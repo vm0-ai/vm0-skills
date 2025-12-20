@@ -58,7 +58,7 @@
 - [ ] [EfiBank](https://dev.efipay.com.br/) - Brazilian Bank/Pix Payment
 - [ ] [OpenPix](https://developers.openpix.com.br/) - Pix Payment Platform
 - [ ] [Bitrix](https://apidocs.bitrix24.com/) - CRM & Collaboration Platform
-- [ ] [Notion](https://developers.notion.com/) - Notes & Knowledge Base
+- [x] [Notion](https://developers.notion.com/) - Notes & Knowledge Base
 - [ ] [Twenty CRM](https://twenty.com/developers) - Open Source CRM
 - [ ] [Instantly](https://developer.instantly.ai/) - Email Outreach Tool
 - [ ] [Close CRM](https://developer.close.com/) - Sales CRM
