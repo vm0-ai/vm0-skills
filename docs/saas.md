@@ -89,6 +89,12 @@
 
 ---
 
+## Analytics & Monitoring
+
+- [x] [Plausible](https://plausible.io/docs) - Privacy-Friendly Web Analytics
+
+---
+
 ## Miscellaneous
 
 - [ ] [Reportei](https://app.reportei.com/docs/api) - Marketing Report Generation
@@ -109,8 +115,9 @@
 | API & Cloud Integrations | 21 |
 | AI, LLM & Voice | 6 |
 | File & PDF Manipulation | 3 |
+| Analytics & Monitoring | 1 |
 | Miscellaneous | 4 |
-| **Total** | **54** |
+| **Total** | **55** |
 
 ---
 
