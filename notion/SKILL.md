@@ -20,7 +20,7 @@ Manage pages, databases, and content blocks in Notion workspaces.
 ## Prerequisites
 
 ```bash
-export NOTION_API_KEY=secret_your-integration-token
+export NOTION_API_KEY=ntn_your-integration-token
 ```
 
 ### Get API Key
@@ -28,10 +28,51 @@ export NOTION_API_KEY=secret_your-integration-token
 1. Go to https://www.notion.so/profile/integrations
 2. Click "New integration"
 3. Name your integration and select workspace
-4. Copy the "Internal Integration Secret" (`secret_...`)
+4. Copy the "Internal Integration Secret" (`ntn_...` or `secret_...`)
 5. **Important**: Share pages/databases with the integration via "Add connections" in Notion
 
+### Page ID Format
+
+Notion URLs contain page IDs. Extract and normalize them:
+
+```
+URL: https://www.notion.so/My-Page-2b70e96f0134807d8450c8793839c659
+Page ID: 2b70e96f0134807d8450c8793839c659 (remove hyphens if present)
+```
+
+```bash
+# Normalize page ID (remove hyphens)
+PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
+```
+
 ## Core APIs
+
+### Read Page with Content
+
+```bash
+PAGE_ID=$(echo "2b70e96f0134807d8450c8793839c659" | tr -d '-')
+
+# Get page metadata
+curl -s -X GET "https://api.notion.com/v1/pages/${PAGE_ID}" \
+  -H "Authorization: Bearer $NOTION_API_KEY" \
+  -H "Notion-Version: 2022-06-28" | jq '{title: .properties.title.title[0].plain_text, url, last_edited_time}'
+
+# Get page content blocks
+curl -s -X GET "https://api.notion.com/v1/blocks/${PAGE_ID}/children?page_size=100" \
+  -H "Authorization: Bearer $NOTION_API_KEY" \
+  -H "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}'
+```
+
+### Read Nested Blocks (Toggle, etc.)
+
+Blocks with `has_children: true` contain nested content:
+
+```bash
+BLOCK_ID="2b70e96f-0134-80d9-9def-f99ae812f1e7"
+curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" \
+  -H "Authorization: Bearer $NOTION_API_KEY" \
+  -H "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
+```
 
 ### Search Workspace
 
