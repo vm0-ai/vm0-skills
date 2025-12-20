@@ -40,12 +40,6 @@ Enable these API scopes in your Lark app:
 
 ## How to Use
 
-### Global Options
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| --output-dir | No | /tmp/lark | Output directory for results |
-
 ### Commands
 
 The script supports 6 modules: `auth`, `message`, `chat`, `contact`, `calendar`, `bot`
@@ -57,7 +51,7 @@ The script supports 6 modules: `auth`, `message`, `chat`, `contact`, `calendar`,
 Obtain and cache tenant access token.
 
 ```bash
-lark.sh auth
+scripts/lark.sh auth
 ```
 
 Token is cached to `/tmp/lark/token.json` and reused until expiration.
@@ -69,8 +63,8 @@ Token is cached to `/tmp/lark/token.json` and reused until expiration.
 #### Send Text Message
 
 ```bash
-lark.sh message send --to "ou_xxx" --type "open_id" --text "Hello World"
-lark.sh message send --to "oc_xxx" --type "chat_id" --text "Group message"
+scripts/lark.sh message send --to "ou_xxx" --type "open_id" --text "Hello World"
+scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --text "Group message"
 ```
 
 | Parameter | Required | Default | Description |
@@ -82,7 +76,7 @@ lark.sh message send --to "oc_xxx" --type "chat_id" --text "Group message"
 #### Send Rich Text (Post)
 
 ```bash
-lark.sh message send --to "ou_xxx" --type "open_id" --post '{
+scripts/lark.sh message send --to "ou_xxx" --type "open_id" --post '{
   "zh_cn": {
     "title": "Title",
     "content": [[{"tag": "text", "text": "Content"}]]
@@ -93,7 +87,7 @@ lark.sh message send --to "ou_xxx" --type "open_id" --post '{
 #### Send Card Message
 
 ```bash
-lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
+scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
   "header": {"title": {"tag": "plain_text", "content": "Alert"}},
   "elements": [{"tag": "div", "text": {"tag": "plain_text", "content": "Message"}}]
 }'
@@ -102,13 +96,13 @@ lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
 #### Reply to Message
 
 ```bash
-lark.sh message reply --message-id "om_xxx" --text "Reply content"
+scripts/lark.sh message reply --message-id "om_xxx" --text "Reply content"
 ```
 
 #### Get Chat History
 
 ```bash
-lark.sh message list --chat-id "oc_xxx" --limit 20
+scripts/lark.sh message list --chat-id "oc_xxx" --limit 20
 ```
 
 ---
@@ -118,7 +112,7 @@ lark.sh message list --chat-id "oc_xxx" --limit 20
 #### Create Group
 
 ```bash
-lark.sh chat create --name "Project Team" --members "ou_xxx,ou_yyy"
+scripts/lark.sh chat create --name "Project Team" --members "ou_xxx,ou_yyy"
 ```
 
 | Parameter | Required | Default | Description |
@@ -130,25 +124,25 @@ lark.sh chat create --name "Project Team" --members "ou_xxx,ou_yyy"
 #### List Groups
 
 ```bash
-lark.sh chat list
+scripts/lark.sh chat list
 ```
 
 #### Get Group Info
 
 ```bash
-lark.sh chat info --chat-id "oc_xxx"
+scripts/lark.sh chat info --chat-id "oc_xxx"
 ```
 
 #### Add Members
 
 ```bash
-lark.sh chat add-member --chat-id "oc_xxx" --members "ou_xxx,ou_yyy"
+scripts/lark.sh chat add-member --chat-id "oc_xxx" --members "ou_xxx,ou_yyy"
 ```
 
 #### Remove Members
 
 ```bash
-lark.sh chat remove-member --chat-id "oc_xxx" --members "ou_xxx"
+scripts/lark.sh chat remove-member --chat-id "oc_xxx" --members "ou_xxx"
 ```
 
 ---
@@ -158,7 +152,7 @@ lark.sh chat remove-member --chat-id "oc_xxx" --members "ou_xxx"
 #### Get User Info
 
 ```bash
-lark.sh contact user --user-id "ou_xxx" --type "open_id"
+scripts/lark.sh contact user --user-id "ou_xxx" --type "open_id"
 ```
 
 | Parameter | Required | Default | Description |
@@ -169,19 +163,19 @@ lark.sh contact user --user-id "ou_xxx" --type "open_id"
 #### Search Users
 
 ```bash
-lark.sh contact search --query "John"
+scripts/lark.sh contact search --query "John"
 ```
 
 #### List Departments
 
 ```bash
-lark.sh contact departments --parent-id "0"
+scripts/lark.sh contact departments --parent-id "0"
 ```
 
 #### Get Department Members
 
 ```bash
-lark.sh contact members --department-id "xxx"
+scripts/lark.sh contact members --department-id "xxx"
 ```
 
 ---
@@ -191,13 +185,13 @@ lark.sh contact members --department-id "xxx"
 #### List Calendars
 
 ```bash
-lark.sh calendar list
+scripts/lark.sh calendar list
 ```
 
 #### Create Event
 
 ```bash
-lark.sh calendar create-event --calendar-id "xxx" \
+scripts/lark.sh calendar create-event --calendar-id "xxx" \
   --summary "Team Meeting" \
   --start "2025-01-15T10:00:00+08:00" \
   --end "2025-01-15T11:00:00+08:00" \
@@ -215,7 +209,7 @@ lark.sh calendar create-event --calendar-id "xxx" \
 #### List Events
 
 ```bash
-lark.sh calendar events --calendar-id "xxx" \
+scripts/lark.sh calendar events --calendar-id "xxx" \
   --start "2025-01-01T00:00:00+08:00" \
   --end "2025-01-31T23:59:59+08:00"
 ```
@@ -225,27 +219,12 @@ lark.sh calendar events --calendar-id "xxx" \
 ### 6. Bot - Bot Information
 
 ```bash
-lark.sh bot info
+scripts/lark.sh bot info
 ```
 
 Returns bot name, open_id, and capabilities.
 
 ---
-
-## Output
-
-Results are saved to the output directory:
-
-| Command | Output File |
-|---------|-------------|
-| auth | `token.json` |
-| message send | `message_[timestamp].json` |
-| message list | `messages_[timestamp].json` |
-| chat list | `chats_[timestamp].json` |
-| chat create | `chat_[timestamp].json` |
-| contact search | `users_[timestamp].json` |
-| calendar list | `calendars_[timestamp].json` |
-| calendar events | `events_[timestamp].json` |
 
 ## Message Types
 
@@ -261,7 +240,7 @@ Results are saved to the output directory:
 ### Send Alert to Group
 
 ```bash
-lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
+scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
   "header": {
     "title": {"tag": "plain_text", "content": "System Alert"},
     "template": "red"
@@ -276,7 +255,7 @@ lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
 ### Create Team Group with Members
 
 ```bash
-lark.sh chat create --name "Q1 Project" \
+scripts/lark.sh chat create --name "Q1 Project" \
   --members "ou_abc,ou_def,ou_ghi" \
   --description "Q1 project discussion"
 ```
@@ -285,16 +264,16 @@ lark.sh chat create --name "Q1 Project" \
 
 ```bash
 # Get root departments
-lark.sh contact departments --parent-id "0"
+scripts/lark.sh contact departments --parent-id "0"
 
 # Get members in a department
-lark.sh contact members --department-id "od_xxx"
+scripts/lark.sh contact members --department-id "od_xxx"
 ```
 
 ### Schedule a Meeting
 
 ```bash
-lark.sh calendar create-event --calendar-id "primary" \
+scripts/lark.sh calendar create-event --calendar-id "primary" \
   --summary "Sprint Planning" \
   --start "2025-01-20T09:00:00+08:00" \
   --end "2025-01-20T10:30:00+08:00" \

@@ -8,9 +8,8 @@ set -e
 
 # Configuration
 BASE_URL="https://open.feishu.cn/open-apis"
-OUTPUT_DIR="${LARK_OUTPUT_DIR:-/tmp/lark}"
-TOKEN_FILE="${OUTPUT_DIR}/token.json"
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+TOKEN_DIR="/tmp/lark"
+TOKEN_FILE="${TOKEN_DIR}/token.json"
 
 # Colors for output
 RED='\033[0;31m'
@@ -23,8 +22,8 @@ log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
-# Create output directory
-mkdir -p "$OUTPUT_DIR"
+# Create token cache directory
+mkdir -p "$TOKEN_DIR"
 
 # Check required environment variables
 check_env() {
@@ -87,13 +86,9 @@ api_request() {
     curl "${curl_args[@]}"
 }
 
-# Save response to file
-save_response() {
-    local prefix="$1"
-    local response="$2"
-    local output_file="${OUTPUT_DIR}/${prefix}_${TIMESTAMP}.json"
-    echo "$response" > "$output_file"
-    log_info "Response saved to: $output_file"
+# Output response to stdout
+output_response() {
+    local response="$1"
     echo "$response" | jq '.' 2>/dev/null || echo "$response"
 }
 
@@ -197,7 +192,7 @@ cmd_message_send() {
         '{receive_id: $receive_id, msg_type: $msg_type, content: ($content | tostring)}')
 
     local response=$(api_request "POST" "/im/v1/messages?receive_id_type=${receive_id_type}" "$data")
-    save_response "message" "$response"
+    output_response "$response"
 }
 
 cmd_message_reply() {
@@ -226,7 +221,7 @@ cmd_message_reply() {
         '{msg_type: $msg_type, content: $content}')
 
     local response=$(api_request "POST" "/im/v1/messages/${message_id}/reply" "$data")
-    save_response "reply" "$response"
+    output_response "$response"
 }
 
 cmd_message_list() {
@@ -249,7 +244,7 @@ cmd_message_list() {
     log_info "Getting messages from chat $chat_id..."
 
     local response=$(api_request "GET" "/im/v1/messages?container_id_type=chat&container_id=${chat_id}&page_size=${limit}")
-    save_response "messages" "$response"
+    output_response "$response"
 }
 
 # ============================================================================
@@ -308,13 +303,13 @@ cmd_chat_create() {
     data="$data}"
 
     local response=$(api_request "POST" "/im/v1/chats?user_id_type=open_id" "$data")
-    save_response "chat" "$response"
+    output_response "$response"
 }
 
 cmd_chat_list() {
     log_info "Getting chat list..."
     local response=$(api_request "GET" "/im/v1/chats")
-    save_response "chats" "$response"
+    output_response "$response"
 }
 
 cmd_chat_info() {
@@ -334,7 +329,7 @@ cmd_chat_info() {
 
     log_info "Getting chat info: $chat_id..."
     local response=$(api_request "GET" "/im/v1/chats/${chat_id}")
-    save_response "chat_info" "$response"
+    output_response "$response"
 }
 
 cmd_chat_add_member() {
@@ -360,7 +355,7 @@ cmd_chat_add_member() {
     local data="{\"id_list\": $member_array}"
 
     local response=$(api_request "POST" "/im/v1/chats/${chat_id}/members?member_id_type=open_id" "$data")
-    save_response "chat_members" "$response"
+    output_response "$response"
 }
 
 cmd_chat_remove_member() {
@@ -386,7 +381,7 @@ cmd_chat_remove_member() {
     local data="{\"id_list\": $member_array}"
 
     local response=$(api_request "DELETE" "/im/v1/chats/${chat_id}/members?member_id_type=open_id" "$data")
-    save_response "chat_members" "$response"
+    output_response "$response"
 }
 
 # ============================================================================
@@ -428,7 +423,7 @@ cmd_contact_user() {
 
     log_info "Getting user info: $user_id..."
     local response=$(api_request "GET" "/contact/v3/users/${user_id}?user_id_type=${user_id_type}")
-    save_response "user" "$response"
+    output_response "$response"
 }
 
 cmd_contact_search() {
@@ -450,7 +445,7 @@ cmd_contact_search() {
 
     local data="{\"query\": \"$query\"}"
     local response=$(api_request "POST" "/contact/v3/users/search?user_id_type=open_id" "$data")
-    save_response "users" "$response"
+    output_response "$response"
 }
 
 cmd_contact_departments() {
@@ -465,7 +460,7 @@ cmd_contact_departments() {
 
     log_info "Getting departments (parent: $parent_id)..."
     local response=$(api_request "GET" "/contact/v3/departments?parent_department_id=${parent_id}")
-    save_response "departments" "$response"
+    output_response "$response"
 }
 
 cmd_contact_members() {
@@ -485,7 +480,7 @@ cmd_contact_members() {
 
     log_info "Getting department members: $department_id..."
     local response=$(api_request "GET" "/contact/v3/users/find_by_department?department_id=${department_id}&user_id_type=open_id")
-    save_response "members" "$response"
+    output_response "$response"
 }
 
 # ============================================================================
@@ -510,7 +505,7 @@ cmd_calendar() {
 cmd_calendar_list() {
     log_info "Getting calendar list..."
     local response=$(api_request "GET" "/calendar/v4/calendars")
-    save_response "calendars" "$response"
+    output_response "$response"
 }
 
 cmd_calendar_create_event() {
@@ -555,7 +550,7 @@ cmd_calendar_create_event() {
         }')
 
     local response=$(api_request "POST" "/calendar/v4/calendars/${calendar_id}/events" "$data")
-    save_response "event" "$response"
+    output_response "$response"
 }
 
 cmd_calendar_events() {
@@ -594,7 +589,7 @@ cmd_calendar_events() {
     [ -n "$query_params" ] && endpoint="${endpoint}?${query_params}"
 
     local response=$(api_request "GET" "$endpoint")
-    save_response "events" "$response"
+    output_response "$response"
 }
 
 # ============================================================================
@@ -617,7 +612,7 @@ cmd_bot() {
 cmd_bot_info() {
     log_info "Getting bot info..."
     local response=$(api_request "GET" "/bot/v3/info")
-    save_response "bot" "$response"
+    output_response "$response"
 }
 
 # ============================================================================
@@ -657,7 +652,6 @@ Commands:
 Environment Variables:
   LARK_APP_ID               Lark app ID (required)
   LARK_APP_SECRET           Lark app secret (required)
-  LARK_OUTPUT_DIR           Output directory (default: /tmp/lark)
 
 Examples:
   # Get access token
@@ -679,12 +673,6 @@ EOF
 # Parse global options
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --output-dir)
-            OUTPUT_DIR="$2"
-            TOKEN_FILE="${OUTPUT_DIR}/token.json"
-            mkdir -p "$OUTPUT_DIR"
-            shift 2
-            ;;
         -h|--help)
             show_help
             exit 0
