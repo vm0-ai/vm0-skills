@@ -31,11 +31,15 @@ Get your API key from: https://www.firecrawl.dev/
 
 ## How to Use
 
+### Script Location
+
+The script is located at `scripts/firecrawl.sh` relative to this skill file.
+
 ### Global Options
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| --output-dir | No | Current directory | Output directory for results |
+| --output-dir | No | `$TMPDIR/firecrawl` | Output directory for results |
 
 ### Commands
 
@@ -125,10 +129,10 @@ firecrawl.sh extract "https://example.com/*" --prompt "Extract all article title
 
 ## Output
 
-Results are saved to the output directory (default: current working directory):
+Results are saved to the output directory (default: `$TMPDIR/firecrawl`):
 
 ```bash
-# Save to current directory
+# Save to temp directory (default)
 firecrawl.sh scrape "https://example.com"
 
 # Save to specific directory

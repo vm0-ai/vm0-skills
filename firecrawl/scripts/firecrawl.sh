@@ -23,9 +23,9 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-# Default to current directory if not specified
+# Default to temp directory if not specified
 if [ -z "$OUTPUT_DIR" ]; then
-    OUTPUT_DIR="$(pwd)"
+    OUTPUT_DIR="${TMPDIR:-/tmp}/firecrawl"
 fi
 
 # Check API key
@@ -46,7 +46,7 @@ show_usage() {
     echo "Usage: firecrawl.sh [--output-dir <dir>] <command> <url|query> [options]"
     echo ""
     echo "Global Options:"
-    echo "  --output-dir <dir>  Output directory for results (default: current directory)"
+    echo "  --output-dir <dir>  Output directory for results (default: \$TMPDIR/firecrawl)"
     echo ""
     echo "Commands:"
     echo "  scrape <url>     Scrape a single webpage"
