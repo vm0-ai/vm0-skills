@@ -62,7 +62,7 @@
 - [ ] [Twenty CRM](https://twenty.com/developers) - Open Source CRM
 - [ ] [Instantly](https://developer.instantly.ai/) - Email Outreach Tool
 - [ ] [Close CRM](https://developer.close.com/) - Sales CRM
-- [ ] [Monday.com](https://developer.monday.com/api-reference/) - Project Management Platform
+- [x] [Monday.com](https://developer.monday.com/api-reference/) - Project Management Platform
 - [ ] [IONOS](https://docs.ionos.com/reference) - Cloud Infrastructure Service
 - [ ] [short.io](https://developers.short.io/docs) - URL Shortener Service
 - [ ] [NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_1559132836.html) - Oracle ERP System
