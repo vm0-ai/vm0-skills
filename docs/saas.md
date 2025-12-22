@@ -22,7 +22,7 @@
 
 ## Document & Content Generation
 
-- [ ] [PDForge](https://docs.pdforge.com/) - AI PDF Generation
+- [x] [PDForge](https://docs.pdforge.com/) - AI PDF Generation
 - [ ] [ZapSign](https://docs.zapsign.com.br/english) - Electronic Signatures
 
 ---
