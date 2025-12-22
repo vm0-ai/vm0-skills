@@ -8,7 +8,7 @@
 
 - [ ] [Evolution API](https://doc.evolution-api.com/) - WhatsApp Channel Hub
 - [ ] [Quepasa](https://github.com/nocodeleaks/quepasa) - WhatsApp Integration
-- [ ] [ChatWoot](https://developers.chatwoot.com/) - Open Source Customer Chat Platform
+- [x] [ChatWoot](https://developers.chatwoot.com/) - Open Source Customer Chat Platform
 - [ ] [Wuzapi](https://github.com/asternic/wuzapi/blob/main/API.md) - WhatsApp Multi-device REST API
 - [ ] [Zalo](https://developers.zalo.me/) - Vietnamese Social App
 - [ ] [WAHA](https://waha.devlike.pro/docs/) - WhatsApp HTTP API
