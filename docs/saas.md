@@ -60,7 +60,7 @@
 - [ ] [Bitrix](https://apidocs.bitrix24.com/) - CRM & Collaboration Platform
 - [x] [Notion](https://developers.notion.com/) - Notes & Knowledge Base
 - [ ] [Twenty CRM](https://twenty.com/developers) - Open Source CRM
-- [ ] [Instantly](https://developer.instantly.ai/) - Email Outreach Tool
+- [x] [Instantly](https://developer.instantly.ai/) - Email Outreach Tool
 - [ ] [Close CRM](https://developer.close.com/) - Sales CRM
 - [x] [Monday.com](https://developer.monday.com/api-reference/) - Project Management Platform
 - [ ] [IONOS](https://docs.ionos.com/reference) - Cloud Infrastructure Service
