@@ -1,198 +1,432 @@
----
 name: firecrawl
-description: Web scraping and crawling API for AI. Use this skill to scrape webpages, crawl entire websites, discover URLs, search the web, or extract structured data from pages. Ideal for gathering web content for LLM processing.
+description: Firecrawl web scraping API via curl. Use this skill to scrape webpages, crawl websites, discover URLs, search the web, or extract structured data.
 vm0_env:
-  - FIRECRAWL_API_KEY
+
+- FIRECRAWL_API_KEY
+
 ---
 
 # Firecrawl
 
-Turn websites into LLM-ready markdown or structured data. Firecrawl is a powerful web data API designed for AI applications.
+Use the Firecrawl API via direct `curl` calls to **scrape websites and extract data for AI**.
+
+> Official docs: `https://docs.firecrawl.dev/`
+
+---
 
 ## When to Use
 
-- Scrape a single webpage and convert to markdown/html
-- Crawl an entire website and extract all pages
-- Discover all URLs on a website quickly
-- Search the web and get full page content
-- Extract structured data from pages using AI
-- Gather training data or research content
-- Monitor competitor websites or prices
+Use this skill when you need to:
+
+- **Scrape a webpage** and convert to markdown/HTML
+- **Crawl an entire website** and extract all pages
+- **Discover all URLs** on a website
+- **Search the web** and get full page content
+- **Extract structured data** using AI
+
+---
 
 ## Prerequisites
 
-Set the `FIRECRAWL_API_KEY` environment variable:
+1. Sign up at https://www.firecrawl.dev/
+2. Get your API key from the dashboard
 
 ```bash
-export FIRECRAWL_API_KEY=fc-your-api-key
+export FIRECRAWL_API_KEY="fc-your-api-key"
 ```
 
-Get your API key from: https://www.firecrawl.dev/
+---
 
 ## How to Use
 
-### Script Location
+All examples below assume you have `FIRECRAWL_API_KEY` set.
 
-The script is located at `scripts/firecrawl.sh` relative to this skill file.
+Base URL: `https://api.firecrawl.dev/v1`
 
-### Global Options
+---
 
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| --output-dir | No | `$TMPDIR/firecrawl` | Output directory for results |
-
-### Commands
-
-The script supports 5 operations: `scrape`, `crawl`, `map`, `search`, `extract`
-
-### 1. Scrape - Single Page
+## 1. Scrape - Single Page
 
 Extract content from a single webpage.
 
+### Basic Scrape
+
 ```bash
-firecrawl.sh scrape "https://example.com"
-firecrawl.sh scrape "https://example.com" --format html
-firecrawl.sh scrape "https://example.com" --format markdown --main-only
+curl -s -X POST "https://api.firecrawl.dev/v1/scrape" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "formats": ["markdown"]
+  }' | jq .
 ```
 
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| url | Yes | - | URL to scrape |
-| --format | No | markdown | Output format: markdown, html, rawHtml, screenshot, links |
-| --main-only | No | false | Extract only main content, skip headers/footers |
-| --timeout | No | 30000 | Request timeout in milliseconds |
+### Scrape with Options
 
-### 2. Crawl - Entire Website
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/scrape" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://docs.example.com/api",
+    "formats": ["markdown"],
+    "onlyMainContent": true,
+    "timeout": 30000
+  }' | jq '.data.markdown'
+```
+
+### Get HTML Instead
+
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/scrape" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "formats": ["html"]
+  }' | jq '.data.html'
+```
+
+### Get Screenshot
+
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/scrape" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "formats": ["screenshot"]
+  }' | jq '.data.screenshot'
+```
+
+**Scrape Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `url` | string | URL to scrape (required) |
+| `formats` | array | `markdown`, `html`, `rawHtml`, `screenshot`, `links` |
+| `onlyMainContent` | boolean | Skip headers/footers |
+| `timeout` | number | Timeout in milliseconds |
+
+---
+
+## 2. Crawl - Entire Website
 
 Crawl all pages of a website (async operation).
 
-```bash
-firecrawl.sh crawl "https://example.com"
-firecrawl.sh crawl "https://example.com" --limit 50 --depth 2
-firecrawl.sh crawl "https://example.com" --include "/blog/*" --exclude "/admin/*"
-```
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| url | Yes | - | Starting URL to crawl |
-| --limit | No | 100 | Maximum number of pages to crawl |
-| --depth | No | 3 | Maximum crawl depth |
-| --include | No | - | Path pattern to include (e.g., /blog/*) |
-| --exclude | No | - | Path pattern to exclude (e.g., /admin/*) |
-| --wait | No | true | Wait for crawl to complete |
-
-### 3. Map - URL Discovery
-
-Get a list of all URLs on a website quickly.
+### Start a Crawl
 
 ```bash
-firecrawl.sh map "https://example.com"
-firecrawl.sh map "https://example.com" --search "product"
-firecrawl.sh map "https://example.com" --limit 500
+curl -s -X POST "https://api.firecrawl.dev/v1/crawl" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "limit": 50,
+    "maxDepth": 2
+  }' | jq .
 ```
 
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| url | Yes | - | Website URL to map |
-| --search | No | - | Filter URLs containing this keyword |
-| --limit | No | 1000 | Maximum URLs to return |
+**Response:**
 
-### 4. Search - Web Search
+```json
+{
+  "success": true,
+  "id": "crawl-job-id-here"
+}
+```
+
+### Check Crawl Status
+
+```bash
+JOB_ID="crawl-job-id-here"
+
+curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq '{status, completed, total}'
+```
+
+### Get Crawl Results
+
+```bash
+JOB_ID="crawl-job-id-here"
+
+curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq '.data[] | {url: .metadata.url, title: .metadata.title}'
+```
+
+### Crawl with Path Filters
+
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/crawl" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://blog.example.com",
+    "limit": 20,
+    "maxDepth": 3,
+    "includePaths": ["/posts/*"],
+    "excludePaths": ["/admin/*", "/login"]
+  }' | jq .
+```
+
+**Crawl Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `url` | string | Starting URL (required) |
+| `limit` | number | Max pages to crawl (default: 100) |
+| `maxDepth` | number | Max crawl depth (default: 3) |
+| `includePaths` | array | Paths to include (e.g., `/blog/*`) |
+| `excludePaths` | array | Paths to exclude |
+
+---
+
+## 3. Map - URL Discovery
+
+Get all URLs from a website quickly.
+
+### Basic Map
+
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/map" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com"
+  }' | jq '.links[:10]'
+```
+
+### Map with Search Filter
+
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/map" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://shop.example.com",
+    "search": "product",
+    "limit": 500
+  }' | jq '.links'
+```
+
+**Map Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `url` | string | Website URL (required) |
+| `search` | string | Filter URLs containing keyword |
+| `limit` | number | Max URLs to return (default: 1000) |
+
+---
+
+## 4. Search - Web Search
 
 Search the web and get full page content.
 
+### Basic Search
+
 ```bash
-firecrawl.sh search "AI news 2024"
-firecrawl.sh search "machine learning tutorials" --limit 5
+curl -s -X POST "https://api.firecrawl.dev/v1/search" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "AI news 2024",
+    "limit": 5
+  }' | jq '.data[] | {title: .metadata.title, url: .url}'
 ```
 
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| query | Yes | - | Search query string |
-| --limit | No | 10 | Number of results |
-| --format | No | markdown | Content format for results |
+### Search with Full Content
 
-### 5. Extract - AI Data Extraction
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/search" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "machine learning tutorials",
+    "limit": 3,
+    "scrapeOptions": {
+      "formats": ["markdown"]
+    }
+  }' | jq '.data[] | {title: .metadata.title, content: .markdown[:500]}'
+```
+
+**Search Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `query` | string | Search query (required) |
+| `limit` | number | Number of results (default: 10) |
+| `scrapeOptions` | object | Options for scraping results |
+
+---
+
+## 5. Extract - AI Data Extraction
 
 Extract structured data from pages using AI.
 
-```bash
-firecrawl.sh extract "https://example.com/product" --prompt "Extract product name and price"
-firecrawl.sh extract "https://example.com/*" --prompt "Extract all article titles and dates"
-```
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| url | Yes | - | URL or URL pattern (use /* for multiple pages) |
-| --prompt | Yes | - | Natural language description of data to extract |
-| --schema | No | - | JSON schema for structured output |
-
-## Output
-
-Results are saved to the output directory (default: `$TMPDIR/firecrawl`):
+### Basic Extract
 
 ```bash
-# Save to temp directory (default)
-firecrawl.sh scrape "https://example.com"
-
-# Save to specific directory
-firecrawl.sh --output-dir ./output scrape "https://example.com"
+curl -s -X POST "https://api.firecrawl.dev/v1/extract" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "urls": ["https://example.com/product/123"],
+    "prompt": "Extract the product name, price, and description"
+  }' | jq '.data'
 ```
 
-| Operation | Output Files |
-|-----------|-------------|
-| scrape | `scrape_[timestamp].json`, `scrape_[timestamp].md` |
-| crawl | `crawl_[job_id].json` |
-| map | `map_[timestamp].json` |
-| search | `search_[timestamp].json` |
-| extract | `extract_[timestamp].json` |
-
-## Examples
-
-### Scrape a documentation page
+### Extract with Schema
 
 ```bash
-firecrawl.sh scrape "https://docs.example.com/api" --format markdown --main-only
+curl -s -X POST "https://api.firecrawl.dev/v1/extract" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "urls": ["https://example.com/product/123"],
+    "prompt": "Extract product information",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "price": {"type": "number"},
+        "currency": {"type": "string"},
+        "inStock": {"type": "boolean"}
+      }
+    }
+  }' | jq '.data'
 ```
 
-### Crawl a blog
+### Extract from Multiple URLs
 
 ```bash
-firecrawl.sh crawl "https://blog.example.com" --include "/posts/*" --limit 20
+curl -s -X POST "https://api.firecrawl.dev/v1/extract" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "urls": [
+      "https://example.com/product/1",
+      "https://example.com/product/2"
+    ],
+    "prompt": "Extract product name and price"
+  }' | jq '.data'
 ```
 
-### Find all product pages
+**Extract Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `urls` | array | URLs to extract from (required) |
+| `prompt` | string | Description of data to extract (required) |
+| `schema` | object | JSON schema for structured output |
+
+---
+
+## Practical Examples
+
+### Scrape Documentation
 
 ```bash
-firecrawl.sh map "https://shop.example.com" --search "product"
+curl -s -X POST "https://api.firecrawl.dev/v1/scrape" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://docs.python.org/3/tutorial/",
+    "formats": ["markdown"],
+    "onlyMainContent": true
+  }' | jq -r '.data.markdown' > python-tutorial.md
 ```
 
-### Research a topic
+### Find All Blog Posts
 
 ```bash
-firecrawl.sh search "best practices for API design" --limit 5
+curl -s -X POST "https://api.firecrawl.dev/v1/map" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://blog.example.com",
+    "search": "post"
+  }' | jq -r '.links[]'
 ```
 
-### Extract product data
+### Research a Topic
 
 ```bash
-firecrawl.sh extract "https://shop.example.com/product/123" \
-  --prompt "Extract product name, price, description, and availability"
+curl -s -X POST "https://api.firecrawl.dev/v1/search" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "best practices REST API design 2024",
+    "limit": 5,
+    "scrapeOptions": {"formats": ["markdown"]}
+  }' | jq '.data[] | {title: .metadata.title, url: .url}'
 ```
+
+### Extract Pricing Data
+
+```bash
+curl -s -X POST "https://api.firecrawl.dev/v1/extract" \
+  -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "urls": ["https://example.com/pricing"],
+    "prompt": "Extract all pricing tiers with name, price, and features"
+  }' | jq '.data'
+```
+
+### Poll Crawl Until Complete
+
+```bash
+JOB_ID="your-crawl-job-id"
+
+while true; do
+  STATUS=$(curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" \
+    -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq -r '.status')
+  echo "Status: $STATUS"
+  [ "$STATUS" = "completed" ] && break
+  sleep 5
+done
+```
+
+---
+
+## Response Format
+
+### Scrape Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "markdown": "# Page Title\n\nContent...",
+    "metadata": {
+      "title": "Page Title",
+      "description": "...",
+      "url": "https://..."
+    }
+  }
+}
+```
+
+### Crawl Status Response
+
+```json
+{
+  "success": true,
+  "status": "completed",
+  "completed": 50,
+  "total": 50,
+  "data": [...]
+}
+```
+
+---
 
 ## Guidelines
 
-1. **Rate Limits**: Be mindful of API rate limits (429 errors). Add delays between requests if needed.
-2. **Crawl Limits**: Set reasonable `--limit` values to avoid excessive API usage.
-3. **Main Content**: Use `--main-only` for cleaner output without navigation/footer.
-4. **Async Crawls**: Large crawls run asynchronously. The script polls for completion.
-5. **Extract Prompts**: Be specific in extraction prompts for better results.
-6. **Error Handling**: Check output JSON for error messages on failures.
-
-## API Reference
-
-- Documentation: https://docs.firecrawl.dev/
-- Scrape API: https://docs.firecrawl.dev/features/scrape
-- Crawl API: https://docs.firecrawl.dev/features/crawl
-- Map API: https://docs.firecrawl.dev/features/map
-- Extract API: https://docs.firecrawl.dev/features/extract
+1. **Rate limits**: Add delays between requests to avoid 429 errors
+2. **Crawl limits**: Set reasonable `limit` values to control API usage
+3. **Main content**: Use `onlyMainContent: true` for cleaner output
+4. **Async crawls**: Large crawls are async; poll `/crawl/{id}` for status
+5. **Extract prompts**: Be specific for better AI extraction results
+6. **Check success**: Always check `success` field in responses
