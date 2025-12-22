@@ -46,7 +46,7 @@
 
 ## API & Cloud Integrations
 
-- [ ] [Kommo](https://developers.kommo.com/) - CRM System
+- [x] [Kommo](https://developers.kommo.com/) - CRM System
 - [ ] [Power BI](https://learn.microsoft.com/en-us/rest/api/power-bi/) - Microsoft Data Visualization
 - [x] [MinIO](https://min.io/docs/minio/linux/developers/minio-drivers.html) - Object Storage Service
 - [x] [Tavily](https://docs.tavily.com/) - AI Search Engine
