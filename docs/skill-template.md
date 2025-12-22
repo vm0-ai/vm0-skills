@@ -37,13 +37,12 @@ curl -s -X POST "https://api.tavily.com/search" \
 Create `<skill-name>/SKILL.md` in the project root with the following structure:
 
 ```markdown
+---
 name: <skill-name>
 description: <One-line description of what this skill does>
 vm0_env:
-
-- ENV_VAR_1
-- ENV_VAR_2
-
+  - ENV_VAR_1
+  - ENV_VAR_2
 ---
 
 # <Skill Name>
