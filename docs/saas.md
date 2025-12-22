@@ -16,7 +16,7 @@
 - [ ] [Exotel](https://developer.exotel.com/api) - Cloud Communication Platform
 - [x] [Feishu/Lark](https://open.larkoffice.com/document/home/index) - Enterprise Collaboration Platform
 - [ ] [WhatsApp Business API](https://business.whatsapp.com/developers/developer-hub) - Official WhatsApp Business API
-- [ ] [Instagram API](https://developers.facebook.com/docs/instagram-api) - Official Instagram API
+- [x] [Instagram API](https://developers.facebook.com/docs/instagram-api) - Official Instagram API
 
 ---
 
@@ -49,7 +49,7 @@
 - [ ] [Kommo](https://developers.kommo.com/) - CRM System
 - [ ] [Power BI](https://learn.microsoft.com/en-us/rest/api/power-bi/) - Microsoft Data Visualization
 - [ ] [MinIO](https://min.io/docs/minio/linux/developers/minio-drivers.html) - Object Storage Service
-- [ ] [Tavily](https://docs.tavily.com/) - AI Search Engine
+- [x] [Tavily](https://docs.tavily.com/) - AI Search Engine
 - [ ] [Qdrant](https://api.qdrant.tech/api-reference) - Vector Search Engine
 - [ ] [Brave Search](https://api-dashboard.search.brave.com/app/documentation) - Privacy Search Engine
 - [ ] [BrasilAPI (CNPJ)](https://brasilapi.com.br/docs) - Brazilian Company Info Lookup
@@ -106,18 +106,18 @@
 
 ## Statistics
 
-| Category | API Count |
-|----------|-----------|
-| Communication & Messaging | 11 |
-| Document & Content Generation | 2 |
-| Browser Automation & Web Scraping | 6 |
-| Data Processing & Utilities | 1 |
-| API & Cloud Integrations | 21 |
-| AI, LLM & Voice | 6 |
-| File & PDF Manipulation | 3 |
-| Analytics & Monitoring | 1 |
-| Miscellaneous | 4 |
-| **Total** | **55** |
+| Category                          | API Count |
+| --------------------------------- | --------- |
+| Communication & Messaging         | 11        |
+| Document & Content Generation     | 2         |
+| Browser Automation & Web Scraping | 6         |
+| Data Processing & Utilities       | 1         |
+| API & Cloud Integrations          | 21        |
+| AI, LLM & Voice                   | 6         |
+| File & PDF Manipulation           | 3         |
+| Analytics & Monitoring            | 1         |
+| Miscellaneous                     | 4         |
+| **Total**                         | **55**    |
 
 ---
 
