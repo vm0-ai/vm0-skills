@@ -74,7 +74,7 @@
 
 - [x] [ElevenLabs](https://elevenlabs.io/docs/api-reference/introduction) - AI Voice Generation
 - [x] [DeepSeek](https://api-docs.deepseek.com/) - AI Large Language Model
-- [ ] [Perplexity AI](https://docs.perplexity.ai/) - AI Search Engine
+- [x] [Perplexity AI](https://docs.perplexity.ai/) - AI Search Engine
 - [ ] [GitHub Copilot](https://docs.github.com/en/rest/copilot) - AI Coding Assistant
 - [ ] [Runway](https://docs.dev.runwayml.com/) - AI Video Generation
 - [ ] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
