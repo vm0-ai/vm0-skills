@@ -72,7 +72,7 @@
 
 ## AI, LLM & Voice
 
-- [ ] [ElevenLabs](https://elevenlabs.io/docs/api-reference/introduction) - AI Voice Generation
+- [x] [ElevenLabs](https://elevenlabs.io/docs/api-reference/introduction) - AI Voice Generation
 - [ ] [DeepSeek](https://api-docs.deepseek.com/) - AI Large Language Model
 - [ ] [Perplexity AI](https://docs.perplexity.ai/) - AI Search Engine
 - [ ] [GitHub Copilot](https://docs.github.com/en/rest/copilot) - AI Coding Assistant
