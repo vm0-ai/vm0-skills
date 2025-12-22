@@ -97,7 +97,7 @@
 
 ## Miscellaneous
 
-- [ ] [Reportei](https://app.reportei.com/docs/api) - Marketing Report Generation
+- [x] [Reportei](https://app.reportei.com/docs/api) - Marketing Report Generation
 - [x] [Supadata](https://docs.supadata.ai/) - YouTube/Web Content Extraction
 - [x] [Zoho ZeptoMail](https://www.zoho.com/zeptomail/help/api-home.html) - Transactional Email Service
 - [x] [Pushinator](https://pushinator.com/) - Push Notification Service
