@@ -62,8 +62,8 @@ Create a document for signature from a public PDF URL:
 
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "Employment Contract",
     "url_pdf": "https://example.com/contract.pdf",
@@ -76,7 +76,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
         "send_automatic_email": true
       }
     ]
-  }' | jq '{token, status, shortURL: .signers[0].sign_url}'
+  }' | jq '{token, status, sign_url: .signers[0].sign_url}'
 ```
 
 ---
@@ -90,8 +90,8 @@ Create a document from base64-encoded PDF:
 BASE64_PDF=$(base64 -i document.pdf)
 
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d "{
     \"name\": \"Contract\",
     \"base64_pdf\": \"${BASE64_PDF}\",
@@ -112,8 +112,8 @@ Create a document directly from Markdown text (great for AI integrations):
 
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "Service Agreement",
     "markdown_text": "# Service Agreement\n\nThis agreement is between **Company A** and **Client B**.\n\n## Terms\n\n1. Service will be provided for 12 months\n2. Payment is due monthly\n\n---\n\nSignature: ________________",
@@ -134,8 +134,8 @@ Create a document with signing order:
 
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "Multi-party Contract",
     "url_pdf": "https://example.com/contract.pdf",
@@ -165,8 +165,8 @@ Create a document with a deadline for signing:
 
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "Limited Time Offer",
     "url_pdf": "https://example.com/offer.pdf",
@@ -190,7 +190,7 @@ Retrieve document status and signer information:
 DOC_TOKEN="your-document-token"
 
 curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
   | jq '{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}'
 ```
 
@@ -204,8 +204,8 @@ Add a new signer to an existing document:
 DOC_TOKEN="your-document-token"
 
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/add-signer/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "Additional Signer",
     "email": "additional@example.com",
@@ -222,8 +222,8 @@ Send signing link via WhatsApp (costs credits):
 
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "Contract via WhatsApp",
     "url_pdf": "https://example.com/contract.pdf",
@@ -247,8 +247,8 @@ Require facial recognition during signing:
 
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
-  --header "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "High Security Contract",
     "url_pdf": "https://example.com/contract.pdf",
@@ -273,7 +273,7 @@ Delete a document:
 DOC_TOKEN="your-document-token"
 
 curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" \
-  --header "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
+  -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" \
   | jq .
 ```
 
