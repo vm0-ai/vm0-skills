@@ -66,7 +66,7 @@
 - [ ] [IONOS](https://docs.ionos.com/reference) - Cloud Infrastructure Service
 - [x] [short.io](https://developers.short.io/docs) - URL Shortener Service
 - [ ] [NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_1559132836.html) - Oracle ERP System
-- [ ] [Streak CRM](https://streak.readme.io/) - Gmail CRM
+- [x] [Streak CRM](https://streak.readme.io/) - Gmail CRM
 
 ---
 
