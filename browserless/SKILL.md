@@ -153,15 +153,47 @@ curl -s -X POST "https://production-sfo.browserless.io/content?token=${BROWSERLE
   }'
 ```
 
-### 5. Execute Custom JavaScript
+### 5. Execute Custom JavaScript (Click, Type, etc.)
 
-Run JavaScript in the browser and get results:
+Run Puppeteer code with full interaction support:
+
+**Click element:**
 
 ```bash
 curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "code": "module.exports = async ({ page }) => { await page.goto(\"https://example.com\"); return await page.title(); }"
+  -H "Content-Type: application/javascript" \
+  -d 'export default async ({ page }) => {
+    await page.goto("https://example.com");
+    await page.click("a");
+    return { data: { url: page.url() }, type: "application/json" };
+  }' | jq .
+```
+
+**Type into input:**
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" \
+  -H "Content-Type: application/javascript" \
+  -d 'export default async ({ page }) => {
+    await page.goto("https://duckduckgo.com");
+    await page.waitForSelector("input[name=q]");
+    await page.type("input[name=q]", "hello world");
+    const val = await page.$eval("input[name=q]", e => e.value);
+    return { data: { typed: val }, type: "application/json" };
+  }' | jq .
+```
+
+**Form submission:**
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" \
+  -H "Content-Type: application/javascript" \
+  -d 'export default async ({ page }) => {
+    await page.goto("https://duckduckgo.com");
+    await page.type("input[name=q]", "test query");
+    await page.keyboard.press("Enter");
+    await page.waitForNavigation();
+    return { data: { title: await page.title() }, type: "application/json" };
   }' | jq .
 ```
 
@@ -169,9 +201,11 @@ curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERL
 
 ```bash
 curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "code": "module.exports = async ({ page }) => { await page.goto(\"https://news.ycombinator.com\"); return await page.$$eval(\".titleline > a\", links => links.slice(0,5).map(a => ({title: a.innerText, url: a.href}))); }"
+  -H "Content-Type: application/javascript" \
+  -d 'export default async ({ page }) => {
+    await page.goto("https://news.ycombinator.com");
+    const links = await page.$$eval(".titleline > a", els => els.slice(0,5).map(a => ({title: a.innerText, url: a.href})));
+    return { data: links, type: "application/json" };
   }' | jq .
 ```
 
