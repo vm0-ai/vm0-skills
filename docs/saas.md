@@ -85,7 +85,7 @@
 
 - [ ] [PDF.co](https://docs.pdf.co/) - PDF Processing API
 - [ ] [PDF4ME](https://dev.pdf4me.com/apiv2/documentation/) - PDF Tools Service
-- [ ] [HTMLCSStoImage](https://docs.htmlcsstoimage.com/) - HTML/CSS to Image
+- [x] [HTMLCSStoImage](https://docs.htmlcsstoimage.com/) - HTML/CSS to Image
 
 ---
 
