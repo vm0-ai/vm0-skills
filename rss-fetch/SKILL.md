@@ -1,65 +1,190 @@
----
 name: rss-fetch
-description: Fetch and parse RSS feeds from provided URLs. Use this skill when you need to gather news articles from RSS sources.
+description: Fetch RSS/Atom feeds via curl. Use this skill to gather news and articles from RSS sources.
+
 ---
 
 # RSS Feed Fetcher
 
-This skill fetches and parses RSS feeds from provided URLs, extracting article titles, descriptions, links, and publication dates.
+Use `curl` to **fetch and parse RSS/Atom feeds** from any source.
+
+> RSS feeds return XML that can be parsed with `xmllint` or converted to JSON.
+
+---
 
 ## When to Use
 
-Use this skill when:
-- Need to gather recent news articles from RSS feeds
-- Want to collect content from multiple sources
-- Building a content pipeline from RSS sources
+Use this skill when you need to:
+
+- **Fetch news articles** from RSS feeds
+- **Monitor blog updates** or content sources
+- **Aggregate content** from multiple feeds
+- **Track topics** via RSS subscriptions
+
+---
+
+## Prerequisites
+
+No API key required. RSS feeds are public.
+
+Optional tools for parsing:
+- `xmllint` (for XML parsing)
+- `jq` (for JSON output)
+
+---
 
 ## How to Use
 
-Execute the script with RSS feed URLs as arguments:
+### 1. Fetch Raw RSS Feed
 
 ```bash
-scripts/rss-fetch.sh "url1" "url2" "url3" ...
+curl -s "https://hnrss.org/frontpage" | head -100
 ```
 
-### Parameters
+### 2. Parse RSS with xmllint
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| urls | Yes | One or more RSS feed URLs to fetch |
-
-### Example
+Extract titles from RSS feed:
 
 ```bash
-scripts/rss-fetch.sh \
-  "https://example.com/feed.xml" \
-  "https://blog.example.org/rss"
+curl -s "https://hnrss.org/frontpage" | \
+  xmllint --xpath '//item/title/text()' - 2>/dev/null
 ```
 
-## Output
+Extract titles and links:
 
-Results are saved to `/tmp/rss/feeds.json` with this structure:
-
-```json
-{
-  "fetched_at": "2024-01-15T10:30:00Z",
-  "sources": ["example.com", "blog.example.org"],
-  "articles": [
-    {
-      "title": "Article Title",
-      "description": "Article summary...",
-      "link": "https://example.com/article",
-      "pubDate": "2024-01-15T09:00:00Z",
-      "source": "example.com"
-    }
-  ]
-}
+```bash
+curl -s "https://hnrss.org/frontpage" | \
+  xmllint --format - | \
+  grep -E '<title>|<link>' | \
+  head -20
 ```
 
-After fetching, read `/tmp/rss/feeds.json` to see all available articles.
+### 3. Get Items with Details
+
+```bash
+RSS_URL="https://hnrss.org/frontpage"
+
+curl -s "$RSS_URL" | xmllint --xpath '//item' - 2>/dev/null | \
+  xmllint --format - | head -50
+```
+
+### 4. Parse Atom Feeds
+
+Atom feeds use `<entry>` instead of `<item>`:
+
+```bash
+curl -s "https://github.com/blog.atom" | \
+  xmllint --xpath '//entry/title/text()' - 2>/dev/null
+```
+
+---
+
+## Popular RSS Feeds
+
+| Source | URL |
+|--------|-----|
+| Hacker News | `https://hnrss.org/frontpage` |
+| HN Best | `https://hnrss.org/best` |
+| TechCrunch | `https://techcrunch.com/feed/` |
+| Ars Technica | `https://feeds.arstechnica.com/arstechnica/index` |
+| The Verge | `https://www.theverge.com/rss/index.xml` |
+| Reddit (any sub) | `https://www.reddit.com/r/programming/.rss` |
+| GitHub Blog | `https://github.blog/feed/` |
+
+---
+
+## Examples
+
+### Fetch Hacker News Top Stories
+
+```bash
+curl -s "https://hnrss.org/frontpage?count=10" | \
+  xmllint --xpath '//item/title/text()' - 2>/dev/null | \
+  tr '\n' '\n'
+```
+
+### Get Story Links
+
+```bash
+curl -s "https://hnrss.org/frontpage?count=5" | \
+  grep -oP '<link>\K[^<]+' | \
+  grep -v hnrss
+```
+
+### Fetch Multiple Feeds
+
+```bash
+FEEDS=(
+  "https://hnrss.org/frontpage?count=5"
+  "https://techcrunch.com/feed/"
+)
+
+for feed in "${FEEDS[@]}"; do
+  echo "=== $feed ==="
+  curl -s "$feed" | xmllint --xpath '//item/title/text()' - 2>/dev/null | head -5
+  echo ""
+done
+```
+
+### Extract Title, Link, and Date
+
+```bash
+curl -s "https://hnrss.org/frontpage?count=3" | \
+  xmllint --format - | \
+  awk '
+    /<item>/ { in_item=1 }
+    /<\/item>/ { in_item=0; print "---" }
+    in_item && /<title>/ { gsub(/<[^>]*>/, ""); print "Title: " $0 }
+    in_item && /<link>/ { gsub(/<[^>]*>/, ""); print "Link: " $0 }
+    in_item && /<pubDate>/ { gsub(/<[^>]*>/, ""); print "Date: " $0 }
+  '
+```
+
+### Save Feed to File
+
+```bash
+curl -s "https://hnrss.org/frontpage" -o /tmp/hn-feed.xml
+xmllint --xpath '//item/title/text()' /tmp/hn-feed.xml
+```
+
+---
+
+## HN RSS Options
+
+Hacker News RSS (`hnrss.org`) supports parameters:
+
+| Parameter | Description |
+|-----------|-------------|
+| `count=N` | Number of items (default 20) |
+| `points=N` | Minimum points |
+| `comments=N` | Minimum comments |
+| `q=keyword` | Search keyword |
+
+```bash
+# Top stories with 100+ points
+curl -s "https://hnrss.org/frontpage?points=100&count=10"
+
+# Search for "AI" topics
+curl -s "https://hnrss.org/frontpage?q=AI&count=10"
+```
+
+---
+
+## RSS vs Atom Format
+
+| Element | RSS | Atom |
+|---------|-----|------|
+| Container | `<item>` | `<entry>` |
+| Title | `<title>` | `<title>` |
+| Link | `<link>` | `<link href="...">` |
+| Summary | `<description>` | `<summary>` |
+| Date | `<pubDate>` | `<published>` |
+
+---
 
 ## Guidelines
 
-1. Pass all RSS URLs as arguments to fetch from multiple sources
-2. After fetching, analyze the articles to find relevant topics
-3. Use the article links as sources for your generated content
+1. **Check feed format**: Use `head` first to see if it's RSS or Atom
+2. **Use xmllint**: Best tool for XPath queries on XML
+3. **Handle errors**: Some feeds may be slow or rate-limited
+4. **Respect robots.txt**: Don't hammer feeds with requests
+5. **Cache results**: Feeds don't update every second
