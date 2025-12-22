@@ -1,5 +1,5 @@
 name: fal-image
-description: fal.ai image generation API via curl. Use this skill to generate images from text prompts.
+description: fal.ai image generation API. Use this skill to generate images from text prompts.
 vm0_env:
 
 - FAL_KEY
@@ -8,7 +8,7 @@ vm0_env:
 
 # fal.ai Image Generator
 
-Use the fal.ai API via direct `curl` calls to **generate images from text prompts**.
+Use the fal.ai API to **generate images from text prompts**.
 
 > Official docs: `https://fal.ai/models/fal-ai/nano-banana-pro`
 
@@ -37,58 +37,25 @@ export FAL_KEY="your-api-key"
 
 ## How to Use
 
-All examples below assume you have `FAL_KEY` set.
+Use `generate.sh` to generate images. It reads the prompt from stdin and outputs the image URL.
 
-### 1. Generate an Image
-
-```bash
-curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
-  -H "Authorization: Key ${FAL_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "A futuristic city at sunset, cyberpunk style",
-    "aspect_ratio": "16:9",
-    "resolution": "1K",
-    "output_format": "png",
-    "num_images": 1
-  }' | jq .
-```
-
-**Response:**
-
-```json
-{
-  "images": [{
-    "url": "https://storage.googleapis.com/...",
-    "width": 1920,
-    "height": 1080,
-    "content_type": "image/png"
-  }]
-}
-```
-
-### 2. Download the Generated Image
+### Basic Usage
 
 ```bash
-IMAGE_URL="https://storage.googleapis.com/..."
-
-curl -sL -o /tmp/generated.png "${IMAGE_URL}"
+echo "A futuristic city at sunset, cyberpunk style" | ./generate.sh
 ```
 
-### 3. Generate and Download in One Go
+### Specify Model
 
 ```bash
-IMAGE_URL=$(curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
-  -H "Authorization: Key ${FAL_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "Modern AI technology concept, neural networks visualization",
-    "aspect_ratio": "16:9",
-    "resolution": "1K"
-  }' | jq -r '.images[0].url')
+echo "A cute cat eating a cookie" | ./generate.sh nano-banana-pro
+echo "Abstract art" | ./generate.sh recraft-v3
+```
 
-curl -sL -o /tmp/generated.png "${IMAGE_URL}"
-echo "Saved to /tmp/generated.png"
+### Download the Generated Image
+
+```bash
+echo "A cute cat" | ./generate.sh | xargs curl -sL -o /tmp/image.png
 ```
 
 ---
@@ -97,66 +64,21 @@ echo "Saved to /tmp/generated.png"
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
-| `prompt` | Yes | - | Text description of the image |
-| `aspect_ratio` | No | 16:9 | Aspect ratio (1:1, 16:9, 4:3, 9:16, 21:9) |
-| `resolution` | No | 1K | Image resolution (1K, 2K, 4K) |
-| `output_format` | No | png | Output format (png, jpeg) |
-| `num_images` | No | 1 | Number of images to generate |
+| `prompt` | Yes | - | Text description of the image (via stdin) |
+| `model` | No | nano-banana-pro | Model name (first argument) |
 
 ---
 
-## Aspect Ratios
+## Available Models
 
-| Ratio | Use Case |
-|-------|----------|
-| `1:1` | Square, social media posts |
-| `16:9` | Landscape, blog headers, YouTube thumbnails |
-| `4:3` | Standard landscape |
-| `9:16` | Vertical, mobile, stories |
-| `21:9` | Ultra-wide, cinematic |
+| Model | Description |
+|-------|-------------|
+| `nano-banana-pro` | Fast, good quality (default) |
+| `recraft-v3` | High quality vector/illustration |
+| `flux/schnell` | Fast generation |
+| `flux-pro` | High quality |
 
----
-
-## Examples
-
-### Blog Header
-
-```bash
-curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
-  -H "Authorization: Key ${FAL_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "Abstract technology background with flowing data streams, blue and purple gradient, modern and clean",
-    "aspect_ratio": "16:9",
-    "resolution": "2K"
-  }' | jq -r '.images[0].url'
-```
-
-### Square Social Media Post
-
-```bash
-curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
-  -H "Authorization: Key ${FAL_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "Minimalist workspace with laptop and coffee, soft morning light",
-    "aspect_ratio": "1:1",
-    "resolution": "1K"
-  }' | jq -r '.images[0].url'
-```
-
-### Vertical Story Image
-
-```bash
-curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
-  -H "Authorization: Key ${FAL_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "Neon city street at night, rain reflections, cinematic",
-    "aspect_ratio": "9:16",
-    "resolution": "1K"
-  }' | jq -r '.images[0].url'
-```
+See more at: https://fal.ai/models
 
 ---
 
@@ -171,19 +93,15 @@ For best results:
 
 ---
 
-## Pricing
+## Examples
 
-| Resolution | Cost |
-|------------|------|
-| 1K | ~$0.15/image |
-| 2K | ~$0.15/image |
-| 4K | ~$0.30/image |
+```bash
+# Blog header
+echo "Abstract technology background with flowing data streams, blue and purple gradient" | ./generate.sh
 
----
+# Social media post
+echo "Minimalist workspace with laptop and coffee, soft morning light" | ./generate.sh
 
-## Guidelines
-
-1. **Use jq**: Extract the image URL with `jq -r '.images[0].url'`
-2. **Check errors**: API returns `{"error": ...}` on failure
-3. **Download with -L**: Use `curl -sL` to follow redirects when downloading
-4. **Prompt quality**: Better prompts = better images
+# Vertical story
+echo "Neon city street at night, rain reflections, cinematic" | ./generate.sh
+```
