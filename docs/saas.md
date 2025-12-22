@@ -29,7 +29,7 @@
 
 ## Browser Automation & Web Scraping
 
-- [ ] [SerpApi](https://serpapi.com/) - Search Engine Results API
+- [x] [SerpApi](https://serpapi.com/) - Search Engine Results API
 - [x] [Firecrawl](https://docs.firecrawl.dev/) - Web Scraping Service
 - [ ] [Browserless](https://docs.browserless.io/) - Headless Browser as a Service
 - [ ] [ScrapeNinja](https://scrapeninja.net/docs/) - Web Scraping API
