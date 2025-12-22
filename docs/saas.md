@@ -33,7 +33,7 @@
 - [x] [Firecrawl](https://docs.firecrawl.dev/) - Web Scraping Service
 - [ ] [Browserless](https://docs.browserless.io/) - Headless Browser as a Service
 - [ ] [ScrapeNinja](https://scrapeninja.net/docs/) - Web Scraping API
-- [ ] [Apify](https://docs.apify.com/api/v2) - Web Scraping & Automation Platform
+- [x] [Apify](https://docs.apify.com/api/v2) - Web Scraping & Automation Platform
 - [ ] [Bright Data](https://docs.brightdata.com/) - Data Collection & Proxy Service
 
 ---
