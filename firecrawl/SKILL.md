@@ -1,9 +1,8 @@
+---
 name: firecrawl
 description: Firecrawl web scraping API via curl. Use this skill to scrape webpages, crawl websites, discover URLs, search the web, or extract structured data.
 vm0_env:
-
-- FIRECRAWL_API_KEY
-
+  - FIRECRAWL_API_KEY
 ---
 
 # Firecrawl
