@@ -34,7 +34,7 @@
 - [x] [Browserless](https://docs.browserless.io/) - Headless Browser as a Service
 - [x] [ScrapeNinja](https://scrapeninja.net/docs/) - Web Scraping API
 - [x] [Apify](https://docs.apify.com/api/v2) - Web Scraping & Automation Platform
-- [ ] [Bright Data](https://docs.brightdata.com/) - Data Collection & Proxy Service
+- [x] [Bright Data](https://docs.brightdata.com/) - Data Collection & Proxy Service
 
 ---
 
