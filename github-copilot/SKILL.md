@@ -1,9 +1,8 @@
+---
 name: github-copilot
 description: GitHub Copilot REST API via curl. Use this skill to manage Copilot subscriptions and retrieve usage metrics.
 vm0_env:
-
-- GITHUB_TOKEN
-
+  - GITHUB_TOKEN
 ---
 
 # GitHub Copilot API

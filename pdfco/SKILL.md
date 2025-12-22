@@ -1,8 +1,8 @@
+---
 name: pdfco
 description: PDF processing API for conversion, extraction, merging, splitting and more
 vm0_env:
   - PDFCO_API_KEY
-
 ---
 
 # PDF.co

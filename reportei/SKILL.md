@@ -1,9 +1,8 @@
+---
 name: reportei
 description: Reportei marketing report generation API via curl. Use this skill to manage clients, reports, templates, integrations and webhooks for automated marketing analytics.
 vm0_env:
-
-- REPORTEI_API_TOKEN
-
+  - REPORTEI_API_TOKEN
 ---
 
 # Reportei

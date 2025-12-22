@@ -1,9 +1,8 @@
+---
 name: instantly
 description: Instantly.ai API via curl. Use this skill for cold email outreach automation, managing campaigns, leads, and email accounts.
 vm0_env:
-
-- INSTANTLY_API_KEY
-
+  - INSTANTLY_API_KEY
 ---
 
 # Instantly API

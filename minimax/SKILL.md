@@ -1,9 +1,8 @@
+---
 name: minimax
 description: MiniMax API via curl. Use this skill for Chinese LLM chat, text-to-speech, and AI video generation.
 vm0_env:
-
-- MINIMAX_API_KEY
-
+  - MINIMAX_API_KEY
 ---
 
 # MiniMax API

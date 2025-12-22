@@ -1,10 +1,9 @@
+---
 name: qdrant
 description: Qdrant vector database REST API via curl. Use this skill to store, search, and manage vector embeddings.
 vm0_env:
-
-- QDRANT_URL
-- QDRANT_API_KEY
-
+  - QDRANT_URL
+  - QDRANT_API_KEY
 ---
 
 # Qdrant API

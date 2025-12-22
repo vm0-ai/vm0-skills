@@ -1,9 +1,8 @@
+---
 name: bright-data
 description: Bright Data API via curl. Use this skill for account management, usage monitoring, and billing information.
 vm0_env:
-
-- BRIGHTDATA_API_KEY
-
+  - BRIGHTDATA_API_KEY
 ---
 
 # Bright Data API

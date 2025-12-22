@@ -1,9 +1,8 @@
+---
 name: serpapi
 description: SerpApi search engine results API via curl. Use this skill to scrape Google, Bing, YouTube, and other search engines.
 vm0_env:
-
-- SERPAPI_API_KEY
-
+  - SERPAPI_API_KEY
 ---
 
 # SerpApi

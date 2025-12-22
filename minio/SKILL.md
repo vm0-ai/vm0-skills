@@ -1,11 +1,10 @@
+---
 name: minio
 description: MinIO S3-compatible object storage API. Use this skill for file upload, download, bucket management, and pre-signed URL generation.
 vm0_env:
-
-- MINIO_ENDPOINT
-- MINIO_ACCESS_KEY
-- MINIO_SECRET_KEY
-
+  - MINIO_ENDPOINT
+  - MINIO_ACCESS_KEY
+  - MINIO_SECRET_KEY
 ---
 
 # MinIO Object Storage

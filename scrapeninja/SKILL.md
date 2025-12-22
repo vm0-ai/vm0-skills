@@ -1,8 +1,8 @@
+---
 name: scrapeninja
 description: High-performance web scraping API with Chrome TLS fingerprint and JS rendering
 vm0_env:
   - SCRAPENINJA_API_KEY
-
 ---
 
 # ScrapeNinja

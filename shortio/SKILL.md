@@ -1,10 +1,9 @@
+---
 name: shortio
 description: Short.io URL shortener API via curl. Use this skill to create, manage, and track short links on custom branded domains.
 vm0_env:
-
-- SHORTIO_API_KEY
-- SHORTIO_DOMAIN
-
+  - SHORTIO_API_KEY
+  - SHORTIO_DOMAIN
 ---
 
 # Short.io
