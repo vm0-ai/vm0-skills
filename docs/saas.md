@@ -51,7 +51,7 @@
 - [ ] [MinIO](https://min.io/docs/minio/linux/developers/minio-drivers.html) - Object Storage Service
 - [x] [Tavily](https://docs.tavily.com/) - AI Search Engine
 - [ ] [Qdrant](https://api.qdrant.tech/api-reference) - Vector Search Engine
-- [ ] [Brave Search](https://api-dashboard.search.brave.com/app/documentation) - Privacy Search Engine
+- [x] [Brave Search](https://api-dashboard.search.brave.com/app/documentation) - Privacy Search Engine
 - [ ] [BrasilAPI (CNPJ)](https://brasilapi.com.br/docs) - Brazilian Company Info Lookup
 - [ ] [Asaas](https://docs.asaas.com/) - Brazilian Payment Platform
 - [ ] [Hostinger](https://developers.hostinger.com/) - Web Hosting Service
