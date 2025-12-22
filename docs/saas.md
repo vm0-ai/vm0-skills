@@ -77,7 +77,7 @@
 - [x] [Perplexity AI](https://docs.perplexity.ai/) - AI Search Engine
 - [ ] [GitHub Copilot](https://docs.github.com/en/rest/copilot) - AI Coding Assistant
 - [x] [Runway](https://docs.dev.runwayml.com/) - AI Video Generation
-- [ ] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
+- [x] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
 
 ---
 
