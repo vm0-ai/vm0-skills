@@ -250,6 +250,77 @@ curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLES
   }' | jq .
 ```
 
+### 9. Export Page with Resources
+
+Fetch a URL and get content in native format. Can bundle all resources (CSS, JS, images) as zip:
+
+**Basic export:**
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/export?token=${BROWSERLESS_API_TOKEN}" \
+  --header "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com"
+  }' --output page.html
+```
+
+**Export with all resources as ZIP:**
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/export?token=${BROWSERLESS_API_TOKEN}" \
+  --header "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "includeResources": true
+  }' --output webpage.zip
+```
+
+### 10. Performance Audit (Lighthouse)
+
+Run Lighthouse audits for accessibility, performance, SEO, best practices:
+
+**Full audit:**
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" \
+  --header "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com"
+  }' | jq '.data.categories | to_entries[] | {category: .key, score: .value.score}'
+```
+
+**Specific category (accessibility, performance, seo, best-practices, pwa):**
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" \
+  --header "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "config": {
+      "extends": "lighthouse:default",
+      "settings": {
+        "onlyCategories": ["performance"]
+      }
+    }
+  }' | jq '.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'
+```
+
+**Specific audit (e.g., unminified-css, first-contentful-paint):**
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" \
+  --header "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "config": {
+      "extends": "lighthouse:default",
+      "settings": {
+        "onlyAudits": ["first-contentful-paint", "largest-contentful-paint"]
+      }
+    }
+  }' | jq '.data.audits'
+```
+
 ---
 
 ## API Endpoints
@@ -263,6 +334,8 @@ curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLES
 | `/function` | POST | Execute custom Puppeteer code |
 | `/unblock` | POST | Bypass bot protection |
 | `/download` | POST | Download files |
+| `/export` | POST | Export page with resources as ZIP |
+| `/performance` | POST | Lighthouse audits (a11y, perf, SEO) |
 
 ---
 
