@@ -86,6 +86,36 @@ curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
   | jq -r '.images[0].url' | xargs curl -sL -o /tmp/image.png
 ```
 
+### 6. Pipe Prompt from Echo (JSON escaped)
+
+```bash
+echo "A dragon breathing fire, epic fantasy art" | jq -Rs '{prompt: .}' | \
+  curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
+  --header "Authorization: Key ${FAL_KEY}" \
+  --header "Content-Type: application/json" \
+  -d @- | jq -r '.images[0].url'
+```
+
+### 7. Pipe Prompt from File (JSON escaped)
+
+```bash
+cat /tmp/prompt.txt | jq -Rs '{prompt: .}' | \
+  curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
+  --header "Authorization: Key ${FAL_KEY}" \
+  --header "Content-Type: application/json" \
+  -d @- | jq -r '.images[0].url'
+```
+
+### 8. Pipe with Additional Parameters
+
+```bash
+echo "Neon city at night" | jq -Rs '{prompt: ., image_size: "landscape_16_9"}' | \
+  curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" \
+  --header "Authorization: Key ${FAL_KEY}" \
+  --header "Content-Type: application/json" \
+  -d @- | jq -r '.images[0].url'
+```
+
 ---
 
 ## Available Models
