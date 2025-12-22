@@ -99,7 +99,7 @@
 
 - [ ] [Reportei](https://app.reportei.com/docs/api) - Marketing Report Generation
 - [x] [Supadata](https://docs.supadata.ai/) - YouTube/Web Content Extraction
-- [ ] [Zoho ZeptoMail](https://www.zoho.com/zeptomail/help/api-home.html) - Transactional Email Service
+- [x] [Zoho ZeptoMail](https://www.zoho.com/zeptomail/help/api-home.html) - Transactional Email Service
 - [ ] [Pushinator](https://pushinator.com/) - Push Notification Service
 
 ---
