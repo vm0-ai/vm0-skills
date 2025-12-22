@@ -40,7 +40,7 @@
 
 ## Data Processing & Utilities
 
-- [ ] [Cronlytic](https://www.cronlytic.com/api-documentation) - Advanced Cron Scheduling Service
+- [x] [Cronlytic](https://www.cronlytic.com/api-documentation) - Advanced Cron Scheduling Service
 
 ---
 
