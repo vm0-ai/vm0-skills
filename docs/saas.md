@@ -48,7 +48,7 @@
 
 - [ ] [Kommo](https://developers.kommo.com/) - CRM System
 - [ ] [Power BI](https://learn.microsoft.com/en-us/rest/api/power-bi/) - Microsoft Data Visualization
-- [ ] [MinIO](https://min.io/docs/minio/linux/developers/minio-drivers.html) - Object Storage Service
+- [x] [MinIO](https://min.io/docs/minio/linux/developers/minio-drivers.html) - Object Storage Service
 - [x] [Tavily](https://docs.tavily.com/) - AI Search Engine
 - [ ] [Qdrant](https://api.qdrant.tech/api-reference) - Vector Search Engine
 - [x] [Brave Search](https://api-dashboard.search.brave.com/app/documentation) - Privacy Search Engine
