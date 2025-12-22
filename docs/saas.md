@@ -57,7 +57,7 @@
 - [ ] [Hostinger](https://developers.hostinger.com/) - Web Hosting Service
 - [ ] [EfiBank](https://dev.efipay.com.br/) - Brazilian Bank/Pix Payment
 - [ ] [OpenPix](https://developers.openpix.com.br/) - Pix Payment Platform
-- [ ] [Bitrix](https://apidocs.bitrix24.com/) - CRM & Collaboration Platform
+- [x] [Bitrix](https://apidocs.bitrix24.com/) - CRM & Collaboration Platform
 - [x] [Notion](https://developers.notion.com/) - Notes & Knowledge Base
 - [x] [Twenty CRM](https://twenty.com/developers) - Open Source CRM
 - [x] [Instantly](https://developer.instantly.ai/) - Email Outreach Tool
