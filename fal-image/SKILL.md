@@ -1,5 +1,5 @@
 name: fal-image
-description: fal.ai image generation API. Use this skill to generate images from text prompts.
+description: fal.ai AI image generation. Use this skill when you need to use fal, fal.ai, or generate images from text prompts using AI text-to-image models.
 vm0_env:
 
 - FAL_KEY
