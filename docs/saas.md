@@ -119,7 +119,7 @@
 ## Development & Engineering
 
 - [x] [GitHub](https://docs.github.com/en/rest) - Code Hosting & Version Control
-- [ ] [GitLab](https://docs.gitlab.com/ee/api/) - DevOps Platform
+- [x] [GitLab](https://docs.gitlab.com/ee/api/) - DevOps Platform
 - [ ] [Sentry](https://docs.sentry.io/api/) - Error Tracking & Performance Monitoring
 - [ ] [Honeybadger](https://docs.honeybadger.io/api/) - Error Management
 - [ ] [Raycast](https://developers.raycast.com/) - Productivity Launcher
