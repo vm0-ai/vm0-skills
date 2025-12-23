@@ -66,8 +66,8 @@ Send a simple chat message:
 
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "user", "content": "Hello, who are you?"}]}' \
   | jq -r '.choices[0].message.content'
 ```
@@ -89,8 +89,8 @@ Use a system message to set behavior:
 
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "system", "content": "You are a helpful assistant that responds in JSON format."}, {"role": "user", "content": "List 3 programming languages with their main use cases."}]}' \
   | jq -r '.choices[0].message.content'
 ```
@@ -103,8 +103,8 @@ Get real-time token-by-token output:
 
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "user", "content": "Write a haiku about programming."}], "stream": true}'
 ```
 
@@ -118,8 +118,8 @@ Force the model to return valid JSON:
 
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "system", "content": "Return JSON only."}, {"role": "user", "content": "Give me info about Paris: name, country, population."}], "response_format": {"type": "json_object"}}' \
   | jq -r '.choices[0].message.content' | jq .
 ```
@@ -132,8 +132,8 @@ Analyze an image with GPT-4o:
 
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "user", "content": [{"type": "text", "text": "What is in this image?"}, {"type": "image_url", "image_url": {"url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"}}]}], "max_tokens": 300}' \
   | jq -r '.choices[0].message.content'
 ```
@@ -146,8 +146,8 @@ Define functions the model can call:
 
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "user", "content": "What is the weather in Tokyo?"}], "tools": [{"type": "function", "function": {"name": "get_weather", "description": "Get current weather for a location", "parameters": {"type": "object", "properties": {"location": {"type": "string", "description": "City name"}}, "required": ["location"]}}}]}' \
   | jq '.choices[0].message.tool_calls'
 ```
@@ -160,8 +160,8 @@ Create vector embeddings for text:
 
 ```bash
 curl -s "https://api.openai.com/v1/embeddings" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "text-embedding-3-small", "input": "The quick brown fox jumps over the lazy dog."}' \
   | jq '.data[0].embedding[:5]'
 ```
@@ -179,8 +179,8 @@ Create an image from text:
 
 ```bash
 curl -s "https://api.openai.com/v1/images/generations" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "dall-e-3", "prompt": "A white cat sitting on a windowsill, digital art", "n": 1, "size": "1024x1024"}' \
   | jq -r '.data[0].url'
 ```
@@ -199,7 +199,7 @@ Transcribe audio to text:
 
 ```bash
 curl -s "https://api.openai.com/v1/audio/transcriptions" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -F "file=@audio.mp3" \
   -F "model=whisper-1" \
   | jq -r '.text'
@@ -215,8 +215,8 @@ Generate audio from text:
 
 ```bash
 curl -s "https://api.openai.com/v1/audio/speech" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "tts-1", "input": "Hello! This is a test of OpenAI text to speech.", "voice": "alloy"}' \
   --output speech.mp3
 ```
@@ -233,7 +233,7 @@ Get all available models:
 
 ```bash
 curl -s "https://api.openai.com/v1/models" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   | jq -r '.data[].id' | sort | head -20
 ```
 
@@ -245,8 +245,8 @@ Extract usage from response:
 
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${OPENAI_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${OPENAI_API_KEY}" \
   -d '{"model": "gpt-4o-mini", "messages": [{"role": "user", "content": "Hi!"}]}' \
   | jq '.usage'
 ```
