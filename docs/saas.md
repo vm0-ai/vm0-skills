@@ -156,7 +156,7 @@
 - [ ] [Figma](https://www.figma.com/developers/api) - Design Collaboration Platform
 - [ ] [Miro](https://developers.miro.com/docs) - Whiteboard Collaboration
 - [ ] [Claap](https://docs.claap.io/) - Video Recording & Collaboration
-- [ ] [YouTube](https://developers.google.com/youtube/v3) - Video Platform API
+- [x] [YouTube](https://developers.google.com/youtube/v3) - Video Platform API
 
 ---
 
