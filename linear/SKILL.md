@@ -1,0 +1,279 @@
+---
+name: linear
+description: Linear issue tracking API via curl. Use this skill to create, update, and query issues, projects, and teams using GraphQL.
+vm0_env:
+  - LINEAR_API_KEY
+---
+
+# Linear API
+
+Use the Linear API via direct `curl` calls to manage **issues, projects, and teams** with GraphQL queries and mutations.
+
+> Official docs: `https://linear.app/developers`
+
+---
+
+## When to Use
+
+Use this skill when you need to:
+
+- **Query issues** from Linear workspaces
+- **Create new issues** with title, description, and assignments
+- **Update issue status** and properties
+- **List teams and projects** in an organization
+- **Add comments** to issues
+- **Search issues** with filters
+
+---
+
+## Prerequisites
+
+1. Log in to [Linear](https://linear.app/) and go to Settings
+2. Navigate to **Security & access** → **Personal API keys**
+3. Create a new API key with appropriate permissions
+
+```bash
+export LINEAR_API_KEY="lin_api_..."
+```
+
+### Rate Limits
+
+Linear's API is rate-limited to ensure fair usage. Limits may vary based on your plan.
+
+---
+
+## How to Use
+
+All examples below assume you have `LINEAR_API_KEY` set.
+
+Base URL: `https://api.linear.app/graphql`
+
+Linear uses **GraphQL** for all API operations. Queries retrieve data, mutations modify data.
+
+---
+
+### 1. List Teams
+
+Get all teams in your workspace:
+
+```bash
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d '{"query": "{ teams { nodes { id name key } } }"}' \
+  | jq '.data.teams.nodes'
+```
+
+Save a team ID for subsequent queries.
+
+---
+
+### 2. List Issues for a Team
+
+Get issues from a specific team:
+
+```bash
+TEAM_ID="your-team-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"{ team(id: \\\"${TEAM_ID}\\\") { issues { nodes { id identifier title state { name } assignee { name } } } } }\"}" \
+  | jq '.data.team.issues.nodes'
+```
+
+---
+
+### 3. Get Issue by Identifier
+
+Fetch a specific issue by its identifier (e.g., `ENG-123`):
+
+```bash
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d '{"query": "{ issue(id: \"ENG-123\") { id identifier title description state { name } priority assignee { name } createdAt } }"}' \
+  | jq '.data.issue'
+```
+
+---
+
+### 4. Search Issues
+
+Search issues with filters:
+
+```bash
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d '{"query": "{ issues(filter: { state: { name: { eq: \"In Progress\" } } }, first: 10) { nodes { id identifier title assignee { name } } } }"}' \
+  | jq '.data.issues.nodes'
+```
+
+---
+
+### 5. Create Issue
+
+Create a new issue in a team:
+
+```bash
+TEAM_ID="your-team-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"mutation { issueCreate(input: { title: \\\"Bug: Login button not working\\\", description: \\\"Users report the login button is unresponsive on mobile.\\\", teamId: \\\"${TEAM_ID}\\\" }) { success issue { id identifier title url } } }\"}" \
+  | jq '.data.issueCreate'
+```
+
+---
+
+### 6. Create Issue with Priority and Labels
+
+Create an issue with additional properties:
+
+```bash
+TEAM_ID="your-team-id"
+LABEL_ID="your-label-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"mutation { issueCreate(input: { title: \\\"High priority task\\\", teamId: \\\"${TEAM_ID}\\\", priority: 1, labelIds: [\\\"${LABEL_ID}\\\"] }) { success issue { id identifier title priority } } }\"}" \
+  | jq '.data.issueCreate'
+```
+
+**Priority values:** 0 (No priority), 1 (Urgent), 2 (High), 3 (Medium), 4 (Low)
+
+---
+
+### 7. Update Issue
+
+Update an existing issue:
+
+```bash
+ISSUE_ID="your-issue-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"mutation { issueUpdate(id: \\\"${ISSUE_ID}\\\", input: { title: \\\"Updated title\\\", priority: 2 }) { success issue { id identifier title priority } } }\"}" \
+  | jq '.data.issueUpdate'
+```
+
+---
+
+### 8. Change Issue State
+
+Move an issue to a different state (e.g., "Done"):
+
+```bash
+ISSUE_ID="your-issue-id"
+STATE_ID="your-state-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"mutation { issueUpdate(id: \\\"${ISSUE_ID}\\\", input: { stateId: \\\"${STATE_ID}\\\" }) { success issue { id identifier state { name } } } }\"}" \
+  | jq '.data.issueUpdate'
+```
+
+---
+
+### 9. List Workflow States
+
+Get available states for a team:
+
+```bash
+TEAM_ID="your-team-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"{ team(id: \\\"${TEAM_ID}\\\") { states { nodes { id name type } } } }\"}" \
+  | jq '.data.team.states.nodes'
+```
+
+---
+
+### 10. Add Comment to Issue
+
+Add a comment to an existing issue:
+
+```bash
+ISSUE_ID="your-issue-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"mutation { commentCreate(input: { issueId: \\\"${ISSUE_ID}\\\", body: \\\"This is a comment from the API.\\\" }) { success comment { id body createdAt } } }\"}" \
+  | jq '.data.commentCreate'
+```
+
+---
+
+### 11. List Projects
+
+Get all projects in the workspace:
+
+```bash
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d '{"query": "{ projects { nodes { id name state progress targetDate } } }"}' \
+  | jq '.data.projects.nodes'
+```
+
+---
+
+### 12. Get Current User
+
+Get information about the authenticated user:
+
+```bash
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d '{"query": "{ viewer { id name email admin } }"}' \
+  | jq '.data.viewer'
+```
+
+---
+
+### 13. List Labels
+
+Get available labels for a team:
+
+```bash
+TEAM_ID="your-team-id"
+
+curl -s -X POST "https://api.linear.app/graphql" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -d "{\"query\": \"{ team(id: \\\"${TEAM_ID}\\\") { labels { nodes { id name color } } } }\"}" \
+  | jq '.data.team.labels.nodes'
+```
+
+---
+
+## Finding IDs
+
+To find IDs for teams, issues, projects, etc.:
+
+1. Open Linear app
+2. Press `Cmd/Ctrl + K` to open command menu
+3. Type "Copy model UUID"
+4. Select the entity to copy its ID
+
+Or use the queries above to list entities and extract their IDs.
+
+---
+
+## Guidelines
+
+1. **Use GraphQL variables**: For production, use variables instead of string interpolation for better security
+2. **Handle pagination**: Use `first`, `after`, `last`, `before` for paginated results
+3. **Check for errors**: GraphQL returns 200 even with errors; always check the `errors` array
+4. **Rate limiting**: Implement backoff if you receive rate limit errors
+5. **Batch operations**: Combine multiple queries in one request when possible
+6. **Issue identifiers**: You can use either UUID or readable identifier (e.g., `ENG-123`) for most queries

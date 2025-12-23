@@ -75,7 +75,7 @@
 - [x] [short.io](https://developers.short.io/docs) - URL Shortener Service
 - [ ] [NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_1559132836.html) - Oracle ERP System
 - [x] [Streak CRM](https://streak.readme.io/) - Gmail CRM
-- [ ] [Linear](https://developers.linear.app/docs) - Issue Tracking & Project Management
+- [x] [Linear](https://developers.linear.app/docs) - Issue Tracking & Project Management
 - [ ] [Jira](https://developer.atlassian.com/cloud/jira/platform/rest/v3/) - Project Management & Issue Tracking
 - [ ] [Canny](https://developers.canny.io/api-reference) - Feature Request & Feedback
 - [ ] [Productlane](https://productlane.com/docs) - Public Roadmap & Helpdesk
