@@ -1,6 +1,8 @@
 # Awesome N8N - SaaS Service List
 
-> Source: https://github.com/restyler/awesome-n8n
+> Sources:
+> - https://github.com/restyler/awesome-n8n
+> - https://linear.app/integrations
 
 ---
 
@@ -17,6 +19,10 @@
 - [x] [Feishu/Lark](https://open.larkoffice.com/document/home/index) - Enterprise Collaboration Platform
 - [ ] [WhatsApp Business API](https://business.whatsapp.com/developers/developer-hub) - Official WhatsApp Business API
 - [x] [Instagram API](https://developers.facebook.com/docs/instagram-api) - Official Instagram API
+- [x] [Slack](https://api.slack.com/docs) - Team Communication Platform
+- [ ] [Discord](https://discord.com/developers/docs) - Community Communication Platform
+- [ ] [Intercom](https://developers.intercom.com/docs) - Customer Messaging Platform
+- [ ] [Loom](https://dev.loom.com/docs) - Video Messaging Platform
 
 ---
 
@@ -35,6 +41,8 @@
 - [x] [ScrapeNinja](https://scrapeninja.net/docs/) - Web Scraping API
 - [x] [Apify](https://docs.apify.com/api/v2) - Web Scraping & Automation Platform
 - [x] [Bright Data](https://docs.brightdata.com/) - Data Collection & Proxy Service
+- [ ] [Jam](https://jam.dev/docs) - Bug Reporting with Screenshots
+- [ ] [Bird Eats Bug](https://docs.birdeatsbug.com/) - Technical Bug Reporting
 
 ---
 
@@ -67,6 +75,10 @@
 - [x] [short.io](https://developers.short.io/docs) - URL Shortener Service
 - [ ] [NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_1559132836.html) - Oracle ERP System
 - [x] [Streak CRM](https://streak.readme.io/) - Gmail CRM
+- [ ] [Linear](https://developers.linear.app/docs) - Issue Tracking & Project Management
+- [ ] [Jira](https://developer.atlassian.com/cloud/jira/platform/rest/v3/) - Project Management & Issue Tracking
+- [ ] [Canny](https://developers.canny.io/api-reference) - Feature Request & Feedback
+- [ ] [Productlane](https://productlane.com/docs) - Public Roadmap & Helpdesk
 
 ---
 
@@ -78,6 +90,10 @@
 - [x] [GitHub Copilot](https://docs.github.com/en/rest/copilot) - AI Coding Assistant
 - [x] [Runway](https://docs.dev.runwayml.com/) - AI Video Generation
 - [x] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
+- [ ] [OpenAI](https://platform.openai.com/docs/api-reference) - GPT & Codex AI Models
+- [ ] [Cursor](https://docs.cursor.com/) - AI Code Editor
+- [ ] [Dust](https://docs.dust.tt/) - AI Workflow Platform
+- [ ] [Replit](https://docs.replit.com/) - Cloud Development & AI Platform
 
 ---
 
@@ -92,6 +108,55 @@
 ## Analytics & Monitoring
 
 - [x] [Plausible](https://plausible.io/docs) - Privacy-Friendly Web Analytics
+- [ ] [Datadog](https://docs.datadoghq.com/api/) - Infrastructure Monitoring & APM
+- [ ] [Airbyte](https://docs.airbyte.com/api-documentation) - Data Integration Platform
+- [ ] [Retool](https://docs.retool.com/docs) - Internal Tool Builder
+- [ ] [Fivetran](https://fivetran.com/docs/rest-api) - Data Pipeline Service
+- [ ] [Span](https://www.span.run/docs) - Engineering Analytics
+
+---
+
+## Development & Engineering
+
+- [x] [GitHub](https://docs.github.com/en/rest) - Code Hosting & Version Control
+- [ ] [GitLab](https://docs.gitlab.com/ee/api/) - DevOps Platform
+- [ ] [Sentry](https://docs.sentry.io/api/) - Error Tracking & Performance Monitoring
+- [ ] [Honeybadger](https://docs.honeybadger.io/api/) - Error Management
+- [ ] [Raycast](https://developers.raycast.com/) - Productivity Launcher
+- [ ] [VS Code](https://code.visualstudio.com/api) - Code Editor Extensions
+
+---
+
+## Customer Support
+
+- [ ] [Zendesk](https://developer.zendesk.com/api-reference) - Customer Support Platform
+- [ ] [Front](https://dev.frontapp.com/docs) - Team Inbox Platform
+- [ ] [incident.io](https://api-docs.incident.io/) - Incident Management
+
+---
+
+## Security & Compliance
+
+- [ ] [Vanta](https://developer.vanta.com/docs) - Compliance Automation
+- [ ] [Drata](https://developers.drata.com/) - Compliance & Risk Management
+- [ ] [Orca Security](https://docs.orcasecurity.io/) - Cloud Security Platform
+- [ ] [Aikido Security](https://docs.aikido.dev/) - Application Security
+
+---
+
+## Automation
+
+- [ ] [Zapier](https://platform.zapier.com/docs) - Workflow Automation Platform
+- [ ] [Supernormal](https://supernormal.com/docs) - Meeting Notes Automation
+
+---
+
+## Design & Media
+
+- [ ] [Figma](https://www.figma.com/developers/api) - Design Collaboration Platform
+- [ ] [Miro](https://developers.miro.com/docs) - Whiteboard Collaboration
+- [ ] [Claap](https://docs.claap.io/) - Video Recording & Collaboration
+- [ ] [YouTube](https://developers.google.com/youtube/v3) - Video Platform API
 
 ---
 
@@ -101,6 +166,8 @@
 - [x] [Supadata](https://docs.supadata.ai/) - YouTube/Web Content Extraction
 - [x] [Zoho ZeptoMail](https://www.zoho.com/zeptomail/help/api-home.html) - Transactional Email Service
 - [x] [Pushinator](https://pushinator.com/) - Push Notification Service
+- [ ] [Morgen](https://docs.morgen.so/) - Calendar & Task Scheduling
+- [ ] [Google Sheets](https://developers.google.com/sheets/api) - Spreadsheet Platform
 
 ---
 
@@ -108,17 +175,22 @@
 
 | Category                          | API Count |
 | --------------------------------- | --------- |
-| Communication & Messaging         | 11        |
+| Communication & Messaging         | 15        |
 | Document & Content Generation     | 2         |
-| Browser Automation & Web Scraping | 6         |
+| Browser Automation & Web Scraping | 8         |
 | Data Processing & Utilities       | 1         |
-| API & Cloud Integrations          | 21        |
-| AI, LLM & Voice                   | 6         |
+| API & Cloud Integrations          | 25        |
+| AI, LLM & Voice                   | 10        |
 | File & PDF Manipulation           | 3         |
-| Analytics & Monitoring            | 1         |
-| Miscellaneous                     | 4         |
-| **Total**                         | **55**    |
+| Analytics & Monitoring            | 6         |
+| Development & Engineering         | 6         |
+| Customer Support                  | 3         |
+| Security & Compliance             | 4         |
+| Automation                        | 2         |
+| Design & Media                    | 4         |
+| Miscellaneous                     | 6         |
+| **Total**                         | **95**    |
 
 ---
 
-> Last updated: 2025-12-20
+> Last updated: 2025-12-23
