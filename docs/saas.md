@@ -167,7 +167,7 @@
 - [x] [Zoho ZeptoMail](https://www.zoho.com/zeptomail/help/api-home.html) - Transactional Email Service
 - [x] [Pushinator](https://pushinator.com/) - Push Notification Service
 - [ ] [Morgen](https://docs.morgen.so/) - Calendar & Task Scheduling
-- [ ] [Google Sheets](https://developers.google.com/sheets/api) - Spreadsheet Platform
+- [x] [Google Sheets](https://developers.google.com/sheets/api) - Spreadsheet Platform
 
 ---
 
