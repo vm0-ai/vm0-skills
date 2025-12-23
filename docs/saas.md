@@ -90,7 +90,7 @@
 - [x] [GitHub Copilot](https://docs.github.com/en/rest/copilot) - AI Coding Assistant
 - [x] [Runway](https://docs.dev.runwayml.com/) - AI Video Generation
 - [x] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
-- [ ] [OpenAI](https://platform.openai.com/docs/api-reference) - GPT & Codex AI Models
+- [x] [OpenAI](https://platform.openai.com/docs/api-reference) - GPT & Codex AI Models
 - [ ] [Cursor](https://docs.cursor.com/) - AI Code Editor
 - [ ] [Dust](https://docs.dust.tt/) - AI Workflow Platform
 - [ ] [Replit](https://docs.replit.com/) - Cloud Development & AI Platform
