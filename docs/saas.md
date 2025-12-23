@@ -20,7 +20,7 @@
 - [ ] [WhatsApp Business API](https://business.whatsapp.com/developers/developer-hub) - Official WhatsApp Business API
 - [x] [Instagram API](https://developers.facebook.com/docs/instagram-api) - Official Instagram API
 - [x] [Slack](https://api.slack.com/docs) - Team Communication Platform
-- [ ] [Discord](https://discord.com/developers/docs) - Community Communication Platform
+- [x] [Discord](https://discord.com/developers/docs) - Community Communication Platform
 - [ ] [Intercom](https://developers.intercom.com/docs) - Customer Messaging Platform
 - [ ] [Loom](https://dev.loom.com/docs) - Video Messaging Platform
 
