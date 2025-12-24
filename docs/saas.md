@@ -21,7 +21,7 @@
 - [x] [Instagram API](https://developers.facebook.com/docs/instagram-api) - Official Instagram API
 - [x] [Slack](https://api.slack.com/docs) - Team Communication Platform
 - [x] [Discord](https://discord.com/developers/docs) - Community Communication Platform
-- [ ] [Intercom](https://developers.intercom.com/docs) - Customer Messaging Platform
+- [x] [Intercom](https://developers.intercom.com/docs) - Customer Messaging Platform
 - [ ] [Loom](https://dev.loom.com/docs) - Video Messaging Platform
 
 ---
@@ -130,7 +130,7 @@
 
 ## Customer Support
 
-- [ ] [Zendesk](https://developer.zendesk.com/api-reference) - Customer Support Platform
+- [x] [Zendesk](https://developer.zendesk.com/api-reference) - Customer Support Platform
 - [ ] [Front](https://dev.frontapp.com/docs) - Team Inbox Platform
 - [ ] [incident.io](https://api-docs.incident.io/) - Incident Management
 
@@ -154,7 +154,7 @@
 
 ## Design & Media
 
-- [ ] [Figma](https://www.figma.com/developers/api) - Design Collaboration Platform
+- [x] [Figma](https://www.figma.com/developers/api) - Design Collaboration Platform
 - [ ] [Miro](https://developers.miro.com/docs) - Whiteboard Collaboration
 - [ ] [Claap](https://docs.claap.io/) - Video Recording & Collaboration
 - [x] [YouTube](https://developers.google.com/youtube/v3) - Video Platform API
