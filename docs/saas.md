@@ -107,6 +107,7 @@
 
 ## Analytics & Monitoring
 
+- [x] [Axiom](https://axiom.co/docs/restapi/introduction) - Cloud-Native Observability Platform
 - [x] [Plausible](https://plausible.io/docs) - Privacy-Friendly Web Analytics
 - [ ] [Datadog](https://docs.datadoghq.com/api/) - Infrastructure Monitoring & APM
 - [ ] [Airbyte](https://docs.airbyte.com/api-documentation) - Data Integration Platform
@@ -182,14 +183,14 @@
 | API & Cloud Integrations          | 25        |
 | AI, LLM & Voice                   | 10        |
 | File & PDF Manipulation           | 3         |
-| Analytics & Monitoring            | 6         |
+| Analytics & Monitoring            | 7         |
 | Development & Engineering         | 6         |
 | Customer Support                  | 3         |
 | Security & Compliance             | 4         |
 | Automation                        | 2         |
 | Design & Media                    | 4         |
 | Miscellaneous                     | 6         |
-| **Total**                         | **95**    |
+| **Total**                         | **96**    |
 
 ---
 
