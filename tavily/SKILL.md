@@ -43,7 +43,7 @@ export TAVILY_API_KEY="tvly-xxxxxxxxxxxxxxxx"
 TAVILY_API_KEY
 ```
 
-All examples below assume you have `TAVILY_API_KEY` set.  
+All examples below assume you have `TAVILY_API_KEY` set. 
 The base endpoint for the Tavily search API is a `POST` request to:
 
 - `https://api.tavily.com/search`
@@ -55,13 +55,10 @@ with a JSON body.
 ### 1. Basic Search
 
 ```bash
-curl -s -X POST "https://api.tavily.com/search" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${TAVILY_API_KEY}" \
-  -d '{
-    "query": "2025 AI Trending",
-    "search_depth": "basic",
-    "max_results": 5
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '{
+  "query": "2025 AI Trending",
+  "search_depth": "basic",
+  "max_results": 5
   }' | jq .
 ```
 
@@ -78,17 +75,14 @@ curl -s -X POST "https://api.tavily.com/search" \
 ### 2. Advanced Search
 
 ```bash
-curl -s -X POST "https://api.tavily.com/search" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${TAVILY_API_KEY}" \
-  -d '{
-    "query": "serverless SaaS pricing best practices",
-    "search_depth": "advanced",
-    "max_results": 8,
-    "include_answer": true,
-    "include_domains": ["docs.aws.amazon.com", "cloud.google.com"],
-    "exclude_domains": ["reddit.com", "twitter.com"],
-    "include_raw_content": false
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '{
+  "query": "serverless SaaS pricing best practices",
+  "search_depth": "advanced",
+  "max_results": 8,
+  "include_answer": true,
+  "include_domains": ["docs.aws.amazon.com", "cloud.google.com"],
+  "exclude_domains": ["reddit.com", "twitter.com"],
+  "include_raw_content": false
   }' | jq .
 ```
 
@@ -109,12 +103,12 @@ Tavily returns a JSON object similar to:
 {
   "answer": "简要总结……",
   "results": [
-    {
-      "title": "Article title",
-      "url": "https://example.com/article",
-      "content": "Snippet or extracted content…",
-      "score": 0.89
-    }
+  {
+  "title": "Article title",
+  "url": "https://example.com/article",
+  "content": "Snippet or extracted content…",
+  "score": 0.89
+  }
   ]
 }
 ```

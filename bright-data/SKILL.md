@@ -47,9 +47,7 @@ Authentication uses Bearer token in the `Authorization` header.
 Verify your API key and account status:
 
 ```bash
-curl -s "https://api.brightdata.com/status" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
-  | jq .
+curl -s "https://api.brightdata.com/status" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" | jq .
 ```
 
 **Response:**
@@ -69,9 +67,7 @@ curl -s "https://api.brightdata.com/status" \
 List all active zones in your account:
 
 ```bash
-curl -s "https://api.brightdata.com/zone/get_active_zones" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
-  | jq '.[] | {name, type}'
+curl -s "https://api.brightdata.com/zone/get_active_zones" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" | jq '.[] | {name, type}'
 ```
 
 ---
@@ -83,9 +79,7 @@ Get details about a specific zone:
 ```bash
 ZONE_NAME="your-zone-name"
 
-curl -s "https://api.brightdata.com/zone?zone=${ZONE_NAME}" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
-  | jq .
+curl -s "https://api.brightdata.com/zone?zone=${ZONE_NAME}" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" | jq .
 ```
 
 ---
@@ -95,9 +89,7 @@ curl -s "https://api.brightdata.com/zone?zone=${ZONE_NAME}" \
 Get bandwidth usage statistics:
 
 ```bash
-curl -s "https://api.brightdata.com/customer/bw" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
-  | jq .
+curl -s "https://api.brightdata.com/customer/bw" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" | jq .
 ```
 
 ---
@@ -120,8 +112,8 @@ curl -s "https://api.brightdata.com/customer/bw" \
 ```json
 [
   {
-    "name": "zone_name",
-    "type": "serp"
+  "name": "zone_name",
+  "type": "serp"
   }
 ]
 ```

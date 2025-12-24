@@ -56,16 +56,12 @@ Authentication uses Bearer token in the `Authorization` header.
 Send a chat message:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "MiniMax-Text-01",
-    "messages": [
-      {"role": "system", "content": "You are a helpful assistant."},
-      {"role": "user", "content": "Hello, who are you?"}
-    ]
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "MiniMax-Text-01",
+  "messages": [
+  {"role": "system", "content": "You are a helpful assistant."},
+  {"role": "user", "content": "Hello, who are you?"}
+  ]
   }' | jq '.choices[0].message.content'
 ```
 
@@ -82,17 +78,13 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
 Adjust creativity:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "MiniMax-Text-01",
-    "messages": [
-      {"role": "user", "content": "Write a short poem about AI."}
-    ],
-    "temperature": 0.7,
-    "max_tokens": 200
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "MiniMax-Text-01",
+  "messages": [
+  {"role": "user", "content": "Write a short poem about AI."}
+  ],
+  "temperature": 0.7,
+  "max_tokens": 200
   }' | jq '.choices[0].message.content'
 ```
 
@@ -109,16 +101,12 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
 Get real-time output:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "MiniMax-M1",
-    "messages": [
-      {"role": "user", "content": "Explain quantum computing."}
-    ],
-    "stream": true
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "MiniMax-M1",
+  "messages": [
+  {"role": "user", "content": "Explain quantum computing."}
+  ],
+  "stream": true
   }'
 ```
 
@@ -131,16 +119,12 @@ Streaming is recommended for reasoning models (M1/M2).
 Use reasoning models for complex tasks:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "MiniMax-M1",
-    "messages": [
-      {"role": "user", "content": "Solve step by step: A train travels 120km in 2 hours. What is its average speed in m/s?"}
-    ],
-    "stream": true
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "MiniMax-M1",
+  "messages": [
+  {"role": "user", "content": "Solve step by step: A train travels 120km in 2 hours. What is its average speed in m/s?"}
+  ],
+  "stream": true
   }'
 ```
 
@@ -153,16 +137,12 @@ Response includes `reasoning_content` field with thought process.
 Convert text to speech:
 
 ```bash
-curl -s "https://api.minimax.io/v1/t2a_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "speech-02-hd",
-    "text": "Hello, this is a test of MiniMax text to speech.",
-    "voice_id": "male-qn-qingse",
-    "speed": 1.0,
-    "format": "mp3"
+curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "speech-02-hd",
+  "text": "Hello, this is a test of MiniMax text to speech.",
+  "voice_id": "male-qn-qingse",
+  "speed": 1.0,
+  "format": "mp3"
   }' --output speech.mp3
 ```
 
@@ -173,17 +153,13 @@ curl -s "https://api.minimax.io/v1/t2a_v2" \
 Add emotion to speech (speech-02 models):
 
 ```bash
-curl -s "https://api.minimax.io/v1/t2a_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "speech-02-hd",
-    "text": "I am so happy to meet you today!",
-    "voice_id": "female-shaonv",
-    "emotion": "happy",
-    "speed": 1.0,
-    "format": "mp3"
+curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "speech-02-hd",
+  "text": "I am so happy to meet you today!",
+  "voice_id": "female-shaonv",
+  "emotion": "happy",
+  "speed": 1.0,
+  "format": "mp3"
   }' --output happy_speech.mp3
 ```
 
@@ -196,20 +172,16 @@ curl -s "https://api.minimax.io/v1/t2a_v2" \
 Fine-tune audio output:
 
 ```bash
-curl -s "https://api.minimax.io/v1/t2a_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "speech-02-hd",
-    "text": "High quality audio test.",
-    "voice_id": "male-qn-qingse",
-    "speed": 1.0,
-    "vol": 1.0,
-    "pitch": 0,
-    "audio_sample_rate": 32000,
-    "bitrate": 128000,
-    "format": "mp3"
+curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "speech-02-hd",
+  "text": "High quality audio test.",
+  "voice_id": "male-qn-qingse",
+  "speed": 1.0,
+  "vol": 1.0,
+  "pitch": 0,
+  "audio_sample_rate": 32000,
+  "bitrate": 128000,
+  "format": "mp3"
   }' --output hq_speech.mp3
 ```
 
@@ -227,15 +199,11 @@ curl -s "https://api.minimax.io/v1/t2a_v2" \
 Generate video from text prompt:
 
 ```bash
-curl -s "https://api.minimax.io/v1/video_generation" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "T2V-01-Director",
-    "prompt": "A cat playing with a ball of yarn [Static shot].",
-    "duration": 6,
-    "resolution": "1080P"
+curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "T2V-01-Director",
+  "prompt": "A cat playing with a ball of yarn [Static shot].",
+  "duration": 6,
+  "resolution": "1080P"
   }' | jq .
 ```
 
@@ -248,15 +216,11 @@ Video generation is async - returns a task ID to poll for completion.
 Control camera movement in videos:
 
 ```bash
-curl -s "https://api.minimax.io/v1/video_generation" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "MiniMax-Hailuo-2.3",
-    "prompt": "A person walking through a forest [Tracking shot], then stops to look at a bird [Push in].",
-    "duration": 6,
-    "resolution": "1080P"
+curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "MiniMax-Hailuo-2.3",
+  "prompt": "A person walking through a forest [Tracking shot], then stops to look at a bird [Push in].",
+  "duration": 6,
+  "resolution": "1080P"
   }' | jq .
 ```
 
@@ -276,16 +240,12 @@ Combine with `[Pan left, Pedestal up]` (max 3 simultaneous).
 Generate video from an image:
 
 ```bash
-curl -s "https://api.minimax.io/v1/video_generation" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "T2V-01-Director",
-    "prompt": "The scene comes to life with gentle movement [Static shot].",
-    "first_frame_image": "https://example.com/image.jpg",
-    "duration": 6,
-    "resolution": "1080P"
+curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "T2V-01-Director",
+  "prompt": "The scene comes to life with gentle movement [Static shot].",
+  "first_frame_image": "https://example.com/image.jpg",
+  "duration": 6,
+  "resolution": "1080P"
   }' | jq .
 ```
 
@@ -298,32 +258,28 @@ Provide `first_frame_image` as URL or base64-encoded image.
 Use tools with chat:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
-  -X POST \
-  -H "Authorization: Bearer ${MINIMAX_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "MiniMax-Text-01",
-    "messages": [
-      {"role": "user", "content": "What is the weather in Beijing?"}
-    ],
-    "tools": [
-      {
-        "type": "function",
-        "function": {
-          "name": "get_weather",
-          "description": "Get weather for a location",
-          "parameters": {
-            "type": "object",
-            "properties": {
-              "location": {"type": "string", "description": "City name"}
-            },
-            "required": ["location"]
-          }
-        }
-      }
-    ],
-    "tool_choice": "auto"
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+  "model": "MiniMax-Text-01",
+  "messages": [
+  {"role": "user", "content": "What is the weather in Beijing?"}
+  ],
+  "tools": [
+  {
+  "type": "function",
+  "function": {
+  "name": "get_weather",
+  "description": "Get weather for a location",
+  "parameters": {
+  "type": "object",
+  "properties": {
+  "location": {"type": "string", "description": "City name"}
+  },
+  "required": ["location"]
+  }
+  }
+  }
+  ],
+  "tool_choice": "auto"
   }' | jq .
 ```
 
@@ -337,17 +293,17 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" \
 {
   "id": "string",
   "choices": [{
-    "message": {
-      "role": "assistant",
-      "content": "Response text",
-      "reasoning_content": "Thought process (M1/M2 only)"
-    },
-    "finish_reason": "stop"
+  "message": {
+  "role": "assistant",
+  "content": "Response text",
+  "reasoning_content": "Thought process (M1/M2 only)"
+  },
+  "finish_reason": "stop"
   }],
   "usage": {
-    "prompt_tokens": 10,
-    "completion_tokens": 50,
-    "total_tokens": 60
+  "prompt_tokens": 10,
+  "completion_tokens": 50,
+  "total_tokens": 60
   }
 }
 ```

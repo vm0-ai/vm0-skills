@@ -40,9 +40,7 @@ First, create an unsigned upload preset in Cloudinary Console:
 Settings > Upload > Upload presets > Add upload preset > Signing Mode: Unsigned
 
 ```bash
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" \
-  -F "file=@/path/to/image.png" \
-  -F "upload_preset=your_preset_name"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" -F "file=@/path/to/image.png" -F "upload_preset=your_preset_name"
 ```
 
 ### Method 2: Signed Upload
@@ -57,11 +55,7 @@ TIMESTAMP=$(date +%s)
 SIGNATURE=$(echo -n "timestamp=$TIMESTAMP$CLOUDINARY_API_SECRET" | sha1sum | cut -d' ' -f1)
 
 # Upload
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" \
-  -F "file=@/path/to/image.png" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" -F "file=@/path/to/image.png" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 ```
 
 ### Upload from URL
@@ -70,11 +64,7 @@ curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/uploa
 TIMESTAMP=$(date +%s)
 SIGNATURE=$(echo -n "timestamp=$TIMESTAMP$CLOUDINARY_API_SECRET" | sha1sum | cut -d' ' -f1)
 
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" \
-  -F "file=https://example.com/image.png" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" -F "file=https://example.com/image.png" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 ```
 
 ### Upload Video
@@ -83,11 +73,7 @@ curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/uploa
 TIMESTAMP=$(date +%s)
 SIGNATURE=$(echo -n "timestamp=$TIMESTAMP$CLOUDINARY_API_SECRET" | sha1sum | cut -d' ' -f1)
 
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/upload" \
-  -F "file=@/path/to/video.mp4" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/upload" -F "file=@/path/to/video.mp4" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 ```
 
 ### Upload Video with Custom Public ID
@@ -97,12 +83,7 @@ TIMESTAMP=$(date +%s)
 PUBLIC_ID="my-videos/clip1"
 SIGNATURE=$(echo -n "public_id=$PUBLIC_ID&timestamp=$TIMESTAMP$CLOUDINARY_API_SECRET" | sha1sum | cut -d' ' -f1)
 
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/upload" \
-  -F "file=@/path/to/video.mp4" \
-  -F "public_id=$PUBLIC_ID" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/upload" -F "file=@/path/to/video.mp4" -F "public_id=$PUBLIC_ID" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 ```
 
 ### Upload Video from URL
@@ -112,12 +93,7 @@ TIMESTAMP=$(date +%s)
 PUBLIC_ID="my-videos/clip1"
 SIGNATURE=$(echo -n "public_id=$PUBLIC_ID&timestamp=$TIMESTAMP$CLOUDINARY_API_SECRET" | sha1sum | cut -d' ' -f1)
 
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/upload" \
-  -F "file=https://example.com/video.mp4" \
-  -F "public_id=$PUBLIC_ID" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/upload" -F "file=https://example.com/video.mp4" -F "public_id=$PUBLIC_ID" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 ```
 
 ### With Custom Public ID
@@ -127,12 +103,7 @@ TIMESTAMP=$(date +%s)
 PUBLIC_ID="my-folder/my-image"
 SIGNATURE=$(echo -n "public_id=$PUBLIC_ID&timestamp=$TIMESTAMP$CLOUDINARY_API_SECRET" | sha1sum | cut -d' ' -f1)
 
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" \
-  -F "file=@/path/to/image.png" \
-  -F "public_id=$PUBLIC_ID" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/upload" -F "file=@/path/to/image.png" -F "public_id=$PUBLIC_ID" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 ```
 
 ## Response
@@ -231,18 +202,10 @@ PUBLIC_ID="your_public_id"
 SIGNATURE=$(echo -n "public_id=$PUBLIC_ID&timestamp=$TIMESTAMP$CLOUDINARY_API_SECRET" | sha1sum | cut -d' ' -f1)
 
 # Delete image
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/destroy" \
-  -F "public_id=$PUBLIC_ID" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/image/destroy" -F "public_id=$PUBLIC_ID" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 
 # Delete video
-curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/destroy" \
-  -F "public_id=$PUBLIC_ID" \
-  -F "api_key=$CLOUDINARY_API_KEY" \
-  -F "timestamp=$TIMESTAMP" \
-  -F "signature=$SIGNATURE"
+curl -X POST "https://api.cloudinary.com/v1_1/$CLOUDINARY_CLOUD_NAME/video/destroy" -F "public_id=$PUBLIC_ID" -F "api_key=$CLOUDINARY_API_KEY" -F "timestamp=$TIMESTAMP" -F "signature=$SIGNATURE"
 ```
 
 ## Free Tier Limits

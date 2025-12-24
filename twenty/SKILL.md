@@ -50,53 +50,41 @@ export TWENTY_API_URL="https://your-domain.com"
 ### 1. List Companies
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/companies" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq '.data.companies[:3]'
+curl -s -X GET "${TWENTY_API_URL}/rest/companies" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq '.data.companies[:3]'
 ```
 
 **With pagination:**
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/companies?limit=10&offset=0" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq .
+curl -s -X GET "${TWENTY_API_URL}/rest/companies?limit=10&offset=0" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq .
 ```
 
 ### 2. Create a Company
 
 ```bash
-curl -s -X POST "${TWENTY_API_URL}/rest/companies" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "name": "Acme Corp",
-    "domainName": "acme.com",
-    "address": "123 Main St, San Francisco, CA"
+curl -s -X POST "${TWENTY_API_URL}/rest/companies" --header "Authorization: Bearer ${TWENTY_API_KEY}" --header "Content-Type: application/json" -d '{
+  "name": "Acme Corp",
+  "domainName": "acme.com",
+  "address": "123 Main St, San Francisco, CA"
   }' | jq .
 ```
 
 ### 3. List People (Contacts)
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/people" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq '.data.people[:3]'
+curl -s -X GET "${TWENTY_API_URL}/rest/people" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq '.data.people[:3]'
 ```
 
 ### 4. Create a Person
 
 ```bash
-curl -s -X POST "${TWENTY_API_URL}/rest/people" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "name": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john@example.com",
-    "phone": "+1234567890"
+curl -s -X POST "${TWENTY_API_URL}/rest/people" --header "Authorization: Bearer ${TWENTY_API_KEY}" --header "Content-Type: application/json" -d '{
+  "name": {
+  "firstName": "John",
+  "lastName": "Doe"
+  },
+  "email": "john@example.com",
+  "phone": "+1234567890"
   }' | jq .
 ```
 
@@ -104,73 +92,55 @@ curl -s -X POST "${TWENTY_API_URL}/rest/people" \
 
 ```bash
 # Get company by ID
-curl -s -X GET "${TWENTY_API_URL}/rest/companies/{companyId}" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq .
+curl -s -X GET "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq .
 
 # Get person by ID
-curl -s -X GET "${TWENTY_API_URL}/rest/people/{personId}" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq .
+curl -s -X GET "${TWENTY_API_URL}/rest/people/{personId}" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq .
 ```
 
 ### 6. Update a Record
 
 ```bash
-curl -s -X PATCH "${TWENTY_API_URL}/rest/companies/{companyId}" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "name": "Acme Corporation",
-    "employees": 500
+curl -s -X PATCH "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_API_KEY}" --header "Content-Type: application/json" -d '{
+  "name": "Acme Corporation",
+  "employees": 500
   }' | jq .
 ```
 
 ### 7. Delete a Record
 
 ```bash
-curl -s -X DELETE "${TWENTY_API_URL}/rest/companies/{companyId}" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}"
+curl -s -X DELETE "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_API_KEY}"
 ```
 
 ### 8. List Notes
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/notes" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq '.data.notes[:3]'
+curl -s -X GET "${TWENTY_API_URL}/rest/notes" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq '.data.notes[:3]'
 ```
 
 ### 9. Create a Note
 
 ```bash
-curl -s -X POST "${TWENTY_API_URL}/rest/notes" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "title": "Meeting Notes",
-    "body": "Discussed Q1 roadmap and budget allocation."
+curl -s -X POST "${TWENTY_API_URL}/rest/notes" --header "Authorization: Bearer ${TWENTY_API_KEY}" --header "Content-Type: application/json" -d '{
+  "title": "Meeting Notes",
+  "body": "Discussed Q1 roadmap and budget allocation."
   }' | jq .
 ```
 
 ### 10. List Tasks
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/tasks" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq '.data.tasks[:3]'
+curl -s -X GET "${TWENTY_API_URL}/rest/tasks" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq '.data.tasks[:3]'
 ```
 
 ### 11. Create a Task
 
 ```bash
-curl -s -X POST "${TWENTY_API_URL}/rest/tasks" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "title": "Follow up with client",
-    "dueAt": "2025-01-15T10:00:00Z",
-    "status": "TODO"
+curl -s -X POST "${TWENTY_API_URL}/rest/tasks" --header "Authorization: Bearer ${TWENTY_API_KEY}" --header "Content-Type: application/json" -d '{
+  "title": "Follow up with client",
+  "dueAt": "2025-01-15T10:00:00Z",
+  "status": "TODO"
   }' | jq .
 ```
 
@@ -179,27 +149,20 @@ curl -s -X POST "${TWENTY_API_URL}/rest/tasks" \
 List all object types and their fields:
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/metadata/objects" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq '.data.objects[] | {name: .nameSingular, fields: [.fields[].name]}'
+curl -s -X GET "${TWENTY_API_URL}/rest/metadata/objects" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq '.data.objects[] | {name: .nameSingular, fields: [.fields[].name]}'
 ```
 
 **Get metadata for a specific object:**
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/metadata/objects/companies" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq .
+curl -s -X GET "${TWENTY_API_URL}/rest/metadata/objects/companies" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq .
 ```
 
 ### 13. GraphQL Query
 
 ```bash
-curl -s -X POST "${TWENTY_API_URL}/graphql" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "query": "query { companies(first: 5) { edges { node { id name domainName } } } }"
+curl -s -X POST "${TWENTY_API_URL}/graphql" --header "Authorization: Bearer ${TWENTY_API_KEY}" --header "Content-Type: application/json" -d '{
+  "query": "query { companies(first: 5) { edges { node { id name domainName } } } }"
   }' | jq '.data.companies.edges'
 ```
 
@@ -234,9 +197,7 @@ curl -s -X POST "${TWENTY_API_URL}/graphql" \
 **Example with filters:**
 
 ```bash
-curl -s -X GET "${TWENTY_API_URL}/rest/companies?filter={\"name\":{\"like\":\"%Acme%\"}}" \
-  --header "Authorization: Bearer ${TWENTY_API_KEY}" \
-  | jq .
+curl -s -X GET "${TWENTY_API_URL}/rest/companies?filter={\"name\":{\"like\":\"%Acme%\"}}" --header "Authorization: Bearer ${TWENTY_API_KEY}" | jq .
 ```
 
 ---
@@ -246,19 +207,19 @@ curl -s -X GET "${TWENTY_API_URL}/rest/companies?filter={\"name\":{\"like\":\"%A
 ```json
 {
   "data": {
-    "companies": [
-      {
-        "id": "uuid",
-        "name": "Company Name",
-        "domainName": "example.com",
-        "createdAt": "2025-01-01T00:00:00Z",
-        "updatedAt": "2025-01-01T00:00:00Z"
-      }
-    ]
+  "companies": [
+  {
+  "id": "uuid",
+  "name": "Company Name",
+  "domainName": "example.com",
+  "createdAt": "2025-01-01T00:00:00Z",
+  "updatedAt": "2025-01-01T00:00:00Z"
+  }
+  ]
   },
   "pageInfo": {
-    "hasNextPage": true,
-    "endCursor": "cursor-string"
+  "hasNextPage": true,
+  "endCursor": "cursor-string"
   }
 }
 ```

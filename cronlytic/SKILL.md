@@ -66,17 +66,13 @@ Response: `{"message": "pong"}`
 Create a scheduled job to call a webhook:
 
 ```bash
-curl -s -X POST "https://api.cronlytic.com/prog/jobs" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "daily-backup",
-    "url": "https://api.example.com/backup",
-    "method": "POST",
-    "headers": {"Authorization": "Bearer token123"},
-    "body": "{\"type\": \"full\"}",
-    "cron_expression": "0 2 * * *"
+curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d '{
+  "name": "daily-backup",
+  "url": "https://api.example.com/backup",
+  "method": "POST",
+  "headers": {"Authorization": "Bearer token123"},
+  "body": "{\"type\": \"full\"}",
+  "cron_expression": "0 2 * * *"
   }' | jq '{job_id, name, status, next_run_at}'
 ```
 
@@ -87,17 +83,13 @@ curl -s -X POST "https://api.cronlytic.com/prog/jobs" \
 Simple health check every 5 minutes:
 
 ```bash
-curl -s -X POST "https://api.cronlytic.com/prog/jobs" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "health-check",
-    "url": "https://api.example.com/health",
-    "method": "GET",
-    "headers": {},
-    "body": "",
-    "cron_expression": "*/5 * * * *"
+curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d '{
+  "name": "health-check",
+  "url": "https://api.example.com/health",
+  "method": "GET",
+  "headers": {},
+  "body": "",
+  "cron_expression": "*/5 * * * *"
   }' | jq .
 ```
 
@@ -108,10 +100,7 @@ curl -s -X POST "https://api.cronlytic.com/prog/jobs" \
 Get all your scheduled jobs:
 
 ```bash
-curl -s -X GET "https://api.cronlytic.com/prog/jobs" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  | jq '.[] | {job_id, name, status, cron_expression, next_run_at}'
+curl -s -X GET "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" | jq '.[] | {job_id, name, status, cron_expression, next_run_at}'
 ```
 
 ---
@@ -123,17 +112,13 @@ Update an existing job (all fields required):
 ```bash
 JOB_ID="your-job-id"
 
-curl -s -X PUT "https://api.cronlytic.com/prog/jobs/${JOB_ID}" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "daily-backup-v2",
-    "url": "https://api.example.com/backup/v2",
-    "method": "POST",
-    "headers": {"Authorization": "Bearer newtoken"},
-    "body": "{\"type\": \"incremental\"}",
-    "cron_expression": "0 3 * * *"
+curl -s -X PUT "https://api.cronlytic.com/prog/jobs/${JOB_ID}" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d '{
+  "name": "daily-backup-v2",
+  "url": "https://api.example.com/backup/v2",
+  "method": "POST",
+  "headers": {"Authorization": "Bearer newtoken"},
+  "body": "{\"type\": \"incremental\"}",
+  "cron_expression": "0 3 * * *"
   }' | jq .
 ```
 
@@ -146,10 +131,7 @@ Stop a job from executing:
 ```bash
 JOB_ID="your-job-id"
 
-curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/pause" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  | jq '{job_id, status}'
+curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/pause" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" | jq '{job_id, status}'
 ```
 
 ---
@@ -161,10 +143,7 @@ Resume a paused job:
 ```bash
 JOB_ID="your-job-id"
 
-curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/resume" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  | jq '{job_id, status, next_run_at}'
+curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/resume" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" | jq '{job_id, status, next_run_at}'
 ```
 
 ---
@@ -176,10 +155,7 @@ View execution history (last 50 entries):
 ```bash
 JOB_ID="your-job-id"
 
-curl -s -X GET "https://api.cronlytic.com/prog/jobs/${JOB_ID}/logs" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  | jq '.[] | {timestamp, status_code, duration_ms}'
+curl -s -X GET "https://api.cronlytic.com/prog/jobs/${JOB_ID}/logs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" | jq '.[] | {timestamp, status_code, duration_ms}'
 ```
 
 ---
@@ -191,10 +167,7 @@ Permanently delete a job and its logs:
 ```bash
 JOB_ID="your-job-id"
 
-curl -s -X DELETE "https://api.cronlytic.com/prog/jobs/${JOB_ID}" \
-  -H "X-API-Key: ${CRONLYTIC_API_KEY}" \
-  -H "X-User-ID: ${CRONLYTIC_USER_ID}" \
-  | jq .
+curl -s -X DELETE "https://api.cronlytic.com/prog/jobs/${JOB_ID}" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" | jq .
 ```
 
 ---

@@ -60,17 +60,12 @@ Base URL: `https://api.zeptomail.com/v1.1`
 ### 1. Send Basic Email
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
-    "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
-    "subject": "Welcome to Our Service",
-    "htmlbody": "<h1>Welcome!</h1><p>Thank you for signing up.</p>"
-  }' \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+  "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
+  "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
+  "subject": "Welcome to Our Service",
+  "htmlbody": "<h1>Welcome!</h1><p>Thank you for signing up.</p>"
+}' | jq .
 ```
 
 ---
@@ -78,17 +73,12 @@ curl -s "https://api.zeptomail.com/v1.1/email" \
 ### 2. Send Plain Text Email
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
-    "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
-    "subject": "Your OTP Code",
-    "textbody": "Your one-time password is: 123456\n\nThis code expires in 10 minutes."
-  }' \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+  "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
+  "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
+  "subject": "Your OTP Code",
+  "textbody": "Your one-time password is: 123456\n\nThis code expires in 10 minutes."
+}' | jq .
 ```
 
 ---
@@ -98,20 +88,15 @@ curl -s "https://api.zeptomail.com/v1.1/email" \
 Enable open and click tracking:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
-    "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
-    "subject": "Order Confirmation #12345",
-    "htmlbody": "<p>Your order has been confirmed. <a href=\"https://example.com/track\">Track your order</a></p>",
-    "track_clicks": true,
-    "track_opens": true,
-    "client_reference": "order-12345"
-  }' \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+  "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
+  "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
+  "subject": "Order Confirmation #12345",
+  "htmlbody": "<p>Your order has been confirmed. <a href=\"https://example.com/track\">Track your order</a></p>",
+  "track_clicks": true,
+  "track_opens": true,
+  "client_reference": "order-12345"
+}' | jq .
 ```
 
 ---
@@ -119,20 +104,15 @@ curl -s "https://api.zeptomail.com/v1.1/email" \
 ### 4. Send to Multiple Recipients (CC/BCC)
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
-    "to": [{"email_address": {"address": "user1@example.com", "name": "User 1"}}],
-    "cc": [{"email_address": {"address": "user2@example.com", "name": "User 2"}}],
-    "bcc": [{"email_address": {"address": "admin@example.com", "name": "Admin"}}],
-    "subject": "Team Update",
-    "htmlbody": "<p>Here is the latest update for the team.</p>",
-    "reply_to": [{"address": "support@yourdomain.com", "name": "Support"}]
-  }' \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+  "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
+  "to": [{"email_address": {"address": "user1@example.com", "name": "User 1"}}],
+  "cc": [{"email_address": {"address": "user2@example.com", "name": "User 2"}}],
+  "bcc": [{"email_address": {"address": "admin@example.com", "name": "Admin"}}],
+  "subject": "Team Update",
+  "htmlbody": "<p>Here is the latest update for the team.</p>",
+  "reply_to": [{"address": "support@yourdomain.com", "name": "Support"}]
+}' | jq .
 ```
 
 ---
@@ -143,22 +123,17 @@ curl -s "https://api.zeptomail.com/v1.1/email" \
 # Encode file to base64
 FILE_CONTENT=$(base64 -i /path/to/file.pdf)
 
-curl -s "https://api.zeptomail.com/v1.1/email" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"from\": {\"address\": \"noreply@yourdomain.com\", \"name\": \"Your App\"},
-    \"to\": [{\"email_address\": {\"address\": \"user@example.com\", \"name\": \"User\"}}],
-    \"subject\": \"Your Invoice\",
-    \"htmlbody\": \"<p>Please find your invoice attached.</p>\",
-    \"attachments\": [{
-      \"name\": \"invoice.pdf\",
-      \"mime_type\": \"application/pdf\",
-      \"content\": \"${FILE_CONTENT}\"
-    }]
-  }" \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"from\": {\"address\": \"noreply@yourdomain.com\", \"name\": \"Your App\"},
+  \"to\": [{\"email_address\": {\"address\": \"user@example.com\", \"name\": \"User\"}}],
+  \"subject\": \"Your Invoice\",
+  \"htmlbody\": \"<p>Please find your invoice attached.</p>\",
+  \"attachments\": [{
+  \"name\": \"invoice.pdf\",
+  \"mime_type\": \"application/pdf\",
+  \"content\": \"${FILE_CONTENT}\"
+  }]
+}" | jq .
 ```
 
 ---
@@ -169,23 +144,18 @@ curl -s "https://api.zeptomail.com/v1.1/email" \
 # Encode image to base64
 IMAGE_CONTENT=$(base64 -i /path/to/logo.png)
 
-curl -s "https://api.zeptomail.com/v1.1/email" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"from\": {\"address\": \"noreply@yourdomain.com\", \"name\": \"Your App\"},
-    \"to\": [{\"email_address\": {\"address\": \"user@example.com\", \"name\": \"User\"}}],
-    \"subject\": \"Newsletter\",
-    \"htmlbody\": \"<p><img src='cid:logo'/></p><p>Welcome to our newsletter!</p>\",
-    \"inline_images\": [{
-      \"cid\": \"logo\",
-      \"name\": \"logo.png\",
-      \"mime_type\": \"image/png\",
-      \"content\": \"${IMAGE_CONTENT}\"
-    }]
-  }" \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"from\": {\"address\": \"noreply@yourdomain.com\", \"name\": \"Your App\"},
+  \"to\": [{\"email_address\": {\"address\": \"user@example.com\", \"name\": \"User\"}}],
+  \"subject\": \"Newsletter\",
+  \"htmlbody\": \"<p><img src='cid:logo'/></p><p>Welcome to our newsletter!</p>\",
+  \"inline_images\": [{
+  \"cid\": \"logo\",
+  \"name\": \"logo.png\",
+  \"mime_type\": \"image/png\",
+  \"content\": \"${IMAGE_CONTENT}\"
+  }]
+}" | jq .
 ```
 
 ---
@@ -195,21 +165,16 @@ curl -s "https://api.zeptomail.com/v1.1/email" \
 Use pre-defined templates with merge fields:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/template" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "template_key": "your-template-key",
-    "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
-    "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
-    "merge_info": {
-      "user_name": "John",
-      "order_id": "12345",
-      "total": "$99.00"
-    }
-  }' \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+  "template_key": "your-template-key",
+  "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
+  "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
+  "merge_info": {
+  "user_name": "John",
+  "order_id": "12345",
+  "total": "$99.00"
+  }
+}' | jq .
 ```
 
 Template example (in ZeptoMail dashboard):
@@ -225,26 +190,21 @@ Template example (in ZeptoMail dashboard):
 Send to up to 500 recipients with personalized merge fields:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/batch" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
-    "subject": "Your Monthly Report - {{month}}",
-    "htmlbody": "<p>Hi {{name}},</p><p>Here is your report for {{month}}.</p>",
-    "to": [
-      {
-        "email_address": {"address": "user1@example.com", "name": "User 1"},
-        "merge_info": {"name": "Alice", "month": "December"}
-      },
-      {
-        "email_address": {"address": "user2@example.com", "name": "User 2"},
-        "merge_info": {"name": "Bob", "month": "December"}
-      }
-    ]
-  }' \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+  "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
+  "subject": "Your Monthly Report - {{month}}",
+  "htmlbody": "<p>Hi {{name}},</p><p>Here is your report for {{month}}.</p>",
+  "to": [
+  {
+  "email_address": {"address": "user1@example.com", "name": "User 1"},
+  "merge_info": {"name": "Alice", "month": "December"}
+  },
+  {
+  "email_address": {"address": "user2@example.com", "name": "User 2"},
+  "merge_info": {"name": "Bob", "month": "December"}
+  }
+  ]
+}' | jq .
 ```
 
 ---
@@ -252,25 +212,20 @@ curl -s "https://api.zeptomail.com/v1.1/email/batch" \
 ### 9. Batch Send with Template
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/template/batch" \
-  -X POST \
-  --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "template_key": "your-template-key",
-    "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
-    "to": [
-      {
-        "email_address": {"address": "user1@example.com", "name": "User 1"},
-        "merge_info": {"user_name": "Alice", "code": "ABC123"}
-      },
-      {
-        "email_address": {"address": "user2@example.com", "name": "User 2"},
-        "merge_info": {"user_name": "Bob", "code": "XYZ789"}
-      }
-    ]
-  }' \
-  | jq .
+curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+  "template_key": "your-template-key",
+  "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
+  "to": [
+  {
+  "email_address": {"address": "user1@example.com", "name": "User 1"},
+  "merge_info": {"user_name": "Alice", "code": "ABC123"}
+  },
+  {
+  "email_address": {"address": "user2@example.com", "name": "User 2"},
+  "merge_info": {"user_name": "Bob", "code": "XYZ789"}
+  }
+  ]
+}' | jq .
 ```
 
 ---
@@ -282,11 +237,11 @@ curl -s "https://api.zeptomail.com/v1.1/email/template/batch" \
 ```json
 {
   "data": [
-    {
-      "code": "EM_104",
-      "additional_info": [],
-      "message": "OK"
-    }
+  {
+  "code": "EM_104",
+  "additional_info": [],
+  "message": "OK"
+  }
   ],
   "message": "OK",
   "request_id": "abc123..."
@@ -298,15 +253,15 @@ curl -s "https://api.zeptomail.com/v1.1/email/template/batch" \
 ```json
 {
   "error": {
-    "code": "TM_102",
-    "details": [
-      {
-        "code": "TM_102",
-        "message": "Invalid email address",
-        "target": "to"
-      }
-    ],
-    "message": "Invalid request"
+  "code": "TM_102",
+  "details": [
+  {
+  "code": "TM_102",
+  "message": "Invalid email address",
+  "target": "to"
+  }
+  ],
+  "message": "Invalid request"
   },
   "request_id": "abc123..."
 }

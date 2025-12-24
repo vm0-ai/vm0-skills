@@ -34,69 +34,59 @@ export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XX
 ### Simple Message
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL \
-  -H "Content-type: application/json" \
-  -d '{"text":"Hello, world."}'
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{"text":"Hello, world."}'
 ```
 
 ### With Formatting
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL \
-  -H "Content-type: application/json" \
-  -d '{"text":"*Bold* and _italic_ text"}'
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{"text":"*Bold* and _italic_ text"}'
 ```
 
 ### With Link
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL \
-  -H "Content-type: application/json" \
-  -d '{"text":"Check <https://example.com|this link>"}'
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{"text":"Check <https://example.com|this link>"}'
 ```
 
 ### With Blocks (Rich Layout)
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL \
-  -H "Content-type: application/json" \
-  -d '{
-    "text": "New review submitted",
-    "blocks": [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "Danny left the following review:"
-        }
-      },
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "<https://example.com|Overlook Hotel>\n:star:\nDoors had too many axe holes."
-        }
-      }
-    ]
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{
+  "text": "New review submitted",
+  "blocks": [
+  {
+  "type": "section",
+  "text": {
+  "type": "mrkdwn",
+  "text": "Danny left the following review:"
+  }
+  },
+  {
+  "type": "section",
+  "text": {
+  "type": "mrkdwn",
+  "text": "<https://example.com|Overlook Hotel>\n:star:\nDoors had too many axe holes."
+  }
+  }
+  ]
   }'
 ```
 
 ### With Fields
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL \
-  -H "Content-type: application/json" \
-  -d '{
-    "text": "Deployment status",
-    "blocks": [
-      {
-        "type": "section",
-        "fields": [
-          {"type": "mrkdwn", "text": "*Environment:*\nProduction"},
-          {"type": "mrkdwn", "text": "*Status:*\nSuccess"}
-        ]
-      }
-    ]
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{
+  "text": "Deployment status",
+  "blocks": [
+  {
+  "type": "section",
+  "fields": [
+  {"type": "mrkdwn", "text": "*Environment:*\nProduction"},
+  {"type": "mrkdwn", "text": "*Status:*\nSuccess"}
+  ]
+  }
+  ]
   }'
 ```
 
@@ -117,9 +107,7 @@ curl -X POST $SLACK_WEBHOOK_URL \
 Messages with `!` may fail due to shell history expansion. Use heredoc:
 
 ```bash
-curl -s -X POST $SLACK_WEBHOOK_URL \
-  -H "Content-type: application/json" \
-  -d @- << 'EOF'
+curl -s -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @- << 'EOF'
 {"text":"Deploy completed! :rocket:"}
 EOF
 ```

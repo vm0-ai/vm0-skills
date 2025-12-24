@@ -32,8 +32,8 @@ export PLAUSIBLE_SITE_ID=example.com
 3. Navigate to "API Keys" in sidebar
 4. Click "New API Key"
 5. Choose key type:
-   - **Stats API** - For querying analytics data
-   - **Sites API** - For managing sites programmatically
+  - **Stats API** - For querying analytics data
+  - **Sites API** - For managing sites programmatically
 6. Save the key (shown only once)
 
 ## Stats API (v2)
@@ -41,10 +41,7 @@ export PLAUSIBLE_SITE_ID=example.com
 ### Basic Query - Total Visitors
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {"site_id":"'$PLAUSIBLE_SITE_ID'","metrics":["visitors","pageviews"],"date_range":"7d"}
 EOF
 ```
@@ -54,10 +51,7 @@ Docs: https://plausible.io/docs/stats-api
 ### Query with Dimensions (Breakdown)
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors", "pageviews", "bounce_rate"],
@@ -70,10 +64,7 @@ EOF
 ### Top Pages
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors", "pageviews"],
@@ -88,10 +79,7 @@ EOF
 ### Geographic Breakdown
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors"],
@@ -104,10 +92,7 @@ EOF
 ### Device & Browser Stats
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors"],
@@ -120,10 +105,7 @@ EOF
 ### Time Series (Daily)
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors", "pageviews"],
@@ -136,10 +118,7 @@ EOF
 ### Filter by Page Path
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors", "pageviews"],
@@ -152,10 +131,7 @@ EOF
 ### UTM Campaign Analysis
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors", "conversion_rate"],
@@ -168,10 +144,7 @@ EOF
 ### Custom Date Range
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v2/query' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v2/query' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {
   "site_id": "example.com",
   "metrics": ["visitors", "pageviews"],
@@ -185,8 +158,7 @@ EOF
 ### List Sites
 
 ```bash
-curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  'https://plausible.io/api/v1/sites' | jq '.sites[] | {domain, timezone}'
+curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" 'https://plausible.io/api/v1/sites' | jq '.sites[] | {domain, timezone}'
 ```
 
 Docs: https://plausible.io/docs/sites-api
@@ -194,10 +166,7 @@ Docs: https://plausible.io/docs/sites-api
 ### Create Site
 
 ```bash
-curl -s -X POST 'https://plausible.io/api/v1/sites' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://plausible.io/api/v1/sites' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {"domain":"newsite.com","timezone":"America/New_York"}
 EOF
 ```
@@ -205,24 +174,19 @@ EOF
 ### Get Site Details
 
 ```bash
-curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  'https://plausible.io/api/v1/sites/example.com'
+curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" 'https://plausible.io/api/v1/sites/example.com'
 ```
 
 ### Delete Site
 
 ```bash
-curl -s -X DELETE -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  'https://plausible.io/api/v1/sites/example.com'
+curl -s -X DELETE -H "Authorization: Bearer $PLAUSIBLE_API_KEY" 'https://plausible.io/api/v1/sites/example.com'
 ```
 
 ### Create Goal
 
 ```bash
-curl -s -X PUT 'https://plausible.io/api/v1/sites/goals' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X PUT 'https://plausible.io/api/v1/sites/goals' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {"site_id":"example.com","goal_type":"event","event_name":"Signup"}
 EOF
 ```
@@ -230,10 +194,7 @@ EOF
 ### Create Page Goal
 
 ```bash
-curl -s -X PUT 'https://plausible.io/api/v1/sites/goals' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X PUT 'https://plausible.io/api/v1/sites/goals' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {"site_id":"example.com","goal_type":"page","page_path":"/thank-you"}
 EOF
 ```
@@ -241,17 +202,13 @@ EOF
 ### List Goals
 
 ```bash
-curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  'https://plausible.io/api/v1/sites/goals?site_id=example.com'
+curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" 'https://plausible.io/api/v1/sites/goals?site_id=example.com'
 ```
 
 ### Create Shared Link
 
 ```bash
-curl -s -X PUT 'https://plausible.io/api/v1/sites/shared-links' \
-  -H "Authorization: Bearer $PLAUSIBLE_API_KEY" \
-  -H 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X PUT 'https://plausible.io/api/v1/sites/shared-links' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
 {"site_id":"example.com","name":"Public Dashboard"}
 EOF
 ```

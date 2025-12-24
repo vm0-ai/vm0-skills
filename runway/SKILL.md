@@ -62,10 +62,7 @@ Base URL: `https://api.dev.runwayml.com/v1`
 Check your credit balance:
 
 ```bash
-curl -s -X GET "https://api.dev.runwayml.com/v1/organization" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  | jq .
+curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" | jq .
 ```
 
 ---
@@ -75,16 +72,12 @@ curl -s -X GET "https://api.dev.runwayml.com/v1/organization" \
 Generate a video from an image:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "model": "gen4_turbo",
-    "promptImage": "https://example.com/your-image.jpg",
-    "promptText": "A timelapse of clouds moving across the sky",
-    "ratio": "1280:720",
-    "duration": 5
+curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
+  "model": "gen4_turbo",
+  "promptImage": "https://example.com/your-image.jpg",
+  "promptText": "A timelapse of clouds moving across the sky",
+  "ratio": "1280:720",
+  "duration": 5
   }' | jq .
 ```
 
@@ -102,15 +95,11 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" \
 Generate a video from text only:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "model": "veo3.1",
-    "promptText": "A serene forest with sunlight filtering through the trees",
-    "ratio": "1280:720",
-    "duration": 5
+curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
+  "model": "veo3.1",
+  "promptText": "A serene forest with sunlight filtering through the trees",
+  "ratio": "1280:720",
+  "duration": 5
   }' | jq .
 ```
 
@@ -121,14 +110,10 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" \
 Transform an existing video:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "model": "gen4_aleph",
-    "videoUri": "https://example.com/source-video.mp4",
-    "promptText": "Add magical sparkles and fairy dust effects"
+curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
+  "model": "gen4_aleph",
+  "videoUri": "https://example.com/source-video.mp4",
+  "promptText": "Add magical sparkles and fairy dust effects"
   }' | jq .
 ```
 
@@ -139,14 +124,10 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" \
 Generate images from text:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "model": "gen4_image_turbo",
-    "promptText": "A futuristic cityscape at sunset",
-    "ratio": "16:9"
+curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
+  "model": "gen4_image_turbo",
+  "promptText": "A futuristic cityscape at sunset",
+  "ratio": "16:9"
   }' | jq .
 ```
 
@@ -159,10 +140,7 @@ Poll for task completion:
 ```bash
 TASK_ID="your-task-id"
 
-curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  | jq .
+curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" | jq .
 ```
 
 **Response when complete:**
@@ -185,9 +163,7 @@ Cancel a running task:
 ```bash
 TASK_ID="your-task-id"
 
-curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06"
+curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"
 ```
 
 ---
@@ -197,13 +173,9 @@ curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" \
 Upscale video resolution:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "model": "upscale_v1",
-    "videoUri": "https://example.com/low-res-video.mp4"
+curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
+  "model": "upscale_v1",
+  "videoUri": "https://example.com/low-res-video.mp4"
   }' | jq .
 ```
 
@@ -214,13 +186,9 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" \
 Generate audio from text:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" \
-  --header "Authorization: Bearer ${RUNWAY_API_KEY}" \
-  --header "X-Runway-Version: 2024-11-06" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "model": "eleven_text_to_sound_v2",
-    "promptText": "Thunder rumbling in the distance"
+curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
+  "model": "eleven_text_to_sound_v2",
+  "promptText": "Thunder rumbling in the distance"
   }' | jq .
 ```
 

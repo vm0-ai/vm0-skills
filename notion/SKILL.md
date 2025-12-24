@@ -53,14 +53,10 @@ PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
 PAGE_ID="2b70e96f0134807d8450c8793839c659"
 
 # Get page metadata
-curl -s -X GET "https://api.notion.com/v1/pages/${PAGE_ID}" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header "Notion-Version: 2022-06-28" | jq '{title: .properties.title.title[0].plain_text, url, last_edited_time}'
+curl -s -X GET "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" | jq '{title: .properties.title.title[0].plain_text, url, last_edited_time}'
 
 # Get page content blocks
-curl -s -X GET "https://api.notion.com/v1/blocks/${PAGE_ID}/children?page_size=100" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}'
+curl -s -X GET "https://api.notion.com/v1/blocks/${PAGE_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}'
 ```
 
 ### Read Nested Blocks (Toggle, etc.)
@@ -69,19 +65,13 @@ Blocks with `has_children: true` contain nested content:
 
 ```bash
 BLOCK_ID="2b70e96f-0134-80d9-9def-f99ae812f1e7"
-curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
+curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
 ```
 
 ### Search Workspace
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/search' \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d '{"query":"Meeting Notes","page_size":10}' | jq '.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}'
+curl -s -X POST 'https://api.notion.com/v1/search' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d '{"query":"Meeting Notes","page_size":10}' | jq '.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}'
 ```
 
 Docs: https://developers.notion.com/reference/post-search
@@ -89,11 +79,7 @@ Docs: https://developers.notion.com/reference/post-search
 ### List Database Entries
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d '{"page_size":100}' | jq '.results[] | {id, properties}'
+curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d '{"page_size":100}' | jq '.results[] | {id, properties}'
 ```
 
 Docs: https://developers.notion.com/reference/post-database-query
@@ -101,15 +87,11 @@ Docs: https://developers.notion.com/reference/post-database-query
 ### Query with Filter
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "filter": {
-    "property": "Status",
-    "select": {"equals": "Done"}
+  "property": "Status",
+  "select": {"equals": "Done"}
   },
   "sorts": [{"property": "Date", "direction": "descending"}],
   "page_size": 50
@@ -120,17 +102,13 @@ EOF
 ### Query with Multiple Filters
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "filter": {
-    "and": [
-      {"property": "Status", "select": {"does_not_equal": "Archived"}},
-      {"property": "Due", "date": {"on_or_before": "2024-12-31"}}
-    ]
+  "and": [
+  {"property": "Status", "select": {"does_not_equal": "Archived"}},
+  {"property": "Due", "date": {"on_or_before": "2024-12-31"}}
+  ]
   }
 }
 EOF
@@ -139,9 +117,7 @@ EOF
 ### Get Database Schema
 
 ```bash
-curl -s "https://api.notion.com/v1/databases/${DATABASE_ID}" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' | jq '{title: .title[0].plain_text, properties: .properties | keys}'
+curl -s "https://api.notion.com/v1/databases/${DATABASE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' | jq '{title: .title[0].plain_text, properties: .properties | keys}'
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-database
@@ -149,9 +125,7 @@ Docs: https://developers.notion.com/reference/retrieve-a-database
 ### Get Page
 
 ```bash
-curl -s "https://api.notion.com/v1/pages/${PAGE_ID}" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' | jq '{id, url, properties}'
+curl -s "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' | jq '{id, url, properties}'
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-page
@@ -159,17 +133,13 @@ Docs: https://developers.notion.com/reference/retrieve-a-page
 ### Create Page in Database
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/pages' \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://api.notion.com/v1/pages' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "parent": {"database_id": "your-database-id"},
   "properties": {
-    "Name": {"title": [{"text": {"content": "New Task"}}]},
-    "Status": {"select": {"name": "To Do"}},
-    "Due": {"date": {"start": "2024-12-31"}}
+  "Name": {"title": [{"text": {"content": "New Task"}}]},
+  "Status": {"select": {"name": "To Do"}},
+  "Due": {"date": {"start": "2024-12-31"}}
   }
 }
 EOF
@@ -180,27 +150,23 @@ Docs: https://developers.notion.com/reference/post-page
 ### Create Page with Content
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/pages' \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://api.notion.com/v1/pages' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "parent": {"page_id": "parent-page-id"},
   "properties": {
-    "title": {"title": [{"text": {"content": "My New Page"}}]}
+  "title": {"title": [{"text": {"content": "My New Page"}}]}
   },
   "children": [
-    {
-      "object": "block",
-      "type": "heading_2",
-      "heading_2": {"rich_text": [{"text": {"content": "Introduction"}}]}
-    },
-    {
-      "object": "block",
-      "type": "paragraph",
-      "paragraph": {"rich_text": [{"text": {"content": "This is the content."}}]}
-    }
+  {
+  "object": "block",
+  "type": "heading_2",
+  "heading_2": {"rich_text": [{"text": {"content": "Introduction"}}]}
+  },
+  {
+  "object": "block",
+  "type": "paragraph",
+  "paragraph": {"rich_text": [{"text": {"content": "This is the content."}}]}
+  }
   ]
 }
 EOF
@@ -209,14 +175,10 @@ EOF
 ### Update Page Properties
 
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "properties": {
-    "Status": {"select": {"name": "In Progress"}}
+  "Status": {"select": {"name": "In Progress"}}
   }
 }
 EOF
@@ -227,19 +189,13 @@ Docs: https://developers.notion.com/reference/patch-page
 ### Archive Page
 
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d '{"archived": true}'
+curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d '{"archived": true}'
 ```
 
 ### Get Block Children
 
 ```bash
-curl -s "https://api.notion.com/v1/blocks/${BLOCK_ID}/children?page_size=100" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' | jq '.results[] | {type, id}'
+curl -s "https://api.notion.com/v1/blocks/${BLOCK_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' | jq '.results[] | {type, id}'
 ```
 
 Docs: https://developers.notion.com/reference/get-block-children
@@ -247,26 +203,22 @@ Docs: https://developers.notion.com/reference/get-block-children
 ### Append Blocks to Page
 
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/blocks/${PAGE_ID}/children" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X PATCH "https://api.notion.com/v1/blocks/${PAGE_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "children": [
-    {
-      "object": "block",
-      "type": "paragraph",
-      "paragraph": {"rich_text": [{"text": {"content": "New paragraph added."}}]}
-    },
-    {
-      "object": "block",
-      "type": "to_do",
-      "to_do": {
-        "rich_text": [{"text": {"content": "Task item"}}],
-        "checked": false
-      }
-    }
+  {
+  "object": "block",
+  "type": "paragraph",
+  "paragraph": {"rich_text": [{"text": {"content": "New paragraph added."}}]}
+  },
+  {
+  "object": "block",
+  "type": "to_do",
+  "to_do": {
+  "rich_text": [{"text": {"content": "Task item"}}],
+  "checked": false
+  }
+  }
   ]
 }
 EOF
@@ -277,17 +229,13 @@ Docs: https://developers.notion.com/reference/patch-block-children
 ### Delete Block
 
 ```bash
-curl -s -X DELETE "https://api.notion.com/v1/blocks/${BLOCK_ID}" \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28'
+curl -s -X DELETE "https://api.notion.com/v1/blocks/${BLOCK_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28'
 ```
 
 ### List Users
 
 ```bash
-curl -s 'https://api.notion.com/v1/users' \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' | jq '.results[] | {id, name, type}'
+curl -s 'https://api.notion.com/v1/users' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' | jq '.results[] | {id, name, type}'
 ```
 
 Docs: https://developers.notion.com/reference/get-users
@@ -295,36 +243,30 @@ Docs: https://developers.notion.com/reference/get-users
 ### Get Current Bot
 
 ```bash
-curl -s 'https://api.notion.com/v1/users/me' \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28'
+curl -s 'https://api.notion.com/v1/users/me' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28'
 ```
 
 ### Create Database
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/databases' \
-  --header "Authorization: Bearer $NOTION_API_KEY" \
-  --header 'Notion-Version: 2022-06-28' \
-  --header 'Content-Type: application/json' \
-  -d @- << 'EOF'
+curl -s -X POST 'https://api.notion.com/v1/databases' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "parent": {"page_id": "parent-page-id"},
   "title": [{"text": {"content": "Task Tracker"}}],
   "properties": {
-    "Name": {"title": {}},
-    "Status": {"select": {"options": [
-      {"name": "To Do", "color": "gray"},
-      {"name": "In Progress", "color": "blue"},
-      {"name": "Done", "color": "green"}
-    ]}},
-    "Due Date": {"date": {}},
-    "Assignee": {"people": {}},
-    "Priority": {"select": {"options": [
-      {"name": "High", "color": "red"},
-      {"name": "Medium", "color": "yellow"},
-      {"name": "Low", "color": "green"}
-    ]}}
+  "Name": {"title": {}},
+  "Status": {"select": {"options": [
+  {"name": "To Do", "color": "gray"},
+  {"name": "In Progress", "color": "blue"},
+  {"name": "Done", "color": "green"}
+  ]}},
+  "Due Date": {"date": {}},
+  "Assignee": {"people": {}},
+  "Priority": {"select": {"options": [
+  {"name": "High", "color": "red"},
+  {"name": "Medium", "color": "yellow"},
+  {"name": "Low", "color": "green"}
+  ]}}
   }
 }
 EOF
@@ -408,12 +350,12 @@ Docs: https://developers.notion.com/reference/create-a-database
 {
   "text": {"content": "Styled text", "link": {"url": "https://example.com"}},
   "annotations": {
-    "bold": true,
-    "italic": false,
-    "strikethrough": false,
-    "underline": false,
-    "code": false,
-    "color": "red"
+  "bold": true,
+  "italic": false,
+  "strikethrough": false,
+  "underline": false,
+  "code": false,
+  "color": "red"
   }
 }
 ```

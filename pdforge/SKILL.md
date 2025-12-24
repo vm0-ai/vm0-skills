@@ -53,19 +53,16 @@ Base URL: `https://api.pdfnoodle.com/v1`
 Generate a PDF using a pre-built template with dynamic data:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" \
-  --header "Authorization: Bearer ${PDFORGE_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "templateId": "your-template-id",
-    "data": {
-      "name": "John Doe",
-      "date": "2025-01-15",
-      "items": [
-        {"description": "Item 1", "price": 100},
-        {"description": "Item 2", "price": 200}
-      ]
-    }
+curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+  "templateId": "your-template-id",
+  "data": {
+  "name": "John Doe",
+  "date": "2025-01-15",
+  "items": [
+  {"description": "Item 1", "price": 100},
+  {"description": "Item 2", "price": 200}
+  ]
+  }
   }' | jq .
 ```
 
@@ -87,16 +84,13 @@ The `signedUrl` is a temporary URL (expires in 1 hour) to download the generated
 For batch processing, use the async endpoint with a webhook:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" \
-  --header "Authorization: Bearer ${PDFORGE_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "templateId": "your-template-id",
-    "webhook": "https://your-server.com/webhook",
-    "data": {
-      "name": "Jane Doe",
-      "amount": 500
-    }
+curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+  "templateId": "your-template-id",
+  "webhook": "https://your-server.com/webhook",
+  "data": {
+  "name": "Jane Doe",
+  "amount": 500
+  }
   }' | jq .
 ```
 
@@ -117,11 +111,8 @@ The webhook will receive the `signedUrl` when generation is complete.
 Convert raw HTML directly to PDF without a template:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" \
-  --header "Authorization: Bearer ${PDFORGE_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "html": "<html><body><h1>Hello World</h1><p>This is a PDF generated from HTML.</p></body></html>"
+curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+  "html": "<html><body><h1>Hello World</h1><p>This is a PDF generated from HTML.</p></body></html>"
   }' | jq .
 ```
 
@@ -132,11 +123,8 @@ curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" \
 Include CSS for styled PDFs:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" \
-  --header "Authorization: Bearer ${PDFORGE_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "html": "<html><head><style>body { font-family: Arial; } h1 { color: #333; } .invoice { border: 1px solid #ddd; padding: 20px; }</style></head><body><div class=\"invoice\"><h1>Invoice #001</h1><p>Amount: $500</p></div></body></html>"
+curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+  "html": "<html><head><style>body { font-family: Arial; } h1 { color: #333; } .invoice { border: 1px solid #ddd; padding: 20px; }</style></head><body><div class=\"invoice\"><h1>Invoice #001</h1><p>Amount: $500</p></div></body></html>"
   }' | jq .
 ```
 
@@ -147,12 +135,9 @@ curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" \
 Set `convertToImage` to true to get a PNG:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" \
-  --header "Authorization: Bearer ${PDFORGE_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "html": "<html><body><h1>Image Export</h1></body></html>",
-    "convertToImage": true
+curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+  "html": "<html><body><h1>Image Export</h1></body></html>",
+  "convertToImage": true
   }' | jq .
 ```
 
@@ -198,10 +183,10 @@ curl -s -o output.pdf "${SIGNED_URL}"
 ```json
 {
   "metadata": {
-    "title": "Invoice #001",
-    "author": "Company Name",
-    "subject": "Monthly Invoice",
-    "keywords": ["invoice", "payment"]
+  "title": "Invoice #001",
+  "author": "Company Name",
+  "subject": "Monthly Invoice",
+  "keywords": ["invoice", "payment"]
   }
 }
 ```

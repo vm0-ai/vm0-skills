@@ -49,7 +49,7 @@ docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
 
 ```bash
 export QDRANT_URL="http://localhost:6333"
-export QDRANT_API_KEY=""  # Optional for local
+export QDRANT_API_KEY="" # Optional for local
 ```
 
 ---
@@ -65,9 +65,7 @@ All examples below assume you have `QDRANT_URL` and `QDRANT_API_KEY` set.
 Verify connection to Qdrant:
 
 ```bash
-curl -s -X GET "${QDRANT_URL}" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  | jq .
+curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}" | jq .
 ```
 
 ---
@@ -77,9 +75,7 @@ curl -s -X GET "${QDRANT_URL}" \
 Get all collections:
 
 ```bash
-curl -s -X GET "${QDRANT_URL}/collections" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  | jq .
+curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_API_KEY}" | jq .
 ```
 
 ---
@@ -89,14 +85,11 @@ curl -s -X GET "${QDRANT_URL}/collections" \
 Create a collection for storing vectors:
 
 ```bash
-curl -s -X PUT "${QDRANT_URL}/collections/my_collection" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "vectors": {
-      "size": 1536,
-      "distance": "Cosine"
-    }
+curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "vectors": {
+  "size": 1536,
+  "distance": "Cosine"
+  }
   }' | jq .
 ```
 
@@ -118,9 +111,7 @@ curl -s -X PUT "${QDRANT_URL}/collections/my_collection" \
 Get details about a collection:
 
 ```bash
-curl -s -X GET "${QDRANT_URL}/collections/my_collection" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  | jq .
+curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" | jq .
 ```
 
 ---
@@ -130,22 +121,19 @@ curl -s -X GET "${QDRANT_URL}/collections/my_collection" \
 Add vectors with payload (metadata):
 
 ```bash
-curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "points": [
-      {
-        "id": 1,
-        "vector": [0.05, 0.61, 0.76, 0.74],
-        "payload": {"text": "Hello world", "source": "doc1"}
-      },
-      {
-        "id": 2,
-        "vector": [0.19, 0.81, 0.75, 0.11],
-        "payload": {"text": "Goodbye world", "source": "doc2"}
-      }
-    ]
+curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "points": [
+  {
+  "id": 1,
+  "vector": [0.05, 0.61, 0.76, 0.74],
+  "payload": {"text": "Hello world", "source": "doc1"}
+  },
+  {
+  "id": 2,
+  "vector": [0.19, 0.81, 0.75, 0.11],
+  "payload": {"text": "Goodbye world", "source": "doc2"}
+  }
+  ]
   }' | jq .
 ```
 
@@ -156,13 +144,10 @@ curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" \
 Find vectors similar to a query vector:
 
 ```bash
-curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "query": [0.05, 0.61, 0.76, 0.74],
-    "limit": 5,
-    "with_payload": true
+curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "query": [0.05, 0.61, 0.76, 0.74],
+  "limit": 5,
+  "with_payload": true
   }' | jq .
 ```
 
@@ -170,9 +155,9 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" \
 ```json
 {
   "result": {
-    "points": [
-      {"id": 1, "score": 0.99, "payload": {"text": "Hello world"}}
-    ]
+  "points": [
+  {"id": 1, "score": 0.99, "payload": {"text": "Hello world"}}
+  ]
   }
 }
 ```
@@ -184,18 +169,15 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" \
 Filter results by payload fields:
 
 ```bash
-curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "query": [0.05, 0.61, 0.76, 0.74],
-    "limit": 5,
-    "filter": {
-      "must": [
-        {"key": "source", "match": {"value": "doc1"}}
-      ]
-    },
-    "with_payload": true
+curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "query": [0.05, 0.61, 0.76, 0.74],
+  "limit": 5,
+  "filter": {
+  "must": [
+  {"key": "source", "match": {"value": "doc1"}}
+  ]
+  },
+  "with_payload": true
   }' | jq .
 ```
 
@@ -211,13 +193,10 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" \
 Retrieve specific points:
 
 ```bash
-curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "ids": [1, 2],
-    "with_payload": true,
-    "with_vector": true
+curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "ids": [1, 2],
+  "with_payload": true,
+  "with_vector": true
   }' | jq .
 ```
 
@@ -228,26 +207,20 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" \
 Delete by IDs:
 
 ```bash
-curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "points": [1, 2]
+curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "points": [1, 2]
   }' | jq .
 ```
 
 Delete by filter:
 
 ```bash
-curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "filter": {
-      "must": [
-        {"key": "source", "match": {"value": "doc1"}}
-      ]
-    }
+curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "filter": {
+  "must": [
+  {"key": "source", "match": {"value": "doc1"}}
+  ]
+  }
   }' | jq .
 ```
 
@@ -258,9 +231,7 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" \
 Remove a collection entirely:
 
 ```bash
-curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  | jq .
+curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" | jq .
 ```
 
 ---
@@ -270,11 +241,8 @@ curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" \
 Get total count or filtered count:
 
 ```bash
-curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" \
-  --header "api-key: ${QDRANT_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "exact": true
+curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
+  "exact": true
   }' | jq .
 ```
 
@@ -287,11 +255,11 @@ Common filter conditions:
 ```json
 {
   "filter": {
-    "must": [
-      {"key": "city", "match": {"value": "London"}},
-      {"key": "price", "range": {"gte": 100, "lte": 500}},
-      {"key": "tags", "match": {"any": ["electronics", "sale"]}}
-    ]
+  "must": [
+  {"key": "city", "match": {"value": "London"}},
+  {"key": "price", "range": {"gte": 100, "lte": 500}},
+  {"key": "tags", "match": {"any": ["electronics", "sale"]}}
+  ]
   }
 }
 ```

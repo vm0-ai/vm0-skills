@@ -64,11 +64,7 @@ The base URL for the API is:
 Generate an image from basic HTML:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  -d 'html=<div style="padding:20px;background:blue;color:white;font-size:24px;">Hello World</div>' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d 'html=<div style="padding:20px;background:blue;color:white;font-size:24px;">Hello World</div>' | jq .
 ```
 
 Response:
@@ -87,12 +83,7 @@ The returned URL is permanent and served via Cloudflare CDN.
 Generate a styled card image:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'html=<div class="card"><h1>Welcome</h1><p>This is a styled card</p></div>' \
-  --data-urlencode 'css=.card { padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white; font-family: sans-serif; text-align: center; } h1 { margin: 0 0 10px 0; } p { margin: 0; opacity: 0.9; }' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'html=<div class="card"><h1>Welcome</h1><p>This is a styled card</p></div>' --data-urlencode 'css=.card { padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white; font-family: sans-serif; text-align: center; } h1 { margin: 0 0 10px 0; } p { margin: 0; opacity: 0.9; }' | jq .
 ```
 
 ---
@@ -102,13 +93,7 @@ curl -s "https://hcti.io/v1/image" \
 Generate an image with custom fonts:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'html=<div class="title">Beautiful Typography</div>' \
-  --data-urlencode 'css=.title { font-family: Playfair Display; font-size: 48px; padding: 40px; background: #1a1a2e; color: #eee; }' \
-  -d 'google_fonts=Playfair Display' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'html=<div class="title">Beautiful Typography</div>' --data-urlencode 'css=.title { font-family: Playfair Display; font-size: 48px; padding: 40px; background: #1a1a2e; color: #eee; }' -d 'google_fonts=Playfair Display' | jq .
 ```
 
 Multiple fonts: `google_fonts=Playfair Display|Roboto|Open Sans`
@@ -120,11 +105,7 @@ Multiple fonts: `google_fonts=Playfair Display|Roboto|Open Sans`
 Capture a screenshot of any public URL:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'url=https://example.com' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'url=https://example.com' | jq .
 ```
 
 ---
@@ -134,12 +115,7 @@ curl -s "https://hcti.io/v1/image" \
 Wait for JavaScript to render before capturing:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'url=https://example.com' \
-  -d 'ms_delay=1500' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'url=https://example.com' -d 'ms_delay=1500' | jq .
 ```
 
 `ms_delay` waits specified milliseconds before taking the screenshot.
@@ -151,12 +127,7 @@ curl -s "https://hcti.io/v1/image" \
 Screenshot only a specific element on the page:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'url=https://example.com' \
-  -d 'selector=h1' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'url=https://example.com' -d 'selector=h1' | jq .
 ```
 
 Use any CSS selector: `#id`, `.class`, `div > p`, etc.
@@ -168,12 +139,7 @@ Use any CSS selector: `#id`, `.class`, `div > p`, etc.
 Generate 2x or 3x resolution images:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  -d 'html=<div style="padding:20px;font-size:18px;">High Resolution Image</div>' \
-  -d 'device_scale=2' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d 'html=<div style="padding:20px;font-size:18px;">High Resolution Image</div>' -d 'device_scale=2' | jq .
 ```
 
 `device_scale` accepts values 1-3 (default: 1).
@@ -185,13 +151,7 @@ curl -s "https://hcti.io/v1/image" \
 Set specific viewport dimensions:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'url=https://example.com' \
-  -d 'viewport_width=1200' \
-  -d 'viewport_height=630' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'url=https://example.com' -d 'viewport_width=1200' -d 'viewport_height=630' | jq .
 ```
 
 Perfect for generating OG images (1200x630).
@@ -203,12 +163,7 @@ Perfect for generating OG images (1200x630).
 Capture the entire page height:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'url=https://example.com' \
-  -d 'full_screen=true' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'url=https://example.com' -d 'full_screen=true' | jq .
 ```
 
 ---
@@ -218,12 +173,7 @@ curl -s "https://hcti.io/v1/image" \
 Automatically hide consent/cookie popups:
 
 ```bash
-curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  --data-urlencode 'url=https://example.com' \
-  -d 'block_consent_banners=true' \
-  | jq .
+curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode 'url=https://example.com' -d 'block_consent_banners=true' | jq .
 ```
 
 ---
@@ -233,11 +183,7 @@ curl -s "https://hcti.io/v1/image" \
 Add `?dl=1` to the image URL to trigger download:
 
 ```bash
-IMAGE_URL=$(curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  -d 'html=<div style="padding:20px;background:green;color:white;">Download Me</div>' \
-  | jq -r '.url')
+IMAGE_URL=$(curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d 'html=<div style="padding:20px;background:green;color:white;">Download Me</div>' | jq -r '.url')
 
 curl -s "${IMAGE_URL}?dl=1" --output image.png
 ```
@@ -249,11 +195,7 @@ curl -s "${IMAGE_URL}?dl=1" --output image.png
 Add width/height query parameters to resize:
 
 ```bash
-IMAGE_URL=$(curl -s "https://hcti.io/v1/image" \
-  -X POST \
-  -u "${HCTI_USER_ID}:${HCTI_API_KEY}" \
-  -d 'html=<div style="padding:40px;background:purple;color:white;font-size:32px;">Resizable</div>' \
-  | jq -r '.url')
+IMAGE_URL=$(curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d 'html=<div style="padding:40px;background:purple;color:white;font-size:32px;">Resizable</div>' | jq -r '.url')
 
 echo "Original: ${IMAGE_URL}"
 echo "Thumbnail: ${IMAGE_URL}?width=200&height=200"

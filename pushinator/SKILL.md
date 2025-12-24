@@ -61,12 +61,9 @@ Send a notification to all subscribers of a channel:
 ```bash
 CHANNEL_ID="your-channel-uuid"
 
-curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"channel_id\": \"${CHANNEL_ID}\",
-    \"content\": \"Hello from Pushinator!\"
+curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"channel_id\": \"${CHANNEL_ID}\",
+  \"content\": \"Hello from Pushinator!\"
   }" | jq .
 ```
 
@@ -87,12 +84,9 @@ Notify when a deployment completes:
 ```bash
 CHANNEL_ID="your-channel-uuid"
 
-curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"channel_id\": \"${CHANNEL_ID}\",
-    \"content\": \"Deployment complete! Project deployed to production.\"
+curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"channel_id\": \"${CHANNEL_ID}\",
+  \"content\": \"Deployment complete! Project deployed to production.\"
   }" | jq .
 ```
 
@@ -105,12 +99,9 @@ Include emojis for visual distinction:
 ```bash
 CHANNEL_ID="your-channel-uuid"
 
-curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"channel_id\": \"${CHANNEL_ID}\",
-    \"content\": \"Build failed! Check the CI logs.\"
+curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"channel_id\": \"${CHANNEL_ID}\",
+  \"content\": \"Build failed! Check the CI logs.\"
   }" | jq .
 ```
 

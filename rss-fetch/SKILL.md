@@ -45,17 +45,13 @@ curl -s "https://hnrss.org/frontpage" | head -100
 Extract titles from RSS feed:
 
 ```bash
-curl -s "https://hnrss.org/frontpage" | \
-  xmllint --xpath '//item/title/text()' - 2>/dev/null
+curl -s "https://hnrss.org/frontpage" | xmllint --xpath '//item/title/text()' - 2>/dev/null
 ```
 
 Extract titles and links:
 
 ```bash
-curl -s "https://hnrss.org/frontpage" | \
-  xmllint --format - | \
-  grep -E '<title>|<link>' | \
-  head -20
+curl -s "https://hnrss.org/frontpage" | xmllint --format - | grep -E '<title>|<link>' | head -20
 ```
 
 ### 3. Get Items with Details
@@ -63,8 +59,7 @@ curl -s "https://hnrss.org/frontpage" | \
 ```bash
 RSS_URL="https://hnrss.org/frontpage"
 
-curl -s "$RSS_URL" | xmllint --xpath '//item' - 2>/dev/null | \
-  xmllint --format - | head -50
+curl -s "$RSS_URL" | xmllint --xpath '//item' - 2>/dev/null | xmllint --format - | head -50
 ```
 
 ### 4. Parse Atom Feeds
@@ -72,8 +67,7 @@ curl -s "$RSS_URL" | xmllint --xpath '//item' - 2>/dev/null | \
 Atom feeds use `<entry>` instead of `<item>`:
 
 ```bash
-curl -s "https://github.com/blog.atom" | \
-  xmllint --xpath '//entry/title/text()' - 2>/dev/null
+curl -s "https://github.com/blog.atom" | xmllint --xpath '//entry/title/text()' - 2>/dev/null
 ```
 
 ---
@@ -97,17 +91,13 @@ curl -s "https://github.com/blog.atom" | \
 ### Fetch Hacker News Top Stories
 
 ```bash
-curl -s "https://hnrss.org/frontpage?count=10" | \
-  xmllint --xpath '//item/title/text()' - 2>/dev/null | \
-  tr '\n' '\n'
+curl -s "https://hnrss.org/frontpage?count=10" | xmllint --xpath '//item/title/text()' - 2>/dev/null | tr '\n' '\n'
 ```
 
 ### Get Story Links
 
 ```bash
-curl -s "https://hnrss.org/frontpage?count=5" | \
-  grep -oP '<link>\K[^<]+' | \
-  grep -v hnrss
+curl -s "https://hnrss.org/frontpage?count=5" | grep -oP '<link>\K[^<]+' | grep -v hnrss
 ```
 
 ### Fetch Multiple Feeds
@@ -128,14 +118,12 @@ done
 ### Extract Title, Link, and Date
 
 ```bash
-curl -s "https://hnrss.org/frontpage?count=3" | \
-  xmllint --format - | \
-  awk '
-    /<item>/ { in_item=1 }
-    /<\/item>/ { in_item=0; print "---" }
-    in_item && /<title>/ { gsub(/<[^>]*>/, ""); print "Title: " $0 }
-    in_item && /<link>/ { gsub(/<[^>]*>/, ""); print "Link: " $0 }
-    in_item && /<pubDate>/ { gsub(/<[^>]*>/, ""); print "Date: " $0 }
+curl -s "https://hnrss.org/frontpage?count=3" | xmllint --format - | awk '
+  /<item>/ { in_item=1 }
+  /<\/item>/ { in_item=0; print "---" }
+  in_item && /<title>/ { gsub(/<[^>]*>/, ""); print "Title: " $0 }
+  in_item && /<link>/ { gsub(/<[^>]*>/, ""); print "Link: " $0 }
+  in_item && /<pubDate>/ { gsub(/<[^>]*>/, ""); print "Date: " $0 }
   '
 ```
 

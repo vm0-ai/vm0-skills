@@ -33,8 +33,8 @@ Use this skill when you need to:
 3. Copy the generated token
 
 ```bash
-export GITLAB_HOST="gitlab.com"              # Or your self-hosted GitLab domain
-export GITLAB_TOKEN="glpat-xxxxxxxxxxxx"     # Personal access token with api scope
+export GITLAB_HOST="gitlab.com" # Or your self-hosted GitLab domain
+export GITLAB_TOKEN="glpat-xxxxxxxxxxxx" # Personal access token with api scope
 ```
 
 ### Rate Limits
@@ -58,9 +58,7 @@ Base URL: `https://${GITLAB_HOST}/api/v4`
 Verify your authentication:
 
 ```bash
-curl -s "https://${GITLAB_HOST}/api/v4/user" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '{id, username, name, email, state}'
+curl -s "https://${GITLAB_HOST}/api/v4/user" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '{id, username, name, email, state}'
 ```
 
 ---
@@ -70,9 +68,7 @@ curl -s "https://${GITLAB_HOST}/api/v4/user" \
 Get projects accessible to you:
 
 ```bash
-curl -s "https://${GITLAB_HOST}/api/v4/projects?membership=true&per_page=20" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '.[] | {id, path_with_namespace, visibility, default_branch}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects?membership=true&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '.[] | {id, path_with_namespace, visibility, default_branch}'
 ```
 
 Filter options:
@@ -88,11 +84,9 @@ Filter options:
 Get details for a specific project:
 
 ```bash
-PROJECT_ID="123"  # or URL-encoded path like "mygroup%2Fmyproject"
+PROJECT_ID="123" # or URL-encoded path like "mygroup%2Fmyproject"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '{id, name, path_with_namespace, default_branch, visibility, web_url}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '{id, name, path_with_namespace, default_branch, visibility, web_url}'
 ```
 
 ---
@@ -104,9 +98,7 @@ Get issues for a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues?state=opened&per_page=20" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '.[] | {iid, title, state, author: .author.username, labels, web_url}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues?state=opened&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '.[] | {iid, title, state, author: .author.username, labels, web_url}'
 ```
 
 Filter options:
@@ -123,11 +115,9 @@ Get a specific issue:
 
 ```bash
 PROJECT_ID="123"
-ISSUE_IID="1"  # Issue internal ID (not global ID)
+ISSUE_IID="1" # Issue internal ID (not global ID)
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '{iid, title, description, state, author: .author.username, assignees: [.assignees[].username], labels, created_at, web_url}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '{iid, title, description, state, author: .author.username, assignees: [.assignees[].username], labels, created_at, web_url}'
 ```
 
 ---
@@ -139,15 +129,11 @@ Create a new issue in a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "title": "Bug: Login page not loading",
-    "description": "The login page shows a blank screen on mobile devices.",
-    "labels": "bug,frontend"
-  }' \
-  | jq '{iid, title, web_url}'
+curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+  "title": "Bug: Login page not loading",
+  "description": "The login page shows a blank screen on mobile devices.",
+  "labels": "bug,frontend"
+}' | jq '{iid, title, web_url}'
 ```
 
 ---
@@ -161,17 +147,13 @@ PROJECT_ID="123"
 ASSIGNEE_ID="456"
 MILESTONE_ID="1"
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"title\": \"Implement user profile page\",
-    \"description\": \"Create a user profile page with avatar and bio.\",
-    \"assignee_ids\": [${ASSIGNEE_ID}],
-    \"milestone_id\": ${MILESTONE_ID},
-    \"labels\": \"feature,frontend\"
-  }" \
-  | jq '{iid, title, web_url}'
+curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d "{
+  \"title\": \"Implement user profile page\",
+  \"description\": \"Create a user profile page with avatar and bio.\",
+  \"assignee_ids\": [${ASSIGNEE_ID}],
+  \"milestone_id\": ${MILESTONE_ID},
+  \"labels\": \"feature,frontend\"
+}" | jq '{iid, title, web_url}'
 ```
 
 ---
@@ -184,14 +166,10 @@ Update an existing issue:
 PROJECT_ID="123"
 ISSUE_IID="1"
 
-curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "title": "Updated: Bug fix for login page",
-    "labels": "bug,frontend,in-progress"
-  }' \
-  | jq '{iid, title, labels, updated_at}'
+curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+  "title": "Updated: Bug fix for login page",
+  "labels": "bug,frontend,in-progress"
+}' | jq '{iid, title, labels, updated_at}'
 ```
 
 ---
@@ -204,11 +182,7 @@ Close an issue:
 PROJECT_ID="123"
 ISSUE_IID="1"
 
-curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"state_event": "close"}' \
-  | jq '{iid, title, state}'
+curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{"state_event": "close"}' | jq '{iid, title, state}'
 ```
 
 Use `"state_event": "reopen"` to reopen a closed issue.
@@ -223,11 +197,7 @@ Add a note/comment to an issue:
 PROJECT_ID="123"
 ISSUE_IID="1"
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}/notes" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"body": "Investigating this issue. Will update soon."}' \
-  | jq '{id, body, author: .author.username, created_at}'
+curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}/notes" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{"body": "Investigating this issue. Will update soon."}' | jq '{id, body, author: .author.username, created_at}'
 ```
 
 ---
@@ -239,9 +209,7 @@ Get merge requests for a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests?state=opened&per_page=20" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '.[] | {iid, title, state, source_branch, target_branch, author: .author.username, web_url}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests?state=opened&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '.[] | {iid, title, state, source_branch, target_branch, author: .author.username, web_url}'
 ```
 
 Filter options:
@@ -259,9 +227,7 @@ Get a specific merge request:
 PROJECT_ID="123"
 MR_IID="1"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '{iid, title, state, source_branch, target_branch, author: .author.username, merge_status, has_conflicts, web_url}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '{iid, title, state, source_branch, target_branch, author: .author.username, merge_status, has_conflicts, web_url}'
 ```
 
 ---
@@ -273,16 +239,12 @@ Create a new merge request:
 ```bash
 PROJECT_ID="123"
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "source_branch": "feature/user-profile",
-    "target_branch": "main",
-    "title": "Add user profile page",
-    "description": "This MR adds a new user profile page with avatar support."
-  }' \
-  | jq '{iid, title, web_url}'
+curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+  "source_branch": "feature/user-profile",
+  "target_branch": "main",
+  "title": "Add user profile page",
+  "description": "This MR adds a new user profile page with avatar support."
+}' | jq '{iid, title, web_url}'
 ```
 
 ---
@@ -295,11 +257,7 @@ Merge an MR (if it's ready):
 PROJECT_ID="123"
 MR_IID="1"
 
-curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}/merge" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"merge_when_pipeline_succeeds": true}' \
-  | jq '{iid, title, state, merged_by: .merged_by.username}'
+curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}/merge" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{"merge_when_pipeline_succeeds": true}' | jq '{iid, title, state, merged_by: .merged_by.username}'
 ```
 
 Options:
@@ -316,9 +274,7 @@ Get pipelines for a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines?per_page=10" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '.[] | {id, status, ref, sha: .sha[0:8], created_at, web_url}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines?per_page=10" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '.[] | {id, status, ref, sha: .sha[0:8], created_at, web_url}'
 ```
 
 ---
@@ -331,9 +287,7 @@ Get details of a specific pipeline:
 PROJECT_ID="123"
 PIPELINE_ID="456"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '{id, status, ref, duration, finished_at, web_url}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '{id, status, ref, duration, finished_at, web_url}'
 ```
 
 ---
@@ -346,9 +300,7 @@ Get jobs in a pipeline:
 PROJECT_ID="123"
 PIPELINE_ID="456"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}/jobs" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  | jq '.[] | {id, name, stage, status, duration}'
+curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}/jobs" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '.[] | {id, name, stage, status, duration}'
 ```
 
 ---
@@ -358,10 +310,7 @@ curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELI
 Search for users:
 
 ```bash
-curl -s -G "https://${GITLAB_HOST}/api/v4/users" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --data-urlencode "search=john" \
-  | jq '.[] | {id, username, name, state}'
+curl -s -G "https://${GITLAB_HOST}/api/v4/users" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --data-urlencode "search=john" | jq '.[] | {id, username, name, state}'
 ```
 
 ---
@@ -371,15 +320,11 @@ curl -s -G "https://${GITLAB_HOST}/api/v4/users" \
 Create a new project:
 
 ```bash
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "name": "my-new-project",
-    "visibility": "private",
-    "initialize_with_readme": true
-  }' \
-  | jq '{id, path_with_namespace, web_url}'
+curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+  "name": "my-new-project",
+  "visibility": "private",
+  "initialize_with_readme": true
+}' | jq '{id, path_with_namespace, web_url}'
 ```
 
 ---
@@ -392,9 +337,7 @@ Delete an issue (requires admin or owner permissions):
 PROJECT_ID="123"
 ISSUE_IID="1"
 
-curl -s -X DELETE "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" \
-  --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
-  -w "\nHTTP Status: %{http_code}"
+curl -s -X DELETE "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" -w "\nHTTP Status: %{http_code}"
 ```
 
 Returns 204 No Content on success.

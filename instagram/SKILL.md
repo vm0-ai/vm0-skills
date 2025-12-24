@@ -30,8 +30,8 @@ Use this skill when you need to:
 1. You must have an **Instagram Business / Creator account** linked to a **Facebook Page**
 2. Create an app in Facebook Developers and enable **Instagram Basic Display / Instagram Graph API** permissions
 3. Obtain:
-   - `INSTAGRAM_ACCESS_TOKEN`: a long-lived user access token
-   - `INSTAGRAM_BUSINESS_ACCOUNT_ID`: your Instagram Business account ID
+  - `INSTAGRAM_ACCESS_TOKEN`: a long-lived user access token
+  - `INSTAGRAM_BUSINESS_ACCOUNT_ID`: your Instagram Business account ID
 
 Set the environment variables, for example:
 
@@ -67,10 +67,7 @@ INSTAGRAM_BUSINESS_ACCOUNT_ID
 Fetch the most recent media (photos / videos / Reels) for the account:
 
 ```bash
-curl -s -X GET \
-  "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media?fields=id,caption,media_type,media_url,permalink,timestamp" \
-  --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" \
-  | jq .
+curl -s -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media?fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" | jq .
 ```
 
 **Notes:**
@@ -93,10 +90,7 @@ If you already have a media `id`, you can fetch more complete information:
 ```bash
 MEDIA_ID="1789xxxxxxxxxxxx"
 
-curl -s -X GET \
-  "https://graph.facebook.com/v21.0/${MEDIA_ID}?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" \
-  --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" \
-  | jq .
+curl -s -X GET "https://graph.facebook.com/v21.0/${MEDIA_ID}?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" | jq .
 ```
 
 ---
@@ -112,10 +106,7 @@ This usually involves two steps:
 ```bash
 HASHTAG_NAME="travel"
 
-curl -s -X GET \
-  "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&q=${HASHTAG_NAME}" \
-  --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" \
-  | jq .
+curl -s -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&q=${HASHTAG_NAME}" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" | jq .
 ```
 
 Take the returned `id` (we call it `HASHTAG_ID`).
@@ -125,10 +116,7 @@ Take the returned `id` (we call it `HASHTAG_ID`).
 ```bash
 HASHTAG_ID="178434113xxxxxxxx"
 
-curl -s -X GET \
-  "https://graph.facebook.com/v21.0/${HASHTAG_ID}/recent_media?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&fields=id,caption,media_type,media_url,permalink,timestamp" \
-  --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" \
-  | jq .
+curl -s -X GET "https://graph.facebook.com/v21.0/${HASHTAG_ID}/recent_media?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" | jq .
 ```
 
 ---
@@ -146,12 +134,7 @@ Publishing an image post via the Graph API usually requires **two steps**:
 IMAGE_URL="https://example.com/image.jpg"
 CAPTION="Hello from Instagram API 👋"
 
-curl -s -X POST \
-  "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media" \
-  -F "image_url=${IMAGE_URL}" \
-  -F "caption=${CAPTION}" \
-  --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" \
-  | jq .
+curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media" -F "image_url=${IMAGE_URL}" -F "caption=${CAPTION}" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" | jq .
 ```
 
 The response will contain an `id` (media container ID), for example:
@@ -169,11 +152,7 @@ Store this ID (for example as `CREATION_ID`).
 ```bash
 CREATION_ID="1790xxxxxxxxxxxx"
 
-curl -s -X POST \
-  "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish" \
-  -F "creation_id=${CREATION_ID}" \
-  --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" \
-  | jq .
+curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish" -F "creation_id=${CREATION_ID}" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}" | jq .
 ```
 
 If successful, the response will contain the final media `id`:
@@ -192,19 +171,19 @@ You can then use the "Get details for a single media" command to fetch its `perm
 
 1. **Permissions / OAuth errors**
 
-   - Typical error message: `(#10) Application does not have permission for this action`
-   - Check:
-     - Whether the app has been reviewed / approved
-     - Whether the required Instagram permissions are enabled
-     - Whether `INSTAGRAM_ACCESS_TOKEN` is a valid long-lived token
+  - Typical error message: `(#10) Application does not have permission for this action`
+  - Check:
+  - Whether the app has been reviewed / approved
+  - Whether the required Instagram permissions are enabled
+  - Whether `INSTAGRAM_ACCESS_TOKEN` is a valid long-lived token
 
 2. **Unsupported account type**
 
-   - Most Graph API features require **Business / Creator** accounts
-   - Make sure the Instagram account type is correct and linked to a Facebook Page
+  - Most Graph API features require **Business / Creator** accounts
+  - Make sure the Instagram account type is correct and linked to a Facebook Page
 
 3. **Rate limits**
-   - Too many requests in a short period may hit rate limits; add delays for bulk operations
+  - Too many requests in a short period may hit rate limits; add delays for bulk operations
 
 ---
 

@@ -174,23 +174,23 @@
 
 ## Statistics
 
-| Category                          | API Count |
+| Category | API Count |
 | --------------------------------- | --------- |
-| Communication & Messaging         | 15        |
-| Document & Content Generation     | 2         |
-| Browser Automation & Web Scraping | 8         |
-| Data Processing & Utilities       | 1         |
-| API & Cloud Integrations          | 25        |
-| AI, LLM & Voice                   | 10        |
-| File & PDF Manipulation           | 3         |
-| Analytics & Monitoring            | 7         |
-| Development & Engineering         | 6         |
-| Customer Support                  | 3         |
-| Security & Compliance             | 4         |
-| Automation                        | 2         |
-| Design & Media                    | 4         |
-| Miscellaneous                     | 6         |
-| **Total**                         | **96**    |
+| Communication & Messaging | 15 |
+| Document & Content Generation | 2 |
+| Browser Automation & Web Scraping | 8 |
+| Data Processing & Utilities | 1 |
+| API & Cloud Integrations | 25 |
+| AI, LLM & Voice | 10 |
+| File & PDF Manipulation | 3 |
+| Analytics & Monitoring | 7 |
+| Development & Engineering | 6 |
+| Customer Support | 3 |
+| Security & Compliance | 4 |
+| Automation | 2 |
+| Design & Media | 4 |
+| Miscellaneous | 6 |
+| **Total** | **96** |
 
 ---
 

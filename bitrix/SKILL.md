@@ -69,10 +69,10 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.current.json" | jq .
 ```json
 {
   "result": {
-    "ID": "1",
-    "NAME": "John",
-    "LAST_NAME": "Doe",
-    "EMAIL": "john@example.com"
+  "ID": "1",
+  "NAME": "John",
+  "LAST_NAME": "Doe",
+  "EMAIL": "john@example.com"
   }
 }
 ```
@@ -94,16 +94,14 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.get.json" | jq '.result[] | {ID, NAME
 ### 3. Create a Lead
 
 ```bash
-curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.add.json" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "TITLE": "New Lead from API",
-      "NAME": "John",
-      "LAST_NAME": "Doe",
-      "PHONE": [{"VALUE": "+1234567890", "VALUE_TYPE": "WORK"}],
-      "EMAIL": [{"VALUE": "john@example.com", "VALUE_TYPE": "WORK"}]
-    }
+curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.add.json" --header "Content-Type: application/json" -d '{
+  "fields": {
+  "TITLE": "New Lead from API",
+  "NAME": "John",
+  "LAST_NAME": "Doe",
+  "PHONE": [{"VALUE": "+1234567890", "VALUE_TYPE": "WORK"}],
+  "EMAIL": [{"VALUE": "john@example.com", "VALUE_TYPE": "WORK"}]
+  }
   }' | jq .
 ```
 
@@ -135,11 +133,9 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" | jq '.result[] | {ID,
 With filter:
 
 ```bash
-curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "filter": {"STATUS_ID": "NEW"},
-    "select": ["ID", "TITLE", "NAME", "PHONE"]
+curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" --header "Content-Type: application/json" -d '{
+  "filter": {"STATUS_ID": "NEW"},
+  "select": ["ID", "TITLE", "NAME", "PHONE"]
   }' | jq .
 ```
 
@@ -150,14 +146,12 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" \
 ```bash
 LEAD_ID="123"
 
-curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.update.json" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"id\": ${LEAD_ID},
-    \"fields\": {
-      \"STATUS_ID\": \"IN_PROCESS\",
-      \"COMMENTS\": \"Updated via API\"
-    }
+curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.update.json" --header "Content-Type: application/json" -d "{
+  \"id\": ${LEAD_ID},
+  \"fields\": {
+  \"STATUS_ID\": \"IN_PROCESS\",
+  \"COMMENTS\": \"Updated via API\"
+  }
   }" | jq .
 ```
 
@@ -178,15 +172,13 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.delete.json?id=${LEAD_ID}" | jq .
 ### 8. Create a Contact
 
 ```bash
-curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.contact.add.json" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "NAME": "Jane",
-      "LAST_NAME": "Smith",
-      "PHONE": [{"VALUE": "+1987654321", "VALUE_TYPE": "MOBILE"}],
-      "EMAIL": [{"VALUE": "jane@example.com", "VALUE_TYPE": "WORK"}]
-    }
+curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.contact.add.json" --header "Content-Type: application/json" -d '{
+  "fields": {
+  "NAME": "Jane",
+  "LAST_NAME": "Smith",
+  "PHONE": [{"VALUE": "+1987654321", "VALUE_TYPE": "MOBILE"}],
+  "EMAIL": [{"VALUE": "jane@example.com", "VALUE_TYPE": "WORK"}]
+  }
   }' | jq .
 ```
 
@@ -205,15 +197,13 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.list.json" | jq '.result[] | {
 ### 10. Create a Deal
 
 ```bash
-curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.add.json" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "TITLE": "New Deal from API",
-      "STAGE_ID": "NEW",
-      "OPPORTUNITY": 5000,
-      "CURRENCY_ID": "USD"
-    }
+curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.add.json" --header "Content-Type: application/json" -d '{
+  "fields": {
+  "TITLE": "New Deal from API",
+  "STAGE_ID": "NEW",
+  "OPPORTUNITY": 5000,
+  "CURRENCY_ID": "USD"
+  }
   }' | jq .
 ```
 
@@ -232,13 +222,11 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.list.json" | jq '.result[] | {ID,
 ```bash
 DEAL_ID="456"
 
-curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.update.json" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"id\": ${DEAL_ID},
-    \"fields\": {
-      \"STAGE_ID\": \"WON\"
-    }
+curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.update.json" --header "Content-Type: application/json" -d "{
+  \"id\": ${DEAL_ID},
+  \"fields\": {
+  \"STAGE_ID\": \"WON\"
+  }
   }" | jq .
 ```
 
@@ -249,15 +237,13 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.update.json" \
 ### 13. Create a Task
 
 ```bash
-curl -s -X POST "${BITRIX_WEBHOOK_URL}/tasks.task.add.json" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "fields": {
-      "TITLE": "New Task from API",
-      "DESCRIPTION": "Task description here",
-      "RESPONSIBLE_ID": 1,
-      "DEADLINE": "2025-12-31"
-    }
+curl -s -X POST "${BITRIX_WEBHOOK_URL}/tasks.task.add.json" --header "Content-Type: application/json" -d '{
+  "fields": {
+  "TITLE": "New Task from API",
+  "DESCRIPTION": "Task description here",
+  "RESPONSIBLE_ID": 1,
+  "DEADLINE": "2025-12-31"
+  }
   }' | jq .
 ```
 

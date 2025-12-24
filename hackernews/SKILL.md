@@ -198,8 +198,7 @@ curl -s "https://hacker-news.firebaseio.com/v0/updates.json" | jq .
 ```bash
 echo "=== Top 10 Hacker News Stories ==="
 for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:10][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | \
-    jq -r '"\(.score) points | \(.title) | \(.url // "Ask HN")"'
+curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r '"\(.score) points | \(.title) | \(.url // "Ask HN")"'
 done
 ```
 
@@ -207,8 +206,7 @@ done
 
 ```bash
 for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:30][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | \
-    jq -r 'select(.score >= 100) | "\(.score) | \(.title)"'
+curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r 'select(.score >= 100) | "\(.score) | \(.title)"'
 done
 ```
 
@@ -216,8 +214,7 @@ done
 
 ```bash
 for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:50][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | \
-    jq -r 'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"'
+curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r 'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"'
 done
 ```
 

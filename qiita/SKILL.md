@@ -226,18 +226,12 @@ scripts/qiita.sh item get --id "abc123def456"
 
 ```bash
 # Post from command line
-scripts/qiita.sh item post \
-  --title "Getting Started with Docker" \
-  --body "# Introduction
+scripts/qiita.sh item post --title "Getting Started with Docker" --body "# Introduction
 
-Docker is a containerization platform..." \
-  --tags "Docker,DevOps,Tutorial"
+Docker is a containerization platform..." --tags "Docker,DevOps,Tutorial"
 
 # Post from file
-scripts/qiita.sh item post \
-  --title "My Technical Article" \
-  --body-file ./my-article.md \
-  --tags "Programming"
+scripts/qiita.sh item post --title "My Technical Article" --body-file ./my-article.md --tags "Programming"
 ```
 
 ### Explore Tags and Users

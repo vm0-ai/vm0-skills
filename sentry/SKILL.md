@@ -35,9 +35,9 @@ Use this skill when you need to:
 3. Copy the generated token
 
 ```bash
-export SENTRY_HOST="sentry.io"               # Or your self-hosted Sentry domain
-export SENTRY_TOKEN="sntrys_..."             # Auth token from Internal Integration
-export SENTRY_ORG="your-org-slug"            # Your organization slug
+export SENTRY_HOST="sentry.io" # Or your self-hosted Sentry domain
+export SENTRY_TOKEN="sntrys_..." # Auth token from Internal Integration
+export SENTRY_ORG="your-org-slug" # Your organization slug
 ```
 
 ### Required Scopes
@@ -63,9 +63,7 @@ Base URL: `https://${SENTRY_HOST}/api/0`
 Get all projects you have access to:
 
 ```bash
-curl -s "https://${SENTRY_HOST}/api/0/projects/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '.[] | {slug, name, platform, dateCreated}'
+curl -s "https://${SENTRY_HOST}/api/0/projects/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '.[] | {slug, name, platform, dateCreated}'
 ```
 
 ---
@@ -77,9 +75,7 @@ Get details for a specific project:
 ```bash
 PROJECT_SLUG="my-project"
 
-curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '{slug, name, platform, status, dateCreated}'
+curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '{slug, name, platform, status, dateCreated}'
 ```
 
 ---
@@ -89,9 +85,7 @@ curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/" \
 Get all issues across the organization:
 
 ```bash
-curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '.[] | {id, shortId, title, culprit, status, count, userCount, firstSeen, lastSeen}'
+curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '.[] | {id, shortId, title, culprit, status, count, userCount, firstSeen, lastSeen}'
 ```
 
 Query parameters:
@@ -110,9 +104,7 @@ Get issues for a specific project:
 ```bash
 PROJECT_SLUG="my-project"
 
-curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/issues/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '.[] | {id, shortId, title, status, count, lastSeen}'
+curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '.[] | {id, shortId, title, status, count, lastSeen}'
 ```
 
 ---
@@ -122,10 +114,7 @@ curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/iss
 Search issues with query:
 
 ```bash
-curl -s -G "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --data-urlencode "query=is:unresolved level:error" \
-  | jq '.[] | {shortId, title, level, count}'
+curl -s -G "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --data-urlencode "query=is:unresolved level:error" | jq '.[] | {shortId, title, level, count}'
 ```
 
 Common query filters:
@@ -145,9 +134,7 @@ Get details for a specific issue:
 ```bash
 ISSUE_ID="123456789"
 
-curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '{id, shortId, title, culprit, status, level, count, userCount, firstSeen, lastSeen, assignedTo}'
+curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '{id, shortId, title, culprit, status, level, count, userCount, firstSeen, lastSeen, assignedTo}'
 ```
 
 ---
@@ -159,9 +146,7 @@ Get the most recent event for an issue:
 ```bash
 ISSUE_ID="123456789"
 
-curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/events/latest/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '{eventID, message, platform, dateCreated, tags, contexts}'
+curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/events/latest/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '{eventID, message, platform, dateCreated, tags, contexts}'
 ```
 
 ---
@@ -173,9 +158,7 @@ Get all events for an issue:
 ```bash
 ISSUE_ID="123456789"
 
-curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/events/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '.[] | {eventID, message, dateCreated}'
+curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/events/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '.[] | {eventID, message, dateCreated}'
 ```
 
 ---
@@ -187,11 +170,7 @@ Mark an issue as resolved:
 ```bash
 ISSUE_ID="123456789"
 
-curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"status": "resolved"}' \
-  | jq '{id, shortId, status}'
+curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '{"status": "resolved"}' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -203,11 +182,7 @@ Mark issue as resolved in next release:
 ```bash
 ISSUE_ID="123456789"
 
-curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"status": "resolvedInNextRelease"}' \
-  | jq '{id, shortId, status}'
+curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '{"status": "resolvedInNextRelease"}' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -219,21 +194,13 @@ Ignore an issue:
 ```bash
 ISSUE_ID="123456789"
 
-curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"status": "ignored"}' \
-  | jq '{id, shortId, status}'
+curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '{"status": "ignored"}' | jq '{id, shortId, status}'
 ```
 
 Ignore with duration (in minutes):
 
 ```bash
-curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"status": "ignored", "statusDetails": {"ignoreDuration": 60}}' \
-  | jq '{id, shortId, status}'
+curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '{"status": "ignored", "statusDetails": {"ignoreDuration": 60}}' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -245,11 +212,7 @@ Reopen a resolved issue:
 ```bash
 ISSUE_ID="123456789"
 
-curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{"status": "unresolved"}' \
-  | jq '{id, shortId, status}'
+curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '{"status": "unresolved"}' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -262,11 +225,7 @@ Assign an issue to a user:
 ISSUE_ID="123456789"
 USER_EMAIL="developer@example.com"
 
-curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d "{\"assignedTo\": \"${USER_EMAIL}\"}" \
-  | jq '{id, shortId, assignedTo}'
+curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d "{\"assignedTo\": \"${USER_EMAIL}\"}" | jq '{id, shortId, assignedTo}'
 ```
 
 ---
@@ -276,14 +235,10 @@ curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/
 Update multiple issues at once:
 
 ```bash
-curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "id": ["123456789", "987654321"],
-    "status": "resolved"
-  }' \
-  | jq '.'
+curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '{
+  "id": ["123456789", "987654321"],
+  "status": "resolved"
+}' | jq '.'
 ```
 
 ---
@@ -295,9 +250,7 @@ Delete an issue (requires admin permissions):
 ```bash
 ISSUE_ID="123456789"
 
-curl -s -X DELETE "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  -w "\nHTTP Status: %{http_code}"
+curl -s -X DELETE "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" -w "\nHTTP Status: %{http_code}"
 ```
 
 ---
@@ -307,9 +260,7 @@ curl -s -X DELETE "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issu
 Get all releases for the organization:
 
 ```bash
-curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '.[] | {version, dateCreated, newGroups, projects: [.projects[].slug]}'
+curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '.[] | {version, dateCreated, newGroups, projects: [.projects[].slug]}'
 ```
 
 ---
@@ -321,9 +272,7 @@ Get details for a specific release:
 ```bash
 RELEASE_VERSION="1.0.0"
 
-curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/${RELEASE_VERSION}/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '{version, dateCreated, dateReleased, newGroups, lastEvent, projects}'
+curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/${RELEASE_VERSION}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '{version, dateCreated, dateReleased, newGroups, lastEvent, projects}'
 ```
 
 ---
@@ -335,14 +284,10 @@ Create a new release:
 ```bash
 PROJECT_SLUG="my-project"
 
-curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"version\": \"1.0.1\",
-    \"projects\": [\"${PROJECT_SLUG}\"]
-  }" \
-  | jq '{version, dateCreated}'
+curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d "{
+  \"version\": \"1.0.1\",
+  \"projects\": [\"${PROJECT_SLUG}\"]
+}" | jq '{version, dateCreated}'
 ```
 
 ---
@@ -354,18 +299,14 @@ Create release with associated commits:
 ```bash
 PROJECT_SLUG="my-project"
 
-curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"version\": \"1.0.2\",
-    \"projects\": [\"${PROJECT_SLUG}\"],
-    \"refs\": [{
-      \"repository\": \"owner/repo\",
-      \"commit\": \"abc123def456\"
-    }]
-  }" \
-  | jq '{version, dateCreated}'
+curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d "{
+  \"version\": \"1.0.2\",
+  \"projects\": [\"${PROJECT_SLUG}\"],
+  \"refs\": [{
+  \"repository\": \"owner/repo\",
+  \"commit\": \"abc123def456\"
+  }]
+}" | jq '{version, dateCreated}'
 ```
 
 ---
@@ -377,9 +318,7 @@ Get recent error events for a project:
 ```bash
 PROJECT_SLUG="my-project"
 
-curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/events/" \
-  --header "Authorization: Bearer ${SENTRY_TOKEN}" \
-  | jq '.[] | {eventID, title, message, dateCreated}'
+curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/events/" --header "Authorization: Bearer ${SENTRY_TOKEN}" | jq '.[] | {eventID, title, message, dateCreated}'
 ```
 
 ---

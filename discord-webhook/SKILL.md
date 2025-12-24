@@ -144,7 +144,7 @@ curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d 
   "url": "https://example.com",
   "color": 5763719,
   "fields": [
-    {"name": "Field 1", "value": "Value 1", "inline": true}
+  {"name": "Field 1", "value": "Value 1", "inline": true}
   ],
   "author": {"name": "Author", "icon_url": "https://..."},
   "footer": {"text": "Footer text"},

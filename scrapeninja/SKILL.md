@@ -30,8 +30,8 @@ Use this skill when you need to:
 ## Prerequisites
 
 1. Get an API key from RapidAPI or APIRoad:
-   - RapidAPI: https://rapidapi.com/restyler/api/scrapeninja
-   - APIRoad: https://apiroad.net/marketplace/apis/scrapeninja
+  - RapidAPI: https://rapidapi.com/restyler/api/scrapeninja
+  - APIRoad: https://apiroad.net/marketplace/apis/scrapeninja
 
 Set environment variable:
 
@@ -52,25 +52,19 @@ export SCRAPENINJA_API_KEY="your-apiroad-key"
 High-performance scraping with Chrome TLS fingerprint, no JavaScript:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com"
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com"
   }' | jq '{status: .info.statusCode, url: .info.finalUrl, bodyLength: (.body | length)}'
 ```
 
 **With custom headers and retries:**
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com",
-    "headers": ["Accept-Language: en-US"],
-    "retryNum": 3,
-    "timeout": 15
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com",
+  "headers": ["Accept-Language: en-US"],
+  "retryNum": 3,
+  "timeout": 15
   }' | jq .
 ```
 
@@ -79,25 +73,19 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
 For JavaScript-heavy sites (React, Vue, etc.):
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com",
-    "waitForSelector": "h1",
-    "timeout": 20
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com",
+  "waitForSelector": "h1",
+  "timeout": 20
   }' | jq '{status: .info.statusCode, bodyLength: (.body | length)}'
 ```
 
 **With screenshot:**
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com",
-    "screenshot": true
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com",
+  "screenshot": true
   }' | jq -r '.info.screenshot' | base64 -d > screenshot.png
 ```
 
@@ -106,12 +94,9 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" \
 Use proxies from specific regions:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com",
-    "geo": "eu"
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com",
+  "geo": "eu"
   }' | jq .info
 ```
 
@@ -122,14 +107,11 @@ Available geos: `us`, `eu`, `br` (Brazil), `fr` (France), `de` (Germany), `4g-eu
 Retry on specific HTTP status codes or text patterns:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com",
-    "retryNum": 3,
-    "statusNotExpected": [403, 429, 503],
-    "textNotExpected": ["captcha", "Access Denied"]
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com",
+  "retryNum": 3,
+  "statusNotExpected": [403, 429, 503],
+  "textNotExpected": ["captcha", "Access Denied"]
   }' | jq .
 ```
 
@@ -138,12 +120,9 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
 Extract structured JSON using Cheerio extractor functions:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://news.ycombinator.com",
-    "extractor": "function(input, cheerio) { let $ = cheerio.load(input); return $(\".titleline > a\").slice(0,5).map((i,el) => ({title: $(el).text(), url: $(el).attr(\"href\")})).get(); }"
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://news.ycombinator.com",
+  "extractor": "function(input, cheerio) { let $ = cheerio.load(input); return $(\".titleline > a\").slice(0,5).map((i,el) => ({title: $(el).text(), url: $(el).attr(\"href\")})).get(); }"
   }' | jq '.extractor'
 ```
 
@@ -152,12 +131,9 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" \
 Capture XHR/fetch responses:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com",
-    "catchAjaxHeadersUrlMask": "api/data"
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com",
+  "catchAjaxHeadersUrlMask": "api/data"
   }' | jq '.info.catchedAjax'
 ```
 
@@ -166,13 +142,10 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" \
 Speed up JS rendering by blocking images and media:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" \
-  --header "Content-Type: application/json" \
-  --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" \
-  -d '{
-    "url": "https://example.com",
-    "blockImages": true,
-    "blockMedia": true
+curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+  "url": "https://example.com",
+  "blockImages": true,
+  "blockMedia": true
   }' | jq .
 ```
 
@@ -223,16 +196,16 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" \
 ```json
 {
   "info": {
-    "statusCode": 200,
-    "finalUrl": "https://example.com",
-    "headers": ["content-type: text/html"],
-    "screenshot": "base64-encoded-png",
-    "catchedAjax": {
-      "url": "https://example.com/api/data",
-      "method": "GET",
-      "body": "...",
-      "status": 200
-    }
+  "statusCode": 200,
+  "finalUrl": "https://example.com",
+  "headers": ["content-type: text/html"],
+  "screenshot": "base64-encoded-png",
+  "catchedAjax": {
+  "url": "https://example.com/api/data",
+  "method": "GET",
+  "body": "...",
+  "status": 200
+  }
   },
   "body": "<html>...</html>",
   "extractor": { "extracted": "data" }

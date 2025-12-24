@@ -66,23 +66,19 @@ Get seat breakdown and settings for an organization:
 ```bash
 ORG="your-org-name"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  | jq .
+curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .
 ```
 
 **Response:**
 ```json
 {
   "seat_breakdown": {
-    "total": 12,
-    "added_this_cycle": 2,
-    "pending_cancellation": 0,
-    "pending_invitation": 1,
-    "active_this_cycle": 12,
-    "inactive_this_cycle": 0
+  "total": 12,
+  "added_this_cycle": 2,
+  "pending_cancellation": 0,
+  "pending_invitation": 1,
+  "active_this_cycle": 12,
+  "inactive_this_cycle": 0
   },
   "seat_management_setting": "assign_selected",
   "public_code_suggestions": "block"
@@ -98,11 +94,7 @@ Get all users with Copilot seats:
 ```bash
 ORG="your-org-name"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing/seats?per_page=50" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'
+curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing/seats?per_page=50" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'
 ```
 
 ---
@@ -115,11 +107,7 @@ Get specific user's Copilot seat information:
 ORG="your-org-name"
 USERNAME="octocat"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/members/${USERNAME}/copilot" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  | jq .
+curl -s -X GET "https://api.github.com/orgs/${ORG}/members/${USERNAME}/copilot" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .
 ```
 
 ---
@@ -131,13 +119,8 @@ Assign Copilot seats to specific users:
 ```bash
 ORG="your-org-name"
 
-curl -s -X POST "https://api.github.com/orgs/${ORG}/copilot/billing/selected_users" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "selected_usernames": ["user1", "user2"]
+curl -s -X POST "https://api.github.com/orgs/${ORG}/copilot/billing/selected_users" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
+  "selected_usernames": ["user1", "user2"]
   }' | jq .
 ```
 
@@ -157,13 +140,8 @@ Remove Copilot seats from specific users:
 ```bash
 ORG="your-org-name"
 
-curl -s -X DELETE "https://api.github.com/orgs/${ORG}/copilot/billing/selected_users" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "selected_usernames": ["user1", "user2"]
+curl -s -X DELETE "https://api.github.com/orgs/${ORG}/copilot/billing/selected_users" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
+  "selected_usernames": ["user1", "user2"]
   }' | jq .
 ```
 
@@ -183,13 +161,8 @@ Assign Copilot to entire teams:
 ```bash
 ORG="your-org-name"
 
-curl -s -X POST "https://api.github.com/orgs/${ORG}/copilot/billing/selected_teams" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "selected_teams": ["engineering", "design"]
+curl -s -X POST "https://api.github.com/orgs/${ORG}/copilot/billing/selected_teams" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
+  "selected_teams": ["engineering", "design"]
   }' | jq .
 ```
 
@@ -202,13 +175,8 @@ Remove Copilot from teams:
 ```bash
 ORG="your-org-name"
 
-curl -s -X DELETE "https://api.github.com/orgs/${ORG}/copilot/billing/selected_teams" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "selected_teams": ["engineering"]
+curl -s -X DELETE "https://api.github.com/orgs/${ORG}/copilot/billing/selected_teams" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
+  "selected_teams": ["engineering"]
   }' | jq .
 ```
 
@@ -221,11 +189,7 @@ Get usage statistics (requires 5+ active users):
 ```bash
 ORG="your-org-name"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/metrics?per_page=7" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  | jq '.[] | {date, total_active_users, total_engaged_users}'
+curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/metrics?per_page=7" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '.[] | {date, total_active_users, total_engaged_users}'
 ```
 
 **Response:**
@@ -247,11 +211,7 @@ Get team-specific usage metrics:
 ORG="your-org-name"
 TEAM="engineering"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/team/${TEAM}/copilot/metrics" \
-  --header "Authorization: Bearer ${GITHUB_TOKEN}" \
-  --header "Accept: application/vnd.github+json" \
-  --header "X-GitHub-Api-Version: 2022-11-28" \
-  | jq .
+curl -s -X GET "https://api.github.com/orgs/${ORG}/team/${TEAM}/copilot/metrics" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .
 ```
 
 ---

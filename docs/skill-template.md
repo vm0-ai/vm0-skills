@@ -24,10 +24,7 @@ Before writing a skill, thoroughly understand the target API:
 
 ```bash
 # Example: search API docs with Tavily
-curl -s -X POST "https://api.tavily.com/search" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${TAVILY_API_KEY}" \
-  -d '{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}' | jq .
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}' | jq .
 ```
 
 ---
@@ -82,19 +79,13 @@ export ENV_VAR_2="your-value"
 ### 1. <Feature Name>
 
 \`\`\`bash
-curl -s -X GET "https://api.example.com/endpoint" \
-  --header "Authorization: Bearer ${ENV_VAR_1}" \
-  | jq .
+curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer ${ENV_VAR_1}" | jq .
 \`\`\`
 
 ### 2. <Feature Name>
 
 \`\`\`bash
-curl -s -X POST "https://api.example.com/endpoint" \
-  --header "Content-Type: application/json" \
-  --header "Authorization: Bearer ${ENV_VAR_1}" \
-  -d '{"key": "value"}' \
-  | jq .
+curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer ${ENV_VAR_1}" -d '{"key": "value"}' | jq .
 \`\`\`
 
 ---
@@ -110,6 +101,7 @@ curl -s -X POST "https://api.example.com/endpoint" \
 
 - **Write everything in English** - all text, comments, and examples must be in English
 - **Prefer curl examples** over shell scripts
+- **Write curl commands on a single line** - do NOT use backslash (`\`) for line continuation, as it may cause issues in Claude Code
 - Use `--header` instead of `-H` (better compatibility)
 - All examples should be copy-paste executable
 - Include the API documentation URL so agents can look up additional endpoints
@@ -150,9 +142,7 @@ After writing, test each curl example in SKILL.md:
 source $HOME/.env.local
 
 # Execute example commands and verify results
-curl -s -X GET "https://api.example.com/endpoint" \
-  --header "Authorization: Bearer ${EXAMPLE_API_KEY}" \
-  | jq .
+curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer ${EXAMPLE_API_KEY}" | jq .
 ```
 
 Checklist:

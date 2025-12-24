@@ -54,12 +54,9 @@ Convert Word, Excel, PowerPoint, images to PDF:
 echo "Hello, PDF4ME!" > /tmp/test.txt
 BASE64_CONTENT=$(base64 < /tmp/test.txt)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertToPdf" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${BASE64_CONTENT}\",
-    \"docName\": \"test.txt\"
+curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertToPdf" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${BASE64_CONTENT}\",
+  \"docName\": \"test.txt\"
   }" | jq -r '.docContent' | base64 -d > /tmp/output.pdf
 ```
 
@@ -70,14 +67,11 @@ Convert HTML content to PDF:
 ```bash
 HTML_CONTENT=$(echo '<html><body><h1>Hello World</h1><p>This is a test.</p></body></html>' | base64)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertHtmlToPdf" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${HTML_CONTENT}\",
-    \"docName\": \"test.html\",
-    \"layout\": \"Portrait\",
-    \"format\": \"A4\"
+curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertHtmlToPdf" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${HTML_CONTENT}\",
+  \"docName\": \"test.html\",
+  \"layout\": \"Portrait\",
+  \"format\": \"A4\"
   }" --output /tmp/from-html.pdf
 ```
 
@@ -86,11 +80,8 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertHtmlToPdf" \
 Convert a webpage to PDF:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/UrlToPdf" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "url": "https://example.com"
+curl -s -X POST "https://api.pdf4me.com/api/v2/UrlToPdf" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d '{
+  "url": "https://example.com"
   }' | jq -r '.docContent' | base64 -d > /tmp/webpage.pdf
 ```
 
@@ -102,12 +93,9 @@ Combine multiple PDFs into one:
 PDF1_BASE64=$(base64 < file1.pdf)
 PDF2_BASE64=$(base64 < file2.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/Merge" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": [\"${PDF1_BASE64}\", \"${PDF2_BASE64}\"],
-    \"docName\": \"merged.pdf\"
+curl -s -X POST "https://api.pdf4me.com/api/v2/Merge" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": [\"${PDF1_BASE64}\", \"${PDF2_BASE64}\"],
+  \"docName\": \"merged.pdf\"
   }" | jq -r '.docContent' | base64 -d > merged.pdf
 ```
 
@@ -118,14 +106,11 @@ Split PDF by page ranges:
 ```bash
 PDF_BASE64=$(base64 < input.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/Split" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"input.pdf\",
-    \"splitAction\": \"splitAfterPage\",
-    \"splitAfterPage\": 2
+curl -s -X POST "https://api.pdf4me.com/api/v2/Split" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"input.pdf\",
+  \"splitAction\": \"splitAfterPage\",
+  \"splitAfterPage\": 2
   }"
 ```
 
@@ -136,12 +121,9 @@ Reduce PDF file size:
 ```bash
 PDF_BASE64=$(base64 < large.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/Compress" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"large.pdf\"
+curl -s -X POST "https://api.pdf4me.com/api/v2/Compress" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"large.pdf\"
   }" | jq -r '.docContent' | base64 -d > compressed.pdf
 ```
 
@@ -152,12 +134,9 @@ Convert PDF to editable Word document:
 ```bash
 PDF_BASE64=$(base64 < input.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/PdfToWord" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"input.pdf\"
+curl -s -X POST "https://api.pdf4me.com/api/v2/PdfToWord" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"input.pdf\"
   }" | jq -r '.docContent' | base64 -d > output.docx
 ```
 
@@ -168,14 +147,11 @@ Create thumbnails/images from PDF pages:
 ```bash
 PDF_BASE64=$(base64 < input.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/CreateThumbnail" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"input.pdf\",
-    \"imageFormat\": \"png\",
-    \"width\": 800
+curl -s -X POST "https://api.pdf4me.com/api/v2/CreateThumbnail" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"input.pdf\",
+  \"imageFormat\": \"png\",
+  \"width\": 800
   }"
 ```
 
@@ -186,17 +162,14 @@ Add text watermark to PDF:
 ```bash
 PDF_BASE64=$(base64 < input.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/TextStamp" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"input.pdf\",
-    \"stampText\": \"CONFIDENTIAL\",
-    \"pages\": \"all\",
-    \"alignX\": \"center\",
-    \"alignY\": \"middle\",
-    \"alpha\": 0.3
+curl -s -X POST "https://api.pdf4me.com/api/v2/TextStamp" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"input.pdf\",
+  \"stampText\": \"CONFIDENTIAL\",
+  \"pages\": \"all\",
+  \"alignX\": \"center\",
+  \"alignY\": \"middle\",
+  \"alpha\": 0.3
   }" | jq -r '.docContent' | base64 -d > stamped.pdf
 ```
 
@@ -207,13 +180,10 @@ Make scanned PDFs searchable:
 ```bash
 PDF_BASE64=$(base64 < scanned.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/PdfOcr" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"scanned.pdf\",
-    \"ocrLanguage\": \"eng\"
+curl -s -X POST "https://api.pdf4me.com/api/v2/PdfOcr" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"scanned.pdf\",
+  \"ocrLanguage\": \"eng\"
   }" | jq -r '.docContent' | base64 -d > searchable.pdf
 ```
 
@@ -222,13 +192,10 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/PdfOcr" \
 ```bash
 PDF_BASE64=$(base64 < input.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/ProtectDocument" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"input.pdf\",
-    \"password\": \"secret123\"
+curl -s -X POST "https://api.pdf4me.com/api/v2/ProtectDocument" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"input.pdf\",
+  \"password\": \"secret123\"
   }" | jq -r '.docContent' | base64 -d > protected.pdf
 ```
 
@@ -239,13 +206,10 @@ Extract specific pages from PDF:
 ```bash
 PDF_BASE64=$(base64 < input.pdf)
 
-curl -s -X POST "https://api.pdf4me.com/api/v2/ExtractPages" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d "{
-    \"docContent\": \"${PDF_BASE64}\",
-    \"docName\": \"input.pdf\",
-    \"pageNrs\": [1, 3, 5]
+curl -s -X POST "https://api.pdf4me.com/api/v2/ExtractPages" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d "{
+  \"docContent\": \"${PDF_BASE64}\",
+  \"docName\": \"input.pdf\",
+  \"pageNrs\": [1, 3, 5]
   }" | jq -r '.docContent' | base64 -d > extracted.pdf
 ```
 
@@ -290,13 +254,10 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/ExtractPages" \
 All endpoints use POST with JSON body:
 
 ```bash
-curl -X POST "https://api.pdf4me.com/api/v2/{endpoint}" \
-  --header "Authorization: ${PDF4ME_API_KEY}" \
-  --header "Content-Type: application/json" \
-  -d '{
-    "docContent": "base64-encoded-file",
-    "docName": "filename.ext",
-    ...other parameters
+curl -X POST "https://api.pdf4me.com/api/v2/{endpoint}" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d '{
+  "docContent": "base64-encoded-file",
+  "docName": "filename.ext",
+  ...other parameters
   }'
 ```
 

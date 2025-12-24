@@ -78,8 +78,8 @@ scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --text "Group messag
 ```bash
 scripts/lark.sh message send --to "ou_xxx" --type "open_id" --post '{
   "zh_cn": {
-    "title": "Title",
-    "content": [[{"tag": "text", "text": "Content"}]]
+  "title": "Title",
+  "content": [[{"tag": "text", "text": "Content"}]]
   }
 }'
 ```
@@ -191,11 +191,7 @@ scripts/lark.sh calendar list
 #### Create Event
 
 ```bash
-scripts/lark.sh calendar create-event --calendar-id "xxx" \
-  --summary "Team Meeting" \
-  --start "2025-01-15T10:00:00+08:00" \
-  --end "2025-01-15T11:00:00+08:00" \
-  --description "Weekly sync"
+scripts/lark.sh calendar create-event --calendar-id "xxx" --summary "Team Meeting" --start "2025-01-15T10:00:00+08:00" --end "2025-01-15T11:00:00+08:00" --description "Weekly sync"
 ```
 
 | Parameter | Required | Default | Description |
@@ -209,9 +205,7 @@ scripts/lark.sh calendar create-event --calendar-id "xxx" \
 #### List Events
 
 ```bash
-scripts/lark.sh calendar events --calendar-id "xxx" \
-  --start "2025-01-01T00:00:00+08:00" \
-  --end "2025-01-31T23:59:59+08:00"
+scripts/lark.sh calendar events --calendar-id "xxx" --start "2025-01-01T00:00:00+08:00" --end "2025-01-31T23:59:59+08:00"
 ```
 
 ---
@@ -242,12 +236,12 @@ Returns bot name, open_id, and capabilities.
 ```bash
 scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
   "header": {
-    "title": {"tag": "plain_text", "content": "System Alert"},
-    "template": "red"
+  "title": {"tag": "plain_text", "content": "System Alert"},
+  "template": "red"
   },
   "elements": [{
-    "tag": "div",
-    "text": {"tag": "lark_md", "content": "**Error:** Service down"}
+  "tag": "div",
+  "text": {"tag": "lark_md", "content": "**Error:** Service down"}
   }]
 }'
 ```
@@ -255,9 +249,7 @@ scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
 ### Create Team Group with Members
 
 ```bash
-scripts/lark.sh chat create --name "Q1 Project" \
-  --members "ou_abc,ou_def,ou_ghi" \
-  --description "Q1 project discussion"
+scripts/lark.sh chat create --name "Q1 Project" --members "ou_abc,ou_def,ou_ghi" --description "Q1 project discussion"
 ```
 
 ### Query Organization Structure
@@ -273,11 +265,7 @@ scripts/lark.sh contact members --department-id "od_xxx"
 ### Schedule a Meeting
 
 ```bash
-scripts/lark.sh calendar create-event --calendar-id "primary" \
-  --summary "Sprint Planning" \
-  --start "2025-01-20T09:00:00+08:00" \
-  --end "2025-01-20T10:30:00+08:00" \
-  --description "Sprint 5 planning session"
+scripts/lark.sh calendar create-event --calendar-id "primary" --summary "Sprint Planning" --start "2025-01-20T09:00:00+08:00" --end "2025-01-20T10:30:00+08:00" --description "Sprint 5 planning session"
 ```
 
 ## Guidelines

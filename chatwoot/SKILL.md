@@ -36,7 +36,7 @@ Use this skill when you need to:
 ```bash
 export CHATWOOT_API_TOKEN="your-api-access-token"
 export CHATWOOT_ACCOUNT_ID="1"
-export CHATWOOT_BASE_URL="https://app.chatwoot.com"  # or your self-hosted URL
+export CHATWOOT_BASE_URL="https://app.chatwoot.com" # or your self-hosted URL
 ```
 
 ### API Types
@@ -60,19 +60,16 @@ All examples use the **Application API** with user access token.
 Create a new contact in your account:
 
 ```bash
-curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "inbox_id": 1,
-    "name": "John Doe",
-    "email": "john@example.com",
-    "phone_number": "+1234567890",
-    "identifier": "customer_123",
-    "additional_attributes": {
-      "company": "Acme Inc",
-      "plan": "premium"
-    }
+curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d '{
+  "inbox_id": 1,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "phone_number": "+1234567890",
+  "identifier": "customer_123",
+  "additional_attributes": {
+  "company": "Acme Inc",
+  "plan": "premium"
+  }
   }' | jq '{id, name, email, phone_number}'
 ```
 
@@ -83,9 +80,7 @@ curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/con
 Search contacts by email, phone, or name:
 
 ```bash
-curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/search?q=john@example.com" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  | jq '.payload[] | {id, name, email}'
+curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/search?q=john@example.com" -H "api_access_token: ${CHATWOOT_API_TOKEN}" | jq '.payload[] | {id, name, email}'
 ```
 
 ---
@@ -97,9 +92,7 @@ Get a specific contact by ID:
 ```bash
 CONTACT_ID=123
 
-curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/${CONTACT_ID}" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  | jq '{id, name, email, phone_number, custom_attributes}'
+curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/${CONTACT_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}" | jq '{id, name, email, phone_number, custom_attributes}'
 ```
 
 ---
@@ -109,17 +102,14 @@ curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/cont
 Create a new conversation with a contact:
 
 ```bash
-curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "source_id": "api_conversation_123",
-    "inbox_id": 1,
-    "contact_id": 123,
-    "status": "open",
-    "message": {
-      "content": "Hello! How can I help you today?"
-    }
+curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d '{
+  "source_id": "api_conversation_123",
+  "inbox_id": 1,
+  "contact_id": 123,
+  "status": "open",
+  "message": {
+  "content": "Hello! How can I help you today?"
+  }
   }' | jq '{id, inbox_id, status}'
 ```
 
@@ -131,9 +121,7 @@ Get all conversations with optional filters:
 
 ```bash
 # List open conversations
-curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations?status=open" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  | jq '.data.payload[] | {id, status, contact: .meta.sender.name}'
+curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations?status=open" -H "api_access_token: ${CHATWOOT_API_TOKEN}" | jq '.data.payload[] | {id, status, contact: .meta.sender.name}'
 ```
 
 ---
@@ -145,9 +133,7 @@ Get details of a specific conversation:
 ```bash
 CONVERSATION_ID=123
 
-curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  | jq '{id, status, inbox_id, messages_count: .messages | length}'
+curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}" | jq '{id, status, inbox_id, messages_count: .messages | length}'
 ```
 
 ---
@@ -159,13 +145,10 @@ Send a message in a conversation:
 ```bash
 CONVERSATION_ID=123
 
-curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/messages" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "content": "Thank you for contacting us! Let me help you with that.",
-    "message_type": "outgoing",
-    "private": false
+curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/messages" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d '{
+  "content": "Thank you for contacting us! Let me help you with that.",
+  "message_type": "outgoing",
+  "private": false
   }' | jq '{id, content, status}'
 ```
 
@@ -178,13 +161,10 @@ Add an internal note (not visible to customer):
 ```bash
 CONVERSATION_ID=123
 
-curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/messages" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "content": "Customer is a VIP - handle with priority",
-    "message_type": "outgoing",
-    "private": true
+curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/messages" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d '{
+  "content": "Customer is a VIP - handle with priority",
+  "message_type": "outgoing",
+  "private": true
   }' | jq '{id, content, private}'
 ```
 
@@ -198,11 +178,7 @@ Assign a conversation to an agent:
 CONVERSATION_ID=123
 AGENT_ID=1
 
-curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/assignments" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d "{\"assignee_id\": ${AGENT_ID}}" \
-  | jq .
+curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/assignments" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d "{\"assignee_id\": ${AGENT_ID}}" | jq .
 ```
 
 ---
@@ -214,11 +190,7 @@ Change conversation status (open, resolved, pending):
 ```bash
 CONVERSATION_ID=123
 
-curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/toggle_status" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  -H "Content-Type: application/json" \
-  -d '{"status": "resolved"}' \
-  | jq '{id, status}'
+curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/toggle_status" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d '{"status": "resolved"}' | jq '{id, status}'
 ```
 
 ---
@@ -228,9 +200,7 @@ curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/con
 Get all agents in the account:
 
 ```bash
-curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/agents" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  | jq '.[] | {id, name, email, role, availability_status}'
+curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/agents" -H "api_access_token: ${CHATWOOT_API_TOKEN}" | jq '.[] | {id, name, email, role, availability_status}'
 ```
 
 ---
@@ -240,9 +210,7 @@ curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/agen
 Get all inboxes (channels) in the account:
 
 ```bash
-curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/inboxes" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  | jq '.payload[] | {id, name, channel_type}'
+curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/inboxes" -H "api_access_token: ${CHATWOOT_API_TOKEN}" | jq '.payload[] | {id, name, channel_type}'
 ```
 
 ---
@@ -252,9 +220,7 @@ curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/inbo
 Get counts by status for dashboard:
 
 ```bash
-curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/meta" \
-  -H "api_access_token: ${CHATWOOT_API_TOKEN}" \
-  | jq '.meta.all_count, .meta.mine_count'
+curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/meta" -H "api_access_token: ${CHATWOOT_API_TOKEN}" | jq '.meta.all_count, .meta.mine_count'
 ```
 
 ---

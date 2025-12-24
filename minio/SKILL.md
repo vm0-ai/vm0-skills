@@ -230,12 +230,7 @@ date=$(date -R)
 signature_string="PUT\n\n${content_type}\n${date}\n${resource}"
 signature=$(echo -en "${signature_string}" | openssl sha1 -hmac "${s3_secret}" -binary | base64)
 
-curl -X PUT -T "${file}" \
-  --header "Host: ${host}" \
-  --header "Date: ${date}" \
-  --header "Content-Type: ${content_type}" \
-  --header "Authorization: AWS ${s3_key}:${signature}" \
-  "https://${host}${resource}"
+curl -X PUT -T "${file}" --header "Host: ${host}" --header "Date: ${date}" --header "Content-Type: ${content_type}" --header "Authorization: AWS ${s3_key}:${signature}" "https://${host}${resource}"
 ```
 
 Usage:
@@ -294,12 +289,12 @@ cat > /tmp/policy.json << 'EOF'
 {
   "Version": "2012-10-17",
   "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {"AWS": ["*"]},
-      "Action": ["s3:GetObject"],
-      "Resource": ["arn:aws:s3:::my-bucket/public/*"]
-    }
+  {
+  "Effect": "Allow",
+  "Principal": {"AWS": ["*"]},
+  "Action": ["s3:GetObject"],
+  "Resource": ["arn:aws:s3:::my-bucket/public/*"]
+  }
   ]
 }
 EOF
