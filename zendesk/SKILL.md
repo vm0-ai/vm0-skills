@@ -77,7 +77,7 @@ curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users.json" -u "${ZENDE
 
 **Note**: The `/users/me.json` endpoint may return anonymous user for API token authentication. Use `/tickets.json` or `/users.json` to verify token validity.
 
-**✅ This skill has been tested and verified** with a live Zendesk workspace (vm0.zendesk.com). All core endpoints work correctly.
+**✅ This skill has been tested and verified** with a live Zendesk workspace. All core endpoints work correctly.
 
 ---
 
