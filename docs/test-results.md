@@ -6,14 +6,14 @@ This document tracks the testing status of all skills after the `bash -c` patter
 
 ## Summary
 
-- **Total Skills**: 62
-- **Tested & Passed**: 35
-- **Tested with Issues**: 7 (API/config issues, not curl pattern issues)
-- **Not Tested**: 20 (no credentials)
+- **Total Skills**: 61
+- **Tested & Passed**: 45
+- **Tested with Issues**: 4 (API/config issues, not curl pattern issues)
+- **Not Tested**: 12 (no credentials)
 
 ## Test Results
 
-### ✅ Passed (35)
+### ✅ Passed (45)
 
 | Skill | Test Result | Notes |
 |-------|-------------|-------|
@@ -52,18 +52,25 @@ This document tracks the testing status of all skills after the `bash -c` patter
 | zapsign | ✅ | 0 docs (empty account) |
 | zeptomail | ✅ | API responds (auth works) |
 | runway | ✅ | 2675 credits, 16 models available |
+| minimax | ✅ | Chat completion works (global endpoint) |
+| jira | ✅ | User info: Ethan Zhang |
+| fal.ai | ✅ | Image generated successfully |
+| slack-webhook | ✅ | Message sent successfully |
+| scrapeninja | ✅ | Scraped example.com |
+| twenty | ✅ | 5 people returned |
+| pdfco | ✅ | PDF to text conversion works |
+| pdforge | ✅ | HTML to PDF works |
+| github | ✅ | gh CLI auth works |
+| cloudinary | ✅ | List resources works |
 
-### ⚠️ Issues (7)
+### ⚠️ Issues (4)
 
 | Skill | Issue | Root Cause |
 |-------|-------|------------|
-| fal.ai | Returns null | Queue mode requires async polling |
 | google-sheets | Token error | OAuth token expired |
 | instagram | OAuth error | Access token expired |
-| jira | Returns HTML | Wrong endpoint or auth format |
-| kommo | Empty response | API key may be invalid |
-| minimax | Returns null | API response format issue |
-| twenty | Empty URL | TWENTY_API_URL not configured |
+| kommo | 401 Unauthorized | API key invalid |
+| pdf4me | 404 error | API endpoint may have changed |
 
 **Note**: These issues are API-specific, not related to the `bash -c` curl pattern.
 
@@ -75,31 +82,6 @@ This document tracks the testing status of all skills after the `bash -c` patter
 bash -c 'curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer $AXIOM_API_KEY"' | jq '[.[] | .name]'
 # Error: jq: error (at <stdin>:0): Cannot index number with string "name"
 # Root cause: API returns object not array, need different jq query
-```
-
-**minimax**
-```bash
-bash -c 'curl -s "https://api.minimax.chat/v1/text/chatcompletion_v2" -H "Authorization: Bearer $MINIMAX_API_KEY" ...' | jq '.'
-# Response: {"model": null, "content": null}
-```
-
-**fal.ai**
-```bash
-bash -c 'curl -s "https://queue.fal.run/fal-ai/flux/schnell" -H "Authorization: Key $FAL_API_KEY" ...' | jq '.'
-# Response: {"status": null, "request_id": null}
-# Note: Queue endpoint returns job ID, need to poll for result
-```
-
-**twenty**
-```bash
-bash -c 'curl -s "${TWENTY_API_URL}/people" -H "Authorization: Bearer $TWENTY_API_KEY"'
-# Response: HTML page (TWENTY_API_URL is empty)
-```
-
-**jira**
-```bash
-bash -c 'curl -s "https://api.jira.com/ex/jira" -H "Authorization: Basic $JIRA_API_TOKEN"'
-# Response: HTML page (wrong endpoint or auth format)
 ```
 
 **google-sheets**
@@ -116,27 +98,20 @@ bash -c 'curl -s "https://api.kommo.com/api/v4/account" -H "Authorization: Beare
 
 </details>
 
-### ⏳ Not Tested (20)
+### ⏳ Not Tested (12)
 
 | Skill | Reason |
 |-------|--------|
 | bitrix | No credentials |
-| cloudinary | No credentials |
 | discord-webhook | Requires webhook URL |
-| fal-image | Duplicate of fal.ai |
 | figma | No credentials |
-| github | Uses gh CLI, not curl |
 | github-copilot | No credentials |
 | imgur | No credentials |
 | intercom | No credentials |
 | lark | No credentials |
 | minio | No credentials |
-| pdf4me | No credentials (empty response) |
-| pdfco | Connection error (exit 35) |
-| pdforge | No credentials (empty response) |
 | qiita | No credentials |
 | reportei | No credentials |
-| scrapeninja | Empty response |
 | streak | No credentials |
 | zendesk | No credentials |
 
@@ -155,7 +130,7 @@ VAR="$(bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API
 bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"'' | jq .
 ```
 
-All 32 tested skills confirmed that:
+All 45 tested skills confirmed that:
 1. Environment variables are correctly passed inside `bash -c`
 2. Pipes to `jq` work correctly outside `bash -c`
 3. Command substitution with quotes protects special characters
