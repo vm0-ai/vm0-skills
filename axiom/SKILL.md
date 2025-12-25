@@ -3,6 +3,8 @@ name: axiom
 description: Axiom observability platform for logs, events, and analytics via REST API
 vm0_env:
   - AXIOM_API_TOKEN
+  - AXIOM_PERSONAL_ACCESS_TOKEN (optional, for /v2/user endpoint)
+  - AXIOM_ORG_ID (optional, required with PAT)
 ---
 
 # Axiom
@@ -30,10 +32,24 @@ Use this skill when you need to:
 2. Create an API token with appropriate permissions (Settings > API Tokens)
 3. Create a dataset to store your data
 
-Set environment variable:
+### Token Types
+
+Axiom supports two token types:
+
+| Type | Prefix | Use Case |
+|------|--------|----------|
+| **API Token** | `xaat-` | Most operations (datasets, ingest, queries, monitors) |
+| **Personal Access Token (PAT)** | `xapt-` | Full account access (required for `/v2/user` endpoint) |
+
+Set environment variables:
 
 ```bash
+# Required: API Token for most operations
 export AXIOM_API_TOKEN="xaat-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Optional: For endpoints that require PAT (e.g., Get Current User)
+export AXIOM_PERSONAL_ACCESS_TOKEN="xapt-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+export AXIOM_ORG_ID="your-org-id"
 ```
 
 ---
@@ -106,10 +122,12 @@ bash -c 'curl -s -X POST "https://api.axiom.co/v2/annotations" -H "Authorization
 bash -c 'curl -s "https://api.axiom.co/v2/monitors" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
 ```
 
-### 10. Get Current User
+### 10. Get Current User (Requires PAT)
+
+> **Note:** This endpoint requires a Personal Access Token (PAT), not an API Token.
 
 ```bash
-bash -c 'curl -s "https://api.axiom.co/v2/user" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
+bash -c 'curl -s "https://api.axiom.co/v2/user" -H "Authorization: Bearer ${AXIOM_PERSONAL_ACCESS_TOKEN}" -H "x-axiom-org-id: ${AXIOM_ORG_ID}"' | jq .
 ```
 
 ### 11. Delete Dataset
