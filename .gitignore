@@ -1,0 +1,3 @@
+artifact/
+.env
+.env.local

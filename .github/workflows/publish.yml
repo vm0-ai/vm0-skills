@@ -1,0 +1,27 @@
+name: Publish Agent
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build VM0 Image
+        uses: vm0-ai/image-build-action@v1
+        with:
+          name: skills-tester
+          vm0-token: ${{ secrets.VM0_TOKEN }}
+
+      - name: Publish skills-tester
+        id: publish-skills-tester
+        uses: vm0-ai/compose-action@v1
+        with:
+          vm0-token: ${{ secrets.VM0_TOKEN }}
+
+      - name: Print outputs
+        run: |
+          echo "skills-tester: ${{ steps.publish-skills-tester.outputs.agent }}@${{ steps.publish-skills-tester.outputs.version }}"
