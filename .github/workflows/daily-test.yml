@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 17 * * *'
   workflow_dispatch:
+    inputs:
+      prompt:
+        description: 'Prompt to send to the agent'
+        required: false
+        default: 'do the job'
 
 jobs:
   run-skills-tester:
@@ -14,7 +19,7 @@ jobs:
         uses: vm0-ai/run-action@v1
         with:
           agent: skills-tester
-          prompt: "Run the daily skills test"
+          prompt: ${{ inputs.prompt || 'do the job' }}
           vm0-token: ${{ secrets.VM0_TOKEN }}
           secrets: |
             CLAUDE_CODE_OAUTH_TOKEN=${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
