@@ -3,6 +3,8 @@ name: Publish Agent
 on:
   push:
     branches: [main]
+    paths:
+      - '.vm0/**'
 
 jobs:
   publish:
