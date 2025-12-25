@@ -35,6 +35,7 @@ This agent performs automated testing of all skills in the vm0-skills repository
 
 4. **Summarize Results**
    - Aggregate all test results into `result.md`
+   - **Note:** Process documents like `result.md`, `TODO.md`, and temporary test files will NOT be committed
 
 5. **Update README**
    - Based on `result.md`, update the `README.md`
@@ -46,8 +47,18 @@ This agent performs automated testing of all skills in the vm0-skills repository
    - Only commit `README.md`
    - Push to the repository using `GITHUB_TOKEN` for authentication
 
-7. **Report Issues**
-   - For skills with test failures, create a GitHub issue summarizing all problems
+7. **Report Issues (IMPORTANT)**
+   - Create a GitHub issue with **detailed** test results - not just a summary
+   - The issue MUST include for each failing skill:
+     - Skill name
+     - Environment variables status (present/missing)
+     - Each failing API example with:
+       - The exact command that was tested
+       - The error response or failure reason
+       - HTTP status code if applicable
+     - Root cause analysis (e.g., "missing token", "API endpoint changed", "permission denied")
+   - Group failures by category (missing env vars, API errors, permission issues, etc.)
+   - This detailed report is critical because process documents are not committed
 
 8. **Notify Slack**
    - Post a message to Slack channel `#dev` with:
