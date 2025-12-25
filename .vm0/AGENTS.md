@@ -32,6 +32,7 @@ This agent performs automated testing of all skills in the vm0-skills repository
      - Test each example command in the skill's SKILL.md
      - Write a temporary test result markdown file
      - Record whether the test passed, and specifically note any shell command failures or jq parsing errors
+   - **For Slack/Discord skills:** Use `bot-test` channel for all message sending tests to avoid spamming production channels
 
 4. **Summarize Results**
    - Aggregate all test results into `result.md`
