@@ -7,17 +7,18 @@ This document tracks the testing status of all skills after the `bash -c` patter
 ## Summary
 
 - **Total Skills**: 62
-- **Tested & Passed**: 34
-- **Tested with Issues**: 8 (API/config issues, not curl pattern issues)
+- **Tested & Passed**: 35
+- **Tested with Issues**: 7 (API/config issues, not curl pattern issues)
 - **Not Tested**: 20 (no credentials)
 
 ## Test Results
 
-### ✅ Passed (34)
+### ✅ Passed (35)
 
 | Skill | Test Result | Notes |
 |-------|-------------|-------|
 | apify | ✅ | 1 actor returned |
+| bright-data | ✅ | Account active, bandwidth data |
 | browserless | ✅ | Scraped example.com h1 |
 | axiom | ✅ | API responds (object format) |
 | brave-search | ✅ | Search results for "anthropic" |
@@ -52,11 +53,10 @@ This document tracks the testing status of all skills after the `bash -c` patter
 | zeptomail | ✅ | API responds (auth works) |
 | runway | ✅ | 2675 credits, 16 models available |
 
-### ⚠️ Issues (8)
+### ⚠️ Issues (7)
 
 | Skill | Issue | Root Cause |
 |-------|-------|------------|
-| bright-data | 404 error | Endpoint not found |
 | fal.ai | Returns null | Queue mode requires async polling |
 | google-sheets | Token error | OAuth token expired |
 | instagram | OAuth error | Access token expired |
@@ -88,12 +88,6 @@ bash -c 'curl -s "https://api.minimax.chat/v1/text/chatcompletion_v2" -H "Author
 bash -c 'curl -s "https://queue.fal.run/fal-ai/flux/schnell" -H "Authorization: Key $FAL_API_KEY" ...' | jq '.'
 # Response: {"status": null, "request_id": null}
 # Note: Queue endpoint returns job ID, need to poll for result
-```
-
-**bright-data**
-```bash
-bash -c 'curl -s "https://api.brightdata.com/zone/status" -H "Authorization: Bearer $BRIGHTDATA_API_KEY"'
-# Response: parse error (non-JSON response)
 ```
 
 **twenty**
