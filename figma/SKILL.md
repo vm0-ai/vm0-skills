@@ -140,8 +140,7 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=${NODE_
 Download an exported image:
 
 ```bash
-curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=1:2&format=png" -H "X-Figma-Token: ${FIGMA_API_TOKEN}" > /tmp/resp.json
-IMAGE_URL=$(cat /tmp/resp.json | jq -r '.images["1:2"]')
+IMAGE_URL=$(bash -c 'curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=1:2&format=png" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.images["1:2"]')
 
 curl -s -o output.png "$IMAGE_URL"
 ```
@@ -342,8 +341,7 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/files?name=${
 FILE_KEY="abc123XYZ"
 
 # Get all frame IDs
-curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}" > /tmp/resp.json
-FRAME_IDS=$(cat /tmp/resp.json | jq -r '.document.children[0].children[] | select(.type=="FRAME") | .id' | paste -sd "," -)
+FRAME_IDS=$(bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.document.children[0].children[] | select(.type=="FRAME") | .id' | paste -sd "," -)
 
 # Export frames
 bash -c 'curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=${FRAME_IDS}&format=png&scale=2" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.images
@@ -364,8 +362,7 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma
 FILE_KEY="abc123XYZ"
 
 # Get current version
-curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}" > /tmp/resp.json
-CURRENT_VERSION=$(cat /tmp/resp.json | jq -r '.version')
+CURRENT_VERSION=$(bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.version')
 
 echo "Current version: $CURRENT_VERSION"
 ```

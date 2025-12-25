@@ -189,8 +189,7 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 Add `?dl=1` to the image URL to trigger download:
 
 ```bash
-curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d 'html=<div style="padding:20px;background:green;color:white;">Download Me</div>' > /tmp/resp_hcti.json
-IMAGE_URL=$(cat /tmp/resp_hcti.json | jq -r '.url')
+IMAGE_URL=$(bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d '"'"'html=<div style="padding:20px;background:green;color:white;">Download Me</div>'"'"'' | jq -r '.url')
 
 curl -s "${IMAGE_URL}?dl=1" --output image.png
 ```
@@ -202,8 +201,7 @@ curl -s "${IMAGE_URL}?dl=1" --output image.png
 Add width/height query parameters to resize:
 
 ```bash
-curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d 'html=<div style="padding:40px;background:purple;color:white;font-size:32px;">Resizable</div>' > /tmp/resp_hcti.json
-IMAGE_URL=$(cat /tmp/resp_hcti.json | jq -r '.url')
+IMAGE_URL=$(bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" -d '"'"'html=<div style="padding:40px;background:purple;color:white;font-size:32px;">Resizable</div>'"'"'' | jq -r '.url')
 
 echo "Original: ${IMAGE_URL}"
 echo "Thumbnail: ${IMAGE_URL}?width=200&height=200"

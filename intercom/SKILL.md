@@ -362,7 +362,7 @@ bash -c 'curl -s -X POST "https://api.intercom.io/events" -H "Authorization: Bea
 
 ```bash
 # Search for open conversations
-OPEN_CONVS=$(curl -s -X POST "https://api.intercom.io/conversations/search" -H "Authorization: Bearer ${INTERCOM_ACCESS_TOKEN}" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d '{"query": {"field": "state", "operator": "=", "value": "open"}}' | jq -r '.conversations[0].id')
+OPEN_CONVS=$(bash -c 'curl -s -X POST "https://api.intercom.io/conversations/search" -H "Authorization: Bearer ${INTERCOM_ACCESS_TOKEN}" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d '"'"'{"query": {"field": "state", "operator": "=", "value": "open"}}'"'"'' | jq -r '.conversations[0].id')
 
 # Reply to first conversation
 ADMIN_ID="1234567"

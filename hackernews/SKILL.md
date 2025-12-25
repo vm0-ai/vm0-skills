@@ -121,10 +121,8 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${ITEM_ID}.json"' |
 Fetch top 5 stories with full details:
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
-for id in $(cat /tmp/topstories.json | jq '.[:5][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" > /tmp/resp_d9f85b.json
-  cat /tmp/resp_d9f85b.json | jq '{id, title, score, url, by}'
+for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:5][]'); do
+  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq '{id, title, score, url, by}'
 done
 ```
 
@@ -141,8 +139,7 @@ echo "$STORY" | jq '{title, score, descendants}'
 
 # Get first 3 comments
 for kid in $(echo "$STORY" | jq '.kids[:3][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${kid}.json" > /tmp/resp_6ce63a.json
-  cat /tmp/resp_6ce63a.json | jq '{by, text}'
+  curl -s "https://hacker-news.firebaseio.com/v0/item/${kid}.json" | jq '{by, text}'
 done
 ```
 
