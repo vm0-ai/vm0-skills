@@ -6,71 +6,75 @@ Skills follow the [Agent Skills specification](https://agentskills.io/specificat
 
 ## Skills
 
-| Skill | Status | Last Tested |
-|-------|--------|-------------|
-| [apify](./apify) | ⚠️ | 2025-12-25 |
-| [axiom](./axiom) | ✅ | 2025-12-25 |
-| [bitrix](./bitrix) | ✅ | 2025-12-25 |
-| [brave-search](./brave-search) | ✅ | 2025-12-25 |
-| [bright-data](./bright-data) | ✅ | 2025-12-25 |
-| [browserless](./browserless) | ⚠️ | 2025-12-25 |
-| [chatwoot](./chatwoot) | ❌ | 2025-12-25 |
-| [cloudinary](./cloudinary) | ✅ | 2025-12-25 |
-| [cronlytic](./cronlytic) | ✅ | 2025-12-25 |
-| [deepseek](./deepseek) | ✅ | 2025-12-25 |
-| [devto-publish](./devto-publish) | ✅ | 2025-12-25 |
-| [discord](./discord) | ✅ | 2025-12-25 |
-| [discord-webhook](./discord-webhook) | ❌ | 2025-12-25 |
-| [elevenlabs](./elevenlabs) | ✅ | 2025-12-25 |
-| [fal.ai](./fal.ai) | ✅ | 2025-12-25 |
-| [figma](./figma) | ✅ | 2025-12-25 |
-| [firecrawl](./firecrawl) | ✅ | 2025-12-25 |
-| [github](./github) | ✅ | 2025-12-25 |
-| [github-copilot](./github-copilot) | ⚠️ | 2025-12-25 |
-| [gitlab](./gitlab) | ✅ | 2025-12-25 |
-| [google-sheets](./google-sheets) | ❌ | 2025-12-25 |
-| [hackernews](./hackernews) | ✅ | 2025-12-25 |
-| [htmlcsstoimage](./htmlcsstoimage) | ✅ | 2025-12-25 |
-| [imgur](./imgur) | ❌ | 2025-12-25 |
-| [instagram](./instagram) | ❌ | 2025-12-25 |
-| [instantly](./instantly) | ❌ | 2025-12-25 |
-| [intercom](./intercom) | ❌ | 2025-12-25 |
-| [jira](./jira) | ✅ | 2025-12-25 |
-| [kommo](./kommo) | ✅ | 2025-12-25 |
-| [lark](./lark) | ✅ | 2025-12-25 |
-| [linear](./linear) | ✅ | 2025-12-25 |
-| [minimax](./minimax) | ✅ | 2025-12-25 |
-| [minio](./minio) | ✅ | 2025-12-25 |
-| [monday](./monday) | ⚠️ | 2025-12-25 |
-| [notion](./notion) | ✅ | 2025-12-25 |
-| [openai](./openai) | ✅ | 2025-12-25 |
-| [pdf4me](./pdf4me) | ⚠️ | 2025-12-25 |
-| [pdfco](./pdfco) | ✅ | 2025-12-25 |
-| [pdforge](./pdforge) | ✅ | 2025-12-25 |
-| [perplexity](./perplexity) | ✅ | 2025-12-25 |
-| [plausible](./plausible) | ❌ | 2025-12-25 |
-| [pushinator](./pushinator) | ✅ | 2025-12-25 |
-| [qdrant](./qdrant) | ⚠️ | 2025-12-25 |
-| [qiita](./qiita) | ⚠️ | 2025-12-25 |
-| [reportei](./reportei) | ❌ | 2025-12-25 |
-| [rss-fetch](./rss-fetch) | ⚠️ | 2025-12-25 |
-| [runway](./runway) | ⚠️ | 2025-12-25 |
-| [scrapeninja](./scrapeninja) | ⚠️ | 2025-12-25 |
-| [sentry](./sentry) | ⚠️ | 2025-12-25 |
-| [serpapi](./serpapi) | ⚠️ | 2025-12-25 |
-| [shortio](./shortio) | ⚠️ | 2025-12-25 |
-| [slack](./slack) | ⚠️ | 2025-12-25 |
-| [slack-webhook](./slack-webhook) | ⚠️ | 2025-12-25 |
-| [streak](./streak) | ⚠️ | 2025-12-25 |
-| [supadata](./supadata) | ⚠️ | 2025-12-25 |
-| [tavily](./tavily) | ⚠️ | 2025-12-25 |
-| [twenty](./twenty) | ⚠️ | 2025-12-25 |
-| [youtube](./youtube) | ⚠️ | 2025-12-25 |
-| [zapsign](./zapsign) | ⚠️ | 2025-12-25 |
-| [zendesk](./zendesk) | ⚠️ | 2025-12-25 |
-| [zeptomail](./zeptomail) | ⚠️ | 2025-12-25 |
+**Test Summary:** 61 skills tested | 604 total examples | 352 passed (58.3%) | 252 failed (41.7%)
 
-**Status Legend:** ✅ Passing | ⚠️ Partial | ❌ Failed
+| Skill | Description | Status | Test Results |
+|-------|-------------|--------|--------------|
+| [apify](./apify) | Web scraping automation platform with actors | ⚠️ | 5/12 passed |
+| [axiom](./axiom) | Serverless data analytics and observability | ⚠️ | 3/11 passed |
+| [bitrix](./bitrix) | CRM and business management platform | ❌ | 0/18 passed |
+| [brave-search](./brave-search) | Privacy-focused search engine API | ⚠️ | 8/9 passed |
+| [bright-data](./bright-data) | Web data platform and proxy services | ⚠️ | 3/4 passed |
+| [browserless](./browserless) | Headless browser automation service | ✅ | 19/19 passed |
+| [chatwoot](./chatwoot) | Open-source customer engagement platform | ⚠️ | 11/13 passed |
+| [cloudinary](./cloudinary) | Media management and transformation | ⚠️ | Not tested |
+| [cronlytic](./cronlytic) | Cron job monitoring service | ⚠️ | 7/9 passed |
+| [deepseek](./deepseek) | AI language model API | ✅ | 9/9 passed |
+| [devto-publish](./devto-publish) | Dev.to article publishing API | ⚠️ | 9/13 passed |
+| [discord](./discord) | Discord bot and messaging automation | ⚠️ | 13/15 passed |
+| [discord-webhook](./discord-webhook) | Discord webhook integrations | ❌ | 0/10 passed |
+| [elevenlabs](./elevenlabs) | AI voice generation and text-to-speech | ✅ | 7/7 passed |
+| [fal.ai](./fal.ai) | AI model inference platform | ✅ | 8/8 passed |
+| [figma](./figma) | Design collaboration platform API | ⚠️ | Not tested |
+| [firecrawl](./firecrawl) | Web scraping and data extraction | ❌ | 0/16 passed |
+| [github](./github) | GitHub repository and code management | ✅ | 15/15 passed |
+| [github-copilot](./github-copilot) | AI pair programming assistant | ⚠️ | 7/9 passed |
+| [gitlab](./gitlab) | GitLab DevOps platform | ⚠️ | 17/20 passed |
+| [google-sheets](./google-sheets) | Google Sheets spreadsheet automation | ❌ | 0/13 passed |
+| [hackernews](./hackernews) | Hacker News API client | ⚠️ | 12/16 passed |
+| [htmlcsstoimage](./htmlcsstoimage) | HTML/CSS to image conversion service | ✅ | 12/12 passed |
+| [imgur](./imgur) | Image hosting and sharing platform | ❌ | 0/5 passed |
+| [instagram](./instagram) | Instagram API integrations | ❌ | 0/6 passed |
+| [instantly](./instantly) | Email outreach automation platform | ⚠️ | 13/21 passed |
+| [intercom](./intercom) | Customer messaging and support platform | ❌ | 0/27 passed |
+| [jira](./jira) | Project and issue tracking system | ⚠️ | 15/16 passed |
+| [kommo](./kommo) | CRM and sales automation platform | ✅ | 15/15 passed |
+| [lark](./lark) | Team collaboration and productivity suite | ⚠️ | Not tested |
+| [linear](./linear) | Issue tracking for software teams | ✅ | 13/13 passed |
+| [minimax](./minimax) | AI model API platform | ⚠️ | 7/11 passed |
+| [minio](./minio) | Object storage compatible with S3 | ⚠️ | Not tested |
+| [monday](./monday) | Work operating system platform | ⚠️ | 7/10 passed |
+| [notion](./notion) | Workspace for notes and databases | ✅ | 14/14 passed |
+| [openai](./openai) | OpenAI GPT models and APIs | ✅ | 12/12 passed |
+| [pdf4me](./pdf4me) | PDF conversion and manipulation | ⚠️ | 3/12 passed |
+| [pdfco](./pdfco) | PDF generation and processing API | ⚠️ | 11/12 passed |
+| [pdforge](./pdforge) | PDF generation service | ⚠️ | 5/6 passed |
+| [perplexity](./perplexity) | AI-powered search and answer engine | ✅ | 11/11 passed |
+| [plausible](./plausible) | Privacy-focused web analytics | ❌ | 3/17 passed |
+| [pushinator](./pushinator) | Push notification service | ⚠️ | Not tested |
+| [qdrant](./qdrant) | Vector database for AI applications | ⚠️ | Not tested |
+| [qiita](./qiita) | Japanese technical knowledge platform | ⚠️ | Not tested |
+| [reportei](./reportei) | Marketing reports automation | ❌ | 0/16 passed |
+| [rss-fetch](./rss-fetch) | RSS feed parser and reader | ⚠️ | Not tested |
+| [runway](./runway) | AI video and image generation | ⚠️ | Not tested |
+| [scrapeninja](./scrapeninja) | Web scraping API service | ⚠️ | 7/9 passed |
+| [sentry](./sentry) | Application monitoring and error tracking | ⚠️ | Not tested |
+| [serpapi](./serpapi) | Search engine results API | ⚠️ | 8/9 passed |
+| [shortio](./shortio) | URL shortening and link management | ⚠️ | 9/10 passed |
+| [slack](./slack) | Team messaging and collaboration | ⚠️ | 8/11 passed |
+| [slack-webhook](./slack-webhook) | Slack incoming webhooks | ✅ | 6/6 passed |
+| [streak](./streak) | CRM for Gmail | ❌ | 0/23 passed |
+| [supadata](./supadata) | Data enrichment and verification | ⚠️ | Not tested |
+| [tavily](./tavily) | AI research and search API | ✅ | 2/2 passed |
+| [twenty](./twenty) | Open-source CRM | ⚠️ | Not tested |
+| [youtube](./youtube) | YouTube data and video management | ⚠️ | 13/15 passed |
+| [zapsign](./zapsign) | Electronic signature platform | ⚠️ | 8/10 passed |
+| [zendesk](./zendesk) | Customer service and support platform | ❌ | 0/31 passed |
+| [zeptomail](./zeptomail) | Transactional email service | ❌ | 0/9 passed |
+
+**Status Legend:** ✅ All tests passing | ⚠️ Some tests passing | ❌ All tests failing
+
+**Last Tested:** 2025-12-25
 
 ## Contributing
 
