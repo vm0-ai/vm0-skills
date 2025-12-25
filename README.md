@@ -20,7 +20,8 @@ Skills follow the [Agent Skills specification](https://agentskills.io/specificat
 | [cloudinary](./cloudinary) | Media management and transformation | ⚠️ | Not tested |
 | [cronlytic](./cronlytic) | Cron job monitoring service | ⚠️ | 7/9 passed |
 | [deepseek](./deepseek) | AI language model API | ✅ | 9/9 passed |
-| [devto-publish](./devto-publish) | Dev.to article publishing API | ⚠️ | 9/13 passed |
+| [dev.to](./dev.to) | Dev.to article publishing API | ⚠️ | 9/13 passed |
+| [devto-publish](./devto-publish) | *Legacy* Dev.to article publishing API | ⚠️ | 9/13 passed |
 | [discord](./discord) | Discord bot and messaging automation | ⚠️ | 13/15 passed |
 | [discord-webhook](./discord-webhook) | Discord webhook integrations | ❌ | 0/10 passed |
 | [elevenlabs](./elevenlabs) | AI voice generation and text-to-speech | ✅ | 7/7 passed |
