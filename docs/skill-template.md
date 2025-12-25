@@ -143,9 +143,9 @@ bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_
 bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"'' | jq .
 ```
 
-**For command substitution:**
+**For command substitution (use quotes to protect special chars):**
 ```bash
-VAR=$(bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq -r .id)
+VAR="$(bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq -r .id)"
 ```
 
 **For loops:**

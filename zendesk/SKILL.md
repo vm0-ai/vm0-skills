@@ -383,7 +383,7 @@ curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET
 
 ```bash
 # Search for old open tickets (30+ days)
-OLD_TICKETS=$(bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:ticket status:open created<30"' | jq -r '.results[].id' | paste -sd "," -)
+OLD_TICKETS="$(bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:ticket status:open created<30"' | jq -r '.results[].id' | paste -sd "," -)"
 
 # Bulk close them
 curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/update_many.json?ids=${OLD_TICKETS}" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '{"ticket": {"status": "closed"}}'

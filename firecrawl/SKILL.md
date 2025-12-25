@@ -332,7 +332,7 @@ bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorizatio
 JOB_ID="your-crawl-job-id"
 
 while true; do
-  STATUS=$(bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq -r '.status')
+  STATUS="$(bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq -r '.status')"
   echo "Status: $STATUS"
   [ "$STATUS" = "completed" ] && break
   sleep 5
