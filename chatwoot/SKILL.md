@@ -95,6 +95,8 @@ bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT
 
 Get a specific contact by ID:
 
+> **Note:** Get `CONTACT_ID` from the "Search Contacts" response (`id` field) or from the "Create a Contact" response.
+
 ```bash
 CONTACT_ID=123
 
@@ -136,6 +138,8 @@ bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT
 
 Get details of a specific conversation:
 
+> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field) or from the "Create a Conversation" response.
+
 ```bash
 CONVERSATION_ID=123
 
@@ -147,6 +151,8 @@ bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT
 ### 7. Send a Message
 
 Send a message in a conversation:
+
+> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field).
 
 ```bash
 CONVERSATION_ID=123
@@ -164,6 +170,8 @@ bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUN
 
 Add an internal note (not visible to customer):
 
+> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field).
+
 ```bash
 CONVERSATION_ID=123
 
@@ -180,6 +188,8 @@ bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUN
 
 Assign a conversation to an agent:
 
+> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field). Get `AGENT_ID` from the "List Agents" response (`id` field).
+
 ```bash
 CONVERSATION_ID=123
 AGENT_ID=1
@@ -192,6 +202,8 @@ bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUN
 ### 10. Update Conversation Status
 
 Change conversation status (open, resolved, pending):
+
+> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field).
 
 ```bash
 CONVERSATION_ID=123

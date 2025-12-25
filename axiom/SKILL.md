@@ -77,7 +77,7 @@ bash -c 'curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer ${
 ### 2. Get Dataset Info
 
 ```bash
-bash -c 'curl -s "https://api.axiom.co/v2/datasets/my-dataset" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
+bash -c 'curl -s "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
 ```
 
 ### 3. Create Dataset
@@ -89,31 +89,31 @@ bash -c 'curl -s -X POST "https://api.axiom.co/v2/datasets" -H "Authorization: B
 ### 4. Ingest Data (JSON)
 
 ```bash
-bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-dataset" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'[{"message": "User logged in", "user_id": "123", "level": "info"}]'"'"'' | jq .
+bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'[{"message": "User logged in", "user_id": "123", "level": "info"}]'"'"'' | jq .
 ```
 
 ### 5. Ingest Data (NDJSON)
 
 ```bash
-bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-dataset" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/x-ndjson" -d $'"'"'{"message": "Event 1", "level": "info"}\n{"message": "Event 2", "level": "warn"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/x-ndjson" -d $'"'"'{"message": "Event 1", "level": "info"}\n{"message": "Event 2", "level": "warn"}'"'"'' | jq .
 ```
 
 ### 6. Query Data with APL
 
 ```bash
-bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"apl": "[\"my-dataset\"] | where level == \"error\" | limit 10", "startTime": "2024-01-01T00:00:00Z", "endTime": "2025-12-31T23:59:59Z"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"apl": "[\"my-logs\"] | where level == \"error\" | limit 10", "startTime": "2024-01-01T00:00:00Z", "endTime": "2025-12-31T23:59:59Z"}'"'"'' | jq .
 ```
 
 ### 7. Query with Aggregation
 
 ```bash
-bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"apl": "[\"my-dataset\"] | summarize count() by level", "startTime": "2024-01-01T00:00:00Z", "endTime": "2025-12-31T23:59:59Z"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"apl": "[\"my-logs\"] | summarize count() by level", "startTime": "2024-01-01T00:00:00Z", "endTime": "2025-12-31T23:59:59Z"}'"'"'' | jq .
 ```
 
 ### 8. Create Annotation
 
 ```bash
-bash -c 'curl -s -X POST "https://api.axiom.co/v2/annotations" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"datasets": ["my-dataset"], "type": "deployment", "title": "v1.2.0 deployed", "time": "2024-12-24T10:00:00Z"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.axiom.co/v2/annotations" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"datasets": ["my-logs"], "type": "deployment", "title": "v1.2.0 deployed", "time": "2024-12-24T10:00:00Z"}'"'"'' | jq .
 ```
 
 ### 9. List Monitors
@@ -133,7 +133,7 @@ bash -c 'curl -s "https://api.axiom.co/v2/user" -H "Authorization: Bearer ${AXIO
 ### 11. Delete Dataset
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.axiom.co/v2/datasets/my-dataset" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
+bash -c 'curl -s -X DELETE "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
 ```
 
 ---

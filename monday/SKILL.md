@@ -87,6 +87,8 @@ BOARD_ID="1234567890"
 bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"query { boards (ids: ${BOARD_ID}) { id name groups { id title } columns { id title type } } }\"}"' | jq .
 ```
 
+> **Note:** Replace `BOARD_ID` with an actual board ID from the "List All Boards" response (example 2).
+
 ---
 
 ### 4. Get Items from a Board
@@ -98,6 +100,8 @@ BOARD_ID="1234567890"
 
 bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"query { boards (ids: ${BOARD_ID}) { items_page (limit: 10) { items { id name column_values { id text value } } } } }\"}"' | jq .
 ```
+
+> **Note:** Replace `BOARD_ID` with an actual board ID from the "List All Boards" response (example 2).
 
 ---
 
@@ -112,6 +116,11 @@ ITEM_NAME="New Task"
 
 bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"mutation { create_item (board_id: ${BOARD_ID}, group_id: \\\"${GROUP_ID}\\\", item_name: \\\"${ITEM_NAME}\\\") { id name } }\"}"' | jq .
 ```
+
+> **Note:**
+> - Replace `BOARD_ID` with an actual board ID from the "List All Boards" response (example 2)
+> - Replace `GROUP_ID` with a group ID from the "Get Board Details" response (example 3, groups array)
+> - Replace `ITEM_NAME` with your desired name for the new item
 
 ---
 
@@ -134,6 +143,11 @@ bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${
   }'"'"' | jq .'
 ```
 
+> **Note:**
+> - Replace `boardId` with an actual board ID from the "List All Boards" response (example 2)
+> - Replace `groupId` with a group ID from the "Get Board Details" response (example 3, groups array)
+> - Replace `itemName` with your desired name for the new item
+
 ---
 
 ### 7. Update an Item
@@ -154,6 +168,10 @@ bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${
   }'"'"' | jq .'
 ```
 
+> **Note:**
+> - Replace `boardId` with an actual board ID from the "List All Boards" response (example 2)
+> - Replace `itemId` with an item ID from the "Get Items from a Board" response (example 4)
+
 ---
 
 ### 8. Delete an Item
@@ -165,6 +183,8 @@ ITEM_ID="9876543210"
 
 bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"mutation { delete_item (item_id: ${ITEM_ID}) { id } }\"}"' | jq .
 ```
+
+> **Note:** Replace `ITEM_ID` with an actual item ID from the "Get Items from a Board" response (example 4).
 
 ---
 
@@ -185,6 +205,8 @@ Search for items across boards:
 ```bash
 bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d '"'"'{"query": "query { items_page_by_column_values (limit: 10, board_id: 1234567890, columns: [{column_id: \"name\", column_values: [\"Task\"]}]) { items { id name } } }"}'"'"'' | jq .
 ```
+
+> **Note:** Replace the `board_id` value `1234567890` with an actual board ID from the "List All Boards" response (example 2).
 
 ---
 

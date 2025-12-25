@@ -78,6 +78,8 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/" --header "Authorizatio
 
 Get details for a specific project:
 
+> **Note:** Replace `my-project` with your actual project slug from the "List Your Projects" output above.
+
 ```bash
 PROJECT_SLUG="my-project"
 
@@ -106,6 +108,8 @@ Query parameters:
 ### 4. List Project Issues
 
 Get issues for a specific project:
+
+> **Note:** Replace `my-project` with your actual project slug from the "List Your Projects" output.
 
 ```bash
 PROJECT_SLUG="my-project"
@@ -137,6 +141,8 @@ Common query filters:
 
 Get details for a specific issue:
 
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" or "List Project Issues" output (use the `id` field, not `shortId`).
+
 ```bash
 ISSUE_ID="123456789"
 
@@ -148,6 +154,8 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issue
 ### 7. Get Latest Event for Issue
 
 Get the most recent event for an issue:
+
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output.
 
 ```bash
 ISSUE_ID="123456789"
@@ -161,6 +169,8 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issue
 
 Get all events for an issue:
 
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output.
+
 ```bash
 ISSUE_ID="123456789"
 
@@ -172,6 +182,8 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issue
 ### 9. Resolve Issue
 
 Mark an issue as resolved:
+
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output.
 
 ```bash
 ISSUE_ID="123456789"
@@ -185,6 +197,8 @@ bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG
 
 Mark issue as resolved in next release:
 
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output.
+
 ```bash
 ISSUE_ID="123456789"
 
@@ -196,6 +210,8 @@ bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG
 ### 11. Ignore Issue
 
 Ignore an issue:
+
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output.
 
 ```bash
 ISSUE_ID="123456789"
@@ -215,6 +231,8 @@ bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG
 
 Reopen a resolved issue:
 
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output.
+
 ```bash
 ISSUE_ID="123456789"
 
@@ -226,6 +244,8 @@ bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG
 ### 13. Assign Issue
 
 Assign an issue to a user:
+
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output. Replace `developer@example.com` with a valid user email from your Sentry organization members.
 
 ```bash
 ISSUE_ID="123456789"
@@ -240,6 +260,8 @@ bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG
 
 Update multiple issues at once:
 
+> **Note:** Replace `123456789` and `987654321` with actual issue IDs from the "List Issues" output.
+
 ```bash
 bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "id": ["123456789", "987654321"],
@@ -252,6 +274,8 @@ bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG
 ### 15. Delete Issue
 
 Delete an issue (requires admin permissions):
+
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output.
 
 ```bash
 ISSUE_ID="123456789"
@@ -275,6 +299,8 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/relea
 
 Get details for a specific release:
 
+> **Note:** Replace `1.0.0` with an actual release version from the "List Releases" output.
+
 ```bash
 RELEASE_VERSION="1.0.0"
 
@@ -286,6 +312,8 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/relea
 ### 18. Create Release
 
 Create a new release:
+
+> **Note:** Replace `my-project` with your actual project slug from the "List Your Projects" output.
 
 ```bash
 PROJECT_SLUG="my-project"
@@ -301,6 +329,8 @@ curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releas
 ### 19. Create Release with Commits
 
 Create release with associated commits:
+
+> **Note:** Replace `my-project` with your actual project slug from the "List Your Projects" output.
 
 ```bash
 PROJECT_SLUG="my-project"
@@ -320,6 +350,8 @@ curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releas
 ### 20. List Project Error Events
 
 Get recent error events for a project:
+
+> **Note:** Replace `my-project` with your actual project slug from the "List Your Projects" output.
 
 ```bash
 PROJECT_SLUG="my-project"

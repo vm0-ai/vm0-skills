@@ -72,20 +72,62 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sy
 
 ### 3. Check Run Status
 
+> **Note:** Replace `{runId}` with the actual run ID from the async run response (found in `.data.id`).
+
 Poll the run status:
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.status
+bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.status'
+```
+
+**Complete workflow example** (capture run ID and check status):
+
+```bash
+# Step 1: Start an async run and capture the run ID
+RUN_ID=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+  "startUrls": [{"url": "https://example.com"}],
+  "maxPagesPerCrawl": 10
+  }'"'"'' | jq -r '.data.id')
+
+# Step 2: Check the run status
+bash -c "curl -s \"https://api.apify.com/v2/actor-runs/${RUN_ID}\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\"" | jq '.data.status'
 ```
 
 **Statuses**: `READY`, `RUNNING`, `SUCCEEDED`, `FAILED`, `ABORTED`, `TIMED-OUT`
 
 ### 4. Get Dataset Items
 
+> **Note:** Replace `{datasetId}` with the actual dataset ID from the run response (found in `.data.defaultDatasetId`).
+
 Fetch results from a completed run:
 
 ```bash
 bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
+```
+
+**Complete workflow example** (run async, wait, and fetch results):
+
+```bash
+# Step 1: Start async run and capture IDs
+RESPONSE=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+  "startUrls": [{"url": "https://example.com"}],
+  "maxPagesPerCrawl": 10
+  }'"'"'')
+
+RUN_ID=$(echo "$RESPONSE" | jq -r '.data.id')
+DATASET_ID=$(echo "$RESPONSE" | jq -r '.data.defaultDatasetId')
+
+# Step 2: Wait for completion (poll status)
+while true; do
+  STATUS=$(bash -c "curl -s \"https://api.apify.com/v2/actor-runs/${RUN_ID}\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\"" | jq -r '.data.status')
+  echo "Status: $STATUS"
+  [[ "$STATUS" == "SUCCEEDED" ]] && break
+  [[ "$STATUS" == "FAILED" || "$STATUS" == "ABORTED" ]] && exit 1
+  sleep 5
+done
+
+# Step 3: Fetch the dataset items
+bash -c "curl -s \"https://api.apify.com/v2/datasets/${DATASET_ID}/items\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\"" | jq .
 ```
 
 **With pagination:**
@@ -145,10 +187,27 @@ bash -c 'curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --head
 
 ### 7. Abort a Run
 
+> **Note:** Replace `{runId}` with the actual run ID from the async run response (found in `.data.id`).
+
 Stop a running Actor:
 
 ```bash
 bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
+```
+
+**Complete workflow example** (start a run and abort it):
+
+```bash
+# Step 1: Start an async run and capture the run ID
+RUN_ID=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+  "startUrls": [{"url": "https://example.com"}],
+  "maxPagesPerCrawl": 100
+  }'"'"'' | jq -r '.data.id')
+
+echo "Started run: $RUN_ID"
+
+# Step 2: Abort the run
+bash -c "curl -s -X POST \"https://api.apify.com/v2/actor-runs/${RUN_ID}/abort\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\"" | jq .
 ```
 
 ### 8. List Available Actors

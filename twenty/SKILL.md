@@ -96,6 +96,8 @@ bash -c 'curl -s -X POST "${TWENTY_API_URL}/rest/people" --header "Authorization
 
 ### 5. Get a Specific Record
 
+> **Note:** Replace `{companyId}` and `{personId}` with actual IDs obtained from the "List Companies" or "List People" endpoints above (look for the `id` field in the response).
+
 ```bash
 # Get company by ID
 bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_API_KEY}"' | jq .
@@ -106,6 +108,8 @@ bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/people/{personId}" --header "Aut
 
 ### 6. Update a Record
 
+> **Note:** Replace `{companyId}` with an actual company ID from the "List Companies" endpoint above.
+
 ```bash
 bash -c 'curl -s -X PATCH "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "name": "Acme Corporation",
@@ -114,6 +118,8 @@ bash -c 'curl -s -X PATCH "${TWENTY_API_URL}/rest/companies/{companyId}" --heade
 ```
 
 ### 7. Delete a Record
+
+> **Note:** Replace `{companyId}` with an actual company ID from the "List Companies" endpoint above.
 
 ```bash
 curl -s -X DELETE "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_API_KEY}"

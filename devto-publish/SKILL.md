@@ -139,6 +139,8 @@ bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEV
 
 ### 8. Get Single Article
 
+> **Note:** Replace `123456` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
+
 ```bash
 ARTICLE_ID="123456"
 
@@ -146,6 +148,8 @@ bash -c 'curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVT
 ```
 
 ### 9. Update an Article
+
+> **Note:** Replace `123456` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
 
 ```bash
 ARTICLE_ID="123456"
@@ -159,6 +163,8 @@ bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key:
 ```
 
 ### 10. Publish a Draft
+
+> **Note:** Replace `123456` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
 
 ```bash
 ARTICLE_ID="123456"

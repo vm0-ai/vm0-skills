@@ -93,6 +93,8 @@ bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_A
 
 If you already have a media `id`, you can fetch more complete information:
 
+> **Where to get `{MEDIA_ID}`:** Use the `id` field from the "Get User Media" response (section 1 above)
+
 ```bash
 MEDIA_ID="1789xxxxxxxxxxxx"
 
@@ -109,6 +111,8 @@ This usually involves two steps:
 
 #### 3.1 Get the hashtag ID
 
+> **Where to get `{HASHTAG_NAME}`:** Use any hashtag name you want to search for (without the # symbol), e.g., "travel", "food", "photography"
+
 ```bash
 HASHTAG_NAME="travel"
 
@@ -118,6 +122,8 @@ bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user
 Take the returned `id` (we call it `HASHTAG_ID`).
 
 #### 3.2 Fetch recent media for the hashtag
+
+> **Where to get `{HASHTAG_ID}`:** Use the `id` field from the "Search Hashtag" response (section 3.1 above)
 
 ```bash
 HASHTAG_ID="178434113xxxxxxxx"
@@ -135,6 +141,10 @@ Publishing an image post via the Graph API usually requires **two steps**:
 2. **Publish the container to the feed**
 
 #### 4.1 Create a media container
+
+> **Where to get `{IMAGE_URL}`:** Use any publicly accessible image URL (e.g., from your CDN, S3, or public hosting)
+>
+> **Where to get `{CAPTION}`:** This is the text caption for your post (what you want to say in the post)
 
 ```bash
 IMAGE_URL="https://example.com/image.jpg"
@@ -154,6 +164,8 @@ The response will contain an `id` (media container ID), for example:
 Store this ID (for example as `CREATION_ID`).
 
 #### 4.2 Publish the media container to the feed
+
+> **Where to get `{CREATION_ID}`:** Use the `id` field from the "Create Media Container" response (section 4.1 above)
 
 ```bash
 CREATION_ID="1790xxxxxxxxxxxx"
