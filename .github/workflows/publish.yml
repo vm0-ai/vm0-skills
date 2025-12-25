@@ -13,6 +13,7 @@ jobs:
       - name: Build VM0 Image
         uses: vm0-ai/image-build-action@v1
         with:
+          working-directory: .vm0
           name: skills-tester
           vm0-token: ${{ secrets.VM0_TOKEN }}
 
@@ -20,6 +21,7 @@ jobs:
         id: publish-skills-tester
         uses: vm0-ai/compose-action@v1
         with:
+          working-directory: .vm0
           vm0-token: ${{ secrets.VM0_TOKEN }}
 
       - name: Print outputs
