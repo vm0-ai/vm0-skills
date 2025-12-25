@@ -169,6 +169,7 @@
 - [x] [Pushinator](https://pushinator.com/) - Push Notification Service
 - [ ] [Morgen](https://docs.morgen.so/) - Calendar & Task Scheduling
 - [x] [Google Sheets](https://developers.google.com/sheets/api) - Spreadsheet Platform
+- [x] [Podchaser](https://api-docs.podchaser.com/) - Podcast Database & Discovery API
 
 ---
 
@@ -189,9 +190,9 @@
 | Security & Compliance | 4 |
 | Automation | 2 |
 | Design & Media | 4 |
-| Miscellaneous | 6 |
-| **Total** | **96** |
+| Miscellaneous | 7 |
+| **Total** | **97** |
 
 ---
 
-> Last updated: 2025-12-23
+> Last updated: 2025-12-25
