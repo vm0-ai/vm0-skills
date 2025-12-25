@@ -7,13 +7,13 @@ This document tracks the testing status of all skills after the `bash -c` patter
 ## Summary
 
 - **Total Skills**: 62
-- **Tested & Passed**: 32
-- **Tested with Issues**: 10 (API/config issues, not curl pattern issues)
+- **Tested & Passed**: 33
+- **Tested with Issues**: 9 (API/config issues, not curl pattern issues)
 - **Not Tested**: 20 (no credentials)
 
 ## Test Results
 
-### ✅ Passed (32)
+### ✅ Passed (33)
 
 | Skill | Test Result | Notes |
 |-------|-------------|-------|
@@ -49,8 +49,9 @@ This document tracks the testing status of all skills after the `bash -c` patter
 | youtube | ✅ | Search results for "claude ai" |
 | zapsign | ✅ | 0 docs (empty account) |
 | zeptomail | ✅ | API responds (auth works) |
+| runway | ✅ | 2675 credits, 16 models available |
 
-### ⚠️ Issues (10)
+### ⚠️ Issues (9)
 
 | Skill | Issue | Root Cause |
 |-------|-------|------------|
@@ -62,20 +63,12 @@ This document tracks the testing status of all skills after the `bash -c` patter
 | jira | Returns HTML | Wrong endpoint or auth format |
 | kommo | Empty response | API key may be invalid |
 | minimax | Returns null | API response format issue |
-| runway | 404 error | API endpoint changed |
 | twenty | Empty URL | TWENTY_API_URL not configured |
 
 **Note**: These issues are API-specific, not related to the `bash -c` curl pattern.
 
 <details>
 <summary>Detailed Error Logs</summary>
-
-**runway**
-```bash
-bash -c 'curl -s "https://api.runway.com/v1/tasks" -H "Authorization: Bearer $RUNWAY_API_KEY" -H "X-Runway-Version: 2024-11-06"' | jq '.'
-# Error: jq: parse error: Invalid numeric literal at line 1, column 9
-# Response: 404
-```
 
 **axiom** (actually works, but response format differs from expected)
 ```bash
