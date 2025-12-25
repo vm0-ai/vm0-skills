@@ -53,7 +53,8 @@ Start an Actor run asynchronously:
 ```bash
 bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "startUrls": [{"url": "https://example.com"}],
-  "maxPagesPerCrawl": 10
+  "maxPagesPerCrawl": 10,
+  "pageFunction": "async function pageFunction(context) { const { request, log, jQuery } = context; const $ = jQuery; const title = $(\"title\").text(); return { url: request.url, title }; }"
   }'"'"' | jq .'
 ```
 
@@ -66,7 +67,8 @@ Wait for completion and get results directly (max 5 min):
 ```bash
 bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "startUrls": [{"url": "https://news.ycombinator.com"}],
-  "maxPagesPerCrawl": 1
+  "maxPagesPerCrawl": 1,
+  "pageFunction": "async function pageFunction(context) { const { request, log, jQuery } = context; const $ = jQuery; const title = $(\"title\").text(); return { url: request.url, title }; }"
   }'"'"' | jq .'
 ```
 
