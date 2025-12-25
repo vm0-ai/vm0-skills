@@ -43,10 +43,9 @@ export SERPAPI_API_KEY="your-api-key"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -62,8 +61,7 @@ Base URL: `https://serpapi.com/search`
 Search Google and get structured JSON results:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google&q=artificial+intelligence&api_key=${SERPAPI_API_KEY}" > /tmp/resp_4a5c5e.json
-cat /tmp/resp_4a5c5e.json | jq '.organic_results[:3] | .[] | {title, link, snippet}'
+bash -c 'curl -s "https://serpapi.com/search?engine=google&q=artificial+intelligence&api_key=${SERPAPI_API_KEY}" | jq '"'"'.organic_results[:3] | .[] | {title, link, snippet}'"'"''
 ```
 
 ---
@@ -73,8 +71,7 @@ cat /tmp/resp_4a5c5e.json | jq '.organic_results[:3] | .[] | {title, link, snipp
 Search from a specific location:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=San+Francisco,+California&gl=us&hl=en&api_key=${SERPAPI_API_KEY}" > /tmp/resp_699df2.json
-cat /tmp/resp_699df2.json | jq '.organic_results[:3]'
+bash -c 'curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=San+Francisco,+California&gl=us&hl=en&api_key=${SERPAPI_API_KEY}" | jq '"'"'.organic_results[:3]'"'"''
 ```
 
 **Parameters:**
@@ -89,8 +86,7 @@ cat /tmp/resp_699df2.json | jq '.organic_results[:3]'
 Search for images:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_images&q=sunset+beach&api_key=${SERPAPI_API_KEY}" > /tmp/resp_e55945.json
-cat /tmp/resp_e55945.json | jq '.images_results[:3] | .[] | {title, original, thumbnail}'
+bash -c 'curl -s "https://serpapi.com/search?engine=google_images&q=sunset+beach&api_key=${SERPAPI_API_KEY}" | jq '"'"'.images_results[:3] | .[] | {title, original, thumbnail}'"'"''
 ```
 
 ---
@@ -100,8 +96,7 @@ cat /tmp/resp_e55945.json | jq '.images_results[:3] | .[] | {title, original, th
 Search news articles:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_news&q=technology&api_key=${SERPAPI_API_KEY}" > /tmp/resp_8705ae.json
-cat /tmp/resp_8705ae.json | jq '.news_results[:3] | .[] | {title, link, source, date}'
+bash -c 'curl -s "https://serpapi.com/search?engine=google_news&q=technology&api_key=${SERPAPI_API_KEY}" | jq '"'"'.news_results[:3] | .[] | {title, link, source, date}'"'"''
 ```
 
 ---
@@ -111,8 +106,7 @@ cat /tmp/resp_8705ae.json | jq '.news_results[:3] | .[] | {title, link, source, 
 Search products:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_shopping&q=wireless+headphones&api_key=${SERPAPI_API_KEY}" > /tmp/resp_5e2bc2.json
-cat /tmp/resp_5e2bc2.json | jq '.shopping_results[:3] | .[] | {title, price, source}'
+bash -c 'curl -s "https://serpapi.com/search?engine=google_shopping&q=wireless+headphones&api_key=${SERPAPI_API_KEY}" | jq '"'"'.shopping_results[:3] | .[] | {title, price, source}'"'"''
 ```
 
 ---
@@ -122,8 +116,7 @@ cat /tmp/resp_5e2bc2.json | jq '.shopping_results[:3] | .[] | {title, price, sou
 Search YouTube videos:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=youtube&search_query=python+tutorial&api_key=${SERPAPI_API_KEY}" > /tmp/resp_d1869b.json
-cat /tmp/resp_d1869b.json | jq '.video_results[:3] | .[] | {title, link, channel, views}'
+bash -c 'curl -s "https://serpapi.com/search?engine=youtube&search_query=python+tutorial&api_key=${SERPAPI_API_KEY}" | jq '"'"'.video_results[:3] | .[] | {title, link, channel, views}'"'"''
 ```
 
 ---
@@ -133,8 +126,7 @@ cat /tmp/resp_d1869b.json | jq '.video_results[:3] | .[] | {title, link, channel
 Search local businesses:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_maps&q=restaurants&ll=@40.7128,-74.0060,15z&api_key=${SERPAPI_API_KEY}" > /tmp/resp_db1737.json
-cat /tmp/resp_db1737.json | jq '.local_results[:3] | .[] | {title, rating, address}'
+bash -c 'curl -s "https://serpapi.com/search?engine=google_maps&q=restaurants&ll=@40.7128,-74.0060,15z&api_key=${SERPAPI_API_KEY}" | jq '"'"'.local_results[:3] | .[] | {title, rating, address}'"'"''
 ```
 
 **Parameters:**
@@ -148,12 +140,10 @@ Get more results using the `start` parameter:
 
 ```bash
 # First page (results 1-10)
-curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=0&api_key=${SERPAPI_API_KEY}" > /tmp/resp_22488e.json
-cat /tmp/resp_22488e.json | jq '.organic_results | length'
+bash -c 'curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=0&api_key=${SERPAPI_API_KEY}" | jq '"'"'.organic_results | length'"'"''
 
 # Second page (results 11-20)
-curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&api_key=${SERPAPI_API_KEY}" > /tmp/resp_c2136d.json
-cat /tmp/resp_c2136d.json | jq '.organic_results | length'
+bash -c 'curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&api_key=${SERPAPI_API_KEY}" | jq '"'"'.organic_results | length'"'"''
 ```
 
 ---
@@ -163,8 +153,7 @@ cat /tmp/resp_c2136d.json | jq '.organic_results | length'
 Check your API usage and credits:
 
 ```bash
-curl -s "https://serpapi.com/account?api_key=${SERPAPI_API_KEY}" > /tmp/resp_5d1b07.json
-cat /tmp/resp_5d1b07.json | jq '{plan_name, searches_per_month, this_month_usage}'
+bash -c 'curl -s "https://serpapi.com/account?api_key=${SERPAPI_API_KEY}" | jq '"'"'{plan_name, searches_per_month, this_month_usage}'"'"''
 ```
 
 ---

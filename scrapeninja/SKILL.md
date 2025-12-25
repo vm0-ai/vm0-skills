@@ -46,10 +46,9 @@ export SCRAPENINJA_API_KEY="your-apiroad-key"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -59,22 +58,20 @@ export SCRAPENINJA_API_KEY="your-apiroad-key"
 High-performance scraping with Chrome TLS fingerprint, no JavaScript:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com"
-  }' > /tmp/resp_9bf7fe.json
-cat /tmp/resp_9bf7fe.json | jq '{status: .info.statusCode, url: .info.finalUrl, bodyLength: (.body | length)}'
+  }'"'"' | jq '"'"'{status: .info.statusCode, url: .info.finalUrl, bodyLength: (.body | length)}'"'"''
 ```
 
 **With custom headers and retries:**
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com",
   "headers": ["Accept-Language: en-US"],
   "retryNum": 3,
   "timeout": 15
-  }' > /tmp/resp_7be3b1.json
-cat /tmp/resp_7be3b1.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 2. Scrape with JavaScript Rendering
@@ -82,22 +79,20 @@ cat /tmp/resp_7be3b1.json | jq .
 For JavaScript-heavy sites (React, Vue, etc.):
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com",
   "waitForSelector": "h1",
   "timeout": 20
-  }' > /tmp/resp_89b8b3.json
-cat /tmp/resp_89b8b3.json | jq '{status: .info.statusCode, bodyLength: (.body | length)}'
+  }'"'"' | jq '"'"'{status: .info.statusCode, bodyLength: (.body | length)}'"'"''
 ```
 
 **With screenshot:**
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com",
   "screenshot": true
-  }' > /tmp/resp_ca2339.json
-cat /tmp/resp_ca2339.json | jq -r '.info.screenshot' | base64 -d > screenshot.png
+  }'"'"' | jq -r '"'"'.info.screenshot'"'"' | base64 -d > screenshot.png'
 ```
 
 ### 3. Geo-Based Proxy Selection
@@ -105,11 +100,10 @@ cat /tmp/resp_ca2339.json | jq -r '.info.screenshot' | base64 -d > screenshot.pn
 Use proxies from specific regions:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com",
   "geo": "eu"
-  }' > /tmp/resp_1ac920.json
-cat /tmp/resp_1ac920.json | jq .info
+  }'"'"' | jq .info'
 ```
 
 Available geos: `us`, `eu`, `br` (Brazil), `fr` (France), `de` (Germany), `4g-eu`
@@ -119,13 +113,12 @@ Available geos: `us`, `eu`, `br` (Brazil), `fr` (France), `de` (Germany), `4g-eu
 Retry on specific HTTP status codes or text patterns:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com",
   "retryNum": 3,
   "statusNotExpected": [403, 429, 503],
   "textNotExpected": ["captcha", "Access Denied"]
-  }' > /tmp/resp_2e660b.json
-cat /tmp/resp_2e660b.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 5. Extract Data with Cheerio
@@ -144,11 +137,10 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Ty
 Capture XHR/fetch responses:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com",
   "catchAjaxHeadersUrlMask": "api/data"
-  }' > /tmp/resp_f3a87a.json
-cat /tmp/resp_f3a87a.json | jq '.info.catchedAjax'
+  }'"'"' | jq '"'"'.info.catchedAjax'"'"''
 ```
 
 ### 7. Block Resources for Speed
@@ -156,12 +148,11 @@ cat /tmp/resp_f3a87a.json | jq '.info.catchedAjax'
 Speed up JS rendering by blocking images and media:
 
 ```bash
-curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '"'"'{
   "url": "https://example.com",
   "blockImages": true,
   "blockMedia": true
-  }' > /tmp/resp_f0fcb7.json
-cat /tmp/resp_f0fcb7.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---

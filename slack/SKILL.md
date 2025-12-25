@@ -36,10 +36,9 @@ export SLACK_BOT_TOKEN=xoxb-your-bot-token
 3. Install to Workspace
 4. Copy "Bot User OAuth Token" (`xoxb-...`)
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## Core APIs
@@ -47,8 +46,7 @@ export SLACK_BOT_TOKEN=xoxb-your-bot-token
 ### List Channels
 
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/conversations.list?types=public_channel' > /tmp/resp_ef75ef.json
-cat /tmp/resp_ef75ef.json | jq '.channels[] | {id, name}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" '"'"'https://slack.com/api/conversations.list?types=public_channel'"'"' | jq '"'"'.channels[] | {id, name}'"'"''
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.list
@@ -56,8 +54,7 @@ Docs: https://docs.slack.dev/reference/methods/conversations.list
 ### Get Channel History
 
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/conversations.history?channel=C1234567890&limit=10' > /tmp/resp_fe6fa2.json
-cat /tmp/resp_fe6fa2.json | jq '.messages[] | {ts, user, text}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" '"'"'https://slack.com/api/conversations.history?channel=C1234567890&limit=10'"'"' | jq '"'"'.messages[] | {ts, user, text}'"'"''
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.history
@@ -127,8 +124,7 @@ EOF
 ### List Users
 
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/users.list' > /tmp/resp_873cab.json
-cat /tmp/resp_873cab.json | jq '.members[] | {id, name, real_name}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" '"'"'https://slack.com/api/users.list'"'"' | jq '"'"'.members[] | {id, name, real_name}'"'"''
 ```
 
 Docs: https://docs.slack.dev/reference/methods/users.list

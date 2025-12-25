@@ -44,10 +44,9 @@ export PDF4ME_API_KEY="your-api-key-here"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -87,10 +86,9 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertHtmlToPdf" --header "Autho
 Convert a webpage to PDF:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/UrlToPdf" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/UrlToPdf" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://example.com"
-  }' > /tmp/resp_3cdfb8.json
-cat /tmp/resp_3cdfb8.json | jq -r '.docContent' | base64 -d > /tmp/webpage.pdf
+  }'"'"' | jq -r '"'"'.docContent'"'"' | base64 -d > /tmp/webpage.pdf'
 ```
 
 ### 4. Merge PDFs

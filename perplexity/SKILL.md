@@ -40,10 +40,9 @@ export PERPLEXITY_API_KEY="pplx-your-api-key"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -55,32 +54,30 @@ AI-powered Q&A with web search and citations. OpenAI SDK compatible.
 **Basic query with sonar model:**
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar",
   "messages": [
   {"role": "user", "content": "What is the current price of Bitcoin?"}
   ]
-  }' > /tmp/resp_3634ac.json
-cat /tmp/resp_3634ac.json | jq .
+  }'"'"' | jq .'
 ```
 
 **With system prompt:**
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar",
   "messages": [
   {"role": "system", "content": "Be precise and concise. Answer in bullet points."},
   {"role": "user", "content": "What are the latest developments in AI?"}
   ]
-  }' > /tmp/resp_af50c7.json
-cat /tmp/resp_af50c7.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Advanced query with sonar-pro:**
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar-pro",
   "messages": [
   {"role": "user", "content": "Compare the latest iPhone and Samsung Galaxy flagship phones"}
@@ -89,8 +86,7 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   "web_search_options": {
   "search_context_size": "high"
   }
-  }' > /tmp/resp_ecf62b.json
-cat /tmp/resp_ecf62b.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 2. Search with Domain Filter
@@ -98,27 +94,25 @@ cat /tmp/resp_ecf62b.json | jq .
 Limit search to specific domains:
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar",
   "messages": [
   {"role": "user", "content": "Latest research on transformer architectures"}
   ],
   "search_domain_filter": ["arxiv.org", "openai.com", "anthropic.com"]
-  }' > /tmp/resp_5a8e0c.json
-cat /tmp/resp_5a8e0c.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Exclude domains (add `-` prefix):**
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar",
   "messages": [
   {"role": "user", "content": "Best programming practices"}
   ],
   "search_domain_filter": ["-reddit.com", "-quora.com"]
-  }' > /tmp/resp_a69294.json
-cat /tmp/resp_a69294.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 3. Search with Time Filter
@@ -126,28 +120,26 @@ cat /tmp/resp_a69294.json | jq .
 Filter by recency:
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar",
   "messages": [
   {"role": "user", "content": "Major tech news"}
   ],
   "search_recency_filter": "week"
-  }' > /tmp/resp_8d86fb.json
-cat /tmp/resp_8d86fb.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Filter by date range:**
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar",
   "messages": [
   {"role": "user", "content": "AI announcements"}
   ],
   "search_after_date_filter": "12/01/2024",
   "search_before_date_filter": "12/31/2024"
-  }' > /tmp/resp_9c998c.json
-cat /tmp/resp_9c998c.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 4. Academic Search
@@ -155,14 +147,13 @@ cat /tmp/resp_9c998c.json | jq .
 Search academic sources:
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar",
   "messages": [
   {"role": "user", "content": "Recent papers on large language model alignment"}
   ],
   "search_mode": "academic"
-  }' > /tmp/resp_995817.json
-cat /tmp/resp_995817.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 5. Raw Search API
@@ -170,24 +161,22 @@ cat /tmp/resp_995817.json | jq .
 Get raw search results without AI synthesis:
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "query": "Claude AI Anthropic",
   "max_results": 5
-  }' > /tmp/resp_59d48e.json
-cat /tmp/resp_59d48e.json | jq .
+  }'"'"' | jq .'
 ```
 
 **With domain and time filters:**
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "query": "machine learning tutorials",
   "max_results": 10,
   "search_domain_filter": ["github.com", "medium.com"],
   "search_recency_filter": "month",
   "country": "US"
-  }' > /tmp/resp_cf12dd.json
-cat /tmp/resp_cf12dd.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 6. Deep Research (Long-form)
@@ -195,14 +184,13 @@ cat /tmp/resp_cf12dd.json | jq .
 For comprehensive research reports:
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar-deep-research",
   "messages": [
   {"role": "user", "content": "Write a comprehensive analysis of the electric vehicle market in 2024"}
   ],
   "reasoning_effort": "high"
-  }' > /tmp/resp_c20a56.json
-cat /tmp/resp_c20a56.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 7. Reasoning Model
@@ -210,13 +198,12 @@ cat /tmp/resp_c20a56.json | jq .
 For complex problem-solving:
 
 ```bash
-curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "model": "sonar-reasoning-pro",
   "messages": [
   {"role": "user", "content": "Analyze the pros and cons of microservices vs monolithic architecture for a startup"}
   ]
-  }' > /tmp/resp_412b6c.json
-cat /tmp/resp_412b6c.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---

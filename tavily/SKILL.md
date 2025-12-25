@@ -38,10 +38,9 @@ export TAVILY_API_KEY="tvly-xxxxxxxxxxxxxxxx"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -62,12 +61,11 @@ with a JSON body.
 ### 1. Basic Search
 
 ```bash
-curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '"'"'{
   "query": "2025 AI Trending",
   "search_depth": "basic",
   "max_results": 5
-  }' > /tmp/resp_a072d5.json
-cat /tmp/resp_a072d5.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Key parameters:**
@@ -83,7 +81,7 @@ cat /tmp/resp_a072d5.json | jq .
 ### 2. Advanced Search
 
 ```bash
-curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '{
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '"'"'{
   "query": "serverless SaaS pricing best practices",
   "search_depth": "advanced",
   "max_results": 8,
@@ -91,8 +89,7 @@ curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: applicat
   "include_domains": ["docs.aws.amazon.com", "cloud.google.com"],
   "exclude_domains": ["reddit.com", "twitter.com"],
   "include_raw_content": false
-  }' > /tmp/resp_bb4356.json
-cat /tmp/resp_bb4356.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Common advanced parameters:**

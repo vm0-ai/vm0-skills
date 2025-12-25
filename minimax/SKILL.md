@@ -44,10 +44,9 @@ export MINIMAX_API_KEY="your-api-key"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -63,14 +62,13 @@ Authentication uses Bearer token in the `Authorization` header.
 Send a chat message:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
   "model": "MiniMax-Text-01",
   "messages": [
   {"role": "system", "content": "You are a helpful assistant."},
   {"role": "user", "content": "Hello, who are you?"}
   ]
-  }' > /tmp/resp_c490b5.json
-cat /tmp/resp_c490b5.json | jq '.choices[0].message.content'
+  }'"'"' | jq '"'"'.choices[0].message.content'"'"''
 ```
 
 **Available models:**
@@ -86,15 +84,14 @@ cat /tmp/resp_c490b5.json | jq '.choices[0].message.content'
 Adjust creativity:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
   "model": "MiniMax-Text-01",
   "messages": [
   {"role": "user", "content": "Write a short poem about AI."}
   ],
   "temperature": 0.7,
   "max_tokens": 200
-  }' > /tmp/resp_2ac461.json
-cat /tmp/resp_2ac461.json | jq '.choices[0].message.content'
+  }'"'"' | jq '"'"'.choices[0].message.content'"'"''
 ```
 
 **Parameters:**
@@ -208,13 +205,12 @@ curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer ${M
 Generate video from text prompt:
 
 ```bash
-curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
   "model": "T2V-01-Director",
   "prompt": "A cat playing with a ball of yarn [Static shot].",
   "duration": 6,
   "resolution": "1080P"
-  }' > /tmp/resp_51ee9c.json
-cat /tmp/resp_51ee9c.json | jq .
+  }'"'"' | jq .'
 ```
 
 Video generation is async - returns a task ID to poll for completion.
@@ -226,13 +222,12 @@ Video generation is async - returns a task ID to poll for completion.
 Control camera movement in videos:
 
 ```bash
-curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
   "model": "MiniMax-Hailuo-2.3",
   "prompt": "A person walking through a forest [Tracking shot], then stops to look at a bird [Push in].",
   "duration": 6,
   "resolution": "1080P"
-  }' > /tmp/resp_a4f0de.json
-cat /tmp/resp_a4f0de.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Camera commands (in brackets):**
@@ -251,14 +246,13 @@ Combine with `[Pan left, Pedestal up]` (max 3 simultaneous).
 Generate video from an image:
 
 ```bash
-curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
   "model": "T2V-01-Director",
   "prompt": "The scene comes to life with gentle movement [Static shot].",
   "first_frame_image": "https://example.com/image.jpg",
   "duration": 6,
   "resolution": "1080P"
-  }' > /tmp/resp_d4b297.json
-cat /tmp/resp_d4b297.json | jq .
+  }'"'"' | jq .'
 ```
 
 Provide `first_frame_image` as URL or base64-encoded image.
@@ -270,7 +264,7 @@ Provide `first_frame_image` as URL or base64-encoded image.
 Use tools with chat:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
   "model": "MiniMax-Text-01",
   "messages": [
   {"role": "user", "content": "What is the weather in Beijing?"}
@@ -292,8 +286,7 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
   }
   ],
   "tool_choice": "auto"
-  }' > /tmp/resp_0c6e5d.json
-cat /tmp/resp_0c6e5d.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---

@@ -36,10 +36,9 @@ export PLAUSIBLE_SITE_ID=example.com
   - **Sites API** - For managing sites programmatically
 6. Save the key (shown only once)
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## Stats API (v2)
@@ -164,8 +163,7 @@ EOF
 ### List Sites
 
 ```bash
-curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" 'https://plausible.io/api/v1/sites' > /tmp/resp_dee850.json
-cat /tmp/resp_dee850.json | jq '.sites[] | {domain, timezone}'
+bash -c 'curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" '"'"'https://plausible.io/api/v1/sites'"'"' | jq '"'"'.sites[] | {domain, timezone}'"'"''
 ```
 
 Docs: https://plausible.io/docs/sites-api

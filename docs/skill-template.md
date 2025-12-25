@@ -24,8 +24,7 @@ Before writing a skill, thoroughly understand the target API:
 
 ```bash
 # Example: search API docs with Tavily
-curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_API_KEY" -d '{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}' > /tmp/resp.json
-cat /tmp/resp.json | jq .
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_API_KEY" -d '"'"'{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}'"'"' | jq .'
 ```
 
 ---
@@ -80,15 +79,13 @@ export ENV_VAR_2="your-value"
 ### 1. <Feature Name>
 
 \`\`\`bash
-curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $ENV_VAR_1" > /tmp/resp.json
-cat /tmp/resp.json | jq .
+bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $ENV_VAR_1" | jq .'
 \`\`\`
 
 ### 2. <Feature Name>
 
 \`\`\`bash
-curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer $ENV_VAR_1" -d '{"key": "value"}' > /tmp/resp.json
-cat /tmp/resp.json | jq .
+bash -c 'curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer $ENV_VAR_1" -d '"'"'{"key": "value"}'"'"' | jq .'
 \`\`\`
 
 ---
@@ -128,30 +125,34 @@ curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq
 
 **The Workaround:**
 
-Never combine variable substitution and pipes in the same command. Split into two steps:
+Wrap the entire command in `bash -c '...'` to bypass Claude Code's preprocessing:
 
 ```bash
-# GOOD - redirect to file first (no pipe), then pipe file contents (no variable)
-curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" > /tmp/resp.json
-cat /tmp/resp.json | jq .
+# GOOD - bash -c creates a subshell that bypasses preprocessing
+bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq .'
 ```
 
 **Rules:**
-1. If using `$VAR` in curl headers → redirect output to a temp file (`> /tmp/resp.json`)
-2. If using pipe (`|`) → don't use variables in the same command
+1. Always use `bash -c '...'` when combining `$VAR` with pipes
+2. Escape single quotes inside as `'"'"'` (end quote, literal quote, start quote)
 3. Use `$VAR` instead of `${VAR}` (simpler, less prone to parsing issues)
-4. For command substitution like `VAR=$(curl ... | jq)`, split it:
-   ```bash
-   curl ... > /tmp/resp.json
-   VAR=$(cat /tmp/resp.json | jq ...)
-   ```
-5. For loops with pipes, fetch data first:
-   ```bash
-   curl -s "https://api.example.com/ids" > /tmp/ids.json
-   for id in $(cat /tmp/ids.json | jq '.[]'); do
-     ...
-   done
-   ```
+
+**Example with JSON body (escaping single quotes):**
+```bash
+bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"' | jq .'
+```
+
+**For command substitution:**
+```bash
+VAR=$(bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq -r .id')
+```
+
+**For loops:**
+```bash
+for id in $(bash -c 'curl -s "https://api.example.com/ids" --header "Authorization: Bearer $API_KEY" | jq -r ".[]"'); do
+  echo "Processing $id"
+done
+```
 
 ---
 
@@ -188,8 +189,7 @@ After writing, test each curl example in SKILL.md:
 source $HOME/.env.local
 
 # Execute example commands and verify results
-curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY" > /tmp/resp.json
-cat /tmp/resp.json | jq .
+bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY" | jq .'
 ```
 
 Checklist:
@@ -210,8 +210,8 @@ Based on test results, document any issues encountered:
 | curl reports blank argument | `-H` has issues in some environments | Use `--header` instead |
 | Authentication failed | Incorrect token format | Check Bearer prefix |
 | Returns 404 | API version outdated | Update version number |
-| API returns 401 but token is correct | Claude Code bug: variables cleared with pipes | Split `curl ... \| jq` into two commands |
-| Variable appears empty in pipe | Claude Code preprocessing bug | Use redirect `> /tmp/file` then `cat file \| ...` |
+| API returns 401 but token is correct | Claude Code bug: variables cleared with pipes | Wrap in `bash -c '...'` |
+| Variable appears empty in pipe | Claude Code preprocessing bug | Use `bash -c 'curl ... \| jq'` |
 
 After fixing SKILL.md, re-test until all examples work correctly.
 

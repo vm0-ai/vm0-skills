@@ -44,10 +44,9 @@ https://app.reportei.com/api/v1
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -59,8 +58,7 @@ https://app.reportei.com/api/v1
 Retrieve details of your company associated with the token:
 
 ```bash
-curl -s -X GET "https://app.reportei.com/api/v1/me" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_6e9752.json
-cat /tmp/resp_6e9752.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/me" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 Response:
@@ -85,8 +83,7 @@ Response:
 Retrieve all report templates in your company:
 
 ```bash
-curl -s -X GET "https://app.reportei.com/api/v1/templates" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_7959d5.json
-cat /tmp/resp_7959d5.json | jq '.data[] | {id, title, used_count}'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/templates" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq '"'"'.data[] | {id, title, used_count}'"'"''
 ```
 
 ---
@@ -96,8 +93,7 @@ cat /tmp/resp_7959d5.json | jq '.data[] | {id, title, used_count}'
 Retrieve all client projects:
 
 ```bash
-curl -s -X GET "https://app.reportei.com/api/v1/clients" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_c1ba11.json
-cat /tmp/resp_c1ba11.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -109,8 +105,7 @@ Retrieve details of a specific client:
 ```bash
 CLIENT_ID="your-client-id"
 
-curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_8a85e2.json
-cat /tmp/resp_8a85e2.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -122,8 +117,7 @@ Get all reports for a specific client:
 ```bash
 CLIENT_ID="your-client-id"
 
-curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/reports" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_88323e.json
-cat /tmp/resp_88323e.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/reports" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -135,8 +129,7 @@ Retrieve details of a specific report:
 ```bash
 REPORT_ID="your-report-id"
 
-curl -s -X GET "https://app.reportei.com/api/v1/reports/${REPORT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_dcfa97.json
-cat /tmp/resp_dcfa97.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/reports/${REPORT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -148,8 +141,7 @@ Get all integrations for a specific client:
 ```bash
 CLIENT_ID="your-client-id"
 
-curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/integrations" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_b5beb6.json
-cat /tmp/resp_b5beb6.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/integrations" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -161,8 +153,7 @@ Retrieve details of a specific integration:
 ```bash
 INTEGRATION_ID="your-integration-id"
 
-curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_35bf99.json
-cat /tmp/resp_35bf99.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -174,8 +165,7 @@ List available widgets for an integration:
 ```bash
 INTEGRATION_ID="your-integration-id"
 
-curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_4e9e16.json
-cat /tmp/resp_4e9e16.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -187,12 +177,11 @@ Retrieve the value of specific widgets:
 ```bash
 INTEGRATION_ID="your-integration-id"
 
-curl -s -X POST "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets/value" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets/value" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "widgets": ["widget_id_1", "widget_id_2"],
   "start_date": "2024-01-01",
   "end_date": "2024-01-31"
-  }' > /tmp/resp_097673.json
-cat /tmp/resp_097673.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -202,13 +191,12 @@ cat /tmp/resp_097673.json | jq .
 Create a new report programmatically:
 
 ```bash
-curl -s -X POST "https://app.reportei.com/api/v1/create_report" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/create_report" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "client_id": "your-client-id",
   "template_id": "your-template-id",
   "start_date": "2024-01-01",
   "end_date": "2024-01-31"
-  }' > /tmp/resp_5ced23.json
-cat /tmp/resp_5ced23.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -218,11 +206,10 @@ cat /tmp/resp_5ced23.json | jq .
 Create a new dashboard:
 
 ```bash
-curl -s -X POST "https://app.reportei.com/api/v1/create_dashboard" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/create_dashboard" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "client_id": "your-client-id",
   "name": "My Dashboard"
-  }' > /tmp/resp_a3aacf.json
-cat /tmp/resp_a3aacf.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -232,12 +219,11 @@ cat /tmp/resp_a3aacf.json | jq .
 Add an entry to the client timeline:
 
 ```bash
-curl -s -X POST "https://app.reportei.com/api/v1/add_to_timeline" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/add_to_timeline" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "client_id": "your-client-id",
   "title": "Campaign Launched",
   "description": "New marketing campaign started"
-  }' > /tmp/resp_cea62c.json
-cat /tmp/resp_cea62c.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -247,8 +233,7 @@ cat /tmp/resp_cea62c.json | jq .
 Get available webhook event types:
 
 ```bash
-curl -s -X GET "https://app.reportei.com/api/v1/webhook/events" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" > /tmp/resp_349bc6.json
-cat /tmp/resp_349bc6.json | jq .
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/webhook/events" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
 ```
 
 ---
@@ -258,11 +243,10 @@ cat /tmp/resp_349bc6.json | jq .
 Subscribe to webhook notifications:
 
 ```bash
-curl -s -X POST "https://app.reportei.com/api/v1/webhooks/subscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/webhooks/subscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "url": "https://your-webhook-endpoint.com/webhook",
   "events": ["report.created", "report.updated"]
-  }' > /tmp/resp_0e35d1.json
-cat /tmp/resp_0e35d1.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -272,10 +256,9 @@ cat /tmp/resp_0e35d1.json | jq .
 Unsubscribe from webhook notifications:
 
 ```bash
-curl -s -X POST "https://app.reportei.com/api/v1/webhooks/unsubscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/webhooks/unsubscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "webhook_id": "your-webhook-id"
-  }' > /tmp/resp_de5c99.json
-cat /tmp/resp_de5c99.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---

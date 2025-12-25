@@ -44,10 +44,9 @@ GitLab.com has rate limits of ~2000 requests per minute for authenticated users.
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -65,8 +64,7 @@ Base URL: `https://${GITLAB_HOST}/api/v4`
 Verify your authentication:
 
 ```bash
-curl -s "https://${GITLAB_HOST}/api/v4/user" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_6cc42f.json
-cat /tmp/resp_6cc42f.json | jq '{id, username, name, email, state}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/user" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'{id, username, name, email, state}'"'"''
 ```
 
 ---
@@ -76,8 +74,7 @@ cat /tmp/resp_6cc42f.json | jq '{id, username, name, email, state}'
 Get projects accessible to you:
 
 ```bash
-curl -s "https://${GITLAB_HOST}/api/v4/projects?membership=true&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_5cb6f8.json
-cat /tmp/resp_5cb6f8.json | jq '.[] | {id, path_with_namespace, visibility, default_branch}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects?membership=true&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'.[] | {id, path_with_namespace, visibility, default_branch}'"'"''
 ```
 
 Filter options:
@@ -95,8 +92,7 @@ Get details for a specific project:
 ```bash
 PROJECT_ID="123" # or URL-encoded path like "mygroup%2Fmyproject"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_a7034b.json
-cat /tmp/resp_a7034b.json | jq '{id, name, path_with_namespace, default_branch, visibility, web_url}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'{id, name, path_with_namespace, default_branch, visibility, web_url}'"'"''
 ```
 
 ---
@@ -108,8 +104,7 @@ Get issues for a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues?state=opened&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_6a9f1d.json
-cat /tmp/resp_6a9f1d.json | jq '.[] | {iid, title, state, author: .author.username, labels, web_url}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues?state=opened&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'.[] | {iid, title, state, author: .author.username, labels, web_url}'"'"''
 ```
 
 Filter options:
@@ -128,8 +123,7 @@ Get a specific issue:
 PROJECT_ID="123"
 ISSUE_IID="1" # Issue internal ID (not global ID)
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_ceef84.json
-cat /tmp/resp_ceef84.json | jq '{iid, title, description, state, author: .author.username, assignees: [.assignees[].username], labels, created_at, web_url}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'{iid, title, description, state, author: .author.username, assignees: [.assignees[].username], labels, created_at, web_url}'"'"''
 ```
 
 ---
@@ -141,12 +135,11 @@ Create a new issue in a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "title": "Bug: Login page not loading",
   "description": "The login page shows a blank screen on mobile devices.",
   "labels": "bug,frontend"
-}' > /tmp/resp_5b7d20.json
-cat /tmp/resp_5b7d20.json | jq '{iid, title, web_url}'
+}'"'"' | jq '"'"'{iid, title, web_url}'"'"''
 ```
 
 ---
@@ -179,11 +172,10 @@ Update an existing issue:
 PROJECT_ID="123"
 ISSUE_IID="1"
 
-curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "title": "Updated: Bug fix for login page",
   "labels": "bug,frontend,in-progress"
-}' > /tmp/resp_aa0398.json
-cat /tmp/resp_aa0398.json | jq '{iid, title, labels, updated_at}'
+}'"'"' | jq '"'"'{iid, title, labels, updated_at}'"'"''
 ```
 
 ---
@@ -196,8 +188,7 @@ Close an issue:
 PROJECT_ID="123"
 ISSUE_IID="1"
 
-curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{"state_event": "close"}' > /tmp/resp_7c079e.json
-cat /tmp/resp_7c079e.json | jq '{iid, title, state}'
+bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"state_event": "close"}'"'"' | jq '"'"'{iid, title, state}'"'"''
 ```
 
 Use `"state_event": "reopen"` to reopen a closed issue.
@@ -212,8 +203,7 @@ Add a note/comment to an issue:
 PROJECT_ID="123"
 ISSUE_IID="1"
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}/notes" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{"body": "Investigating this issue. Will update soon."}' > /tmp/resp_f41ba4.json
-cat /tmp/resp_f41ba4.json | jq '{id, body, author: .author.username, created_at}'
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}/notes" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"body": "Investigating this issue. Will update soon."}'"'"' | jq '"'"'{id, body, author: .author.username, created_at}'"'"''
 ```
 
 ---
@@ -225,8 +215,7 @@ Get merge requests for a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests?state=opened&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_d73262.json
-cat /tmp/resp_d73262.json | jq '.[] | {iid, title, state, source_branch, target_branch, author: .author.username, web_url}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests?state=opened&per_page=20" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'.[] | {iid, title, state, source_branch, target_branch, author: .author.username, web_url}'"'"''
 ```
 
 Filter options:
@@ -244,8 +233,7 @@ Get a specific merge request:
 PROJECT_ID="123"
 MR_IID="1"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_2d25d8.json
-cat /tmp/resp_2d25d8.json | jq '{iid, title, state, source_branch, target_branch, author: .author.username, merge_status, has_conflicts, web_url}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'{iid, title, state, source_branch, target_branch, author: .author.username, merge_status, has_conflicts, web_url}'"'"''
 ```
 
 ---
@@ -257,13 +245,12 @@ Create a new merge request:
 ```bash
 PROJECT_ID="123"
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "source_branch": "feature/user-profile",
   "target_branch": "main",
   "title": "Add user profile page",
   "description": "This MR adds a new user profile page with avatar support."
-}' > /tmp/resp_199d3b.json
-cat /tmp/resp_199d3b.json | jq '{iid, title, web_url}'
+}'"'"' | jq '"'"'{iid, title, web_url}'"'"''
 ```
 
 ---
@@ -276,8 +263,7 @@ Merge an MR (if it's ready):
 PROJECT_ID="123"
 MR_IID="1"
 
-curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}/merge" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{"merge_when_pipeline_succeeds": true}' > /tmp/resp_26a526.json
-cat /tmp/resp_26a526.json | jq '{iid, title, state, merged_by: .merged_by.username}'
+bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}/merge" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"merge_when_pipeline_succeeds": true}'"'"' | jq '"'"'{iid, title, state, merged_by: .merged_by.username}'"'"''
 ```
 
 Options:
@@ -294,8 +280,7 @@ Get pipelines for a project:
 ```bash
 PROJECT_ID="123"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines?per_page=10" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_fed015.json
-cat /tmp/resp_fed015.json | jq '.[] | {id, status, ref, sha: .sha[0:8], created_at, web_url}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines?per_page=10" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'.[] | {id, status, ref, sha: .sha[0:8], created_at, web_url}'"'"''
 ```
 
 ---
@@ -308,8 +293,7 @@ Get details of a specific pipeline:
 PROJECT_ID="123"
 PIPELINE_ID="456"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_5e27ba.json
-cat /tmp/resp_5e27ba.json | jq '{id, status, ref, duration, finished_at, web_url}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'{id, status, ref, duration, finished_at, web_url}'"'"''
 ```
 
 ---
@@ -322,8 +306,7 @@ Get jobs in a pipeline:
 PROJECT_ID="123"
 PIPELINE_ID="456"
 
-curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}/jobs" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" > /tmp/resp_516db1.json
-cat /tmp/resp_516db1.json | jq '.[] | {id, name, stage, status, duration}'
+bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/pipelines/${PIPELINE_ID}/jobs" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" | jq '"'"'.[] | {id, name, stage, status, duration}'"'"''
 ```
 
 ---
@@ -333,8 +316,7 @@ cat /tmp/resp_516db1.json | jq '.[] | {id, name, stage, status, duration}'
 Search for users:
 
 ```bash
-curl -s -G "https://${GITLAB_HOST}/api/v4/users" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --data-urlencode "search=john" > /tmp/resp_453f6e.json
-cat /tmp/resp_453f6e.json | jq '.[] | {id, username, name, state}'
+bash -c 'curl -s -G "https://${GITLAB_HOST}/api/v4/users" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --data-urlencode "search=john" | jq '"'"'.[] | {id, username, name, state}'"'"''
 ```
 
 ---
@@ -344,12 +326,11 @@ cat /tmp/resp_453f6e.json | jq '.[] | {id, username, name, state}'
 Create a new project:
 
 ```bash
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "name": "my-new-project",
   "visibility": "private",
   "initialize_with_readme": true
-}' > /tmp/resp_331d90.json
-cat /tmp/resp_331d90.json | jq '{id, path_with_namespace, web_url}'
+}'"'"' | jq '"'"'{id, path_with_namespace, web_url}'"'"''
 ```
 
 ---

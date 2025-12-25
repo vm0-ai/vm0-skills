@@ -45,10 +45,9 @@ Page ID: 2b70e96f0134807d8450c8793839c659 (remove hyphens if present)
 PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
 ```
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## Core APIs
@@ -59,12 +58,10 @@ PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
 PAGE_ID="2b70e96f0134807d8450c8793839c659"
 
 # Get page metadata
-curl -s -X GET "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" > /tmp/resp_dc599d.json
-cat /tmp/resp_dc599d.json | jq '{title: .properties.title.title[0].plain_text, url, last_edited_time}'
+bash -c 'curl -s -X GET "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" | jq '"'"'{title: .properties.title.title[0].plain_text, url, last_edited_time}'"'"''
 
 # Get page content blocks
-curl -s -X GET "https://api.notion.com/v1/blocks/${PAGE_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" > /tmp/resp_11944b.json
-cat /tmp/resp_11944b.json | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}'
+bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/${PAGE_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" | jq '"'"'.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}'"'"''
 ```
 
 ### Read Nested Blocks (Toggle, etc.)
@@ -73,15 +70,13 @@ Blocks with `has_children: true` contain nested content:
 
 ```bash
 BLOCK_ID="2b70e96f-0134-80d9-9def-f99ae812f1e7"
-curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" > /tmp/resp_956bfc.json
-cat /tmp/resp_956bfc.json | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
+bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" | jq '"'"'.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'"'"''
 ```
 
 ### Search Workspace
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/search' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d '{"query":"Meeting Notes","page_size":10}' > /tmp/resp_b7fe15.json
-cat /tmp/resp_b7fe15.json | jq '.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}'
+bash -c 'curl -s -X POST '"'"'https://api.notion.com/v1/search'"'"' --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' --header '"'"'Content-Type: application/json'"'"' -d '"'"'{"query":"Meeting Notes","page_size":10}'"'"' | jq '"'"'.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}'"'"''
 ```
 
 Docs: https://developers.notion.com/reference/post-search
@@ -89,8 +84,7 @@ Docs: https://developers.notion.com/reference/post-search
 ### List Database Entries
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d '{"page_size":100}' > /tmp/resp_40e4de.json
-cat /tmp/resp_40e4de.json | jq '.results[] | {id, properties}'
+bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' --header '"'"'Content-Type: application/json'"'"' -d '"'"'{"page_size":100}'"'"' | jq '"'"'.results[] | {id, properties}'"'"''
 ```
 
 Docs: https://developers.notion.com/reference/post-database-query
@@ -128,8 +122,7 @@ EOF
 ### Get Database Schema
 
 ```bash
-curl -s "https://api.notion.com/v1/databases/${DATABASE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' > /tmp/resp_cec94f.json
-cat /tmp/resp_cec94f.json | jq '{title: .title[0].plain_text, properties: .properties | keys}'
+bash -c 'curl -s "https://api.notion.com/v1/databases/${DATABASE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' | jq '"'"'{title: .title[0].plain_text, properties: .properties | keys}'"'"''
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-database
@@ -137,8 +130,7 @@ Docs: https://developers.notion.com/reference/retrieve-a-database
 ### Get Page
 
 ```bash
-curl -s "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' > /tmp/resp_9aa3b6.json
-cat /tmp/resp_9aa3b6.json | jq '{id, url, properties}'
+bash -c 'curl -s "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' | jq '"'"'{id, url, properties}'"'"''
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-page
@@ -208,8 +200,7 @@ curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authoriz
 ### Get Block Children
 
 ```bash
-curl -s "https://api.notion.com/v1/blocks/${BLOCK_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' > /tmp/resp_83e734.json
-cat /tmp/resp_83e734.json | jq '.results[] | {type, id}'
+bash -c 'curl -s "https://api.notion.com/v1/blocks/${BLOCK_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' | jq '"'"'.results[] | {type, id}'"'"''
 ```
 
 Docs: https://developers.notion.com/reference/get-block-children
@@ -249,8 +240,7 @@ curl -s -X DELETE "https://api.notion.com/v1/blocks/${BLOCK_ID}" --header "Autho
 ### List Users
 
 ```bash
-curl -s 'https://api.notion.com/v1/users' --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' > /tmp/resp_2afeb4.json
-cat /tmp/resp_2afeb4.json | jq '.results[] | {id, name, type}'
+bash -c 'curl -s '"'"'https://api.notion.com/v1/users'"'"' --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' | jq '"'"'.results[] | {id, name, type}'"'"''
 ```
 
 Docs: https://developers.notion.com/reference/get-users

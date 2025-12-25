@@ -41,10 +41,9 @@ export PDFORGE_API_KEY="pdfnoodle_api_your-key-here"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -60,7 +59,7 @@ Base URL: `https://api.pdfnoodle.com/v1`
 Generate a PDF using a pre-built template with dynamic data:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "templateId": "your-template-id",
   "data": {
   "name": "John Doe",
@@ -70,8 +69,7 @@ curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization:
   {"description": "Item 2", "price": 200}
   ]
   }
-  }' > /tmp/resp_bc164f.json
-cat /tmp/resp_bc164f.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Response:**
@@ -92,15 +90,14 @@ The `signedUrl` is a temporary URL (expires in 1 hour) to download the generated
 For batch processing, use the async endpoint with a webhook:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "templateId": "your-template-id",
   "webhook": "https://your-server.com/webhook",
   "data": {
   "name": "Jane Doe",
   "amount": 500
   }
-  }' > /tmp/resp_f1f7d1.json
-cat /tmp/resp_f1f7d1.json | jq .
+  }'"'"' | jq .'
 ```
 
 **Response:**
@@ -120,10 +117,9 @@ The webhook will receive the `signedUrl` when generation is complete.
 Convert raw HTML directly to PDF without a template:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "html": "<html><body><h1>Hello World</h1><p>This is a PDF generated from HTML.</p></body></html>"
-  }' > /tmp/resp_61fd7a.json
-cat /tmp/resp_61fd7a.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -133,10 +129,9 @@ cat /tmp/resp_61fd7a.json | jq .
 Include CSS for styled PDFs:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "html": "<html><head><style>body { font-family: Arial; } h1 { color: #333; } .invoice { border: 1px solid #ddd; padding: 20px; }</style></head><body><div class=\"invoice\"><h1>Invoice #001</h1><p>Amount: $500</p></div></body></html>"
-  }' > /tmp/resp_423ac6.json
-cat /tmp/resp_423ac6.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -146,11 +141,10 @@ cat /tmp/resp_423ac6.json | jq .
 Set `convertToImage` to true to get a PNG:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "html": "<html><body><h1>Image Export</h1></body></html>",
   "convertToImage": true
-  }' > /tmp/resp_ef6aea.json
-cat /tmp/resp_ef6aea.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---

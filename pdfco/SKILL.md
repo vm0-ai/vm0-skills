@@ -41,10 +41,9 @@ export PDFCO_API_KEY="your-email@example.com_your-api-key"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -54,22 +53,20 @@ export PDFCO_API_KEY="your-email@example.com_your-api-key"
 Extract text from PDF with OCR support:
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/convert/to/text' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/convert/to/text'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-to-text/sample.pdf",
   "inline": true
-  }' > /tmp/resp_ac89d1.json
-cat /tmp/resp_ac89d1.json | jq .
+  }'"'"' | jq .'
 ```
 
 **With specific pages:**
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/convert/to/text' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/convert/to/text'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-to-text/sample.pdf",
   "pages": "0-2",
   "inline": true
-  }' > /tmp/resp_1d3dd8.json
-cat /tmp/resp_1d3dd8.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 2. PDF to CSV
@@ -77,11 +74,10 @@ cat /tmp/resp_1d3dd8.json | jq .
 Convert PDF tables to CSV:
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/convert/to/csv' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/convert/to/csv'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-to-csv/sample.pdf",
   "inline": true
-  }' > /tmp/resp_334695.json
-cat /tmp/resp_334695.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 3. Merge PDFs
@@ -89,11 +85,10 @@ cat /tmp/resp_334695.json | jq .
 Combine multiple PDFs into one:
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/merge' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/merge'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-merge/sample1.pdf,https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-merge/sample2.pdf",
   "name": "merged.pdf"
-  }' > /tmp/resp_02bb09.json
-cat /tmp/resp_02bb09.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 4. Split PDF
@@ -101,11 +96,10 @@ cat /tmp/resp_02bb09.json | jq .
 Split PDF by page ranges:
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/split' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/split'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-split/sample.pdf",
   "pages": "1-2,3-"
-  }' > /tmp/resp_1f674e.json
-cat /tmp/resp_1f674e.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 5. Compress PDF
@@ -113,11 +107,10 @@ cat /tmp/resp_1f674e.json | jq .
 Reduce PDF file size:
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/optimize' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/optimize'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-optimize/sample.pdf",
   "name": "compressed.pdf"
-  }' > /tmp/resp_07ec97.json
-cat /tmp/resp_07ec97.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 6. HTML to PDF
@@ -125,21 +118,19 @@ cat /tmp/resp_07ec97.json | jq .
 Convert HTML or URL to PDF:
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/convert/from/html' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/convert/from/html'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "html": "<h1>Hello World</h1><p>This is a test.</p>",
   "name": "output.pdf"
-  }' > /tmp/resp_41f7d5.json
-cat /tmp/resp_41f7d5.json | jq .
+  }'"'"' | jq .'
 ```
 
 **From URL:**
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/pdf/convert/from/url' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/convert/from/url'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://example.com",
   "name": "webpage.pdf"
-  }' > /tmp/resp_492657.json
-cat /tmp/resp_492657.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 7. AI Invoice Parser
@@ -147,11 +138,10 @@ cat /tmp/resp_492657.json | jq .
 Extract structured data from invoices:
 
 ```bash
-curl --location --request POST 'https://api.pdf.co/v1/ai-invoice-parser' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw '{
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/ai-invoice-parser'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/ai-invoice-parser/sample-invoice.pdf",
   "inline": true
-  }' > /tmp/resp_173a5a.json
-cat /tmp/resp_173a5a.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 8. Upload Local File
@@ -186,8 +176,7 @@ RESPONSE=$(curl -s --location --request POST 'https://api.pdf.co/v1/pdf/convert/
 JOB_ID=$(echo $RESPONSE | jq -r '.jobId')
 
 # Check job status
-curl --location --request POST 'https://api.pdf.co/v1/job/check' --header "x-api-key: ${PDFCO_API_KEY}" --header 'Content-Type: application/json' --data-raw "{\"jobid\": \"$JOB_ID\"}" > /tmp/resp_fffa66.json
-cat /tmp/resp_fffa66.json | jq .
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/job/check'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw "{\"jobid\": \"$JOB_ID\"}" | jq .'
 ```
 
 ---

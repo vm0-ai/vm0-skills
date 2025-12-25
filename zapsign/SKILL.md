@@ -50,10 +50,9 @@ export ZAPSIGN_API_TOKEN="your-api-token"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -67,7 +66,7 @@ All examples use the **sandbox** environment. For production, replace `sandbox.a
 Create a document for signature from a public PDF URL:
 
 ```bash
-curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "name": "Employment Contract",
   "url_pdf": "https://example.com/contract.pdf",
   "lang": "en",
@@ -79,8 +78,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "send_automatic_email": true
   }
   ]
-  }' > /tmp/resp_534b24.json
-cat /tmp/resp_534b24.json | jq '{token, status, sign_url: .signers[0].sign_url}'
+  }'"'"' | jq '"'"'{token, status, sign_url: .signers[0].sign_url}'"'"''
 ```
 
 ---
@@ -112,7 +110,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
 Create a document directly from Markdown text (great for AI integrations):
 
 ```bash
-curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "name": "Service Agreement",
   "markdown_text": "# Service Agreement\n\nThis agreement is between **Company A** and **Client B**.\n\n## Terms\n\n1. Service will be provided for 12 months\n2. Payment is due monthly\n\n---\n\nSignature: ________________",
   "signers": [
@@ -121,8 +119,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "email": "client@example.com"
   }
   ]
-  }' > /tmp/resp_4cdb31.json
-cat /tmp/resp_4cdb31.json | jq '{token, status, original_file}'
+  }'"'"' | jq '"'"'{token, status, original_file}'"'"''
 ```
 
 ---
@@ -132,7 +129,7 @@ cat /tmp/resp_4cdb31.json | jq '{token, status, original_file}'
 Create a document with signing order:
 
 ```bash
-curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "name": "Multi-party Contract",
   "url_pdf": "https://example.com/contract.pdf",
   "signature_order_active": true,
@@ -150,8 +147,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "send_automatic_email": true
   }
   ]
-  }' > /tmp/resp_40a59d.json
-cat /tmp/resp_40a59d.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -161,7 +157,7 @@ cat /tmp/resp_40a59d.json | jq .
 Create a document with a deadline for signing:
 
 ```bash
-curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "name": "Limited Time Offer",
   "url_pdf": "https://example.com/offer.pdf",
   "date_limit_to_sign": "2025-12-31T23:59:59Z",
@@ -171,8 +167,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "email": "customer@example.com"
   }
   ]
-  }' > /tmp/resp_b60a9b.json
-cat /tmp/resp_b60a9b.json | jq '{token, status, date_limit_to_sign}'
+  }'"'"' | jq '"'"'{token, status, date_limit_to_sign}'"'"''
 ```
 
 ---
@@ -184,8 +179,7 @@ Retrieve document status and signer information:
 ```bash
 DOC_TOKEN="your-document-token"
 
-curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" > /tmp/resp_2d0620.json
-cat /tmp/resp_2d0620.json | jq '{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}'
+bash -c 'curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" | jq '"'"'{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}'"'"''
 ```
 
 ---
@@ -197,13 +191,12 @@ Add a new signer to an existing document:
 ```bash
 DOC_TOKEN="your-document-token"
 
-curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/add-signer/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/add-signer/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "name": "Additional Signer",
   "email": "additional@example.com",
   "auth_mode": "assinaturaTela",
   "send_automatic_email": true
-  }' > /tmp/resp_9c8a6b.json
-cat /tmp/resp_9c8a6b.json | jq '{token, sign_url, status}'
+  }'"'"' | jq '"'"'{token, sign_url, status}'"'"''
 ```
 
 ---
@@ -213,7 +206,7 @@ cat /tmp/resp_9c8a6b.json | jq '{token, sign_url, status}'
 Send signing link via WhatsApp (costs credits):
 
 ```bash
-curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "name": "Contract via WhatsApp",
   "url_pdf": "https://example.com/contract.pdf",
   "signers": [
@@ -225,8 +218,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "auth_mode": "tokenWhatsapp"
   }
   ]
-  }' > /tmp/resp_07fed7.json
-cat /tmp/resp_07fed7.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -236,7 +228,7 @@ cat /tmp/resp_07fed7.json | jq .
 Require facial recognition during signing:
 
 ```bash
-curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
   "name": "High Security Contract",
   "url_pdf": "https://example.com/contract.pdf",
   "signers": [
@@ -247,8 +239,7 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "require_document_photo": true
   }
   ]
-  }' > /tmp/resp_38397c.json
-cat /tmp/resp_38397c.json | jq .
+  }'"'"' | jq .'
 ```
 
 ---
@@ -260,8 +251,7 @@ Delete a document:
 ```bash
 DOC_TOKEN="your-document-token"
 
-curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" > /tmp/resp_fa7e30.json
-cat /tmp/resp_fa7e30.json | jq .
+bash -c 'curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" | jq .'
 ```
 
 ---

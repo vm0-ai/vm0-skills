@@ -52,10 +52,9 @@ export ZEPTOMAIL_API_KEY="your-send-mail-token"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -67,13 +66,12 @@ Base URL: `https://api.zeptomail.com/v1.1`
 ### 1. Send Basic Email
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
   "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
   "subject": "Welcome to Our Service",
   "htmlbody": "<h1>Welcome!</h1><p>Thank you for signing up.</p>"
-}' > /tmp/resp_7a5c58.json
-cat /tmp/resp_7a5c58.json | jq .
+}'"'"' | jq .'
 ```
 
 ---
@@ -81,13 +79,12 @@ cat /tmp/resp_7a5c58.json | jq .
 ### 2. Send Plain Text Email
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
   "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
   "subject": "Your OTP Code",
   "textbody": "Your one-time password is: 123456\n\nThis code expires in 10 minutes."
-}' > /tmp/resp_c03281.json
-cat /tmp/resp_c03281.json | jq .
+}'"'"' | jq .'
 ```
 
 ---
@@ -97,7 +94,7 @@ cat /tmp/resp_c03281.json | jq .
 Enable open and click tracking:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
   "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
   "subject": "Order Confirmation #12345",
@@ -105,8 +102,7 @@ curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: 
   "track_clicks": true,
   "track_opens": true,
   "client_reference": "order-12345"
-}' > /tmp/resp_a96938.json
-cat /tmp/resp_a96938.json | jq .
+}'"'"' | jq .'
 ```
 
 ---
@@ -114,7 +110,7 @@ cat /tmp/resp_a96938.json | jq .
 ### 4. Send to Multiple Recipients (CC/BCC)
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
   "to": [{"email_address": {"address": "user1@example.com", "name": "User 1"}}],
   "cc": [{"email_address": {"address": "user2@example.com", "name": "User 2"}}],
@@ -122,8 +118,7 @@ curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: 
   "subject": "Team Update",
   "htmlbody": "<p>Here is the latest update for the team.</p>",
   "reply_to": [{"address": "support@yourdomain.com", "name": "Support"}]
-}' > /tmp/resp_9c46a8.json
-cat /tmp/resp_9c46a8.json | jq .
+}'"'"' | jq .'
 ```
 
 ---
@@ -176,7 +171,7 @@ curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: 
 Use pre-defined templates with merge fields:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "template_key": "your-template-key",
   "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
   "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
@@ -185,8 +180,7 @@ curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Author
   "order_id": "12345",
   "total": "$99.00"
   }
-}' > /tmp/resp_d8377d.json
-cat /tmp/resp_d8377d.json | jq .
+}'"'"' | jq .'
 ```
 
 Template example (in ZeptoMail dashboard):
@@ -202,7 +196,7 @@ Template example (in ZeptoMail dashboard):
 Send to up to 500 recipients with personalized merge fields:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
   "subject": "Your Monthly Report - {{month}}",
   "htmlbody": "<p>Hi {{name}},</p><p>Here is your report for {{month}}.</p>",
@@ -216,8 +210,7 @@ curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authoriza
   "merge_info": {"name": "Bob", "month": "December"}
   }
   ]
-}' > /tmp/resp_22a9b4.json
-cat /tmp/resp_22a9b4.json | jq .
+}'"'"' | jq .'
 ```
 
 ---
@@ -225,7 +218,7 @@ cat /tmp/resp_22a9b4.json | jq .
 ### 9. Batch Send with Template
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
   "template_key": "your-template-key",
   "from": {"address": "noreply@yourdomain.com", "name": "Your App"},
   "to": [
@@ -238,8 +231,7 @@ curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "
   "merge_info": {"user_name": "Bob", "code": "XYZ789"}
   }
   ]
-}' > /tmp/resp_0f701e.json
-cat /tmp/resp_0f701e.json | jq .
+}'"'"' | jq .'
 ```
 
 ---

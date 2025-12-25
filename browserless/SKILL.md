@@ -40,10 +40,9 @@ export BROWSERLESS_API_TOKEN="your-api-token-here"
 ---
 
 
-> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
-> cat /tmp/response.json | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
 > ```
 
 ## How to Use
@@ -53,28 +52,26 @@ export BROWSERLESS_API_TOKEN="your-api-token-here"
 Extract structured JSON using CSS selectors:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://example.com",
   "elements": [
   {"selector": "h1"},
   {"selector": "p"}
   ]
-  }' > /tmp/resp_004b9f.json
-cat /tmp/resp_004b9f.json | jq .
+  }'"'"' | jq .'
 ```
 
 **With wait options:**
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://news.ycombinator.com",
   "elements": [{"selector": ".titleline > a"}],
   "gotoOptions": {
   "waitUntil": "networkidle2",
   "timeout": 30000
   }
-  }' > /tmp/resp_f11ca4.json
-cat /tmp/resp_f11ca4.json | jq '.data[0].results[:3]'
+  }'"'"' | jq '"'"'.data[0].results[:3]'"'"''
 ```
 
 ### 2. Take Screenshots
@@ -201,14 +198,13 @@ curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERL
 Bypass bot detection:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/unblock?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/unblock?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://example.com",
   "browserWSEndpoint": false,
   "cookies": false,
   "content": true,
   "screenshot": false
-  }' > /tmp/resp_55033d.json
-cat /tmp/resp_55033d.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 7. Download Files
@@ -226,11 +222,10 @@ curl -s -X POST "https://production-sfo.browserless.io/download?token=${BROWSERL
 Enable stealth mode to avoid detection:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}&stealth=true" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}&stealth=true" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://example.com",
   "elements": [{"selector": "body"}]
-  }' > /tmp/resp_8310d6.json
-cat /tmp/resp_8310d6.json | jq .
+  }'"'"' | jq .'
 ```
 
 ### 9. Export Page with Resources
@@ -261,16 +256,15 @@ Run Lighthouse audits for accessibility, performance, SEO, best practices:
 **Full audit:**
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://example.com"
-  }' > /tmp/resp_933208.json
-cat /tmp/resp_933208.json | jq '.data.categories | to_entries[] | {category: .key, score: .value.score}'
+  }'"'"' | jq '"'"'.data.categories | to_entries[] | {category: .key, score: .value.score}'"'"''
 ```
 
 **Specific category (accessibility, performance, seo, best-practices, pwa):**
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://example.com",
   "config": {
   "extends": "lighthouse:default",
@@ -278,14 +272,13 @@ curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWS
   "onlyCategories": ["performance"]
   }
   }
-  }' > /tmp/resp_cb3b1b.json
-cat /tmp/resp_cb3b1b.json | jq '.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'
+  }'"'"' | jq '"'"'.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'"'"''
 ```
 
 **Specific audit (e.g., unminified-css, first-contentful-paint):**
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
   "url": "https://example.com",
   "config": {
   "extends": "lighthouse:default",
@@ -293,8 +286,7 @@ curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWS
   "onlyAudits": ["first-contentful-paint", "largest-contentful-paint"]
   }
   }
-  }' > /tmp/resp_f09eb2.json
-cat /tmp/resp_f09eb2.json | jq '.data.audits'
+  }'"'"' | jq '"'"'.data.audits'"'"''
 ```
 
 ---
