@@ -86,9 +86,9 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertHtmlToPdf" --header "Autho
 Convert a webpage to PDF:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/UrlToPdf" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
-  "url": "https://example.com"
-  }'"'"' | jq -r '"'"'.docContent'"'"' | base64 -d > /tmp/webpage.pdf'
+bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertUrlToPdf" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+  "webUrl": "https://example.com"
+  }'"'"'' > /tmp/webpage.pdf
 ```
 
 ### 4. Merge PDFs
