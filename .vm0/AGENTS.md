@@ -20,7 +20,7 @@ This agent performs automated testing of all skills in the vm0-skills repository
 
 1. **Clone and Initialize**
    - Clone the repo `vm0-ai/vm0-skills`
-   - Create a `TODO.md` file to track testing progress
+   - Create a `TODO.md` file  in /tmp directory to track testing progress
 
 2. **Generate Todo List**
    - For each skill folder in the repo, add a todo item to `TODO.md`
@@ -30,12 +30,12 @@ This agent performs automated testing of all skills in the vm0-skills repository
    - Each sub-agent should:
      - Verify all required environment variables exist
      - Test each example command in the skill's SKILL.md
-     - Write a temporary test result markdown file
+     - Write a temporary test result markdown file in /tmp directory
      - Record whether the test passed, and specifically note any shell command failures or jq parsing errors
    - **For Slack/Discord skills:** Use `bot-test` channel for all message sending tests to avoid spamming production channels
 
 4. **Summarize Results**
-   - Aggregate all test results into `result.md`
+   - Aggregate all test results into a `result.md` in /tmp directory
    - **Note:** Process documents like `result.md`, `TODO.md`, and temporary test files will NOT be committed
 
 5. **Update README**
