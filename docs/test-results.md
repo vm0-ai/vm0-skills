@@ -52,6 +52,44 @@ This document tracks the testing status of all skills after the `bash -c` patter
 
 **Note**: These issues are API-specific, not related to the `bash -c` curl pattern.
 
+<details>
+<summary>Detailed Error Logs</summary>
+
+**runway**
+```bash
+bash -c 'curl -s "https://api.runway.com/v1/tasks" -H "Authorization: Bearer $RUNWAY_API_KEY" -H "X-Runway-Version: 2024-11-06"' | jq '.'
+# Error: jq: parse error: Invalid numeric literal at line 1, column 9
+# Response: 404
+```
+
+**axiom** (actually works, but response format differs from expected)
+```bash
+bash -c 'curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer $AXIOM_API_KEY"' | jq '[.[] | .name]'
+# Error: jq: error (at <stdin>:0): Cannot index number with string "name"
+# Root cause: API returns object not array, need different jq query
+```
+
+**browserless**
+```bash
+bash -c 'curl -s "https://api.browserless.io/chrome/content?token=$BROWSERLESS_API_TOKEN" -H "Content-Type: application/json" -d '"'"'{"url": "https://example.com"}'"'"''
+# Response: Cannot POST /chrome/content
+```
+
+**minimax**
+```bash
+bash -c 'curl -s "https://api.minimax.chat/v1/text/chatcompletion_v2" -H "Authorization: Bearer $MINIMAX_API_KEY" ...' | jq '.'
+# Response: {"model": null, "content": null}
+```
+
+**fal.ai**
+```bash
+bash -c 'curl -s "https://queue.fal.run/fal-ai/flux/schnell" -H "Authorization: Key $FAL_API_KEY" ...' | jq '.'
+# Response: {"status": null, "request_id": null}
+# Note: Queue endpoint returns job ID, need to poll for result
+```
+
+</details>
+
 ### ⏳ Not Tested (35)
 
 | Skill | Reason |
