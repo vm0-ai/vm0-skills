@@ -63,7 +63,8 @@ curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization:
   {"description": "Item 2", "price": 200}
   ]
   }
-  }' | jq .
+  }' > /tmp/resp_bc164f.json
+cat /tmp/resp_bc164f.json | jq .
 ```
 
 **Response:**
@@ -91,7 +92,8 @@ curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization
   "name": "Jane Doe",
   "amount": 500
   }
-  }' | jq .
+  }' > /tmp/resp_f1f7d1.json
+cat /tmp/resp_f1f7d1.json | jq .
 ```
 
 **Response:**
@@ -113,7 +115,8 @@ Convert raw HTML directly to PDF without a template:
 ```bash
 curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
   "html": "<html><body><h1>Hello World</h1><p>This is a PDF generated from HTML.</p></body></html>"
-  }' | jq .
+  }' > /tmp/resp_61fd7a.json
+cat /tmp/resp_61fd7a.json | jq .
 ```
 
 ---
@@ -125,7 +128,8 @@ Include CSS for styled PDFs:
 ```bash
 curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
   "html": "<html><head><style>body { font-family: Arial; } h1 { color: #333; } .invoice { border: 1px solid #ddd; padding: 20px; }</style></head><body><div class=\"invoice\"><h1>Invoice #001</h1><p>Amount: $500</p></div></body></html>"
-  }' | jq .
+  }' > /tmp/resp_423ac6.json
+cat /tmp/resp_423ac6.json | jq .
 ```
 
 ---
@@ -138,7 +142,8 @@ Set `convertToImage` to true to get a PNG:
 curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '{
   "html": "<html><body><h1>Image Export</h1></body></html>",
   "convertToImage": true
-  }' | jq .
+  }' > /tmp/resp_ef6aea.json
+cat /tmp/resp_ef6aea.json | jq .
 ```
 
 ---

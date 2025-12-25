@@ -62,7 +62,8 @@ All examples assume `BITRIX_WEBHOOK_URL` is set to your webhook base URL.
 Get information about the authenticated user:
 
 ```bash
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.current.json" | jq .
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.current.json" > /tmp/resp_f589e6.json
+cat /tmp/resp_f589e6.json | jq .
 ```
 
 **Response:**
@@ -84,7 +85,8 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.current.json" | jq .
 Get a list of users in the workspace:
 
 ```bash
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.get.json" | jq '.result[] | {ID, NAME, LAST_NAME, EMAIL}'
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.get.json" > /tmp/resp_324fed.json
+cat /tmp/resp_324fed.json | jq '.result[] | {ID, NAME, LAST_NAME, EMAIL}'
 ```
 
 ---
@@ -102,7 +104,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.add.json" --header "Content-Type
   "PHONE": [{"VALUE": "+1234567890", "VALUE_TYPE": "WORK"}],
   "EMAIL": [{"VALUE": "john@example.com", "VALUE_TYPE": "WORK"}]
   }
-  }' | jq .
+  }' > /tmp/resp_c2b916.json
+cat /tmp/resp_c2b916.json | jq .
 ```
 
 **Response:**
@@ -119,7 +122,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.add.json" --header "Content-Type
 ```bash
 LEAD_ID="123"
 
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.get.json?id=${LEAD_ID}" | jq .
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.get.json?id=${LEAD_ID}" > /tmp/resp_904655.json
+cat /tmp/resp_904655.json | jq .
 ```
 
 ---
@@ -127,7 +131,8 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.get.json?id=${LEAD_ID}" | jq .
 ### 5. List Leads
 
 ```bash
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" | jq '.result[] | {ID, TITLE, STATUS_ID}'
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" > /tmp/resp_8fb46f.json
+cat /tmp/resp_8fb46f.json | jq '.result[] | {ID, TITLE, STATUS_ID}'
 ```
 
 With filter:
@@ -136,7 +141,8 @@ With filter:
 curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" --header "Content-Type: application/json" -d '{
   "filter": {"STATUS_ID": "NEW"},
   "select": ["ID", "TITLE", "NAME", "PHONE"]
-  }' | jq .
+  }' > /tmp/resp_69708c.json
+cat /tmp/resp_69708c.json | jq .
 ```
 
 ---
@@ -162,7 +168,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.update.json" --header "Content-T
 ```bash
 LEAD_ID="123"
 
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.delete.json?id=${LEAD_ID}" | jq .
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.delete.json?id=${LEAD_ID}" > /tmp/resp_640d0d.json
+cat /tmp/resp_640d0d.json | jq .
 ```
 
 ---
@@ -179,7 +186,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.contact.add.json" --header "Content-T
   "PHONE": [{"VALUE": "+1987654321", "VALUE_TYPE": "MOBILE"}],
   "EMAIL": [{"VALUE": "jane@example.com", "VALUE_TYPE": "WORK"}]
   }
-  }' | jq .
+  }' > /tmp/resp_dfdd4f.json
+cat /tmp/resp_dfdd4f.json | jq .
 ```
 
 ---
@@ -187,7 +195,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.contact.add.json" --header "Content-T
 ### 9. List Contacts
 
 ```bash
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.list.json" | jq '.result[] | {ID, NAME, LAST_NAME}'
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.list.json" > /tmp/resp_24c63c.json
+cat /tmp/resp_24c63c.json | jq '.result[] | {ID, NAME, LAST_NAME}'
 ```
 
 ---
@@ -204,7 +213,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.add.json" --header "Content-Type
   "OPPORTUNITY": 5000,
   "CURRENCY_ID": "USD"
   }
-  }' | jq .
+  }' > /tmp/resp_770c02.json
+cat /tmp/resp_770c02.json | jq .
 ```
 
 ---
@@ -212,7 +222,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.add.json" --header "Content-Type
 ### 11. List Deals
 
 ```bash
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.list.json" | jq '.result[] | {ID, TITLE, STAGE_ID, OPPORTUNITY}'
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.list.json" > /tmp/resp_dacb2d.json
+cat /tmp/resp_dacb2d.json | jq '.result[] | {ID, TITLE, STAGE_ID, OPPORTUNITY}'
 ```
 
 ---
@@ -244,7 +255,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/tasks.task.add.json" --header "Content-Ty
   "RESPONSIBLE_ID": 1,
   "DEADLINE": "2025-12-31"
   }
-  }' | jq .
+  }' > /tmp/resp_0e7b97.json
+cat /tmp/resp_0e7b97.json | jq .
 ```
 
 ---
@@ -252,7 +264,8 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/tasks.task.add.json" --header "Content-Ty
 ### 14. List Tasks
 
 ```bash
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.list.json" | jq '.result.tasks[] | {id, title, status}'
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.list.json" > /tmp/resp_1e5430.json
+cat /tmp/resp_1e5430.json | jq '.result.tasks[] | {id, title, status}'
 ```
 
 ---
@@ -262,7 +275,8 @@ curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.list.json" | jq '.result.tasks[
 ```bash
 TASK_ID="789"
 
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.complete.json?taskId=${TASK_ID}" | jq .
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.complete.json?taskId=${TASK_ID}" > /tmp/resp_e195f4.json
+cat /tmp/resp_e195f4.json | jq .
 ```
 
 ---
@@ -273,13 +287,16 @@ Get available fields for any entity:
 
 ```bash
 # Lead fields
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.fields.json" | jq .
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.fields.json" > /tmp/resp_402923.json
+cat /tmp/resp_402923.json | jq .
 
 # Contact fields
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.fields.json" | jq .
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.fields.json" > /tmp/resp_bb2a05.json
+cat /tmp/resp_bb2a05.json | jq .
 
 # Deal fields
-curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.fields.json" | jq .
+curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.fields.json" > /tmp/resp_2f4bef.json
+cat /tmp/resp_2f4bef.json | jq .
 ```
 
 ---

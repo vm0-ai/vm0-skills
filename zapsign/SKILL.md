@@ -72,7 +72,8 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "send_automatic_email": true
   }
   ]
-  }' | jq '{token, status, sign_url: .signers[0].sign_url}'
+  }' > /tmp/resp_534b24.json
+cat /tmp/resp_534b24.json | jq '{token, status, sign_url: .signers[0].sign_url}'
 ```
 
 ---
@@ -113,7 +114,8 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "email": "client@example.com"
   }
   ]
-  }' | jq '{token, status, original_file}'
+  }' > /tmp/resp_4cdb31.json
+cat /tmp/resp_4cdb31.json | jq '{token, status, original_file}'
 ```
 
 ---
@@ -141,7 +143,8 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "send_automatic_email": true
   }
   ]
-  }' | jq .
+  }' > /tmp/resp_40a59d.json
+cat /tmp/resp_40a59d.json | jq .
 ```
 
 ---
@@ -161,7 +164,8 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "email": "customer@example.com"
   }
   ]
-  }' | jq '{token, status, date_limit_to_sign}'
+  }' > /tmp/resp_b60a9b.json
+cat /tmp/resp_b60a9b.json | jq '{token, status, date_limit_to_sign}'
 ```
 
 ---
@@ -173,7 +177,8 @@ Retrieve document status and signer information:
 ```bash
 DOC_TOKEN="your-document-token"
 
-curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" | jq '{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}'
+curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" > /tmp/resp_2d0620.json
+cat /tmp/resp_2d0620.json | jq '{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}'
 ```
 
 ---
@@ -190,7 +195,8 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/add
   "email": "additional@example.com",
   "auth_mode": "assinaturaTela",
   "send_automatic_email": true
-  }' | jq '{token, sign_url, status}'
+  }' > /tmp/resp_9c8a6b.json
+cat /tmp/resp_9c8a6b.json | jq '{token, sign_url, status}'
 ```
 
 ---
@@ -212,7 +218,8 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "auth_mode": "tokenWhatsapp"
   }
   ]
-  }' | jq .
+  }' > /tmp/resp_07fed7.json
+cat /tmp/resp_07fed7.json | jq .
 ```
 
 ---
@@ -233,7 +240,8 @@ curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorizat
   "require_document_photo": true
   }
   ]
-  }' | jq .
+  }' > /tmp/resp_38397c.json
+cat /tmp/resp_38397c.json | jq .
 ```
 
 ---
@@ -245,7 +253,8 @@ Delete a document:
 ```bash
 DOC_TOKEN="your-document-token"
 
-curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" | jq .
+curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" > /tmp/resp_fa7e30.json
+cat /tmp/resp_fa7e30.json | jq .
 ```
 
 ---

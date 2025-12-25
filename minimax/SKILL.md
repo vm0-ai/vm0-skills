@@ -62,7 +62,8 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
   {"role": "system", "content": "You are a helpful assistant."},
   {"role": "user", "content": "Hello, who are you?"}
   ]
-  }' | jq '.choices[0].message.content'
+  }' > /tmp/resp_c490b5.json
+cat /tmp/resp_c490b5.json | jq '.choices[0].message.content'
 ```
 
 **Available models:**
@@ -85,7 +86,8 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
   ],
   "temperature": 0.7,
   "max_tokens": 200
-  }' | jq '.choices[0].message.content'
+  }' > /tmp/resp_2ac461.json
+cat /tmp/resp_2ac461.json | jq '.choices[0].message.content'
 ```
 
 **Parameters:**
@@ -204,7 +206,8 @@ curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: 
   "prompt": "A cat playing with a ball of yarn [Static shot].",
   "duration": 6,
   "resolution": "1080P"
-  }' | jq .
+  }' > /tmp/resp_51ee9c.json
+cat /tmp/resp_51ee9c.json | jq .
 ```
 
 Video generation is async - returns a task ID to poll for completion.
@@ -221,7 +224,8 @@ curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: 
   "prompt": "A person walking through a forest [Tracking shot], then stops to look at a bird [Push in].",
   "duration": 6,
   "resolution": "1080P"
-  }' | jq .
+  }' > /tmp/resp_a4f0de.json
+cat /tmp/resp_a4f0de.json | jq .
 ```
 
 **Camera commands (in brackets):**
@@ -246,7 +250,8 @@ curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: 
   "first_frame_image": "https://example.com/image.jpg",
   "duration": 6,
   "resolution": "1080P"
-  }' | jq .
+  }' > /tmp/resp_d4b297.json
+cat /tmp/resp_d4b297.json | jq .
 ```
 
 Provide `first_frame_image` as URL or base64-encoded image.
@@ -280,7 +285,8 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
   }
   ],
   "tool_choice": "auto"
-  }' | jq .
+  }' > /tmp/resp_0c6e5d.json
+cat /tmp/resp_0c6e5d.json | jq .
 ```
 
 ---

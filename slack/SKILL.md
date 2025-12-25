@@ -41,7 +41,8 @@ export SLACK_BOT_TOKEN=xoxb-your-bot-token
 ### List Channels
 
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/conversations.list?types=public_channel' | jq '.channels[] | {id, name}'
+curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/conversations.list?types=public_channel' > /tmp/resp_ef75ef.json
+cat /tmp/resp_ef75ef.json | jq '.channels[] | {id, name}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.list
@@ -49,7 +50,8 @@ Docs: https://docs.slack.dev/reference/methods/conversations.list
 ### Get Channel History
 
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/conversations.history?channel=C1234567890&limit=10' | jq '.messages[] | {ts, user, text}'
+curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/conversations.history?channel=C1234567890&limit=10' > /tmp/resp_fe6fa2.json
+cat /tmp/resp_fe6fa2.json | jq '.messages[] | {ts, user, text}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.history
@@ -119,7 +121,8 @@ EOF
 ### List Users
 
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/users.list' | jq '.members[] | {id, name, real_name}'
+curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/users.list' > /tmp/resp_873cab.json
+cat /tmp/resp_873cab.json | jq '.members[] | {id, name, real_name}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/users.list

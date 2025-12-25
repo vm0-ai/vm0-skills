@@ -53,7 +53,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   "messages": [
   {"role": "user", "content": "What is the current price of Bitcoin?"}
   ]
-  }' | jq .
+  }' > /tmp/resp_3634ac.json
+cat /tmp/resp_3634ac.json | jq .
 ```
 
 **With system prompt:**
@@ -65,7 +66,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   {"role": "system", "content": "Be precise and concise. Answer in bullet points."},
   {"role": "user", "content": "What are the latest developments in AI?"}
   ]
-  }' | jq .
+  }' > /tmp/resp_af50c7.json
+cat /tmp/resp_af50c7.json | jq .
 ```
 
 **Advanced query with sonar-pro:**
@@ -80,7 +82,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   "web_search_options": {
   "search_context_size": "high"
   }
-  }' | jq .
+  }' > /tmp/resp_ecf62b.json
+cat /tmp/resp_ecf62b.json | jq .
 ```
 
 ### 2. Search with Domain Filter
@@ -94,7 +97,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   {"role": "user", "content": "Latest research on transformer architectures"}
   ],
   "search_domain_filter": ["arxiv.org", "openai.com", "anthropic.com"]
-  }' | jq .
+  }' > /tmp/resp_5a8e0c.json
+cat /tmp/resp_5a8e0c.json | jq .
 ```
 
 **Exclude domains (add `-` prefix):**
@@ -106,7 +110,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   {"role": "user", "content": "Best programming practices"}
   ],
   "search_domain_filter": ["-reddit.com", "-quora.com"]
-  }' | jq .
+  }' > /tmp/resp_a69294.json
+cat /tmp/resp_a69294.json | jq .
 ```
 
 ### 3. Search with Time Filter
@@ -120,7 +125,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   {"role": "user", "content": "Major tech news"}
   ],
   "search_recency_filter": "week"
-  }' | jq .
+  }' > /tmp/resp_8d86fb.json
+cat /tmp/resp_8d86fb.json | jq .
 ```
 
 **Filter by date range:**
@@ -133,7 +139,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   ],
   "search_after_date_filter": "12/01/2024",
   "search_before_date_filter": "12/31/2024"
-  }' | jq .
+  }' > /tmp/resp_9c998c.json
+cat /tmp/resp_9c998c.json | jq .
 ```
 
 ### 4. Academic Search
@@ -147,7 +154,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   {"role": "user", "content": "Recent papers on large language model alignment"}
   ],
   "search_mode": "academic"
-  }' | jq .
+  }' > /tmp/resp_995817.json
+cat /tmp/resp_995817.json | jq .
 ```
 
 ### 5. Raw Search API
@@ -158,7 +166,8 @@ Get raw search results without AI synthesis:
 curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d '{
   "query": "Claude AI Anthropic",
   "max_results": 5
-  }' | jq .
+  }' > /tmp/resp_59d48e.json
+cat /tmp/resp_59d48e.json | jq .
 ```
 
 **With domain and time filters:**
@@ -170,7 +179,8 @@ curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bear
   "search_domain_filter": ["github.com", "medium.com"],
   "search_recency_filter": "month",
   "country": "US"
-  }' | jq .
+  }' > /tmp/resp_cf12dd.json
+cat /tmp/resp_cf12dd.json | jq .
 ```
 
 ### 6. Deep Research (Long-form)
@@ -184,7 +194,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   {"role": "user", "content": "Write a comprehensive analysis of the electric vehicle market in 2024"}
   ],
   "reasoning_effort": "high"
-  }' | jq .
+  }' > /tmp/resp_c20a56.json
+cat /tmp/resp_c20a56.json | jq .
 ```
 
 ### 7. Reasoning Model
@@ -197,7 +208,8 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
   "messages": [
   {"role": "user", "content": "Analyze the pros and cons of microservices vs monolithic architecture for a startup"}
   ]
-  }' | jq .
+  }' > /tmp/resp_412b6c.json
+cat /tmp/resp_412b6c.json | jq .
 ```
 
 ---

@@ -62,7 +62,8 @@ Base URL: `https://api.dev.runwayml.com/v1`
 Check your credit balance:
 
 ```bash
-curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" | jq .
+curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" > /tmp/resp_2b6a29.json
+cat /tmp/resp_2b6a29.json | jq .
 ```
 
 ---
@@ -78,7 +79,8 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Autho
   "promptText": "A timelapse of clouds moving across the sky",
   "ratio": "1280:720",
   "duration": 5
-  }' | jq .
+  }' > /tmp/resp_a3f9da.json
+cat /tmp/resp_a3f9da.json | jq .
 ```
 
 **Response:**
@@ -100,7 +102,8 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Author
   "promptText": "A serene forest with sunlight filtering through the trees",
   "ratio": "1280:720",
   "duration": 5
-  }' | jq .
+  }' > /tmp/resp_f380f0.json
+cat /tmp/resp_f380f0.json | jq .
 ```
 
 ---
@@ -114,7 +117,8 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Autho
   "model": "gen4_aleph",
   "videoUri": "https://example.com/source-video.mp4",
   "promptText": "Add magical sparkles and fairy dust effects"
-  }' | jq .
+  }' > /tmp/resp_2baa23.json
+cat /tmp/resp_2baa23.json | jq .
 ```
 
 ---
@@ -128,7 +132,8 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Author
   "model": "gen4_image_turbo",
   "promptText": "A futuristic cityscape at sunset",
   "ratio": "16:9"
-  }' | jq .
+  }' > /tmp/resp_9320f9.json
+cat /tmp/resp_9320f9.json | jq .
 ```
 
 ---
@@ -140,7 +145,8 @@ Poll for task completion:
 ```bash
 TASK_ID="your-task-id"
 
-curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" | jq .
+curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" > /tmp/resp_4db888.json
+cat /tmp/resp_4db888.json | jq .
 ```
 
 **Response when complete:**
@@ -176,7 +182,8 @@ Upscale video resolution:
 curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
   "model": "upscale_v1",
   "videoUri": "https://example.com/low-res-video.mp4"
-  }' | jq .
+  }' > /tmp/resp_691c2b.json
+cat /tmp/resp_691c2b.json | jq .
 ```
 
 ---
@@ -189,7 +196,8 @@ Generate audio from text:
 curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '{
   "model": "eleven_text_to_sound_v2",
   "promptText": "Thunder rumbling in the distance"
-  }' | jq .
+  }' > /tmp/resp_e3a8db.json
+cat /tmp/resp_e3a8db.json | jq .
 ```
 
 ---

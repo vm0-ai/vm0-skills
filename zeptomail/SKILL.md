@@ -65,7 +65,8 @@ curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: 
   "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
   "subject": "Welcome to Our Service",
   "htmlbody": "<h1>Welcome!</h1><p>Thank you for signing up.</p>"
-}' | jq .
+}' > /tmp/resp_7a5c58.json
+cat /tmp/resp_7a5c58.json | jq .
 ```
 
 ---
@@ -78,7 +79,8 @@ curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: 
   "to": [{"email_address": {"address": "user@example.com", "name": "User"}}],
   "subject": "Your OTP Code",
   "textbody": "Your one-time password is: 123456\n\nThis code expires in 10 minutes."
-}' | jq .
+}' > /tmp/resp_c03281.json
+cat /tmp/resp_c03281.json | jq .
 ```
 
 ---
@@ -96,7 +98,8 @@ curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: 
   "track_clicks": true,
   "track_opens": true,
   "client_reference": "order-12345"
-}' | jq .
+}' > /tmp/resp_a96938.json
+cat /tmp/resp_a96938.json | jq .
 ```
 
 ---
@@ -112,7 +115,8 @@ curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: 
   "subject": "Team Update",
   "htmlbody": "<p>Here is the latest update for the team.</p>",
   "reply_to": [{"address": "support@yourdomain.com", "name": "Support"}]
-}' | jq .
+}' > /tmp/resp_9c46a8.json
+cat /tmp/resp_9c46a8.json | jq .
 ```
 
 ---
@@ -174,7 +178,8 @@ curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Author
   "order_id": "12345",
   "total": "$99.00"
   }
-}' | jq .
+}' > /tmp/resp_d8377d.json
+cat /tmp/resp_d8377d.json | jq .
 ```
 
 Template example (in ZeptoMail dashboard):
@@ -204,7 +209,8 @@ curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authoriza
   "merge_info": {"name": "Bob", "month": "December"}
   }
   ]
-}' | jq .
+}' > /tmp/resp_22a9b4.json
+cat /tmp/resp_22a9b4.json | jq .
 ```
 
 ---
@@ -225,7 +231,8 @@ curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "
   "merge_info": {"user_name": "Bob", "code": "XYZ789"}
   }
   ]
-}' | jq .
+}' > /tmp/resp_0f701e.json
+cat /tmp/resp_0f701e.json | jq .
 ```
 
 ---

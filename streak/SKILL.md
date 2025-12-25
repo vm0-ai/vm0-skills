@@ -51,7 +51,8 @@ Streak uses HTTP Basic Auth with your API key as the username and no password. I
 ### 1. Get Current User
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/users/me" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/users/me" -u "${STREAK_API_KEY}:" > /tmp/resp_907dc8.json
+cat /tmp/resp_907dc8.json | jq .
 ```
 
 ---
@@ -61,7 +62,8 @@ curl -s -X GET "https://api.streak.com/api/v1/users/me" -u "${STREAK_API_KEY}:" 
 Pipelines represent business processes (Sales, Hiring, Projects, etc.).
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:" > /tmp/resp_994a3d.json
+cat /tmp/resp_994a3d.json | jq .
 ```
 
 ---
@@ -69,7 +71,8 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:"
 ### 3. Get a Pipeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}" -u "${STREAK_API_KEY}:" > /tmp/resp_ceec65.json
+cat /tmp/resp_ceec65.json | jq .
 ```
 
 ---
@@ -77,7 +80,8 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}" -u "${STR
 ### 4. Create a Pipeline
 
 ```bash
-curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"name": "New Sales Pipeline"}' | jq .
+curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"name": "New Sales Pipeline"}' > /tmp/resp_736907.json
+cat /tmp/resp_736907.json | jq .
 ```
 
 ---
@@ -87,7 +91,8 @@ curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:"
 Boxes are the core data objects (deals, leads, projects) within a pipeline.
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "${STREAK_API_KEY}:" > /tmp/resp_ecbc33.json
+cat /tmp/resp_ecbc33.json | jq .
 ```
 
 ---
@@ -95,7 +100,8 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u 
 ### 6. Get a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_KEY}:" > /tmp/resp_768d63.json
+cat /tmp/resp_768d63.json | jq .
 ```
 
 ---
@@ -103,7 +109,8 @@ curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_K
 ### 7. Create a Box
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"name": "Acme Corp Deal"}' | jq .
+curl -s -X POST "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"name": "Acme Corp Deal"}' > /tmp/resp_f64809.json
+cat /tmp/resp_f64809.json | jq .
 ```
 
 ---
@@ -111,7 +118,8 @@ curl -s -X POST "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u
 ### 8. Update a Box
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"name": "Updated Deal Name", "stageKey": "stageKey123"}' | jq .
+curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"name": "Updated Deal Name", "stageKey": "stageKey123"}' > /tmp/resp_a83fea.json
+cat /tmp/resp_a83fea.json | jq .
 ```
 
 ---
@@ -119,7 +127,8 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_
 ### 9. List Stages in Pipeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/stages" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/stages" -u "${STREAK_API_KEY}:" > /tmp/resp_f18f73.json
+cat /tmp/resp_f18f73.json | jq .
 ```
 
 ---
@@ -127,7 +136,8 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/stages" -u
 ### 10. List Fields in Pipeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/fields" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/fields" -u "${STREAK_API_KEY}:" > /tmp/resp_6118e9.json
+cat /tmp/resp_6118e9.json | jq .
 ```
 
 ---
@@ -135,7 +145,8 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/fields" -u
 ### 11. Get a Contact
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/contacts/{contactKey}" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/contacts/{contactKey}" -u "${STREAK_API_KEY}:" > /tmp/resp_4240d7.json
+cat /tmp/resp_4240d7.json | jq .
 ```
 
 ---
@@ -148,7 +159,8 @@ curl -s -X POST "https://api.streak.com/api/v1/contacts" -u "${STREAK_API_KEY}:"
   "emailAddresses": ["john@example.com"],
   "givenName": "John",
   "familyName": "Doe"
-}' | jq .
+}' > /tmp/resp_5890f2.json
+cat /tmp/resp_5890f2.json | jq .
 ```
 
 ---
@@ -156,7 +168,8 @@ curl -s -X POST "https://api.streak.com/api/v1/contacts" -u "${STREAK_API_KEY}:"
 ### 13. Get an Organization
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/organizations/{organizationKey}" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/organizations/{organizationKey}" -u "${STREAK_API_KEY}:" > /tmp/resp_531ed7.json
+cat /tmp/resp_531ed7.json | jq .
 ```
 
 ---
@@ -164,7 +177,8 @@ curl -s -X GET "https://api.streak.com/api/v1/organizations/{organizationKey}" -
 ### 14. Search Boxes, Contacts, and Organizations
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/search?query=acme" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/search?query=acme" -u "${STREAK_API_KEY}:" > /tmp/resp_4f17b2.json
+cat /tmp/resp_4f17b2.json | jq .
 ```
 
 ---
@@ -172,7 +186,8 @@ curl -s -X GET "https://api.streak.com/api/v1/search?query=acme" -u "${STREAK_AP
 ### 15. Get Tasks in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREAK_API_KEY}:" > /tmp/resp_417f6d.json
+cat /tmp/resp_417f6d.json | jq .
 ```
 
 ---
@@ -180,7 +195,8 @@ curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREAK
 ### 16. Create a Task
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"text": "Follow up with client", "dueDate": 1735689600000}' | jq .
+curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"text": "Follow up with client", "dueDate": 1735689600000}' > /tmp/resp_ef6c8a.json
+cat /tmp/resp_ef6c8a.json | jq .
 ```
 
 ---
@@ -188,7 +204,8 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREA
 ### 17. Get Comments in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${STREAK_API_KEY}:" > /tmp/resp_87455e.json
+cat /tmp/resp_87455e.json | jq .
 ```
 
 ---
@@ -196,7 +213,8 @@ curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${STR
 ### 18. Create a Comment
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"message": "Spoke with client today, they are interested."}' | jq .
+curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '{"message": "Spoke with client today, they are interested."}' > /tmp/resp_1204c8.json
+cat /tmp/resp_1204c8.json | jq .
 ```
 
 ---
@@ -206,7 +224,8 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${ST
 Email threads associated with a box.
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/threads" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/threads" -u "${STREAK_API_KEY}:" > /tmp/resp_51f234.json
+cat /tmp/resp_51f234.json | jq .
 ```
 
 ---
@@ -214,7 +233,8 @@ curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/threads" -u "${STRE
 ### 20. Get Files in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/files" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/files" -u "${STREAK_API_KEY}:" > /tmp/resp_d8220b.json
+cat /tmp/resp_d8220b.json | jq .
 ```
 
 ---
@@ -222,7 +242,8 @@ curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/files" -u "${STREAK
 ### 21. Get Meetings in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "${STREAK_API_KEY}:" > /tmp/resp_1759e0.json
+cat /tmp/resp_1759e0.json | jq .
 ```
 
 ---
@@ -234,7 +255,8 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "${ST
   "meetingDate": 1735689600000,
   "meetingNotes": "Discussed pricing and timeline.",
   "title": "Sales Call"
-}' | jq .
+}' > /tmp/resp_20dea5.json
+cat /tmp/resp_20dea5.json | jq .
 ```
 
 ---
@@ -242,7 +264,8 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "${ST
 ### 23. Get Box Timeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/timeline" -u "${STREAK_API_KEY}:" | jq .
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/timeline" -u "${STREAK_API_KEY}:" > /tmp/resp_51f5d4.json
+cat /tmp/resp_51f5d4.json | jq .
 ```
 
 ---

@@ -59,7 +59,8 @@ curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: applicat
   "query": "2025 AI Trending",
   "search_depth": "basic",
   "max_results": 5
-  }' | jq .
+  }' > /tmp/resp_a072d5.json
+cat /tmp/resp_a072d5.json | jq .
 ```
 
 **Key parameters:**
@@ -83,7 +84,8 @@ curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: applicat
   "include_domains": ["docs.aws.amazon.com", "cloud.google.com"],
   "exclude_domains": ["reddit.com", "twitter.com"],
   "include_raw_content": false
-  }' | jq .
+  }' > /tmp/resp_bb4356.json
+cat /tmp/resp_bb4356.json | jq .
 ```
 
 **Common advanced parameters:**

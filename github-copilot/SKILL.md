@@ -66,7 +66,8 @@ Get seat breakdown and settings for an organization:
 ```bash
 ORG="your-org-name"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .
+curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" > /tmp/resp_3f1191.json
+cat /tmp/resp_3f1191.json | jq .
 ```
 
 **Response:**
@@ -94,7 +95,8 @@ Get all users with Copilot seats:
 ```bash
 ORG="your-org-name"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing/seats?per_page=50" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'
+curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing/seats?per_page=50" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" > /tmp/resp_fb2675.json
+cat /tmp/resp_fb2675.json | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'
 ```
 
 ---
@@ -107,7 +109,8 @@ Get specific user's Copilot seat information:
 ORG="your-org-name"
 USERNAME="octocat"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/members/${USERNAME}/copilot" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .
+curl -s -X GET "https://api.github.com/orgs/${ORG}/members/${USERNAME}/copilot" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" > /tmp/resp_1ff756.json
+cat /tmp/resp_1ff756.json | jq .
 ```
 
 ---
@@ -121,7 +124,8 @@ ORG="your-org-name"
 
 curl -s -X POST "https://api.github.com/orgs/${ORG}/copilot/billing/selected_users" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
   "selected_usernames": ["user1", "user2"]
-  }' | jq .
+  }' > /tmp/resp_8147ad.json
+cat /tmp/resp_8147ad.json | jq .
 ```
 
 **Response:**
@@ -142,7 +146,8 @@ ORG="your-org-name"
 
 curl -s -X DELETE "https://api.github.com/orgs/${ORG}/copilot/billing/selected_users" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
   "selected_usernames": ["user1", "user2"]
-  }' | jq .
+  }' > /tmp/resp_b22dee.json
+cat /tmp/resp_b22dee.json | jq .
 ```
 
 **Response:**
@@ -163,7 +168,8 @@ ORG="your-org-name"
 
 curl -s -X POST "https://api.github.com/orgs/${ORG}/copilot/billing/selected_teams" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
   "selected_teams": ["engineering", "design"]
-  }' | jq .
+  }' > /tmp/resp_93a72c.json
+cat /tmp/resp_93a72c.json | jq .
 ```
 
 ---
@@ -177,7 +183,8 @@ ORG="your-org-name"
 
 curl -s -X DELETE "https://api.github.com/orgs/${ORG}/copilot/billing/selected_teams" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d '{
   "selected_teams": ["engineering"]
-  }' | jq .
+  }' > /tmp/resp_cad42d.json
+cat /tmp/resp_cad42d.json | jq .
 ```
 
 ---
@@ -189,7 +196,8 @@ Get usage statistics (requires 5+ active users):
 ```bash
 ORG="your-org-name"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/metrics?per_page=7" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '.[] | {date, total_active_users, total_engaged_users}'
+curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/metrics?per_page=7" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" > /tmp/resp_5e72b2.json
+cat /tmp/resp_5e72b2.json | jq '.[] | {date, total_active_users, total_engaged_users}'
 ```
 
 **Response:**
@@ -211,7 +219,8 @@ Get team-specific usage metrics:
 ORG="your-org-name"
 TEAM="engineering"
 
-curl -s -X GET "https://api.github.com/orgs/${ORG}/team/${TEAM}/copilot/metrics" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .
+curl -s -X GET "https://api.github.com/orgs/${ORG}/team/${TEAM}/copilot/metrics" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" > /tmp/resp_fe2122.json
+cat /tmp/resp_fe2122.json | jq .
 ```
 
 ---

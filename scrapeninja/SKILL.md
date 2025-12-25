@@ -54,7 +54,8 @@ High-performance scraping with Chrome TLS fingerprint, no JavaScript:
 ```bash
 curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
   "url": "https://example.com"
-  }' | jq '{status: .info.statusCode, url: .info.finalUrl, bodyLength: (.body | length)}'
+  }' > /tmp/resp_9bf7fe.json
+cat /tmp/resp_9bf7fe.json | jq '{status: .info.statusCode, url: .info.finalUrl, bodyLength: (.body | length)}'
 ```
 
 **With custom headers and retries:**
@@ -65,7 +66,8 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Ty
   "headers": ["Accept-Language: en-US"],
   "retryNum": 3,
   "timeout": 15
-  }' | jq .
+  }' > /tmp/resp_7be3b1.json
+cat /tmp/resp_7be3b1.json | jq .
 ```
 
 ### 2. Scrape with JavaScript Rendering
@@ -77,7 +79,8 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content
   "url": "https://example.com",
   "waitForSelector": "h1",
   "timeout": 20
-  }' | jq '{status: .info.statusCode, bodyLength: (.body | length)}'
+  }' > /tmp/resp_89b8b3.json
+cat /tmp/resp_89b8b3.json | jq '{status: .info.statusCode, bodyLength: (.body | length)}'
 ```
 
 **With screenshot:**
@@ -86,7 +89,8 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content
 curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
   "url": "https://example.com",
   "screenshot": true
-  }' | jq -r '.info.screenshot' | base64 -d > screenshot.png
+  }' > /tmp/resp_ca2339.json
+cat /tmp/resp_ca2339.json | jq -r '.info.screenshot' | base64 -d > screenshot.png
 ```
 
 ### 3. Geo-Based Proxy Selection
@@ -97,7 +101,8 @@ Use proxies from specific regions:
 curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
   "url": "https://example.com",
   "geo": "eu"
-  }' | jq .info
+  }' > /tmp/resp_1ac920.json
+cat /tmp/resp_1ac920.json | jq .info
 ```
 
 Available geos: `us`, `eu`, `br` (Brazil), `fr` (France), `de` (Germany), `4g-eu`
@@ -112,7 +117,8 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Ty
   "retryNum": 3,
   "statusNotExpected": [403, 429, 503],
   "textNotExpected": ["captcha", "Access Denied"]
-  }' | jq .
+  }' > /tmp/resp_2e660b.json
+cat /tmp/resp_2e660b.json | jq .
 ```
 
 ### 5. Extract Data with Cheerio
@@ -134,7 +140,8 @@ Capture XHR/fetch responses:
 curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d '{
   "url": "https://example.com",
   "catchAjaxHeadersUrlMask": "api/data"
-  }' | jq '.info.catchedAjax'
+  }' > /tmp/resp_f3a87a.json
+cat /tmp/resp_f3a87a.json | jq '.info.catchedAjax'
 ```
 
 ### 7. Block Resources for Speed
@@ -146,7 +153,8 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content
   "url": "https://example.com",
   "blockImages": true,
   "blockMedia": true
-  }' | jq .
+  }' > /tmp/resp_f0fcb7.json
+cat /tmp/resp_f0fcb7.json | jq .
 ```
 
 ---

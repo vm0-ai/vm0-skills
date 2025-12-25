@@ -158,7 +158,8 @@ EOF
 ### List Sites
 
 ```bash
-curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" 'https://plausible.io/api/v1/sites' | jq '.sites[] | {domain, timezone}'
+curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" 'https://plausible.io/api/v1/sites' > /tmp/resp_dee850.json
+cat /tmp/resp_dee850.json | jq '.sites[] | {domain, timezone}'
 ```
 
 Docs: https://plausible.io/docs/sites-api

@@ -51,7 +51,8 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
   "published": false,
   "tags": ["javascript", "webdev"]
   }
-  }' | jq '{id, url, published}'
+  }' > /tmp/resp_67f890.json
+cat /tmp/resp_67f890.json | jq '{id, url, published}'
 ```
 
 **Response:**
@@ -76,7 +77,8 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
   "published": true,
   "tags": ["tutorial"]
   }
-  }' | jq '{id, url, published}'
+  }' > /tmp/resp_098390.json
+cat /tmp/resp_098390.json | jq '{id, url, published}'
 ```
 
 ### 3. Publish with Cover Image
@@ -90,7 +92,8 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
   "tags": ["webdev", "tutorial"],
   "main_image": "https://example.com/cover.png"
   }
-  }' | jq '{id, url}'
+  }' > /tmp/resp_3f6a97.json
+cat /tmp/resp_3f6a97.json | jq '{id, url}'
 ```
 
 ### 4. Publish from Markdown File
@@ -116,19 +119,22 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
 ### 5. Get Your Articles
 
 ```bash
-curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: ${DEVTO_API_KEY}" | jq '.[] | {id, title, published, url}'
+curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: ${DEVTO_API_KEY}" > /tmp/resp_b5e6b0.json
+cat /tmp/resp_b5e6b0.json | jq '.[] | {id, title, published, url}'
 ```
 
 ### 6. Get Published Articles Only
 
 ```bash
-curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: ${DEVTO_API_KEY}" | jq '.[] | {id, title, url}'
+curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: ${DEVTO_API_KEY}" > /tmp/resp_4fbb7b.json
+cat /tmp/resp_4fbb7b.json | jq '.[] | {id, title, url}'
 ```
 
 ### 7. Get Unpublished (Drafts)
 
 ```bash
-curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEVTO_API_KEY}" | jq '.[] | {id, title}'
+curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEVTO_API_KEY}" > /tmp/resp_b0fd55.json
+cat /tmp/resp_b0fd55.json | jq '.[] | {id, title}'
 ```
 
 ### 8. Get Single Article
@@ -136,7 +142,8 @@ curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEVTO_API_KE
 ```bash
 ARTICLE_ID="123456"
 
-curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" | jq '{id, title, url, published}'
+curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" > /tmp/resp_677b7c.json
+cat /tmp/resp_677b7c.json | jq '{id, title, url, published}'
 ```
 
 ### 9. Update an Article
@@ -149,7 +156,8 @@ curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_
   "title": "Updated Title",
   "body_markdown": "Updated content..."
   }
-  }' | jq '{id, url}'
+  }' > /tmp/resp_3212f1.json
+cat /tmp/resp_3212f1.json | jq '{id, url}'
 ```
 
 ### 10. Publish a Draft
@@ -161,7 +169,8 @@ curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_
   "article": {
   "published": true
   }
-  }' | jq '{id, url, published}'
+  }' > /tmp/resp_d10458.json
+cat /tmp/resp_d10458.json | jq '{id, url, published}'
 ```
 
 ---
@@ -192,7 +201,8 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
   "published": true,
   "tags": ["docker", "devops", "tutorial", "beginners"]
   }
-  }' | jq '{url}'
+  }' > /tmp/resp_0c84dd.json
+cat /tmp/resp_0c84dd.json | jq '{url}'
 ```
 
 ### Cross-post from Blog
@@ -206,7 +216,8 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
   "canonical_url": "https://myblog.com/original-post",
   "tags": ["webdev"]
   }
-  }' | jq '{url}'
+  }' > /tmp/resp_2bca75.json
+cat /tmp/resp_2bca75.json | jq '{url}'
 ```
 
 ### Article in a Series
@@ -220,7 +231,8 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
   "series": "React Hooks Deep Dive",
   "tags": ["react", "javascript", "hooks"]
   }
-  }' | jq '{url}'
+  }' > /tmp/resp_405b32.json
+cat /tmp/resp_405b32.json | jq '{url}'
 ```
 
 ---

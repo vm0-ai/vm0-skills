@@ -54,7 +54,8 @@ Extract content from a single webpage.
 curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "url": "https://example.com",
   "formats": ["markdown"]
-  }' | jq .
+  }' > /tmp/resp_77a77c.json
+cat /tmp/resp_77a77c.json | jq .
 ```
 
 ### Scrape with Options
@@ -65,7 +66,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer 
   "formats": ["markdown"],
   "onlyMainContent": true,
   "timeout": 30000
-  }' | jq '.data.markdown'
+  }' > /tmp/resp_a95f19.json
+cat /tmp/resp_a95f19.json | jq '.data.markdown'
 ```
 
 ### Get HTML Instead
@@ -74,7 +76,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer 
 curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "url": "https://example.com",
   "formats": ["html"]
-  }' | jq '.data.html'
+  }' > /tmp/resp_d873f0.json
+cat /tmp/resp_d873f0.json | jq '.data.html'
 ```
 
 ### Get Screenshot
@@ -83,7 +86,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer 
 curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "url": "https://example.com",
   "formats": ["screenshot"]
-  }' | jq '.data.screenshot'
+  }' > /tmp/resp_39dfaf.json
+cat /tmp/resp_39dfaf.json | jq '.data.screenshot'
 ```
 
 **Scrape Parameters:**
@@ -108,7 +112,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer $
   "url": "https://example.com",
   "limit": 50,
   "maxDepth": 2
-  }' | jq .
+  }' > /tmp/resp_5b8dd5.json
+cat /tmp/resp_5b8dd5.json | jq .
 ```
 
 **Response:**
@@ -125,7 +130,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer $
 ```bash
 JOB_ID="crawl-job-id-here"
 
-curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq '{status, completed, total}'
+curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" > /tmp/resp_075c29.json
+cat /tmp/resp_075c29.json | jq '{status, completed, total}'
 ```
 
 ### Get Crawl Results
@@ -133,7 +139,8 @@ curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer
 ```bash
 JOB_ID="crawl-job-id-here"
 
-curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq '.data[] | {url: .metadata.url, title: .metadata.title}'
+curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" > /tmp/resp_075c29.json
+cat /tmp/resp_075c29.json | jq '.data[] | {url: .metadata.url, title: .metadata.title}'
 ```
 
 ### Crawl with Path Filters
@@ -145,7 +152,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer $
   "maxDepth": 3,
   "includePaths": ["/posts/*"],
   "excludePaths": ["/admin/*", "/login"]
-  }' | jq .
+  }' > /tmp/resp_25c4c4.json
+cat /tmp/resp_25c4c4.json | jq .
 ```
 
 **Crawl Parameters:**
@@ -169,7 +177,8 @@ Get all URLs from a website quickly.
 ```bash
 curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "url": "https://example.com"
-  }' | jq '.links[:10]'
+  }' > /tmp/resp_c6e567.json
+cat /tmp/resp_c6e567.json | jq '.links[:10]'
 ```
 
 ### Map with Search Filter
@@ -179,7 +188,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${F
   "url": "https://shop.example.com",
   "search": "product",
   "limit": 500
-  }' | jq '.links'
+  }' > /tmp/resp_8337b1.json
+cat /tmp/resp_8337b1.json | jq '.links'
 ```
 
 **Map Parameters:**
@@ -202,7 +212,8 @@ Search the web and get full page content.
 curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "query": "AI news 2024",
   "limit": 5
-  }' | jq '.data[] | {title: .metadata.title, url: .url}'
+  }' > /tmp/resp_6c3c76.json
+cat /tmp/resp_6c3c76.json | jq '.data[] | {title: .metadata.title, url: .url}'
 ```
 
 ### Search with Full Content
@@ -214,7 +225,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer 
   "scrapeOptions": {
   "formats": ["markdown"]
   }
-  }' | jq '.data[] | {title: .metadata.title, content: .markdown[:500]}'
+  }' > /tmp/resp_a79671.json
+cat /tmp/resp_a79671.json | jq '.data[] | {title: .metadata.title, content: .markdown[:500]}'
 ```
 
 **Search Parameters:**
@@ -237,7 +249,8 @@ Extract structured data from pages using AI.
 curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "urls": ["https://example.com/product/123"],
   "prompt": "Extract the product name, price, and description"
-  }' | jq '.data'
+  }' > /tmp/resp_4d2394.json
+cat /tmp/resp_4d2394.json | jq '.data'
 ```
 
 ### Extract with Schema
@@ -255,7 +268,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer
   "inStock": {"type": "boolean"}
   }
   }
-  }' | jq '.data'
+  }' > /tmp/resp_680fd5.json
+cat /tmp/resp_680fd5.json | jq '.data'
 ```
 
 ### Extract from Multiple URLs
@@ -267,7 +281,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer
   "https://example.com/product/2"
   ],
   "prompt": "Extract product name and price"
-  }' | jq '.data'
+  }' > /tmp/resp_fce0a0.json
+cat /tmp/resp_fce0a0.json | jq '.data'
 ```
 
 **Extract Parameters:**
@@ -289,7 +304,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer 
   "url": "https://docs.python.org/3/tutorial/",
   "formats": ["markdown"],
   "onlyMainContent": true
-  }' | jq -r '.data.markdown' > python-tutorial.md
+  }' > /tmp/resp_6d8b7c.json
+cat /tmp/resp_6d8b7c.json | jq -r '.data.markdown' > python-tutorial.md
 ```
 
 ### Find All Blog Posts
@@ -298,7 +314,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer 
 curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "url": "https://blog.example.com",
   "search": "post"
-  }' | jq -r '.links[]'
+  }' > /tmp/resp_bf07a7.json
+cat /tmp/resp_bf07a7.json | jq -r '.links[]'
 ```
 
 ### Research a Topic
@@ -308,7 +325,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer 
   "query": "best practices REST API design 2024",
   "limit": 5,
   "scrapeOptions": {"formats": ["markdown"]}
-  }' | jq '.data[] | {title: .metadata.title, url: .url}'
+  }' > /tmp/resp_0dbf19.json
+cat /tmp/resp_0dbf19.json | jq '.data[] | {title: .metadata.title, url: .url}'
 ```
 
 ### Extract Pricing Data
@@ -317,7 +335,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer 
 curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '{
   "urls": ["https://example.com/pricing"],
   "prompt": "Extract all pricing tiers with name, price, and features"
-  }' | jq '.data'
+  }' > /tmp/resp_b3b85f.json
+cat /tmp/resp_b3b85f.json | jq '.data'
 ```
 
 ### Poll Crawl Until Complete
@@ -326,7 +345,8 @@ curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer
 JOB_ID="your-crawl-job-id"
 
 while true; do
-STATUS=$(curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq -r '.status')
+  curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" > /tmp/resp_poll.json
+  STATUS=$(cat /tmp/resp_poll.json | jq -r '.status')
   echo "Status: $STATUS"
   [ "$STATUS" = "completed" ] && break
   sleep 5

@@ -52,7 +52,8 @@ curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLES
   {"selector": "h1"},
   {"selector": "p"}
   ]
-  }' | jq .
+  }' > /tmp/resp_004b9f.json
+cat /tmp/resp_004b9f.json | jq .
 ```
 
 **With wait options:**
@@ -65,7 +66,8 @@ curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLES
   "waitUntil": "networkidle2",
   "timeout": 30000
   }
-  }' | jq '.data[0].results[:3]'
+  }' > /tmp/resp_f11ca4.json
+cat /tmp/resp_f11ca4.json | jq '.data[0].results[:3]'
 ```
 
 ### 2. Take Screenshots
@@ -198,7 +200,8 @@ curl -s -X POST "https://production-sfo.browserless.io/unblock?token=${BROWSERLE
   "cookies": false,
   "content": true,
   "screenshot": false
-  }' | jq .
+  }' > /tmp/resp_55033d.json
+cat /tmp/resp_55033d.json | jq .
 ```
 
 ### 7. Download Files
@@ -219,7 +222,8 @@ Enable stealth mode to avoid detection:
 curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}&stealth=true" --header "Content-Type: application/json" -d '{
   "url": "https://example.com",
   "elements": [{"selector": "body"}]
-  }' | jq .
+  }' > /tmp/resp_8310d6.json
+cat /tmp/resp_8310d6.json | jq .
 ```
 
 ### 9. Export Page with Resources
@@ -252,7 +256,8 @@ Run Lighthouse audits for accessibility, performance, SEO, best practices:
 ```bash
 curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
   "url": "https://example.com"
-  }' | jq '.data.categories | to_entries[] | {category: .key, score: .value.score}'
+  }' > /tmp/resp_933208.json
+cat /tmp/resp_933208.json | jq '.data.categories | to_entries[] | {category: .key, score: .value.score}'
 ```
 
 **Specific category (accessibility, performance, seo, best-practices, pwa):**
@@ -266,7 +271,8 @@ curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWS
   "onlyCategories": ["performance"]
   }
   }
-  }' | jq '.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'
+  }' > /tmp/resp_cb3b1b.json
+cat /tmp/resp_cb3b1b.json | jq '.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'
 ```
 
 **Specific audit (e.g., unminified-css, first-contentful-paint):**
@@ -280,7 +286,8 @@ curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWS
   "onlyAudits": ["first-contentful-paint", "largest-contentful-paint"]
   }
   }
-  }' | jq '.data.audits'
+  }' > /tmp/resp_f09eb2.json
+cat /tmp/resp_f09eb2.json | jq '.data.audits'
 ```
 
 ---

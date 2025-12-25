@@ -48,7 +48,8 @@ Start an Actor run asynchronously:
 curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '{
   "startUrls": [{"url": "https://example.com"}],
   "maxPagesPerCrawl": 10
-  }' | jq .
+  }' > /tmp/resp_a8b5e2.json
+cat /tmp/resp_a8b5e2.json | jq .
 ```
 
 **Response contains `id` (run ID) and `defaultDatasetId` for fetching results.**
@@ -61,7 +62,8 @@ Wait for completion and get results directly (max 5 min):
 curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '{
   "startUrls": [{"url": "https://news.ycombinator.com"}],
   "maxPagesPerCrawl": 1
-  }' | jq .
+  }' > /tmp/resp_b1ec97.json
+cat /tmp/resp_b1ec97.json | jq .
 ```
 
 ### 3. Check Run Status
@@ -69,7 +71,8 @@ curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-da
 Poll the run status:
 
 ```bash
-curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq '.data.status'
+curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}" > /tmp/resp_9a3532.json
+cat /tmp/resp_9a3532.json | jq '.data.status'
 ```
 
 **Statuses**: `READY`, `RUNNING`, `SUCCEEDED`, `FAILED`, `ABORTED`, `TIMED-OUT`
@@ -79,13 +82,15 @@ curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: B
 Fetch results from a completed run:
 
 ```bash
-curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq .
+curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" > /tmp/resp_38cada.json
+cat /tmp/resp_38cada.json | jq .
 ```
 
 **With pagination:**
 
 ```bash
-curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&offset=0" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq .
+curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&offset=0" --header "Authorization: Bearer ${APIFY_API_TOKEN}" > /tmp/resp_abe33a.json
+cat /tmp/resp_abe33a.json | jq .
 ```
 
 ### 5. Popular Actors
@@ -97,7 +102,8 @@ curl -s -X POST "https://api.apify.com/v2/acts/apify~google-search-scraper/run-s
   "queries": "web scraping tools",
   "maxPagesPerQuery": 1,
   "resultsPerPage": 10
-  }' | jq .
+  }' > /tmp/resp_07a889.json
+cat /tmp/resp_07a889.json | jq .
 ```
 
 #### Website Content Crawler
@@ -107,7 +113,8 @@ curl -s -X POST "https://api.apify.com/v2/acts/apify~website-content-crawler/run
   "startUrls": [{"url": "https://docs.example.com"}],
   "maxCrawlPages": 10,
   "crawlerType": "cheerio"
-  }' | jq .
+  }' > /tmp/resp_c4f4e1.json
+cat /tmp/resp_c4f4e1.json | jq .
 ```
 
 #### Instagram Scraper
@@ -117,7 +124,8 @@ curl -s -X POST "https://api.apify.com/v2/acts/apify~instagram-scraper/runs" --h
   "directUrls": ["https://www.instagram.com/apaborotnikov/"],
   "resultsType": "posts",
   "resultsLimit": 10
-  }' | jq .
+  }' > /tmp/resp_cfe88d.json
+cat /tmp/resp_cfe88d.json | jq .
 ```
 
 #### Amazon Product Scraper
@@ -126,7 +134,8 @@ curl -s -X POST "https://api.apify.com/v2/acts/apify~instagram-scraper/runs" --h
 curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '{
   "categoryOrProductUrls": [{"url": "https://www.amazon.com/dp/B0BSHF7WHW"}],
   "maxItemsPerStartUrl": 1
-  }' | jq .
+  }' > /tmp/resp_9838f7.json
+cat /tmp/resp_9838f7.json | jq .
 ```
 
 ### 6. List Your Runs
@@ -134,7 +143,8 @@ curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/runs" --he
 Get recent Actor runs:
 
 ```bash
-curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq '.data.items[] | {id, actId, status, startedAt}'
+curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --header "Authorization: Bearer ${APIFY_API_TOKEN}" > /tmp/resp_97f65e.json
+cat /tmp/resp_97f65e.json | jq '.data.items[] | {id, actId, status, startedAt}'
 ```
 
 ### 7. Abort a Run
@@ -142,7 +152,8 @@ curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --header "Autho
 Stop a running Actor:
 
 ```bash
-curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq .
+curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}" > /tmp/resp_bf8b66.json
+cat /tmp/resp_bf8b66.json | jq .
 ```
 
 ### 8. List Available Actors
@@ -150,7 +161,8 @@ curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Au
 Browse public Actors:
 
 ```bash
-curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq '.data.items[] | {name, username, title}'
+curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "Authorization: Bearer ${APIFY_API_TOKEN}" > /tmp/resp_e2973a.json
+cat /tmp/resp_e2973a.json | jq '.data.items[] | {name, username, title}'
 ```
 
 ---

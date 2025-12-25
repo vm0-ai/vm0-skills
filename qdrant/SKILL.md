@@ -65,7 +65,8 @@ All examples below assume you have `QDRANT_URL` and `QDRANT_API_KEY` set.
 Verify connection to Qdrant:
 
 ```bash
-curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}" | jq .
+curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}" > /tmp/resp_ec3d66.json
+cat /tmp/resp_ec3d66.json | jq .
 ```
 
 ---
@@ -75,7 +76,8 @@ curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}" | jq .
 Get all collections:
 
 ```bash
-curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_API_KEY}" | jq .
+curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_API_KEY}" > /tmp/resp_fafc0a.json
+cat /tmp/resp_fafc0a.json | jq .
 ```
 
 ---
@@ -90,7 +92,8 @@ curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QD
   "size": 1536,
   "distance": "Cosine"
   }
-  }' | jq .
+  }' > /tmp/resp_e308df.json
+cat /tmp/resp_e308df.json | jq .
 ```
 
 **Distance metrics:**
@@ -111,7 +114,8 @@ curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QD
 Get details about a collection:
 
 ```bash
-curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" | jq .
+curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" > /tmp/resp_ddd448.json
+cat /tmp/resp_ddd448.json | jq .
 ```
 
 ---
@@ -134,7 +138,8 @@ curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --header "api-ke
   "payload": {"text": "Goodbye world", "source": "doc2"}
   }
   ]
-  }' | jq .
+  }' > /tmp/resp_3ba3b6.json
+cat /tmp/resp_3ba3b6.json | jq .
 ```
 
 ---
@@ -148,7 +153,8 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header 
   "query": [0.05, 0.61, 0.76, 0.74],
   "limit": 5,
   "with_payload": true
-  }' | jq .
+  }' > /tmp/resp_2c7fed.json
+cat /tmp/resp_2c7fed.json | jq .
 ```
 
 **Response:**
@@ -178,7 +184,8 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header 
   ]
   },
   "with_payload": true
-  }' | jq .
+  }' > /tmp/resp_8563bf.json
+cat /tmp/resp_8563bf.json | jq .
 ```
 
 **Filter operators:**
@@ -197,7 +204,8 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --header "api-k
   "ids": [1, 2],
   "with_payload": true,
   "with_vector": true
-  }' | jq .
+  }' > /tmp/resp_9013a3.json
+cat /tmp/resp_9013a3.json | jq .
 ```
 
 ---
@@ -209,7 +217,8 @@ Delete by IDs:
 ```bash
 curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
   "points": [1, 2]
-  }' | jq .
+  }' > /tmp/resp_c8300f.json
+cat /tmp/resp_c8300f.json | jq .
 ```
 
 Delete by filter:
@@ -221,7 +230,8 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header
   {"key": "source", "match": {"value": "doc1"}}
   ]
   }
-  }' | jq .
+  }' > /tmp/resp_738424.json
+cat /tmp/resp_738424.json | jq .
 ```
 
 ---
@@ -231,7 +241,8 @@ curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header
 Remove a collection entirely:
 
 ```bash
-curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" | jq .
+curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" > /tmp/resp_2349d5.json
+cat /tmp/resp_2349d5.json | jq .
 ```
 
 ---
@@ -243,7 +254,8 @@ Get total count or filtered count:
 ```bash
 curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '{
   "exact": true
-  }' | jq .
+  }' > /tmp/resp_be0cb1.json
+cat /tmp/resp_be0cb1.json | jq .
 ```
 
 ---

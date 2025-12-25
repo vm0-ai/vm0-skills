@@ -38,7 +38,8 @@ Base URL: `https://hacker-news.firebaseio.com/v0`
 Fetch IDs of the current top 500 stories:
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:10]'
+curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/resp_fdee43.json
+cat /tmp/resp_fdee43.json | jq '.[:10]'
 ```
 
 ### 2. Get Best Stories
@@ -46,7 +47,8 @@ curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:10]'
 Fetch the best stories (highest voted over time):
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/beststories.json" | jq '.[:10]'
+curl -s "https://hacker-news.firebaseio.com/v0/beststories.json" > /tmp/resp_04f8fe.json
+cat /tmp/resp_04f8fe.json | jq '.[:10]'
 ```
 
 ### 3. Get New Stories
@@ -54,7 +56,8 @@ curl -s "https://hacker-news.firebaseio.com/v0/beststories.json" | jq '.[:10]'
 Fetch the newest stories:
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/newstories.json" | jq '.[:10]'
+curl -s "https://hacker-news.firebaseio.com/v0/newstories.json" > /tmp/resp_733fd4.json
+cat /tmp/resp_733fd4.json | jq '.[:10]'
 ```
 
 ### 4. Get Ask HN Stories
@@ -62,7 +65,8 @@ curl -s "https://hacker-news.firebaseio.com/v0/newstories.json" | jq '.[:10]'
 Fetch "Ask HN" posts:
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/askstories.json" | jq '.[:10]'
+curl -s "https://hacker-news.firebaseio.com/v0/askstories.json" > /tmp/resp_833486.json
+cat /tmp/resp_833486.json | jq '.[:10]'
 ```
 
 ### 5. Get Show HN Stories
@@ -70,7 +74,8 @@ curl -s "https://hacker-news.firebaseio.com/v0/askstories.json" | jq '.[:10]'
 Fetch "Show HN" posts:
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/showstories.json" | jq '.[:10]'
+curl -s "https://hacker-news.firebaseio.com/v0/showstories.json" > /tmp/resp_297bf8.json
+cat /tmp/resp_297bf8.json | jq '.[:10]'
 ```
 
 ### 6. Get Job Stories
@@ -78,7 +83,8 @@ curl -s "https://hacker-news.firebaseio.com/v0/showstories.json" | jq '.[:10]'
 Fetch job postings:
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/jobstories.json" | jq '.[:10]'
+curl -s "https://hacker-news.firebaseio.com/v0/jobstories.json" > /tmp/resp_9633d8.json
+cat /tmp/resp_9633d8.json | jq '.[:10]'
 ```
 
 ---
@@ -92,7 +98,8 @@ Fetch full details for any item by ID:
 ```bash
 ITEM_ID="8863"
 
-curl -s "https://hacker-news.firebaseio.com/v0/item/${ITEM_ID}.json" | jq .
+curl -s "https://hacker-news.firebaseio.com/v0/item/${ITEM_ID}.json" > /tmp/resp_7f2a30.json
+cat /tmp/resp_7f2a30.json | jq .
 ```
 
 **Response fields:**
@@ -115,8 +122,10 @@ curl -s "https://hacker-news.firebaseio.com/v0/item/${ITEM_ID}.json" | jq .
 Fetch top 5 stories with full details:
 
 ```bash
-for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:5][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq '{id, title, score, url, by}'
+curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
+for id in $(cat /tmp/topstories.json | jq '.[:5][]'); do
+  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" > /tmp/resp_d9f85b.json
+  cat /tmp/resp_d9f85b.json | jq '{id, title, score, url, by}'
 done
 ```
 
@@ -133,7 +142,8 @@ echo "$STORY" | jq '{title, score, descendants}'
 
 # Get first 3 comments
 for kid in $(echo "$STORY" | jq '.kids[:3][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${kid}.json" | jq '{by, text}'
+  curl -s "https://hacker-news.firebaseio.com/v0/item/${kid}.json" > /tmp/resp_6ce63a.json
+  cat /tmp/resp_6ce63a.json | jq '{by, text}'
 done
 ```
 
@@ -148,7 +158,8 @@ Fetch user details:
 ```bash
 USERNAME="pg"
 
-curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" | jq .
+curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" > /tmp/resp_c74d41.json
+cat /tmp/resp_c74d41.json | jq .
 ```
 
 **Response fields:**
@@ -166,7 +177,8 @@ curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" | jq .
 ```bash
 USERNAME="pg"
 
-curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" | jq '.submitted[:5]'
+curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" > /tmp/resp_c74d41.json
+cat /tmp/resp_c74d41.json | jq '.submitted[:5]'
 ```
 
 ---
@@ -186,7 +198,8 @@ curl -s "https://hacker-news.firebaseio.com/v0/maxitem.json"
 Get recently changed items and profiles (for real-time updates):
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/updates.json" | jq .
+curl -s "https://hacker-news.firebaseio.com/v0/updates.json" > /tmp/resp_fa51d8.json
+cat /tmp/resp_fa51d8.json | jq .
 ```
 
 ---
@@ -197,24 +210,30 @@ curl -s "https://hacker-news.firebaseio.com/v0/updates.json" | jq .
 
 ```bash
 echo "=== Top 10 Hacker News Stories ==="
-for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:10][]'); do
-curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r '"\(.score) points | \(.title) | \(.url // "Ask HN")"'
+curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
+for id in $(cat /tmp/topstories.json | jq '.[:10][]'); do
+curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" > /tmp/resp_d9f85b.json
+cat /tmp/resp_d9f85b.json | jq -r '"\(.score) points | \(.title) | \(.url // "Ask HN")"'
 done
 ```
 
 ### Find High-Scoring Stories (100+ points)
 
 ```bash
-for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:30][]'); do
-curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r 'select(.score >= 100) | "\(.score) | \(.title)"'
+curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
+for id in $(cat /tmp/topstories.json | jq '.[:30][]'); do
+curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" > /tmp/resp_d9f85b.json
+cat /tmp/resp_d9f85b.json | jq -r 'select(.score >= 100) | "\(.score) | \(.title)"'
 done
 ```
 
 ### Get Latest AI/ML Related Stories
 
 ```bash
-for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:50][]'); do
-curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r 'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"'
+curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
+for id in $(cat /tmp/topstories.json | jq '.[:50][]'); do
+curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" > /tmp/resp_d9f85b.json
+cat /tmp/resp_d9f85b.json | jq -r 'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"'
 done
 ```
 
