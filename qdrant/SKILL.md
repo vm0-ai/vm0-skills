@@ -55,9 +55,9 @@ export QDRANT_API_KEY="" # Optional for local
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -71,7 +71,7 @@ All examples below assume you have `QDRANT_URL` and `QDRANT_API_KEY` set.
 Verify connection to Qdrant:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}" | jq .'
+bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}"' | jq .
 ```
 
 ---
@@ -81,7 +81,7 @@ bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}" | 
 Get all collections:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_API_KEY}" | jq .'
+bash -c 'curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_API_KEY}"' | jq .
 ```
 
 ---
@@ -117,7 +117,7 @@ bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-
 Get details about a collection:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" | jq .'
+bash -c 'curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}"' | jq .
 ```
 
 ---
@@ -237,7 +237,7 @@ bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete"
 Remove a collection entirely:
 
 ```bash
-bash -c 'curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" | jq .'
+bash -c 'curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}"' | jq .
 ```
 
 ---

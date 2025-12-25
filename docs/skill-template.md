@@ -24,7 +24,7 @@ Before writing a skill, thoroughly understand the target API:
 
 ```bash
 # Example: search API docs with Tavily
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_API_KEY" -d '"'"'{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}'"'"' | jq .'
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_API_KEY" -d '"'"'{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}'"'"'' | jq .
 ```
 
 ---
@@ -79,13 +79,13 @@ export ENV_VAR_2="your-value"
 ### 1. <Feature Name>
 
 \`\`\`bash
-bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $ENV_VAR_1" | jq .'
+bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $ENV_VAR_1"' | jq .
 \`\`\`
 
 ### 2. <Feature Name>
 
 \`\`\`bash
-bash -c 'curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer $ENV_VAR_1" -d '"'"'{"key": "value"}'"'"' | jq .'
+bash -c 'curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer $ENV_VAR_1" -d '"'"'{"key": "value"}'"'"'' | jq .
 \`\`\`
 
 ---
@@ -125,31 +125,32 @@ curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq
 
 **The Workaround:**
 
-Wrap the entire command in `bash -c '...'` to bypass Claude Code's preprocessing:
+Wrap the command containing `$VAR` in `bash -c '...'`, keep other commands (like `jq`) outside:
 
 ```bash
-# GOOD - bash -c creates a subshell that bypasses preprocessing
-bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq .'
+# GOOD - only curl (which uses $VAR) is wrapped, jq stays outside
+bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq .
 ```
 
 **Rules:**
-1. Always use `bash -c '...'` when combining `$VAR` with pipes
-2. Escape single quotes inside as `'"'"'` (end quote, literal quote, start quote)
-3. Use `$VAR` instead of `${VAR}` (simpler, less prone to parsing issues)
+1. Wrap only the command that uses `$VAR` in `bash -c '...'`
+2. Keep `jq` and other processing outside (simpler, no quote escaping needed)
+3. Escape single quotes inside bash -c as `'"'"'` (for JSON bodies)
+4. Use `$VAR` instead of `${VAR}`
 
-**Example with JSON body (escaping single quotes):**
+**Example with JSON body:**
 ```bash
-bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"' | jq .'
+bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"'' | jq .
 ```
 
 **For command substitution:**
 ```bash
-VAR=$(bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq -r .id')
+VAR=$(bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq -r .id)
 ```
 
 **For loops:**
 ```bash
-for id in $(bash -c 'curl -s "https://api.example.com/ids" --header "Authorization: Bearer $API_KEY" | jq -r ".[]"'); do
+for id in $(bash -c 'curl -s "https://api.example.com/ids" --header "Authorization: Bearer $API_KEY"' | jq -r '.[]'); do
   echo "Processing $id"
 done
 ```
@@ -189,7 +190,7 @@ After writing, test each curl example in SKILL.md:
 source $HOME/.env.local
 
 # Execute example commands and verify results
-bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY" | jq .'
+bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY"' | jq .
 ```
 
 Checklist:

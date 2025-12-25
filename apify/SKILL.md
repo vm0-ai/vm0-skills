@@ -39,9 +39,9 @@ export APIFY_API_TOKEN="apify_api_xxxxxxxxxxxxxxxxxxxxxxxx"
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -75,7 +75,7 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sy
 Poll the run status:
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq '"'"'.data.status'"'"''
+bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.status
 ```
 
 **Statuses**: `READY`, `RUNNING`, `SUCCEEDED`, `FAILED`, `ABORTED`, `TIMED-OUT`
@@ -85,13 +85,13 @@ bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authori
 Fetch results from a completed run:
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq .'
+bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
 ```
 
 **With pagination:**
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&offset=0" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq .'
+bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&offset=0" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
 ```
 
 ### 5. Popular Actors
@@ -140,7 +140,7 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/r
 Get recent Actor runs:
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq '"'"'.data.items[] | {id, actId, status, startedAt}'"'"''
+bash -c 'curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.items[] | {id, actId, status, startedAt}
 ```
 
 ### 7. Abort a Run
@@ -148,7 +148,7 @@ bash -c 'curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --head
 Stop a running Actor:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq .'
+bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
 ```
 
 ### 8. List Available Actors
@@ -156,7 +156,7 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --h
 Browse public Actors:
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "Authorization: Bearer ${APIFY_API_TOKEN}" | jq '"'"'.data.items[] | {name, username, title}'"'"''
+bash -c 'curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.items[] | {name, username, title}
 ```
 
 ---

@@ -52,9 +52,9 @@ https://[domain]/rest/[user-id]/[secret-code]/[method].json
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -68,7 +68,7 @@ All examples assume `BITRIX_WEBHOOK_URL` is set to your webhook base URL.
 Get information about the authenticated user:
 
 ```bash
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.current.json" | jq .'
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.current.json"' | jq .
 ```
 
 **Response:**
@@ -90,7 +90,7 @@ bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.current.json" | jq .'
 Get a list of users in the workspace:
 
 ```bash
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.get.json" | jq '"'"'.result[] | {ID, NAME, LAST_NAME, EMAIL}'"'"''
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/user.get.json"' | jq '.result[] | {ID, NAME, LAST_NAME, EMAIL}
 ```
 
 ---
@@ -125,7 +125,7 @@ bash -c 'curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.add.json" --header "Con
 ```bash
 LEAD_ID="123"
 
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.get.json?id=${LEAD_ID}" | jq .'
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.get.json?id=${LEAD_ID}"' | jq .
 ```
 
 ---
@@ -133,7 +133,7 @@ bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.get.json?id=${LEAD_ID}" 
 ### 5. List Leads
 
 ```bash
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.list.json" | jq '"'"'.result[] | {ID, TITLE, STATUS_ID}'"'"''
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.list.json"' | jq '.result[] | {ID, TITLE, STATUS_ID}
 ```
 
 With filter:
@@ -168,7 +168,7 @@ curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.lead.update.json" --header "Content-T
 ```bash
 LEAD_ID="123"
 
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.delete.json?id=${LEAD_ID}" | jq .'
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.delete.json?id=${LEAD_ID}"' | jq .
 ```
 
 ---
@@ -193,7 +193,7 @@ bash -c 'curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.contact.add.json" --header "
 ### 9. List Contacts
 
 ```bash
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.list.json" | jq '"'"'.result[] | {ID, NAME, LAST_NAME}'"'"''
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.list.json"' | jq '.result[] | {ID, NAME, LAST_NAME}
 ```
 
 ---
@@ -218,7 +218,7 @@ bash -c 'curl -s -X POST "${BITRIX_WEBHOOK_URL}/crm.deal.add.json" --header "Con
 ### 11. List Deals
 
 ```bash
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.list.json" | jq '"'"'.result[] | {ID, TITLE, STAGE_ID, OPPORTUNITY}'"'"''
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.list.json"' | jq '.result[] | {ID, TITLE, STAGE_ID, OPPORTUNITY}
 ```
 
 ---
@@ -258,7 +258,7 @@ bash -c 'curl -s -X POST "${BITRIX_WEBHOOK_URL}/tasks.task.add.json" --header "C
 ### 14. List Tasks
 
 ```bash
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.list.json" | jq '"'"'.result.tasks[] | {id, title, status}'"'"''
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.list.json"' | jq '.result.tasks[] | {id, title, status}
 ```
 
 ---
@@ -268,7 +268,7 @@ bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.list.json" | jq '"'"'.
 ```bash
 TASK_ID="789"
 
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.complete.json?taskId=${TASK_ID}" | jq .'
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/tasks.task.complete.json?taskId=${TASK_ID}"' | jq .
 ```
 
 ---
@@ -279,13 +279,13 @@ Get available fields for any entity:
 
 ```bash
 # Lead fields
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.fields.json" | jq .'
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.lead.fields.json"' | jq .
 
 # Contact fields
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.fields.json" | jq .'
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.contact.fields.json"' | jq .
 
 # Deal fields
-bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.fields.json" | jq .'
+bash -c 'curl -s -X GET "${BITRIX_WEBHOOK_URL}/crm.deal.fields.json"' | jq .
 ```
 
 ---

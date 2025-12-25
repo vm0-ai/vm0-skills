@@ -32,9 +32,9 @@ Base URL: `https://hacker-news.firebaseio.com/v0`
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -44,7 +44,7 @@ Base URL: `https://hacker-news.firebaseio.com/v0`
 Fetch IDs of the current top 500 stories:
 
 ```bash
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '"'"'.[:10]'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/topstories.json"' | jq '.[:10]
 ```
 
 ### 2. Get Best Stories
@@ -52,7 +52,7 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '"
 Fetch the best stories (highest voted over time):
 
 ```bash
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/beststories.json" | jq '"'"'.[:10]'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/beststories.json"' | jq '.[:10]
 ```
 
 ### 3. Get New Stories
@@ -60,7 +60,7 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/beststories.json" | jq '
 Fetch the newest stories:
 
 ```bash
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/newstories.json" | jq '"'"'.[:10]'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/newstories.json"' | jq '.[:10]
 ```
 
 ### 4. Get Ask HN Stories
@@ -68,7 +68,7 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/newstories.json" | jq '"
 Fetch "Ask HN" posts:
 
 ```bash
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/askstories.json" | jq '"'"'.[:10]'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/askstories.json"' | jq '.[:10]
 ```
 
 ### 5. Get Show HN Stories
@@ -76,7 +76,7 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/askstories.json" | jq '"
 Fetch "Show HN" posts:
 
 ```bash
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/showstories.json" | jq '"'"'.[:10]'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/showstories.json"' | jq '.[:10]
 ```
 
 ### 6. Get Job Stories
@@ -84,7 +84,7 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/showstories.json" | jq '
 Fetch job postings:
 
 ```bash
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/jobstories.json" | jq '"'"'.[:10]'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/jobstories.json"' | jq '.[:10]
 ```
 
 ---
@@ -98,7 +98,7 @@ Fetch full details for any item by ID:
 ```bash
 ITEM_ID="8863"
 
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${ITEM_ID}.json" | jq .'
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${ITEM_ID}.json"' | jq .
 ```
 
 **Response fields:**
@@ -157,7 +157,7 @@ Fetch user details:
 ```bash
 USERNAME="pg"
 
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" | jq .'
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json"' | jq .
 ```
 
 **Response fields:**
@@ -175,7 +175,7 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" |
 ```bash
 USERNAME="pg"
 
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json" | jq '"'"'.submitted[:5]'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/user/${USERNAME}.json"' | jq '.submitted[:5]
 ```
 
 ---
@@ -195,7 +195,7 @@ curl -s "https://hacker-news.firebaseio.com/v0/maxitem.json"
 Get recently changed items and profiles (for real-time updates):
 
 ```bash
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/updates.json" | jq .'
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/updates.json"' | jq .
 ```
 
 ---
@@ -208,7 +208,7 @@ bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/updates.json" | jq .'
 echo "=== Top 10 Hacker News Stories ==="
 curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
 for id in $(cat /tmp/topstories.json | jq '.[:10][]'); do
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r '"'"'"\(.score) points | \(.title) | \(.url // "Ask HN")"'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json"' | jq -r '"\(.score) points | \(.title) | \(.url // "Ask HN")"
 done
 ```
 
@@ -217,7 +217,7 @@ done
 ```bash
 curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
 for id in $(cat /tmp/topstories.json | jq '.[:30][]'); do
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r '"'"'select(.score >= 100) | "\(.score) | \(.title)"'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json"' | jq -r 'select(.score >= 100) | "\(.score) | \(.title)"
 done
 ```
 
@@ -226,7 +226,7 @@ done
 ```bash
 curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
 for id in $(cat /tmp/topstories.json | jq '.[:50][]'); do
-bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r '"'"'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"'"'"''
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json"' | jq -r 'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"
 done
 ```
 

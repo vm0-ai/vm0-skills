@@ -49,9 +49,9 @@ DeepSeek does **not** enforce strict rate limits. They will try to serve every r
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -70,7 +70,7 @@ The base URL for the DeepSeek API is:
 Send a simple chat message:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Hello, who are you?"}]}'"'"' | jq .'
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "Hello, who are you?"}]}'"'"'' | jq .
 ```
 
 **Available models:**
@@ -85,7 +85,7 @@ bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content
 Adjust creativity/randomness with temperature:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "Write a short poem about coding."}], "temperature": 0.7, "max_tokens": 200}'"'"' | jq -r '"'"'.choices[0].message.content'"'"''
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "Write a short poem about coding."}], "temperature": 0.7, "max_tokens": 200}'"'"'' | jq -r '.choices[0].message.content
 ```
 
 **Parameters:**
@@ -113,7 +113,7 @@ Streaming returns Server-Sent Events (SSE) with delta chunks, ending with `data:
 Use the reasoner model for complex reasoning tasks:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-reasoner", "messages": [{"role": "user", "content": "What is 15 * 17? Show your work."}]}'"'"' | jq -r '"'"'.choices[0].message.content'"'"''
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-reasoner", "messages": [{"role": "user", "content": "What is 15 * 17? Show your work."}]}'"'"'' | jq -r '.choices[0].message.content
 ```
 
 The reasoner model excels at math, logic, and multi-step problems.
@@ -125,7 +125,7 @@ The reasoner model excels at math, logic, and multi-step problems.
 Force the model to return valid JSON:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "system", "content": "You are a JSON generator. Always respond with valid JSON."}, {"role": "user", "content": "List 3 programming languages with their main use cases."}], "response_format": {"type": "json_object"}}'"'"' | jq -r '"'"'.choices[0].message.content'"'"' | jq .'
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "system", "content": "You are a JSON generator. Always respond with valid JSON."}, {"role": "user", "content": "List 3 programming languages with their main use cases."}], "response_format": {"type": "json_object"}}'"'"'' | jq -r '.choices[0].message.content' | jq .
 ```
 
 ---
@@ -135,7 +135,7 @@ bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content
 Continue a conversation with message history:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "My name is Alice."}, {"role": "assistant", "content": "Nice to meet you, Alice!"}, {"role": "user", "content": "What is my name?"}]}'"'"' | jq -r '"'"'.choices[0].message.content'"'"''
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "My name is Alice."}, {"role": "assistant", "content": "Nice to meet you, Alice!"}, {"role": "user", "content": "What is my name?"}]}'"'"'' | jq -r '.choices[0].message.content
 ```
 
 ---
@@ -145,7 +145,7 @@ bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content
 Use Fill-in-the-Middle for code completion (beta endpoint):
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/beta/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "prompt": "def add(a, b):\n ", "max_tokens": 20}'"'"' | jq -r '"'"'.choices[0].text'"'"''
+bash -c 'curl -s "https://api.deepseek.com/beta/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "prompt": "def add(a, b):\n ", "max_tokens": 20}'"'"'' | jq -r '.choices[0].text
 ```
 
 FIM is useful for:
@@ -160,7 +160,7 @@ FIM is useful for:
 Define functions the model can call:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "What is the weather in Tokyo?"}], "tools": [{"type": "function", "function": {"name": "get_weather", "description": "Get the current weather for a location", "parameters": {"type": "object", "properties": {"location": {"type": "string", "description": "The city name"}}, "required": ["location"]}}}]}'"'"' | jq .'
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "What is the weather in Tokyo?"}], "tools": [{"type": "function", "function": {"name": "get_weather", "description": "Get the current weather for a location", "parameters": {"type": "object", "properties": {"location": {"type": "string", "description": "The city name"}}, "required": ["location"]}}}]}'"'"'' | jq .
 ```
 
 The model will return a `tool_calls` array when it wants to use a function.
@@ -172,7 +172,7 @@ The model will return a `tool_calls` array when it wants to use a function.
 Extract usage information from response:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "Hello!"}]}'"'"' | jq '"'"'.usage'"'"''
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d '"'"'{"model": "deepseek-chat", "messages": [{"role": "user", "content": "Hello!"}]}'"'"'' | jq '.usage
 ```
 
 Response includes:

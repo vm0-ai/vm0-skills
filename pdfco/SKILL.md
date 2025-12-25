@@ -41,9 +41,9 @@ export PDFCO_API_KEY="your-email@example.com_your-api-key"
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -176,7 +176,7 @@ RESPONSE=$(curl -s --location --request POST 'https://api.pdf.co/v1/pdf/convert/
 JOB_ID=$(echo $RESPONSE | jq -r '.jobId')
 
 # Check job status
-bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/job/check'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw "{\"jobid\": \"$JOB_ID\"}" | jq .'
+bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/job/check'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw "{\"jobid\": \"$JOB_ID\"}"' | jq .
 ```
 
 ---

@@ -44,9 +44,9 @@ https://app.reportei.com/api/v1
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -58,7 +58,7 @@ https://app.reportei.com/api/v1
 Retrieve details of your company associated with the token:
 
 ```bash
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/me" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/me" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 Response:
@@ -83,7 +83,7 @@ Response:
 Retrieve all report templates in your company:
 
 ```bash
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/templates" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq '"'"'.data[] | {id, title, used_count}'"'"''
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/templates" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq '.data[] | {id, title, used_count}
 ```
 
 ---
@@ -93,7 +93,7 @@ bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/templates" -H "Authoriz
 Retrieve all client projects:
 
 ```bash
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---
@@ -105,7 +105,7 @@ Retrieve details of a specific client:
 ```bash
 CLIENT_ID="your-client-id"
 
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---
@@ -117,7 +117,7 @@ Get all reports for a specific client:
 ```bash
 CLIENT_ID="your-client-id"
 
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/reports" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/reports" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---
@@ -129,7 +129,7 @@ Retrieve details of a specific report:
 ```bash
 REPORT_ID="your-report-id"
 
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/reports/${REPORT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/reports/${REPORT_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---
@@ -141,7 +141,7 @@ Get all integrations for a specific client:
 ```bash
 CLIENT_ID="your-client-id"
 
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/integrations" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/clients/${CLIENT_ID}/integrations" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---
@@ -153,7 +153,7 @@ Retrieve details of a specific integration:
 ```bash
 INTEGRATION_ID="your-integration-id"
 
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---
@@ -165,7 +165,7 @@ List available widgets for an integration:
 ```bash
 INTEGRATION_ID="your-integration-id"
 
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---
@@ -233,7 +233,7 @@ bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/add_to_timeline" -H "A
 Get available webhook event types:
 
 ```bash
-bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/webhook/events" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" | jq .'
+bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/webhook/events" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}"' | jq .
 ```
 
 ---

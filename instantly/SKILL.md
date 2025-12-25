@@ -47,9 +47,9 @@ Create API keys with specific permissions:
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -69,13 +69,13 @@ Authentication uses Bearer token in the `Authorization` header.
 Get all campaigns:
 
 ```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'.items[] | {id, name, status}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '.items[] | {id, name, status}
 ```
 
 With filters:
 
 ```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns?status=ACTIVE&limit=10" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'.items[] | {id, name}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns?status=ACTIVE&limit=10" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '.items[] | {id, name}
 ```
 
 **Status values:** `ACTIVE`, `PAUSED`, `COMPLETED`, `DRAFTED`
@@ -89,7 +89,7 @@ Get campaign details by ID:
 ```bash
 CAMPAIGN_ID="your-campaign-id"
 
-bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'{id, name, status, daily_limit}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '{id, name, status, daily_limit}
 ```
 
 ---
@@ -115,10 +115,10 @@ Control campaign status:
 CAMPAIGN_ID="your-campaign-id"
 
 # Pause campaign
-bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}/pause" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq .'
+bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}/pause" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq .
 
 # Activate campaign
-bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}/activate" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq .'
+bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}/activate" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq .
 ```
 
 ---
@@ -128,7 +128,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}/activ
 List leads (POST endpoint due to complex filters):
 
 ```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/list" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}" -H "Content-Type: application/json" -d '"'"'{"limit": 10}'"'"' | jq '"'"'.items[] | {id, email, first_name, last_name}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/list" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}" -H "Content-Type: application/json" -d '"'"'{"limit": 10}'"'"'' | jq '.items[] | {id, email, first_name, last_name}
 ```
 
 Filter by campaign:
@@ -196,7 +196,7 @@ Get lead by ID:
 ```bash
 LEAD_ID="your-lead-id"
 
-bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/${LEAD_ID}" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq .'
+bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/${LEAD_ID}" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq .
 ```
 
 ---
@@ -223,7 +223,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/${LEAD_ID}" -X PATCH -H 
 Get all lead lists:
 
 ```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/lead-lists" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'.items[] | {id, name}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/lead-lists" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '.items[] | {id, name}
 ```
 
 ---
@@ -247,13 +247,13 @@ Get campaign performance metrics:
 ```bash
 CAMPAIGN_ID="your-campaign-id"
 
-bash -c 'curl -s "https://api.instantly.ai/api/v2/analytics/campaign/${CAMPAIGN_ID}" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'{sent, opened, replied, clicked}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/analytics/campaign/${CAMPAIGN_ID}" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '{sent, opened, replied, clicked}
 ```
 
 Get analytics for all campaigns:
 
 ```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/analytics/campaign" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq .'
+bash -c 'curl -s "https://api.instantly.ai/api/v2/analytics/campaign" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq .
 ```
 
 ---
@@ -263,7 +263,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/analytics/campaign" -H "Author
 Get connected sending accounts:
 
 ```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/accounts" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'.items[] | {email, status, warmup_status}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/accounts" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '.items[] | {email, status, warmup_status}
 ```
 
 ---
@@ -273,7 +273,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/accounts" -H "Authorization: B
 Verify your API key is valid:
 
 ```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/api-keys" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'.items[0] | {name, scopes}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/api-keys" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '.items[0] | {name, scopes}
 ```
 
 ---
@@ -284,10 +284,10 @@ List endpoints support pagination:
 
 ```bash
 # First page
-bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns?limit=10" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq '"'"'{items: .items | length, next_starting_after: .next_starting_after}'"'"''
+bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns?limit=10" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '{items: .items | length, next_starting_after: .next_starting_after}
 
 # Next page
-bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns?limit=10&starting_after=CURSOR" -H "Authorization: Bearer ${INSTANTLY_API_KEY}" | jq .'
+bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns?limit=10&starting_after=CURSOR" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq .
 ```
 
 ---

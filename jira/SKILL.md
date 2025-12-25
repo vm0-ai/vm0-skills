@@ -48,9 +48,9 @@ Jira Cloud has rate limits that vary by endpoint. For most REST API calls, expec
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -68,7 +68,7 @@ Base URL: `https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3`
 Verify your authentication:
 
 ```bash
-bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/myself" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" | jq '"'"'{accountId, emailAddress, displayName, active}'"'"''
+bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/myself" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json"' | jq '{accountId, emailAddress, displayName, active}
 ```
 
 ---
@@ -78,7 +78,7 @@ bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/res
 Get all projects you have access to:
 
 ```bash
-bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/project" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" | jq '"'"'.[] | {id, key, name}'"'"''
+bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/project" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json"' | jq '.[] | {id, key, name}
 ```
 
 ---
@@ -90,7 +90,7 @@ Get details for a specific project:
 ```bash
 PROJECT_KEY="PROJ"
 
-bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/project/${PROJECT_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" | jq '"'"'{id, key, name, projectTypeKey, lead: .lead.displayName}'"'"''
+bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/project/${PROJECT_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json"' | jq '{id, key, name, projectTypeKey, lead: .lead.displayName}
 ```
 
 ---
@@ -102,7 +102,7 @@ List available issue types (Task, Bug, Story, etc.):
 ```bash
 PROJECT_KEY="PROJ"
 
-bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/project/${PROJECT_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" | jq '"'"'.issueTypes[] | {id, name, subtask}'"'"''
+bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/project/${PROJECT_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json"' | jq '.issueTypes[] | {id, name, subtask}
 ```
 
 ---
@@ -112,7 +112,7 @@ bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/res
 Search issues using Jira Query Language:
 
 ```bash
-bash -c 'curl -s -G "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/search/jql" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --data-urlencode "jql=project = PROJ AND status != Done ORDER BY created DESC" --data-urlencode "maxResults=10" --data-urlencode "fields=key,summary,status,assignee,priority" | jq '"'"'.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}'"'"''
+bash -c 'curl -s -G "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/search/jql" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --data-urlencode "jql=project = PROJ AND status != Done ORDER BY created DESC" --data-urlencode "maxResults=10" --data-urlencode "fields=key,summary,status,assignee,priority"' | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}
 ```
 
 Common JQL examples:
@@ -132,7 +132,7 @@ Get full details of an issue:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" | jq '"'"'{key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name, created: .fields.created, updated: .fields.updated}'"'"''
+bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json"' | jq '{key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name, created: .fields.created, updated: .fields.updated}
 ```
 
 ---
@@ -222,7 +222,7 @@ Get possible status transitions for an issue:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" | jq '"'"'.transitions[] | {id, name, to: .to.name}'"'"''
+bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json"' | jq '.transitions[] | {id, name, to: .to.name}
 ```
 
 ---
@@ -274,7 +274,7 @@ List all comments on an issue:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/comment" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" | jq '"'"'.comments[] | {id, author: .author.displayName, created, body: .body.content[0].content[0].text}'"'"''
+bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/comment" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json"' | jq '.comments[] | {id, author: .author.displayName, created, body: .body.content[0].content[0].text}
 ```
 
 ---
@@ -297,7 +297,7 @@ curl -s -X PUT "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/i
 Find users by email or name:
 
 ```bash
-bash -c 'curl -s -G "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/user/search" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --data-urlencode "query=john" | jq '"'"'.[] | {accountId, displayName, emailAddress}'"'"''
+bash -c 'curl -s -G "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/user/search" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --data-urlencode "query=john"' | jq '.[] | {accountId, displayName, emailAddress}
 ```
 
 ---

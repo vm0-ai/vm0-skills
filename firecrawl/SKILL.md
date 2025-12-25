@@ -37,9 +37,9 @@ export FIRECRAWL_API_KEY="fc-your-api-key"
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -131,7 +131,7 @@ bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization:
 ```bash
 JOB_ID="crawl-job-id-here"
 
-bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq '"'"'{status, completed, total}'"'"''
+bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '{status, completed, total}
 ```
 
 ### Get Crawl Results
@@ -139,7 +139,7 @@ bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorizatio
 ```bash
 JOB_ID="crawl-job-id-here"
 
-bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" | jq '"'"'.data[] | {url: .metadata.url, title: .metadata.title}'"'"''
+bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '.data[] | {url: .metadata.url, title: .metadata.title}
 ```
 
 ### Crawl with Path Filters

@@ -47,9 +47,9 @@ export SHORTIO_DOMAIN_ID="123456" # Optional, needed for list/stats operations
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -106,7 +106,7 @@ curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_
 Get details of a short link using domain and path:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/links/expand?domain=${SHORTIO_DOMAIN}&path=my-custom-slug" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json" | jq '"'"'{originalURL, shortURL, path, idString, createdAt, cloaking}'"'"''
+bash -c 'curl -s -X GET "https://api.short.io/links/expand?domain=${SHORTIO_DOMAIN}&path=my-custom-slug" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{originalURL, shortURL, path, idString, createdAt, cloaking}
 ```
 
 ---
@@ -118,7 +118,7 @@ Get details of a short link using its ID:
 ```bash
 LINK_ID="lnk_abc123xyz"
 
-bash -c 'curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json" | jq '"'"'{originalURL, shortURL, path, idString, createdAt}'"'"''
+bash -c 'curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{originalURL, shortURL, path, idString, createdAt}
 ```
 
 ---
@@ -128,7 +128,7 @@ bash -c 'curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Author
 Get a list of links for a domain (max 150 per request):
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/api/links?domain_id=${SHORTIO_DOMAIN_ID}&limit=20" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json" | jq '"'"'{count, links: [.links[] | {shortURL, originalURL, path, idString}]}'"'"''
+bash -c 'curl -s -X GET "https://api.short.io/api/links?domain_id=${SHORTIO_DOMAIN_ID}&limit=20" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{count, links: [.links[] | {shortURL, originalURL, path, idString}]}
 ```
 
 ---
@@ -155,7 +155,7 @@ Delete a short link by ID:
 ```bash
 LINK_ID="lnk_abc123xyz"
 
-bash -c 'curl -s -X DELETE "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json" | jq '"'"'{success, idString}'"'"''
+bash -c 'curl -s -X DELETE "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{success, idString}
 ```
 
 ---
@@ -165,7 +165,7 @@ bash -c 'curl -s -X DELETE "https://api.short.io/links/${LINK_ID}" --header "Aut
 Get all domains associated with your account:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/api/domains" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json" | jq '"'"'.[] | {id, hostname, state, linkType}'"'"''
+bash -c 'curl -s -X GET "https://api.short.io/api/domains" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '.[] | {id, hostname, state, linkType}
 ```
 
 ---
@@ -175,7 +175,7 @@ bash -c 'curl -s -X GET "https://api.short.io/api/domains" --header "Authorizati
 Get click counts for specific links:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/domains/${SHORTIO_DOMAIN_ID}/link_clicks?link_ids=${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json" | jq .'
+bash -c 'curl -s -X GET "https://api.short.io/domains/${SHORTIO_DOMAIN_ID}/link_clicks?link_ids=${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq .
 ```
 
 ---

@@ -47,9 +47,9 @@ export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -72,7 +72,7 @@ Get seat breakdown and settings for an organization:
 ```bash
 ORG="your-org-name"
 
-bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .'
+bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"' | jq .
 ```
 
 **Response:**
@@ -100,7 +100,7 @@ Get all users with Copilot seats:
 ```bash
 ORG="your-org-name"
 
-bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing/seats?per_page=50" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '"'"'.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'"'"''
+bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/billing/seats?per_page=50" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"' | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}
 ```
 
 ---
@@ -113,7 +113,7 @@ Get specific user's Copilot seat information:
 ORG="your-org-name"
 USERNAME="octocat"
 
-bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/members/${USERNAME}/copilot" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .'
+bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/members/${USERNAME}/copilot" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"' | jq .
 ```
 
 ---
@@ -195,7 +195,7 @@ Get usage statistics (requires 5+ active users):
 ```bash
 ORG="your-org-name"
 
-bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/metrics?per_page=7" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '"'"'.[] | {date, total_active_users, total_engaged_users}'"'"''
+bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/copilot/metrics?per_page=7" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"' | jq '.[] | {date, total_active_users, total_engaged_users}
 ```
 
 **Response:**
@@ -217,7 +217,7 @@ Get team-specific usage metrics:
 ORG="your-org-name"
 TEAM="engineering"
 
-bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/team/${TEAM}/copilot/metrics" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq .'
+bash -c 'curl -s -X GET "https://api.github.com/orgs/${ORG}/team/${TEAM}/copilot/metrics" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"' | jq .
 ```
 
 ---

@@ -45,9 +45,9 @@ export RUNWAY_API_KEY="your-api-key"
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -68,7 +68,7 @@ Base URL: `https://api.dev.runwayml.com/v1`
 Check your credit balance:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" | jq .'
+bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"' | jq .
 ```
 
 ---
@@ -146,7 +146,7 @@ Poll for task completion:
 ```bash
 TASK_ID="your-task-id"
 
-bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" | jq .'
+bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"' | jq .
 ```
 
 **Response when complete:**

@@ -38,9 +38,9 @@ export DEVTO_API_KEY="your-api-key"
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -122,19 +122,19 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
 ### 5. Get Your Articles
 
 ```bash
-bash -c 'curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: ${DEVTO_API_KEY}" | jq '"'"'.[] | {id, title, published, url}'"'"''
+bash -c 'curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title, published, url}
 ```
 
 ### 6. Get Published Articles Only
 
 ```bash
-bash -c 'curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: ${DEVTO_API_KEY}" | jq '"'"'.[] | {id, title, url}'"'"''
+bash -c 'curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title, url}
 ```
 
 ### 7. Get Unpublished (Drafts)
 
 ```bash
-bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEVTO_API_KEY}" | jq '"'"'.[] | {id, title}'"'"''
+bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title}
 ```
 
 ### 8. Get Single Article
@@ -142,7 +142,7 @@ bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEV
 ```bash
 ARTICLE_ID="123456"
 
-bash -c 'curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" | jq '"'"'{id, title, url, published}'"'"''
+bash -c 'curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}"' | jq '{id, title, url, published}
 ```
 
 ### 9. Update an Article

@@ -43,9 +43,9 @@ export SUPADATA_API_KEY="your-api-key"
 ---
 
 
-> **Important:** When piping `curl` output to `jq`, wrap the command in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -65,7 +65,7 @@ Authentication uses the `x-api-key` header.
 Extract transcript from a YouTube video:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true" | jq .'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true"' | jq .
 ```
 
 **Parameters:**
@@ -82,7 +82,7 @@ bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADA
 Get transcript with timing information:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=false" | jq '"'"'.content[:3]'"'"''
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=false"' | jq '.content[:3]
 ```
 
 Response format:
@@ -104,10 +104,10 @@ Extract transcript from other platforms:
 
 ```bash
 # TikTok
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890" -d "text=true" | jq .'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890" -d "text=true"' | jq .
 
 # Instagram Reel
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.instagram.com/reel/ABC123/" -d "text=true" | jq .'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.instagram.com/reel/ABC123/" -d "text=true"' | jq .
 ```
 
 Supported platforms: YouTube, TikTok, Instagram, X (Twitter), Facebook
@@ -119,7 +119,7 @@ Supported platforms: YouTube, TikTok, Instagram, X (Twitter), Facebook
 Fetch only existing transcripts without AI generation:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true" -d "mode=native" | jq .'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true" -d "mode=native"' | jq .
 ```
 
 Use `mode=native` to avoid AI generation costs (1 credit vs 2 credits/min).
@@ -131,7 +131,7 @@ Use `mode=native` to avoid AI generation costs (1 credit vs 2 credits/min).
 Get channel information:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/youtube/channel" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "id=@mkbhd" | jq '"'"'{name, subscriberCount, videoCount}'"'"''
+bash -c 'curl -s "https://api.supadata.ai/v1/youtube/channel" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "id=@mkbhd"' | jq '{name, subscriberCount, videoCount}
 ```
 
 Accepts channel URL, channel ID, or handle (e.g., `@mkbhd`).
@@ -143,7 +143,7 @@ Accepts channel URL, channel ID, or handle (e.g., `@mkbhd`).
 Get video information:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" | jq '"'"'{title, viewCount, likeCount, duration}'"'"''
+bash -c 'curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ"' | jq '{title, viewCount, likeCount, duration}
 ```
 
 ---
@@ -153,7 +153,7 @@ bash -c 'curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: ${SUP
 Get metadata from any supported platform:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/metadata" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890" | jq .'
+bash -c 'curl -s "https://api.supadata.ai/v1/metadata" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890"' | jq .
 ```
 
 Works with YouTube, TikTok, Instagram, X, Facebook posts.
@@ -165,7 +165,7 @@ Works with YouTube, TikTok, Instagram, X, Facebook posts.
 Extract web page content:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/web/scrape" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com" | jq .'
+bash -c 'curl -s "https://api.supadata.ai/v1/web/scrape" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"' | jq .
 ```
 
 Returns page content in Markdown format, ideal for AI processing.
@@ -177,7 +177,7 @@ Returns page content in Markdown format, ideal for AI processing.
 Get all links from a website:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com" | jq '"'"'.links[:10]'"'"''
+bash -c 'curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"' | jq '.links[:10]
 ```
 
 ---
@@ -194,7 +194,7 @@ JOB_ID=$(cat /tmp/resp_crawl.json | jq -r '.jobId')
 echo "Job ID: ${JOB_ID}"
 
 # Check status
-bash -c 'curl -s "https://api.supadata.ai/v1/web/crawl/${JOB_ID}" -H "x-api-key: ${SUPADATA_API_KEY}" | jq '"'"'{status, pagesCompleted}'"'"''
+bash -c 'curl -s "https://api.supadata.ai/v1/web/crawl/${JOB_ID}" -H "x-api-key: ${SUPADATA_API_KEY}"' | jq '{status, pagesCompleted}
 ```
 
 Status values: `queued`, `active`, `completed`, `failed`
@@ -206,7 +206,7 @@ Status values: `queued`, `active`, `completed`, `failed`
 Translate a YouTube transcript to another language:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "lang=zh" -d "text=true" | jq .'
+bash -c 'curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "lang=zh" -d "text=true"' | jq .
 ```
 
 ---
