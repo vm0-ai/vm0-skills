@@ -7,17 +7,18 @@ This document tracks the testing status of all skills after the `bash -c` patter
 ## Summary
 
 - **Total Skills**: 62
-- **Tested & Passed**: 33
-- **Tested with Issues**: 9 (API/config issues, not curl pattern issues)
+- **Tested & Passed**: 34
+- **Tested with Issues**: 8 (API/config issues, not curl pattern issues)
 - **Not Tested**: 20 (no credentials)
 
 ## Test Results
 
-### ✅ Passed (33)
+### ✅ Passed (34)
 
 | Skill | Test Result | Notes |
 |-------|-------------|-------|
 | apify | ✅ | 1 actor returned |
+| browserless | ✅ | Scraped example.com h1 |
 | axiom | ✅ | API responds (object format) |
 | brave-search | ✅ | Search results for "anthropic" |
 | chatwoot | ✅ | 1 contact |
@@ -51,12 +52,11 @@ This document tracks the testing status of all skills after the `bash -c` patter
 | zeptomail | ✅ | API responds (auth works) |
 | runway | ✅ | 2675 credits, 16 models available |
 
-### ⚠️ Issues (9)
+### ⚠️ Issues (8)
 
 | Skill | Issue | Root Cause |
 |-------|-------|------------|
 | bright-data | 404 error | Endpoint not found |
-| browserless | 404 error | Endpoint changed or incorrect |
 | fal.ai | Returns null | Queue mode requires async polling |
 | google-sheets | Token error | OAuth token expired |
 | instagram | OAuth error | Access token expired |
@@ -75,12 +75,6 @@ This document tracks the testing status of all skills after the `bash -c` patter
 bash -c 'curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer $AXIOM_API_KEY"' | jq '[.[] | .name]'
 # Error: jq: error (at <stdin>:0): Cannot index number with string "name"
 # Root cause: API returns object not array, need different jq query
-```
-
-**browserless**
-```bash
-bash -c 'curl -s "https://api.browserless.io/chrome/content?token=$BROWSERLESS_API_TOKEN" -H "Content-Type: application/json" -d '"'"'{"url": "https://example.com"}'"'"''
-# Response: Cannot POST /chrome/content
 ```
 
 **minimax**
