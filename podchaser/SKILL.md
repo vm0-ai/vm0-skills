@@ -4,7 +4,6 @@ description: Podchaser GraphQL API for podcast data, discovery, episodes, creato
 vm0_env:
   - PODCHASER_CLIENT_ID
   - PODCHASER_CLIENT_SECRET
-  - PODCHASER_ACCESS_TOKEN
 ---
 
 # Podchaser API
@@ -39,34 +38,34 @@ Set environment variables:
 ```bash
 export PODCHASER_CLIENT_ID="your-client-id"
 export PODCHASER_CLIENT_SECRET="your-client-secret"
-export PODCHASER_ACCESS_TOKEN="your-access-token"  # After obtaining via mutation
 ```
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq .
-> ```
+> **Important:** Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly. Wrap the command containing `$VAR` in `bash -c '...'`, keep `jq` outside.
 
 ## How to Use
 
 ### 1. Get Access Token
 
-Request an access token (valid for 1 year, store it for reuse):
+Request an access token (valid for 1 year) and save to a temp file:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" -d "{\"query\": \"mutation { requestAccessToken(input: { grant_type: CLIENT_CREDENTIALS, client_id: \\\"$PODCHASER_CLIENT_ID\\\", client_secret: \\\"$PODCHASER_CLIENT_SECRET\\\" }) { access_token token_type expires_in } }\"}"' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" -d "{\"query\": \"mutation { requestAccessToken(input: { grant_type: CLIENT_CREDENTIALS, client_id: \\\"$PODCHASER_CLIENT_ID\\\", client_secret: \\\"$PODCHASER_CLIENT_SECRET\\\" }) { access_token token_type expires_in } }\"}"' | jq -r '.data.requestAccessToken.access_token' > /tmp/podchaser_token.txt
 ```
 
-Save the returned `access_token` to `PODCHASER_ACCESS_TOKEN`.
+Verify the token was saved:
+
+```bash
+cat /tmp/podchaser_token.txt | head -c 50
+```
 
 ### 2. Search Podcasts
 
 Search for podcasts by keyword:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcasts(searchTerm: \"technology\", first: 5) { paginatorInfo { count } data { id title description author { name } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(searchTerm: \"technology\", first: 5) { paginatorInfo { count } data { id title description author { name } } } }"}'"'"'' | jq .
 ```
 
 ### 3. Get Podcast Details
@@ -76,7 +75,7 @@ Get detailed information about a specific podcast by ID:
 > **Note:** The `type` field is required in the identifier. Use `PODCHASER` for Podchaser IDs, `APPLE_PODCASTS` for Apple IDs, or `SPOTIFY` for Spotify IDs.
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title description url imageUrl language ratingAverage ratingCount author { name } categories { title } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title description url imageUrl language ratingAverage ratingCount author { name } categories { title } } }"}'"'"'' | jq .
 ```
 
 ### 4. Search Episodes
@@ -84,7 +83,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Search for episodes across all podcasts:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ episodes(searchTerm: \"AI\", first: 5) { paginatorInfo { count } data { id title description airDate length podcast { title } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ episodes(searchTerm: \"AI\", first: 5) { paginatorInfo { count } data { id title description airDate length podcast { title } } } }"}'"'"'' | jq .
 ```
 
 ### 5. Get Podcast Episodes
@@ -92,7 +91,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Get episodes for a specific podcast:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title episodes(first: 10) { data { id title description airDate length } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title episodes(first: 10) { data { id title description airDate length } } } }"}'"'"'' | jq .
 ```
 
 ### 6. Get Episode Details
@@ -100,7 +99,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Get detailed information about a specific episode:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ episode(identifier: { id: \"789012\", type: PODCHASER }) { id title description airDate length url imageUrl podcast { id title } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ episode(identifier: { id: \"789012\", type: PODCHASER }) { id title description airDate length url imageUrl podcast { id title } } }"}'"'"'' | jq .
 ```
 
 ### 7. Browse Categories
@@ -108,7 +107,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 List available podcast categories:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ categories { id title slug } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ categories { id title slug } }"}'"'"'' | jq .
 ```
 
 ### 8. Filter Podcasts by Category
@@ -116,7 +115,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Get podcasts in a specific category:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcasts(filters: { categories: [\"technology\"] }, first: 10) { data { id title description ratingAverage } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(filters: { categories: [\"technology\"] }, first: 10) { data { id title description ratingAverage } } }"}'"'"'' | jq .
 ```
 
 ### 9. Get Chart Rankings
@@ -124,7 +123,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Get Apple Podcasts chart data:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcasts(filters: { hasAppleChartRank: true }, sort: { sortBy: APPLE_CHART_RANK, direction: ASC }, first: 10) { data { id title appleChartRank } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(filters: { hasAppleChartRank: true }, sort: { sortBy: APPLE_CHART_RANK, direction: ASC }, first: 10) { data { id title appleChartRank } } }"}'"'"'' | jq .
 ```
 
 ### 10. Get Creator/Host Information
@@ -132,7 +131,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Search for podcast creators:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ creators(searchTerm: \"Joe Rogan\", first: 5) { data { id name bio podcasts { data { id title } } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ creators(searchTerm: \"Joe Rogan\", first: 5) { data { id name bio podcasts { data { id title } } } } }"}'"'"'' | jq .
 ```
 
 ### 11. Preview Query Cost
@@ -140,7 +139,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Check how many points a query will cost before executing:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql/cost" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcasts(searchTerm: \"tech\", first: 10) { data { id title description episodes(first: 5) { data { id title } } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql/cost" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(searchTerm: \"tech\", first: 10) { data { id title description episodes(first: 5) { data { id title } } } } }"}'"'"'' | jq .
 ```
 
 ---
