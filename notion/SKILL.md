@@ -45,6 +45,12 @@ Page ID: 2b70e96f0134807d8450c8793839c659 (remove hyphens if present)
 PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
 ```
 
+> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> ```bash
+> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
+> cat /tmp/response.json | jq .
+> ```
+
 ## Core APIs
 
 ### Read Page with Content

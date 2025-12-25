@@ -37,6 +37,13 @@ export TAVILY_API_KEY="tvly-xxxxxxxxxxxxxxxx"
 
 ---
 
+
+> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> ```bash
+> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
+> cat /tmp/response.json | jq .
+> ```
+
 ## How to Use
 
 ```bash

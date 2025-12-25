@@ -36,6 +36,12 @@ export SLACK_BOT_TOKEN=xoxb-your-bot-token
 3. Install to Workspace
 4. Copy "Bot User OAuth Token" (`xoxb-...`)
 
+> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> ```bash
+> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
+> cat /tmp/response.json | jq .
+> ```
+
 ## Core APIs
 
 ### List Channels

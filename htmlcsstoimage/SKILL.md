@@ -49,6 +49,13 @@ The API uses HTTP Basic Authentication:
 
 ---
 
+
+> **Important:** Do not pipe `curl` output directly to `jq` (e.g., `curl ... | jq`). Due to a Claude Code bug, environment variables in curl headers are silently cleared when pipes are used. Instead, use a two-step pattern:
+> ```bash
+> curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" > /tmp/response.json
+> cat /tmp/response.json | jq .
+> ```
+
 ## How to Use
 
 All examples below assume you have `HCTI_USER_ID` and `HCTI_API_KEY` set.
