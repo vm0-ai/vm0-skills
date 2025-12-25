@@ -46,7 +46,7 @@ export PODCHASER_ACCESS_TOKEN="your-access-token"  # After obtaining via mutatio
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
 ## How to Use
@@ -76,8 +76,7 @@ Get detailed information about a specific podcast by ID:
 > **Note:** The `type` field is required in the identifier. Use `PODCHASER` for Podchaser IDs, `APPLE_PODCASTS` for Apple IDs, or `SPOTIFY` for Spotify IDs.
 
 ```bash
-PODCAST_ID="717178"
-bash -c "curl -s -X POST \"https://api.podchaser.com/graphql\" --header \"Content-Type: application/json\" --header \"Authorization: Bearer \$PODCHASER_ACCESS_TOKEN\" -d '{\"query\": \"{ podcast(identifier: { id: \\\"${PODCAST_ID}\\\", type: PODCHASER }) { id title description url imageUrl language ratingAverage ratingCount author { name } categories { title } } }\"}'" | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title description url imageUrl language ratingAverage ratingCount author { name } categories { title } } }"}'"'"'' | jq .
 ```
 
 ### 4. Search Episodes
@@ -93,8 +92,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Get episodes for a specific podcast:
 
 ```bash
-PODCAST_ID="717178"
-bash -c "curl -s -X POST \"https://api.podchaser.com/graphql\" --header \"Content-Type: application/json\" --header \"Authorization: Bearer \$PODCHASER_ACCESS_TOKEN\" -d '{\"query\": \"{ podcast(identifier: { id: \\\"${PODCAST_ID}\\\", type: PODCHASER }) { id title episodes(first: 10) { data { id title description airDate length } } } }\"}'" | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title episodes(first: 10) { data { id title description airDate length } } } }"}'"'"'' | jq .
 ```
 
 ### 6. Get Episode Details
@@ -102,8 +100,7 @@ bash -c "curl -s -X POST \"https://api.podchaser.com/graphql\" --header \"Conten
 Get detailed information about a specific episode:
 
 ```bash
-EPISODE_ID="789012"
-bash -c "curl -s -X POST \"https://api.podchaser.com/graphql\" --header \"Content-Type: application/json\" --header \"Authorization: Bearer \$PODCHASER_ACCESS_TOKEN\" -d '{\"query\": \"{ episode(identifier: { id: \\\"${EPISODE_ID}\\\", type: PODCHASER }) { id title description airDate length url imageUrl podcast { id title } } }\"}'" | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_ACCESS_TOKEN" -d '"'"'{"query": "{ episode(identifier: { id: \"789012\", type: PODCHASER }) { id title description airDate length url imageUrl podcast { id title } } }"}'"'"'' | jq .
 ```
 
 ### 7. Browse Categories
