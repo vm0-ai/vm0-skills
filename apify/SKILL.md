@@ -74,11 +74,12 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sy
 
 ### 3. Check Run Status
 
-> **Note:** Replace `{runId}` with the actual run ID from the async run response (found in `.data.id`).
+> ⚠️ **Important:** The `{runId}` below is a **placeholder** - replace it with the actual run ID from your async run response (found in `.data.id`). See the complete workflow example below.
 
 Poll the run status:
 
 ```bash
+# Replace {runId} with actual ID like "HG7ML7M8z78YcAPEB"
 bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.status'
 ```
 
@@ -99,11 +100,12 @@ bash -c "curl -s \"https://api.apify.com/v2/actor-runs/${RUN_ID}\" --header \"Au
 
 ### 4. Get Dataset Items
 
-> **Note:** Replace `{datasetId}` with the actual dataset ID from the run response (found in `.data.defaultDatasetId`).
+> ⚠️ **Important:** The `{datasetId}` below is a **placeholder** - do not use it literally! You must replace it with the actual dataset ID from your run response (found in `.data.defaultDatasetId`). See the complete workflow example below for how to capture and use the real ID.
 
 Fetch results from a completed run:
 
 ```bash
+# Replace {datasetId} with actual ID like "WkzbQMuFYuamGv3YF"
 bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
 ```
 
@@ -135,6 +137,7 @@ bash -c "curl -s \"https://api.apify.com/v2/datasets/${DATASET_ID}/items\" --hea
 **With pagination:**
 
 ```bash
+# Replace {datasetId} with actual ID
 bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&offset=0" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
 ```
 
@@ -189,11 +192,12 @@ bash -c 'curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --head
 
 ### 7. Abort a Run
 
-> **Note:** Replace `{runId}` with the actual run ID from the async run response (found in `.data.id`).
+> ⚠️ **Important:** The `{runId}` below is a **placeholder** - replace it with the actual run ID. See the complete workflow example below.
 
 Stop a running Actor:
 
 ```bash
+# Replace {runId} with actual ID like "HG7ML7M8z78YcAPEB"
 bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
 ```
 

@@ -200,6 +200,37 @@ const client = new OpenAI({ apiKey: 'your-deepseek-key', baseURL: 'https://api.d
 
 ---
 
+## Tips: Complex JSON Payloads
+
+For complex requests with nested JSON (like function calling), use a temp file to avoid shell escaping issues:
+
+```bash
+# Write JSON to temp file
+cat > /tmp/deepseek_request.json << 'EOF'
+{
+  "model": "deepseek-chat",
+  "messages": [{"role": "user", "content": "What is the weather in Tokyo?"}],
+  "tools": [{
+    "type": "function",
+    "function": {
+      "name": "get_weather",
+      "description": "Get current weather",
+      "parameters": {
+        "type": "object",
+        "properties": {"location": {"type": "string"}},
+        "required": ["location"]
+      }
+    }
+  }]
+}
+EOF
+
+# Make request using the file
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json' | jq .
+```
+
+---
+
 ## Guidelines
 
 1. **Choose the right model**: Use `deepseek-chat` for general tasks, `deepseek-reasoner` for complex reasoning
@@ -208,3 +239,4 @@ const client = new OpenAI({ apiKey: 'your-deepseek-key', baseURL: 'https://api.d
 4. **Use streaming for long responses**: Better UX for real-time applications
 5. **JSON mode requires system prompt**: When using `response_format`, include JSON instructions in system message
 6. **FIM uses beta endpoint**: Code completion endpoint is at `api.deepseek.com/beta`
+7. **Complex JSON**: Use temp files with `-d @filename` to avoid shell quoting issues
