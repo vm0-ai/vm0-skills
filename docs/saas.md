@@ -23,6 +23,7 @@
 - [x] [Discord](https://discord.com/developers/docs) - Community Communication Platform
 - [x] [Intercom](https://developers.intercom.com/docs) - Customer Messaging Platform
 - [ ] [Loom](https://dev.loom.com/docs) - Video Messaging Platform
+- [x] [Gmail](https://developers.google.com/workspace/gmail/api/reference/rest) - Google Email API
 
 ---
 
@@ -178,7 +179,7 @@
 
 | Category | API Count |
 | --------------------------------- | --------- |
-| Communication & Messaging | 15 |
+| Communication & Messaging | 16 |
 | Document & Content Generation | 2 |
 | Browser Automation & Web Scraping | 8 |
 | Data Processing & Utilities | 1 |
@@ -192,7 +193,7 @@
 | Automation | 2 |
 | Design & Media | 4 |
 | Miscellaneous | 7 |
-| **Total** | **98** |
+| **Total** | **99** |
 
 ---
 
