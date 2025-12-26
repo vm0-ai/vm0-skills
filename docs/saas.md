@@ -65,6 +65,7 @@
 - [ ] [Hostinger](https://developers.hostinger.com/) - Web Hosting Service
 - [ ] [EfiBank](https://dev.efipay.com.br/) - Brazilian Bank/Pix Payment
 - [ ] [OpenPix](https://developers.openpix.com.br/) - Pix Payment Platform
+- [x] [Mercury](https://docs.mercury.com/reference/getaccount) - Business Banking API
 - [x] [Bitrix](https://apidocs.bitrix24.com/) - CRM & Collaboration Platform
 - [x] [Notion](https://developers.notion.com/) - Notes & Knowledge Base
 - [x] [Twenty CRM](https://twenty.com/developers) - Open Source CRM
@@ -181,7 +182,7 @@
 | Document & Content Generation | 2 |
 | Browser Automation & Web Scraping | 8 |
 | Data Processing & Utilities | 1 |
-| API & Cloud Integrations | 25 |
+| API & Cloud Integrations | 26 |
 | AI, LLM & Voice | 10 |
 | File & PDF Manipulation | 3 |
 | Analytics & Monitoring | 7 |
@@ -191,8 +192,8 @@
 | Automation | 2 |
 | Design & Media | 4 |
 | Miscellaneous | 7 |
-| **Total** | **97** |
+| **Total** | **98** |
 
 ---
 
-> Last updated: 2025-12-25
+> Last updated: 2025-12-26
