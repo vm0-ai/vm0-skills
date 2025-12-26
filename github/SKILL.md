@@ -14,7 +14,6 @@ This Skill helps you manage GitHub operations using the `gh` CLI, including repo
 - **Pull Requests**: Create, review, merge, list, and comment on PRs
 - **Releases**: Create releases and manage tags
 - **Workflows**: View and manage GitHub Actions
-- **Notifications**: Check and manage notifications
 - **Gists**: Create and manage gists
 - **Search**: Search repos, issues, PRs, code, and users
 

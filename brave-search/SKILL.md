@@ -99,7 +99,7 @@ Control explicit content filtering:
 bash -c 'curl -s "https://api.search.brave.com/res/v1/web/search" -H "Accept: application/json" -H "X-Subscription-Token: ${BRAVE_API_KEY}" -G --data-urlencode "q=programming tutorials" -d "safesearch=strict"' | jq '.web.results[:3] | .[] | {title, url}
 ```
 
-**Options:** `off`, `moderate` (default), `strict`
+**Options:** `off`, `strict` (Note: Image/Video search only supports `off` and `strict`)
 
 ---
 
@@ -126,7 +126,7 @@ bash -c 'curl -s "https://api.search.brave.com/res/v1/web/search" -H "Accept: ap
 Search for images:
 
 ```bash
-bash -c 'curl -s "https://api.search.brave.com/res/v1/images/search" -H "Accept: application/json" -H "X-Subscription-Token: ${BRAVE_API_KEY}" -G --data-urlencode "q=sunset beach" -d "count=5" -d "safesearch=moderate"' | jq '.results[] | {title, url: .properties.url, thumbnail: .thumbnail.src}
+bash -c 'curl -s "https://api.search.brave.com/res/v1/images/search" -H "Accept: application/json" -H "X-Subscription-Token: ${BRAVE_API_KEY}" -G --data-urlencode "q=sunset beach" -d "count=5" -d "safesearch=strict"' | jq '.results[] | {title, url: .properties.url, thumbnail: .thumbnail.src}
 ```
 
 Image search supports up to 200 results per request.

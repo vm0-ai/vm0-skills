@@ -19,9 +19,8 @@ Use this skill when you need to:
 
 - **Manage email campaigns** - create, launch, pause campaigns
 - **Handle leads** - add, update, list leads in campaigns
-- **Track analytics** - get campaign performance metrics
 - **Manage sending accounts** - list and configure email accounts
-- **Automate outreach** - bulk add leads, schedule sends
+- **Automate outreach** - schedule sends and manage lead lists
 
 ---
 
@@ -96,12 +95,22 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns/${CAMPAIGN_ID}" -H "
 
 ### 3. Create Campaign
 
-Create a new campaign:
+Create a new campaign (requires `campaign_schedule`):
 
 ```bash
 bash -c 'curl -s "https://api.instantly.ai/api/v2/campaigns" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
   "name": "My New Campaign",
-  "daily_limit": 50
+  "daily_limit": 50,
+  "campaign_schedule": {
+    "timezone": "America/New_York",
+    "days": {
+      "monday": [{"start": "09:00", "end": "17:00"}],
+      "tuesday": [{"start": "09:00", "end": "17:00"}],
+      "wednesday": [{"start": "09:00", "end": "17:00"}],
+      "thursday": [{"start": "09:00", "end": "17:00"}],
+      "friday": [{"start": "09:00", "end": "17:00"}]
+    }
+  }
 }'"'"' | jq .'
 ```
 
@@ -172,24 +181,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/leads" -X POST -H "Authorizati
 
 ---
 
-### 7. Bulk Add Leads
-
-Add multiple leads at once:
-
-```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/bulk" -X POST -H "Authorization: Bearer ${INSTANTLY_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
-  "campaign_id": "your-campaign-id",
-  "leads": [
-  {"email": "lead1@example.com", "first_name": "Lead1"},
-  {"email": "lead2@example.com", "first_name": "Lead2"},
-  {"email": "lead3@example.com", "first_name": "Lead3"}
-  ]
-}'"'"' | jq .'
-```
-
----
-
-### 8. Get Single Lead
+### 7. Get Single Lead
 
 Get lead by ID:
 
@@ -201,7 +193,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/${LEAD_ID}" -H "Authoriz
 
 ---
 
-### 9. Update Lead
+### 8. Update Lead
 
 Update lead information:
 
@@ -218,7 +210,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/leads/${LEAD_ID}" -X PATCH -H 
 
 ---
 
-### 10. List Lead Lists
+### 9. List Lead Lists
 
 Get all lead lists:
 
@@ -228,7 +220,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/lead-lists" -H "Authorization:
 
 ---
 
-### 11. Create Lead List
+### 10. Create Lead List
 
 Create a new lead list:
 
@@ -240,25 +232,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/lead-lists" -X POST -H "Author
 
 ---
 
-### 12. Get Campaign Analytics
-
-Get campaign performance metrics:
-
-```bash
-CAMPAIGN_ID="your-campaign-id"
-
-bash -c 'curl -s "https://api.instantly.ai/api/v2/analytics/campaign/${CAMPAIGN_ID}" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq '{sent, opened, replied, clicked}
-```
-
-Get analytics for all campaigns:
-
-```bash
-bash -c 'curl -s "https://api.instantly.ai/api/v2/analytics/campaign" -H "Authorization: Bearer ${INSTANTLY_API_KEY}"' | jq .
-```
-
----
-
-### 13. List Email Accounts
+### 11. List Email Accounts
 
 Get connected sending accounts:
 
@@ -268,7 +242,7 @@ bash -c 'curl -s "https://api.instantly.ai/api/v2/accounts" -H "Authorization: B
 
 ---
 
-### 14. Test API Key
+### 12. Test API Key
 
 Verify your API key is valid:
 
