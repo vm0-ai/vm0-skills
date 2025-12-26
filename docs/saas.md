@@ -168,6 +168,7 @@
 - [x] [Reportei](https://app.reportei.com/docs/api) - Marketing Report Generation
 - [x] [Supadata](https://docs.supadata.ai/) - YouTube/Web Content Extraction
 - [x] [Zoho ZeptoMail](https://www.zoho.com/zeptomail/help/api-home.html) - Transactional Email Service
+- [x] [Resend](https://resend.com/docs/api-reference/introduction) - Developer Email API
 - [x] [Pushinator](https://pushinator.com/) - Push Notification Service
 - [ ] [Morgen](https://docs.morgen.so/) - Calendar & Task Scheduling
 - [x] [Google Sheets](https://developers.google.com/sheets/api) - Spreadsheet Platform
@@ -192,8 +193,8 @@
 | Security & Compliance | 4 |
 | Automation | 2 |
 | Design & Media | 4 |
-| Miscellaneous | 7 |
-| **Total** | **99** |
+| Miscellaneous | 8 |
+| **Total** | **100** |
 
 ---
 
