@@ -209,16 +209,10 @@ bash -c 'curl -s "https://${KOMMO_SUBDOMAIN}.kommo.com/api/v4/tasks" -H "Accept:
 
 ### 12. Create Task
 
-Create a new task:
+Create a new task (use Unix timestamp for `complete_till`):
 
 ```bash
-COMPLETE_TILL=$(( $(date +%s) + 86400 ))
-
-bash -c 'curl -s "https://${KOMMO_SUBDOMAIN}.kommo.com/api/v4/tasks" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${KOMMO_API_KEY}" -d '"'"'[{
-  "text": "Follow up with client",
-  "complete_till": '"${COMPLETE_TILL}"',
-  "task_type_id": 1
-}]'"'"' | jq '"'"'.["_embedded"]["tasks"]'"'"''
+bash -c 'COMPLETE_TILL=$(( $(date +%s) + 86400 )); curl -s "https://${KOMMO_SUBDOMAIN}.kommo.com/api/v4/tasks" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${KOMMO_API_KEY}" -d "[{\"text\": \"Follow up with client\", \"complete_till\": ${COMPLETE_TILL}, \"task_type_id\": 1}]"' | jq '.["_embedded"]["tasks"]'
 ```
 
 **Task types:** `1` = Follow-up, `2` = Meeting
