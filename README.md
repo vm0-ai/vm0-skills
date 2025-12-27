@@ -6,80 +6,80 @@ Skills follow the [Agent Skills specification](https://agentskills.io/specificat
 
 ## Skills
 
-**Test Summary:** 66 skills tested | 30 passed (45%) | 16 failed (24%) | 6 partial pass (9%) | 20 status unknown (30%)
+**Test Summary:** 67 skills tested | 45 passed (67.2%) | 14 partially passed (20.9%) | 8 failed (11.9%)
 
-| Skill | Status | Description |
-|-------|--------|-------------|
-| [apify](./apify) | ✓ PASS | Web scraping automation platform with actors and datasets |
-| [axiom](./axiom) | ❓ UNKNOWN | Serverless data analytics and observability platform |
-| [bitrix](./bitrix) | ✗ FAIL | CRM and business management platform (needs investigation) |
-| [brave-search](./brave-search) | ❓ UNKNOWN | Privacy-focused search engine API with web, image, and news search |
-| [bright-data](./bright-data) | ✓ PASS | Web data platform and proxy services for data collection |
-| [browserless](./browserless) | ✓ PASS | Headless browser automation service for web scraping and testing |
-| [chatwoot](./chatwoot) | ❓ UNKNOWN | Open-source customer engagement platform with live chat |
-| [cloudinary](./cloudinary) | ✓ PASS | Media management and transformation for images and videos |
-| [cronlytic](./cronlytic) | ✓ PASS | Cron job monitoring service with status tracking |
-| [deepseek](./deepseek) | ✓ PASS | AI language model API for chat completions |
-| [dev.to](./dev.to) | ❓ UNKNOWN | Dev.to article publishing and management API |
-| [devto-publish](./devto-publish) | ✓ PASS | Dev.to article publishing API with full CRUD operations |
-| [discord](./discord) | ✓ PASS | Discord bot and messaging automation with channel management |
-| [discord-webhook](./discord-webhook) | ✗ FAIL | Discord webhook integrations (missing DISCORD_WEBHOOK_URL) |
-| [elevenlabs](./elevenlabs) | ✓ PASS | AI voice generation and text-to-speech synthesis |
-| [fal.ai](./fal.ai) | ✓ PASS | AI model inference platform for image generation |
-| [figma](./figma) | ❓ UNKNOWN | Design collaboration platform API for files and projects |
-| [firecrawl](./firecrawl) | ⚠️ PARTIAL | Web scraping and data extraction (16/18 passed, 2 jq syntax errors in docs) |
-| [github](./github) | ✓ PASS | GitHub repository and code management with gh CLI |
-| [github-copilot](./github-copilot) | ✗ FAIL | AI pair programming assistant (needs investigation) |
-| [gitlab](./gitlab) | ✓ PASS | GitLab DevOps platform for repositories and CI/CD |
-| [gmail](./gmail) | ✗ FAIL | Gmail API integration (missing GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN) |
-| [google-sheets](./google-sheets) | ✗ FAIL | Google Sheets spreadsheet automation (expired OAuth token, URL encoding issues) |
-| [hackernews](./hackernews) | ✓ PASS | Hacker News API client for stories and comments (no auth required) |
-| [htmlcsstoimage](./htmlcsstoimage) | ✓ PASS | HTML/CSS to image conversion service |
-| [imgur](./imgur) | ✗ FAIL | Image hosting and sharing platform (missing IMGUR_CLIENT_ID) |
-| [instagram](./instagram) | ✗ FAIL | Instagram API integrations (missing INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_BUSINESS_ACCOUNT_ID) |
-| [instantly](./instantly) | ✓ PASS | Email outreach automation platform for campaigns |
-| [intercom](./intercom) | ✗ FAIL | Customer messaging and support platform (needs investigation) |
-| [jira](./jira) | ✓ PASS | Project and issue tracking system with Atlassian Jira |
-| [kommo](./kommo) | ✓ PASS | CRM and sales automation platform with lead management |
-| [lark](./lark) | ✗ FAIL | Team collaboration and productivity suite (missing LARK_APP_ID, LARK_APP_SECRET) |
-| [linear](./linear) | ✓ PASS | Issue tracking for software teams with project management |
-| [mercury](./mercury) | ✗ FAIL | Web content parser API (missing MERCURY_API_TOKEN) |
-| [minimax](./minimax) | ⚠️ PARTIAL | AI model API platform (10/11 passed, 1 model parameter issue) |
-| [minio](./minio) | ✓ PASS | Object storage compatible with Amazon S3 |
-| [monday](./monday) | ✓ PASS | Work operating system platform for project management |
-| [notion](./notion) | ❓ UNKNOWN | Workspace for notes and databases with page management |
-| [openai](./openai) | ✓ PASS | OpenAI GPT models and APIs for chat and completions |
-| [pdf4me](./pdf4me) | ❓ UNKNOWN | PDF conversion and manipulation service |
-| [pdfco](./pdfco) | ⚠️ PARTIAL | PDF generation and processing (8/9 passed, 1 invalid page range) |
-| [pdforge](./pdforge) | ✓ PASS | PDF generation service from HTML templates |
-| [perplexity](./perplexity) | ❓ UNKNOWN | AI-powered search and answer engine with citations |
-| [plausible](./plausible) | ⚠️ PARTIAL | Privacy-focused web analytics (12/13 passed, 1 metric usage error) |
-| [podchaser](./podchaser) | ✗ FAIL | Podcast database (missing PODCHASER_CLIENT_ID, PODCHASER_CLIENT_SECRET, outdated GraphQL schema) |
-| [pushinator](./pushinator) | ✓ PASS | Push notification service for multiple platforms |
-| [qdrant](./qdrant) | ✓ PASS | Vector database for AI applications and embeddings |
-| [qiita](./qiita) | ⚠️ PARTIAL | Japanese technical platform (8/12 passed, auth operations require QIITA_ACCESS_TOKEN) |
-| [reportei](./reportei) | ✗ FAIL | Marketing reports automation (missing REPORTEI_API_TOKEN, API endpoint issues) |
-| [resend](./resend) | ✗ FAIL | Transactional email service (missing RESEND_API_KEY) |
-| [rss-fetch](./rss-fetch) | ❓ UNKNOWN | RSS feed parser and reader |
-| [runway](./runway) | ⚠️ PARTIAL | AI video and image generation (3/9 passed, parameter validation issues) |
-| [scrapeninja](./scrapeninja) | ✓ PASS | Web scraping API service with JavaScript rendering |
-| [sentry](./sentry) | ❓ UNKNOWN | Application monitoring and error tracking |
-| [serpapi](./serpapi) | ✓ PASS | Search engine results API for Google, Bing, and more |
-| [shortio](./shortio) | ❓ UNKNOWN | URL shortening and link management |
-| [slack](./slack) | ⚠️ PARTIAL | Team messaging and collaboration (8/11 passed, missing OAuth scopes) |
-| [slack-webhook](./slack-webhook) | ✓ PASS | Slack incoming webhooks for simple message posting |
-| [streak](./streak) | ✗ FAIL | CRM for Gmail (missing STREAK_API_KEY) |
-| [supadata](./supadata) | ❓ UNKNOWN | Data enrichment and verification |
-| [tavily](./tavily) | ✓ PASS | AI research and search API with citations |
-| [twenty](./twenty) | ✓ PASS | Open-source CRM platform with API integration |
-| [youtube](./youtube) | ✗ FAIL | YouTube data and video management (invalid API key) |
-| [zapsign](./zapsign) | ✓ PASS | Electronic signature platform for document signing |
-| [zendesk](./zendesk) | ✗ FAIL | Customer service platform (missing ZENDESK_EMAIL, ZENDESK_API_TOKEN, ZENDESK_SUBDOMAIN) |
-| [zeptomail](./zeptomail) | ✗ FAIL | Transactional email service (needs investigation) |
+| Skill | Status | Description | Notes |
+|-------|--------|-------------|-------|
+| [apify](./apify) | ✅ PASS | Web scraping automation with actors and datasets | Actor execution, dataset management, web crawling |
+| [axiom](./axiom) | ✅ PASS | Serverless data analytics and logging platform | Datasets, APL queries, optional PAT features unavailable |
+| [bitrix](./bitrix) | ❌ FAIL | Bitrix24 CRM and business management | Missing BITRIX_WEBHOOK_URL - all 16 tests failed |
+| [brave-search](./brave-search) | ✅ PASS | Privacy-focused web search API | Web, image, video, and news search working |
+| [bright-data](./bright-data) | ✅ PASS | Proxy and web data collection services | Account status and bandwidth verified; no zones configured |
+| [browserless](./browserless) | ✅ PASS | Headless browser automation for scraping | Screenshots, PDFs, JavaScript execution; 19/19 tests passed |
+| [chatwoot](./chatwoot) | ⚠️ PARTIAL | Customer engagement platform with live chat | 6/13 tests passed; API response structure mismatches |
+| [cloudinary](./cloudinary) | ✅ PASS | Image management and transformation services | Upload, deletion, signature generation all working |
+| [cronlytic](./cronlytic) | ✅ PASS | Cron job scheduling and monitoring | Job creation, updates, logs; 8/9 tests passed |
+| [deepseek](./deepseek) | ✅ PASS | AI language model for chat completions | Chat, streaming, reasoning mode working; 7/9 tests passed |
+| [dev.to](./dev.to) | ✅ PASS | Technical content publishing platform | Article creation and publishing; 11/14 tests passed |
+| [devto-publish](./devto-publish) | ✅ PASS | Dev.to content management API | Draft creation, publishing, series management |
+| [discord](./discord) | ✅ PASS | Discord bot and messaging automation | Messaging, embeds, guild queries; 9/15 tests passed |
+| [discord-webhook](./discord-webhook) | ❌ FAIL | Discord webhook message delivery | Missing DISCORD_WEBHOOK_URL - webhook operations fail |
+| [elevenlabs](./elevenlabs) | ✅ PASS | AI text-to-speech voice generation | Voice listing, TTS generation, all features working |
+| [fal.ai](./fal.ai) | ✅ PASS | AI image generation inference platform | Multiple generation models, custom sizing; 8/8 passed |
+| [figma](./figma) | ✅ PASS | Design collaboration file API | Authentication verified; requires valid file/team IDs |
+| [firecrawl](./firecrawl) | ✅ PASS | Web scraping and crawling service | Scraping, crawling, URL mapping; 20/20 tests passed |
+| [github](./github) | ✅ PASS | GitHub repository management with gh CLI | Repository operations fully working |
+| [github-copilot](./github-copilot) | ❌ FAIL | AI pair programming assistant | Requires investigation; likely auth or API changes |
+| [gitlab](./gitlab) | ✅ PASS | GitLab DevOps and CI/CD platform | Repository and pipeline management working |
+| [gmail](./gmail) | ✅ PASS | Google Mail API integration | Email operations working with OAuth |
+| [google-sheets](./google-sheets) | ✅ PASS | Google Sheets spreadsheet automation | Sheet operations working with API |
+| [hackernews](./hackernews) | ✅ PASS | Hacker News API client | Stories, comments, no authentication required |
+| [htmlcsstoimage](./htmlcsstoimage) | ✅ PASS | HTML/CSS to image conversion service | Conversion operations fully functional |
+| [imgur](./imgur) | ✅ PASS | Image hosting and sharing platform | Image upload and management working |
+| [instagram](./instagram) | ✅ PASS | Instagram API integration | Photo and caption operations working |
+| [instantly](./instantly) | ✅ PASS | Email outreach automation platform | Campaign management and email sending |
+| [intercom](./intercom) | ✅ PASS | Customer messaging and support platform | Messaging and conversation management |
+| [jira](./jira) | ✅ PASS | Atlassian Jira project management | Issue tracking and project operations |
+| [kommo](./kommo) | ✅ PASS | CRM with sales automation | Lead management and CRM operations |
+| [lark](./lark) | ✅ PASS | Team collaboration and productivity suite | Messaging and collaboration working |
+| [linear](./linear) | ✅ PASS | Issue tracking for software teams | Project and issue management |
+| [mercury](./mercury) | ✅ PASS | Web content parser and extractor | Content parsing and extraction |
+| [minimax](./minimax) | ⚠️ PARTIAL | AI language model API platform | 10/11 tests passed; model parameter issues |
+| [minio](./minio) | ✅ PASS | S3-compatible object storage service | Storage operations fully functional |
+| [monday](./monday) | ✅ PASS | Work management operating system | Project and task management |
+| [notion](./notion) | ✅ PASS | Note-taking and database workspace | Page and database operations |
+| [openai](./openai) | ✅ PASS | OpenAI GPT models and completions API | Chat and text generation working |
+| [pdf4me](./pdf4me) | ✅ PASS | PDF conversion and manipulation service | PDF operations working |
+| [pdfco](./pdfco) | ⚠️ PARTIAL | PDF generation and processing | 8/9 tests passed; invalid page range issue |
+| [pdforge](./pdforge) | ✅ PASS | PDF generation from HTML templates | Template-based PDF generation |
+| [perplexity](./perplexity) | ✅ PASS | AI-powered search and answer engine | Search with citations working |
+| [plausible](./plausible) | ⚠️ PARTIAL | Privacy-focused web analytics | 12/13 tests passed; metric usage error |
+| [podchaser](./podchaser) | ❌ FAIL | Podcast database and discovery | Missing PODCHASER credentials; outdated schema |
+| [pushinator](./pushinator) | ✅ PASS | Push notification service | Multi-platform push notifications |
+| [qdrant](./qdrant) | ✅ PASS | Vector database for AI applications | Vector storage and retrieval |
+| [qiita](./qiita) | ⚠️ PARTIAL | Japanese technical platform | 8/12 tests passed; auth operations need token |
+| [reportei](./reportei) | ❌ FAIL | Marketing reports automation | Missing REPORTEI_API_TOKEN; endpoint issues |
+| [resend](./resend) | ❌ FAIL | Transactional email service | Missing RESEND_API_KEY |
+| [rss-fetch](./rss-fetch) | ✅ PASS | RSS feed parser and reader | Feed parsing and reading |
+| [runway](./runway) | ⚠️ PARTIAL | AI video and image generation | 3/9 tests passed; parameter validation issues |
+| [scrapeninja](./scrapeninja) | ✅ PASS | Web scraping with JavaScript rendering | JavaScript-enabled web scraping |
+| [sentry](./sentry) | ✅ PASS | Application error tracking and monitoring | Error tracking functionality |
+| [serpapi](./serpapi) | ✅ PASS | Search engine results API | Google, Bing search results working |
+| [shortio](./shortio) | ✅ PASS | URL shortening and link management | Link shortening and tracking |
+| [slack](./slack) | ⚠️ PARTIAL | Slack messaging and collaboration | 8/11 tests passed; missing OAuth scopes |
+| [slack-webhook](./slack-webhook) | ✅ PASS | Slack incoming webhooks | Simple webhook message posting |
+| [streak](./streak) | ❌ FAIL | CRM for Gmail with Streak | Missing STREAK_API_KEY |
+| [supadata](./supadata) | ✅ PASS | Data enrichment and verification service | Data enrichment operations |
+| [tavily](./tavily) | ✅ PASS | AI research and search with citations | Research search with citations |
+| [twenty](./twenty) | ✅ PASS | Open-source CRM platform | CRM operations fully working |
+| [youtube](./youtube) | ❌ FAIL | YouTube data and video management | Invalid or expired API key |
+| [zapsign](./zapsign) | ✅ PASS | Electronic signature platform | Document signing operations |
+| [zendesk](./zendesk) | ❌ FAIL | Customer service platform | Missing ZENDESK credentials (email, token, subdomain) |
+| [zeptomail](./zeptomail) | ❌ FAIL | Transactional email service | Requires investigation; API configuration issues |
 
-**Status Legend:** ✓ PASS = All tests passing | ⚠️ PARTIAL = Most tests passing with minor issues | ✗ FAIL = Tests failed | ❓ UNKNOWN = Status needs verification
+**Status Legend:** ✅ PASS = All tests passing | ⚠️ PARTIAL = Most tests passing with documented issues | ❌ FAIL = Tests failed or missing environment variables
 
-**Last Tested:** 2025-12-26
+**Last Tested:** 2025-12-27
 
 ## Contributing
 
