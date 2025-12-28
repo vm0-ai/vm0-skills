@@ -183,7 +183,7 @@ bash -c 'curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADS
 Add new rows to the end of a sheet:
 
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A:C:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"values\": [[\"John Doe\", \"john@example.com\", \"Active\"]]}"' | jq '{updatedRange, updatedRows}'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A:C:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"values\": [[\"John Doe\", \"john@example.com\", \"Active\"]]}"' | jq '.updates | {updatedRange, updatedRows}'
 ```
 
 ---
