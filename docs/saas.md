@@ -70,6 +70,7 @@
 - [x] [Bitrix](https://apidocs.bitrix24.com/) - CRM & Collaboration Platform
 - [x] [Notion](https://developers.notion.com/) - Notes & Knowledge Base
 - [x] [Twenty CRM](https://twenty.com/developers) - Open Source CRM
+- [x] [Supabase](https://supabase.com/docs/guides/api) - PostgreSQL Database & REST API
 - [x] [Instantly](https://developer.instantly.ai/) - Email Outreach Tool
 - [ ] [Close CRM](https://developer.close.com/) - Sales CRM
 - [x] [Monday.com](https://developer.monday.com/api-reference/) - Project Management Platform
@@ -184,7 +185,7 @@
 | Document & Content Generation | 2 |
 | Browser Automation & Web Scraping | 8 |
 | Data Processing & Utilities | 1 |
-| API & Cloud Integrations | 26 |
+| API & Cloud Integrations | 27 |
 | AI, LLM & Voice | 10 |
 | File & PDF Manipulation | 3 |
 | Analytics & Monitoring | 7 |
@@ -194,8 +195,8 @@
 | Automation | 2 |
 | Design & Media | 4 |
 | Miscellaneous | 8 |
-| **Total** | **100** |
+| **Total** | **101** |
 
 ---
 
-> Last updated: 2025-12-26
+> Last updated: 2025-12-28

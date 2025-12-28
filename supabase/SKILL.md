@@ -1,0 +1,275 @@
+---
+name: supabase
+description: Supabase REST API via curl. Use this skill for database CRUD operations, filtering, pagination, and real-time data management.
+vm0_env:
+  - SUPABASE_URL
+  - SUPABASE_ANON_KEY
+  - SUPABASE_SERVICE_ROLE_KEY
+---
+
+# Supabase REST API
+
+Use the Supabase REST API via direct `curl` calls to **perform database CRUD operations**.
+
+Supabase auto-generates a RESTful API from your PostgreSQL database schema using [PostgREST](https://postgrest.org/).
+
+> Official docs: `https://supabase.com/docs/guides/api`
+
+---
+
+## When to Use
+
+Use this skill when you need to:
+
+- **Read data** from Supabase tables with filtering and pagination
+- **Insert rows** into tables (single or bulk)
+- **Update rows** based on conditions
+- **Delete rows** from tables
+- **Upsert data** (insert or update)
+- **Query with complex filters** using PostgREST operators
+
+---
+
+## Prerequisites
+
+1. Create a Supabase project at https://supabase.com
+2. Go to Project Settings → API to find your credentials
+3. Copy the **Project URL** and **API Keys**
+
+```bash
+export SUPABASE_URL="https://your-project-ref.supabase.co"
+export SUPABASE_ANON_KEY="your-anon-key"
+export SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
+```
+
+**API Keys:**
+- `anon` key: For client-side use, respects Row Level Security (RLS)
+- `service_role` key: Bypasses RLS, use only server-side
+
+---
+
+
+> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+> ```bash
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> ```
+
+## How to Use
+
+Base URL: `${SUPABASE_URL}/rest/v1`
+
+All requests require:
+- `apikey` header with your API key
+- `Authorization` header with `Bearer <key>` for authenticated requests
+
+---
+
+### 1. Read All Rows
+
+Get all rows from a table:
+
+```bash
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+---
+
+### 2. Select Specific Columns
+
+Get only specific columns:
+
+```bash
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=id,name,email" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+---
+
+### 3. Filter with Operators
+
+Filter rows using PostgREST operators:
+
+```bash
+# Equal to
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?status=eq.active" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+
+# Greater than
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/products?price=gt.100" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+
+# Multiple conditions (AND)
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+**Available Operators:**
+
+| Operator | Meaning | Example |
+|----------|---------|---------|
+| `eq` | Equals | `?status=eq.active` |
+| `neq` | Not equals | `?status=neq.deleted` |
+| `gt` | Greater than | `?age=gt.18` |
+| `gte` | Greater than or equal | `?age=gte.21` |
+| `lt` | Less than | `?price=lt.100` |
+| `lte` | Less than or equal | `?price=lte.50` |
+| `like` | Pattern match (use `*` for `%`) | `?name=like.*john*` |
+| `ilike` | Case-insensitive pattern | `?name=ilike.*john*` |
+| `in` | In list | `?id=in.(1,2,3)` |
+| `is` | Is null/true/false | `?deleted_at=is.null` |
+
+---
+
+### 4. OR Conditions
+
+Use `or` for OR logic:
+
+```bash
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+---
+
+### 5. Ordering
+
+Sort results:
+
+```bash
+# Ascending
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.asc" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+
+# Descending
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.desc" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+
+# Multiple columns
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+---
+
+### 6. Pagination
+
+Use `limit` and `offset`:
+
+```bash
+# First 10 rows
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+
+# Page 2 (rows 11-20)
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+---
+
+### 7. Get Row Count
+
+Use `Prefer: count=exact` header:
+
+```bash
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Prefer: count=exact" -I' | grep -i content-range
+```
+
+---
+
+### 8. Insert Single Row
+
+```bash
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"name": "John Doe", "email": "john@example.com"}'"'"'' | jq .
+```
+
+---
+
+### 9. Insert Multiple Rows
+
+```bash
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'[{"name": "John", "email": "john@example.com"}, {"name": "Jane", "email": "jane@example.com"}]'"'"'' | jq .
+```
+
+---
+
+### 10. Update Rows
+
+Update rows matching a filter:
+
+```bash
+bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"status": "inactive"}'"'"'' | jq .
+```
+
+---
+
+### 11. Upsert (Insert or Update)
+
+Use `Prefer: resolution=merge-duplicates`:
+
+```bash
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d '"'"'{"id": 1, "name": "John Updated", "email": "john@example.com"}'"'"'' | jq .
+```
+
+---
+
+### 12. Delete Rows
+
+Delete rows matching a filter:
+
+```bash
+bash -c 'curl -s -X DELETE "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Prefer: return=representation"' | jq .
+```
+
+---
+
+### 13. Query Related Tables
+
+Embed related data using foreign keys:
+
+```bash
+# Get posts with their author
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?select=*,author:users(*)" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+
+# Get users with their posts
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+---
+
+### 14. Full-Text Search
+
+Search text columns:
+
+```bash
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?title=fts.hello" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+```
+
+---
+
+### 15. Call RPC Functions
+
+Call PostgreSQL functions:
+
+```bash
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -d '"'"'{"param1": "value1"}'"'"'' | jq .
+```
+
+---
+
+## Response Headers
+
+| Header | Description |
+|--------|-------------|
+| `Content-Range` | Row range and total count (e.g., `0-9/100`) |
+| `Preference-Applied` | Confirms applied preferences |
+
+---
+
+## Guidelines
+
+1. **Use anon key** for client-side requests with RLS enabled
+2. **Use service_role key** only server-side for admin operations
+3. **Enable RLS** on tables for security when using anon key
+4. **Use `select`** to limit returned columns for better performance
+5. **Add indexes** on frequently filtered columns
+6. **Use `Prefer: return=representation`** to get inserted/updated rows back
+7. **Avoid full-table operations** without filters to prevent accidental data loss
+
+---
+
+## API Reference
+
+- Supabase API Docs: https://supabase.com/docs/guides/api
+- PostgREST Docs: https://postgrest.org/en/stable/
+- API Settings: https://supabase.com/dashboard/project/_/settings/api-keys
