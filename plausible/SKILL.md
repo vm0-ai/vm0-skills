@@ -165,8 +165,10 @@ bash -c 'curl -s -X PUT "https://plausible.io/api/v1/sites/shared-links" -H "Aut
 | `bounce_rate` | float | Bounce rate (%) |
 | `visit_duration` | int | Avg duration (seconds) |
 | `views_per_visit` | float | Pages per session |
-| `conversion_rate` | float | Goal conversion rate |
+| `conversion_rate` | float | Goal conversion rate (requires goal to be configured) |
 | `events` | int | Total events |
+
+> **Note:** The `conversion_rate` metric requires at least one goal to be configured for your site. Create a goal first using the "Create Goal" or "Create Page Goal" endpoints before querying conversion rates.
 
 ## Available Dimensions
 

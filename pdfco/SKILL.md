@@ -59,12 +59,12 @@ bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/convert/t
   }'"'"' | jq .'
 ```
 
-**With specific pages:**
+**With specific pages (1-indexed):**
 
 ```bash
 bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/pdf/convert/to/text'"'"' --header "x-api-key: ${PDFCO_API_KEY}" --header '"'"'Content-Type: application/json'"'"' --data-raw '"'"'{
   "url": "https://pdfco-test-files.s3.us-west-2.amazonaws.com/pdf-to-text/sample.pdf",
-  "pages": "0-2",
+  "pages": "1-3",
   "inline": true
   }'"'"' | jq .'
 ```
@@ -188,7 +188,7 @@ bash -c 'curl --location --request POST '"'"'https://api.pdf.co/v1/job/check'"'"
 | `url` | string | URL to source file (required) |
 | `inline` | boolean | Return result in response body |
 | `async` | boolean | Run as background job |
-| `pages` | string | Page range (e.g., "0-2", "1,3,5", "0-") |
+| `pages` | string | Page range, **1-indexed** (e.g., "1-3", "1,3,5", "2-") |
 | `name` | string | Output filename |
 | `password` | string | PDF password if protected |
 | `expiration` | integer | Output link expiration in minutes (default: 60) |

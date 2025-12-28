@@ -86,7 +86,7 @@ bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUN
 Search contacts by email, phone, or name:
 
 ```bash
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/search?q=john@example.com" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.payload[] | {id, name, email}
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/search?q=john@example.com" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.payload[] | {id, name, email}'
 ```
 
 ---
@@ -100,7 +100,7 @@ Get a specific contact by ID:
 ```bash
 CONTACT_ID=123
 
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/${CONTACT_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '{id, name, email, phone_number, custom_attributes}
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/${CONTACT_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '{id, name, email, phone_number, custom_attributes}'
 ```
 
 ---
@@ -129,7 +129,7 @@ Get all conversations with optional filters:
 
 ```bash
 # List open conversations
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations?status=open" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.data.payload[] | {id, status, contact: .meta.sender.name}
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations?status=open" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.data.payload[] | {id, status, contact: .meta.sender.name}'
 ```
 
 ---
@@ -143,7 +143,7 @@ Get details of a specific conversation:
 ```bash
 CONVERSATION_ID=123
 
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '{id, status, inbox_id, messages_count: .messages | length}
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '{id, status, inbox_id, messages_count: .messages | length}'
 ```
 
 ---
@@ -208,7 +208,7 @@ Change conversation status (open, resolved, pending):
 ```bash
 CONVERSATION_ID=123
 
-bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/toggle_status" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"status": "resolved"}'"'"'' | jq '{id, status}
+bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/toggle_status" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"status": "resolved"}'"'"'' | jq '{id, status}'
 ```
 
 ---
@@ -218,7 +218,7 @@ bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUN
 Get all agents in the account:
 
 ```bash
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/agents" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.[] | {id, name, email, role, availability_status}
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/agents" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.[] | {id, name, email, role, availability_status}'
 ```
 
 ---
@@ -228,7 +228,7 @@ bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT
 Get all inboxes (channels) in the account:
 
 ```bash
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/inboxes" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.payload[] | {id, name, channel_type}
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/inboxes" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.payload[] | {id, name, channel_type}'
 ```
 
 ---
@@ -238,7 +238,7 @@ bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT
 Get counts by status for dashboard:
 
 ```bash
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/meta" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.meta.all_count, .meta.mine_count
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/meta" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '.meta.all_count, .meta.mine_count'
 ```
 
 ---

@@ -121,19 +121,19 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H 
 ### 5. Get Your Articles
 
 ```bash
-bash -c 'curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title, published, url}
+bash -c 'curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title, published, url}'
 ```
 
 ### 6. Get Published Articles Only
 
 ```bash
-bash -c 'curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title, url}
+bash -c 'curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title, url}'
 ```
 
 ### 7. Get Unpublished (Drafts)
 
 ```bash
-bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title}
+bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEVTO_API_KEY}"' | jq '.[] | {id, title}'
 ```
 
 ### 8. Get Single Article
@@ -143,7 +143,7 @@ bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEV
 ```bash
 ARTICLE_ID="123456"
 
-bash -c 'curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}"' | jq '{id, title, url, published}
+bash -c 'curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}"' | jq '{id, title, url, published}'
 ```
 
 ### 9. Update an Article
