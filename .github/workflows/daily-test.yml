@@ -27,6 +27,7 @@ jobs:
             GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
             SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}
             DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}
+            DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
             TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }}
             FIRECRAWL_API_KEY=${{ secrets.FIRECRAWL_API_KEY }}
             ELEVENLABS_API_KEY=${{ secrets.ELEVENLABS_API_KEY }}
@@ -74,6 +75,12 @@ jobs:
             CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
             FIGMA_API_TOKEN=${{ secrets.FIGMA_API_TOKEN }}
             SUPABASE_SECRET_KEY=${{ secrets.SUPABASE_SECRET_KEY }}
+            GMAIL_CLIENT_ID=${{ secrets.GMAIL_CLIENT_ID }}
+            GMAIL_CLIENT_SECRET=${{ secrets.GMAIL_CLIENT_SECRET }}
+            GMAIL_REFRESH_TOKEN=${{ secrets.GMAIL_REFRESH_TOKEN }}
+            GOOGLE_SHEETS_CLIENT_ID=${{ secrets.GOOGLE_SHEETS_CLIENT_ID }}
+            GOOGLE_SHEETS_CLIENT_SECRET=${{ secrets.GOOGLE_SHEETS_CLIENT_SECRET }}
+            GOOGLE_SHEETS_REFRESH_TOKEN=${{ secrets.GOOGLE_SHEETS_REFRESH_TOKEN }}
           vars: |
             SHORTIO_DOMAIN=${{ vars.SHORTIO_DOMAIN }}
             QDRANT_URL=${{ vars.QDRANT_URL }}
