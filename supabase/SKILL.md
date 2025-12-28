@@ -90,16 +90,23 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=id,name,email" -H "apikey
 
 ### 3. Filter with Operators
 
-Filter rows using PostgREST operators:
+Filter rows using PostgREST operators.
+
+**Equal to:**
 
 ```bash
-# Equal to
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+```
 
-# Greater than
+**Greater than:**
+
+```bash
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/products?price=gt.100" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+```
 
-# Multiple conditions (AND)
+**Multiple conditions (AND):**
+
+```bash
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
@@ -132,16 +139,23 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?or=(status.eq.active,status.eq.p
 
 ### 5. Ordering
 
-Sort results:
+Sort results.
+
+**Ascending:**
 
 ```bash
-# Ascending
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.asc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+```
 
-# Descending
+**Descending:**
+
+```bash
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+```
 
-# Multiple columns
+**Multiple columns:**
+
+```bash
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
@@ -149,13 +163,17 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=status.asc,created_at.desc
 
 ### 6. Pagination
 
-Use `limit` and `offset`:
+Use `limit` and `offset`.
+
+**First 10 rows:**
 
 ```bash
-# First 10 rows
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+```
 
-# Page 2 (rows 11-20)
+**Page 2 (rows 11-20):**
+
+```bash
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
@@ -219,13 +237,17 @@ bash -c 'curl -s -X DELETE "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: $
 
 ### 13. Query Related Tables
 
-Embed related data using foreign keys:
+Embed related data using foreign keys.
+
+**Get posts with their author:**
 
 ```bash
-# Get posts with their author
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?select=*,author:users(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+```
 
-# Get users with their posts
+**Get users with their posts:**
+
+```bash
 bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
