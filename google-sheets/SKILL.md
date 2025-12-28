@@ -73,8 +73,12 @@ export GOOGLE_SHEETS_REFRESH_TOKEN="your-refresh-token"
 
 ```bash
 bash -c 'curl -s -X POST "https://oauth2.googleapis.com/token" -d "client_id=$GOOGLE_SHEETS_CLIENT_ID" -d "client_secret=$GOOGLE_SHEETS_CLIENT_SECRET" -d "refresh_token=$GOOGLE_SHEETS_REFRESH_TOKEN" -d "grant_type=refresh_token"' | jq -r '.access_token' > /tmp/sheets_token.txt
-export GOOGLE_ACCESS_TOKEN=$(cat /tmp/sheets_token.txt)
+
+# Verify token was obtained
+head -c 20 /tmp/sheets_token.txt && echo "..."
 ```
+
+Then use `$(cat /tmp/sheets_token.txt)` inside `bash -c` wrappers for API calls.
 
 ### Option 2: Service Account
 
@@ -107,7 +111,9 @@ export GOOGLE_API_KEY="your-api-key"
 
 ## How to Use
 
-All examples below assume you have `GOOGLE_ACCESS_TOKEN` set.
+All examples below use `${GOOGLE_ACCESS_TOKEN}`. Before running, either:
+- Set manually: `GOOGLE_ACCESS_TOKEN="ya29.xxx..."`, or
+- Replace `${GOOGLE_ACCESS_TOKEN}` with `$(cat /tmp/sheets_token.txt)` in each command
 
 Base URL: `https://sheets.googleapis.com/v4/spreadsheets`
 
