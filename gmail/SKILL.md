@@ -38,45 +38,30 @@ Use this skill when you need to:
 
 ### 2. Configure OAuth Consent Screen
 
-1. Go to https://console.cloud.google.com/auth/branding
-2. Set User Type to "External" (or "Internal" for Workspace)
-3. Add your email as test user
+1. Go to https://console.cloud.google.com/apis/credentials/consent
+2. Select **External** → Create
+3. Fill required fields (app name, support email, developer email)
+4. Click **Save and Continue** through Scopes (skip adding scopes)
+5. In **Audience** section, click **Add Users** and add your Gmail address as test user
+6. Save and continue to finish
 
 ### 3. Create OAuth Client ID
 
 1. Go to https://console.cloud.google.com/apis/credentials
-2. Click "Create Credentials" > "OAuth client ID"
-3. Choose "Desktop app"
-4. Download or note the Client ID and Client Secret
+2. Click **Create Credentials** → **OAuth client ID**
+3. Choose **Web application** (not Desktop)
+4. Add Authorized redirect URI: `https://developers.google.com/oauthplayground`
+5. Click Create and note the **Client ID** and **Client Secret**
 
-### 4. Get Refresh Token
-
-**Option A: OAuth Playground (Recommended for testing)**
+### 4. Get Refresh Token (OAuth Playground)
 
 1. Go to https://developers.google.com/oauthplayground/
-2. Click Settings (gear icon) > Check "Use your own OAuth credentials"
+2. Click **Settings** (gear icon ⚙️) → Check **Use your own OAuth credentials**
 3. Enter your Client ID and Client Secret
-4. Select scopes (e.g., `https://www.googleapis.com/auth/gmail.modify`)
-5. Click "Authorize APIs" and sign in
-6. Click "Exchange authorization code for tokens"
-7. Copy the `refresh_token`
-
-**Option B: Manual Flow**
-
-```bash
-# Generate auth URL and open in browser
-CLIENT_ID="your-client-id"
-REDIRECT_URI="urn:ietf:wg:oauth:2.0:oob"
-SCOPE="https://www.googleapis.com/auth/gmail.modify"
-
-echo "https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${SCOPE}&access_type=offline&prompt=consent"
-
-# After authorization, exchange code for tokens
-AUTH_CODE="code-from-browser"
-CLIENT_SECRET="your-client-secret"
-
-curl -s -X POST "https://oauth2.googleapis.com/token" -d "client_id=${CLIENT_ID}" -d "client_secret=${CLIENT_SECRET}" -d "code=${AUTH_CODE}" -d "grant_type=authorization_code" -d "redirect_uri=${REDIRECT_URI}" | jq .
-```
+4. In the left panel, enter scope: `https://www.googleapis.com/auth/gmail.modify`
+5. Click **Authorize APIs** → Sign in with your test user account
+6. Click **Exchange authorization code for tokens**
+7. Copy the **Refresh token**
 
 ### 5. Set Environment Variables
 

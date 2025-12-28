@@ -2,7 +2,9 @@
 name: google-sheets
 description: Google Sheets API via curl. Use this skill to read, write, and manage spreadsheet data programmatically.
 vm0_env:
-  - GOOGLE_ACCESS_TOKEN
+  - GOOGLE_SHEETS_CLIENT_ID
+  - GOOGLE_SHEETS_CLIENT_SECRET
+  - GOOGLE_SHEETS_REFRESH_TOKEN
 ---
 
 # Google Sheets API
@@ -28,20 +30,50 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-### Option 1: Using gcloud CLI (Recommended)
+### Option 1: OAuth Playground (Recommended for testing)
 
-1. Install [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
-2. Authenticate with your Google account:
+1. **Create Google Cloud Project**
+   - Go to https://console.cloud.google.com
+   - Create a new project or select existing
+   - Enable Google Sheets API: https://console.cloud.google.com/apis/library/sheets.googleapis.com
+
+2. **Configure OAuth Consent Screen**
+   - Go to https://console.cloud.google.com/apis/credentials/consent
+   - Select **External** → Create
+   - Fill required fields (app name, support email, developer email)
+   - Click **Save and Continue** through Scopes (skip adding scopes)
+   - In **Audience** section, click **Add Users** and add your Gmail address as test user
+   - Save and continue to finish
+
+3. **Create OAuth Client ID**
+   - Go to https://console.cloud.google.com/apis/credentials
+   - Click **Create Credentials** → **OAuth client ID**
+   - Choose **Web application** (not Desktop)
+   - Add Authorized redirect URI: `https://developers.google.com/oauthplayground`
+   - Click Create and note the **Client ID** and **Client Secret**
+
+4. **Get Refresh Token**
+   - Go to https://developers.google.com/oauthplayground/
+   - Click **Settings** (gear icon ⚙️) → Check **Use your own OAuth credentials**
+   - Enter your Client ID and Client Secret
+   - In the left panel, enter scope: `https://www.googleapis.com/auth/spreadsheets`
+   - Click **Authorize APIs** → Sign in with your test user account
+   - Click **Exchange authorization code for tokens**
+   - Copy the **Refresh token**
+
+5. **Set Environment Variables**
 
 ```bash
-gcloud auth login
-gcloud auth application-default login --scopes="https://www.googleapis.com/auth/spreadsheets,https://www.googleapis.com/auth/drive"
+export GOOGLE_SHEETS_CLIENT_ID="your-client-id"
+export GOOGLE_SHEETS_CLIENT_SECRET="your-client-secret"
+export GOOGLE_SHEETS_REFRESH_TOKEN="your-refresh-token"
 ```
 
-3. Get access token:
+6. **Get Access Token** (before making API calls)
 
 ```bash
-export GOOGLE_ACCESS_TOKEN=$(gcloud auth print-access-token)
+bash -c 'curl -s -X POST "https://oauth2.googleapis.com/token" -d "client_id=$GOOGLE_SHEETS_CLIENT_ID" -d "client_secret=$GOOGLE_SHEETS_CLIENT_SECRET" -d "refresh_token=$GOOGLE_SHEETS_REFRESH_TOKEN" -d "grant_type=refresh_token"' | jq -r '.access_token' > /tmp/sheets_token.txt
+export GOOGLE_ACCESS_TOKEN=$(cat /tmp/sheets_token.txt)
 ```
 
 ### Option 2: Service Account
