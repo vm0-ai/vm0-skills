@@ -100,12 +100,14 @@ bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --head
 
 Generate a video from text only:
 
+> **Note:** Text-to-video only supports duration values of 4, 6, or 8 seconds (not arbitrary values like image-to-video).
+
 ```bash
 bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '"'"'{
   "model": "veo3.1",
   "promptText": "A serene forest with sunlight filtering through the trees",
   "ratio": "1280:720",
-  "duration": 5
+  "duration": 6
   }'"'"' | jq .'
 ```
 

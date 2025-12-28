@@ -245,9 +245,11 @@ Combine with `[Pan left, Pedestal up]` (max 3 simultaneous).
 
 Generate video from an image:
 
+> **Note:** For I2V, use `MiniMax-Hailuo-2.3` or `S2V-01` model which supports `first_frame_image`. The `T2V-01-Director` model is text-to-video only.
+
 ```bash
 bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
-  "model": "T2V-01-Director",
+  "model": "MiniMax-Hailuo-2.3",
   "prompt": "The scene comes to life with gentle movement [Static shot].",
   "first_frame_image": "https://example.com/image.jpg",
   "duration": 6,
