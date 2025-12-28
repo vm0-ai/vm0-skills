@@ -73,6 +73,7 @@ jobs:
             CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
             CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
             FIGMA_API_TOKEN=${{ secrets.FIGMA_API_TOKEN }}
+            SUPABASE_SECRET_KEY=${{ secrets.SUPABASE_SECRET_KEY }}
           vars: |
             SHORTIO_DOMAIN=${{ vars.SHORTIO_DOMAIN }}
             QDRANT_URL=${{ vars.QDRANT_URL }}
@@ -88,3 +89,5 @@ jobs:
             SENTRY_ORG=${{ vars.SENTRY_ORG }}
             PLAUSIBLE_SITE_ID=${{ vars.PLAUSIBLE_SITE_ID }}
             CLOUDINARY_CLOUD_NAME=${{ vars.CLOUDINARY_CLOUD_NAME }}
+            SUPABASE_URL=${{ vars.SUPABASE_URL }}
+            SUPABASE_PUBLISHABLE_KEY=${{ vars.SUPABASE_PUBLISHABLE_KEY }}

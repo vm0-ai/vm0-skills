@@ -3,8 +3,8 @@ name: supabase
 description: Supabase REST API via curl. Use this skill for database CRUD operations, filtering, pagination, and real-time data management.
 vm0_env:
   - SUPABASE_URL
-  - SUPABASE_ANON_KEY
-  - SUPABASE_SERVICE_ROLE_KEY
+  - SUPABASE_PUBLISHABLE_KEY
+  - SUPABASE_SECRET_KEY
 ---
 
 # Supabase REST API
@@ -33,18 +33,24 @@ Use this skill when you need to:
 ## Prerequisites
 
 1. Create a Supabase project at https://supabase.com
-2. Go to Project Settings → API to find your credentials
-3. Copy the **Project URL** and **API Keys**
+2. Go to **Project Settings → API Keys**
+3. Click **Create new API Keys** if needed
+4. Copy the **Project URL** and keys
 
 ```bash
 export SUPABASE_URL="https://your-project-ref.supabase.co"
-export SUPABASE_ANON_KEY="your-anon-key"
-export SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
+export SUPABASE_PUBLISHABLE_KEY="sb_publishable_..."
+export SUPABASE_SECRET_KEY="sb_secret_..."
 ```
 
 **API Keys:**
-- `anon` key: For client-side use, respects Row Level Security (RLS)
-- `service_role` key: Bypasses RLS, use only server-side
+
+| Key Type | Format | Use Case |
+|----------|--------|----------|
+| Publishable | `sb_publishable_...` | Client-side, respects Row Level Security (RLS) |
+| Secret | `sb_secret_...` | Server-side only, bypasses RLS |
+
+> **Note:** Legacy `anon` and `service_role` JWT keys still work but are deprecated. Use the new `sb_publishable_` and `sb_secret_` keys instead.
 
 ---
 
@@ -58,9 +64,7 @@ export SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
 
 Base URL: `${SUPABASE_URL}/rest/v1`
 
-All requests require:
-- `apikey` header with your API key
-- `Authorization` header with `Bearer <key>` for authenticated requests
+All requests require the `apikey` header with your API key.
 
 ---
 
@@ -69,7 +73,7 @@ All requests require:
 Get all rows from a table:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 ---
@@ -79,7 +83,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE
 Get only specific columns:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=id,name,email" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=id,name,email" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 ---
@@ -90,13 +94,13 @@ Filter rows using PostgREST operators:
 
 ```bash
 # Equal to
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?status=eq.active" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 
 # Greater than
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/products?price=gt.100" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/products?price=gt.100" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 
 # Multiple conditions (AND)
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 **Available Operators:**
@@ -121,7 +125,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H 
 Use `or` for OR logic:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 ---
@@ -132,13 +136,13 @@ Sort results:
 
 ```bash
 # Ascending
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.asc" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.asc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 
 # Descending
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.desc" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 
 # Multiple columns
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 ---
@@ -149,10 +153,10 @@ Use `limit` and `offset`:
 
 ```bash
 # First 10 rows
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 
 # Page 2 (rows 11-20)
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 ---
@@ -162,7 +166,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: 
 Use `Prefer: count=exact` header:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Prefer: count=exact" -I' | grep -i content-range
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}" -H "Prefer: count=exact" -I' | grep -i content-range
 ```
 
 ---
@@ -170,7 +174,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE
 ### 8. Insert Single Row
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"name": "John Doe", "email": "john@example.com"}'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"name": "John Doe", "email": "john@example.com"}'"'"'' | jq .
 ```
 
 ---
@@ -178,7 +182,7 @@ bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_
 ### 9. Insert Multiple Rows
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'[{"name": "John", "email": "john@example.com"}, {"name": "Jane", "email": "jane@example.com"}]'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'[{"name": "John", "email": "john@example.com"}, {"name": "Jane", "email": "jane@example.com"}]'"'"'' | jq .
 ```
 
 ---
@@ -188,7 +192,7 @@ bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_
 Update rows matching a filter:
 
 ```bash
-bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"status": "inactive"}'"'"'' | jq .
+bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"status": "inactive"}'"'"'' | jq .
 ```
 
 ---
@@ -198,7 +202,7 @@ bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${
 Use `Prefer: resolution=merge-duplicates`:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d '"'"'{"id": 1, "name": "John Updated", "email": "john@example.com"}'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d '"'"'{"id": 1, "name": "John Updated", "email": "john@example.com"}'"'"'' | jq .
 ```
 
 ---
@@ -208,7 +212,7 @@ bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_
 Delete rows matching a filter:
 
 ```bash
-bash -c 'curl -s -X DELETE "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Prefer: return=representation"' | jq .
+bash -c 'curl -s -X DELETE "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Prefer: return=representation"' | jq .
 ```
 
 ---
@@ -219,10 +223,10 @@ Embed related data using foreign keys:
 
 ```bash
 # Get posts with their author
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?select=*,author:users(*)" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?select=*,author:users(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 
 # Get users with their posts
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 ---
@@ -232,7 +236,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: $
 Search text columns:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?title=fts.hello" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?title=fts.hello" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
 ```
 
 ---
@@ -242,7 +246,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?title=fts.hello" -H "apikey: ${S
 Call PostgreSQL functions:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: ${SUPABASE_ANON_KEY}" -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" -H "Content-Type: application/json" -d '"'"'{"param1": "value1"}'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -d '"'"'{"param1": "value1"}'"'"'' | jq .
 ```
 
 ---
@@ -258,9 +262,9 @@ bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: $
 
 ## Guidelines
 
-1. **Use anon key** for client-side requests with RLS enabled
-2. **Use service_role key** only server-side for admin operations
-3. **Enable RLS** on tables for security when using anon key
+1. **Use publishable key** for read operations with RLS enabled
+2. **Use secret key** only server-side for write operations or admin access
+3. **Enable RLS** on tables for security when using publishable key
 4. **Use `select`** to limit returned columns for better performance
 5. **Add indexes** on frequently filtered columns
 6. **Use `Prefer: return=representation`** to get inserted/updated rows back
@@ -271,5 +275,6 @@ bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: $
 ## API Reference
 
 - Supabase API Docs: https://supabase.com/docs/guides/api
+- API Keys Guide: https://supabase.com/docs/guides/api/api-keys
 - PostgREST Docs: https://postgrest.org/en/stable/
 - API Settings: https://supabase.com/dashboard/project/_/settings/api-keys
