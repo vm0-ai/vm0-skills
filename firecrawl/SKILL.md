@@ -128,18 +128,18 @@ bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization:
 
 ### Check Crawl Status
 
-```bash
-JOB_ID="crawl-job-id-here"
+Replace `{JOB_ID}` with the actual job ID returned from the crawl request:
 
-bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '{status, completed, total}
+```bash
+bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/{JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '{status, completed, total}'
 ```
 
 ### Get Crawl Results
 
-```bash
-JOB_ID="crawl-job-id-here"
+Replace `{JOB_ID}` with the actual job ID:
 
-bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '.data[] | {url: .metadata.url, title: .metadata.title}
+```bash
+bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/{JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '.data[] | {url: .metadata.url, title: .metadata.title}'
 ```
 
 ### Crawl with Path Filters
@@ -328,11 +328,11 @@ bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorizatio
 
 ### Poll Crawl Until Complete
 
-```bash
-JOB_ID="your-crawl-job-id"
+Replace `{JOB_ID}` with the actual job ID:
 
+```bash
 while true; do
-  STATUS="$(bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/${JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq -r '.status')"
+  STATUS="$(bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/{JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq -r '.status')"
   echo "Status: $STATUS"
   [ "$STATUS" = "completed" ] && break
   sleep 5

@@ -102,12 +102,12 @@ Get detailed information about a specific episode:
 bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ episode(identifier: { id: \"789012\", type: PODCHASER }) { id title description airDate length url imageUrl podcast { id title } } }"}'"'"'' | jq .
 ```
 
-### 7. Browse Categories
+### 7. Get Podcast Categories
 
-List available podcast categories:
+Categories are available as a field on podcast objects. Get categories for a specific podcast:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ categories { id title slug } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { title categories { title slug } } }"}'"'"'' | jq .
 ```
 
 ### 8. Filter Podcasts by Category
@@ -131,7 +131,7 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-T
 Search for podcast creators:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ creators(searchTerm: \"Joe Rogan\", first: 5) { data { id name bio podcasts { data { id title } } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ creators(searchTerm: \"Joe Rogan\", first: 5) { data { pcid name bio credits { data { podcast { title } } } } } }"}'"'"'' | jq .
 ```
 
 ### 11. Preview Query Cost
@@ -155,8 +155,8 @@ bash -c 'curl -s -X POST "https://api.podchaser.com/graphql/cost" --header "Cont
 | `episode(identifier: {id: "...", type: PODCHASER})` | Get single episode by ID |
 | `episodes(searchTerm: "...", first: N)` | Search episodes |
 | `creators(searchTerm: "...", first: N)` | Search creators/hosts |
-| `categories` | List all categories |
-| `networks` | List podcast networks |
+| `networks(searchTerm: "...", first: N)` | Search podcast networks |
+| `chartCategories(platform: APPLE_PODCASTS)` | List chart categories (requires paid plan) |
 
 ### Identifier Types
 
@@ -182,9 +182,7 @@ The `type` field is required when using `identifier` to fetch a podcast or episo
 | `ratingCount` | Int | Number of ratings |
 | `author` | Creator | Podcast author/creator |
 | `categories` | [Category] | Associated categories |
-| `episodes` | [Episode] | Podcast episodes |
-| `appleChartRank` | Int | Apple Podcasts chart rank |
-| `spotifyChartRank` | Int | Spotify chart rank |
+| `episodes(first: N)` | EpisodeList | Podcast episodes (paginated) |
 
 ### Episode Fields
 
@@ -198,7 +196,16 @@ The `type` field is required when using `identifier` to fetch a podcast or episo
 | `url` | String | Episode URL |
 | `imageUrl` | String | Episode artwork URL |
 | `podcast` | Podcast | Parent podcast |
-| `transcript` | String | Episode transcript |
+
+### Creator Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `pcid` | String | Unique identifier |
+| `name` | String | Creator name |
+| `bio` | String | Biography |
+| `imageUrl` | String | Profile image URL |
+| `credits` | CreditList | Podcast appearances |
 
 ### Filter Options
 

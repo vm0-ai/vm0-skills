@@ -106,7 +106,7 @@ bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${
 Get all your scheduled jobs:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '.[] | {job_id, name, status, cron_expression, next_run_at}
+bash -c 'curl -s -X GET "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '.[] | {job_id, name, status, cron_expression, next_run_at}'
 ```
 
 ---
@@ -137,7 +137,7 @@ Stop a job from executing:
 ```bash
 JOB_ID="your-job-id"
 
-bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/pause" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '{job_id, status}
+bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/pause" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '{job_id, status}'
 ```
 
 ---
@@ -149,7 +149,7 @@ Resume a paused job:
 ```bash
 JOB_ID="your-job-id"
 
-bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/resume" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '{job_id, status, next_run_at}
+bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs/${JOB_ID}/resume" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '{job_id, status, next_run_at}'
 ```
 
 ---
@@ -161,7 +161,7 @@ View execution history (last 50 entries):
 ```bash
 JOB_ID="your-job-id"
 
-bash -c 'curl -s -X GET "https://api.cronlytic.com/prog/jobs/${JOB_ID}/logs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '.[] | {timestamp, status_code, duration_ms}
+bash -c 'curl -s -X GET "https://api.cronlytic.com/prog/jobs/${JOB_ID}/logs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}"' | jq '.logs[] | {timestamp, status, response_code, response_time}'
 ```
 
 ---
