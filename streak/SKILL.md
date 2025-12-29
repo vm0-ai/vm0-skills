@@ -1,9 +1,8 @@
+---
 name: streak
 description: Gmail-integrated CRM for managing pipelines, deals (boxes), contacts, and email threads
 vm0_env:
-
-- STREAK_API_KEY
-
+  - STREAK_API_KEY
 ---
 
 # Streak CRM
@@ -82,8 +81,18 @@ bash -c 'curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}" 
 
 ### 4. Create a Pipeline
 
+Write to `/tmp/streak_request.json`:
+
+```json
+{
+  "name": "New Sales Pipeline"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '"'"'{"name": "New Sales Pipeline"}'"'"'' | jq .
+bash -c 'curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d @/tmp/streak_request.json' | jq .
 ```
 
 ---
@@ -108,16 +117,37 @@ bash -c 'curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STR
 
 ### 7. Create a Box
 
+Write to `/tmp/streak_request.json`:
+
+```json
+{
+  "name": "Acme Corp Deal"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '"'"'{"name": "Acme Corp Deal"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d @/tmp/streak_request.json' | jq .
 ```
 
 ---
 
 ### 8. Update a Box
 
+Write to `/tmp/streak_request.json`:
+
+```json
+{
+  "name": "Updated Deal Name",
+  "stageKey": "stageKey123"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '"'"'{"name": "Updated Deal Name", "stageKey": "stageKey123"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d @/tmp/streak_request.json' | jq .
 ```
 
 ---
@@ -148,13 +178,21 @@ bash -c 'curl -s -X GET "https://api.streak.com/api/v1/contacts/{contactKey}" -u
 
 ### 12. Create a Contact
 
-```bash
-bash -c 'curl -s -X POST "https://api.streak.com/api/v1/contacts" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/streak_request.json`:
+
+```json
+{
   "teamKey": "teamKey123",
   "emailAddresses": ["john@example.com"],
   "givenName": "John",
   "familyName": "Doe"
-}'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.streak.com/api/v1/contacts" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d @/tmp/streak_request.json' | jq .
 ```
 
 ---
@@ -185,8 +223,19 @@ bash -c 'curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u 
 
 ### 16. Create a Task
 
+Write to `/tmp/streak_request.json`:
+
+```json
+{
+  "text": "Follow up with client",
+  "dueDate": 1735689600000
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '"'"'{"text": "Follow up with client", "dueDate": 1735689600000}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d @/tmp/streak_request.json' | jq .
 ```
 
 ---
@@ -201,8 +250,18 @@ bash -c 'curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/comments" 
 
 ### 18. Create a Comment
 
+Write to `/tmp/streak_request.json`:
+
+```json
+{
+  "message": "Spoke with client today, they are interested."
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '"'"'{"message": "Spoke with client today, they are interested."}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d @/tmp/streak_request.json' | jq .
 ```
 
 ---
@@ -235,12 +294,20 @@ bash -c 'curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" 
 
 ### 22. Create a Meeting Note
 
-```bash
-bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/streak_request.json`:
+
+```json
+{
   "meetingDate": 1735689600000,
   "meetingNotes": "Discussed pricing and timeline.",
   "title": "Sales Call"
-}'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "${STREAK_API_KEY}:" --header "Content-Type: application/json" -d @/tmp/streak_request.json' | jq .
 ```
 
 ---

@@ -45,58 +45,177 @@ export PLAUSIBLE_SITE_ID=example.com
 
 ### Basic Query - Total Visitors
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors", "pageviews"],
+  "date_range": "7d"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\",\"pageviews\"],\"date_range\":\"7d\"}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 Docs: https://plausible.io/docs/stats-api
 
 ### Query with Dimensions (Breakdown)
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors", "pageviews", "bounce_rate"],
+  "date_range": "30d",
+  "dimensions": ["visit:source"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\",\"pageviews\",\"bounce_rate\"],\"date_range\":\"30d\",\"dimensions\":[\"visit:source\"]}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### Top Pages
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors", "pageviews"],
+  "date_range": "7d",
+  "dimensions": ["event:page"],
+  "order_by": [["pageviews", "desc"]],
+  "pagination": {
+    "limit": 10
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\",\"pageviews\"],\"date_range\":\"7d\",\"dimensions\":[\"event:page\"],\"order_by\":[[\"pageviews\",\"desc\"]],\"pagination\":{\"limit\":10}}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### Geographic Breakdown
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors"],
+  "date_range": "30d",
+  "dimensions": ["visit:country_name", "visit:city_name"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\"],\"date_range\":\"30d\",\"dimensions\":[\"visit:country_name\",\"visit:city_name\"]}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### Device & Browser Stats
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors"],
+  "date_range": "7d",
+  "dimensions": ["visit:device"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\"],\"date_range\":\"7d\",\"dimensions\":[\"visit:device\"]}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### Time Series (Daily)
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors", "pageviews"],
+  "date_range": "30d",
+  "dimensions": ["time:day"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\",\"pageviews\"],\"date_range\":\"30d\",\"dimensions\":[\"time:day\"]}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### Filter by Page Path
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors", "pageviews"],
+  "date_range": "7d",
+  "filters": [["contains", "event:page", ["/blog"]]]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\",\"pageviews\"],\"date_range\":\"7d\",\"filters\":[[\"contains\",\"event:page\",[\"/blog\"]]]}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### UTM Campaign Analysis
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors", "conversion_rate"],
+  "date_range": "30d",
+  "dimensions": ["visit:utm_source", "visit:utm_campaign"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\",\"conversion_rate\"],\"date_range\":\"30d\",\"dimensions\":[\"visit:utm_source\",\"visit:utm_campaign\"]}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### Custom Date Range
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "metrics": ["visitors", "pageviews"],
+  "date_range": ["2024-01-01", "2024-01-31"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"metrics\":[\"visitors\",\"pageviews\"],\"date_range\":[\"2024-01-01\",\"2024-01-31\"]}"' | jq .
+bash -c 'curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ## Site Provisioning API
@@ -111,10 +230,19 @@ Docs: https://plausible.io/docs/sites-api
 
 ### Create Site
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "domain": "newsite.com",
+  "timezone": "America/New_York"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST 'https://plausible.io/api/v1/sites' -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H 'Content-Type: application/json' -d @- << 'EOF'
-{"domain":"newsite.com","timezone":"America/New_York"}
-EOF
+bash -c 'curl -s -X POST "https://plausible.io/api/v1/sites" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d @/tmp/plausible_request.json' | jq .
 ```
 
 ### Get Site Details
@@ -133,14 +261,38 @@ bash -c 'curl -s -X DELETE -H "Authorization: Bearer $PLAUSIBLE_API_KEY" "https:
 
 ### Create Goal
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "goal_type": "event",
+  "event_name": "Signup"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"goal_type\":\"event\",\"event_name\":\"Signup\"}"' | jq .
+bash -c 'curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### Create Page Goal
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "goal_type": "page",
+  "page_path": "/thank-you"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"goal_type\":\"page\",\"page_path\":\"/thank-you\"}"' | jq .
+bash -c 'curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ### List Goals
@@ -151,8 +303,19 @@ bash -c 'curl -s -H "Authorization: Bearer $PLAUSIBLE_API_KEY" "https://plausibl
 
 ### Create Shared Link
 
+Write to `/tmp/plausible_request.json`:
+
+```json
+{
+  "site_id": "${PLAUSIBLE_SITE_ID}",
+  "name": "Public Dashboard"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://plausible.io/api/v1/sites/shared-links" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "{\"site_id\":\"$PLAUSIBLE_SITE_ID\",\"name\":\"Public Dashboard\"}"' | jq .
+bash -c 'curl -s -X PUT "https://plausible.io/api/v1/sites/shared-links" -H "Authorization: Bearer $PLAUSIBLE_API_KEY" -H "Content-Type: application/json" -d "$(envsubst < /tmp/plausible_request.json)"' | jq .
 ```
 
 ## Available Metrics

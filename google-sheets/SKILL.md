@@ -168,8 +168,20 @@ bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID
 
 Update a range of cells:
 
+Write to `/tmp/gsheets_request.json`:
+
+```json
+{
+  "values": [
+    ["Name", "Email", "Status"]
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A1:C1?valueInputOption=USER_ENTERED" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"values\": [[\"Name\", \"Email\", \"Status\"]]}"' | jq '.updatedCells'
+bash -c 'curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A1:C1?valueInputOption=USER_ENTERED" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.updatedCells'
 ```
 
 **valueInputOption:**
@@ -182,8 +194,20 @@ bash -c 'curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADS
 
 Add new rows to the end of a sheet:
 
+Write to `/tmp/gsheets_request.json`:
+
+```json
+{
+  "values": [
+    ["John Doe", "john@example.com", "Active"]
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A:C:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"values\": [[\"John Doe\", \"john@example.com\", \"Active\"]]}"' | jq '.updates | {updatedRange, updatedRows}'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A:C:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.updates | {updatedRange, updatedRows}'
 ```
 
 ---
@@ -202,8 +226,28 @@ bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID
 
 Update multiple ranges in one request:
 
+Write to `/tmp/gsheets_request.json`:
+
+```json
+{
+  "valueInputOption": "USER_ENTERED",
+  "data": [
+    {
+      "range": "Sheet1!A1",
+      "values": [["Header 1"]]
+    },
+    {
+      "range": "Sheet1!B1",
+      "values": [["Header 2"]]
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"valueInputOption\": \"USER_ENTERED\", \"data\": [{\"range\": \"Sheet1!A1\", \"values\": [[\"Header 1\"]]}, {\"range\": \"Sheet1!B1\", \"values\": [[\"Header 2\"]]}]}"' | jq '.totalUpdatedCells'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.totalUpdatedCells'
 ```
 
 ---
@@ -212,8 +256,16 @@ bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREAD
 
 Clear a range of cells:
 
+Write to `/tmp/gsheets_request.json`:
+
+```json
+{}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A2:C100:clear" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{}"' | jq '.clearedRange'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A2:C100:clear" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.clearedRange'
 ```
 
 ---
@@ -222,8 +274,27 @@ bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREAD
 
 Create a new spreadsheet:
 
+Write to `/tmp/gsheets_request.json`:
+
+```json
+{
+  "properties": {
+    "title": "My New Spreadsheet"
+  },
+  "sheets": [
+    {
+      "properties": {
+        "title": "Data"
+      }
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"properties\": {\"title\": \"My New Spreadsheet\"}, \"sheets\": [{\"properties\": {\"title\": \"Data\"}}]}"' | jq '{spreadsheetId, spreadsheetUrl}'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '{spreadsheetId, spreadsheetUrl}'
 ```
 
 ---
@@ -232,8 +303,26 @@ bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets" -H "Aut
 
 Add a new sheet to an existing spreadsheet:
 
+Write to `/tmp/gsheets_request.json`:
+
+```json
+{
+  "requests": [
+    {
+      "addSheet": {
+        "properties": {
+          "title": "New Sheet"
+        }
+      }
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"requests\": [{\"addSheet\": {\"properties\": {\"title\": \"New Sheet\"}}}]}"' | jq '.replies[0].addSheet.properties'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.replies[0].addSheet.properties'
 ```
 
 ---
@@ -242,8 +331,24 @@ bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREAD
 
 Delete a sheet from a spreadsheet (use sheetId from metadata):
 
+Write to `/tmp/gsheets_request.json`:
+
+```json
+{
+  "requests": [
+    {
+      "deleteSheet": {
+        "sheetId": 123456789
+      }
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d "{\"requests\": [{\"deleteSheet\": {\"sheetId\": 123456789}}]}"' | jq '.'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.'
 ```
 
 ---

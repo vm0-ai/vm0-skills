@@ -90,13 +90,21 @@ bash -c 'curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_
 
 Create a collection for storing vectors:
 
-```bash
-bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "vectors": {
-  "size": 1536,
-  "distance": "Cosine"
+    "size": 1536,
+    "distance": "Cosine"
   }
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 **Distance metrics:**
@@ -126,21 +134,29 @@ bash -c 'curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-
 
 Add vectors with payload (metadata):
 
-```bash
-bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "points": [
-  {
-  "id": 1,
-  "vector": [0.05, 0.61, 0.76, 0.74],
-  "payload": {"text": "Hello world", "source": "doc1"}
-  },
-  {
-  "id": 2,
-  "vector": [0.19, 0.81, 0.75, 0.11],
-  "payload": {"text": "Goodbye world", "source": "doc2"}
-  }
+    {
+      "id": 1,
+      "vector": [0.05, 0.61, 0.76, 0.74],
+      "payload": {"text": "Hello world", "source": "doc1"}
+    },
+    {
+      "id": 2,
+      "vector": [0.19, 0.81, 0.75, 0.11],
+      "payload": {"text": "Goodbye world", "source": "doc2"}
+    }
   ]
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 ---
@@ -149,12 +165,20 @@ bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --heade
 
 Find vectors similar to a query vector:
 
-```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "query": [0.05, 0.61, 0.76, 0.74],
   "limit": 5,
   "with_payload": true
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 **Response:**
@@ -174,17 +198,25 @@ bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" 
 
 Filter results by payload fields:
 
-```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "query": [0.05, 0.61, 0.76, 0.74],
   "limit": 5,
   "filter": {
-  "must": [
-  {"key": "source", "match": {"value": "doc1"}}
-  ]
+    "must": [
+      {"key": "source", "match": {"value": "doc1"}}
+    ]
   },
   "with_payload": true
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 **Filter operators:**
@@ -198,12 +230,20 @@ bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" 
 
 Retrieve specific points:
 
-```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "ids": [1, 2],
   "with_payload": true,
   "with_vector": true
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 ---
@@ -212,22 +252,38 @@ bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --head
 
 Delete by IDs:
 
-```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "points": [1, 2]
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 Delete by filter:
 
-```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "filter": {
-  "must": [
-  {"key": "source", "match": {"value": "doc1"}}
-  ]
+    "must": [
+      {"key": "source", "match": {"value": "doc1"}}
+    ]
   }
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 ---
@@ -246,10 +302,18 @@ bash -c 'curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "a
 
 Get total count or filtered count:
 
-```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/qdrant_request.json`:
+
+```json
+{
   "exact": true
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json' | jq .
 ```
 
 ---

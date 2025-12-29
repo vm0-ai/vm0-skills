@@ -61,8 +61,18 @@ All examples below assume you have `MONDAY_API_KEY` set.
 
 Query the authenticated user's info:
 
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "query { me { id name email } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d '"'"'{"query": "query { me { id name email } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 ---
@@ -71,8 +81,18 @@ bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${
 
 Get all boards in your account:
 
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "query { boards (limit: 10) { id name state items_count } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d '"'"'{"query": "query { boards (limit: 10) { id name state items_count } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 ---
@@ -83,8 +103,20 @@ Get a specific board with its groups and columns:
 
 ```bash
 BOARD_ID="1234567890"
+```
 
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"query { boards (ids: ${BOARD_ID}) { id name groups { id title } columns { id title type } } }\"}"' | jq .
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "query { boards (ids: ${BOARD_ID}) { id name groups { id title } columns { id title type } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 > **Note:** Replace `BOARD_ID` with an actual board ID from the "List All Boards" response (example 2).
@@ -97,8 +129,20 @@ Get items (rows) from a specific board:
 
 ```bash
 BOARD_ID="1234567890"
+```
 
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"query { boards (ids: ${BOARD_ID}) { items_page (limit: 10) { items { id name column_values { id text value } } } } }\"}"' | jq .
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "query { boards (ids: ${BOARD_ID}) { items_page (limit: 10) { items { id name column_values { id text value } } } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 > **Note:** Replace `BOARD_ID` with an actual board ID from the "List All Boards" response (example 2).
@@ -113,8 +157,20 @@ Create a new item in a board:
 BOARD_ID="1234567890"
 GROUP_ID="topics"
 ITEM_NAME="New Task"
+```
 
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"mutation { create_item (board_id: ${BOARD_ID}, group_id: \\\"${GROUP_ID}\\\", item_name: \\\"${ITEM_NAME}\\\") { id name } }\"}"' | jq .
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "mutation { create_item (board_id: ${BOARD_ID}, group_id: \"${GROUP_ID}\", item_name: \"${ITEM_NAME}\") { id name } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 > **Note:**
@@ -131,16 +187,26 @@ Create an item with specific column values:
 ```bash
 BOARD_ID="1234567890"
 GROUP_ID="topics"
+```
 
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/monday_request.json`:
+
+```json
+{
   "query": "mutation ($boardId: ID!, $groupId: String!, $itemName: String!, $columnValues: JSON!) { create_item (board_id: $boardId, group_id: $groupId, item_name: $itemName, column_values: $columnValues) { id name } }",
   "variables": {
-  "boardId": "1234567890",
-  "groupId": "topics",
-  "itemName": "Task with Details",
-  "columnValues": "{\"status\": {\"label\": \"Working on it\"}, \"date\": {\"date\": \"2025-01-15\"}}"
+    "boardId": "1234567890",
+    "groupId": "topics",
+    "itemName": "Task with Details",
+    "columnValues": "{\"status\": {\"label\": \"Working on it\"}, \"date\": {\"date\": \"2025-01-15\"}}"
   }
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 > **Note:**
@@ -157,15 +223,25 @@ Update an existing item's column values:
 ```bash
 ITEM_ID="9876543210"
 BOARD_ID="1234567890"
+```
 
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/monday_request.json`:
+
+```json
+{
   "query": "mutation ($boardId: ID!, $itemId: ID!, $columnValues: JSON!) { change_multiple_column_values (board_id: $boardId, item_id: $itemId, column_values: $columnValues) { id name } }",
   "variables": {
-  "boardId": "1234567890",
-  "itemId": "9876543210",
-  "columnValues": "{\"status\": {\"label\": \"Done\"}}"
+    "boardId": "1234567890",
+    "itemId": "9876543210",
+    "columnValues": "{\"status\": {\"label\": \"Done\"}}"
   }
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 > **Note:**
@@ -180,8 +256,20 @@ Delete an item from a board:
 
 ```bash
 ITEM_ID="9876543210"
+```
 
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d "{\"query\": \"mutation { delete_item (item_id: ${ITEM_ID}) { id } }\"}"' | jq .
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "mutation { delete_item (item_id: ${ITEM_ID}) { id } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 > **Note:** Replace `ITEM_ID` with an actual item ID from the "Get Items from a Board" response (example 4).
@@ -192,8 +280,18 @@ bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${
 
 Create a new board:
 
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "mutation { create_board (board_name: \"My New Board\", board_kind: public) { id name } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d '"'"'{"query": "mutation { create_board (board_name: \"My New Board\", board_kind: public) { id name } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 ---
@@ -202,8 +300,18 @@ bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${
 
 Search for items across boards:
 
+Write to `/tmp/monday_request.json`:
+
+```json
+{
+  "query": "query { items_page_by_column_values (limit: 10, board_id: 1234567890, columns: [{column_id: \"name\", column_values: [\"Task\"]}]) { items { id name } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d '"'"'{"query": "query { items_page_by_column_values (limit: 10, board_id: 1234567890, columns: [{column_id: \"name\", column_values: [\"Task\"]}]) { items { id name } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.monday.com/v2" --header "Authorization: ${MONDAY_API_KEY}" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json' | jq .
 ```
 
 > **Note:** Replace the `board_id` value `1234567890` with an actual board ID from the "List All Boards" response (example 2).

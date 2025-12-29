@@ -105,15 +105,25 @@ Convert text to speech and save as MP3:
 
 ```bash
 VOICE_ID="21m00Tcm4TlvDq8ikWAM"
+```
 
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d '{
+Write to `/tmp/elevenlabs_request.json`:
+
+```json
+{
   "text": "Hello! This is a test of the ElevenLabs text to speech API.",
   "model_id": "eleven_multilingual_v2",
   "voice_settings": {
-  "stability": 0.5,
-  "similarity_boost": 0.75
+    "stability": 0.5,
+    "similarity_boost": 0.75
   }
-}' --output speech.mp3
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output speech.mp3
 ```
 
 **Voice settings:**
@@ -129,11 +139,21 @@ Stream audio for real-time playback:
 
 ```bash
 VOICE_ID="21m00Tcm4TlvDq8ikWAM"
+```
 
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}/stream" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d '{
+Write to `/tmp/elevenlabs_request.json`:
+
+```json
+{
   "text": "This audio is being streamed in real-time.",
   "model_id": "eleven_flash_v2_5"
-}' --output streamed.mp3
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}/stream" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output streamed.mp3
 ```
 
 ---
@@ -152,8 +172,19 @@ bash -c 'curl -s -X GET "https://api.elevenlabs.io/v1/user/subscription" --heade
 
 You can specify different output formats via the `output_format` query parameter:
 
+Write to `/tmp/elevenlabs_request.json`:
+
+```json
+{
+  "text": "Hello world",
+  "model_id": "eleven_multilingual_v2"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}?output_format=pcm_16000" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" -d '{"text": "Hello world", "model_id": "eleven_multilingual_v2"}' --output speech.pcm
+curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}?output_format=pcm_16000" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" -d @/tmp/elevenlabs_request.json --output speech.pcm
 ```
 
 Available formats:

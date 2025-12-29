@@ -50,8 +50,18 @@ export PODCHASER_CLIENT_SECRET="your-client-secret"
 
 Request an access token (valid for 1 year) and save to a temp file:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "mutation { requestAccessToken(input: { grant_type: CLIENT_CREDENTIALS, client_id: \"$PODCHASER_CLIENT_ID\", client_secret: \"$PODCHASER_CLIENT_SECRET\" }) { access_token token_type expires_in } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" -d "{\"query\": \"mutation { requestAccessToken(input: { grant_type: CLIENT_CREDENTIALS, client_id: \\\"$PODCHASER_CLIENT_ID\\\", client_secret: \\\"$PODCHASER_CLIENT_SECRET\\\" }) { access_token token_type expires_in } }\"}"' | jq -r '.data.requestAccessToken.access_token' > /tmp/podchaser_token.txt
+bash -c 'sed "s/\$PODCHASER_CLIENT_ID/$PODCHASER_CLIENT_ID/g; s/\$PODCHASER_CLIENT_SECRET/$PODCHASER_CLIENT_SECRET/g" /tmp/podchaser_request.json | curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" -d @-' | jq -r '.data.requestAccessToken.access_token' > /tmp/podchaser_token.txt
 ```
 
 Verify the token was saved:
@@ -64,8 +74,18 @@ cat /tmp/podchaser_token.txt | head -c 50
 
 Search for podcasts by keyword:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ podcasts(searchTerm: \"technology\", first: 5) { paginatorInfo { count } data { id title description author { name } } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(searchTerm: \"technology\", first: 5) { paginatorInfo { count } data { id title description author { name } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 3. Get Podcast Details
@@ -74,72 +94,162 @@ Get detailed information about a specific podcast by ID:
 
 > **Note:** The `type` field is required in the identifier. Use `PODCHASER` for Podchaser IDs, `APPLE_PODCASTS` for Apple IDs, or `SPOTIFY` for Spotify IDs.
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title description url imageUrl language ratingAverage ratingCount author { name } categories { title } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title description url imageUrl language ratingAverage ratingCount author { name } categories { title } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 4. Search Episodes
 
 Search for episodes across all podcasts:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ episodes(searchTerm: \"AI\", first: 5) { paginatorInfo { count } data { id title description airDate length podcast { title } } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ episodes(searchTerm: \"AI\", first: 5) { paginatorInfo { count } data { id title description airDate length podcast { title } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 5. Get Podcast Episodes
 
 Get episodes for a specific podcast:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title episodes(first: 10) { data { id title description airDate length } } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { id title episodes(first: 10) { data { id title description airDate length } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 6. Get Episode Details
 
 Get detailed information about a specific episode:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ episode(identifier: { id: \"789012\", type: PODCHASER }) { id title description airDate length url imageUrl podcast { id title } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ episode(identifier: { id: \"789012\", type: PODCHASER }) { id title description airDate length url imageUrl podcast { id title } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 7. Get Podcast Categories
 
 Categories are available as a field on podcast objects. Get categories for a specific podcast:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { title categories { title slug } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcast(identifier: { id: \"717178\", type: PODCHASER }) { title categories { title slug } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 8. Filter Podcasts by Category
 
 Get podcasts in a specific category:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ podcasts(filters: { categories: [\"technology\"] }, first: 10) { data { id title description ratingAverage } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(filters: { categories: [\"technology\"] }, first: 10) { data { id title description ratingAverage } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 9. Get Chart Rankings
 
 Get Apple Podcasts chart data:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ podcasts(filters: { hasAppleChartRank: true }, sort: { sortBy: APPLE_CHART_RANK, direction: ASC }, first: 10) { data { id title appleChartRank } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(filters: { hasAppleChartRank: true }, sort: { sortBy: APPLE_CHART_RANK, direction: ASC }, first: 10) { data { id title appleChartRank } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 10. Get Creator/Host Information
 
 Search for podcast creators:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ creators(searchTerm: \"Joe Rogan\", first: 5) { data { pcid name bio credits { data { podcast { title } } } } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ creators(searchTerm: \"Joe Rogan\", first: 5) { data { pcid name bio credits { data { podcast { title } } } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ### 11. Preview Query Cost
 
 Check how many points a query will cost before executing:
 
+Write to `/tmp/podchaser_request.json`:
+
+```json
+{
+  "query": "{ podcasts(searchTerm: \"tech\", first: 10) { data { id title description episodes(first: 5) { data { id title } } } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.podchaser.com/graphql/cost" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d '"'"'{"query": "{ podcasts(searchTerm: \"tech\", first: 10) { data { id title description episodes(first: 5) { data { id title } } } } }"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.podchaser.com/graphql/cost" --header "Content-Type: application/json" --header "Authorization: Bearer $(cat /tmp/podchaser_token.txt)" -d @/tmp/podchaser_request.json' | jq .
 ```
 
 ---

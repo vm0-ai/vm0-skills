@@ -136,14 +136,49 @@ bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICK
 
 Create a new support ticket:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "subject": "My printer is on fire!",
+    "comment": {
+      "body": "The smoke is very colorful."
+    },
+    "priority": "urgent"
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"ticket": {"subject": "My printer is on fire!", "comment": {"body": "The smoke is very colorful."}, "priority": "urgent"}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 Create ticket with more details:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "subject": "Need help with account",
+    "comment": {
+      "body": "I cannot access my account settings."
+    },
+    "priority": "high",
+    "status": "open",
+    "type": "problem",
+    "tags": ["account", "access"]
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"ticket": {"subject": "Need help with account", "comment": {"body": "I cannot access my account settings."}, "priority": "high", "status": "open", "type": "problem", "tags": ["account", "access"]}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -154,8 +189,26 @@ Update an existing ticket:
 
 ```bash
 TICKET_ID="123"
+```
 
-bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"ticket": {"status": "solved", "comment": {"body": "Issue has been resolved. Thank you!", "public": true}}}'"'"'' | jq .
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "status": "solved",
+    "comment": {
+      "body": "Issue has been resolved. Thank you!",
+      "public": true
+    }
+  }
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 Change priority and assignee:
@@ -163,8 +216,25 @@ Change priority and assignee:
 ```bash
 TICKET_ID="123"
 ASSIGNEE_ID="456"
+```
 
-bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d "{\"ticket\": {\"priority\": \"high\", \"assignee_id\": ${ASSIGNEE_ID}}}"' | jq .
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "priority": "high",
+    "assignee_id": ASSIGNEE_ID_PLACEHOLDER
+  }
+}
+```
+
+Then run:
+
+```bash
+sed -i '' "s/ASSIGNEE_ID_PLACEHOLDER/${ASSIGNEE_ID}/" /tmp/zendesk_request.json
+
+bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -185,8 +255,31 @@ curl -s -X DELETE "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TIC
 
 Bulk create tickets:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "tickets": [
+    {
+      "subject": "Ticket 1",
+      "comment": {
+        "body": "First ticket"
+      }
+    },
+    {
+      "subject": "Ticket 2",
+      "comment": {
+        "body": "Second ticket"
+      }
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/create_many.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"tickets": [{"subject": "Ticket 1", "comment": {"body": "First ticket"}}, {"subject": "Ticket 2", "comment": {"body": "Second ticket"}}]}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/create_many.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -215,14 +308,42 @@ bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users/me.json"
 
 Create an end-user:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "user": {
+    "name": "John Customer",
+    "email": "john@example.com",
+    "role": "end-user"
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"user": {"name": "John Customer", "email": "john@example.com", "role": "end-user"}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 Create an agent:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "user": {
+    "name": "Jane Agent",
+    "email": "jane@company.com",
+    "role": "agent"
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"user": {"name": "Jane Agent", "email": "jane@company.com", "role": "agent"}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -233,8 +354,23 @@ Update user information:
 
 ```bash
 USER_ID="456"
+```
 
-bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users/${USER_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"user": {"name": "Updated Name", "phone": "+1234567890"}}'"'"'' | jq .
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "user": {
+    "name": "Updated Name",
+    "phone": "+1234567890"
+  }
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/users/${USER_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -263,8 +399,22 @@ bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/organizations.
 
 Create a new organization:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "organization": {
+    "name": "Acme Inc",
+    "domain_names": ["acme.com", "acmeinc.com"],
+    "details": "Important customer"
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/organizations.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"organization": {"name": "Acme Inc", "domain_names": ["acme.com", "acmeinc.com"], "details": "Important customer"}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/organizations.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -275,8 +425,23 @@ Update organization details:
 
 ```bash
 ORG_ID="789"
+```
 
-bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/organizations/${ORG_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"organization": {"name": "Acme Corporation", "notes": "Premium customer since 2020"}}'"'"'' | jq .
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "organization": {
+    "name": "Acme Corporation",
+    "notes": "Premium customer since 2020"
+  }
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/organizations/${ORG_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -295,8 +460,20 @@ bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/groups.json" -
 
 Create a new agent group:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "group": {
+    "name": "Support Team"
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/groups.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"group": {"name": "Support Team"}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/groups.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -348,8 +525,24 @@ Assign a ticket to a group:
 ```bash
 TICKET_ID="123"
 GROUP_ID="456"
+```
 
-bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d "{\"ticket\": {\"group_id\": ${GROUP_ID}}}"' | jq .
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "group_id": GROUP_ID_PLACEHOLDER
+  }
+}
+```
+
+Then run:
+
+```bash
+sed -i '' "s/GROUP_ID_PLACEHOLDER/${GROUP_ID}/" /tmp/zendesk_request.json
+
+bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -358,8 +551,20 @@ bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets
 
 Update multiple tickets at once:
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "status": "solved"
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/update_many.json?ids=123,124,125" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '"'"'{"ticket": {"status": "solved"}}'"'"'' | jq .
+bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/update_many.json?ids=123,124,125" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json' | jq .
 ```
 
 ---
@@ -368,15 +573,48 @@ bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets
 
 ### Create Ticket and Assign to Agent
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "subject": "New issue",
+    "comment": {
+      "body": "Need help"
+    }
+  }
+}
+```
+
+Then run:
+
 ```bash
 # Create ticket
-TICKET_RESPONSE=$(curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '{"ticket": {"subject": "New issue", "comment": {"body": "Need help"}}}')
+TICKET_RESPONSE=$(curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json)
 
 TICKET_ID=$(echo $TICKET_RESPONSE | jq -r '.ticket.id')
 
 # Assign to agent
 ASSIGNEE_ID="789"
-curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d "{\"ticket\": {\"assignee_id\": ${ASSIGNEE_ID}, \"status\": \"open\"}}"
+```
+
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "assignee_id": ASSIGNEE_ID_PLACEHOLDER,
+    "status": "open"
+  }
+}
+```
+
+Then run:
+
+```bash
+sed -i '' "s/ASSIGNEE_ID_PLACEHOLDER/${ASSIGNEE_ID}/" /tmp/zendesk_request.json
+
+curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json
 ```
 
 ### Find and Close Old Tickets
@@ -384,9 +622,23 @@ curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET
 ```bash
 # Search for old open tickets (30+ days)
 OLD_TICKETS="$(bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:ticket status:open created<30"' | jq -r '.results[].id' | paste -sd "," -)"
+```
 
+Write to `/tmp/zendesk_request.json`:
+
+```json
+{
+  "ticket": {
+    "status": "closed"
+  }
+}
+```
+
+Then run:
+
+```bash
 # Bulk close them
-curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/update_many.json?ids=${OLD_TICKETS}" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d '{"ticket": {"status": "closed"}}'
+curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/update_many.json?ids=${OLD_TICKETS}" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json
 ```
 
 ---

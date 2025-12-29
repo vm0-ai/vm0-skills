@@ -48,15 +48,23 @@ All examples below assume you have `DEVTO_API_KEY` set.
 
 ### 1. Publish an Article
 
-```bash
-bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "title": "My Awesome Article",
-  "body_markdown": "## Introduction\n\nThis is my article content.\n\n## Conclusion\n\nThanks for reading!",
-  "published": false,
-  "tags": ["javascript", "webdev"]
+    "title": "My Awesome Article",
+    "body_markdown": "## Introduction\n\nThis is my article content.\n\n## Conclusion\n\nThanks for reading!",
+    "published": false,
+    "tags": ["javascript", "webdev"]
   }
-  }'"'"' | jq '"'"'{id, url, published}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url, published}'
 ```
 
 **Response:**
@@ -73,29 +81,45 @@ bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_
 
 Set `published: true` to publish right away:
 
-```bash
-bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "title": "Published Article",
-  "body_markdown": "Content here...",
-  "published": true,
-  "tags": ["tutorial"]
+    "title": "Published Article",
+    "body_markdown": "Content here...",
+    "published": true,
+    "tags": ["tutorial"]
   }
-  }'"'"' | jq '"'"'{id, url, published}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url, published}'
 ```
 
 ### 3. Publish with Cover Image
 
-```bash
-bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "title": "Article with Cover",
-  "body_markdown": "Content here...",
-  "published": true,
-  "tags": ["webdev", "tutorial"],
-  "main_image": "https://example.com/cover.png"
+    "title": "Article with Cover",
+    "body_markdown": "Content here...",
+    "published": true,
+    "tags": ["webdev", "tutorial"],
+    "main_image": "https://example.com/cover.png"
   }
-  }'"'"' | jq '"'"'{id, url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url}'
 ```
 
 ### 4. Publish from Markdown File
@@ -103,15 +127,25 @@ bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_
 ```bash
 TITLE="My Article Title"
 CONTENT=$(cat article.md | jq -Rs '.')
+```
 
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d "{
-  \"article\": {
-  \"title\": \"${TITLE}\",
-  \"body_markdown\": ${CONTENT},
-  \"published\": false,
-  \"tags\": [\"programming\"]
+Write to `/tmp/devto_request.json`:
+
+```json
+{
+  "article": {
+    "title": "${TITLE}",
+    "body_markdown": ${CONTENT},
+    "published": false,
+    "tags": ["programming"]
   }
-  }" | jq '{id, url, published}'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url, published}'
 ```
 
 ---
@@ -152,13 +186,23 @@ bash -c 'curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVT
 
 ```bash
 ARTICLE_ID="123456"
+```
 
-bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "title": "Updated Title",
-  "body_markdown": "Updated content..."
+    "title": "Updated Title",
+    "body_markdown": "Updated content..."
   }
-  }'"'"' | jq '"'"'{id, url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url}'
 ```
 
 ### 10. Publish a Draft
@@ -167,12 +211,22 @@ bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key:
 
 ```bash
 ARTICLE_ID="123456"
+```
 
-bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "published": true
+    "published": true
   }
-  }'"'"' | jq '"'"'{id, url, published}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url, published}'
 ```
 
 ---
@@ -195,43 +249,67 @@ bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key:
 
 ### Tech Tutorial
 
-```bash
-bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "title": "Getting Started with Docker",
-  "body_markdown": "## What is Docker?\n\nDocker is a platform for developing...\n\n## Installation\n\n```bash\nbrew install docker\n```\n\n## Your First Container\n\n```bash\ndocker run hello-world\n```",
-  "published": true,
-  "tags": ["docker", "devops", "tutorial", "beginners"]
+    "title": "Getting Started with Docker",
+    "body_markdown": "## What is Docker?\n\nDocker is a platform for developing...\n\n## Installation\n\n```bash\nbrew install docker\n```\n\n## Your First Container\n\n```bash\ndocker run hello-world\n```",
+    "published": true,
+    "tags": ["docker", "devops", "tutorial", "beginners"]
   }
-  }'"'"' | jq '"'"'{url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{url}'
 ```
 
 ### Cross-post from Blog
 
-```bash
-bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "title": "My Blog Post",
-  "body_markdown": "Content from my blog...",
-  "published": true,
-  "canonical_url": "https://myblog.com/original-post",
-  "tags": ["webdev"]
+    "title": "My Blog Post",
+    "body_markdown": "Content from my blog...",
+    "published": true,
+    "canonical_url": "https://myblog.com/original-post",
+    "tags": ["webdev"]
   }
-  }'"'"' | jq '"'"'{url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{url}'
 ```
 
 ### Article in a Series
 
-```bash
-bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/devto_request.json`:
+
+```json
+{
   "article": {
-  "title": "React Hooks - Part 1: useState",
-  "body_markdown": "First part of the series...",
-  "published": true,
-  "series": "React Hooks Deep Dive",
-  "tags": ["react", "javascript", "hooks"]
+    "title": "React Hooks - Part 1: useState",
+    "body_markdown": "First part of the series...",
+    "published": true,
+    "series": "React Hooks Deep Dive",
+    "tags": ["react", "javascript", "hooks"]
   }
-  }'"'"' | jq '"'"'{url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{url}'
 ```
 
 ---

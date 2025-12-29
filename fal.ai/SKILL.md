@@ -44,53 +44,104 @@ export FAL_KEY="your-api-key"
 
 ### 1. Generate Image (nano-banana-pro - fast)
 
+Write to `/tmp/fal_request.json`:
+
+```json
+{
+  "prompt": "A futuristic city at sunset, cyberpunk style"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d '"'"'{"prompt": "A futuristic city at sunset, cyberpunk style"}'"'"'' | jq -r '.images[0].url
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url'
 ```
 
 ### 2. Generate Image (flux/schnell - fast)
 
+Write to `/tmp/fal_request.json`:
+
+```json
+{
+  "prompt": "A cute cat eating a cookie"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/flux/schnell" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d '"'"'{"prompt": "A cute cat eating a cookie"}'"'"'' | jq -r '.images[0].url
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/flux/schnell" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url'
 ```
 
 ### 3. Generate Image (recraft-v3 - high quality)
 
+Write to `/tmp/fal_request.json`:
+
+```json
+{
+  "prompt": "Abstract art, vibrant colors"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/recraft-v3" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d '"'"'{"prompt": "Abstract art, vibrant colors"}'"'"'' | jq -r '.images[0].url
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/recraft-v3" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url'
 ```
 
 ### 4. Generate with Custom Size
 
+Write to `/tmp/fal_request.json`:
+
+```json
+{
+  "prompt": "Mountain landscape",
+  "image_size": "landscape_16_9"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d '"'"'{"prompt": "Mountain landscape", "image_size": "landscape_16_9"}'"'"'' | jq -r '.images[0].url
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url'
 ```
 
 ### 5. Download Generated Image
 
+Write to `/tmp/fal_request.json`:
+
+```json
+{
+  "prompt": "A minimalist workspace"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d '"'"'{"prompt": "A minimalist workspace"}'"'"'' | jq -r '.images[0].url' | xargs curl -sL -o /tmp/image.png
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url' | xargs curl -sL -o /tmp/image.png
 ```
 
 ### 6. Pipe Prompt from Echo (JSON escaped)
 
 ```bash
-echo "A dragon breathing fire, epic fantasy art" | jq -Rs '{prompt: .}' > /tmp/payload.json
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/payload.json' | jq -r '.images[0].url
+echo "A dragon breathing fire, epic fantasy art" | jq -Rs '{prompt: .}' > /tmp/fal_request.json
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url'
 ```
 
 ### 7. Pipe Prompt from File (JSON escaped)
 
 ```bash
-cat /tmp/prompt.txt | jq -Rs '{prompt: .}' > /tmp/payload.json
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/payload.json' | jq -r '.images[0].url
+cat /tmp/prompt.txt | jq -Rs '{prompt: .}' > /tmp/fal_request.json
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url'
 ```
 
 ### 8. Pipe with Additional Parameters
 
 ```bash
-echo "Neon city at night" | jq -Rs '{prompt: ., image_size: "landscape_16_9"}' > /tmp/payload.json
-bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/payload.json' | jq -r '.images[0].url
+echo "Neon city at night" | jq -Rs '{prompt: ., image_size: "landscape_16_9"}' > /tmp/fal_request.json
+bash -c 'curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key ${FAL_KEY}" --header "Content-Type: application/json" -d @/tmp/fal_request.json' | jq -r '.images[0].url'
 ```
 
 ---

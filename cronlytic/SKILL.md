@@ -69,34 +69,50 @@ Response: `{"message": "pong"}`
 
 ### 2. Create a Cron Job
 
-Create a scheduled job to call a webhook:
+Create a scheduled job to call a webhook.
 
-```bash
-bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/cronlytic_request.json`:
+
+```json
+{
   "name": "daily-backup",
   "url": "https://api.example.com/backup",
   "method": "POST",
   "headers": {"Authorization": "Bearer token123"},
   "body": "{\"type\": \"full\"}",
   "cron_expression": "0 2 * * *"
-  }'"'"' | jq '"'"'{job_id, name, status, next_run_at}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json' | jq '{job_id, name, status, next_run_at}'
 ```
 
 ---
 
 ### 3. Create GET Request Job
 
-Simple health check every 5 minutes:
+Simple health check every 5 minutes.
 
-```bash
-bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/cronlytic_request.json`:
+
+```json
+{
   "name": "health-check",
   "url": "https://api.example.com/health",
   "method": "GET",
   "headers": {},
   "body": "",
   "cron_expression": "*/5 * * * *"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json' | jq .
 ```
 
 ---
@@ -113,19 +129,27 @@ bash -c 'curl -s -X GET "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: ${C
 
 ### 5. Update a Job
 
-Update an existing job (all fields required):
+Update an existing job (all fields required).
 
-```bash
-JOB_ID="your-job-id"
+Write to `/tmp/cronlytic_request.json`:
 
-bash -c 'curl -s -X PUT "https://api.cronlytic.com/prog/jobs/${JOB_ID}" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d '"'"'{
+```json
+{
   "name": "daily-backup-v2",
   "url": "https://api.example.com/backup/v2",
   "method": "POST",
   "headers": {"Authorization": "Bearer newtoken"},
   "body": "{\"type\": \"incremental\"}",
   "cron_expression": "0 3 * * *"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+JOB_ID="your-job-id"
+
+bash -c 'curl -s -X PUT "https://api.cronlytic.com/prog/jobs/${JOB_ID}" -H "X-API-Key: ${CRONLYTIC_API_KEY}" -H "X-User-ID: ${CRONLYTIC_USER_ID}" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json' | jq .
 ```
 
 ---

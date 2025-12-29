@@ -64,11 +64,19 @@ Base URL: `https://api.short.io`
 
 Create a new short link with auto-generated slug:
 
+Write to `/tmp/shortio_request.json`:
+
+```json
+{
+  "domain": "${SHORTIO_DOMAIN}",
+  "originalURL": "https://example.com/very/long/url/here"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d "{
-  \"domain\": \"${SHORTIO_DOMAIN}\",
-  \"originalURL\": \"https://example.com/very/long/url/here\"
-  }" | jq '{shortURL, originalURL, path, idString}'
+curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
 
 ---
@@ -77,12 +85,20 @@ curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_
 
 Create a short link with a custom path/slug:
 
+Write to `/tmp/shortio_request.json`:
+
+```json
+{
+  "domain": "${SHORTIO_DOMAIN}",
+  "originalURL": "https://example.com/product/12345",
+  "path": "my-custom-slug"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d "{
-  \"domain\": \"${SHORTIO_DOMAIN}\",
-  \"originalURL\": \"https://example.com/product/12345\",
-  \"path\": \"my-custom-slug\"
-  }" | jq '{shortURL, originalURL, path, idString}'
+curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
 
 ---
@@ -91,12 +107,20 @@ curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_
 
 Create a link that expires after a specified time (in ISO 8601 format):
 
+Write to `/tmp/shortio_request.json`:
+
+```json
+{
+  "domain": "${SHORTIO_DOMAIN}",
+  "originalURL": "https://example.com/temporary-offer",
+  "ttl": "2025-12-31T23:59:59Z"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d "{
-  \"domain\": \"${SHORTIO_DOMAIN}\",
-  \"originalURL\": \"https://example.com/temporary-offer\",
-  \"ttl\": \"2025-12-31T23:59:59Z\"
-  }" | jq '{shortURL, originalURL, ttl}'
+curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, ttl}'
 ```
 
 ---
@@ -139,11 +163,21 @@ Update an existing link's path, original URL, or other properties:
 
 ```bash
 LINK_ID="lnk_abc123xyz"
+```
 
-curl -s -X POST "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d "{
-  \"path\": \"new-custom-slug\",
-  \"originalURL\": \"https://example.com/new-destination\"
-  }" | jq '{shortURL, originalURL, path, idString}'
+Write to `/tmp/shortio_request.json`:
+
+```json
+{
+  "path": "new-custom-slug",
+  "originalURL": "https://example.com/new-destination"
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
 
 ---

@@ -187,8 +187,20 @@ Mark an issue as resolved:
 
 ```bash
 ISSUE_ID="123456789"
+```
 
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"status": "resolved"}'"'"'' | jq '{id, shortId, status}
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "status": "resolved"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -201,8 +213,20 @@ Mark issue as resolved in next release:
 
 ```bash
 ISSUE_ID="123456789"
+```
 
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"status": "resolvedInNextRelease"}'"'"'' | jq '{id, shortId, status}
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "status": "resolvedInNextRelease"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -215,14 +239,39 @@ Ignore an issue:
 
 ```bash
 ISSUE_ID="123456789"
+```
 
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"status": "ignored"}'"'"'' | jq '{id, shortId, status}
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "status": "ignored"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{id, shortId, status}'
 ```
 
 Ignore with duration (in minutes):
 
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "status": "ignored",
+  "statusDetails": {
+    "ignoreDuration": 60
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"status": "ignored", "statusDetails": {"ignoreDuration": 60}}'"'"'' | jq '{id, shortId, status}
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -235,8 +284,20 @@ Reopen a resolved issue:
 
 ```bash
 ISSUE_ID="123456789"
+```
 
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"status": "unresolved"}'"'"'' | jq '{id, shortId, status}
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "status": "unresolved"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{id, shortId, status}'
 ```
 
 ---
@@ -250,8 +311,20 @@ Assign an issue to a user:
 ```bash
 ISSUE_ID="123456789"
 USER_EMAIL="developer@example.com"
+```
 
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d "{\"assignedTo\": \"${USER_EMAIL}\"}"' | jq '{id, shortId, assignedTo}
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "assignedTo": "${USER_EMAIL}"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{id, shortId, assignedTo}'
 ```
 
 ---
@@ -262,11 +335,19 @@ Update multiple issues at once:
 
 > **Note:** Replace `123456789` and `987654321` with actual issue IDs from the "List Issues" output.
 
-```bash
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
   "id": ["123456789", "987654321"],
   "status": "resolved"
-}'"'"' | jq '"'"'.'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '.'
 ```
 
 ---
@@ -317,11 +398,21 @@ Create a new release:
 
 ```bash
 PROJECT_SLUG="my-project"
+```
 
-curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d "{
-  \"version\": \"1.0.1\",
-  \"projects\": [\"${PROJECT_SLUG}\"]
-}" | jq '{version, dateCreated}'
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "version": "1.0.1",
+  "projects": ["${PROJECT_SLUG}"]
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{version, dateCreated}'
 ```
 
 ---
@@ -334,15 +425,27 @@ Create release with associated commits:
 
 ```bash
 PROJECT_SLUG="my-project"
+```
 
-curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d "{
-  \"version\": \"1.0.2\",
-  \"projects\": [\"${PROJECT_SLUG}\"],
-  \"refs\": [{
-  \"repository\": \"owner/repo\",
-  \"commit\": \"abc123def456\"
-  }]
-}" | jq '{version, dateCreated}'
+Write to `/tmp/sentry_request.json`:
+
+```json
+{
+  "version": "1.0.2",
+  "projects": ["${PROJECT_SLUG}"],
+  "refs": [
+    {
+      "repository": "owner/repo",
+      "commit": "abc123def456"
+    }
+  ]
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{version, dateCreated}'
 ```
 
 ---

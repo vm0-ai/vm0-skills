@@ -184,11 +184,22 @@ bash -c 'curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: ${SUPADATA_
 
 ### 10. Crawl Website (Async)
 
-Start a crawl job for multiple pages:
+Start a crawl job for multiple pages.
+
+Write to `/tmp/supadata_request.json`:
+
+```json
+{
+  "url": "https://example.com",
+  "maxPages": 10
+}
+```
+
+Then run:
 
 ```bash
 # Start crawl
-JOB_ID="$(bash -c 'curl -s "https://api.supadata.ai/v1/web/crawl" -X POST -H "x-api-key: ${SUPADATA_API_KEY}" -H "Content-Type: application/json" -d '"'"'{"url": "https://example.com", "maxPages": 10}'"'"'' | jq -r '.jobId')"
+JOB_ID="$(bash -c 'curl -s "https://api.supadata.ai/v1/web/crawl" -X POST -H "x-api-key: ${SUPADATA_API_KEY}" -H "Content-Type: application/json" -d @/tmp/supadata_request.json' | jq -r '.jobId')"
 
 echo "Job ID: ${JOB_ID}"
 

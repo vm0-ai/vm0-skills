@@ -62,8 +62,18 @@ Linear uses **GraphQL** for all API operations. Queries retrieve data, mutations
 
 Get all teams in your workspace:
 
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ teams { nodes { id name key } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d '"'"'{"query": "{ teams { nodes { id name key } } }"}'"'"'' | jq '.data.teams.nodes
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.teams.nodes'
 ```
 
 Save a team ID for subsequent queries.
@@ -76,8 +86,20 @@ Get issues from a specific team:
 
 ```bash
 TEAM_ID="your-team-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"{ team(id: \\\"${TEAM_ID}\\\") { issues { nodes { id identifier title state { name } assignee { name } } } } }\"}"' | jq '.data.team.issues.nodes
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ team(id: \"${TEAM_ID}\") { issues { nodes { id identifier title state { name } assignee { name } } } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.team.issues.nodes'
 ```
 
 ---
@@ -86,8 +108,18 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 Fetch a specific issue by its identifier (e.g., `ENG-123`):
 
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ issue(id: \"ENG-123\") { id identifier title description state { name } priority assignee { name } createdAt } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d '"'"'{"query": "{ issue(id: \"ENG-123\") { id identifier title description state { name } priority assignee { name } createdAt } }"}'"'"'' | jq '.data.issue
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.issue'
 ```
 
 ---
@@ -96,8 +128,18 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 Search issues with filters:
 
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ issues(filter: { state: { name: { eq: \"In Progress\" } } }, first: 10) { nodes { id identifier title assignee { name } } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d '"'"'{"query": "{ issues(filter: { state: { name: { eq: \"In Progress\" } } }, first: 10) { nodes { id identifier title assignee { name } } } }"}'"'"'' | jq '.data.issues.nodes
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.issues.nodes'
 ```
 
 ---
@@ -108,8 +150,20 @@ Create a new issue in a team:
 
 ```bash
 TEAM_ID="your-team-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"mutation { issueCreate(input: { title: \\\"Bug: Login button not working\\\", description: \\\"Users report the login button is unresponsive on mobile.\\\", teamId: \\\"${TEAM_ID}\\\" }) { success issue { id identifier title url } } }\"}"' | jq '.data.issueCreate
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "mutation { issueCreate(input: { title: \"Bug: Login button not working\", description: \"Users report the login button is unresponsive on mobile.\", teamId: \"${TEAM_ID}\" }) { success issue { id identifier title url } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.issueCreate'
 ```
 
 ---
@@ -121,8 +175,20 @@ Create an issue with additional properties:
 ```bash
 TEAM_ID="your-team-id"
 LABEL_ID="your-label-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"mutation { issueCreate(input: { title: \\\"High priority task\\\", teamId: \\\"${TEAM_ID}\\\", priority: 1, labelIds: [\\\"${LABEL_ID}\\\"] }) { success issue { id identifier title priority } } }\"}"' | jq '.data.issueCreate
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "mutation { issueCreate(input: { title: \"High priority task\", teamId: \"${TEAM_ID}\", priority: 1, labelIds: [\"${LABEL_ID}\"] }) { success issue { id identifier title priority } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.issueCreate'
 ```
 
 **Priority values:** 0 (No priority), 1 (Urgent), 2 (High), 3 (Medium), 4 (Low)
@@ -135,8 +201,20 @@ Update an existing issue:
 
 ```bash
 ISSUE_ID="your-issue-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"mutation { issueUpdate(id: \\\"${ISSUE_ID}\\\", input: { title: \\\"Updated title\\\", priority: 2 }) { success issue { id identifier title priority } } }\"}"' | jq '.data.issueUpdate
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "mutation { issueUpdate(id: \"${ISSUE_ID}\", input: { title: \"Updated title\", priority: 2 }) { success issue { id identifier title priority } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.issueUpdate'
 ```
 
 ---
@@ -148,8 +226,20 @@ Move an issue to a different state (e.g., "Done"):
 ```bash
 ISSUE_ID="your-issue-id"
 STATE_ID="your-state-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"mutation { issueUpdate(id: \\\"${ISSUE_ID}\\\", input: { stateId: \\\"${STATE_ID}\\\" }) { success issue { id identifier state { name } } } }\"}"' | jq '.data.issueUpdate
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "mutation { issueUpdate(id: \"${ISSUE_ID}\", input: { stateId: \"${STATE_ID}\" }) { success issue { id identifier state { name } } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.issueUpdate'
 ```
 
 ---
@@ -160,8 +250,20 @@ Get available states for a team:
 
 ```bash
 TEAM_ID="your-team-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"{ team(id: \\\"${TEAM_ID}\\\") { states { nodes { id name type } } } }\"}"' | jq '.data.team.states.nodes
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ team(id: \"${TEAM_ID}\") { states { nodes { id name type } } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.team.states.nodes'
 ```
 
 ---
@@ -172,8 +274,20 @@ Add a comment to an existing issue:
 
 ```bash
 ISSUE_ID="your-issue-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"mutation { commentCreate(input: { issueId: \\\"${ISSUE_ID}\\\", body: \\\"This is a comment from the API.\\\" }) { success comment { id body createdAt } } }\"}"' | jq '.data.commentCreate
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "mutation { commentCreate(input: { issueId: \"${ISSUE_ID}\", body: \"This is a comment from the API.\" }) { success comment { id body createdAt } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.commentCreate'
 ```
 
 ---
@@ -182,8 +296,18 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 Get all projects in the workspace:
 
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ projects { nodes { id name state progress targetDate } } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d '"'"'{"query": "{ projects { nodes { id name state progress targetDate } } }"}'"'"'' | jq '.data.projects.nodes
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.projects.nodes'
 ```
 
 ---
@@ -192,8 +316,18 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 Get information about the authenticated user:
 
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ viewer { id name email admin } }"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d '"'"'{"query": "{ viewer { id name email admin } }"}'"'"'' | jq '.data.viewer
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.viewer'
 ```
 
 ---
@@ -204,8 +338,20 @@ Get available labels for a team:
 
 ```bash
 TEAM_ID="your-team-id"
+```
 
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d "{\"query\": \"{ team(id: \\\"${TEAM_ID}\\\") { labels { nodes { id name color } } } }\"}"' | jq '.data.team.labels.nodes
+Write to `/tmp/linear_request.json`:
+
+```json
+{
+  "query": "{ team(id: \"${TEAM_ID}\") { labels { nodes { id name color } } } }"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_API_KEY}" -d @/tmp/linear_request.json' | jq '.data.team.labels.nodes'
 ```
 
 ---

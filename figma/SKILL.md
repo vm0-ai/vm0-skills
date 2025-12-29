@@ -38,7 +38,7 @@ Use this skill when you need to:
 4. Click **Generate new token**
 5. Enter a token name (e.g., `vm0-skills-test`)
 6. Click **Create** and **immediately copy the token** (format: `figd_...`)
-   - ⚠️ The token is only shown once - save it securely
+   - The token is only shown once - save it securely
    - If lost, you must delete and create a new token
 
 ```bash
@@ -173,12 +173,23 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}/comments" -H
 
 ### 6. Post Comment
 
-Add a comment to a file:
+Add a comment to a file.
+
+Write to `/tmp/figma_request.json`:
+
+```json
+{
+  "message": "This looks great!",
+  "client_meta": {"x": 100, "y": 200}
+}
+```
+
+Then run:
 
 ```bash
 FILE_KEY="abc123XYZ"
 
-bash -c 'curl -s -X POST "https://api.figma.com/v1/files/${FILE_KEY}/comments" -H "X-Figma-Token: ${FIGMA_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{"message": "This looks great!", "client_meta": {"x": 100, "y": 200}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.figma.com/v1/files/${FILE_KEY}/comments" -H "X-Figma-Token: ${FIGMA_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/figma_request.json' | jq .
 ```
 
 To comment on a specific node, add `client_meta` with node coordinates.

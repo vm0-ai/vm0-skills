@@ -141,8 +141,20 @@ bash -c 'curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages/{messa
 ```bash
 # Create RFC 2822 message and base64url encode
 RAW_MESSAGE=$(echo -e "To: {recipient-email}\r\nSubject: {subject}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 | tr '+/' '-_' | tr -d '=')
+```
 
-bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/send" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d "{\"raw\": \"'"$RAW_MESSAGE"'\"}"' | jq .
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "raw": "$RAW_MESSAGE"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/send" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ### Reply to Thread
@@ -150,14 +162,38 @@ bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/message
 ```bash
 # Include In-Reply-To and References headers for proper threading
 RAW_MESSAGE=$(echo -e "To: {recipient-email}\r\nSubject: Re: {original-subject}\r\nIn-Reply-To: <{original-message-id}>\r\nReferences: <{original-message-id}>\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{reply-text}" | base64 | tr '+/' '-_' | tr -d '=')
+```
 
-bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/send" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d "{\"raw\": \"'"$RAW_MESSAGE"'\", \"threadId\": \"{thread-id}\"}"' | jq .
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "raw": "$RAW_MESSAGE",
+  "threadId": "{thread-id}"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/send" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ### Modify Message Labels
 
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "addLabelIds": ["STARRED"],
+  "removeLabelIds": ["UNREAD"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/{message-id}/modify" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d '"'"'{"addLabelIds": ["STARRED"], "removeLabelIds": ["UNREAD"]}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/{message-id}/modify" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ### Trash Message
@@ -206,8 +242,20 @@ bash -c 'curl -s "https://gmail.googleapis.com/gmail/v1/users/me/labels" --heade
 
 ### Create Label
 
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "name": "{label-name}",
+  "labelListVisibility": "labelShow",
+  "messageListVisibility": "show"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/labels" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d '"'"'{"name": "{label-name}", "labelListVisibility": "labelShow", "messageListVisibility": "show"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/labels" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ### Delete Label
@@ -230,14 +278,38 @@ bash -c 'curl -s "https://gmail.googleapis.com/gmail/v1/users/me/drafts" --heade
 
 ```bash
 RAW_MESSAGE=$(echo -e "To: {recipient-email}\r\nSubject: {subject}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 | tr '+/' '-_' | tr -d '=')
+```
 
-bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/drafts" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d "{\"message\": {\"raw\": \"'"$RAW_MESSAGE"'\"}}"' | jq .
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "message": {
+    "raw": "$RAW_MESSAGE"
+  }
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/drafts" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ### Send Draft
 
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "id": "{draft-id}"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/drafts/send" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d '"'"'{"id": "{draft-id}"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/drafts/send" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ### Delete Draft
@@ -268,8 +340,22 @@ bash -c 'curl -s "https://gmail.googleapis.com/gmail/v1/users/me/settings/vacati
 
 ### Update Vacation Settings
 
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "enableAutoReply": true,
+  "responseSubject": "Out of Office",
+  "responseBodyPlainText": "I am currently out of office.",
+  "restrictToContacts": false,
+  "restrictToDomain": false
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X PUT "https://gmail.googleapis.com/gmail/v1/users/me/settings/vacation" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d '"'"'{"enableAutoReply": true, "responseSubject": "Out of Office", "responseBodyPlainText": "I am currently out of office.", "restrictToContacts": false, "restrictToDomain": false}'"'"'' | jq .
+bash -c 'curl -s -X PUT "https://gmail.googleapis.com/gmail/v1/users/me/settings/vacation" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ### List Filters
@@ -280,8 +366,24 @@ bash -c 'curl -s "https://gmail.googleapis.com/gmail/v1/users/me/settings/filter
 
 ### Create Filter
 
+Write to `/tmp/gmail_request.json`:
+
+```json
+{
+  "criteria": {
+    "from": "{filter-email}"
+  },
+  "action": {
+    "addLabelIds": ["TRASH"],
+    "removeLabelIds": ["INBOX"]
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/settings/filters" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d '"'"'{"criteria": {"from": "{filter-email}"}, "action": {"addLabelIds": ["TRASH"], "removeLabelIds": ["INBOX"]}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/settings/filters" --header "Authorization: Bearer $(cat /tmp/gmail_token.txt)" --header "Content-Type: application/json" -d @/tmp/gmail_request.json' | jq .
 ```
 
 ---

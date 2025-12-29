@@ -172,58 +172,90 @@ bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/integrations/${INTEGRAT
 
 ### 10. Get Widget Value
 
-Retrieve the value of specific widgets:
+Retrieve the value of specific widgets.
+
+Write to `/tmp/reportei_request.json`:
+
+```json
+{
+  "widgets": ["widget_id_1", "widget_id_2"],
+  "start_date": "2024-01-01",
+  "end_date": "2024-01-31"
+}
+```
+
+Then run:
 
 ```bash
 INTEGRATION_ID="your-integration-id"
 
-bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets/value" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
-  "widgets": ["widget_id_1", "widget_id_2"],
-  "start_date": "2024-01-01",
-  "end_date": "2024-01-31"
-  }'"'"' | jq .'
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/integrations/${INTEGRATION_ID}/widgets/value" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/reportei_request.json' | jq .
 ```
 
 ---
 
 ### 11. Create Report (Connector Action)
 
-Create a new report programmatically:
+Create a new report programmatically.
 
-```bash
-bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/create_report" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/reportei_request.json`:
+
+```json
+{
   "client_id": "your-client-id",
   "template_id": "your-template-id",
   "start_date": "2024-01-01",
   "end_date": "2024-01-31"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/create_report" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/reportei_request.json' | jq .
 ```
 
 ---
 
 ### 12. Create Dashboard (Connector Action)
 
-Create a new dashboard:
+Create a new dashboard.
 
-```bash
-bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/create_dashboard" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/reportei_request.json`:
+
+```json
+{
   "client_id": "your-client-id",
   "name": "My Dashboard"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/create_dashboard" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/reportei_request.json' | jq .
 ```
 
 ---
 
 ### 13. Add to Timeline (Connector Action)
 
-Add an entry to the client timeline:
+Add an entry to the client timeline.
 
-```bash
-bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/add_to_timeline" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/reportei_request.json`:
+
+```json
+{
   "client_id": "your-client-id",
   "title": "Campaign Launched",
   "description": "New marketing campaign started"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/add_to_timeline" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/reportei_request.json' | jq .
 ```
 
 ---
@@ -240,25 +272,41 @@ bash -c 'curl -s -X GET "https://app.reportei.com/api/v1/webhook/events" -H "Aut
 
 ### 15. Subscribe to Webhook
 
-Subscribe to webhook notifications:
+Subscribe to webhook notifications.
 
-```bash
-bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/webhooks/subscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/reportei_request.json`:
+
+```json
+{
   "url": "https://your-webhook-endpoint.com/webhook",
   "events": ["report.created", "report.updated"]
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/webhooks/subscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/reportei_request.json' | jq .
 ```
 
 ---
 
 ### 16. Unsubscribe from Webhook
 
-Unsubscribe from webhook notifications:
+Unsubscribe from webhook notifications.
+
+Write to `/tmp/reportei_request.json`:
+
+```json
+{
+  "webhook_id": "your-webhook-id"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/webhooks/unsubscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d '"'"'{
-  "webhook_id": "your-webhook-id"
-  }'"'"' | jq .'
+bash -c 'curl -s -X POST "https://app.reportei.com/api/v1/webhooks/unsubscribe" -H "Authorization: Bearer ${REPORTEI_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/reportei_request.json' | jq .
 ```
 
 ---

@@ -49,7 +49,7 @@ export TAVILY_API_KEY="tvly-xxxxxxxxxxxxxxxx"
 TAVILY_API_KEY
 ```
 
-All examples below assume you have `TAVILY_API_KEY` set. 
+All examples below assume you have `TAVILY_API_KEY` set.
 The base endpoint for the Tavily search API is a `POST` request to:
 
 - `https://api.tavily.com/search`
@@ -60,12 +60,20 @@ with a JSON body.
 
 ### 1. Basic Search
 
-```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '"'"'{
+Write to `/tmp/tavily_request.json`:
+
+```json
+{
   "query": "2025 AI Trending",
   "search_depth": "basic",
   "max_results": 5
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json' | jq .
 ```
 
 **Key parameters:**
@@ -80,8 +88,10 @@ bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type:
 
 ### 2. Advanced Search
 
-```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d '"'"'{
+Write to `/tmp/tavily_request.json`:
+
+```json
+{
   "query": "serverless SaaS pricing best practices",
   "search_depth": "advanced",
   "max_results": 8,
@@ -89,7 +99,13 @@ bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type:
   "include_domains": ["docs.aws.amazon.com", "cloud.google.com"],
   "exclude_domains": ["reddit.com", "twitter.com"],
   "include_raw_content": false
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json' | jq .
 ```
 
 **Common advanced parameters:**
@@ -107,12 +123,12 @@ Tavily returns a JSON object similar to:
 
 ```json
 {
-  "answer": "简要总结……",
+  "answer": "Brief summary...",
   "results": [
   {
   "title": "Article title",
   "url": "https://example.com/article",
-  "content": "Snippet or extracted content…",
+  "content": "Snippet or extracted content...",
   "score": 0.89
   }
   ]

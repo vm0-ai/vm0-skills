@@ -95,18 +95,43 @@ bash -c 'curl -s "https://api.mercury.com/api/v1/account/{accountId}/transaction
 
 ### Create Internal Transfer
 
-Transfer funds between your Mercury accounts:
+Transfer funds between your Mercury accounts.
+
+Write to `/tmp/mercury_request.json`:
+
+```json
+{
+  "toAccountId": "target-account-id",
+  "amount": 100.00,
+  "note": "Internal transfer"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/account/{accountId}/internal-transfer" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d '"'"'{"toAccountId": "target-account-id", "amount": 100.00, "note": "Internal transfer"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/account/{accountId}/internal-transfer" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/mercury_request.json' | jq .
 ```
 
 ### Send Money Request
 
-Initiate a money transfer request:
+Initiate a money transfer request.
+
+Write to `/tmp/mercury_request.json`:
+
+```json
+{
+  "recipientId": "recipient-id",
+  "amount": 100.00,
+  "paymentMethod": "ach",
+  "idempotencyKey": "unique-key-123"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/account/{accountId}/send-money" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d '"'"'{"recipientId": "recipient-id", "amount": 100.00, "paymentMethod": "ach", "idempotencyKey": "unique-key-123"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/account/{accountId}/send-money" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/mercury_request.json' | jq .
 ```
 
 ### Get Send Money Request Status
@@ -133,8 +158,26 @@ bash -c 'curl -s "https://api.mercury.com/api/v1/recipient/{recipientId}" --head
 
 ### Create Recipient
 
+Write to `/tmp/mercury_request.json`:
+
+```json
+{
+  "name": "Vendor Name",
+  "emails": ["vendor@example.com"],
+  "paymentMethod": "ach",
+  "electronicRoutingInfo": {
+    "accountNumber": "123456789",
+    "routingNumber": "021000021",
+    "bankName": "Example Bank",
+    "electronicAccountType": "businessChecking"
+  }
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/recipients" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d '"'"'{"name": "Vendor Name", "emails": ["vendor@example.com"], "paymentMethod": "ach", "electronicRoutingInfo": {"accountNumber": "123456789", "routingNumber": "021000021", "bankName": "Example Bank", "electronicAccountType": "businessChecking"}}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/recipients" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/mercury_request.json' | jq .
 ```
 
 ---
@@ -217,8 +260,19 @@ bash -c 'curl -s "https://api.mercury.com/api/v1/accounts-receivable/customers" 
 
 ### Create Customer
 
+Write to `/tmp/mercury_request.json`:
+
+```json
+{
+  "name": "Customer Name",
+  "email": "customer@example.com"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/accounts-receivable/customers" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d '"'"'{"name": "Customer Name", "email": "customer@example.com"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/accounts-receivable/customers" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/mercury_request.json' | jq .
 ```
 
 ### List Invoices
@@ -229,8 +283,20 @@ bash -c 'curl -s "https://api.mercury.com/api/v1/accounts-receivable/invoices" -
 
 ### Create Invoice
 
+Write to `/tmp/mercury_request.json`:
+
+```json
+{
+  "customerId": "customer-id",
+  "lineItems": [{"description": "Service", "amount": 500.00}],
+  "dueDate": "2024-12-31"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/accounts-receivable/invoices" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d '"'"'{"customerId": "customer-id", "lineItems": [{"description": "Service", "amount": 500.00}], "dueDate": "2024-12-31"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://api.mercury.com/api/v1/accounts-receivable/invoices" --header "Authorization: Bearer $MERCURY_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/mercury_request.json' | jq .
 ```
 
 ### Download Invoice PDF

@@ -56,20 +56,28 @@ Base URL: `https://api.pdfnoodle.com/v1`
 
 ### 1. Generate PDF from Template (Sync)
 
-Generate a PDF using a pre-built template with dynamic data:
+Generate a PDF using a pre-built template with dynamic data.
 
-```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/pdforge_request.json`:
+
+```json
+{
   "templateId": "your-template-id",
   "data": {
-  "name": "John Doe",
-  "date": "2025-01-15",
-  "items": [
-  {"description": "Item 1", "price": 100},
-  {"description": "Item 2", "price": 200}
-  ]
+    "name": "John Doe",
+    "date": "2025-01-15",
+    "items": [
+      {"description": "Item 1", "price": 100},
+      {"description": "Item 2", "price": 200}
+    ]
   }
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
 ```
 
 **Response:**
@@ -87,17 +95,25 @@ The `signedUrl` is a temporary URL (expires in 1 hour) to download the generated
 
 ### 2. Generate PDF from Template (Async)
 
-For batch processing, use the async endpoint with a webhook:
+For batch processing, use the async endpoint with a webhook.
 
-```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/pdforge_request.json`:
+
+```json
+{
   "templateId": "your-template-id",
   "webhook": "https://your-server.com/webhook",
   "data": {
-  "name": "Jane Doe",
-  "amount": 500
+    "name": "Jane Doe",
+    "amount": 500
   }
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
 ```
 
 **Response:**
@@ -114,37 +130,61 @@ The webhook will receive the `signedUrl` when generation is complete.
 
 ### 3. Convert HTML to PDF (Sync)
 
-Convert raw HTML directly to PDF without a template:
+Convert raw HTML directly to PDF without a template.
+
+Write to `/tmp/pdforge_request.json`:
+
+```json
+{
+  "html": "<html><body><h1>Hello World</h1><p>This is a PDF generated from HTML.</p></body></html>"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
-  "html": "<html><body><h1>Hello World</h1><p>This is a PDF generated from HTML.</p></body></html>"
-  }'"'"' | jq .'
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
 ```
 
 ---
 
 ### 4. Convert HTML to PDF with Styling
 
-Include CSS for styled PDFs:
+Include CSS for styled PDFs.
+
+Write to `/tmp/pdforge_request.json`:
+
+```json
+{
+  "html": "<html><head><style>body { font-family: Arial; } h1 { color: #333; } .invoice { border: 1px solid #ddd; padding: 20px; }</style></head><body><div class=\"invoice\"><h1>Invoice #001</h1><p>Amount: $500</p></div></body></html>"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
-  "html": "<html><head><style>body { font-family: Arial; } h1 { color: #333; } .invoice { border: 1px solid #ddd; padding: 20px; }</style></head><body><div class=\"invoice\"><h1>Invoice #001</h1><p>Amount: $500</p></div></body></html>"
-  }'"'"' | jq .'
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
 ```
 
 ---
 
 ### 5. Generate PNG Instead of PDF
 
-Set `convertToImage` to true to get a PNG:
+Set `convertToImage` to true to get a PNG.
 
-```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/pdforge_request.json`:
+
+```json
+{
   "html": "<html><body><h1>Image Export</h1></body></html>",
   "convertToImage": true
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
 ```
 
 ---

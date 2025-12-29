@@ -141,26 +141,34 @@ bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/res
 
 Create a new issue (API v3 uses Atlassian Document Format for description):
 
-```bash
-bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/jira_request.json`:
+
+```json
+{
   "fields": {
-  "project": {"key": "PROJ"},
-  "summary": "Bug: Login button not responding",
-  "description": {
-  "type": "doc",
-  "version": 1,
-  "content": [
-  {
-  "type": "paragraph",
-  "content": [
-  {"type": "text", "text": "The login button on the mobile app is not responding when tapped."}
-  ]
+    "project": {"key": "PROJ"},
+    "summary": "Bug: Login button not responding",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {"type": "text", "text": "The login button on the mobile app is not responding when tapped."}
+          ]
+        }
+      ]
+    },
+    "issuetype": {"name": "Bug"}
   }
-  ]
-  },
-  "issuetype": {"name": "Bug"}
-  }
-}'"'"' | jq '"'"'{id, key, self}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json' | jq '{id, key, self}'
 ```
 
 ---
@@ -169,28 +177,36 @@ bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/re
 
 Create issue with additional fields:
 
-```bash
-bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/jira_request.json`:
+
+```json
+{
   "fields": {
-  "project": {"key": "PROJ"},
-  "summary": "Implement user authentication",
-  "description": {
-  "type": "doc",
-  "version": 1,
-  "content": [
-  {
-  "type": "paragraph",
-  "content": [
-  {"type": "text", "text": "Add OAuth2 authentication flow for the mobile app."}
-  ]
+    "project": {"key": "PROJ"},
+    "summary": "Implement user authentication",
+    "description": {
+      "type": "doc",
+      "version": 1,
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {"type": "text", "text": "Add OAuth2 authentication flow for the mobile app."}
+          ]
+        }
+      ]
+    },
+    "issuetype": {"name": "Story"},
+    "priority": {"name": "High"},
+    "labels": ["backend", "security"]
   }
-  ]
-  },
-  "issuetype": {"name": "Story"},
-  "priority": {"name": "High"},
-  "labels": ["backend", "security"]
-  }
-}'"'"' | jq '"'"'{id, key, self}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json' | jq '{id, key, self}'
 ```
 
 ---
@@ -201,14 +217,24 @@ Update an existing issue:
 
 ```bash
 ISSUE_KEY="PROJ-123"
+```
 
-curl -s -X PUT "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d '{
+Write to `/tmp/jira_request.json`:
+
+```json
+{
   "fields": {
-  "summary": "Updated: Login button not responding on iOS",
-  "priority": {"name": "Highest"},
-  "labels": ["bug", "ios", "urgent"]
+    "summary": "Updated: Login button not responding on iOS",
+    "priority": {"name": "Highest"},
+    "labels": ["bug", "ios", "urgent"]
   }
-  }'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json'
 ```
 
 Returns 204 No Content on success.
@@ -234,8 +260,22 @@ Move issue to a different status:
 ```bash
 ISSUE_KEY="PROJ-123"
 TRANSITION_ID="31" # Get from transitions endpoint
+```
 
-curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d "{\"transition\": {\"id\": \"${TRANSITION_ID}\"}}"
+Write to `/tmp/jira_request.json`:
+
+```json
+{
+  "transition": {
+    "id": "${TRANSITION_ID}"
+  }
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json'
 ```
 
 Returns 204 No Content on success.
@@ -248,21 +288,31 @@ Add a comment to an issue:
 
 ```bash
 ISSUE_KEY="PROJ-123"
+```
 
-bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/comment" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/jira_request.json`:
+
+```json
+{
   "body": {
-  "type": "doc",
-  "version": 1,
-  "content": [
-  {
-  "type": "paragraph",
-  "content": [
-  {"type": "text", "text": "Investigated and found the root cause. Working on a fix."}
-  ]
+    "type": "doc",
+    "version": 1,
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {"type": "text", "text": "Investigated and found the root cause. Working on a fix."}
+        ]
+      }
+    ]
   }
-  ]
-  }
-}'"'"' | jq '"'"'{id, created, author: .author.displayName}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/comment" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json' | jq '{id, created, author: .author.displayName}'
 ```
 
 ---
@@ -286,8 +336,20 @@ Assign an issue to a user:
 ```bash
 ISSUE_KEY="PROJ-123"
 ACCOUNT_ID="5b10ac8d82e05b22cc7d4ef5" # Get from /rest/api/3/user/search
+```
 
-curl -s -X PUT "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/assignee" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d "{\"accountId\": \"${ACCOUNT_ID}\"}"
+Write to `/tmp/jira_request.json`:
+
+```json
+{
+  "accountId": "${ACCOUNT_ID}"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/assignee" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json'
 ```
 
 ---

@@ -191,36 +191,80 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE
 
 ### 8. Insert Single Row
 
+Write to `/tmp/supabase_request.json`:
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"name": "John Doe", "email": "john@example.com"}'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json' | jq .
 ```
 
 ---
 
 ### 9. Insert Multiple Rows
 
+Write to `/tmp/supabase_request.json`:
+
+```json
+[
+  {"name": "John", "email": "john@example.com"},
+  {"name": "Jane", "email": "jane@example.com"}
+]
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'[{"name": "John", "email": "john@example.com"}, {"name": "Jane", "email": "jane@example.com"}]'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json' | jq .
 ```
 
 ---
 
 ### 10. Update Rows
 
-Update rows matching a filter:
+Update rows matching a filter.
+
+Write to `/tmp/supabase_request.json`:
+
+```json
+{
+  "status": "inactive"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d '"'"'{"status": "inactive"}'"'"'' | jq .
+bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json' | jq .
 ```
 
 ---
 
 ### 11. Upsert (Insert or Update)
 
-Use `Prefer: resolution=merge-duplicates`:
+Use `Prefer: resolution=merge-duplicates`.
+
+Write to `/tmp/supabase_request.json`:
+
+```json
+{
+  "id": 1,
+  "name": "John Updated",
+  "email": "john@example.com"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d '"'"'{"id": 1, "name": "John Updated", "email": "john@example.com"}'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d @/tmp/supabase_request.json' | jq .
 ```
 
 ---
@@ -265,10 +309,20 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?title=fts.hello" -H "apikey: ${S
 
 ### 15. Call RPC Functions
 
-Call PostgreSQL functions:
+Call PostgreSQL functions.
+
+Write to `/tmp/supabase_request.json`:
+
+```json
+{
+  "param1": "value1"
+}
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -d '"'"'{"param1": "value1"}'"'"'' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -d @/tmp/supabase_request.json' | jq .
 ```
 
 ---

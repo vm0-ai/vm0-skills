@@ -54,24 +54,75 @@ All examples below assume you have `DISCORD_WEBHOOK_URL` set.
 
 ### 1. Send Simple Message
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "content": "Hello from webhook!"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"content": "Hello from webhook!"}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
 
 ### 2. Send with Custom Username and Avatar
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "content": "Alert!",
+  "username": "Alert Bot",
+  "avatar_url": "https://i.imgur.com/4M34hi2.png"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"content": "Alert!", "username": "Alert Bot", "avatar_url": "https://i.imgur.com/4M34hi2.png"}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
 
 ### 3. Send Rich Embed
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "embeds": [
+    {
+      "title": "Deployment Complete",
+      "description": "Version 1.2.3 deployed to production",
+      "color": 5763719,
+      "fields": [
+        {
+          "name": "Environment",
+          "value": "Production",
+          "inline": true
+        },
+        {
+          "name": "Status",
+          "value": "Success",
+          "inline": true
+        }
+      ],
+      "timestamp": "2025-01-01T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"embeds": [{"title": "Deployment Complete", "description": "Version 1.2.3 deployed to production", "color": 5763719, "fields": [{"name": "Environment", "value": "Production", "inline": true}, {"name": "Status", "value": "Success", "inline": true}], "timestamp": "2025-01-01T12:00:00.000Z"}]}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 **Common colors (decimal):**
@@ -85,8 +136,37 @@ curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d 
 
 ### 4. Send Error Alert
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "embeds": [
+    {
+      "title": "Error Alert",
+      "description": "Database connection failed",
+      "color": 15548997,
+      "fields": [
+        {
+          "name": "Service",
+          "value": "api-server"
+        },
+        {
+          "name": "Error",
+          "value": "Connection timeout"
+        }
+      ],
+      "footer": {
+        "text": "Monitor"
+      }
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"embeds": [{"title": "Error Alert", "description": "Database connection failed", "color": 15548997, "fields": [{"name": "Service", "value": "api-server"}, {"name": "Error", "value": "Connection timeout"}], "footer": {"text": "Monitor"}}]}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
@@ -109,16 +189,52 @@ curl -s -X POST "${DISCORD_WEBHOOK_URL}" -F "file1=@error.log" -F "file2=@debug.
 
 ### 7. Send Multiple Embeds
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "embeds": [
+    {
+      "title": "Build Started",
+      "color": 16776960
+    },
+    {
+      "title": "Tests Passed",
+      "color": 5763719
+    },
+    {
+      "title": "Deployed",
+      "color": 5793266
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"embeds": [{"title": "Build Started", "color": 16776960}, {"title": "Tests Passed", "color": 5763719}, {"title": "Deployed", "color": 5793266}]}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
 
 ### 8. Send with Mention
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "content": "<@USER_ID> Check this out!",
+  "allowed_mentions": {
+    "users": ["USER_ID"]
+  }
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"content": "<@USER_ID> Check this out!", "allowed_mentions": {"users": ["USER_ID"]}}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 Replace `USER_ID` with actual Discord user ID.
@@ -127,16 +243,65 @@ Replace `USER_ID` with actual Discord user ID.
 
 ### 9. Send Silent Message (No Notification)
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "content": "Silent update",
+  "flags": 4096
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"content": "Silent update", "flags": 4096}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
 
 ### 10. CI/CD Pipeline Notification
 
+Write to `/tmp/discord_webhook_request.json`:
+
+```json
+{
+  "username": "GitHub Actions",
+  "embeds": [
+    {
+      "title": "Pipeline Status",
+      "color": 5763719,
+      "fields": [
+        {
+          "name": "Repository",
+          "value": "myorg/myrepo",
+          "inline": true
+        },
+        {
+          "name": "Branch",
+          "value": "main",
+          "inline": true
+        },
+        {
+          "name": "Commit",
+          "value": "abc1234",
+          "inline": true
+        },
+        {
+          "name": "Status",
+          "value": "Success"
+        }
+      ],
+      "timestamp": "2025-01-01T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d '{"username": "GitHub Actions", "embeds": [{"title": "Pipeline Status", "color": 5763719, "fields": [{"name": "Repository", "value": "myorg/myrepo", "inline": true}, {"name": "Branch", "value": "main", "inline": true}, {"name": "Commit", "value": "abc1234", "inline": true}, {"name": "Status", "value": "✅ Success"}], "timestamp": "2025-01-01T12:00:00.000Z"}]}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---

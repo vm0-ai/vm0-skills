@@ -56,40 +56,72 @@ Extract content from a single webpage.
 
 ### Basic Scrape
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "formats": ["markdown"]
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq .
 ```
 
 ### Scrape with Options
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://docs.example.com/api",
   "formats": ["markdown"],
   "onlyMainContent": true,
   "timeout": 30000
-  }'"'"' | jq '"'"'.data.markdown'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data.markdown'
 ```
 
 ### Get HTML Instead
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "formats": ["html"]
-  }'"'"' | jq '"'"'.data.html'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data.html'
 ```
 
 ### Get Screenshot
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "formats": ["screenshot"]
-  }'"'"' | jq '"'"'.data.screenshot'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data.screenshot'
 ```
 
 **Scrape Parameters:**
@@ -109,12 +141,20 @@ Crawl all pages of a website (async operation).
 
 ### Start a Crawl
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "limit": 50,
   "maxDepth": 2
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq .
 ```
 
 **Response:**
@@ -144,14 +184,22 @@ bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/{JOB_ID}" -H "Authorization
 
 ### Crawl with Path Filters
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://blog.example.com",
   "limit": 20,
   "maxDepth": 3,
   "includePaths": ["/posts/*"],
   "excludePaths": ["/admin/*", "/login"]
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq .
 ```
 
 **Crawl Parameters:**
@@ -172,20 +220,36 @@ Get all URLs from a website quickly.
 
 ### Basic Map
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://example.com"
-  }'"'"' | jq '"'"'.links[:10]'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.links[:10]'
 ```
 
 ### Map with Search Filter
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://shop.example.com",
   "search": "product",
   "limit": 500
-  }'"'"' | jq '"'"'.links'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.links'
 ```
 
 **Map Parameters:**
@@ -204,23 +268,39 @@ Search the web and get full page content.
 
 ### Basic Search
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "query": "AI news 2024",
   "limit": 5
-  }'"'"' | jq '"'"'.data[] | {title: .metadata.title, url: .url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data[] | {title: .metadata.title, url: .url}'
 ```
 
 ### Search with Full Content
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "query": "machine learning tutorials",
   "limit": 3,
   "scrapeOptions": {
-  "formats": ["markdown"]
+    "formats": ["markdown"]
   }
-  }'"'"' | jq '"'"'.data[] | {title: .metadata.title, content: .markdown[:500]}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data[] | {title: .metadata.title, content: .markdown[:500]}'
 ```
 
 **Search Parameters:**
@@ -239,41 +319,65 @@ Extract structured data from pages using AI.
 
 ### Basic Extract
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "urls": ["https://example.com/product/123"],
   "prompt": "Extract the product name, price, and description"
-  }'"'"' | jq '"'"'.data'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data'
 ```
 
 ### Extract with Schema
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "urls": ["https://example.com/product/123"],
   "prompt": "Extract product information",
   "schema": {
-  "type": "object",
-  "properties": {
-  "name": {"type": "string"},
-  "price": {"type": "number"},
-  "currency": {"type": "string"},
-  "inStock": {"type": "boolean"}
+    "type": "object",
+    "properties": {
+      "name": {"type": "string"},
+      "price": {"type": "number"},
+      "currency": {"type": "string"},
+      "inStock": {"type": "boolean"}
+    }
   }
-  }
-  }'"'"' | jq '"'"'.data'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data'
 ```
 
 ### Extract from Multiple URLs
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "urls": [
-  "https://example.com/product/1",
-  "https://example.com/product/2"
+    "https://example.com/product/1",
+    "https://example.com/product/2"
   ],
   "prompt": "Extract product name and price"
-  }'"'"' | jq '"'"'.data'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data'
 ```
 
 **Extract Parameters:**
@@ -290,40 +394,72 @@ bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorizatio
 
 ### Scrape Documentation
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://docs.python.org/3/tutorial/",
   "formats": ["markdown"],
   "onlyMainContent": true
-  }'"'"' | jq -r '"'"'.data.markdown'"'"' > python-tutorial.md'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq -r '.data.markdown' > python-tutorial.md
 ```
 
 ### Find All Blog Posts
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "url": "https://blog.example.com",
   "search": "post"
-  }'"'"' | jq -r '"'"'.links[]'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq -r '.links[]'
 ```
 
 ### Research a Topic
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "query": "best practices REST API design 2024",
   "limit": 5,
   "scrapeOptions": {"formats": ["markdown"]}
-  }'"'"' | jq '"'"'.data[] | {title: .metadata.title, url: .url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data[] | {title: .metadata.title, url: .url}'
 ```
 
 ### Extract Pricing Data
 
-```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/firecrawl_request.json`:
+
+```json
+{
   "urls": ["https://example.com/pricing"],
   "prompt": "Extract all pricing tiers with name, price, and features"
-  }'"'"' | jq '"'"'.data'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq '.data'
 ```
 
 ### Poll Crawl Until Complete

@@ -50,12 +50,20 @@ export APIFY_API_TOKEN="apify_api_xxxxxxxxxxxxxxxxxxxxxxxx"
 
 Start an Actor run asynchronously:
 
-```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "startUrls": [{"url": "https://example.com"}],
   "maxPagesPerCrawl": 10,
   "pageFunction": "async function pageFunction(context) { const { request, log, jQuery } = context; const $ = jQuery; const title = $(\"title\").text(); return { url: request.url, title }; }"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
 ```
 
 **Response contains `id` (run ID) and `defaultDatasetId` for fetching results.**
@@ -64,12 +72,20 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" 
 
 Wait for completion and get results directly (max 5 min):
 
-```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "startUrls": [{"url": "https://news.ycombinator.com"}],
   "maxPagesPerCrawl": 1,
   "pageFunction": "async function pageFunction(context) { const { request, log, jQuery } = context; const $ = jQuery; const title = $(\"title\").text(); return { url: request.url, title }; }"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
 ```
 
 ### 3. Check Run Status
@@ -85,12 +101,20 @@ bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authori
 
 **Complete workflow example** (capture run ID and check status):
 
-```bash
-# Step 1: Start an async run and capture the run ID
-RUN_ID=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "startUrls": [{"url": "https://example.com"}],
   "maxPagesPerCrawl": 10
-  }'"'"'' | jq -r '.data.id')
+}
+```
+
+Then run:
+
+```bash
+# Step 1: Start an async run and capture the run ID
+RUN_ID=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq -r '.data.id')
 
 # Step 2: Check the run status
 bash -c "curl -s \"https://api.apify.com/v2/actor-runs/${RUN_ID}\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\"" | jq '.data.status'
@@ -111,12 +135,20 @@ bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header 
 
 **Complete workflow example** (run async, wait, and fetch results):
 
-```bash
-# Step 1: Start async run and capture IDs
-RESPONSE=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "startUrls": [{"url": "https://example.com"}],
   "maxPagesPerCrawl": 10
-  }'"'"'')
+}
+```
+
+Then run:
+
+```bash
+# Step 1: Start async run and capture IDs
+RESPONSE=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json')
 
 RUN_ID=$(echo "$RESPONSE" | jq -r '.data.id')
 DATASET_ID=$(echo "$RESPONSE" | jq -r '.data.defaultDatasetId')
@@ -145,41 +177,73 @@ bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&
 
 #### Google Search Scraper
 
-```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~google-search-scraper/run-sync-get-dataset-items?timeout=120" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "queries": "web scraping tools",
   "maxPagesPerQuery": 1,
   "resultsPerPage": 10
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~google-search-scraper/run-sync-get-dataset-items?timeout=120" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
 ```
 
 #### Website Content Crawler
 
-```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~website-content-crawler/run-sync-get-dataset-items?timeout=300" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "startUrls": [{"url": "https://docs.example.com"}],
   "maxCrawlPages": 10,
   "crawlerType": "cheerio"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~website-content-crawler/run-sync-get-dataset-items?timeout=300" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
 ```
 
 #### Instagram Scraper
 
-```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~instagram-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "directUrls": ["https://www.instagram.com/apaborotnikov/"],
   "resultsType": "posts",
   "resultsLimit": 10
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~instagram-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
 ```
 
 #### Amazon Product Scraper
 
-```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "categoryOrProductUrls": [{"url": "https://www.amazon.com/dp/B0BSHF7WHW"}],
   "maxItemsPerStartUrl": 1
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
 ```
 
 ### 6. List Your Runs
@@ -203,12 +267,20 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --h
 
 **Complete workflow example** (start a run and abort it):
 
-```bash
-# Step 1: Start an async run and capture the run ID
-RUN_ID=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/apify_request.json`:
+
+```json
+{
   "startUrls": [{"url": "https://example.com"}],
   "maxPagesPerCrawl": 100
-  }'"'"'' | jq -r '.data.id')
+}
+```
+
+Then run:
+
+```bash
+# Step 1: Start an async run and capture the run ID
+RUN_ID=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq -r '.data.id')
 
 echo "Started run: $RUN_ID"
 

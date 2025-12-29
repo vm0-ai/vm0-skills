@@ -77,14 +77,22 @@ bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header 
 
 Generate a video from an image:
 
-```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/runway_request.json`:
+
+```json
+{
   "model": "gen4_turbo",
   "promptImage": "https://example.com/your-image.jpg",
   "promptText": "A timelapse of clouds moving across the sky",
   "ratio": "1280:720",
   "duration": 5
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
 ```
 
 **Response:**
@@ -102,13 +110,21 @@ Generate a video from text only:
 
 > **Note:** Text-to-video only supports duration values of 4, 6, or 8 seconds (not arbitrary values like image-to-video).
 
-```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/runway_request.json`:
+
+```json
+{
   "model": "veo3.1",
   "promptText": "A serene forest with sunlight filtering through the trees",
   "ratio": "1280:720",
   "duration": 6
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
 ```
 
 ---
@@ -117,12 +133,20 @@ bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --heade
 
 Transform an existing video:
 
-```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/runway_request.json`:
+
+```json
+{
   "model": "gen4_aleph",
   "videoUri": "https://example.com/source-video.mp4",
   "promptText": "Add magical sparkles and fairy dust effects"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
 ```
 
 ---
@@ -131,12 +155,20 @@ bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --head
 
 Generate images from text:
 
-```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/runway_request.json`:
+
+```json
+{
   "model": "gen4_image_turbo",
   "promptText": "A futuristic cityscape at sunset",
   "ratio": "16:9"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
 ```
 
 ---
@@ -180,11 +212,19 @@ curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "A
 
 Upscale video resolution:
 
-```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/runway_request.json`:
+
+```json
+{
   "model": "upscale_v1",
   "videoUri": "https://example.com/low-res-video.mp4"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
 ```
 
 ---
@@ -193,11 +233,19 @@ bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --heade
 
 Generate audio from text:
 
-```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/runway_request.json`:
+
+```json
+{
   "model": "eleven_text_to_sound_v2",
   "promptText": "Thunder rumbling in the distance"
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
 ```
 
 ---

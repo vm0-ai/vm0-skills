@@ -1,13 +1,13 @@
 ---
 name: bright-data
-description: Bright Data API via curl. Use this skill for account management, usage monitoring, and billing information.
+description: Bright Data Web Scraper API via curl. Use this skill for scraping social media (Twitter/X, Reddit, YouTube, Instagram, TikTok), account management, and usage monitoring.
 vm0_env:
   - BRIGHTDATA_API_KEY
 ---
 
-# Bright Data API
+# Bright Data Web Scraper API
 
-Use the Bright Data API via direct `curl` calls for **account management**, **usage monitoring**, and **billing information**.
+Use the Bright Data API via direct `curl` calls for **social media scraping**, **web data extraction**, and **account management**.
 
 > Official docs: `https://docs.brightdata.com/`
 
@@ -17,9 +17,10 @@ Use the Bright Data API via direct `curl` calls for **account management**, **us
 
 Use this skill when you need to:
 
-- **Check account status** - Verify API key and account state
+- **Scrape social media** - Twitter/X, Reddit, YouTube, Instagram, TikTok, LinkedIn
+- **Extract web data** - Posts, profiles, comments, engagement metrics
 - **Monitor usage** - Track bandwidth and request usage
-- **Manage zones** - List and monitor active zones
+- **Manage account** - Check status and zones
 
 ---
 
@@ -27,9 +28,16 @@ Use this skill when you need to:
 
 1. Sign up at [Bright Data](https://brightdata.com/)
 2. Get your API key from [Settings > Users](https://brightdata.com/cp/setting/users)
+3. Create a Web Scraper dataset in the [Control Panel](https://brightdata.com/cp/datasets) to get your `dataset_id`
 
 ```bash
 export BRIGHTDATA_API_KEY="your-api-key"
+```
+
+### Base URL
+
+```
+https://api.brightdata.com
 ```
 
 ---
@@ -40,20 +48,371 @@ export BRIGHTDATA_API_KEY="your-api-key"
 > bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
 > ```
 
-## How to Use
+---
 
-All examples below assume you have `BRIGHTDATA_API_KEY` set.
+## Social Media Scraping
 
-Authentication uses Bearer token in the `Authorization` header.
+Bright Data supports scraping these social media platforms:
+
+| Platform | Profiles | Posts | Comments | Reels/Videos |
+|----------|----------|-------|----------|--------------|
+| Twitter/X | ✅ | ✅ | - | - |
+| Reddit | - | ✅ | ✅ | - |
+| YouTube | ✅ | ✅ | ✅ | - |
+| Instagram | ✅ | ✅ | ✅ | ✅ |
+| TikTok | ✅ | ✅ | ✅ | - |
+| LinkedIn | ✅ | ✅ | - | - |
 
 ---
 
-### 1. Check Account Status
+## How to Use
 
-Verify your API key and account status:
+### 1. Trigger Scraping (Asynchronous)
+
+Trigger a data collection job and get a `snapshot_id` for later retrieval.
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://twitter.com/username"},
+  {"url": "https://twitter.com/username2"}
+]
+```
+
+Then run:
 
 ```bash
-bash -c 'curl -s "https://api.brightdata.com/status" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+DATASET_ID="gd_xxxxx"  # Your dataset ID from Bright Data dashboard
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Response:**
+```json
+{
+  "snapshot_id": "s_m4x7enmven8djfqak"
+}
+```
+
+---
+
+### 2. Trigger Scraping (Synchronous)
+
+Get results immediately in the response (for small requests).
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://www.reddit.com/r/technology/comments/xxxxx"}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_xxxxx"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+---
+
+### 3. Monitor Progress
+
+Check the status of a scraping job:
+
+```bash
+SNAPSHOT_ID="s_xxxxx"
+
+bash -c 'curl -s "https://api.brightdata.com/datasets/v3/progress/${SNAPSHOT_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+```
+
+**Response:**
+```json
+{
+  "snapshot_id": "s_m4x7enmven8djfqak",
+  "dataset_id": "gd_xxxxx",
+  "status": "running"
+}
+```
+
+Status values: `running`, `ready`, `failed`
+
+---
+
+### 4. Download Results
+
+Once status is `ready`, download the collected data:
+
+```bash
+SNAPSHOT_ID="s_xxxxx"
+
+bash -c 'curl -s "https://api.brightdata.com/datasets/v3/snapshot/${SNAPSHOT_ID}?format=json" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+```
+
+---
+
+### 5. List Snapshots
+
+Get all your snapshots:
+
+```bash
+bash -c 'curl -s "https://api.brightdata.com/datasets/v3/snapshots" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq '.[] | {snapshot_id, dataset_id, status}'
+```
+
+---
+
+### 6. Cancel Snapshot
+
+Cancel a running job:
+
+```bash
+SNAPSHOT_ID="s_xxxxx"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/cancel?snapshot_id=${SNAPSHOT_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+```
+
+---
+
+## Platform-Specific Examples
+
+### Twitter/X - Scrape Profile
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://twitter.com/elonmusk"}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_twitter_profiles"  # Use your actual dataset ID
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Returns:** `x_id`, `profile_name`, `biography`, `is_verified`, `followers`, `following`, `profile_image_link`
+
+### Twitter/X - Scrape Posts
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://twitter.com/username/status/123456789"}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_twitter_posts"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Returns:** `post_id`, `text`, `replies`, `likes`, `retweets`, `views`, `hashtags`, `media`
+
+---
+
+### Reddit - Scrape Subreddit Posts
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://www.reddit.com/r/technology", "sort_by": "hot"}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_reddit_posts"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Parameters:** `url`, `sort_by` (new/top/hot)
+
+**Returns:** `post_id`, `title`, `description`, `num_comments`, `upvotes`, `date_posted`, `community`
+
+### Reddit - Scrape Comments
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://www.reddit.com/r/technology/comments/xxxxx/post_title"}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_reddit_comments"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Returns:** `comment_id`, `user_posted`, `comment_text`, `upvotes`, `replies`
+
+---
+
+### YouTube - Scrape Video Info
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_youtube_videos"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Returns:** `title`, `views`, `likes`, `num_comments`, `video_length`, `transcript`, `channel_name`
+
+### YouTube - Search by Keyword
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"keyword": "artificial intelligence", "num_of_posts": 50}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_youtube_search"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+### YouTube - Scrape Comments
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://www.youtube.com/watch?v=xxxxx", "load_replies": 3}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_youtube_comments"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Returns:** `comment_text`, `likes`, `replies`, `username`, `date`
+
+---
+
+### Instagram - Scrape Profile
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {"url": "https://www.instagram.com/username"}
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_instagram_profiles"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+**Returns:** `followers`, `post_count`, `profile_name`, `is_verified`, `biography`
+
+### Instagram - Scrape Posts
+
+Write to `/tmp/brightdata_request.json`:
+
+```json
+[
+  {
+    "url": "https://www.instagram.com/username",
+    "num_of_posts": 20,
+    "start_date": "01-01-2024",
+    "end_date": "12-31-2024"
+  }
+]
+```
+
+Then run:
+
+```bash
+DATASET_ID="gd_instagram_posts"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json' | jq .
+```
+
+---
+
+## Account Management
+
+### Check Account Status
+
+```bash
+bash -c 'curl -s "https://api.brightdata.com/status" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
 ```
 
 **Response:**
@@ -66,69 +425,62 @@ bash -c 'curl -s "https://api.brightdata.com/status" -H "Authorization: Bearer $
 }
 ```
 
----
-
-### 2. Get Active Zones
-
-List all active zones in your account:
+### Get Active Zones
 
 ```bash
-bash -c 'curl -s "https://api.brightdata.com/zone/get_active_zones" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq '.[] | {name, type}
+bash -c 'curl -s "https://api.brightdata.com/zone/get_active_zones" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq '.[] | {name, type}'
 ```
 
----
-
-### 3. Get Zone Info
-
-Get details about a specific zone:
+### Get Bandwidth Usage
 
 ```bash
-ZONE_NAME="your-zone-name"
-
-bash -c 'curl -s "https://api.brightdata.com/zone?zone=${ZONE_NAME}" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+bash -c 'curl -s "https://api.brightdata.com/customer/bw" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
 ```
 
 ---
 
-### 4. Get Bandwidth Usage
+## Getting Dataset IDs
 
-Get bandwidth usage statistics:
+To use the scraping features, you need a `dataset_id`:
 
-```bash
-bash -c 'curl -s "https://api.brightdata.com/customer/bw" -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
-```
+1. Go to [Bright Data Control Panel](https://brightdata.com/cp/datasets)
+2. Create a new Web Scraper dataset or select an existing one
+3. Choose the platform (Twitter, Reddit, YouTube, etc.)
+4. Copy the `dataset_id` from the dataset settings
+
+Dataset IDs can also be found in the bandwidth usage API response under the `data` field keys (e.g., `v__ds_api_gd_xxxxx` where `gd_xxxxx` is your dataset ID).
 
 ---
 
-## Response Format
+## Common Parameters
 
-### Account Status Response
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `url` | Target URL to scrape | `https://twitter.com/user` |
+| `keyword` | Search keyword | `"artificial intelligence"` |
+| `num_of_posts` | Limit number of results | `50` |
+| `start_date` | Filter by date (MM-DD-YYYY) | `"01-01-2024"` |
+| `end_date` | Filter by date (MM-DD-YYYY) | `"12-31-2024"` |
+| `sort_by` | Sort order (Reddit) | `new`, `top`, `hot` |
+| `format` | Response format | `json`, `csv` |
 
-```json
-{
-  "status": "active",
-  "customer": "hl_xxxxxxxx",
-  "can_make_requests": true,
-  "ip": "x.x.x.x"
-}
-```
+---
 
-### Zone List Response
+## Rate Limits
 
-```json
-[
-  {
-  "name": "zone_name",
-  "type": "serp"
-  }
-]
-```
+- Batch mode: up to 100 concurrent requests
+- Maximum input size: 1GB per batch
+- Exceeding limits returns `429` error
 
 ---
 
 ## Guidelines
 
-1. **API key only**: These endpoints work with just the API key
-2. **Check status first**: Verify account is active before other operations
-3. **Monitor usage**: Regularly check bandwidth usage
-4. **Create zones in UI**: Zone creation requires the control panel
+1. **Create datasets first**: Use the Control Panel to create scraper datasets
+2. **Use async for large jobs**: Use `/trigger` for discovery and batch operations
+3. **Use sync for small jobs**: Use `/scrape` for single URL quick lookups
+4. **Check status before download**: Poll `/progress` until status is `ready`
+5. **Respect rate limits**: Don't exceed 100 concurrent requests
+6. **Date format**: Use MM-DD-YYYY for date parameters

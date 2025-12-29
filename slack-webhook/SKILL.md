@@ -38,61 +38,113 @@ export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XX
 
 ### Simple Message
 
+Write to `/tmp/slack_request.json`:
+
+```json
+{
+  "text": "Hello, world."
+}
+```
+
+Then run:
+
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{"text":"Hello, world."}'
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Formatting
 
+Write to `/tmp/slack_request.json`:
+
+```json
+{
+  "text": "*Bold* and _italic_ text"
+}
+```
+
+Then run:
+
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{"text":"*Bold* and _italic_ text"}'
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Link
 
+Write to `/tmp/slack_request.json`:
+
+```json
+{
+  "text": "Check <https://example.com|this link>"
+}
+```
+
+Then run:
+
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{"text":"Check <https://example.com|this link>"}'
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Blocks (Rich Layout)
 
-```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{
+Write to `/tmp/slack_request.json`:
+
+```json
+{
   "text": "New review submitted",
   "blocks": [
-  {
-  "type": "section",
-  "text": {
-  "type": "mrkdwn",
-  "text": "Danny left the following review:"
-  }
-  },
-  {
-  "type": "section",
-  "text": {
-  "type": "mrkdwn",
-  "text": "<https://example.com|Overlook Hotel>\n:star:\nDoors had too many axe holes."
-  }
-  }
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Danny left the following review:"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "<https://example.com|Overlook Hotel>\n:star:\nDoors had too many axe holes."
+      }
+    }
   ]
-  }'
+}
+```
+
+Then run:
+
+```bash
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Fields
 
-```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d '{
+Write to `/tmp/slack_request.json`:
+
+```json
+{
   "text": "Deployment status",
   "blocks": [
-  {
-  "type": "section",
-  "fields": [
-  {"type": "mrkdwn", "text": "*Environment:*\nProduction"},
-  {"type": "mrkdwn", "text": "*Status:*\nSuccess"}
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Environment:*\nProduction"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Status:*\nSuccess"
+        }
+      ]
+    }
   ]
-  }
-  ]
-  }'
+}
+```
+
+Then run:
+
+```bash
+curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ## Message Formatting

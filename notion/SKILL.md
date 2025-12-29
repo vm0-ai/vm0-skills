@@ -70,21 +70,42 @@ Blocks with `has_children: true` contain nested content:
 
 ```bash
 BLOCK_ID="2b70e96f-0134-80d9-9def-f99ae812f1e7"
-bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}
+bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
 ```
 
 ### Search Workspace
 
+Write to `/tmp/notion_request.json`:
+
+```json
+{
+  "query": "Meeting Notes",
+  "page_size": 10
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST '"'"'https://api.notion.com/v1/search'"'"' --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' --header '"'"'Content-Type: application/json'"'"' -d '"'"'{"query":"Meeting Notes","page_size":10}'"'"'' | jq '.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}
+bash -c 'curl -s -X POST "https://api.notion.com/v1/search" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json' | jq '.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}'
 ```
 
 Docs: https://developers.notion.com/reference/post-search
 
 ### List Database Entries
 
+Write to `/tmp/notion_request.json`:
+
+```json
+{
+  "page_size": 100
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"' --header '"'"'Content-Type: application/json'"'"' -d '"'"'{"page_size":100}'"'"'' | jq '.results[] | {id, properties}
+bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json' | jq '.results[] | {id, properties}'
 ```
 
 Docs: https://developers.notion.com/reference/post-database-query
@@ -122,7 +143,7 @@ EOF
 ### Get Database Schema
 
 ```bash
-bash -c 'curl -s "https://api.notion.com/v1/databases/${DATABASE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{title: .title[0].plain_text, properties: .properties | keys}
+bash -c 'curl -s "https://api.notion.com/v1/databases/${DATABASE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{title: .title[0].plain_text, properties: .properties | keys}'
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-database
@@ -130,7 +151,7 @@ Docs: https://developers.notion.com/reference/retrieve-a-database
 ### Get Page
 
 ```bash
-bash -c 'curl -s "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{id, url, properties}
+bash -c 'curl -s "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{id, url, properties}'
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-page
@@ -193,14 +214,24 @@ Docs: https://developers.notion.com/reference/patch-page
 
 ### Archive Page
 
+Write to `/tmp/notion_request.json`:
+
+```json
+{
+  "archived": true
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d '{"archived": true}'
+bash -c 'curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json'
 ```
 
 ### Get Block Children
 
 ```bash
-bash -c 'curl -s "https://api.notion.com/v1/blocks/${BLOCK_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '.results[] | {type, id}
+bash -c 'curl -s "https://api.notion.com/v1/blocks/${BLOCK_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '.results[] | {type, id}'
 ```
 
 Docs: https://developers.notion.com/reference/get-block-children
@@ -240,7 +271,7 @@ curl -s -X DELETE "https://api.notion.com/v1/blocks/${BLOCK_ID}" --header "Autho
 ### List Users
 
 ```bash
-bash -c 'curl -s '"'"'https://api.notion.com/v1/users'"'"' --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '.results[] | {id, name, type}
+bash -c 'curl -s '"'"'https://api.notion.com/v1/users'"'"' --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '.results[] | {id, name, type}'
 ```
 
 Docs: https://developers.notion.com/reference/get-users

@@ -134,12 +134,22 @@ Create a new issue in a project:
 
 ```bash
 PROJECT_ID="123"
+```
 
-bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
   "title": "Bug: Login page not loading",
   "description": "The login page shows a blank screen on mobile devices.",
   "labels": "bug,frontend"
-}'"'"' | jq '"'"'{iid, title, web_url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{iid, title, web_url}'
 ```
 
 ---
@@ -152,14 +162,24 @@ Create issue with additional fields:
 PROJECT_ID="123"
 ASSIGNEE_ID="456"
 MILESTONE_ID="1"
+```
 
-curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d "{
-  \"title\": \"Implement user profile page\",
-  \"description\": \"Create a user profile page with avatar and bio.\",
-  \"assignee_ids\": [${ASSIGNEE_ID}],
-  \"milestone_id\": ${MILESTONE_ID},
-  \"labels\": \"feature,frontend\"
-}" | jq '{iid, title, web_url}'
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
+  "title": "Implement user profile page",
+  "description": "Create a user profile page with avatar and bio.",
+  "assignee_ids": [${ASSIGNEE_ID}],
+  "milestone_id": ${MILESTONE_ID},
+  "labels": "feature,frontend"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{iid, title, web_url}'
 ```
 
 ---
@@ -171,11 +191,21 @@ Update an existing issue:
 ```bash
 PROJECT_ID="123"
 ISSUE_IID="1"
+```
 
-bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
   "title": "Updated: Bug fix for login page",
   "labels": "bug,frontend,in-progress"
-}'"'"' | jq '"'"'{iid, title, labels, updated_at}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{iid, title, labels, updated_at}'
 ```
 
 ---
@@ -187,8 +217,20 @@ Close an issue:
 ```bash
 PROJECT_ID="123"
 ISSUE_IID="1"
+```
 
-bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"state_event": "close"}'"'"'' | jq '{iid, title, state}
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
+  "state_event": "close"
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{iid, title, state}'
 ```
 
 Use `"state_event": "reopen"` to reopen a closed issue.
@@ -202,8 +244,20 @@ Add a note/comment to an issue:
 ```bash
 PROJECT_ID="123"
 ISSUE_IID="1"
+```
 
-bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}/notes" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"body": "Investigating this issue. Will update soon."}'"'"'' | jq '{id, body, author: .author.username, created_at}
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
+  "body": "Investigating this issue. Will update soon."
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/issues/${ISSUE_IID}/notes" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{id, body, author: .author.username, created_at}'
 ```
 
 ---
@@ -244,13 +298,23 @@ Create a new merge request:
 
 ```bash
 PROJECT_ID="123"
+```
 
-bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
   "source_branch": "feature/user-profile",
   "target_branch": "main",
   "title": "Add user profile page",
   "description": "This MR adds a new user profile page with avatar support."
-}'"'"' | jq '"'"'{iid, title, web_url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{iid, title, web_url}'
 ```
 
 ---
@@ -262,8 +326,20 @@ Merge an MR (if it's ready):
 ```bash
 PROJECT_ID="123"
 MR_IID="1"
+```
 
-bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}/merge" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{"merge_when_pipeline_succeeds": true}'"'"'' | jq '{iid, title, state, merged_by: .merged_by.username}
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
+  "merge_when_pipeline_succeeds": true
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X PUT "https://${GITLAB_HOST}/api/v4/projects/${PROJECT_ID}/merge_requests/${MR_IID}/merge" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{iid, title, state, merged_by: .merged_by.username}'
 ```
 
 Options:
@@ -325,12 +401,20 @@ bash -c 'curl -s -G "https://${GITLAB_HOST}/api/v4/users" --header "PRIVATE-TOKE
 
 Create a new project:
 
-```bash
-bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/gitlab_request.json`:
+
+```json
+{
   "name": "my-new-project",
   "visibility": "private",
   "initialize_with_readme": true
-}'"'"' | jq '"'"'{id, path_with_namespace, web_url}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://${GITLAB_HOST}/api/v4/projects" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json' | jq '{id, path_with_namespace, web_url}'
 ```
 
 ---

@@ -90,16 +90,42 @@ bash -c 'curl -s "https://discord.com/api/v10/users/@me" -H "Authorization: Bot 
 
 ### 2. Send Message to Channel
 
+Write to `/tmp/discord_request.json`:
+
+```json
+{
+  "content": "Hello from bot!"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d "{\"content\": \"Hello from bot!\"}"' | jq '{id, content}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, content}'
 ```
 
 ---
 
 ### 3. Send Embed Message
 
+Write to `/tmp/discord_request.json`:
+
+```json
+{
+  "embeds": [
+    {
+      "title": "Bot Message",
+      "description": "This is from the bot API",
+      "color": 5793266
+    }
+  ]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d "{\"embeds\": [{\"title\": \"Bot Message\", \"description\": \"This is from the bot API\", \"color\": 5793266}]}"' | jq '{id}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id}'
 ```
 
 ---
@@ -180,8 +206,18 @@ bash -c 'curl -s "https://discord.com/api/v10/guilds/${GUILD_ID}/roles" -H "Auth
 
 ### 13. Create Webhook
 
+Write to `/tmp/discord_request.json`:
+
+```json
+{
+  "name": "My Webhook"
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/webhooks" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d "{\"name\": \"My Webhook\"}"' | jq '{id, token, url: "https://discord.com/api/webhooks/\(.id)/\(.token)"}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/webhooks" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, token, url: "https://discord.com/api/webhooks/\(.id)/\(.token)"}'
 ```
 
 ---
@@ -196,8 +232,19 @@ bash -c 'curl -s "https://discord.com/api/v10/channels/${CHANNEL_ID}/webhooks" -
 
 ### 15. Create Text Channel
 
+Write to `/tmp/discord_request.json`:
+
+```json
+{
+  "name": "new-channel",
+  "type": 0
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/guilds/${GUILD_ID}/channels" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d "{\"name\": \"new-channel\", \"type\": 0}"' | jq '{id, name}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/guilds/${GUILD_ID}/channels" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, name}'
 ```
 
 ---

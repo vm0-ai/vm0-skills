@@ -51,98 +51,154 @@ export BROWSERLESS_API_TOKEN="your-api-token-here"
 
 Extract structured JSON using CSS selectors:
 
-```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "elements": [
-  {"selector": "h1"},
-  {"selector": "p"}
+    {"selector": "h1"},
+    {"selector": "p"}
   ]
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq .
 ```
 
 **With wait options:**
 
-```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://news.ycombinator.com",
   "elements": [{"selector": ".titleline > a"}],
   "gotoOptions": {
-  "waitUntil": "networkidle2",
-  "timeout": 30000
+    "waitUntil": "networkidle2",
+    "timeout": 30000
   }
-  }'"'"' | jq '"'"'.data[0].results[:3]'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq '.data[0].results[:3]'
 ```
 
 ### 2. Take Screenshots
 
 **Full page screenshot:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "options": {
-  "fullPage": true,
-  "type": "png"
+    "fullPage": true,
+    "type": "png"
   }
-  }' --output screenshot.png
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output screenshot.png
 ```
 
 **Element screenshot:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "options": {
-  "type": "png"
+    "type": "png"
   },
   "selector": "h1"
-  }' --output element.png
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output element.png
 ```
 
 **With viewport size:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "viewport": {
-  "width": 1920,
-  "height": 1080
+    "width": 1920,
+    "height": 1080
   },
   "options": {
-  "type": "jpeg",
-  "quality": 80
+    "type": "jpeg",
+    "quality": 80
   }
-  }' --output screenshot.jpg
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output screenshot.jpg
 ```
 
 ### 3. Generate PDF
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/pdf?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "options": {
-  "format": "A4",
-  "printBackground": true,
-  "margin": {
-  "top": "1cm",
-  "bottom": "1cm"
+    "format": "A4",
+    "printBackground": true,
+    "margin": {
+      "top": "1cm",
+      "bottom": "1cm"
+    }
   }
-  }
-  }' --output page.pdf
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/pdf?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output page.pdf
 ```
 
 ### 4. Get Rendered HTML
 
 Get fully rendered HTML after JavaScript execution:
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/content?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "gotoOptions": {
-  "waitUntil": "networkidle0"
+    "waitUntil": "networkidle0"
   }
-  }'
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/content?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
 ```
 
 ### 5. Execute Custom JavaScript (Click, Type, etc.)
@@ -197,35 +253,59 @@ curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERL
 
 Bypass bot detection:
 
-```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/unblock?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "browserWSEndpoint": false,
   "cookies": false,
   "content": true,
   "screenshot": false
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/unblock?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq .
 ```
 
 ### 7. Download Files
 
 Trigger and capture file downloads:
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/download?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com/file.pdf"
-  }' --output downloaded.pdf
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/download?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output downloaded.pdf
 ```
 
 ### 8. Stealth Mode
 
 Enable stealth mode to avoid detection:
 
-```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}&stealth=true" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "elements": [{"selector": "body"}]
-  }'"'"' | jq .'
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}&stealth=true" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq .
 ```
 
 ### 9. Export Page with Resources
@@ -234,19 +314,35 @@ Fetch a URL and get content in native format. Can bundle all resources (CSS, JS,
 
 **Basic export:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/export?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com"
-  }' --output page.html
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/export?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output page.html
 ```
 
 **Export with all resources as ZIP:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/export?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "includeResources": true
-  }' --output webpage.zip
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/export?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output webpage.zip
 ```
 
 ### 10. Performance Audit (Lighthouse)
@@ -255,38 +351,62 @@ Run Lighthouse audits for accessibility, performance, SEO, best practices:
 
 **Full audit:**
 
-```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com"
-  }'"'"' | jq '"'"'.data.categories | to_entries[] | {category: .key, score: .value.score}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq '.data.categories | to_entries[] | {category: .key, score: .value.score}'
 ```
 
 **Specific category (accessibility, performance, seo, best-practices, pwa):**
 
-```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "config": {
-  "extends": "lighthouse:default",
-  "settings": {
-  "onlyCategories": ["performance"]
+    "extends": "lighthouse:default",
+    "settings": {
+      "onlyCategories": ["performance"]
+    }
   }
-  }
-  }'"'"' | jq '"'"'.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq '.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'
 ```
 
 **Specific audit (e.g., unminified-css, first-contentful-paint):**
 
-```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d '"'"'{
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
   "url": "https://example.com",
   "config": {
-  "extends": "lighthouse:default",
-  "settings": {
-  "onlyAudits": ["first-contentful-paint", "largest-contentful-paint"]
+    "extends": "lighthouse:default",
+    "settings": {
+      "onlyAudits": ["first-contentful-paint", "largest-contentful-paint"]
+    }
   }
-  }
-  }'"'"' | jq '"'"'.data.audits'"'"''
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq '.data.audits'
 ```
 
 ---
