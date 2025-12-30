@@ -1,7 +1,7 @@
 ---
 name: pushinator
 description: Pushinator push notification API via curl. Use this skill to send push notifications to mobile devices.
-vm0_env:
+vm0_secrets:
   - PUSHINATOR_API_KEY
 ---
 

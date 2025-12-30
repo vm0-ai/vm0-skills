@@ -1,9 +1,10 @@
 ---
 name: kommo
 description: Kommo CRM API via curl. Use this skill for managing leads, contacts, companies, tasks, and sales pipelines.
-vm0_env:
-  - KOMMO_SUBDOMAIN
+vm0_secrets:
   - KOMMO_API_KEY
+vm0_vars:
+  - KOMMO_SUBDOMAIN
 ---
 
 # Kommo API

@@ -1,7 +1,7 @@
 ---
 name: runway
 description: Runway AI API for video generation via curl. Use this skill to generate videos from images, text, or other videos.
-vm0_env:
+vm0_secrets:
   - RUNWAY_API_KEY
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: resend
 description: Resend email API via curl. Use this skill to send transactional emails, manage contacts, domains, and API keys.
-vm0_env:
+vm0_secrets:
   - RESEND_API_KEY
 ---
 

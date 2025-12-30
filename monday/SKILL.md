@@ -1,7 +1,7 @@
 ---
 name: monday
 description: Monday.com GraphQL API via curl. Use this skill to manage boards, items, and projects.
-vm0_env:
+vm0_secrets:
   - MONDAY_API_KEY
 ---
 

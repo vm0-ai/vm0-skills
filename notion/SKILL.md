@@ -1,7 +1,7 @@
 ---
 name: notion
 description: Notion API for managing pages, databases, and blocks. Use this skill to create pages, query databases, search content, and build integrations with Notion workspaces.
-vm0_env:
+vm0_secrets:
   - NOTION_API_KEY
 ---
 

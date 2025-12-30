@@ -1,7 +1,7 @@
 ---
 name: browserless
 description: Headless browser as a service for screenshots, PDFs, scraping, and automation
-vm0_env:
+vm0_secrets:
   - BROWSERLESS_API_TOKEN
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: imgur
 description: Upload images to Imgur for free hosting. Use this skill when you need to upload images and get public URLs for sharing or embedding in articles.
-vm0_env:
+vm0_secrets:
   - IMGUR_CLIENT_ID
 ---
 

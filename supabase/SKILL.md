@@ -1,10 +1,11 @@
 ---
 name: supabase
 description: Supabase REST API via curl. Use this skill for database CRUD operations, filtering, pagination, and real-time data management.
-vm0_env:
+vm0_secrets:
+  - SUPABASE_SECRET_KEY
+vm0_vars:
   - SUPABASE_URL
   - SUPABASE_PUBLISHABLE_KEY
-  - SUPABASE_SECRET_KEY
 ---
 
 # Supabase REST API

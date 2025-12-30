@@ -1,10 +1,11 @@
 ---
 name: cloudinary
 description: Upload images and videos to Cloudinary with CDN delivery and transformations. Use this skill for media hosting, optimization, resizing, format conversion, and video concatenation.
-vm0_env:
-  - CLOUDINARY_CLOUD_NAME
+vm0_secrets:
   - CLOUDINARY_API_KEY
   - CLOUDINARY_API_SECRET
+vm0_vars:
+  - CLOUDINARY_CLOUD_NAME
 ---
 
 # Cloudinary Media Hosting

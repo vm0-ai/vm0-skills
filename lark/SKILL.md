@@ -1,9 +1,10 @@
 ---
 name: lark
 description: Lark/Feishu API integration for messaging, group management, contacts, and calendar. Use this skill to send messages, manage chats, query contacts, and sync calendar events with Lark/Feishu.
-vm0_env:
-  - LARK_APP_ID
+vm0_secrets:
   - LARK_APP_SECRET
+vm0_vars:
+  - LARK_APP_ID
 ---
 
 # Lark (Feishu) API

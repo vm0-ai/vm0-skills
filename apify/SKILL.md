@@ -1,7 +1,7 @@
 ---
 name: apify
 description: Web scraping and automation platform with pre-built Actors for common tasks
-vm0_env:
+vm0_secrets:
   - APIFY_API_TOKEN
 ---
 

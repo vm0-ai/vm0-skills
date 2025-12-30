@@ -1,8 +1,9 @@
 ---
 name: instagram
 description: Instagram Graph API integration via curl. Use this skill to fetch and publish Instagram media.
-vm0_env:
+vm0_secrets:
   - INSTAGRAM_ACCESS_TOKEN
+vm0_vars:
   - INSTAGRAM_BUSINESS_ACCOUNT_ID
 ---
 

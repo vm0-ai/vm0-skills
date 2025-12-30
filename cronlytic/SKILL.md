@@ -1,8 +1,9 @@
 ---
 name: cronlytic
 description: Cronlytic cron job scheduler API via curl. Use this skill to create, manage, pause/resume scheduled HTTP requests and webhook automation.
-vm0_env:
+vm0_secrets:
   - CRONLYTIC_API_KEY
+vm0_vars:
   - CRONLYTIC_USER_ID
 ---
 

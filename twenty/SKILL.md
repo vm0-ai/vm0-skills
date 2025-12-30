@@ -1,8 +1,9 @@
 ---
 name: twenty
 description: Open-source CRM API for managing people, companies, notes, tasks and custom objects
-vm0_env:
+vm0_secrets:
   - TWENTY_API_KEY
+vm0_vars:
   - TWENTY_API_URL
 ---
 

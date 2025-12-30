@@ -1,7 +1,7 @@
 ---
 name: perplexity
 description: AI-powered search engine with real-time web grounding and citations
-vm0_env:
+vm0_secrets:
   - PERPLEXITY_API_KEY
 ---
 

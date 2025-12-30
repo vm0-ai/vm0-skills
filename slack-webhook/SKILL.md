@@ -1,7 +1,7 @@
 ---
 name: slack-webhook
 description: Send messages to Slack using Incoming Webhooks. Simple one-way messaging to a specific channel without OAuth setup.
-vm0_env:
+vm0_secrets:
   - SLACK_WEBHOOK_URL
 ---
 

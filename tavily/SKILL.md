@@ -1,7 +1,7 @@
 ---
 name: tavily
 description: Tavily AI search API integration via curl. Use this skill to perform live web search and RAG-style retrieval.
-vm0_env:
+vm0_secrets:
   - TAVILY_API_KEY
 ---
 

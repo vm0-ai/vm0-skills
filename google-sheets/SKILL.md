@@ -1,10 +1,11 @@
 ---
 name: google-sheets
 description: Google Sheets API via curl. Use this skill to read, write, and manage spreadsheet data programmatically.
-vm0_env:
-  - GOOGLE_SHEETS_CLIENT_ID
+vm0_secrets:
   - GOOGLE_SHEETS_CLIENT_SECRET
   - GOOGLE_SHEETS_REFRESH_TOKEN
+vm0_vars:
+  - GOOGLE_SHEETS_CLIENT_ID
 ---
 
 # Google Sheets API

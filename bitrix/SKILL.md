@@ -1,7 +1,7 @@
 ---
 name: bitrix
 description: Bitrix24 REST API via curl. Use this skill to manage CRM (leads, deals, contacts), tasks, and users.
-vm0_env:
+vm0_secrets:
   - BITRIX_WEBHOOK_URL
 ---
 

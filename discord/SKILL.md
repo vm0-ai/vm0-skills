@@ -1,7 +1,7 @@
 ---
 name: discord
 description: Discord Bot API via curl. Use this skill to interact with channels, guilds, users, and messages using a bot token.
-vm0_env:
+vm0_secrets:
   - DISCORD_BOT_TOKEN
 ---
 

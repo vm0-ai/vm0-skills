@@ -1,7 +1,7 @@
 ---
 name: linear
 description: Linear issue tracking API via curl. Use this skill to create, update, and query issues, projects, and teams using GraphQL.
-vm0_env:
+vm0_secrets:
   - LINEAR_API_KEY
 ---
 

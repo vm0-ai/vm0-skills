@@ -1,10 +1,11 @@
 ---
 name: jira
 description: Jira Cloud REST API via curl. Use this skill to create, update, search, and manage issues, projects, and workflows in Jira.
-vm0_env:
+vm0_secrets:
+  - JIRA_API_TOKEN
+vm0_vars:
   - JIRA_DOMAIN
   - JIRA_EMAIL
-  - JIRA_API_TOKEN
 ---
 
 # Jira API

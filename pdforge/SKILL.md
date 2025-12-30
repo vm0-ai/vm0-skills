@@ -1,7 +1,7 @@
 ---
 name: pdforge
 description: PDForge (PDF Noodle) API for generating PDFs from templates or HTML via curl.
-vm0_env:
+vm0_secrets:
   - PDFORGE_API_KEY
 ---
 

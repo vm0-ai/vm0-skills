@@ -1,8 +1,9 @@
 ---
 name: plausible
 description: Plausible Analytics API for querying website statistics and managing sites. Use this skill to get visitor counts, pageviews, traffic sources, and manage analytics sites.
-vm0_env:
+vm0_secrets:
   - PLAUSIBLE_API_KEY
+vm0_vars:
   - PLAUSIBLE_SITE_ID
 ---
 

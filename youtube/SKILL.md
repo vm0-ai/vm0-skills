@@ -1,7 +1,7 @@
 ---
 name: youtube
 description: YouTube Data API v3 via curl. Use this skill to search videos, get video/channel info, list playlists, and fetch comments.
-vm0_env:
+vm0_secrets:
   - YOUTUBE_API_KEY
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: streak
 description: Gmail-integrated CRM for managing pipelines, deals (boxes), contacts, and email threads
-vm0_env:
+vm0_secrets:
   - STREAK_API_KEY
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: figma
 description: Figma REST API for accessing design files, comments, components, and projects. Use this skill to read file contents, export images, manage comments, and integrate with Figma workspaces.
-vm0_env:
+vm0_secrets:
   - FIGMA_API_TOKEN
 ---
 

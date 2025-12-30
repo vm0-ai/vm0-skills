@@ -1,7 +1,7 @@
 ---
 name: openai
 description: OpenAI API via curl. Use this skill for GPT chat completions, DALL-E image generation, Whisper audio transcription, embeddings, and text-to-speech.
-vm0_env:
+vm0_secrets:
   - OPENAI_API_KEY
 ---
 

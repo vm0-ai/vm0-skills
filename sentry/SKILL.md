@@ -1,9 +1,10 @@
 ---
 name: sentry
 description: Sentry API via curl. Use this skill to manage error tracking, list issues, resolve errors, and monitor releases in Sentry.
-vm0_env:
-  - SENTRY_HOST
+vm0_secrets:
   - SENTRY_TOKEN
+vm0_vars:
+  - SENTRY_HOST
   - SENTRY_ORG
 ---
 

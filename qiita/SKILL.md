@@ -1,7 +1,7 @@
 ---
 name: qiita
 description: Qiita API integration for searching, reading, and publishing technical articles. Use this skill to search articles, get user posts, publish content, and manage comments on Qiita.
-vm0_env:
+vm0_secrets:
   - QIITA_ACCESS_TOKEN
 ---
 

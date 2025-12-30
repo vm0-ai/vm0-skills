@@ -1,7 +1,7 @@
 ---
 name: brave-search
 description: Brave Search API via curl. Use this skill for privacy-focused web, image, video, and news search with no tracking.
-vm0_env:
+vm0_secrets:
   - BRAVE_API_KEY
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: intercom
 description: Intercom REST API for managing customer conversations, contacts, messages, and support tickets. Use this skill to send messages, manage contacts, handle conversations, and access help center content.
-vm0_env:
+vm0_secrets:
   - INTERCOM_ACCESS_TOKEN
 ---
 

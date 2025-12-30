@@ -1,10 +1,11 @@
 ---
 name: gmail
 description: Gmail API via curl. Use this skill to read, send, and manage emails, labels, drafts, and threads.
-vm0_env:
-  - GMAIL_CLIENT_ID
+vm0_secrets:
   - GMAIL_CLIENT_SECRET
   - GMAIL_REFRESH_TOKEN
+vm0_vars:
+  - GMAIL_CLIENT_ID
 ---
 
 # Gmail API

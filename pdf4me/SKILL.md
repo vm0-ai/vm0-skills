@@ -1,7 +1,7 @@
 ---
 name: pdf4me
 description: Comprehensive PDF processing API for conversion, merge, split, compress, OCR, and more
-vm0_env:
+vm0_secrets:
   - PDF4ME_API_KEY
 ---
 

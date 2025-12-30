@@ -1,9 +1,10 @@
 ---
 name: gitlab
 description: GitLab REST API via curl. Use this skill to manage projects, issues, merge requests, and pipelines in GitLab.
-vm0_env:
-  - GITLAB_HOST
+vm0_secrets:
   - GITLAB_TOKEN
+vm0_vars:
+  - GITLAB_HOST
 ---
 
 # GitLab API

@@ -1,9 +1,10 @@
 ---
 name: axiom
 description: Axiom observability platform for logs, events, and analytics via REST API
-vm0_env:
+vm0_secrets:
   - AXIOM_API_TOKEN
   - AXIOM_PERSONAL_ACCESS_TOKEN (optional, for /v2/user endpoint)
+vm0_vars:
   - AXIOM_ORG_ID (optional, required with PAT)
 ---
 

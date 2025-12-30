@@ -1,9 +1,10 @@
 ---
 name: podchaser
 description: Podchaser GraphQL API for podcast data, discovery, episodes, creators, and sponsorship information.
-vm0_env:
-  - PODCHASER_CLIENT_ID
+vm0_secrets:
   - PODCHASER_CLIENT_SECRET
+vm0_vars:
+  - PODCHASER_CLIENT_ID
 ---
 
 # Podchaser API
