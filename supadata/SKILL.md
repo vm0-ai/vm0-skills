@@ -177,7 +177,7 @@ Returns page content in Markdown format, ideal for AI processing.
 Get all links from a website:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"' | jq '.links[:10]
+bash -c 'curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"' | jq '.urls[:10]'
 ```
 
 ---

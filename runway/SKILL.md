@@ -139,7 +139,8 @@ Write to `/tmp/runway_request.json`:
 {
   "model": "gen4_aleph",
   "videoUri": "https://example.com/source-video.mp4",
-  "promptText": "Add magical sparkles and fairy dust effects"
+  "promptText": "Add magical sparkles and fairy dust effects",
+  "ratio": "1280:720"
 }
 ```
 
@@ -161,7 +162,8 @@ Write to `/tmp/runway_request.json`:
 {
   "model": "gen4_image_turbo",
   "promptText": "A futuristic cityscape at sunset",
-  "ratio": "16:9"
+  "ratio": "1920:1080",
+  "referenceImages": []
 }
 ```
 
@@ -178,7 +180,7 @@ bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --heade
 Poll for task completion:
 
 ```bash
-TASK_ID="your-task-id"
+export TASK_ID="your-task-id"
 
 bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"' | jq .
 ```
@@ -201,9 +203,9 @@ bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --hea
 Cancel a running task:
 
 ```bash
-TASK_ID="your-task-id"
+export TASK_ID="your-task-id"
 
-curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"
+bash -c 'curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
 ```
 
 ---

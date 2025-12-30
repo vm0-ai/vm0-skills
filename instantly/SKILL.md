@@ -104,14 +104,14 @@ Write to `/tmp/instantly_request.json`:
   "name": "My New Campaign",
   "daily_limit": 50,
   "campaign_schedule": {
-    "timezone": "America/New_York",
-    "days": {
-      "monday": [{"start": "09:00", "end": "17:00"}],
-      "tuesday": [{"start": "09:00", "end": "17:00"}],
-      "wednesday": [{"start": "09:00", "end": "17:00"}],
-      "thursday": [{"start": "09:00", "end": "17:00"}],
-      "friday": [{"start": "09:00", "end": "17:00"}]
-    }
+    "schedules": [
+      {
+        "timezone": "America/New_York",
+        "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+        "start_hour": "09:00",
+        "end_hour": "17:00"
+      }
+    ]
   }
 }
 ```

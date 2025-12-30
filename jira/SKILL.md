@@ -112,14 +112,27 @@ bash -c 'curl -s -X GET "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/res
 
 Search issues using Jira Query Language:
 
+Write to `/tmp/jira_request.json`:
+
+```json
+{
+  "jql": "project = PROJ AND status NOT IN (Done) ORDER BY created DESC",
+  "maxResults": 10,
+  "fields": ["key", "summary", "status", "assignee", "priority"]
+}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -G "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/search/jql" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --data-urlencode "jql=project = PROJ AND status != Done ORDER BY created DESC" --data-urlencode "maxResults=10" --data-urlencode "fields=key,summary,status,assignee,priority"' | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}
+bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/search/jql" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json' | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}'
 ```
 
 Common JQL examples:
 - `project = PROJ` - Issues in project
 - `assignee = currentUser()` - Your issues
 - `status = "In Progress"` - By status
+- `status NOT IN (Done, Closed)` - Exclude statuses
 - `created >= -7d` - Created in last 7 days
 - `labels = bug` - By label
 - `priority = High` - By priority

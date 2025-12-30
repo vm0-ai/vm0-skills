@@ -114,7 +114,7 @@ Write to `/tmp/shortio_request.json`:
 {
   "domain": "${SHORTIO_DOMAIN}",
   "originalURL": "https://example.com/temporary-offer",
-  "ttl": "2025-12-31T23:59:59Z"
+  "ttl": "2026-12-31T23:59:59Z"
 }
 ```
 
