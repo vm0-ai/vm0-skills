@@ -10,157 +10,597 @@
   },
   "plugins": [
     {
-      "name": "ai-services",
-      "description": "AI and machine learning APIs including LLMs, image generation, video generation, and speech synthesis",
+      "name": "apify",
+      "description": "Web scraping and automation platform with pre-built Actors for common tasks",
       "source": "./",
       "strict": false,
       "skills": [
-        "./deepseek",
-        "./elevenlabs",
-        "./fal.ai",
-        "./minimax",
-        "./openai",
-        "./perplexity",
-        "./runway"
+        "./apify"
       ]
     },
     {
-      "name": "communication",
-      "description": "Messaging, email, and notification services including Slack, Discord, Gmail, and push notifications",
+      "name": "axiom",
+      "description": "Axiom observability platform for logs, events, and analytics via REST API",
       "source": "./",
       "strict": false,
       "skills": [
-        "./discord",
-        "./discord-webhook",
-        "./gmail",
-        "./lark",
-        "./pushinator",
-        "./resend",
-        "./slack",
-        "./slack-webhook",
-        "./zeptomail"
+        "./axiom"
       ]
     },
     {
-      "name": "crm-sales",
-      "description": "CRM and sales automation tools including customer support, email outreach, and pipeline management",
+      "name": "bitrix",
+      "description": "Bitrix24 REST API via curl. Use this skill to manage CRM (leads, deals, contacts), tasks, and users.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./bitrix",
-        "./chatwoot",
-        "./instantly",
-        "./intercom",
-        "./kommo",
-        "./monday",
-        "./notion",
-        "./streak",
-        "./twenty",
-        "./zendesk"
+        "./bitrix"
       ]
     },
     {
-      "name": "developer-tools",
-      "description": "Developer productivity tools including version control, issue tracking, and error monitoring",
+      "name": "brave-search",
+      "description": "Brave Search API via curl. Use this skill for privacy-focused web, image, video, and news search with no tracking.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./github",
-        "./github-copilot",
-        "./gitlab",
-        "./jira",
-        "./linear",
-        "./sentry"
+        "./brave-search"
       ]
     },
     {
-      "name": "data-storage",
-      "description": "Database, analytics, and storage services including vector databases, object storage, and observability",
+      "name": "bright-data",
+      "description": "Bright Data Web Scraper API via curl. Use this skill for scraping social media (Twitter/X, Reddit, YouTube, Instagram, TikTok), account management, and usage monitoring.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./axiom",
-        "./minio",
-        "./plausible",
-        "./qdrant",
-        "./supabase"
+        "./bright-data"
       ]
     },
     {
-      "name": "document-processing",
-      "description": "Document processing and PDF manipulation APIs",
+      "name": "browserless",
+      "description": "Headless browser as a service for screenshots, PDFs, scraping, and automation",
       "source": "./",
       "strict": false,
       "skills": [
-        "./pdf4me",
-        "./pdfco",
+        "./browserless"
+      ]
+    },
+    {
+      "name": "chatwoot",
+      "description": "Chatwoot customer support API via curl. Use this skill to manage contacts, conversations, and messages for multi-channel customer support.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./chatwoot"
+      ]
+    },
+    {
+      "name": "cloudinary",
+      "description": "Upload images and videos to Cloudinary with CDN delivery and transformations. Use this skill for media hosting, optimization, resizing, format conversion, and video concatenation.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./cloudinary"
+      ]
+    },
+    {
+      "name": "cronlytic",
+      "description": "Cronlytic cron job scheduler API via curl. Use this skill to create, manage, pause/resume scheduled HTTP requests and webhook automation.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./cronlytic"
+      ]
+    },
+    {
+      "name": "deepseek",
+      "description": "DeepSeek AI large language model API via curl. Use this skill for chat completions, reasoning, and code generation with OpenAI-compatible endpoints.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./deepseek"
+      ]
+    },
+    {
+      "name": "dev.to",
+      "description": "Dev.to API via curl. Use this skill to publish and manage articles on Dev.to.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./dev.to"
+      ]
+    },
+    {
+      "name": "discord",
+      "description": "Discord Bot API via curl. Use this skill to interact with channels, guilds, users, and messages using a bot token.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./discord"
+      ]
+    },
+    {
+      "name": "discord-webhook",
+      "description": "Discord Webhook API via curl. Use this skill to send messages, embeds, and files to Discord channels without a bot.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./discord-webhook"
+      ]
+    },
+    {
+      "name": "elevenlabs",
+      "description": "ElevenLabs AI voice generation API via curl. Use this skill to convert text to speech with realistic AI voices.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./elevenlabs"
+      ]
+    },
+    {
+      "name": "fal.ai",
+      "description": "fal.ai AI image generation. Use this skill when you need to use fal, fal.ai, or generate images from text prompts using AI text-to-image models.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./fal.ai"
+      ]
+    },
+    {
+      "name": "figma",
+      "description": "Figma REST API for accessing design files, comments, components, and projects. Use this skill to read file contents, export images, manage comments, and integrate with Figma workspaces.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./figma"
+      ]
+    },
+    {
+      "name": "firecrawl",
+      "description": "Firecrawl web scraping API via curl. Use this skill to scrape webpages, crawl websites, discover URLs, search the web, or extract structured data.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./firecrawl"
+      ]
+    },
+    {
+      "name": "github-automation",
+      "description": "Automate GitHub operations using gh CLI - manage repositories, issues, pull requests, releases, and workflows. Use when working with GitHub, managing repos, creating issues/PRs, or when users mention GitHub operations, gh CLI, or repository management.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./github"
+      ]
+    },
+    {
+      "name": "github-copilot",
+      "description": "GitHub Copilot REST API via curl. Use this skill to manage Copilot subscriptions and retrieve usage metrics.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./github-copilot"
+      ]
+    },
+    {
+      "name": "gitlab",
+      "description": "GitLab REST API via curl. Use this skill to manage projects, issues, merge requests, and pipelines in GitLab.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./gitlab"
+      ]
+    },
+    {
+      "name": "gmail",
+      "description": "Gmail API via curl. Use this skill to read, send, and manage emails, labels, drafts, and threads.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./gmail"
+      ]
+    },
+    {
+      "name": "google-sheets",
+      "description": "Google Sheets API via curl. Use this skill to read, write, and manage spreadsheet data programmatically.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./google-sheets"
+      ]
+    },
+    {
+      "name": "hackernews",
+      "description": "Hacker News API via curl. Use this skill to fetch top stories, new posts, comments, and user profiles from Hacker News.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./hackernews"
+      ]
+    },
+    {
+      "name": "htmlcsstoimage",
+      "description": "HTMLCSStoImage API via curl. Use this skill to generate images from HTML/CSS or capture screenshots of web pages.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./htmlcsstoimage"
+      ]
+    },
+    {
+      "name": "imgur",
+      "description": "Upload images to Imgur for free hosting. Use this skill when you need to upload images and get public URLs for sharing or embedding in articles.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./imgur"
+      ]
+    },
+    {
+      "name": "instagram",
+      "description": "Instagram Graph API integration via curl. Use this skill to fetch and publish Instagram media.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./instagram"
+      ]
+    },
+    {
+      "name": "instantly",
+      "description": "Instantly.ai API via curl. Use this skill for cold email outreach automation, managing campaigns, leads, and email accounts.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./instantly"
+      ]
+    },
+    {
+      "name": "intercom",
+      "description": "Intercom REST API for managing customer conversations, contacts, messages, and support tickets. Use this skill to send messages, manage contacts, handle conversations, and access help center content.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./intercom"
+      ]
+    },
+    {
+      "name": "jira",
+      "description": "Jira Cloud REST API via curl. Use this skill to create, update, search, and manage issues, projects, and workflows in Jira.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./jira"
+      ]
+    },
+    {
+      "name": "kommo",
+      "description": "Kommo CRM API via curl. Use this skill for managing leads, contacts, companies, tasks, and sales pipelines.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./kommo"
+      ]
+    },
+    {
+      "name": "lark",
+      "description": "Lark/Feishu API integration for messaging, group management, contacts, and calendar. Use this skill to send messages, manage chats, query contacts, and sync calendar events with Lark/Feishu.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./lark"
+      ]
+    },
+    {
+      "name": "linear",
+      "description": "Linear issue tracking API via curl. Use this skill to create, update, and query issues, projects, and teams using GraphQL.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./linear"
+      ]
+    },
+    {
+      "name": "mercury",
+      "description": "Mercury Banking API via curl. Use this skill to manage bank accounts, transactions, transfers, and financial operations.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./mercury"
+      ]
+    },
+    {
+      "name": "minimax",
+      "description": "MiniMax API via curl. Use this skill for Chinese LLM chat, text-to-speech, and AI video generation.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./minimax"
+      ]
+    },
+    {
+      "name": "minio",
+      "description": "MinIO S3-compatible object storage API. Use this skill for file upload, download, bucket management, and pre-signed URL generation.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./minio"
+      ]
+    },
+    {
+      "name": "monday",
+      "description": "Monday.com GraphQL API via curl. Use this skill to manage boards, items, and projects.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./monday"
+      ]
+    },
+    {
+      "name": "notion",
+      "description": "Notion API for managing pages, databases, and blocks. Use this skill to create pages, query databases, search content, and build integrations with Notion workspaces.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./notion"
+      ]
+    },
+    {
+      "name": "openai",
+      "description": "OpenAI API via curl. Use this skill for GPT chat completions, DALL-E image generation, Whisper audio transcription, embeddings, and text-to-speech.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./openai"
+      ]
+    },
+    {
+      "name": "pdf4me",
+      "description": "Comprehensive PDF processing API for conversion, merge, split, compress, OCR, and more",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./pdf4me"
+      ]
+    },
+    {
+      "name": "pdfco",
+      "description": "PDF processing API for conversion, extraction, merging, splitting and more",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./pdfco"
+      ]
+    },
+    {
+      "name": "pdforge",
+      "description": "PDForge (PDF Noodle) API for generating PDFs from templates or HTML via curl.",
+      "source": "./",
+      "strict": false,
+      "skills": [
         "./pdforge"
       ]
     },
     {
-      "name": "media-content",
-      "description": "Media hosting, image generation, and content management services",
+      "name": "perplexity",
+      "description": "AI-powered search engine with real-time web grounding and citations",
       "source": "./",
       "strict": false,
       "skills": [
-        "./cloudinary",
-        "./figma",
-        "./htmlcsstoimage",
-        "./imgur",
-        "./instagram",
-        "./youtube"
+        "./perplexity"
       ]
     },
     {
-      "name": "web-scraping",
-      "description": "Web scraping, crawling, and data extraction services",
+      "name": "plausible",
+      "description": "Plausible Analytics API for querying website statistics and managing sites. Use this skill to get visitor counts, pageviews, traffic sources, and manage analytics sites.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./apify",
-        "./bright-data",
-        "./browserless",
-        "./firecrawl",
-        "./scrapeninja",
-        "./supadata",
-        "./tavily"
+        "./plausible"
       ]
     },
     {
-      "name": "search",
-      "description": "Web search and SERP APIs",
+      "name": "podchaser",
+      "description": "Podchaser GraphQL API for podcast data, discovery, episodes, creators, and sponsorship information.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./brave-search",
-        "./serpapi"
+        "./podchaser"
       ]
     },
     {
-      "name": "social-publishing",
-      "description": "Social media and developer blogging platforms",
+      "name": "pushinator",
+      "description": "Pushinator push notification API via curl. Use this skill to send push notifications to mobile devices.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./dev.to",
+        "./pushinator"
+      ]
+    },
+    {
+      "name": "qdrant",
+      "description": "Qdrant vector database REST API via curl. Use this skill to store, search, and manage vector embeddings.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./qdrant"
+      ]
+    },
+    {
+      "name": "qiita",
+      "description": "Qiita API integration for searching, reading, and publishing technical articles. Use this skill to search articles, get user posts, publish content, and manage comments on Qiita.",
+      "source": "./",
+      "strict": false,
+      "skills": [
         "./qiita"
       ]
     },
     {
-      "name": "utilities",
-      "description": "Utility services including scheduling, URL shortening, e-signatures, and RSS feeds",
+      "name": "reportei",
+      "description": "Reportei marketing report generation API via curl. Use this skill to manage clients, reports, templates, integrations and webhooks for automated marketing analytics.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./cronlytic",
-        "./google-sheets",
-        "./hackernews",
-        "./mercury",
-        "./podchaser",
-        "./reportei",
-        "./rss-fetch",
-        "./shortio",
+        "./reportei"
+      ]
+    },
+    {
+      "name": "resend",
+      "description": "Resend email API via curl. Use this skill to send transactional emails, manage contacts, domains, and API keys.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./resend"
+      ]
+    },
+    {
+      "name": "rss-fetch",
+      "description": "Fetch RSS/Atom feeds via curl. Use this skill to gather news and articles from RSS sources.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./rss-fetch"
+      ]
+    },
+    {
+      "name": "runway",
+      "description": "Runway AI API for video generation via curl. Use this skill to generate videos from images, text, or other videos.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./runway"
+      ]
+    },
+    {
+      "name": "scrapeninja",
+      "description": "High-performance web scraping API with Chrome TLS fingerprint and JS rendering",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./scrapeninja"
+      ]
+    },
+    {
+      "name": "sentry",
+      "description": "Sentry API via curl. Use this skill to manage error tracking, list issues, resolve errors, and monitor releases in Sentry.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./sentry"
+      ]
+    },
+    {
+      "name": "serpapi",
+      "description": "SerpApi search engine results API via curl. Use this skill to scrape Google, Bing, YouTube, and other search engines.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./serpapi"
+      ]
+    },
+    {
+      "name": "shortio",
+      "description": "Short.io URL shortener API via curl. Use this skill to create, manage, and track short links on custom branded domains.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./shortio"
+      ]
+    },
+    {
+      "name": "slack",
+      "description": "Slack API for sending messages, reading channels, and managing conversations. Use this skill to post messages, upload files, and interact with Slack workspaces.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./slack"
+      ]
+    },
+    {
+      "name": "slack-webhook",
+      "description": "Send messages to Slack using Incoming Webhooks. Simple one-way messaging to a specific channel without OAuth setup.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./slack-webhook"
+      ]
+    },
+    {
+      "name": "streak",
+      "description": "Gmail-integrated CRM for managing pipelines, deals (boxes), contacts, and email threads",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./streak"
+      ]
+    },
+    {
+      "name": "supabase",
+      "description": "Supabase REST API via curl. Use this skill for database CRUD operations, filtering, pagination, and real-time data management.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./supabase"
+      ]
+    },
+    {
+      "name": "supadata",
+      "description": "Supadata API via curl. Use this skill to extract transcripts from YouTube/TikTok/Instagram videos and scrape web content to markdown.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./supadata"
+      ]
+    },
+    {
+      "name": "tavily",
+      "description": "Tavily AI search API integration via curl. Use this skill to perform live web search and RAG-style retrieval.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./tavily"
+      ]
+    },
+    {
+      "name": "twenty",
+      "description": "Open-source CRM API for managing people, companies, notes, tasks and custom objects",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./twenty"
+      ]
+    },
+    {
+      "name": "youtube",
+      "description": "YouTube Data API v3 via curl. Use this skill to search videos, get video/channel info, list playlists, and fetch comments.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./youtube"
+      ]
+    },
+    {
+      "name": "zapsign",
+      "description": "ZapSign electronic signature API via curl. Use this skill to create documents for signature, manage signers, and track signing status.",
+      "source": "./",
+      "strict": false,
+      "skills": [
         "./zapsign"
+      ]
+    },
+    {
+      "name": "zendesk",
+      "description": "Zendesk Support REST API for managing tickets, users, organizations, and support operations. Use this skill to create tickets, manage users, search, and automate customer support workflows.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./zendesk"
+      ]
+    },
+    {
+      "name": "zeptomail",
+      "description": "Zoho ZeptoMail transactional email API. Use this skill for sending password resets, OTPs, order confirmations, and other transactional emails.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./zeptomail"
       ]
     }
   ]
