@@ -106,10 +106,21 @@ Write to `/tmp/instantly_request.json`:
   "campaign_schedule": {
     "schedules": [
       {
-        "timezone": "America/New_York",
-        "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
-        "start_hour": "09:00",
-        "end_hour": "17:00"
+        "name": "Weekday Schedule",
+        "timezone": "America/Chicago",
+        "days": {
+          "monday": true,
+          "tuesday": true,
+          "wednesday": true,
+          "thursday": true,
+          "friday": true,
+          "saturday": false,
+          "sunday": false
+        },
+        "timing": {
+          "from": "09:00",
+          "to": "17:00"
+        }
       }
     ]
   }
