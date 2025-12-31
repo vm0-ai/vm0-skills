@@ -1,6 +1,8 @@
 ---
 name: github-automation
 description: Automate GitHub operations using gh CLI - manage repositories, issues, pull requests, releases, and workflows. Use when working with GitHub, managing repos, creating issues/PRs, or when users mention GitHub operations, gh CLI, or repository management.
+vm0_secrets:
+  - GH_TOKEN
 ---
 
 # GitHub Automation
