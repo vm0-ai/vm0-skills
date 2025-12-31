@@ -1,6 +1,6 @@
+---
 name: hackernews
 description: Hacker News API via curl. Use this skill to fetch top stories, new posts, comments, and user profiles from Hacker News.
-
 ---
 
 # Hacker News API
