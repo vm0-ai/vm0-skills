@@ -42,7 +42,7 @@ export BROWSERLESS_API_TOKEN="your-api-token-here"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq '.data[0]'
 > ```
 
 ## How to Use
@@ -66,7 +66,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq .
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json'
 ```
 
 **With wait options:**
@@ -207,46 +207,78 @@ Run Puppeteer code with full interaction support:
 
 **Click element:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d 'export default async ({ page }) => {
+Write to `/tmp/browserless_function.js`:
+
+```javascript
+export default async ({ page }) => {
   await page.goto("https://example.com");
   await page.click("a");
   return { data: { url: page.url() }, type: "application/json" };
-  }' | jq .
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js'
 ```
 
 **Type into input:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d 'export default async ({ page }) => {
+Write to `/tmp/browserless_function.js`:
+
+```javascript
+export default async ({ page }) => {
   await page.goto("https://duckduckgo.com");
   await page.waitForSelector("input[name=q]");
   await page.type("input[name=q]", "hello world");
   const val = await page.$eval("input[name=q]", e => e.value);
   return { data: { typed: val }, type: "application/json" };
-  }' | jq .
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js'
 ```
 
 **Form submission:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d 'export default async ({ page }) => {
+Write to `/tmp/browserless_function.js`:
+
+```javascript
+export default async ({ page }) => {
   await page.goto("https://duckduckgo.com");
   await page.type("input[name=q]", "test query");
   await page.keyboard.press("Enter");
   await page.waitForNavigation();
   return { data: { title: await page.title() }, type: "application/json" };
-  }' | jq .
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js'
 ```
 
 **Extract data with custom script:**
 
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d 'export default async ({ page }) => {
+Write to `/tmp/browserless_function.js`:
+
+```javascript
+export default async ({ page }) => {
   await page.goto("https://news.ycombinator.com");
   const links = await page.$$eval(".titleline > a", els => els.slice(0,5).map(a => ({title: a.innerText, url: a.href})));
   return { data: links, type: "application/json" };
-  }' | jq .
+}
+```
+
+Then run:
+
+```bash
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/function?token=${BROWSERLESS_API_TOKEN}" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js'
 ```
 
 ### 6. Unblock Protected Sites
@@ -268,28 +300,10 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/unblock?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq .
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/unblock?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json'
 ```
 
-### 7. Download Files
-
-Trigger and capture file downloads:
-
-Write to `/tmp/browserless_request.json`:
-
-```json
-{
-  "url": "https://example.com/file.pdf"
-}
-```
-
-Then run:
-
-```bash
-curl -s -X POST "https://production-sfo.browserless.io/download?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output downloaded.pdf
-```
-
-### 8. Stealth Mode
+### 7. Stealth Mode
 
 Enable stealth mode to avoid detection:
 
@@ -305,10 +319,10 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}&stealth=true" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq .
+bash -c 'curl -s -X POST "https://production-sfo.browserless.io/scrape?token=${BROWSERLESS_API_TOKEN}&stealth=true" --header "Content-Type: application/json" -d @/tmp/browserless_request.json'
 ```
 
-### 9. Export Page with Resources
+### 8. Export Page with Resources
 
 Fetch a URL and get content in native format. Can bundle all resources (CSS, JS, images) as zip:
 
@@ -345,7 +359,7 @@ Then run:
 curl -s -X POST "https://production-sfo.browserless.io/export?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output webpage.zip
 ```
 
-### 10. Performance Audit (Lighthouse)
+### 9. Performance Audit (Lighthouse)
 
 Run Lighthouse audits for accessibility, performance, SEO, best practices:
 
@@ -409,6 +423,66 @@ Then run:
 bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json' | jq '.data.audits'
 ```
 
+### 10. Create Persistent Session
+
+Create a persistent browser session that can be connected to via WebSocket:
+
+Write to `/tmp/browserless_request.json`:
+
+```json
+{
+  "ttl": 300000,
+  "stealth": false,
+  "headless": true
+}
+```
+
+Then run:
+
+```bash
+curl -s -X POST "https://production-sfo.browserless.io/session?token=${BROWSERLESS_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
+```
+
+**Response includes:**
+- `id` - Session ID for subsequent operations
+- `connect` - WebSocket URL for Puppeteer/Playwright connection
+- `stop` - Full URL to stop/delete the session (use this exact URL)
+- `browserQL` - BrowserQL query endpoint
+- `ttl` - Time-to-live in milliseconds (default: 300000 = 5 minutes)
+
+**Use the session with Puppeteer:**
+
+```javascript
+const puppeteer = require('puppeteer-core');
+const browser = await puppeteer.connect({
+  browserWSEndpoint: '<connect-url-from-response>' // Use the 'connect' URL from response
+});
+```
+
+### 11. Stop Persistent Session
+
+Stop a running session before its timeout expires using the `stop` URL from the creation response:
+
+```bash
+curl -s -X DELETE "<stop-url-from-response>"
+```
+
+Example (replace `<stop-url-from-response>` with the actual `stop` URL from session creation):
+
+```bash
+curl -s -X DELETE "https://production-sfo.browserless.io/e/<encoded-path>/session/<session-id>?token=<your-token>"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Session <session-id> was successfully removed",
+  "sessionId": "<session-id>",
+  "timestamp": "2026-01-01T07:41:36.933Z"
+}
+```
+
 ---
 
 ## API Endpoints
@@ -421,9 +495,10 @@ bash -c 'curl -s -X POST "https://production-sfo.browserless.io/performance?toke
 | `/content` | POST | Get rendered HTML |
 | `/function` | POST | Execute custom Puppeteer code |
 | `/unblock` | POST | Bypass bot protection |
-| `/download` | POST | Download files |
 | `/export` | POST | Export page with resources as ZIP |
 | `/performance` | POST | Lighthouse audits (a11y, perf, SEO) |
+| `/session` | POST | Create persistent browser session |
+| `/session/{id}` | DELETE | Stop persistent session |
 
 ---
 

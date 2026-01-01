@@ -55,6 +55,15 @@
       ]
     },
     {
+      "name": "browserbase",
+      "description": "Cloud browser infrastructure for AI agents. Use this skill to create browser sessions, persist contexts for authentication, debug live sessions, and retrieve session recordings.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./browserbase"
+      ]
+    },
+    {
       "name": "browserless",
       "description": "Headless browser as a service for screenshots, PDFs, scraping, and automation",
       "source": "./",
