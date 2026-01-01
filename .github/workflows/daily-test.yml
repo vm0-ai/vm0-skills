@@ -18,7 +18,7 @@ jobs:
         id: vm0
         uses: vm0-ai/run-action@v1
         with:
-          agent: skills-tester
+          agent: skills-tester-2
           prompt: ${{ inputs.prompt || 'do the job' }}
           silent: true
           vm0-token: ${{ secrets.VM0_TOKEN }}

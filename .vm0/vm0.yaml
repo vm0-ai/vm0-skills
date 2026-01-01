@@ -1,7 +1,7 @@
 version: "1.0"
 
 agents:
-  skills-tester:
+  skills-tester-2:
     image: skills-tester:latest
     provider: claude-code
     instructions: AGENTS.md
