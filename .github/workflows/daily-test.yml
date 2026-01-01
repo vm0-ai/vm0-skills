@@ -24,7 +24,7 @@ jobs:
           vm0-token: ${{ secrets.VM0_TOKEN }}
           secrets: |
             CLAUDE_CODE_OAUTH_TOKEN=${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-            GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
+            GH_TOKEN=${{ secrets.GH_TOKEN }}
             SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}
             DISCORD_BOT_TOKEN=${{ secrets.DISCORD_BOT_TOKEN }}
             DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
