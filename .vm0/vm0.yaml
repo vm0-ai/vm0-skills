@@ -11,10 +11,10 @@ agents:
       - https://github.com/vm0-ai/vm0-skills/tree/main/discord
     environment:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      ANTHROPIC_DEFAULT_OPUS_MODEL: claude-haiku-4-5-20251001
-      ANTHROPIC_DEFAULT_SONNET_MODEL: claude-haiku-4-5-20251001
-      ANTHROPIC_DEFAULT_HAIKU_MODEL: claude-haiku-4-5-20251001
-      CLAUDE_CODE_SUBAGENT_MODEL: claude-haiku-4-5-20251001
+      # ANTHROPIC_DEFAULT_OPUS_MODEL: claude-haiku-4-5-20251001
+      # ANTHROPIC_DEFAULT_SONNET_MODEL: claude-haiku-4-5-20251001
+      # ANTHROPIC_DEFAULT_HAIKU_MODEL: claude-haiku-4-5-20251001
+      # CLAUDE_CODE_SUBAGENT_MODEL: claude-haiku-4-5-20251001
 
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
