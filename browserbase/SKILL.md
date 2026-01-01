@@ -160,11 +160,20 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'
 
 ### 8. Get Session Downloads
 
-Retrieve files downloaded during a session:
+Retrieve files downloaded during a session (returns ZIP file):
 
 ```bash
 SESSION_ID="your-session-id"
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/downloads" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/downloads" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' --output downloads.zip
+```
+
+### 9. Upload Files to Session
+
+Upload files to use in a browser session:
+
+```bash
+SESSION_ID="your-session-id"
+bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/uploads" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -F "file=@/path/to/file.pdf"' | jq .
 ```
 
 ---
@@ -246,6 +255,18 @@ bash -c 'curl -s -X DELETE "https://api.browserbase.com/v1/extensions/'"$EXTENSI
 
 ---
 
+## Projects API
+
+### Get Project Usage
+
+Retrieve project-wide usage statistics (browser minutes and proxy bytes):
+
+```bash
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/projects/$BROWSERBASE_PROJECT_ID/usage" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+```
+
+---
+
 ## API Endpoints Reference
 
 | Endpoint | Method | Description |
@@ -257,7 +278,8 @@ bash -c 'curl -s -X DELETE "https://api.browserbase.com/v1/extensions/'"$EXTENSI
 | `/v1/sessions/{id}/debug` | GET | Get live debug URLs |
 | `/v1/sessions/{id}/logs` | GET | Get session logs |
 | `/v1/sessions/{id}/recording` | GET | Get session recording (rrweb) |
-| `/v1/sessions/{id}/downloads` | GET | Get downloaded files |
+| `/v1/sessions/{id}/downloads` | GET | Get downloaded files (ZIP) |
+| `/v1/sessions/{id}/uploads` | POST | Upload files to session |
 | `/v1/contexts` | POST | Create a new context |
 | `/v1/contexts` | GET | List all contexts |
 | `/v1/contexts/{id}` | GET | Get context details |
@@ -265,6 +287,7 @@ bash -c 'curl -s -X DELETE "https://api.browserbase.com/v1/extensions/'"$EXTENSI
 | `/v1/extensions` | POST | Upload an extension |
 | `/v1/extensions` | GET | List all extensions |
 | `/v1/extensions/{id}` | DELETE | Delete an extension |
+| `/v1/projects/{id}/usage` | GET | Get project usage stats |
 
 ---
 
