@@ -20,7 +20,6 @@ jobs:
         with:
           agent: skills-tester-2
           prompt: ${{ inputs.prompt || 'do the job' }}
-          silent: true
           vm0-token: ${{ secrets.VM0_TOKEN }}
           secrets: |
             CLAUDE_CODE_OAUTH_TOKEN=${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
