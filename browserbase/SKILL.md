@@ -40,6 +40,8 @@ export BROWSERBASE_API_KEY="your-api-key-here"
 export BROWSERBASE_PROJECT_ID="your-project-id-here"
 ```
 
+> **Note:** Free plans have a concurrent session limit of 1. You'll receive a 429 error if you exceed this limit. Check your plan details in the Browserbase dashboard.
+
 ---
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
@@ -63,11 +65,13 @@ bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Con
 bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\", \"timeout\": 300, \"keepAlive\": true}"' | jq .
 ```
 
-**With proxy enabled:**
+**With proxy enabled (requires paid plan):**
 
 ```bash
 bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\", \"proxies\": true}"' | jq .
 ```
+
+> **Note:** Proxies are not available on the free plan. You'll receive a 402 error if you try to use this feature without upgrading.
 
 **With specific region (us-west-2, us-east-1, eu-central-1, ap-southeast-1):**
 
@@ -95,44 +99,64 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions" --header "X-BB
 bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions?status=RUNNING" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
 ```
 
-**With pagination:**
-
-```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions?limit=10&page=1" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
-```
-
 **Query by user metadata:**
 
+> **Note:** The query syntax for user metadata filtering uses single quotes: `user_metadata['key']:'value'`. To avoid complex shell escaping, write the query to a file and use `--data-urlencode "q@filename"`.
+
+Write `/tmp/query.txt` with content:
+```
+user_metadata['test']:'true'
+```
+
+Then query sessions:
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions?q={\"userMetadata.env\":\"production\"}" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+bash -c 'curl -s -X GET -G "https://api.browserbase.com/v1/sessions" --data-urlencode "q@/tmp/query.txt" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+```
+
+**More examples:**
+
+Query by stagehand metadata - write `/tmp/query.txt`:
+```
+user_metadata['stagehand']:'true'
+```
+
+Query by environment - write `/tmp/query.txt`:
+```
+user_metadata['env']:'production'
+```
+
+Then run:
+```bash
+bash -c 'curl -s -X GET -G "https://api.browserbase.com/v1/sessions" --data-urlencode "q@/tmp/query.txt" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
 ```
 
 ### 3. Get Session Details
 
-Get details of a specific session:
+Get details of a specific session. Replace `your-session-id` with the actual session ID:
 
 ```bash
-SESSION_ID="your-session-id"
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/your-session-id" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"'
 ```
 
 ### 4. Update Session (Release)
 
-Request to release a session:
+Request to release a session before its timeout to avoid additional charges. Replace `your-session-id` with the actual session ID:
 
 ```bash
-SESSION_ID="your-session-id"
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\", \"status\": \"REQUEST_RELEASE\"}"' | jq .
+bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions/your-session-id" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\", \"status\": \"REQUEST_RELEASE\"}"' | jq .
 ```
+
+The session status will change to `COMPLETED` and `endedAt` timestamp will be set.
 
 ### 5. Get Debug/Live URLs
 
-Get live debugging URLs for a running session:
+Get live debugging URLs for a running session. Replace `your-session-id` with the actual session ID:
 
 ```bash
-SESSION_ID="your-session-id"
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/debug" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/your-session-id/debug" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
 ```
+
+> **Note:** Debug URLs may only be available after a browser client has connected to the session via WebSocket.
 
 **Response includes:**
 - `debuggerUrl` - Chrome DevTools debugger URL
@@ -142,38 +166,34 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'
 
 ### 6. Get Session Logs
 
-Retrieve logs from a session:
+Retrieve logs from a session. Replace `your-session-id` with the actual session ID:
 
 ```bash
-SESSION_ID="your-session-id"
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/logs" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/your-session-id/logs" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
 ```
 
 ### 7. Get Session Recording
 
-Get the rrweb recording of a session:
+Get the rrweb recording of a session. Replace `your-session-id` with the actual session ID:
 
 ```bash
-SESSION_ID="your-session-id"
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/recording" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/your-session-id/recording" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
 ```
 
 ### 8. Get Session Downloads
 
-Retrieve files downloaded during a session (returns ZIP file):
+Retrieve files downloaded during a session (returns ZIP file). Replace `your-session-id` with the actual session ID:
 
 ```bash
-SESSION_ID="your-session-id"
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/downloads" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' --output downloads.zip
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/your-session-id/downloads" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' --output downloads.zip
 ```
 
 ### 9. Upload Files to Session
 
-Upload files to use in a browser session:
+Upload files to use in a browser session. Replace `your-session-id` with the actual session ID:
 
 ```bash
-SESSION_ID="your-session-id"
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions/'"$SESSION_ID"'/uploads" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -F "file=@/path/to/file.pdf"' | jq .
+bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions/your-session-id/uploads" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -F "file=@/path/to/file.pdf"' | jq .
 ```
 
 ---
@@ -188,70 +208,41 @@ Contexts allow you to persist cookies, cache, and session storage across multipl
 bash -c 'curl -s -X POST "https://api.browserbase.com/v1/contexts" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\"}"' | jq .
 ```
 
-### List Contexts
-
-```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/contexts" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
-```
+Save the returned `id` to use in sessions.
 
 ### Get Context Details
 
+Retrieve details of a specific context. Replace `your-context-id` with the actual context ID:
+
 ```bash
-CONTEXT_ID="your-context-id"
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/contexts/'"$CONTEXT_ID"'" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
+bash -c 'curl -s -X GET "https://api.browserbase.com/v1/contexts/your-context-id" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
 ```
+
+**Response includes:**
+- `id` - Context identifier
+- `createdAt` - Creation timestamp
+- `updatedAt` - Last update timestamp
+- `projectId` - The Project ID linked to the context
 
 ### Create Session with Context
 
-Use an existing context to restore cookies and login state:
+Use an existing context to restore cookies and login state. Replace `your-context-id` with the actual context ID:
 
 ```bash
-CONTEXT_ID="your-context-id"
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\", \"browserSettings\": {\"context\": {\"id\": \"'"$CONTEXT_ID"'\", \"persist\": true}}}"' | jq .
+bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\", \"browserSettings\": {\"context\": {\"id\": \"your-context-id\", \"persist\": true}}}"' | jq .
 ```
 
 Set `persist: true` to save updates back to the context after the session ends.
 
 ### Delete Context
 
-```bash
-CONTEXT_ID="your-context-id"
-bash -c 'curl -s -X DELETE "https://api.browserbase.com/v1/contexts/'"$CONTEXT_ID"'" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"'
-```
-
----
-
-## Extensions API
-
-Upload and use Chrome extensions in your browser sessions.
-
-### Upload Extension
-
-Upload a ZIP file containing your Chrome extension:
+Delete a context when it's no longer needed. Replace `your-context-id` with the actual context ID:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/extensions" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -F "file=@/path/to/extension.zip"' | jq .
+bash -c 'curl -s -X DELETE "https://api.browserbase.com/v1/contexts/your-context-id" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -w "\nHTTP Status: %{http_code}"'
 ```
 
-### List Extensions
-
-```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/extensions" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"' | jq .
-```
-
-### Create Session with Extension
-
-```bash
-EXTENSION_ID="your-extension-id"
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_API_KEY" -d "{\"projectId\": \"$BROWSERBASE_PROJECT_ID\", \"extensionId\": \"'"$EXTENSION_ID"'\"}"' | jq .
-```
-
-### Delete Extension
-
-```bash
-EXTENSION_ID="your-extension-id"
-bash -c 'curl -s -X DELETE "https://api.browserbase.com/v1/extensions/'"$EXTENSION_ID"'" --header "X-BB-API-Key: $BROWSERBASE_API_KEY"'
-```
+Successful deletion returns HTTP 204 (No Content).
 
 ---
 
@@ -273,7 +264,7 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/projects/$BROWSERBASE_PR
 |----------|--------|-------------|
 | `/v1/sessions` | POST | Create a new browser session |
 | `/v1/sessions` | GET | List all sessions |
-| `/v1/sessions/{id}` | GET | Get session details |
+| `/v1/sessions/{id}` | GET | Get session details (returns array) |
 | `/v1/sessions/{id}` | POST | Update session (release) |
 | `/v1/sessions/{id}/debug` | GET | Get live debug URLs |
 | `/v1/sessions/{id}/logs` | GET | Get session logs |
@@ -281,12 +272,8 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/projects/$BROWSERBASE_PR
 | `/v1/sessions/{id}/downloads` | GET | Get downloaded files (ZIP) |
 | `/v1/sessions/{id}/uploads` | POST | Upload files to session |
 | `/v1/contexts` | POST | Create a new context |
-| `/v1/contexts` | GET | List all contexts |
 | `/v1/contexts/{id}` | GET | Get context details |
 | `/v1/contexts/{id}` | DELETE | Delete a context |
-| `/v1/extensions` | POST | Upload an extension |
-| `/v1/extensions` | GET | List all extensions |
-| `/v1/extensions/{id}` | DELETE | Delete an extension |
 | `/v1/projects/{id}/usage` | GET | Get project usage stats |
 
 ---
@@ -300,25 +287,6 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/projects/$BROWSERBASE_PR
 | `ERROR` | Session ended with an error |
 | `TIMED_OUT` | Session exceeded timeout |
 | `REQUEST_RELEASE` | Request to end session |
-
----
-
-## Connect with Playwright
-
-After creating a session, connect using Playwright:
-
-```javascript
-const { chromium } = require('playwright');
-
-// Use the connectUrl from session creation response
-const browser = await chromium.connectOverCDP(session.connectUrl);
-const context = browser.contexts()[0];
-const page = context.pages()[0];
-
-await page.goto('https://example.com');
-// ... automation code
-await browser.close();
-```
 
 ---
 
