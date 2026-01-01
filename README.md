@@ -6,78 +6,92 @@ Skills follow the [Agent Skills specification](https://agentskills.io/specificat
 
 ## Skills
 
-**Test Summary:** 66 skills tested | 37 passed (56%) | 29 failed (44%) | Last tested: 2025-12-31
+**Test Summary:** 67 skills tested | 8 passed (12%) | 59 failed (88%) | Last tested: 2026-01-01
 
-| Skill | Status | Description | Notes |
-|-------|--------|-------------|-------|
-| [apify](./apify) | ❌ FAIL | Web scraping automation with actors and datasets | 11/12 tests passed; Amazon Crawler requires paid subscription |
-| [axiom](./axiom) | ❌ FAIL | Serverless data analytics and logging platform | 9/11 tests passed; Missing AXIOM_PERSONAL_ACCESS_TOKEN and AXIOM_ORG_ID |
-| [bitrix](./bitrix) | ✅ PASS | Bitrix24 CRM and business management | All core functionality working |
-| [brave-search](./brave-search) | ✅ PASS | Privacy-focused web search API | All search operations working |
-| [bright-data](./bright-data) | ❌ FAIL | Proxy and web data collection services | Missing BRIGHTDATA_API_KEY |
-| [chatwoot](./chatwoot) | ❌ FAIL | Customer engagement platform with live chat | 5/13 tests passed; Missing CHATWOOT credentials |
-| [cloudinary](./cloudinary) | ✅ PASS | Image management and transformation services | Media management working |
-| [cronlytic](./cronlytic) | ✅ PASS | Cron job scheduling and monitoring | Cron monitoring working |
-| [deepseek](./deepseek) | ✅ PASS | AI language model for chat completions | AI model working |
-| [dev.to](./dev.to) | ❌ FAIL | Technical content publishing platform | 12/13 tests passed; Rate limit reached on publish example |
-| [discord](./discord) | ✅ PASS | Discord bot API for messaging and automation | All core functionality working |
-| [discord-webhook](./discord-webhook) | ❌ FAIL | Discord webhook message delivery | 9/10 tests passed; File attachment test failed |
-| [elevenlabs](./elevenlabs) | ✅ PASS | AI text-to-speech voice generation | Text-to-speech working |
-| [fal.ai](./fal.ai) | ✅ PASS | AI image generation inference platform | Image generation working |
-| [firecrawl](./firecrawl) | ✅ PASS | Web scraping and crawling service | All core functionality working |
-| [github](./github) | ❌ FAIL | GitHub repository management with gh CLI | 13/14 tests passed; Missing permissions to create issues |
-| [github-copilot](./github-copilot) | ✅ PASS | AI pair programming assistant | Code suggestions working |
-| [gitlab](./gitlab) | ❌ FAIL | GitLab DevOps and CI/CD platform | 17/20 tests passed; Merge request creation failed |
-| [gmail](./gmail) | ❌ FAIL | Google Mail API integration | Missing OAuth credentials |
-| [google-sheets](./google-sheets) | ✅ PASS | Google Sheets spreadsheet automation | All core functionality working |
-| [hackernews](./hackernews) | ✅ PASS | Hacker News API client | All API queries working |
-| [htmlcsstoimage](./htmlcsstoimage) | ✅ PASS | HTML/CSS to image conversion service | Screenshot generation working |
-| [imgur](./imgur) | ✅ PASS | Image hosting and sharing platform | Image upload working |
-| [instagram](./instagram) | ✅ PASS | Instagram API integration | All core functionality working |
-| [instantly](./instantly) | ❌ FAIL | Email outreach automation platform | 13/15 tests passed; API status format and variable substitution errors |
-| [jira](./jira) | ❌ FAIL | Atlassian Jira project management | 15/16 tests failed; JQL syntax error in documentation |
-| [kommo](./kommo) | ❌ FAIL | CRM with sales automation | Missing KOMMO_DOMAIN, KOMMO_ACCESS_TOKEN |
-| [lark](./lark) | ✅ PASS | Team collaboration and productivity suite | All core functionality working |
-| [linear](./linear) | ✅ PASS | Issue tracking for software teams | Issue tracking working |
-| [mercury](./mercury) | ❌ FAIL | Web content parser and extractor | API endpoint failures |
-| [minimax](./minimax) | ✅ PASS | AI language model API platform | AI model working |
-| [minio](./minio) | ✅ PASS | S3-compatible object storage service | All core functionality working |
-| [monday](./monday) | ❌ FAIL | Work management operating system | API endpoint failures |
-| [notion](./notion) | ✅ PASS | Note-taking and database workspace | Database operations working |
-| [openai](./openai) | ❌ FAIL | OpenAI GPT models and completions API | API failures |
-| [pdf4me](./pdf4me) | ❌ FAIL | PDF conversion and manipulation service | Missing PDF4ME_API_KEY |
-| [pdfco](./pdfco) | ❌ FAIL | PDF generation and processing | Missing PDFCO_API_KEY |
-| [pdforge](./pdforge) | ❌ FAIL | PDF generation from HTML templates | API endpoint failures |
-| [perplexity](./perplexity) | ❌ FAIL | AI-powered search and answer engine | API failures |
-| [plausible](./plausible) | ✅ PASS | Privacy-focused web analytics | Analytics working |
-| [podchaser](./podchaser) | ❌ FAIL | Podcast database and discovery | API endpoint failures |
-| [pushinator](./pushinator) | ✅ PASS | Push notification service | Push notifications working |
-| [qdrant](./qdrant) | ❌ FAIL | Vector database for AI applications | API endpoint failures |
-| [qiita](./qiita) | ✅ PASS | Japanese technical publishing platform | Article API working |
-| [reportei](./reportei) | ❌ FAIL | Marketing reports automation | Missing REPORTEI_API_KEY |
-| [resend](./resend) | ❌ FAIL | Transactional email service | API failures |
-| [rss-fetch](./rss-fetch) | ✅ PASS | RSS feed parser and reader | Feed parsing working |
-| [runway](./runway) | ❌ FAIL | AI video and image generation | 4/9 tests passed; validation errors on example URLs |
-| [scrapeninja](./scrapeninja) | ✅ PASS | Web scraping with JavaScript rendering | All core functionality working |
-| [serpapi](./serpapi) | ✅ PASS | Search engine results API | Search working |
-| [shortio](./shortio) | ❌ FAIL | URL shortening and link management | 8/10 tests failed; missing SHORTIO_DOMAIN_ID and invalid stats endpoint |
-| [slack](./slack) | ❌ FAIL | Slack messaging and collaboration | 2/11 tests failed; bot not in channels, missing OAuth scopes |
-| [slack-webhook](./slack-webhook) | ✅ PASS | Slack incoming webhooks | All core functionality working |
-| [streak](./streak) | ❌ FAIL | CRM for Gmail with Streak | Missing STREAK_API_KEY |
-| [supadata](./supadata) | ✅ PASS | Data enrichment and verification service | All core functionality working |
-| [supabase](./supabase) | ✅ PASS | PostgreSQL database and backend | All core functionality working |
-| [tavily](./tavily) | ✅ PASS | AI research and search with citations | All core functionality working |
-| [youtube](./youtube) | ✅ PASS | YouTube data and video management | All core functionality working |
-| [zapsign](./zapsign) | ✅ PASS | Electronic signature platform | All core functionality working |
-| [zendesk](./zendesk) | ✅ PASS | Customer service platform | All core functionality working |
-| [zeptomail](./zeptomail) | ✅ PASS | Transactional email service | All core functionality working |
-| [browserless](./browserless) | ✅ PASS | Headless browser automation | All core functionality working |
-| [figma](./figma) | ✅ PASS | Design tool API integration | All core functionality working |
-| [twenty](./twenty) | ✅ PASS | CRM platform | All core functionality working |
+### ✅ Passing Skills (8)
 
-**Status Legend:** ✅ PASS = All tests passing or mostly passing with minor issues | ❌ FAIL = Tests failed due to missing credentials or critical errors
+| Skill | Description |
+|-------|-------------|
+| [brave-search](./brave-search) | Privacy-focused web search API - All search operations working |
+| [deepseek](./deepseek) | AI language model for chat completions - All core functionality working |
+| [figma](./figma) | Design tool API integration - All core functionality working |
+| [github](./github) | GitHub repository management with gh CLI - All core functionality working |
+| [instantly](./instantly) | Email outreach automation platform - All core functionality working |
+| [linear](./linear) | Issue tracking for software teams - All core functionality working |
+| [openai](./openai) | OpenAI GPT models and completions API - All core functionality working |
+| [tavily](./tavily) | AI research and search with citations - All core functionality working |
 
-**Last Tested:** 2025-12-31
+### ❌ Skills Requiring Configuration (59)
+
+These skills require API keys, tokens, or other environment variables to function:
+
+| Skill | Configuration Needed |
+|-------|---------------------|
+| [apify](./apify) | APIFY_API_TOKEN |
+| [axiom](./axiom) | AXIOM_PERSONAL_ACCESS_TOKEN, AXIOM_ORG_ID |
+| [bitrix](./bitrix) | BITRIX_DOMAIN, BITRIX_USER_ID, BITRIX_WEBHOOK_TOKEN |
+| [bright-data](./bright-data) | BRIGHTDATA_API_KEY |
+| [browserbase](./browserbase) | BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID |
+| [browserless](./browserless) | BROWSERLESS_API_KEY |
+| [chatwoot](./chatwoot) | CHATWOOT_API_KEY, CHATWOOT_ACCOUNT_ID |
+| [cloudinary](./cloudinary) | CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET |
+| [cronlytic](./cronlytic) | CRONLYTIC_API_KEY |
+| [dev.to](./dev.to) | DEVTO_API_KEY |
+| [discord-webhook](./discord-webhook) | DISCORD_WEBHOOK_URL |
+| [discord](./discord) | DISCORD_BOT_TOKEN |
+| [elevenlabs](./elevenlabs) | ELEVENLABS_API_KEY |
+| [fal.ai](./fal.ai) | FAL_KEY |
+| [firecrawl](./firecrawl) | FIRECRAWL_API_KEY |
+| [github-copilot](./github-copilot) | GitHub Copilot subscription |
+| [gitlab](./gitlab) | GITLAB_TOKEN, GITLAB_PROJECT_ID |
+| [gmail](./gmail) | Gmail OAuth credentials |
+| [google-sheets](./google-sheets) | Google Sheets OAuth credentials |
+| [hackernews](./hackernews) | No auth required - check API availability |
+| [htmlcsstoimage](./htmlcsstoimage) | HCTI_API_USER_ID, HCTI_API_KEY |
+| [imgur](./imgur) | IMGUR_CLIENT_ID |
+| [instagram](./instagram) | INSTAGRAM_ACCESS_TOKEN |
+| [intercom](./intercom) | INTERCOM_ACCESS_TOKEN |
+| [jira](./jira) | JIRA_API_TOKEN, JIRA_DOMAIN, JIRA_EMAIL |
+| [kommo](./kommo) | KOMMO_DOMAIN, KOMMO_ACCESS_TOKEN |
+| [lark](./lark) | LARK_APP_ID, LARK_APP_SECRET |
+| [mercury](./mercury) | MERCURY_API_KEY |
+| [minimax](./minimax) | MINIMAX_API_KEY, MINIMAX_GROUP_ID |
+| [minio](./minio) | MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY |
+| [monday](./monday) | MONDAY_API_TOKEN |
+| [notion](./notion) | NOTION_API_KEY |
+| [pdf4me](./pdf4me) | PDF4ME_API_KEY |
+| [pdfco](./pdfco) | PDFCO_API_KEY |
+| [pdforge](./pdforge) | PDFORGE_API_KEY |
+| [perplexity](./perplexity) | PERPLEXITY_API_KEY |
+| [plausible](./plausible) | PLAUSIBLE_API_KEY, PLAUSIBLE_SITE_ID |
+| [podchaser](./podchaser) | PODCHASER_API_KEY |
+| [pushinator](./pushinator) | PUSHINATOR_API_KEY |
+| [qdrant](./qdrant) | QDRANT_URL, QDRANT_API_KEY |
+| [qiita](./qiita) | QIITA_ACCESS_TOKEN |
+| [reportei](./reportei) | REPORTEI_API_KEY |
+| [resend](./resend) | RESEND_API_KEY |
+| [rss-fetch](./rss-fetch) | No auth required - check RSS feed URL |
+| [runway](./runway) | RUNWAY_API_KEY |
+| [scrapeninja](./scrapeninja) | SCRAPENINJA_API_KEY |
+| [sentry](./sentry) | SENTRY_AUTH_TOKEN, SENTRY_ORG_SLUG |
+| [serpapi](./serpapi) | SERPAPI_API_KEY |
+| [shortio](./shortio) | SHORTIO_API_KEY, SHORTIO_DOMAIN_ID |
+| [slack-webhook](./slack-webhook) | SLACK_WEBHOOK_URL |
+| [slack](./slack) | SLACK_BOT_TOKEN |
+| [streak](./streak) | STREAK_API_KEY |
+| [supabase](./supabase) | SUPABASE_URL, SUPABASE_KEY |
+| [supadata](./supadata) | SUPADATA_API_KEY |
+| [twenty](./twenty) | TWENTY_API_KEY |
+| [youtube](./youtube) | YOUTUBE_API_KEY |
+| [zapsign](./zapsign) | ZAPSIGN_API_TOKEN |
+| [zendesk](./zendesk) | ZENDESK_API_TOKEN, ZENDESK_SUBDOMAIN, ZENDESK_EMAIL |
+| [zeptomail](./zeptomail) | ZEPTOMAIL_API_KEY |
+
+**Status Legend:**
+- ✅ PASS = All tests passing with proper configuration
+- ❌ FAIL = Missing required credentials or API configuration
+
+**Last Tested:** 2026-01-01
 
 ## Contributing
 
