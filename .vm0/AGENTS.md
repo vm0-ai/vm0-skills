@@ -26,13 +26,8 @@ This agent performs automated testing of all skills in the vm0-skills repository
    - For each skill folder in the repo, add a todo item to `TODO.md`
 
 3. **Test Each Skill**
-   - Create a sub-agent for each skill to test
-   - Each sub-agent should:
-     - Verify all required environment variables exist
-     - Test each example command in the skill's SKILL.md
-     - Write a temporary test result markdown file in /tmp directory
-     - Record whether the test passed, and specifically note any shell command failures or jq parsing errors
-     - Write report to /tmp/<SKILL_NAME>_report.md, and only output a simple 'done' to main agent process.
+   - Create a sub-agent for each skill to test, max concurrent is 4
+   - Each sub-agent to run `ENV1=... ENV2=... qwen -y 'you are a skill tester, today your job is test skill ./<SKILL_NAME>/SKILL.md 1. Verify all required environment variables exist 2. Test each example command in SKILL.md, 3. Record whether the test passed, and specifically note any shell command failures or jq parsing errors, 4. Write report to /tmp/<SKILL_NAME>_report.md' 2>&1 > /tmp/<SKILL_NAME>.log`, the ENV1 ENV2 is provide by vm0_secrets and vm0_vars in SKILL.yaml, and each sub-agent should just output a simple '<SKILL_NAME> done':
   - Wait all sub-agent done, /compact
 
 4. **Summarize Results**

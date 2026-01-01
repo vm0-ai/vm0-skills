@@ -1,0 +1,8 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "qwen-oauth"
+    }
+  },
+  "$version": 2
+}
