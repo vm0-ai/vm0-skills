@@ -41,7 +41,7 @@ export APIFY_API_TOKEN="apify_api_xxxxxxxxxxxxxxxxxxxxxxxx"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -63,7 +63,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json'
 ```
 
 **Response contains `id` (run ID) and `defaultDatasetId` for fetching results.**
@@ -85,7 +85,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json'
 ```
 
 ### 3. Check Run Status
@@ -96,7 +96,7 @@ Poll the run status:
 
 ```bash
 # Replace {runId} with actual ID like "HG7ML7M8z78YcAPEB"
-bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.status'
+bash -c 'curl -s "https://api.apify.com/v2/actor-runs/{runId}" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq -r '.data.status'
 ```
 
 **Complete workflow example** (capture run ID and check status):
@@ -130,7 +130,7 @@ Fetch results from a completed run:
 
 ```bash
 # Replace {datasetId} with actual ID like "WkzbQMuFYuamGv3YF"
-bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
+bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items" --header "Authorization: Bearer ${APIFY_API_TOKEN}"'
 ```
 
 **Complete workflow example** (run async, wait, and fetch results):
@@ -163,14 +163,14 @@ while true; do
 done
 
 # Step 3: Fetch the dataset items
-bash -c "curl -s \"https://api.apify.com/v2/datasets/${DATASET_ID}/items\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\"" | jq .
+bash -c "curl -s \"https://api.apify.com/v2/datasets/${DATASET_ID}/items\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\""
 ```
 
 **With pagination:**
 
 ```bash
 # Replace {datasetId} with actual ID
-bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&offset=0" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
+bash -c 'curl -s "https://api.apify.com/v2/datasets/{datasetId}/items?limit=100&offset=0" --header "Authorization: Bearer ${APIFY_API_TOKEN}"'
 ```
 
 ### 5. Popular Actors
@@ -190,7 +190,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~google-search-scraper/run-sync-get-dataset-items?timeout=120" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~google-search-scraper/run-sync-get-dataset-items?timeout=120" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json'
 ```
 
 #### Website Content Crawler
@@ -208,7 +208,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~website-content-crawler/run-sync-get-dataset-items?timeout=300" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~website-content-crawler/run-sync-get-dataset-items?timeout=300" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json'
 ```
 
 #### Instagram Scraper
@@ -226,7 +226,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~instagram-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~instagram-scraper/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json'
 ```
 
 #### Amazon Product Scraper
@@ -243,7 +243,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/runs" --header "Authorization: Bearer ${APIFY_API_TOKEN}" --header "Content-Type: application/json" -d @/tmp/apify_request.json'
 ```
 
 ### 6. List Your Runs
@@ -251,7 +251,7 @@ bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/r
 Get recent Actor runs:
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.items[] | {id, actId, status, startedAt}
+bash -c 'curl -s "https://api.apify.com/v2/actor-runs?limit=10&desc=true" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.items[] | {id, actId, status, startedAt}'
 ```
 
 ### 7. Abort a Run
@@ -262,7 +262,7 @@ Stop a running Actor:
 
 ```bash
 # Replace {runId} with actual ID like "HG7ML7M8z78YcAPEB"
-bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq .
+bash -c 'curl -s -X POST "https://api.apify.com/v2/actor-runs/{runId}/abort" --header "Authorization: Bearer ${APIFY_API_TOKEN}"'
 ```
 
 **Complete workflow example** (start a run and abort it):
@@ -285,7 +285,7 @@ RUN_ID=$(bash -c 'curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scrap
 echo "Started run: $RUN_ID"
 
 # Step 2: Abort the run
-bash -c "curl -s -X POST \"https://api.apify.com/v2/actor-runs/${RUN_ID}/abort\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\"" | jq .
+bash -c "curl -s -X POST \"https://api.apify.com/v2/actor-runs/${RUN_ID}/abort\" --header \"Authorization: Bearer \${APIFY_API_TOKEN}\""
 ```
 
 ### 8. List Available Actors
@@ -293,7 +293,7 @@ bash -c "curl -s -X POST \"https://api.apify.com/v2/actor-runs/${RUN_ID}/abort\"
 Browse public Actors:
 
 ```bash
-bash -c 'curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.items[] | {name, username, title}
+bash -c 'curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "Authorization: Bearer ${APIFY_API_TOKEN}"' | jq '.data.items[] | {name, username, title}'
 ```
 
 ---

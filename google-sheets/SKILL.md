@@ -127,47 +127,47 @@ The spreadsheet ID is in the URL: `https://docs.google.com/spreadsheets/d/{SPREA
 
 ### 1. Get Spreadsheet Metadata
 
-Get information about a spreadsheet (sheets, properties):
+Get information about a spreadsheet (sheets, properties). Replace `<your-spreadsheet-id>` with your actual spreadsheet ID:
 
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '{title: .properties.title, sheets: [.sheets[].properties | {sheetId, title}]}'
+bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '{title: .properties.title, sheets: [.sheets[].properties | {sheetId, title}]}'
 ```
 
 ---
 
 ### 2. Read Cell Values
 
-Read a range of cells:
+Read a range of cells. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID:
 
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A1:D10" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '.values'
+bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values/Sheet1%21A1:D10" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '.values'
 ```
 
 ---
 
 ### 3. Read Entire Sheet
 
-Read all data from a sheet:
+Read all data from a sheet. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID:
 
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '.values'
+bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values/Sheet1" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '.values'
 ```
 
 ---
 
 ### 4. Read with API Key (Public Sheets)
 
-For publicly accessible sheets:
+For publicly accessible sheets. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID:
 
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A1:D10?key=${GOOGLE_API_KEY}"' | jq '.values'
+bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values/Sheet1%21A1:D10?key=${GOOGLE_API_KEY}"' | jq '.values'
 ```
 
 ---
 
 ### 5. Write Cell Values
 
-Update a range of cells:
+Update a range of cells. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID.
 
 Write to `/tmp/gsheets_request.json`:
 
@@ -182,7 +182,7 @@ Write to `/tmp/gsheets_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A1:C1?valueInputOption=USER_ENTERED" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.updatedCells'
+bash -c 'curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values/Sheet1%21A1:C1?valueInputOption=USER_ENTERED" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.updatedCells'
 ```
 
 **valueInputOption:**
@@ -193,7 +193,7 @@ bash -c 'curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADS
 
 ### 6. Append Rows
 
-Add new rows to the end of a sheet:
+Add new rows to the end of a sheet. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID.
 
 Write to `/tmp/gsheets_request.json`:
 
@@ -208,24 +208,24 @@ Write to `/tmp/gsheets_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A:C:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.updates | {updatedRange, updatedRows}'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values/Sheet1%21A:C:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.updates | {updatedRange, updatedRows}'
 ```
 
 ---
 
 ### 7. Batch Read Multiple Ranges
 
-Read multiple ranges in one request:
+Read multiple ranges in one request. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID:
 
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values:batchGet?ranges=Sheet1%21A1:B5&ranges=Sheet1%21D1:E5" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '.valueRanges'
+bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values:batchGet?ranges=Sheet1%21A1:B5&ranges=Sheet1%21D1:E5" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '.valueRanges'
 ```
 
 ---
 
 ### 8. Batch Update Multiple Ranges
 
-Update multiple ranges in one request:
+Update multiple ranges in one request. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID.
 
 Write to `/tmp/gsheets_request.json`:
 
@@ -248,14 +248,14 @@ Write to `/tmp/gsheets_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.totalUpdatedCells'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.totalUpdatedCells'
 ```
 
 ---
 
 ### 9. Clear Cell Values
 
-Clear a range of cells:
+Clear a range of cells. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID.
 
 Write to `/tmp/gsheets_request.json`:
 
@@ -266,7 +266,7 @@ Write to `/tmp/gsheets_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1%21A2:C100:clear" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.clearedRange'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values/Sheet1%21A2:C100:clear" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.clearedRange'
 ```
 
 ---
@@ -295,14 +295,14 @@ Write to `/tmp/gsheets_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '{spreadsheetId, spreadsheetUrl}'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.spreadsheetId, .spreadsheetUrl'
 ```
 
 ---
 
 ### 11. Add New Sheet
 
-Add a new sheet to an existing spreadsheet:
+Add a new sheet to an existing spreadsheet. Replace `<your-spreadsheet-id>` with your actual spreadsheet ID.
 
 Write to `/tmp/gsheets_request.json`:
 
@@ -323,14 +323,14 @@ Write to `/tmp/gsheets_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.replies[0].addSheet.properties'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.replies[0].addSheet.properties'
 ```
 
 ---
 
 ### 12. Delete Sheet
 
-Delete a sheet from a spreadsheet (use sheetId from metadata):
+Delete a sheet from a spreadsheet (use sheetId from metadata). Replace `<your-spreadsheet-id>` with your actual spreadsheet ID.
 
 Write to `/tmp/gsheets_request.json`:
 
@@ -349,17 +349,17 @@ Write to `/tmp/gsheets_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json' | jq '.'
+bash -c 'curl -s -X POST "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>:batchUpdate" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}" -H "Content-Type: application/json" -d @/tmp/gsheets_request.json'
 ```
 
 ---
 
 ### 13. Search for Values
 
-Find cells containing specific text (read all then filter):
+Find cells containing specific text (read all then filter). Replace `<your-spreadsheet-id>` with your actual spreadsheet ID:
 
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '[.values[] | select(.[0] | ascii_downcase | contains("search_term"))]'
+bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>/values/Sheet1" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '[.values[] | select(.[0] | ascii_downcase | contains("search_term"))]'
 ```
 
 ---

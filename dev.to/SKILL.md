@@ -124,9 +124,10 @@ bash -c 'curl -s -X POST "https://dev.to/api/articles" -H "api-key: ${DEVTO_API_
 
 ### 4. Publish from Markdown File
 
+To publish from a markdown file, first convert it to JSON:
+
 ```bash
-TITLE="My Article Title"
-CONTENT=$(cat article.md | jq -Rs '.')
+cat article.md | jq -Rs '.' > /tmp/content.json
 ```
 
 Write to `/tmp/devto_request.json`:
@@ -134,8 +135,8 @@ Write to `/tmp/devto_request.json`:
 ```json
 {
   "article": {
-    "title": "${TITLE}",
-    "body_markdown": ${CONTENT},
+    "title": "My Article Title",
+    "body_markdown": "Your article content here...",
     "published": false,
     "tags": ["programming"]
   }
@@ -172,21 +173,15 @@ bash -c 'curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: ${DEV
 
 ### 8. Get Single Article
 
-> **Note:** Replace `123456` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
+Replace `<your-article-id>` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
 
 ```bash
-ARTICLE_ID="123456"
-
-bash -c 'curl -s "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}"' | jq '{id, title, url, published}'
+bash -c 'curl -s "https://dev.to/api/articles/<your-article-id>" -H "api-key: ${DEVTO_API_KEY}"' | jq '{id, title, url, published}'
 ```
 
 ### 9. Update an Article
 
-> **Note:** Replace `123456` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
-
-```bash
-ARTICLE_ID="123456"
-```
+Replace `<your-article-id>` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
 
 Write to `/tmp/devto_request.json`:
 
@@ -202,16 +197,12 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url}'
+bash -c 'curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url}'
 ```
 
 ### 10. Publish a Draft
 
-> **Note:** Replace `123456` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
-
-```bash
-ARTICLE_ID="123456"
-```
+Replace `<your-article-id>` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
 
 Write to `/tmp/devto_request.json`:
 
@@ -226,7 +217,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "https://dev.to/api/articles/${ARTICLE_ID}" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url, published}'
+bash -c 'curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: ${DEVTO_API_KEY}" -H "Content-Type: application/json" -d @/tmp/devto_request.json' | jq '{id, url, published}'
 ```
 
 ---

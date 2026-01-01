@@ -140,3 +140,13 @@ gh auth login
 ```
 
 Alternatively, set the `GITHUB_TOKEN` environment variable with a personal access token.
+
+**Important:** When using environment variables in commands with pipes, wrap the command in `bash -c '...'` to avoid variable substitution issues:
+```bash
+bash -c 'gh pr view 123 --repo owner/repo --json title,state' | jq '.title'
+```
+
+Do not use this pattern:
+```bash
+gh pr view 123 --repo owner/repo --json title,state | jq '.title'  # Without bash -c wrapper
+```

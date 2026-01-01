@@ -45,7 +45,7 @@ Linear's API is rate-limited to ensure fair usage. Limits may vary based on your
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -82,17 +82,13 @@ Save a team ID for subsequent queries.
 
 ### 2. List Issues for a Team
 
-Get issues from a specific team:
-
-```bash
-TEAM_ID="your-team-id"
-```
+Get issues from a specific team. Replace `<your-team-id>` with the actual team ID:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "{ team(id: \"${TEAM_ID}\") { issues { nodes { id identifier title state { name } assignee { name } } } } }"
+  "query": "{ team(id: \"<your-team-id>\") { issues { nodes { id identifier title state { name } assignee { name } } } } }"
 }
 ```
 
@@ -146,17 +142,13 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 ### 5. Create Issue
 
-Create a new issue in a team:
-
-```bash
-TEAM_ID="your-team-id"
-```
+Create a new issue in a team. Replace `<your-team-id>` with the actual team ID:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "mutation { issueCreate(input: { title: \"Bug: Login button not working\", description: \"Users report the login button is unresponsive on mobile.\", teamId: \"${TEAM_ID}\" }) { success issue { id identifier title url } } }"
+  "query": "mutation { issueCreate(input: { title: \"Bug: Login button not working\", description: \"Users report the login button is unresponsive on mobile.\", teamId: \"<your-team-id>\" }) { success issue { id identifier title url } } }"
 }
 ```
 
@@ -170,18 +162,13 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 ### 6. Create Issue with Priority and Labels
 
-Create an issue with additional properties:
-
-```bash
-TEAM_ID="your-team-id"
-LABEL_ID="your-label-id"
-```
+Create an issue with additional properties. Replace `<your-team-id>` and `<your-label-id>` with actual IDs:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "mutation { issueCreate(input: { title: \"High priority task\", teamId: \"${TEAM_ID}\", priority: 1, labelIds: [\"${LABEL_ID}\"] }) { success issue { id identifier title priority } } }"
+  "query": "mutation { issueCreate(input: { title: \"High priority task\", teamId: \"<your-team-id>\", priority: 1, labelIds: [\"<your-label-id>\"] }) { success issue { id identifier title priority } } }"
 }
 ```
 
@@ -197,17 +184,13 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 ### 7. Update Issue
 
-Update an existing issue:
-
-```bash
-ISSUE_ID="your-issue-id"
-```
+Update an existing issue. Replace `<your-issue-id>` with the actual issue ID:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "mutation { issueUpdate(id: \"${ISSUE_ID}\", input: { title: \"Updated title\", priority: 2 }) { success issue { id identifier title priority } } }"
+  "query": "mutation { issueUpdate(id: \"<your-issue-id>\", input: { title: \"Updated title\", priority: 2 }) { success issue { id identifier title priority } } }"
 }
 ```
 
@@ -221,18 +204,13 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 ### 8. Change Issue State
 
-Move an issue to a different state (e.g., "Done"):
-
-```bash
-ISSUE_ID="your-issue-id"
-STATE_ID="your-state-id"
-```
+Move an issue to a different state (e.g., "Done"). Replace `<your-issue-id>` and `<your-state-id>` with actual IDs:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "mutation { issueUpdate(id: \"${ISSUE_ID}\", input: { stateId: \"${STATE_ID}\" }) { success issue { id identifier state { name } } } }"
+  "query": "mutation { issueUpdate(id: \"<your-issue-id>\", input: { stateId: \"<your-state-id>\" }) { success issue { id identifier state { name } } } }"
 }
 ```
 
@@ -246,17 +224,13 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 ### 9. List Workflow States
 
-Get available states for a team:
-
-```bash
-TEAM_ID="your-team-id"
-```
+Get available states for a team. Replace `<your-team-id>` with the actual team ID:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "{ team(id: \"${TEAM_ID}\") { states { nodes { id name type } } } }"
+  "query": "{ team(id: \"<your-team-id>\") { states { nodes { id name type } } } }"
 }
 ```
 
@@ -270,17 +244,13 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 ### 10. Add Comment to Issue
 
-Add a comment to an existing issue:
-
-```bash
-ISSUE_ID="your-issue-id"
-```
+Add a comment to an existing issue. Replace `<your-issue-id>` with the actual issue ID:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "mutation { commentCreate(input: { issueId: \"${ISSUE_ID}\", body: \"This is a comment from the API.\" }) { success comment { id body createdAt } } }"
+  "query": "mutation { commentCreate(input: { issueId: \"<your-issue-id>\", body: \"This is a comment from the API.\" }) { success comment { id body createdAt } } }"
 }
 ```
 
@@ -334,17 +304,13 @@ bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: appl
 
 ### 13. List Labels
 
-Get available labels for a team:
-
-```bash
-TEAM_ID="your-team-id"
-```
+Get available labels for a team. Replace `<your-team-id>` with the actual team ID:
 
 Write to `/tmp/linear_request.json`:
 
 ```json
 {
-  "query": "{ team(id: \"${TEAM_ID}\") { labels { nodes { id name color } } } }"
+  "query": "{ team(id: \"<your-team-id>\") { labels { nodes { id name color } } } }"
 }
 ```
 

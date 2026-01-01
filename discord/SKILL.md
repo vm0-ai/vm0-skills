@@ -98,10 +98,10 @@ Write to `/tmp/discord_request.json`:
 }
 ```
 
-Then run:
+Then run (replace `<your-channel-id>` with the actual channel ID):
 
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, content}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/<your-channel-id>/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json'
 ```
 
 ---
@@ -122,50 +122,60 @@ Write to `/tmp/discord_request.json`:
 }
 ```
 
-Then run:
+Then run (replace `<your-channel-id>` with the actual channel ID):
 
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/<your-channel-id>/messages" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json'
 ```
 
 ---
 
 ### 4. Get Channel Info
 
+Replace `<your-channel-id>` with the actual channel ID:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/channels/${CHANNEL_ID}" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '{id, name, type, guild_id}'
+bash -c 'curl -s "https://discord.com/api/v10/channels/<your-channel-id>" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '{id, name, type, guild_id}'
 ```
 
 ---
 
 ### 5. Get Channel Messages
 
+Replace `<your-channel-id>` with the actual channel ID:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages?limit=10" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, author: .author.username, content}'
+bash -c 'curl -s "https://discord.com/api/v10/channels/<your-channel-id>/messages?limit=10" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, author: .author.username, content}'
 ```
 
 ---
 
 ### 6. Get Specific Message
 
+Replace `<your-channel-id>` and `<your-message-id>` with the actual IDs:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages/${MESSAGE_ID}" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '{id, content, author: .author.username}'
+bash -c 'curl -s "https://discord.com/api/v10/channels/<your-channel-id>/messages/<your-message-id>" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '{id, content, author: .author.username}'
 ```
 
 ---
 
 ### 7. Delete Message
 
+Replace `<your-channel-id>` and `<your-message-id>` with the actual IDs:
+
 ```bash
-curl -s -X DELETE "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages/${MESSAGE_ID}" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"
+bash -c 'curl -s -X DELETE "https://discord.com/api/v10/channels/<your-channel-id>/messages/<your-message-id>" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"'
 ```
 
 ---
 
 ### 8. Add Reaction
 
+Replace `<your-channel-id>` and `<your-message-id>` with the actual IDs:
+
 ```bash
-curl -s -X PUT "https://discord.com/api/v10/channels/${CHANNEL_ID}/messages/${MESSAGE_ID}/reactions/%F0%9F%91%8D/@me" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Length: 0"
+bash -c 'curl -s -X PUT "https://discord.com/api/v10/channels/<your-channel-id>/messages/<your-message-id>/reactions/%F0%9F%91%8D/@me" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Length: 0"'
 ```
 
 Note: Emoji must be URL encoded (👍 = `%F0%9F%91%8D`)
@@ -174,32 +184,40 @@ Note: Emoji must be URL encoded (👍 = `%F0%9F%91%8D`)
 
 ### 9. Get Guild (Server) Info
 
+Replace `<your-guild-id>` with the actual guild ID:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/guilds/${GUILD_ID}" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '{id, name, member_count, owner_id}'
+bash -c 'curl -s "https://discord.com/api/v10/guilds/<your-guild-id>" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '{id, name, member_count, owner_id}'
 ```
 
 ---
 
 ### 10. List Guild Channels
 
+Replace `<your-guild-id>` with the actual guild ID:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/guilds/${GUILD_ID}/channels" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, name, type}'
+bash -c 'curl -s "https://discord.com/api/v10/guilds/<your-guild-id>/channels" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, name, type}'
 ```
 
 ---
 
 ### 11. Get Guild Members
 
+Replace `<your-guild-id>` with the actual guild ID:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/guilds/${GUILD_ID}/members?limit=10" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {user: .user.username, nick, joined_at}'
+bash -c 'curl -s "https://discord.com/api/v10/guilds/<your-guild-id>/members?limit=10" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {user: .user.username, nick, joined_at}'
 ```
 
 ---
 
 ### 12. Get Guild Roles
 
+Replace `<your-guild-id>` with the actual guild ID:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/guilds/${GUILD_ID}/roles" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, name, color, position}'
+bash -c 'curl -s "https://discord.com/api/v10/guilds/<your-guild-id>/roles" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, name, color, position}'
 ```
 
 ---
@@ -214,18 +232,20 @@ Write to `/tmp/discord_request.json`:
 }
 ```
 
-Then run:
+Then run (replace `<your-channel-id>` with the actual channel ID):
 
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/${CHANNEL_ID}/webhooks" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, token, url: "https://discord.com/api/webhooks/\(.id)/\(.token)"}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/channels/<your-channel-id>/webhooks" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, token, url: "https://discord.com/api/webhooks/\(.id)/\(.token)"}'
 ```
 
 ---
 
 ### 14. List Channel Webhooks
 
+Replace `<your-channel-id>` with the actual channel ID:
+
 ```bash
-bash -c 'curl -s "https://discord.com/api/v10/channels/${CHANNEL_ID}/webhooks" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, name, token}'
+bash -c 'curl -s "https://discord.com/api/v10/channels/<your-channel-id>/webhooks" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}"' | jq '.[] | {id, name, token}'
 ```
 
 ---
@@ -241,10 +261,10 @@ Write to `/tmp/discord_request.json`:
 }
 ```
 
-Then run:
+Then run (replace `<your-guild-id>` with the actual guild ID):
 
 ```bash
-bash -c 'curl -s -X POST "https://discord.com/api/v10/guilds/${GUILD_ID}/channels" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, name}'
+bash -c 'curl -s -X POST "https://discord.com/api/v10/guilds/<your-guild-id>/channels" -H "Authorization: Bot ${DISCORD_BOT_TOKEN}" -H "Content-Type: application/json" -d @/tmp/discord_request.json' | jq '{id, name}'
 ```
 
 ---

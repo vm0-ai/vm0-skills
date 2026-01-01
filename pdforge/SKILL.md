@@ -43,7 +43,7 @@ export PDFORGE_API_KEY="pdfnoodle_api_your-key-here"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq '.field'
 > ```
 
 ## How to Use
@@ -77,7 +77,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json'
 ```
 
 **Response:**
@@ -113,7 +113,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json'
 ```
 
 **Response:**
@@ -143,7 +143,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json'
 ```
 
 ---
@@ -163,7 +163,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json'
 ```
 
 ---
@@ -184,7 +184,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer ${PDFORGE_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json'
 ```
 
 ---
@@ -193,10 +193,10 @@ bash -c 'curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --heade
 
 After getting the `signedUrl`, download the PDF:
 
-```bash
-SIGNED_URL="https://storage.googleapis.com/..."
+Replace `<your-signed-url>` with the actual signed URL from the previous response:
 
-curl -s -o output.pdf "${SIGNED_URL}"
+```bash
+curl -s -o output.pdf "https://storage.googleapis.com/<your-signed-url>"
 ```
 
 ---

@@ -58,7 +58,7 @@ export AXIOM_ORG_ID="your-org-id"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -72,13 +72,13 @@ export AXIOM_ORG_ID="your-org-id"
 ### 1. List Datasets
 
 ```bash
-bash -c 'curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
+bash -c 'curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"'
 ```
 
 ### 2. Get Dataset Info
 
 ```bash
-bash -c 'curl -s "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
+bash -c 'curl -s "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"'
 ```
 
 ### 3. Create Dataset
@@ -95,7 +95,7 @@ Write to `/tmp/axiom_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json'
 ```
 
 ### 4. Ingest Data (JSON)
@@ -111,13 +111,22 @@ Write to `/tmp/axiom_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json' | jq .
+bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json'
 ```
 
 ### 5. Ingest Data (NDJSON)
 
+Write to `/tmp/axiom_ndjson.ndjson`:
+
+```
+{"message": "Event 1", "level": "info"}
+{"message": "Event 2", "level": "warn"}
+```
+
+Then run:
+
 ```bash
-bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/x-ndjson" -d $'"'"'{"message": "Event 1", "level": "info"}\n{"message": "Event 2", "level": "warn"}'"'"'' | jq .
+bash -c 'curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/x-ndjson" -d @/tmp/axiom_ndjson.ndjson'
 ```
 
 ### 6. Query Data with APL
@@ -135,7 +144,7 @@ Write to `/tmp/axiom_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json'
 ```
 
 ### 7. Query with Aggregation
@@ -153,7 +162,7 @@ Write to `/tmp/axiom_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json'
 ```
 
 ### 8. Create Annotation
@@ -172,13 +181,13 @@ Write to `/tmp/axiom_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.axiom.co/v2/annotations" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.axiom.co/v2/annotations" -H "Authorization: Bearer ${AXIOM_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/axiom_request.json'
 ```
 
 ### 9. List Monitors
 
 ```bash
-bash -c 'curl -s "https://api.axiom.co/v2/monitors" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
+bash -c 'curl -s "https://api.axiom.co/v2/monitors" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"'
 ```
 
 ### 10. Get Current User (Requires PAT)
@@ -186,13 +195,13 @@ bash -c 'curl -s "https://api.axiom.co/v2/monitors" -H "Authorization: Bearer ${
 > **Note:** This endpoint requires a Personal Access Token (PAT), not an API Token.
 
 ```bash
-bash -c 'curl -s "https://api.axiom.co/v2/user" -H "Authorization: Bearer ${AXIOM_PERSONAL_ACCESS_TOKEN}" -H "x-axiom-org-id: ${AXIOM_ORG_ID}"' | jq .
+bash -c 'curl -s "https://api.axiom.co/v2/user" -H "Authorization: Bearer ${AXIOM_PERSONAL_ACCESS_TOKEN}" -H "x-axiom-org-id: ${AXIOM_ORG_ID}"'
 ```
 
 ### 11. Delete Dataset
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"' | jq .
+bash -c 'curl -s -X DELETE "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"'
 ```
 
 ---

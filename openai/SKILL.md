@@ -82,7 +82,7 @@ Write to `/tmp/openai_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq -r '.choices[0].message.content'
+bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq '.choices[0].message.content'
 ```
 
 **Available models:**
@@ -115,7 +115,7 @@ Write to `/tmp/openai_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq -r '.choices[0].message.content'
+bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq '.choices[0].message.content'
 ```
 
 ---
@@ -164,7 +164,7 @@ Write to `/tmp/openai_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq -r '.choices[0].message.content' | jq .
+bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq '.choices[0].message.content'
 ```
 
 ---
@@ -194,7 +194,7 @@ Write to `/tmp/openai_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq -r '.choices[0].message.content'
+bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq '.choices[0].message.content'
 ```
 
 ---
@@ -255,6 +255,8 @@ Then run:
 bash -c 'curl -s "https://api.openai.com/v1/embeddings" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq '.data[0].embedding[:5]'
 ```
 
+This extracts the first 5 dimensions of the embedding vector.
+
 **Embedding models:**
 
 - `text-embedding-3-small`: 1536 dimensions, fastest
@@ -280,7 +282,7 @@ Write to `/tmp/openai_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.openai.com/v1/images/generations" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq -r '.data[0].url'
+bash -c 'curl -s "https://api.openai.com/v1/images/generations" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq '.data[0].url'
 ```
 
 **Parameters:**
@@ -296,7 +298,7 @@ bash -c 'curl -s "https://api.openai.com/v1/images/generations" -H "Content-Type
 Transcribe audio to text:
 
 ```bash
-bash -c 'curl -s "https://api.openai.com/v1/audio/transcriptions" -H "Authorization: Bearer ${OPENAI_API_KEY}" -F "file=@audio.mp3" -F "model=whisper-1"' | jq -r '.text'
+bash -c 'curl -s "https://api.openai.com/v1/audio/transcriptions" -H "Authorization: Bearer ${OPENAI_API_KEY}" -F "file=@audio.mp3" -F "model=whisper-1"' | jq '.text'
 ```
 
 Supports: mp3, mp4, mpeg, mpga, m4a, wav, webm (max 25MB).
@@ -357,6 +359,8 @@ Then run:
 ```bash
 bash -c 'curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json' | jq '.usage'
 ```
+
+This returns token counts for both input and output.
 
 Response includes:
 

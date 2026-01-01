@@ -54,23 +54,22 @@ PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
 
 ### Read Page with Content
 
-```bash
-PAGE_ID="2b70e96f0134807d8450c8793839c659"
+Replace `<your-page-id>` with your actual Notion page ID:
 
+```bash
 # Get page metadata
-bash -c 'curl -s -X GET "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '{title: .properties.title.title[0].plain_text, url, last_edited_time}
+bash -c 'curl -s -X GET "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '{title: .properties.title.title[0].plain_text, url, last_edited_time}
 
 # Get page content blocks
-bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/${PAGE_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}
+bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/<your-page-id>/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}
 ```
 
 ### Read Nested Blocks (Toggle, etc.)
 
-Blocks with `has_children: true` contain nested content:
+Blocks with `has_children: true` contain nested content. Replace `<your-block-id>` with your actual block ID:
 
 ```bash
-BLOCK_ID="2b70e96f-0134-80d9-9def-f99ae812f1e7"
-bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/${BLOCK_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
+bash -c 'curl -s -X GET "https://api.notion.com/v1/blocks/<your-block-id>/children" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28"' | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
 ```
 
 ### Search Workspace
@@ -102,18 +101,20 @@ Write to `/tmp/notion_request.json`:
 }
 ```
 
-Then run:
+Replace `<your-database-id>` with your actual database ID and run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json' | jq '.results[] | {id, properties}'
+bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json' | jq '.results[] | {id, properties}'
 ```
 
 Docs: https://developers.notion.com/reference/post-database-query
 
 ### Query with Filter
 
+Replace `<your-database-id>` with your actual database ID:
+
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "filter": {
   "property": "Status",
@@ -127,8 +128,10 @@ EOF
 
 ### Query with Multiple Filters
 
+Replace `<your-database-id>` with your actual database ID:
+
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/${DATABASE_ID}/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "filter": {
   "and": [
@@ -142,16 +145,20 @@ EOF
 
 ### Get Database Schema
 
+Replace `<your-database-id>` with your actual database ID:
+
 ```bash
-bash -c 'curl -s "https://api.notion.com/v1/databases/${DATABASE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{title: .title[0].plain_text, properties: .properties | keys}'
+bash -c 'curl -s "https://api.notion.com/v1/databases/<your-database-id>" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{title: .title[0].plain_text, properties: .properties | keys}'
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-database
 
 ### Get Page
 
+Replace `<your-page-id>` with your actual page ID:
+
 ```bash
-bash -c 'curl -s "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{id, url, properties}'
+bash -c 'curl -s "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '{id, url, properties}'
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-page
@@ -200,8 +207,10 @@ EOF
 
 ### Update Page Properties
 
+Replace `<your-page-id>` with your actual page ID:
+
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+curl -s -X PATCH "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "properties": {
   "Status": {"select": {"name": "In Progress"}}
@@ -222,24 +231,28 @@ Write to `/tmp/notion_request.json`:
 }
 ```
 
-Then run:
+Replace `<your-page-id>` with your actual page ID and run:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://api.notion.com/v1/pages/${PAGE_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json'
+bash -c 'curl -s -X PATCH "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json'
 ```
 
 ### Get Block Children
 
+Replace `<your-block-id>` with your actual block ID:
+
 ```bash
-bash -c 'curl -s "https://api.notion.com/v1/blocks/${BLOCK_ID}/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '.results[] | {type, id}'
+bash -c 'curl -s "https://api.notion.com/v1/blocks/<your-block-id>/children?page_size=100" --header "Authorization: Bearer $NOTION_API_KEY" --header '"'"'Notion-Version: 2022-06-28'"'"'' | jq '.results[] | {type, id}'
 ```
 
 Docs: https://developers.notion.com/reference/get-block-children
 
 ### Append Blocks to Page
 
+Replace `<your-page-id>` with your actual page ID:
+
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/blocks/${PAGE_ID}/children" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+curl -s -X PATCH "https://api.notion.com/v1/blocks/<your-page-id>/children" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "children": [
   {
@@ -264,8 +277,10 @@ Docs: https://developers.notion.com/reference/patch-block-children
 
 ### Delete Block
 
+Replace `<your-block-id>` with your actual block ID:
+
 ```bash
-curl -s -X DELETE "https://api.notion.com/v1/blocks/${BLOCK_ID}" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28'
+curl -s -X DELETE "https://api.notion.com/v1/blocks/<your-block-id>" --header "Authorization: Bearer $NOTION_API_KEY" --header 'Notion-Version: 2022-06-28'
 ```
 
 ### List Users

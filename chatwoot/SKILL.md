@@ -85,7 +85,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json' | jq '{id, name, email, phone_number}'
+bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json'
 ```
 
 ---
@@ -102,14 +102,10 @@ bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT
 
 ### 3. Get Contact Details
 
-Get a specific contact by ID:
-
-> **Note:** Get `CONTACT_ID` from the "Search Contacts" response (`id` field) or from the "Create a Contact" response.
+Get a specific contact by ID. Replace `<contact-id>` with the actual contact ID from the "Search Contacts" or "Create a Contact" response:
 
 ```bash
-CONTACT_ID=123
-
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/${CONTACT_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '{id, name, email, phone_number, custom_attributes}'
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/contacts/<contact-id>" -H "api_access_token: ${CHATWOOT_API_TOKEN}"'
 ```
 
 ---
@@ -135,7 +131,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json' | jq '{id, inbox_id, status}'
+bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json'
 ```
 
 ---
@@ -153,27 +149,17 @@ bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT
 
 ### 6. Get Conversation Details
 
-Get details of a specific conversation:
-
-> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field) or from the "Create a Conversation" response.
+Get details of a specific conversation. Replace `<conversation-id>` with the actual conversation ID from the "List Conversations" or "Create a Conversation" response:
 
 ```bash
-CONVERSATION_ID=123
-
-bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}" -H "api_access_token: ${CHATWOOT_API_TOKEN}"' | jq '{id, status, inbox_id, messages_count: .messages | length}'
+bash -c 'curl -s -X GET "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/<conversation-id>" -H "api_access_token: ${CHATWOOT_API_TOKEN}"'
 ```
 
 ---
 
 ### 7. Send a Message
 
-Send a message in a conversation:
-
-> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field).
-
-```bash
-CONVERSATION_ID=123
-```
+Send a message in a conversation. Replace `<conversation-id>` with the actual conversation ID from the "List Conversations" response:
 
 Write to `/tmp/chatwoot_request.json`:
 
@@ -188,20 +174,14 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/messages" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json' | jq '{id, content, status}'
+bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/<conversation-id>/messages" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json'
 ```
 
 ---
 
 ### 8. Add Private Note
 
-Add an internal note (not visible to customer):
-
-> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field).
-
-```bash
-CONVERSATION_ID=123
-```
+Add an internal note (not visible to customer). Replace `<conversation-id>` with the actual conversation ID from the "List Conversations" response:
 
 Write to `/tmp/chatwoot_request.json`:
 
@@ -216,21 +196,14 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/messages" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json' | jq '{id, content, private}'
+bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/<conversation-id>/messages" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json'
 ```
 
 ---
 
 ### 9. Assign Conversation
 
-Assign a conversation to an agent:
-
-> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field). Get `AGENT_ID` from the "List Agents" response (`id` field).
-
-```bash
-CONVERSATION_ID=123
-AGENT_ID=1
-```
+Assign a conversation to an agent. Replace `<conversation-id>` with the actual conversation ID and `<agent-id>` with the agent ID from the "List Agents" response:
 
 Write to `/tmp/chatwoot_request.json`:
 
@@ -243,20 +216,14 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/assignments" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json' | jq .
+bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/<conversation-id>/assignments" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json'
 ```
 
 ---
 
 ### 10. Update Conversation Status
 
-Change conversation status (open, resolved, pending):
-
-> **Note:** Get `CONVERSATION_ID` from the "List Conversations" response (`id` field).
-
-```bash
-CONVERSATION_ID=123
-```
+Change conversation status (open, resolved, pending). Replace `<conversation-id>` with the actual conversation ID from the "List Conversations" response:
 
 Write to `/tmp/chatwoot_request.json`:
 
@@ -269,7 +236,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${CONVERSATION_ID}/toggle_status" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json' | jq '{id, status}'
+bash -c 'curl -s -X POST "${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/<conversation-id>/toggle_status" -H "api_access_token: ${CHATWOOT_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json'
 ```
 
 ---

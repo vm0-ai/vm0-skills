@@ -58,7 +58,7 @@ export SUPABASE_SECRET_KEY="sb_secret_..."
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -74,7 +74,7 @@ All requests require the `apikey` header with your API key.
 Get all rows from a table:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 ---
@@ -84,7 +84,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE
 Get only specific columns:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=id,name,email" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=id,name,email" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 ---
@@ -96,19 +96,19 @@ Filter rows using PostgREST operators.
 **Equal to:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 **Greater than:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/products?price=gt.100" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/products?price=gt.100" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 **Multiple conditions (AND):**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 **Available Operators:**
@@ -133,7 +133,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?age=gte.18&status=eq.active" -H 
 Use `or` for OR logic:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 ---
@@ -145,19 +145,19 @@ Sort results.
 **Ascending:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.asc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.asc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 **Descending:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 **Multiple columns:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 ---
@@ -169,13 +169,13 @@ Use `limit` and `offset`.
 **First 10 rows:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 **Page 2 (rows 11-20):**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 ---
@@ -185,7 +185,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: 
 Use `Prefer: count=exact` header:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}" -H "Prefer: count=exact" -I' | grep -i content-range
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}" -H "Prefer: count=exact" -I' | grep -i "content-range"
 ```
 
 ---
@@ -204,7 +204,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json'
 ```
 
 ---
@@ -223,7 +223,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json'
 ```
 
 ---
@@ -243,7 +243,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json' | jq .
+bash -c 'curl -s -X PATCH "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json'
 ```
 
 ---
@@ -265,7 +265,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d @/tmp/supabase_request.json' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d @/tmp/supabase_request.json'
 ```
 
 ---
@@ -275,7 +275,7 @@ bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/users" -H "apikey: ${SUPABASE_
 Delete rows matching a filter:
 
 ```bash
-bash -c 'curl -s -X DELETE "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Prefer: return=representation"' | jq .
+bash -c 'curl -s -X DELETE "${SUPABASE_URL}/rest/v1/users?id=eq.1" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Prefer: return=representation"'
 ```
 
 ---
@@ -287,13 +287,13 @@ Embed related data using foreign keys.
 **Get posts with their author:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?select=*,author:users(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?select=*,author:users(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 **Get users with their posts:**
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 ---
@@ -303,7 +303,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*,posts(*)" -H "apikey: $
 Search text columns:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?title=fts.hello" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"' | jq .
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/posts?title=fts.hello" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}"'
 ```
 
 ---
@@ -323,7 +323,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -d @/tmp/supabase_request.json' | jq .
+bash -c 'curl -s -X POST "${SUPABASE_URL}/rest/v1/rpc/my_function" -H "apikey: ${SUPABASE_SECRET_KEY}" -H "Content-Type: application/json" -d @/tmp/supabase_request.json'
 ```
 
 ---

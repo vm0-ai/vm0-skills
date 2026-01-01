@@ -54,7 +54,7 @@ export SENTRY_ORG="your-org-slug" # Your organization slug
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -70,7 +70,7 @@ Base URL: `https://${SENTRY_HOST}/api/0`
 Get all projects you have access to:
 
 ```bash
-bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '.[] | {slug, name, platform, dateCreated}
+bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '.[] | {slug, name, platform, dateCreated}'
 ```
 
 ---
@@ -84,7 +84,7 @@ Get details for a specific project:
 ```bash
 PROJECT_SLUG="my-project"
 
-bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{slug, name, platform, status, dateCreated}
+bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{slug, name, platform, status, dateCreated}'
 ```
 
 ---
@@ -147,7 +147,7 @@ Get details for a specific issue:
 ```bash
 ISSUE_ID="123456789"
 
-bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{id, shortId, title, culprit, status, level, count, userCount, firstSeen, lastSeen, assignedTo}
+bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{id, shortId, title, culprit, status, level, count, userCount, firstSeen, lastSeen, assignedTo}'
 ```
 
 ---
@@ -161,7 +161,7 @@ Get the most recent event for an issue:
 ```bash
 ISSUE_ID="123456789"
 
-bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/events/latest/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{eventID, message, platform, dateCreated, tags, contexts}
+bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/events/latest/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{eventID, message, platform, dateCreated, tags, contexts}'
 ```
 
 ---
@@ -307,18 +307,13 @@ bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG
 
 Assign an issue to a user:
 
-> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output. Replace `developer@example.com` with a valid user email from your Sentry organization members.
-
-```bash
-ISSUE_ID="123456789"
-USER_EMAIL="developer@example.com"
-```
+> **Note:** Replace `123456789` with an actual issue ID from the "List Issues" output. Replace `<user-email>` with a valid user email from your Sentry organization members.
 
 Write to `/tmp/sentry_request.json`:
 
 ```json
 {
-  "assignedTo": "${USER_EMAIL}"
+  "assignedTo": "<user-email>"
 }
 ```
 
@@ -327,6 +322,8 @@ Then run:
 ```bash
 bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '{id, shortId, assignedTo}'
 ```
+
+> **Note:** Replace `123456789` in the URL with the actual issue ID from the "List Issues" output.
 
 ---
 
@@ -348,7 +345,7 @@ Write to `/tmp/sentry_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json' | jq '.'
+bash -c 'curl -s -X PUT "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/sentry_request.json'
 ```
 
 ---
@@ -362,7 +359,7 @@ Delete an issue (requires admin permissions):
 ```bash
 ISSUE_ID="123456789"
 
-curl -s -X DELETE "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" -w "\nHTTP Status: %{http_code}"
+bash -c 'curl -s -X DELETE "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/${ISSUE_ID}/" --header "Authorization: Bearer ${SENTRY_TOKEN}" -w "\nHTTP Status: %{http_code}"'
 ```
 
 ---
@@ -372,7 +369,7 @@ curl -s -X DELETE "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issu
 Get all releases for the organization:
 
 ```bash
-bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '.[] | {version, dateCreated, newGroups, projects: [.projects[].slug]}
+bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '.[] | {version, dateCreated, newGroups, projects: [.projects[].slug]}'
 ```
 
 ---
@@ -386,7 +383,7 @@ Get details for a specific release:
 ```bash
 RELEASE_VERSION="1.0.0"
 
-bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/${RELEASE_VERSION}/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{version, dateCreated, dateReleased, newGroups, lastEvent, projects}
+bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/releases/${RELEASE_VERSION}/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '{version, dateCreated, dateReleased, newGroups, lastEvent, projects}'
 ```
 
 ---
@@ -395,18 +392,14 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/relea
 
 Create a new release:
 
-> **Note:** Replace `my-project` with your actual project slug from the "List Your Projects" output.
-
-```bash
-PROJECT_SLUG="my-project"
-```
+> **Note:** Replace `<your-project-slug>` with your actual project slug from the "List Your Projects" output.
 
 Write to `/tmp/sentry_request.json`:
 
 ```json
 {
   "version": "1.0.1",
-  "projects": ["${PROJECT_SLUG}"]
+  "projects": ["<your-project-slug>"]
 }
 ```
 
@@ -422,18 +415,14 @@ bash -c 'curl -s -X POST "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_OR
 
 Create release with associated commits:
 
-> **Note:** Replace `my-project` with your actual project slug from the "List Your Projects" output.
-
-```bash
-PROJECT_SLUG="my-project"
-```
+> **Note:** Replace `<your-project-slug>` with your actual project slug from the "List Your Projects" output.
 
 Write to `/tmp/sentry_request.json`:
 
 ```json
 {
   "version": "1.0.2",
-  "projects": ["${PROJECT_SLUG}"],
+  "projects": ["<your-project-slug>"],
   "refs": [
     {
       "repository": "owner/repo",
@@ -460,7 +449,7 @@ Get recent error events for a project:
 ```bash
 PROJECT_SLUG="my-project"
 
-bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/events/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '.[] | {eventID, title, message, dateCreated}
+bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_SLUG}/events/" --header "Authorization: Bearer ${SENTRY_TOKEN}"' | jq '.[] | {eventID, title, message, dateCreated}'
 ```
 
 ---

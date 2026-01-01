@@ -54,7 +54,7 @@ export ZEPTOMAIL_API_KEY="your-send-mail-token"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -89,7 +89,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---
@@ -120,7 +120,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---
@@ -156,7 +156,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---
@@ -209,7 +209,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---
@@ -252,7 +252,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---
@@ -296,7 +296,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---
@@ -333,7 +333,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 Template example (in ZeptoMail dashboard):
@@ -386,7 +386,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---
@@ -430,7 +430,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json' | jq .
+bash -c 'curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey ${ZEPTOMAIL_API_KEY}" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json'
 ```
 
 ---

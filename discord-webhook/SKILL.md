@@ -43,7 +43,7 @@ export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/1234567890/abcdefg.
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -173,16 +173,36 @@ curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d 
 
 ### 5. Send File Attachment
 
+Write to `/tmp/discord_webhook_payload.json`:
+
+```json
+{
+  "content": "Screenshot attached"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -F "file1=@screenshot.png" -F 'payload_json={"content": "Screenshot attached"}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -F "file1=@screenshot.png" -F 'payload_json=@/tmp/discord_webhook_payload.json'
 ```
 
 ---
 
 ### 6. Send Multiple Files
 
+Write to `/tmp/discord_webhook_payload.json`:
+
+```json
+{
+  "content": "Log files attached"
+}
+```
+
+Then run:
+
 ```bash
-curl -s -X POST "${DISCORD_WEBHOOK_URL}" -F "file1=@error.log" -F "file2=@debug.log" -F 'payload_json={"content": "Log files attached"}'
+curl -s -X POST "${DISCORD_WEBHOOK_URL}" -F "file1=@error.log" -F "file2=@debug.log" -F 'payload_json=@/tmp/discord_webhook_payload.json'
 ```
 
 ---
@@ -224,9 +244,9 @@ Write to `/tmp/discord_webhook_request.json`:
 
 ```json
 {
-  "content": "<@USER_ID> Check this out!",
+  "content": "<@<your-user-id>> Check this out!",
   "allowed_mentions": {
-    "users": ["USER_ID"]
+    "users": ["<your-user-id>"]
   }
 }
 ```
@@ -237,7 +257,7 @@ Then run:
 curl -s -X POST "${DISCORD_WEBHOOK_URL}" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
-Replace `USER_ID` with actual Discord user ID.
+Replace `<your-user-id>` with the actual Discord user ID.
 
 ---
 

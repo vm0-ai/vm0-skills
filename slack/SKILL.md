@@ -38,7 +38,7 @@ export SLACK_BOT_TOKEN=xoxb-your-bot-token
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## Core APIs
@@ -46,93 +46,131 @@ export SLACK_BOT_TOKEN=xoxb-your-bot-token
 ### List Channels
 
 ```bash
-bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" '"'"'https://slack.com/api/conversations.list?types=public_channel'"'"'' | jq '.channels[] | {id, name}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/conversations.list?types=public_channel"' | jq '.channels[] | {id, name}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.list
 
 ### Get Channel History
 
+Replace `<channel-id>` with the actual channel ID:
+
 ```bash
-bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" '"'"'https://slack.com/api/conversations.history?channel=C1234567890&limit=10'"'"'' | jq '.messages[] | {ts, user, text}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/conversations.history?channel=<channel-id>&limit=10"' | jq '.messages[] | {ts, user, text}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.history
 
 ### Send Message
 
+Write to `/tmp/request.json`:
+
+```json
+{
+  "channel": "<channel-id>",
+  "text": "Hello, World"
+}
+```
+
 ```bash
-curl -s -X POST 'https://slack.com/api/chat.postMessage' -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H 'Content-Type: application/json' -d @- << 'EOF'
-{"channel":"C1234567890","text":"Hello, World"}
-EOF
+bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/chat.postmessage
 
 ### Send with Blocks
 
-```bash
-curl -s -X POST 'https://slack.com/api/chat.postMessage' -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H 'Content-Type: application/json' -d @- << 'EOF'
+Write to `/tmp/request.json`:
+
+```json
 {
-  "channel": "C1234567890",
+  "channel": "<channel-id>",
   "text": "Notification",
   "blocks": [
-  {
-  "type": "section",
-  "text": {"type": "mrkdwn", "text": "*Alert:* Something happened"}
-  },
-  {
-  "type": "section",
-  "fields": [
-  {"type": "mrkdwn", "text": "*Status:*\nActive"},
-  {"type": "mrkdwn", "text": "*Priority:*\nHigh"}
-  ]
-  }
+    {
+      "type": "section",
+      "text": {"type": "mrkdwn", "text": "*Alert:* Something happened"}
+    },
+    {
+      "type": "section",
+      "fields": [
+        {"type": "mrkdwn", "text": "*Status:*\nActive"},
+        {"type": "mrkdwn", "text": "*Priority:*\nHigh"}
+      ]
+    }
   ]
 }
-EOF
+```
+
+```bash
+bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Block Kit Builder: https://app.slack.com/block-kit-builder
 
 ### Reply in Thread
 
+Write to `/tmp/request.json`:
+
+```json
+{
+  "channel": "<channel-id>",
+  "thread_ts": "<thread-timestamp>",
+  "text": "Thread reply"
+}
+```
+
 ```bash
-curl -s -X POST 'https://slack.com/api/chat.postMessage' -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H 'Content-Type: application/json' -d @- << 'EOF'
-{"channel":"C1234567890","thread_ts":"1234567890.123456","text":"Thread reply"}
-EOF
+bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 ### Update Message
 
+Write to `/tmp/request.json`:
+
+```json
+{
+  "channel": "<channel-id>",
+  "ts": "<message-timestamp>",
+  "text": "Updated message"
+}
+```
+
 ```bash
-curl -s -X POST 'https://slack.com/api/chat.update' -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H 'Content-Type: application/json' -d @- << 'EOF'
-{"channel":"C1234567890","ts":"1234567890.123456","text":"Updated message"}
-EOF
+bash -c 'curl -s -X POST "https://slack.com/api/chat.update" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/chat.update
 
 ### Delete Message
 
+Write to `/tmp/request.json`:
+
+```json
+{
+  "channel": "<channel-id>",
+  "ts": "<message-timestamp>"
+}
+```
+
 ```bash
-curl -s -X POST 'https://slack.com/api/chat.delete' -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H 'Content-Type: application/json' -d @- << 'EOF'
-{"channel":"C1234567890","ts":"1234567890.123456"}
-EOF
+bash -c 'curl -s -X POST "https://slack.com/api/chat.delete" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 ### List Users
 
 ```bash
-bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" '"'"'https://slack.com/api/users.list'"'"'' | jq '.members[] | {id, name, real_name}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/users.list"' | jq '.members[] | {id, name, real_name}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/users.list
 
 ### Get User by Email
 
+Replace `<user-email>` with the actual email address:
+
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/users.lookupByEmail?email=user@example.com'
+curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/users.lookupByEmail?email=<user-email>'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/users.lookupbyemail
@@ -147,10 +185,18 @@ Docs: https://docs.slack.dev/reference/methods/files.upload
 
 ### Add Reaction
 
+Write to `/tmp/request.json`:
+
+```json
+{
+  "channel": "<channel-id>",
+  "timestamp": "<message-timestamp>",
+  "name": "thumbsup"
+}
+```
+
 ```bash
-curl -s -X POST 'https://slack.com/api/reactions.add' -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H 'Content-Type: application/json' -d @- << 'EOF'
-{"channel":"C1234567890","timestamp":"1234567890.123456","name":"thumbsup"}
-EOF
+bash -c 'curl -s -X POST "https://slack.com/api/reactions.add" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/reactions.add

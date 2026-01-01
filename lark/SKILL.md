@@ -76,22 +76,34 @@ scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --text "Group messag
 
 #### Send Rich Text (Post)
 
-```bash
-scripts/lark.sh message send --to "ou_xxx" --type "open_id" --post '{
+Write to `/tmp/post.json`:
+
+```json
+{
   "zh_cn": {
-  "title": "Title",
-  "content": [[{"tag": "text", "text": "Content"}]]
+    "title": "Title",
+    "content": [[{"tag": "text", "text": "Content"}]]
   }
-}'
+}
+```
+
+```bash
+scripts/lark.sh message send --to "ou_xxx" --type "open_id" --post "$(bash -c 'cat /tmp/post.json')"
 ```
 
 #### Send Card Message
 
-```bash
-scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
+Write to `/tmp/card.json`:
+
+```json
+{
   "header": {"title": {"tag": "plain_text", "content": "Alert"}},
   "elements": [{"tag": "div", "text": {"tag": "plain_text", "content": "Message"}}]
-}'
+}
+```
+
+```bash
+scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card "$(bash -c 'cat /tmp/card.json')"
 ```
 
 #### Reply to Message
@@ -234,17 +246,23 @@ Returns bot name, open_id, and capabilities.
 
 ### Send Alert to Group
 
-```bash
-scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card '{
+Write to `/tmp/alert.json`:
+
+```json
+{
   "header": {
-  "title": {"tag": "plain_text", "content": "System Alert"},
-  "template": "red"
+    "title": {"tag": "plain_text", "content": "System Alert"},
+    "template": "red"
   },
   "elements": [{
-  "tag": "div",
-  "text": {"tag": "lark_md", "content": "**Error:** Service down"}
+    "tag": "div",
+    "text": {"tag": "lark_md", "content": "**Error:** Service down"}
   }]
-}'
+}
+```
+
+```bash
+scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card "$(bash -c 'cat /tmp/alert.json')"
 ```
 
 ### Create Team Group with Members

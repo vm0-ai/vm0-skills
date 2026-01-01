@@ -40,16 +40,12 @@ export TAVILY_API_KEY="tvly-xxxxxxxxxxxxxxxx"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq '.results[] | {title, url}'
 > ```
 
 ## How to Use
 
-```bash
-TAVILY_API_KEY
-```
-
-All examples below assume you have `TAVILY_API_KEY` set.
+All examples below assume you have `TAVILY_API_KEY` set in your environment.
 The base endpoint for the Tavily search API is a `POST` request to:
 
 - `https://api.tavily.com/search`
@@ -73,7 +69,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json'
 ```
 
 **Key parameters:**
@@ -105,7 +101,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json'
 ```
 
 **Common advanced parameters:**

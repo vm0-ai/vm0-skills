@@ -50,7 +50,7 @@ export FIGMA_API_TOKEN="figd_..."
 Test your token with this command:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.figma.com/v1/me" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq .
+bash -c 'curl -s -X GET "https://api.figma.com/v1/me" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"'
 ```
 
 Expected response: Your user information (id, email, handle)
@@ -76,7 +76,7 @@ The file key is the alphanumeric string between `/design/` (or `/file/`) and the
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq '.[0]'
 > ```
 
 ## How to Use
@@ -89,31 +89,26 @@ Base URL: `https://api.figma.com/v1`
 
 ### 1. Get File
 
-Retrieve complete file structure including frames, components, and styles:
+Retrieve complete file structure including frames, components, and styles. Replace `<your-file-key>` with your actual file key:
 
 ```bash
-FILE_KEY="abc123XYZ"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '{name, lastModified, version, document: .document.children[0].name}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '{name, lastModified, version, document: .document.children[0].name}'
 ```
 
 Get specific version:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}?version=123" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq .
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>?version=123" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"'
 ```
 
 ---
 
 ### 2. Get File Nodes
 
-Retrieve specific nodes from a file by node IDs:
+Retrieve specific nodes from a file by node IDs. Replace `<your-file-key>` with your file key and `<node-ids>` with comma-separated node IDs (e.g., `1:2,1:3`):
 
 ```bash
-FILE_KEY="abc123XYZ"
-NODE_IDS="1:2,1:3"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}/nodes?ids=${NODE_IDS}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.nodes'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>/nodes?ids=<node-ids>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.nodes'
 ```
 
 Node IDs can be found in the file structure or by appending `?node-id=X-Y` to the Figma URL.
@@ -122,13 +117,10 @@ Node IDs can be found in the file structure or by appending `?node-id=X-Y` to th
 
 ### 3. Get File Images
 
-Export nodes as images in PNG, JPG, SVG, or PDF format:
+Export nodes as images in PNG, JPG, SVG, or PDF format. Replace `<your-file-key>` with your file key and `<node-ids>` with comma-separated node IDs:
 
 ```bash
-FILE_KEY="abc123XYZ"
-NODE_IDS="1:2,1:3"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=${NODE_IDS}&format=png&scale=2" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.images'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/images/<your-file-key>?ids=<node-ids>&format=png&scale=2" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.images'
 ```
 
 **Parameters:**
@@ -137,10 +129,10 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=${NODE_
 - `svg_outline_text`: `true` to convert text to outlines in SVG
 - `svg_include_id`: `true` to include node IDs in SVG
 
-Download an exported image:
+Download an exported image. Replace `<your-file-key>` with your file key and `<node-id>` with the actual node ID:
 
 ```bash
-IMAGE_URL="$(bash -c 'curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=1:2&format=png" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.images["1:2"]')"
+IMAGE_URL="$(bash -c 'curl -s -X GET "https://api.figma.com/v1/images/<your-file-key>?ids=<node-id>&format=png" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.images["<node-id>"]')"
 
 curl -s -o output.png "$IMAGE_URL"
 ```
@@ -149,31 +141,27 @@ curl -s -o output.png "$IMAGE_URL"
 
 ### 4. Get Image Fills
 
-Get download URLs for all images used in a file:
+Get download URLs for all images used in a file. Replace `<your-file-key>` with your file key:
 
 ```bash
-FILE_KEY="abc123XYZ"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}/images" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.images'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>/images" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.images'
 ```
 
 ---
 
 ### 5. Get File Comments
 
-List all comments on a file:
+List all comments on a file. Replace `<your-file-key>` with your file key:
 
 ```bash
-FILE_KEY="abc123XYZ"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}/comments" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.comments[] | {id, message: .message, user: .user.handle, created_at}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>/comments" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.comments[] | {id, message: .message, user: .user.handle, created_at}'
 ```
 
 ---
 
 ### 6. Post Comment
 
-Add a comment to a file.
+Add a comment to a file. Replace `<your-file-key>` with your file key.
 
 Write to `/tmp/figma_request.json`:
 
@@ -187,9 +175,7 @@ Write to `/tmp/figma_request.json`:
 Then run:
 
 ```bash
-FILE_KEY="abc123XYZ"
-
-bash -c 'curl -s -X POST "https://api.figma.com/v1/files/${FILE_KEY}/comments" -H "X-Figma-Token: ${FIGMA_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/figma_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.figma.com/v1/files/<your-file-key>/comments" -H "X-Figma-Token: ${FIGMA_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/figma_request.json'
 ```
 
 To comment on a specific node, add `client_meta` with node coordinates.
@@ -198,87 +184,72 @@ To comment on a specific node, add `client_meta` with node coordinates.
 
 ### 7. Delete Comment
 
-Delete a comment by ID:
+Delete a comment by ID. Replace `<your-file-key>` with your file key and `<comment-id>` with the comment ID:
 
 ```bash
-FILE_KEY="abc123XYZ"
-COMMENT_ID="123456"
-
-curl -s -X DELETE "https://api.figma.com/v1/files/${FILE_KEY}/comments/${COMMENT_ID}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"
+curl -s -X DELETE "https://api.figma.com/v1/files/<your-file-key>/comments/<comment-id>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"
 ```
 
 ---
 
 ### 8. Get File Versions
 
-List version history of a file:
+List version history of a file. Replace `<your-file-key>` with your file key:
 
 ```bash
-FILE_KEY="abc123XYZ"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}/versions" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.versions[] | {id, created_at, label, description, user: .user.handle}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>/versions" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.versions[] | {id, created_at, label, description, user: .user.handle}'
 ```
 
 ---
 
 ### 9. Get Team Projects
 
-List all projects in a team:
+List all projects in a team. Replace `<your-team-id>` with your team ID:
 
 ```bash
-TEAM_ID="123456"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/projects" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.projects[] | {id, name}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/<your-team-id>/projects" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.projects[] | {id, name}'
 ```
 
-To find your team ID, go to your Figma team page and extract it from the URL: `https://www.figma.com/files/team/123456/TeamName`
+To find your team ID, go to your Figma team page and extract it from the URL: `https://www.figma.com/files/team/<your-team-id>/TeamName`
 
 ---
 
 ### 10. Get Project Files
 
-List all files in a project:
+List all files in a project. Replace `<your-project-id>` with your project ID:
 
 ```bash
-PROJECT_ID="123456"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/projects/${PROJECT_ID}/files" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.files[] | {key, name, last_modified}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/projects/<your-project-id>/files" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.files[] | {key, name, last_modified}'
 ```
 
 ---
 
 ### 11. Get Team Components
 
-Get all published components in a team:
+Get all published components in a team. Replace `<your-team-id>` with your team ID:
 
 ```bash
-TEAM_ID="123456"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/components" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.components[] | {key, name, description, containing_frame: .containing_frame.name}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/<your-team-id>/components" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.components[] | {key, name, description, containing_frame: .containing_frame.name}'
 ```
 
 ---
 
 ### 12. Get Component
 
-Get metadata for a specific component:
+Get metadata for a specific component. Replace `<your-component-key>` with your component key:
 
 ```bash
-COMPONENT_KEY="abc123"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/components/${COMPONENT_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '{key, name, description, containing_frame}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/components/<your-component-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '{key, name, description, containing_frame}'
 ```
 
 ---
 
 ### 13. Get Team Styles
 
-Get all published styles (colors, text, effects, grids) in a team:
+Get all published styles (colors, text, effects, grids) in a team. Replace `<your-team-id>` with your team ID:
 
 ```bash
-TEAM_ID="123456"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/styles" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.styles[] | {key, name, description, style_type}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/<your-team-id>/styles" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.styles[] | {key, name, description, style_type}'
 ```
 
 **Style types:** `FILL`, `TEXT`, `EFFECT`, `GRID`
@@ -287,12 +258,10 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/styles" -H "X
 
 ### 14. Get Style
 
-Get metadata for a specific style:
+Get metadata for a specific style. Replace `<your-style-key>` with your style key:
 
 ```bash
-STYLE_KEY="abc123"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/styles/${STYLE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '{key, name, description, style_type}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/styles/<your-style-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '{key, name, description, style_type}'
 ```
 
 ---
@@ -309,37 +278,30 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/me" -H "X-Figma-Token: ${FIGMA
 
 ### 16. Get Team Members
 
-List all members of a team:
+List all members of a team. Replace `<your-team-id>` with your team ID:
 
 ```bash
-TEAM_ID="123456"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/members" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.members[] | {id, email: .user.email, handle: .user.handle, role}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/<your-team-id>/members" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.members[] | {id, email: .user.email, handle: .user.handle, role}'
 ```
 
 ---
 
 ### 17. Get Component Sets
 
-Get component sets (variants) in a file:
+Get component sets (variants) in a file. Replace `<your-file-key>` with your file key:
 
 ```bash
-FILE_KEY="abc123XYZ"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}/component_sets" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.component_sets[] | {key, name, description}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>/component_sets" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.meta.component_sets[] | {key, name, description}'
 ```
 
 ---
 
 ### 18. Search Files
 
-Search for files in a team (requires team ID):
+Search for files in a team (requires team ID). Replace `<your-team-id>` with your team ID and `<search-query>` with your search term:
 
 ```bash
-TEAM_ID="123456"
-QUERY="button"
-
-bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/files?name=${QUERY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.files[] | {key, name, last_modified}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/<your-team-id>/files?name=<search-query>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.files[] | {key, name, last_modified}'
 ```
 
 ---
@@ -348,32 +310,32 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/${TEAM_ID}/files?name=${
 
 ### Export All Frames as Images
 
-```bash
-FILE_KEY="abc123XYZ"
+Replace `<your-file-key>` with your file key:
 
+```bash
 # Get all frame IDs
-FRAME_IDS="$(bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.document.children[0].children[] | select(.type=="FRAME") | .id' | paste -sd "," -)"
+FRAME_IDS=$(bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.document.children[0].children[] | select(.type=="FRAME") | .id' | paste -sd "," -)
 
 # Export frames
-bash -c 'curl -s -X GET "https://api.figma.com/v1/images/${FILE_KEY}?ids=${FRAME_IDS}&format=png&scale=2" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.images'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/images/<your-file-key>?ids='"$FRAME_IDS"'&format=png&scale=2" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.images'
 ```
 
 ### Extract Design Tokens
 
-```bash
-FILE_KEY="abc123XYZ"
+Replace `<your-file-key>` with your file key:
 
+```bash
 # Get color styles
-bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.styles | to_entries[] | select(.value.styleType == "FILL") | {name: .value.name, key: .value.key}'
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.styles | to_entries[] | select(.value.styleType == "FILL") | {name: .value.name, key: .value.key}'
 ```
 
 ### Monitor File Changes
 
-```bash
-FILE_KEY="abc123XYZ"
+Replace `<your-file-key>` with your file key:
 
+```bash
 # Get current version
-CURRENT_VERSION="$(bash -c 'curl -s -X GET "https://api.figma.com/v1/files/${FILE_KEY}" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.version')"
+CURRENT_VERSION=$(bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.version')
 
 echo "Current version: $CURRENT_VERSION"
 ```

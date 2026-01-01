@@ -51,7 +51,7 @@ DeepSeek does **not** enforce strict rate limits. They will try to serve every r
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -90,7 +90,7 @@ Write to `/tmp/deepseek_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json' | jq .
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json'
 ```
 
 **Available models:**
@@ -156,7 +156,7 @@ Write to `/tmp/deepseek_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json'
 ```
 
 Streaming returns Server-Sent Events (SSE) with delta chunks, ending with `data: [DONE]`.
@@ -219,7 +219,7 @@ Write to `/tmp/deepseek_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json' | jq -r '.choices[0].message.content' | jq .
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json' | jq -r '.choices[0].message.content'
 ```
 
 ---
@@ -325,7 +325,7 @@ Write to `/tmp/deepseek_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json' | jq .
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json'
 ```
 
 The model will return a `tool_calls` array when it wants to use a function.
@@ -409,7 +409,7 @@ Write to `/tmp/deepseek_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json' | jq .
+bash -c 'curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" -d @/tmp/deepseek_request.json'
 ```
 
 ---

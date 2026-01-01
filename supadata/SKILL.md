@@ -65,7 +65,7 @@ Authentication uses the `x-api-key` header.
 Extract transcript from a YouTube video:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true"' | jq .
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true"'
 ```
 
 **Parameters:**
@@ -104,10 +104,10 @@ Extract transcript from other platforms:
 
 ```bash
 # TikTok
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890" -d "text=true"' | jq .
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890" -d "text=true"'
 
 # Instagram Reel
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.instagram.com/reel/ABC123/" -d "text=true"' | jq .
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.instagram.com/reel/ABC123/" -d "text=true"'
 ```
 
 Supported platforms: YouTube, TikTok, Instagram, X (Twitter), Facebook
@@ -119,7 +119,7 @@ Supported platforms: YouTube, TikTok, Instagram, X (Twitter), Facebook
 Fetch only existing transcripts without AI generation:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true" -d "mode=native"' | jq .
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true" -d "mode=native"'
 ```
 
 Use `mode=native` to avoid AI generation costs (1 credit vs 2 credits/min).
@@ -153,7 +153,7 @@ bash -c 'curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: ${SUP
 Get metadata from any supported platform:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/metadata" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890"' | jq .
+bash -c 'curl -s "https://api.supadata.ai/v1/metadata" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890"'
 ```
 
 Works with YouTube, TikTok, Instagram, X, Facebook posts.
@@ -165,7 +165,7 @@ Works with YouTube, TikTok, Instagram, X, Facebook posts.
 Extract web page content:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/web/scrape" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"' | jq .
+bash -c 'curl -s "https://api.supadata.ai/v1/web/scrape" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"'
 ```
 
 Returns page content in Markdown format, ideal for AI processing.
@@ -204,7 +204,7 @@ JOB_ID="$(bash -c 'curl -s "https://api.supadata.ai/v1/web/crawl" -X POST -H "x-
 echo "Job ID: ${JOB_ID}"
 
 # Check status
-bash -c 'curl -s "https://api.supadata.ai/v1/web/crawl/${JOB_ID}" -H "x-api-key: ${SUPADATA_API_KEY}"' | jq '{status, pagesCompleted}'
+bash -c 'curl -s "https://api.supadata.ai/v1/web/crawl/<your-job-id>" -H "x-api-key: ${SUPADATA_API_KEY}"' | jq '{status, pagesCompleted}'
 ```
 
 Status values: `queued`, `active`, `completed`, `failed`
@@ -216,7 +216,7 @@ Status values: `queued`, `active`, `completed`, `failed`
 Translate a YouTube transcript to another language:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "lang=zh" -d "text=true"' | jq .
+bash -c 'curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "lang=zh" -d "text=true"'
 ```
 
 ---

@@ -46,7 +46,7 @@ export PDF4ME_API_KEY="your-api-key-here"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -165,7 +165,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/Split" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/Split" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json'
 ```
 
 ### 6. Compress PDF
@@ -236,7 +236,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/CreateThumbnail" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/CreateThumbnail" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json'
 ```
 
 ### 9. Add Text Stamp/Watermark
@@ -390,7 +390,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/{endpoint}" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.pdf4me.com/api/v2/{endpoint}" --header "Authorization: ${PDF4ME_API_KEY}" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json'
 ```
 
 ## Response Format

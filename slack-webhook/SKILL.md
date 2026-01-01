@@ -49,7 +49,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
+bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
 ```
 
 ### With Formatting
@@ -65,7 +65,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
+bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
 ```
 
 ### With Link
@@ -81,7 +81,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
+bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
 ```
 
 ### With Blocks (Rich Layout)
@@ -113,7 +113,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
+bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
 ```
 
 ### With Fields
@@ -144,7 +144,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json
+bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
 ```
 
 ## Message Formatting
@@ -164,7 +164,7 @@ curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/sla
 Messages with `!` may fail due to shell history expansion. Use heredoc:
 
 ```bash
-curl -s -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @- << 'EOF'
+bash -c 'curl -s -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @-' << 'EOF'
 {"text":"Deploy completed! :rocket:"}
 EOF
 ```

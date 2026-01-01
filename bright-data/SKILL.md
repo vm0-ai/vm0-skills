@@ -88,7 +88,7 @@ DATASET_ID="gd_xxxxx"  # Your dataset ID from Bright Data dashboard
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Response:**
@@ -120,7 +120,7 @@ DATASET_ID="gd_xxxxx"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 ---
@@ -133,7 +133,7 @@ Check the status of a scraping job:
 SNAPSHOT_ID="s_xxxxx"
 
 bash -c 'curl -s "https://api.brightdata.com/datasets/v3/progress/${SNAPSHOT_ID}" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"'
 ```
 
 **Response:**
@@ -157,7 +157,7 @@ Once status is `ready`, download the collected data:
 SNAPSHOT_ID="s_xxxxx"
 
 bash -c 'curl -s "https://api.brightdata.com/datasets/v3/snapshot/${SNAPSHOT_ID}?format=json" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"'
 ```
 
 ---
@@ -181,7 +181,7 @@ Cancel a running job:
 SNAPSHOT_ID="s_xxxxx"
 
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/cancel?snapshot_id=${SNAPSHOT_ID}" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"'
 ```
 
 ---
@@ -206,7 +206,7 @@ DATASET_ID="gd_twitter_profiles"  # Use your actual dataset ID
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Returns:** `x_id`, `profile_name`, `biography`, `is_verified`, `followers`, `following`, `profile_image_link`
@@ -229,7 +229,7 @@ DATASET_ID="gd_twitter_posts"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Returns:** `post_id`, `text`, `replies`, `likes`, `retweets`, `views`, `hashtags`, `media`
@@ -254,7 +254,7 @@ DATASET_ID="gd_reddit_posts"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Parameters:** `url`, `sort_by` (new/top/hot)
@@ -279,7 +279,7 @@ DATASET_ID="gd_reddit_comments"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Returns:** `comment_id`, `user_posted`, `comment_text`, `upvotes`, `replies`
@@ -304,7 +304,7 @@ DATASET_ID="gd_youtube_videos"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Returns:** `title`, `views`, `likes`, `num_comments`, `video_length`, `transcript`, `channel_name`
@@ -327,7 +327,7 @@ DATASET_ID="gd_youtube_search"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 ### YouTube - Scrape Comments
@@ -348,7 +348,7 @@ DATASET_ID="gd_youtube_comments"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Returns:** `comment_text`, `likes`, `replies`, `username`, `date`
@@ -373,7 +373,7 @@ DATASET_ID="gd_instagram_profiles"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Returns:** `followers`, `post_count`, `profile_name`, `is_verified`, `biography`
@@ -401,7 +401,7 @@ DATASET_ID="gd_instagram_posts"
 bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
   -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
   -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json' | jq .
+  -d @/tmp/brightdata_request.json'
 ```
 
 ---
@@ -412,7 +412,7 @@ bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset
 
 ```bash
 bash -c 'curl -s "https://api.brightdata.com/status" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"'
 ```
 
 **Response:**
@@ -436,7 +436,7 @@ bash -c 'curl -s "https://api.brightdata.com/zone/get_active_zones" \
 
 ```bash
 bash -c 'curl -s "https://api.brightdata.com/customer/bw" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"' | jq .
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}"'
 ```
 
 ---

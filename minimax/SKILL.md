@@ -274,7 +274,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq .
+bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
 ```
 
 Video generation is async - returns a task ID to poll for completion.
@@ -299,7 +299,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq .
+bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
 ```
 
 **Camera commands (in brackets):**
@@ -334,7 +334,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq .
+bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
 ```
 
 Provide `first_frame_image` as URL or base64-encoded image.
@@ -376,7 +376,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq .
+bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.choices[0]'
 ```
 
 ---

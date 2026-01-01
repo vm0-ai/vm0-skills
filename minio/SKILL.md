@@ -199,20 +199,20 @@ For environments without `mc`, use pre-signed URLs with curl:
 
 ```bash
 # First, generate upload URL with mc
-UPLOAD_URL=$(mc share upload --json myminio/my-bucket/file.txt | jq -r '.share')
+UPLOAD_URL=$(bash -c 'mc share upload --json myminio/my-bucket/file.txt' | jq -r '.share')
 
 # Then upload with curl
-curl -X PUT --upload-file /path/to/file.txt "${UPLOAD_URL}"
+curl -X PUT --upload-file /path/to/file.txt "$UPLOAD_URL"
 ```
 
 ### Download with Pre-signed URL
 
 ```bash
 # Generate download URL
-DOWNLOAD_URL=$(mc share download --json myminio/my-bucket/file.txt | jq -r '.share')
+DOWNLOAD_URL=$(bash -c 'mc share download --json myminio/my-bucket/file.txt' | jq -r '.share')
 
 # Download with curl
-curl -o /local/path/file.txt "${DOWNLOAD_URL}"
+curl -o /local/path/file.txt "$DOWNLOAD_URL"
 ```
 
 ---

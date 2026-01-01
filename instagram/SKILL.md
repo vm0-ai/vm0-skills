@@ -57,7 +57,7 @@ Depending on which endpoints you use, make sure your app has requested and been 
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq '.'
 > ```
 
 ## How to Use
@@ -74,7 +74,7 @@ INSTAGRAM_BUSINESS_ACCOUNT_ID
 Fetch the most recent media (photos / videos / Reels) for the account:
 
 ```bash
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media?fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"' | jq .
+bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media?fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
 ```
 
 **Notes:**
@@ -92,14 +92,10 @@ bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_A
 
 ### 2. Get details for a single media
 
-If you already have a media `id`, you can fetch more complete information:
-
-> **Where to get `{MEDIA_ID}`:** Use the `id` field from the "Get User Media" response (section 1 above)
+If you already have a media `id`, you can fetch more complete information. Replace `<your-media-id>` with the `id` field from the "Get User Media" response (section 1 above):
 
 ```bash
-MEDIA_ID="1789xxxxxxxxxxxx"
-
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${MEDIA_ID}?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"' | jq .
+bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/<your-media-id>?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
 ```
 
 ---
@@ -112,24 +108,20 @@ This usually involves two steps:
 
 #### 3.1 Get the hashtag ID
 
-> **Where to get `{HASHTAG_NAME}`:** Use any hashtag name you want to search for (without the # symbol), e.g., "travel", "food", "photography"
+Replace `<hashtag-name>` with any hashtag name you want to search for (without the # symbol), e.g., "travel", "food", "photography":
 
 ```bash
-HASHTAG_NAME="travel"
-
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&q=${HASHTAG_NAME}" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"' | jq .
+bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&q=<hashtag-name>" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
 ```
 
-Take the returned `id` (we call it `HASHTAG_ID`).
+Note the `id` field in the returned JSON for use in the next step.
 
 #### 3.2 Fetch recent media for the hashtag
 
-> **Where to get `{HASHTAG_ID}`:** Use the `id` field from the "Search Hashtag" response (section 3.1 above)
+Replace `<hashtag-id>` with the `id` field from the "Search Hashtag" response (section 3.1 above):
 
 ```bash
-HASHTAG_ID="178434113xxxxxxxx"
-
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${HASHTAG_ID}/recent_media?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"' | jq .
+bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/<hashtag-id>/recent_media?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
 ```
 
 ---
@@ -143,15 +135,19 @@ Publishing an image post via the Graph API usually requires **two steps**:
 
 #### 4.1 Create a media container
 
-> **Where to get `{IMAGE_URL}`:** Use any publicly accessible image URL (e.g., from your CDN, S3, or public hosting)
->
-> **Where to get `{CAPTION}`:** This is the text caption for your post (what you want to say in the post)
+Write the request data to `/tmp/request.json`:
+
+```json
+{
+  "image_url": "https://example.com/image.jpg",
+  "caption": "Hello from Instagram API 👋"
+}
+```
+
+Replace `https://example.com/image.jpg` with any publicly accessible image URL and update the caption text as needed.
 
 ```bash
-IMAGE_URL="https://example.com/image.jpg"
-CAPTION="Hello from Instagram API 👋"
-
-bash -c 'curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media" -F "image_url=${IMAGE_URL}" -F "caption=${CAPTION}" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"' | jq .
+bash -c 'curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
 ```
 
 The response will contain an `id` (media container ID), for example:
@@ -162,16 +158,22 @@ The response will contain an `id` (media container ID), for example:
 }
 ```
 
-Store this ID (for example as `CREATION_ID`).
+Note this ID for use in the next step.
 
 #### 4.2 Publish the media container to the feed
 
-> **Where to get `{CREATION_ID}`:** Use the `id` field from the "Create Media Container" response (section 4.1 above)
+Write the request data to `/tmp/request.json`:
+
+```json
+{
+  "creation_id": "<your-creation-id>"
+}
+```
+
+Replace `<your-creation-id>` with the `id` field from the "Create Media Container" response (section 4.1 above):
 
 ```bash
-CREATION_ID="1790xxxxxxxxxxxx"
-
-bash -c 'curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish" -F "creation_id=${CREATION_ID}" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"' | jq .
+bash -c 'curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
 ```
 
 If successful, the response will contain the final media `id`:
@@ -208,7 +210,7 @@ You can then use the "Get details for a single media" command to fetch its `perm
 
 ## Guidelines
 
-1. **Use `jq`**: all examples use `jq` to pretty-print JSON, which is helpful for both agents and humans
-2. **Do not log tokens**: `INSTAGRAM_ACCESS_TOKEN` is sensitive; avoid printing it in logs or chat transcripts
-3. **Validate curl commands in a test environment first**: confirm flows before wiring them into automation / agents
-4. **Keep API version up to date**: periodically check Facebook docs and update the `v21.0` version in URLs to the latest
+1. **Do not log tokens**: `INSTAGRAM_ACCESS_TOKEN` is sensitive; avoid printing it in logs or chat transcripts
+2. **Validate curl commands in a test environment first**: confirm flows before wiring them into automation / agents
+3. **Keep API version up to date**: periodically check Facebook docs and update the `v21.0` version in URLs to the latest
+4. **Use placeholder text for IDs**: all examples use placeholder text like `<your-media-id>` instead of shell variables in URLs to avoid dependencies and make examples self-contained

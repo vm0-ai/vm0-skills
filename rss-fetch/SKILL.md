@@ -35,7 +35,7 @@ Optional tools for parsing:
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -63,9 +63,7 @@ curl -s "https://hnrss.org/frontpage" | xmllint --format - | grep -E '<title>|<l
 ### 3. Get Items with Details
 
 ```bash
-RSS_URL="https://hnrss.org/frontpage"
-
-curl -s "$RSS_URL" | xmllint --xpath '//item' - 2>/dev/null | xmllint --format - | head -50
+bash -c 'curl -s "https://hnrss.org/frontpage"' | xmllint --xpath '//item' - 2>/dev/null | xmllint --format - | head -50
 ```
 
 ### 4. Parse Atom Feeds
@@ -116,7 +114,7 @@ FEEDS=(
 
 for feed in "${FEEDS[@]}"; do
   echo "=== $feed ==="
-  curl -s "$feed" | xmllint --xpath '//item/title/text()' - 2>/dev/null | head -5
+  bash -c 'curl -s "'"$feed"'"' | xmllint --xpath '//item/title/text()' - 2>/dev/null | head -5
   echo ""
 done
 ```

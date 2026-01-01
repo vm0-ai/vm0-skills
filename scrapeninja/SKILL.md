@@ -48,7 +48,7 @@ export SCRAPENINJA_API_KEY="your-apiroad-key"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -87,7 +87,7 @@ Write to `/tmp/scrapeninja_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json' | jq .
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json'
 ```
 
 ### 2. Scrape with JavaScript Rendering
@@ -170,7 +170,7 @@ Write to `/tmp/scrapeninja_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json' | jq .
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json'
 ```
 
 ### 5. Extract Data with Cheerio
@@ -228,7 +228,7 @@ Write to `/tmp/scrapeninja_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json' | jq .
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json'
 ```
 
 ---

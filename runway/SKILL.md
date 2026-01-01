@@ -47,7 +47,7 @@ export RUNWAY_API_KEY="your-api-key"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -68,7 +68,7 @@ Base URL: `https://api.dev.runwayml.com/v1`
 Check your credit balance:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"' | jq .
+bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
 ```
 
 ---
@@ -92,7 +92,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 **Response:**
@@ -124,7 +124,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
@@ -147,7 +147,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
@@ -170,19 +170,17 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
 
 ### 6. Check Task Status
 
-Poll for task completion:
+Poll for task completion. Replace `<your-task-id>` with the actual task ID:
 
 ```bash
-export TASK_ID="your-task-id"
-
-bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"' | jq .
+bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
 ```
 
 **Response when complete:**
@@ -200,12 +198,10 @@ bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --hea
 
 ### 7. Cancel a Task
 
-Cancel a running task:
+Cancel a running task. Replace `<your-task-id>` with the actual task ID:
 
 ```bash
-export TASK_ID="your-task-id"
-
-bash -c 'curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/${TASK_ID}" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
+bash -c 'curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
 ```
 
 ---
@@ -226,7 +222,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
@@ -247,7 +243,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---

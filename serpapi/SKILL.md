@@ -45,7 +45,7 @@ export SERPAPI_API_KEY="your-api-key"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -71,7 +71,7 @@ bash -c 'curl -s "https://serpapi.com/search?engine=google&q=artificial+intellig
 Search from a specific location:
 
 ```bash
-bash -c 'curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=San+Francisco,+California&gl=us&hl=en&api_key=${SERPAPI_API_KEY}"' | jq '.organic_results[:3]
+bash -c 'curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=San+Francisco,+California&gl=us&hl=en&api_key=${SERPAPI_API_KEY}"' | jq '.organic_results[:3]'
 ```
 
 **Parameters:**
@@ -140,10 +140,10 @@ Get more results using the `start` parameter:
 
 ```bash
 # First page (results 1-10)
-bash -c 'curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=0&api_key=${SERPAPI_API_KEY}"' | jq '.organic_results | length
+bash -c 'curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=0&api_key=${SERPAPI_API_KEY}"' | jq '.organic_results | length'
 
 # Second page (results 11-20)
-bash -c 'curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&api_key=${SERPAPI_API_KEY}"' | jq '.organic_results | length
+bash -c 'curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&api_key=${SERPAPI_API_KEY}"' | jq '.organic_results | length'
 ```
 
 ---

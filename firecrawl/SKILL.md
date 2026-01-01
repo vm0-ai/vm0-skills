@@ -39,7 +39,7 @@ export FIRECRAWL_API_KEY="fc-your-api-key"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -68,7 +68,7 @@ Write to `/tmp/firecrawl_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json'
 ```
 
 ### Scrape with Options
@@ -154,7 +154,7 @@ Write to `/tmp/firecrawl_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json'
 ```
 
 **Response:**
@@ -168,18 +168,18 @@ bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization:
 
 ### Check Crawl Status
 
-Replace `{JOB_ID}` with the actual job ID returned from the crawl request:
+Replace `<job-id>` with the actual job ID returned from the crawl request:
 
 ```bash
-bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/{JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '{status, completed, total}'
+bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/<job-id>" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '{status, completed, total}'
 ```
 
 ### Get Crawl Results
 
-Replace `{JOB_ID}` with the actual job ID:
+Replace `<job-id>` with the actual job ID:
 
 ```bash
-bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/{JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '.data[] | {url: .metadata.url, title: .metadata.title}'
+bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/<job-id>" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq '.data[] | {url: .metadata.url, title: .metadata.title}'
 ```
 
 ### Crawl with Path Filters
@@ -199,7 +199,7 @@ Write to `/tmp/firecrawl_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json' | jq .
+bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}" -H "Content-Type: application/json" -d @/tmp/firecrawl_request.json'
 ```
 
 **Crawl Parameters:**
@@ -464,11 +464,11 @@ bash -c 'curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorizatio
 
 ### Poll Crawl Until Complete
 
-Replace `{JOB_ID}` with the actual job ID:
+Replace `<job-id>` with the actual job ID:
 
 ```bash
 while true; do
-  STATUS="$(bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/{JOB_ID}" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq -r '.status')"
+  STATUS="$(bash -c 'curl -s "https://api.firecrawl.dev/v1/crawl/<job-id>" -H "Authorization: Bearer ${FIRECRAWL_API_KEY}"' | jq -r '.status')"
   echo "Status: $STATUS"
   [ "$STATUS" = "completed" ] && break
   sleep 5

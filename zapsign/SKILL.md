@@ -181,7 +181,7 @@ Write to `/tmp/zapsign_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq .
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq '{token, status, signature_order_active}'
 ```
 
 ---
@@ -216,23 +216,17 @@ bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "A
 
 ### 6. Get Document Details
 
-Retrieve document status and signer information:
+Retrieve document status and signer information. Replace `<your-document-token>` with the actual document token:
 
 ```bash
-DOC_TOKEN="your-document-token"
-
-bash -c 'curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}"' | jq '{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}
+bash -c 'curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document-token>/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}"' | jq '{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}'
 ```
 
 ---
 
 ### 7. Add Signer to Existing Document
 
-Add a new signer to an existing document:
-
-```bash
-DOC_TOKEN="your-document-token"
-```
+Add a new signer to an existing document. Replace `<your-document-token>` with the actual document token:
 
 Write to `/tmp/zapsign_request.json`:
 
@@ -248,7 +242,7 @@ Write to `/tmp/zapsign_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/add-signer/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq '{token, sign_url, status}'
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document-token>/add-signer/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq '{token, sign_url, status}'
 ```
 
 ---
@@ -278,7 +272,7 @@ Write to `/tmp/zapsign_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq .
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq '{token, status, signers}'
 ```
 
 ---
@@ -307,19 +301,17 @@ Write to `/tmp/zapsign_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq .
+bash -c 'curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json' | jq '{token, status, signers: [.signers[] | {name, selfie_validation_type}]}'
 ```
 
 ---
 
 ### 10. Delete a Document
 
-Delete a document:
+Delete a document. Replace `<your-document-token>` with the actual document token:
 
 ```bash
-DOC_TOKEN="your-document-token"
-
-bash -c 'curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/${DOC_TOKEN}/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}"' | jq .
+bash -c 'curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document-token>/" -H "Authorization: Bearer ${ZAPSIGN_API_TOKEN}"'
 ```
 
 ---

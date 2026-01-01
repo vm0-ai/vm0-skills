@@ -47,7 +47,7 @@ export PUSHINATOR_API_KEY="your-api-token"
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
 > ```
 
 ## How to Use
@@ -62,30 +62,24 @@ Base URL: `https://api.pushinator.com`
 
 ### 1. Send a Push Notification
 
-Send a notification to all subscribers of a channel:
-
-```bash
-CHANNEL_ID="your-channel-uuid"
-```
+Send a notification to all subscribers of a channel.
 
 Write to `/tmp/pushinator_request.json`:
 
 ```json
 {
-  "channel_id": "YOUR_CHANNEL_ID",
+  "channel_id": "<your-channel-uuid>",
   "content": "Hello from Pushinator!"
 }
 ```
 
-Then run:
+Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
-sed -i '' "s/YOUR_CHANNEL_ID/${CHANNEL_ID}/" /tmp/pushinator_request.json
-
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
   --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
   --header "Content-Type: application/json" \
-  -d @/tmp/pushinator_request.json | jq .
+  -d @/tmp/pushinator_request.json
 ```
 
 **Response:**
@@ -100,60 +94,48 @@ curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
 
 ### 2. Send Deployment Notification
 
-Notify when a deployment completes:
-
-```bash
-CHANNEL_ID="your-channel-uuid"
-```
+Notify when a deployment completes.
 
 Write to `/tmp/pushinator_request.json`:
 
 ```json
 {
-  "channel_id": "YOUR_CHANNEL_ID",
+  "channel_id": "<your-channel-uuid>",
   "content": "Deployment complete! Project deployed to production."
 }
 ```
 
-Then run:
+Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
-sed -i '' "s/YOUR_CHANNEL_ID/${CHANNEL_ID}/" /tmp/pushinator_request.json
-
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
   --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
   --header "Content-Type: application/json" \
-  -d @/tmp/pushinator_request.json | jq .
+  -d @/tmp/pushinator_request.json
 ```
 
 ---
 
 ### 3. Send Alert with Emoji
 
-Include emojis for visual distinction:
-
-```bash
-CHANNEL_ID="your-channel-uuid"
-```
+Include emojis for visual distinction.
 
 Write to `/tmp/pushinator_request.json`:
 
 ```json
 {
-  "channel_id": "YOUR_CHANNEL_ID",
+  "channel_id": "<your-channel-uuid>",
   "content": "Build failed! Check the CI logs."
 }
 ```
 
-Then run:
+Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
-sed -i '' "s/YOUR_CHANNEL_ID/${CHANNEL_ID}/" /tmp/pushinator_request.json
-
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
   --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
   --header "Content-Type: application/json" \
-  -d @/tmp/pushinator_request.json | jq .
+  -d @/tmp/pushinator_request.json
 ```
 
 ---
