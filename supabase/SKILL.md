@@ -185,7 +185,7 @@ bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?limit=10&offset=10" -H "apikey: 
 Use `Prefer: count=exact` header:
 
 ```bash
-bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}" -H "Prefer: count=exact" -I' | grep -i "content-range"
+bash -c 'curl -s "${SUPABASE_URL}/rest/v1/users?select=*" -H "apikey: ${SUPABASE_PUBLISHABLE_KEY}" -H "Prefer: count=exact" -I | grep -i "content-range"'
 ```
 
 ---

@@ -33,10 +33,10 @@ When using environment variables in commands with pipes, always wrap the command
 
 ```bash
 # Good - wraps curl in bash -c, pipe is outside
-bash -c 'curl -H "Authorization: Bearer ${QIITA_ACCESS_TOKEN}" https://api.qiita.com/api/v2/users' | jq .
+bash -c 'curl -H "Authorization: Bearer ${QIITA_ACCESS_TOKEN}" https://api.qiita.com/api/v2/users'
 
 # Bad - environment variable with pipe causes issues
-curl -H "Authorization: Bearer ${QIITA_ACCESS_TOKEN}" https://api.qiita.com/api/v2/users | jq .
+curl -H "Authorization: Bearer ${QIITA_ACCESS_TOKEN}" https://api.qiita.com/api/v2/users
 ```
 
 ### Required Scopes

@@ -114,16 +114,45 @@ curl -G "https://api.example.com/sessions" --data-urlencode "q@/tmp/query.txt"
 
 **Problem:** Using shell variables like `$CONTEXT_ID` in URLs creates dependency on unstable variable expansion and makes examples harder to follow.
 
+### When to Use `${VAR}` vs `<placeholder>`
+
+| Type | Format | Example | Keep as Variable? |
+|------|--------|---------|-------------------|
+| **Prerequisites env vars** | `${VAR}` | `${API_KEY}`, `${API_TOKEN}`, `${DOMAIN}` | ✅ Yes |
+| **Dynamic values from API** | `<placeholder>` | `<context-id>`, `<session-id>`, `<item-id>` | ❌ No, use placeholder |
+
+**Keep as `${VAR}`** — Environment variables defined in the Prerequisites section:
+- API tokens/keys: `${API_KEY}`, `${API_TOKEN}`, `${ACCESS_TOKEN}`
+- Base URLs/domains: `${API_HOST}`, `${DOMAIN}`, `${BASE_URL}`
+- Account identifiers: `${ACCOUNT_ID}`, `${ORG_ID}` (when set in Prerequisites)
+- Credentials: `${EMAIL}`, `${USERNAME}` (when set in Prerequisites)
+
+**Use `<placeholder>`** — Dynamic values obtained from previous API responses:
+- Resource IDs: `<context-id>`, `<session-id>`, `<project-id>`
+- Temporary tokens: `<upload-token>`, `<refresh-token>`
+- User-specific values: `<your-item-id>`, `<your-file-key>`
+- Any value returned from a previous API call that the user needs to copy
+
 ### ❌ Bad Case
 
-**Example 1: Create context**
+**Example 1: Save Parameter**
 ```bash
 CONTEXT_ID=$(curl -X POST "https://api.example.com/contexts" -H "X-API-Key: ${API_KEY}" -d '{"projectId": "proj123"}' | jq -r '.id')
 ```
 
-**Example 2: Use context**
+**Example 2: Use Parameter**
 ```bash
 curl -X POST "https://api.example.com/sessions" -H "X-API-Key: ${API_KEY}" -d "{\"contextId\": \"${CONTEXT_ID}\"}"
+```
+
+**Example 3: Use Parameter**
+```bash
+DATASET_ID="gd_xxxxx"
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Issues:**
@@ -156,6 +185,18 @@ Or more explicitly:
 
 ```bash
 curl -X DELETE "https://api.example.com/contexts/<your-context-id>" -H "X-API-Key: ${API_KEY}"
+```
+
+**Example 3: Use Parameter**
+
+Replace `<dataset-id>` with the actual dataset id.
+
+```bash
+
+bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=<dataset-id>" \
+  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/brightdata_request.json'
 ```
 
 **Documentation Pattern:**

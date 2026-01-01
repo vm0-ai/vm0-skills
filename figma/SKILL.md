@@ -310,14 +310,16 @@ bash -c 'curl -s -X GET "https://api.figma.com/v1/teams/<your-team-id>/files?nam
 
 ### Export All Frames as Images
 
-Replace `<your-file-key>` with your file key:
+Replace `<your-file-key>` with your file key. First, get all frame IDs:
 
 ```bash
-# Get all frame IDs
-FRAME_IDS=$(bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.document.children[0].children[] | select(.type=="FRAME") | .id' | paste -sd "," -)
+bash -c 'curl -s -X GET "https://api.figma.com/v1/files/<your-file-key>" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq -r '.document.children[0].children[] | select(.type=="FRAME") | .id' | paste -sd "," -
+```
 
-# Export frames
-bash -c 'curl -s -X GET "https://api.figma.com/v1/images/<your-file-key>?ids='"$FRAME_IDS"'&format=png&scale=2" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.images'
+Then export frames (replace `<frame-ids>` with the comma-separated frame IDs from the previous response):
+
+```bash
+bash -c 'curl -s -X GET "https://api.figma.com/v1/images/<your-file-key>?ids=<frame-ids>&format=png&scale=2" -H "X-Figma-Token: ${FIGMA_API_TOKEN}"' | jq '.images'
 ```
 
 ### Extract Design Tokens

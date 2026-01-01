@@ -116,29 +116,26 @@ curl -s "https://hacker-news.firebaseio.com/v0/item/<item-id>.json"
 
 ### 8. Get Multiple Stories with Details
 
-Fetch top 5 stories with full details:
+Fetch top 5 stories with full details. Replace `<item-id>` with the actual item ID:
 
 ```bash
-for id in $(curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:5][]'); do
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/topstories.json"' | jq '.[:5][]' | while read id; do
   curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq '{id, title, score, url, by}'
 done
 ```
 
 ### 9. Get Story with Comments
 
-Fetch a story and its top-level comments:
+Fetch a story and its top-level comments. Replace `<story-id>` with the actual story ID:
 
 ```bash
-STORY_ID="8863"
+curl -s "https://hacker-news.firebaseio.com/v0/item/<story-id>.json" | jq '{title, score, descendants, kids}'
+```
 
-# Get story
-STORY=$(curl -s "https://hacker-news.firebaseio.com/v0/item/${STORY_ID}.json")
-echo "$STORY" | jq '{title, score, descendants}'
+Then for each comment ID in the `kids` array, replace `<comment-id>` with the actual comment ID:
 
-# Get first 3 comments
-for kid in $(echo "$STORY" | jq '.kids[:3][]'); do
-  curl -s "https://hacker-news.firebaseio.com/v0/item/${kid}.json" | jq '{by, text}'
-done
+```bash
+curl -s "https://hacker-news.firebaseio.com/v0/item/<comment-id>.json" | jq '{by, text, score}'
 ```
 
 ---
@@ -198,28 +195,24 @@ curl -s "https://hacker-news.firebaseio.com/v0/updates.json"
 ### Fetch Today's Top 10 with Scores
 
 ```bash
-echo "=== Top 10 Hacker News Stories ==="
-curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
-for id in $(cat /tmp/topstories.json | jq '.[:10][]'); do
-  bash -c "curl -s 'https://hacker-news.firebaseio.com/v0/item/${id}.json'" | jq -r '"\(.score) points | \(.title) | \(.url // "Ask HN")"'
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/topstories.json"' | jq '.[:10][]' | while read id; do
+  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r '"\(.score) points | \(.title) | \(.url // "Ask HN")"'
 done
 ```
 
 ### Find High-Scoring Stories (100+ points)
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
-for id in $(cat /tmp/topstories.json | jq '.[:30][]'); do
-  bash -c "curl -s 'https://hacker-news.firebaseio.com/v0/item/${id}.json'" | jq -r 'select(.score >= 100) | "\(.score) | \(.title)"'
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/topstories.json"' | jq '.[:30][]' | while read id; do
+  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r 'select(.score >= 100) | "\(.score) | \(.title)"'
 done
 ```
 
 ### Get Latest AI/ML Related Stories
 
 ```bash
-curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" > /tmp/topstories.json
-for id in $(cat /tmp/topstories.json | jq '.[:50][]'); do
-  bash -c "curl -s 'https://hacker-news.firebaseio.com/v0/item/${id}.json'" | jq -r 'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"'
+bash -c 'curl -s "https://hacker-news.firebaseio.com/v0/topstories.json"' | jq '.[:50][]' | while read id; do
+  curl -s "https://hacker-news.firebaseio.com/v0/item/${id}.json" | jq -r 'select(.title | test("AI|GPT|LLM|Machine Learning|Neural"; "i")) | "\(.score) | \(.title)"'
 done
 ```
 

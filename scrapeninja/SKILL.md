@@ -125,10 +125,7 @@ Then run:
 
 ```bash
 # Get screenshot URL from response
-SCREENSHOT_URL=$(bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json' | jq -r '.info.screenshot')
-
-# Download the screenshot
-curl -s -o screenshot.png "${SCREENSHOT_URL}"
+bash -c 'curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: ${SCRAPENINJA_API_KEY}" -d @/tmp/scrapeninja_request.json' | jq -r '.info.screenshot'
 ```
 
 ### 3. Geo-Based Proxy Selection

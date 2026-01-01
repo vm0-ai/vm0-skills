@@ -565,7 +565,7 @@ Then run:
 
 ```bash
 # Search for open conversations
-OPEN_CONVS="$(bash -c 'curl -s -X POST "https://api.intercom.io/conversations/search" -H "Authorization: Bearer ${INTERCOM_ACCESS_TOKEN}" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json' | jq -r '.conversations[0].id')"
+OPEN_CONVS="$(bash -c 'curl -s -X POST "https://api.intercom.io/conversations/search" -H "Authorization: Bearer ${INTERCOM_ACCESS_TOKEN}" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json | jq -r ".conversations[0].id"')"
 
 # Replace <your-admin-id> with the actual admin ID
 ADMIN_ID="<your-admin-id>"
@@ -602,10 +602,8 @@ Write to `/tmp/intercom_request.json`:
 Then run:
 
 ```bash
-# Create contact
-CONTACT=$(bash -c 'curl -s -X POST "https://api.intercom.io/contacts" -H "Authorization: Bearer ${INTERCOM_ACCESS_TOKEN}" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json')
-
-CONTACT_ID=$(echo $CONTACT | jq -r '.id')
+# Create contact and extract ID
+CONTACT_ID=$(bash -c 'curl -s -X POST "https://api.intercom.io/contacts" -H "Authorization: Bearer ${INTERCOM_ACCESS_TOKEN}" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json | jq -r ".id"')
 
 # Replace <your-company-id> with the actual company ID
 COMPANY_ID="<your-company-id>"

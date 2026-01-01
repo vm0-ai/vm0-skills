@@ -170,7 +170,7 @@ Docs: https://docs.slack.dev/reference/methods/users.list
 Replace `<user-email>` with the actual email address:
 
 ```bash
-curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" 'https://slack.com/api/users.lookupByEmail?email=<user-email>'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/users.lookupByEmail?email=<user-email>"'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/users.lookupbyemail

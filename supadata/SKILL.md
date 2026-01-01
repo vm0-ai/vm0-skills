@@ -82,7 +82,7 @@ bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADA
 Get transcript with timing information:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=false"' | jq '.content[:3]
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=false"' | jq '.content[:3]'
 ```
 
 Response format:

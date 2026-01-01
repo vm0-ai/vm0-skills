@@ -38,55 +38,55 @@ Use `gh` CLI commands. Common patterns:
 
 **Repository Operations**
 ```bash
-gh repo view [owner/repo]
-gh repo clone [owner/repo]
-gh repo create [name] --public/--private
-gh repo list [owner]
+gh repo view <owner>/<repo>
+gh repo clone <owner>/<repo>
+gh repo create <name> --public/--private
+gh repo list <owner>
 ```
 
 **Issue Operations**
 ```bash
-gh issue list --repo [owner/repo]
-gh issue create --repo [owner/repo] --title "Title" --body "Body"
-gh issue view [number] --repo [owner/repo]
-gh issue close [number] --repo [owner/repo]
-gh issue comment [number] --repo [owner/repo] --body "Comment"
+gh issue list --repo <owner>/<repo>
+gh issue create --repo <owner>/<repo> --title "Title" --body "Body"
+gh issue view <number> --repo <owner>/<repo>
+gh issue close <number> --repo <owner>/<repo>
+gh issue comment <number> --repo <owner>/<repo> --body "Comment"
 ```
 
 **Pull Request Operations**
 ```bash
-gh pr list --repo [owner/repo]
-gh pr create --repo [owner/repo] --title "Title" --body "Body"
-gh pr view [number] --repo [owner/repo]
-gh pr merge [number] --repo [owner/repo]
-gh pr review [number] --repo [owner/repo] --approve/--comment/--request-changes
-gh pr checks [number] --repo [owner/repo]
+gh pr list --repo <owner>/<repo>
+gh pr create --repo <owner>/<repo> --title "Title" --body "Body"
+gh pr view <number> --repo <owner>/<repo>
+gh pr merge <number> --repo <owner>/<repo>
+gh pr review <number> --repo <owner>/<repo> --approve/--comment/--request-changes
+gh pr checks <number> --repo <owner>/<repo>
 ```
 
 **Search Operations**
 ```bash
-gh search repos [query]
-gh search issues [query]
-gh search prs [query]
-gh search code [query]
+gh search repos <query>
+gh search issues <query>
+gh search prs <query>
+gh search code <query>
 ```
 
 **GitHub Actions**
 ```bash
-gh run list --repo [owner/repo]
-gh run view [run-id] --repo [owner/repo]
-gh workflow list --repo [owner/repo]
+gh run list --repo <owner>/<repo>
+gh run view <run-id> --repo <owner>/<repo>
+gh workflow list --repo <owner>/<repo>
 ```
 
 **Releases**
 ```bash
-gh release list --repo [owner/repo]
-gh release create [tag] --repo [owner/repo] --title "Title" --notes "Notes"
+gh release list --repo <owner>/<repo>
+gh release create <tag> --repo <owner>/<repo> --title "Title" --notes "Notes"
 ```
 
 ## Guidelines
 
-- Always specify `--repo owner/repo` when not in a cloned repository
+- Always specify `--repo <owner>/<repo>` when not in a cloned repository
 - For destructive operations (delete, close, merge), confirm with user first
 - Use `--json` flag when you need to parse output programmatically
 - Handle errors gracefully and suggest fixes
@@ -114,17 +114,17 @@ When creating items, always report:
 
 **Create an issue:**
 ```bash
-gh issue create --repo owner/repo --title "Bug: Login fails" --body "Steps to reproduce..."
+gh issue create --repo <owner>/<repo> --title "Bug: Login fails" --body "Steps to reproduce..."
 ```
 
 **List open PRs awaiting review:**
 ```bash
-gh pr list --repo owner/repo --state open --search "review:required"
+gh pr list --repo <owner>/<repo> --state open --search "review:required"
 ```
 
 **Get PR details as JSON:**
 ```bash
-gh pr view 123 --repo owner/repo --json title,state,reviews,checks
+gh pr view <number> --repo <owner>/<repo> --json title,state,reviews,checks
 ```
 
 ## Prerequisites
@@ -143,10 +143,10 @@ Alternatively, set the `GITHUB_TOKEN` environment variable with a personal acces
 
 **Important:** When using environment variables in commands with pipes, wrap the command in `bash -c '...'` to avoid variable substitution issues:
 ```bash
-bash -c 'gh pr view 123 --repo owner/repo --json title,state' | jq '.title'
+bash -c 'gh pr view <number> --repo $OWNER/$REPO --json title,state' | jq '.title'
 ```
 
-Do not use this pattern:
+Without environment variables, the pipe is fine:
 ```bash
-gh pr view 123 --repo owner/repo --json title,state | jq '.title'  # Without bash -c wrapper
+gh pr view <number> --repo <owner>/<repo> --json title,state | jq '.title'
 ```
