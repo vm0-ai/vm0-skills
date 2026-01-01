@@ -77,8 +77,3 @@ agents:
       CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
       FIGMA_API_TOKEN: ${{ secrets.FIGMA_API_TOKEN }}
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-
-volumes:
-  qwen-config:
-    name: qwen-config
-    version: latest
