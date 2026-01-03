@@ -4,13 +4,11 @@ A collection of reusable [Agent Skills](https://agentskills.io) for AI agents.
 
 Skills follow the [Agent Skills specification](https://agentskills.io/specification).
 
-## 🎯 Principles
+## Principles
 
-1. **Focus on SaaS API Integration** - Focus on common SaaS API use cases, providing practical integration solutions
-
-2. **Clean, Zero Scripts** - Keep code simple and clear, no redundant scripts, easy for AI Agents to learn and understand
-
-3. **Security First** - All API calls are documented in SKILL.md for easy security auditing and compliance checks
+1. **Focus on SaaS API Integration**: Focus on common SaaS API use cases, providing practical integration solutions
+2. **Clean, Zero Scripts**: Keep code simple and clear, no redundant scripts, easy for AI Agents to learn and understand
+3. **Security First**: All API calls are documented in SKILL.md for easy security auditing and compliance checks
 
 ## Installation
 
