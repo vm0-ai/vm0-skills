@@ -2,7 +2,7 @@
 
 **Test Summary:** 66 skills | 37 passed | 17 with issues | 12 not covered | Last tested: 2025-12-31
 
-## ✅ Fully Working Skills (37)
+## Fully Working Skills (37)
 
 ### Communication & Messaging
 - [bitrix](../bitrix) - Bitrix24 CRM and business management
@@ -53,7 +53,7 @@
 - [twenty](../twenty) - CRM platform
 - [zapsign](../zapsign) - Electronic signature platform
 
-## ❌ Skills with Issues (17)
+## Skills with Issues (17)
 
 ### Partial Functionality (8)
 - [apify](../apify) - 11/12 tests passed; Amazon Crawler requires paid subscription
@@ -76,9 +76,9 @@
 - [resend](../resend) - API failures
 - [slack](../slack) - 2/11 tests failed; bot not in channels, missing OAuth scopes
 
-## ⏸️ Not Covered (12)
+## Not Covered (12)
 
-Skills not covered by automated testing due to missing credentials. These skills may work correctly once proper API keys are configured.
+No automated test coverage due to missing credentials. May work correctly once configured.
 
 - [axiom](../axiom) - AXIOM_PERSONAL_ACCESS_TOKEN, AXIOM_ORG_ID
 - [bright-data](../bright-data) - BRIGHTDATA_API_KEY
