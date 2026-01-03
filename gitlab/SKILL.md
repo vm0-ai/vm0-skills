@@ -338,8 +338,14 @@ bash -c 'curl -s "https://${GITLAB_HOST}/api/v4/projects/<project-id>/pipelines/
 
 Search for users:
 
+Write to `/tmp/gitlab_search.txt`:
+
+```
+john
+```
+
 ```bash
-bash -c 'curl -s -G "https://${GITLAB_HOST}/api/v4/users" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --data-urlencode "search=john"' | jq '.[] | {id, username, name, state}'
+bash -c 'curl -s -G "https://${GITLAB_HOST}/api/v4/users" --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --data-urlencode "search@/tmp/gitlab_search.txt"' | jq '.[] | {id, username, name, state}'
 ```
 
 ---

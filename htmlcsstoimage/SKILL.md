@@ -147,8 +147,14 @@ Multiple fonts: `google_fonts=Playfair Display|Roboto|Open Sans`
 
 Capture a screenshot of any public URL:
 
+Write to `/tmp/hcti_url.txt`:
+
+```
+https://example.com
+```
+
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url=https://example.com"'
+bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt"'
 ```
 
 ---
@@ -157,8 +163,14 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 
 Wait for JavaScript to render before capturing:
 
+Write to `/tmp/hcti_url.txt`:
+
+```
+https://example.com
+```
+
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url=https://example.com" -d "ms_delay=1500"'
+bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "ms_delay=1500"'
 ```
 
 `ms_delay` waits specified milliseconds before taking the screenshot.
@@ -170,7 +182,7 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 Screenshot only a specific element on the page:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url=https://example.com" -d "selector=h1"'
+bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "selector=h1"'
 ```
 
 Use any CSS selector: `#id`, `.class`, `div > p`, etc.
@@ -202,7 +214,7 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 Set specific viewport dimensions:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url=https://example.com" -d "viewport_width=1200" -d "viewport_height=630"'
+bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "viewport_width=1200" -d "viewport_height=630"'
 ```
 
 Perfect for generating OG images (1200x630).
@@ -214,7 +226,7 @@ Perfect for generating OG images (1200x630).
 Capture the entire page height:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url=https://example.com" -d "full_screen=true"'
+bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "full_screen=true"'
 ```
 
 ---
@@ -224,7 +236,7 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 Automatically hide consent/cookie popups:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url=https://example.com" -d "block_consent_banners=true"'
+bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "block_consent_banners=true"'
 ```
 
 ---

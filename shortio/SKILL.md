@@ -153,7 +153,7 @@ bash -c 'curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Author
 Get a list of links for a domain (max 150 per request):
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/api/links?domain_id=${SHORTIO_DOMAIN_ID}&limit=20" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{count, links: [.links[] | {shortURL, originalURL, path, idString}]}
+bash -c 'curl -s -X GET "https://api.short.io/api/links?domain_id=${SHORTIO_DOMAIN_ID}&limit=20" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{count, links: [.links[] | {shortURL, originalURL, path, idString}]}'
 ```
 
 ---

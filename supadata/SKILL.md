@@ -64,8 +64,14 @@ Authentication uses the `x-api-key` header.
 
 Extract transcript from a YouTube video:
 
+Write to `/tmp/supadata_url.txt`:
+
+```
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+```
+
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true"'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt" -d "text=true"'
 ```
 
 **Parameters:**
@@ -82,7 +88,7 @@ bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADA
 Get transcript with timing information:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=false"' | jq '.content[:3]'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt" -d "text=false"' | jq '.content[:3]'
 ```
 
 Response format:
@@ -104,10 +110,10 @@ Extract transcript from other platforms:
 
 ```bash
 # TikTok
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890" -d "text=true"'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt" -d "text=true"'
 
 # Instagram Reel
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.instagram.com/reel/ABC123/" -d "text=true"'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt" -d "text=true"'
 ```
 
 Supported platforms: YouTube, TikTok, Instagram, X (Twitter), Facebook
@@ -119,7 +125,7 @@ Supported platforms: YouTube, TikTok, Instagram, X (Twitter), Facebook
 Fetch only existing transcripts without AI generation:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "text=true" -d "mode=native"'
+bash -c 'curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt" -d "text=true" -d "mode=native"'
 ```
 
 Use `mode=native` to avoid AI generation costs (1 credit vs 2 credits/min).
@@ -143,7 +149,7 @@ Accepts channel URL, channel ID, or handle (e.g., `@mkbhd`).
 Get video information:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ"' | jq '{title, viewCount, likeCount, duration}
+bash -c 'curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt"' | jq '{title, viewCount, likeCount, duration}
 ```
 
 ---
@@ -153,7 +159,7 @@ bash -c 'curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: ${SUP
 Get metadata from any supported platform:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/metadata" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.tiktok.com/@user/video/1234567890"'
+bash -c 'curl -s "https://api.supadata.ai/v1/metadata" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt"'
 ```
 
 Works with YouTube, TikTok, Instagram, X, Facebook posts.
@@ -165,7 +171,7 @@ Works with YouTube, TikTok, Instagram, X, Facebook posts.
 Extract web page content:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/web/scrape" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"'
+bash -c 'curl -s "https://api.supadata.ai/v1/web/scrape" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt"'
 ```
 
 Returns page content in Markdown format, ideal for AI processing.
@@ -177,7 +183,7 @@ Returns page content in Markdown format, ideal for AI processing.
 Get all links from a website:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://example.com"' | jq '.urls[:10]'
+bash -c 'curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt"' | jq '.urls[:10]'
 ```
 
 ---
@@ -216,7 +222,7 @@ Status values: `queued`, `active`, `completed`, `failed`
 Translate a YouTube transcript to another language:
 
 ```bash
-bash -c 'curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url=https://www.youtube.com/watch?v=dQw4w9WgXcQ" -d "lang=zh" -d "text=true"'
+bash -c 'curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key: ${SUPADATA_API_KEY}" -G --data-urlencode "url@/tmp/supadata_url.txt" -d "lang=zh" -d "text=true"'
 ```
 
 ---

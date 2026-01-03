@@ -124,8 +124,14 @@ bash -c 'curl -s "https://${SENTRY_HOST}/api/0/projects/${SENTRY_ORG}/${PROJECT_
 
 Search issues with query:
 
+Write to `/tmp/sentry_query.txt`:
+
+```
+is:unresolved level:error
+```
+
 ```bash
-bash -c 'curl -s -G "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --data-urlencode "query=is:unresolved level:error"' | jq '.[] | {shortId, title, level, count}
+bash -c 'curl -s -G "https://${SENTRY_HOST}/api/0/organizations/${SENTRY_ORG}/issues/" --header "Authorization: Bearer ${SENTRY_TOKEN}" --data-urlencode "query@/tmp/sentry_query.txt"' | jq '.[] | {shortId, title, level, count}
 ```
 
 Common query filters:

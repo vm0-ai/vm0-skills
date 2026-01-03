@@ -483,26 +483,32 @@ bash -c 'curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/groups
 
 Search for open tickets:
 
+Write to `/tmp/zendesk_query.txt`:
+
+```
+type:ticket status:open
+```
+
 ```bash
-bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:ticket status:open"' | jq '.results[] | {id, subject, status}
+bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query@/tmp/zendesk_query.txt"' | jq '.results[] | {id, subject, status}
 ```
 
 Search for high priority tickets:
 
 ```bash
-bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:ticket priority:high"' | jq '.results[]
+bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query@/tmp/zendesk_query.txt"' | jq '.results[]
 ```
 
 Search tickets with keywords:
 
 ```bash
-bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:ticket urgent issue"' | jq '.results[]
+bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query@/tmp/zendesk_query.txt"' | jq '.results[]
 ```
 
 Search users by email domain:
 
 ```bash
-bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:user email:*@acme.com"' | jq '.results[]
+bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query@/tmp/zendesk_query.txt"' | jq '.results[]
 ```
 
 ---
@@ -622,7 +628,7 @@ bash -c 'curl -s -X PUT "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets
 
 ```bash
 # Search for old open tickets (30+ days)
-OLD_TICKETS="$(bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query=type:ticket status:open created<30"' | jq -r '.results[].id' | paste -sd "," -)"
+OLD_TICKETS="$(bash -c 'curl -s "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/search.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -G --data-urlencode "query@/tmp/zendesk_query.txt"' | jq -r '.results[].id' | paste -sd "," -)"
 ```
 
 Write to `/tmp/zendesk_request.json`:

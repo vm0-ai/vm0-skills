@@ -130,7 +130,7 @@ The spreadsheet ID is in the URL: `https://docs.google.com/spreadsheets/d/{SPREA
 Get information about a spreadsheet (sheets, properties). Replace `<your-spreadsheet-id>` with your actual spreadsheet ID:
 
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '{title: .properties.title, sheets: [.sheets[].properties | {sheetId, title}]}'
+bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets/<your-spreadsheet-id>" -H "Authorization: Bearer ${GOOGLE_ACCESS_TOKEN}"' | jq '{title: .properties.title, sheets: [.sheets[].properties | {sheetId, title}]}''
 ```
 
 ---

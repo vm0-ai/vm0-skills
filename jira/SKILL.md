@@ -125,7 +125,7 @@ Write to `/tmp/jira_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/search/jql" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json' | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}'
+bash -c 'curl -s -X POST "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/search/jql" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json' | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}''
 ```
 
 Common JQL examples:
@@ -372,8 +372,14 @@ bash -c 'curl -s -X PUT "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/res
 
 Find users by email or name:
 
+Write to `/tmp/jira_search.txt`:
+
+```
+john
+```
+
 ```bash
-bash -c 'curl -s -G "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/user/search" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --data-urlencode "query=john"'
+bash -c 'curl -s -G "https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3/user/search" -u "${JIRA_EMAIL}:${JIRA_API_TOKEN}" --header "Accept: application/json" --data-urlencode "query@/tmp/jira_search.txt"'
 ```
 
 ---

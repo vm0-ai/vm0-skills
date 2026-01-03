@@ -417,13 +417,32 @@ Docs: https://developers.notion.com/reference/create-a-database
 
 All list endpoints support cursor-based pagination:
 
+Write to `/tmp/notion_request.json`:
+
+```json
+{
+  "page_size": 100
+}
+```
+
 ```bash
 # First request
-curl -s -X POST '.../query' -d '{"page_size": 100}'
+bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json'
 # Response includes: {"next_cursor": "abc123", "has_more": true}
+```
 
+Write to `/tmp/notion_request.json`:
+
+```json
+{
+  "page_size": 100,
+  "start_cursor": "<your-cursor>"
+}
+```
+
+```bash
 # Next page
-curl -s -X POST '.../query' -d '{"page_size": 100, "start_cursor": "abc123"}'
+bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json'
 ```
 
 ## Rate Limits

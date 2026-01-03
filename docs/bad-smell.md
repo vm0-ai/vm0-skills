@@ -219,6 +219,104 @@ curl -X DELETE "https://api.example.com/contexts/your-context-id" -H "X-API-Key:
 
 ---
 
+## 5. Inline JSON with -d Parameter
+
+**Problem:** Using `-d '{"key": "value"}'` format for JSON data creates inconsistency with the file-based pattern and makes examples harder to maintain.
+
+### ❌ Bad Case
+
+```bash
+curl -s -X POST '.../query' -d '{"page_size": 100}'
+curl -s -X POST '.../query' -d '{"page_size": 100, "start_cursor": "abc123"}'
+```
+
+**Issues:**
+- Inconsistent with file-based pattern used elsewhere
+- Hard to modify for complex JSON
+- Doesn't scale for nested structures
+- Mixed patterns confuse users
+
+### ✅ Good Case
+
+**Write to `/tmp/notion_request.json`:**
+```json
+{
+  "page_size": 100
+}
+```
+
+```bash
+bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json'
+```
+
+**Benefits:**
+- ✅ Consistent with file-based pattern across all skills
+- ✅ Easy to modify and extend
+- ✅ Works with any JSON complexity
+- ✅ Clear separation of data and command
+- ✅ Follows established pattern from other skills
+
+**Pattern Rule:** Always use `-d @/tmp/filename.json` for JSON data, never inline JSON with `-d '{"key": "value"}'`.
+
+---
+
+## 6. Simple --data-urlencode Parameters
+
+**Problem:** Using `--data-urlencode "key=value"` for simple parameters can cause escaping issues with special characters like `!`, `&`, `?`, etc., creating potential shell escaping nightmares.
+
+### ❌ Bad Case
+
+```bash
+# Query with special characters can break
+--data-urlencode "q=best restaurants! & cafes in NYC"
+--data-urlencode "query=type:ticket status:open created<30"
+--data-urlencode "url=https://example.com/path?param=value&other=123"
+```
+
+**Issues:**
+- Special characters require shell escaping
+- Complex URLs with query parameters break parsing
+- Search queries with symbols cause failures
+- Inconsistent with file-based patterns
+
+### ✅ Good Case
+
+**Write to `/tmp/query.txt`:**
+```
+best restaurants! & cafes in NYC
+```
+
+```bash
+--data-urlencode "q@/tmp/query.txt"
+```
+
+**Or for complex URLs:**
+**Write to `/tmp/url.txt`:**
+```
+https://example.com/path?param=value&other=123
+```
+
+```bash
+--data-urlencode "url@/tmp/url.txt"
+```
+
+**Benefits:**
+- ✅ No shell escaping issues with special characters
+- ✅ Handles complex URLs and queries safely
+- ✅ Consistent with JSON file pattern
+- ✅ Easy to modify and test
+- ✅ Works with any content complexity
+
+**When to use file mode:**
+- ✅ URLs with query parameters: `--data-urlencode "url@/tmp/url.txt"`
+- ✅ Search queries with symbols: `--data-urlencode "q@/tmp/query.txt"`
+- ✅ Complex filter strings: `--data-urlencode "query@/tmp/filter.txt"`
+- ✅ Any parameter that might contain special characters
+
+**Pattern Rule:** Always use `--data-urlencode "key@/tmp/file.txt"` for parameters that might contain special characters or complex content.
+
+---
+
 ## Quick Checklist
 
 When writing SKILL.md, verify:
@@ -227,4 +325,6 @@ When writing SKILL.md, verify:
 - [ ] Remove `| jq .` unless doing actual transformation
 - [ ] Use `/tmp/file` with `-d @/tmp/file` instead of inline JSON/data
 - [ ] Use placeholder text (`<your-context-id>`) instead of shell variables (`$CONTEXT_ID`) in URLs
+- [ ] Always use `-d @/tmp/filename.json` for JSON data, never `-d '{"key": "value"}'`
+- [ ] Always use `--data-urlencode "key@/tmp/file.txt"` for parameters with special characters
 - [ ] Include the "Important" warning about `$VAR` and pipes in Prerequisites section
