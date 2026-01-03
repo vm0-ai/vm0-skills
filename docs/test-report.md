@@ -1,6 +1,6 @@
 # Test Report
 
-**Test Summary:** 66 skills tested | 37 passed (56%) | 29 failed (44%) | Last tested: 2025-12-31
+**Test Summary:** 66 skills | 37 passed | 17 with issues | 12 not covered | Last tested: 2025-12-31
 
 ## ✅ Fully Working Skills (37)
 
@@ -53,18 +53,7 @@
 - [twenty](../twenty) - CRM platform
 - [zapsign](../zapsign) - Electronic signature platform
 
-## ❌ Skills with Issues (29)
-
-### Missing API Keys/Configuration (12)
-- [axiom](../axiom) - Missing AXIOM_PERSONAL_ACCESS_TOKEN and AXIOM_ORG_ID
-- [bright-data](../bright-data) - Missing BRIGHTDATA_API_KEY
-- [chatwoot](../chatwoot) - Missing CHATWOOT credentials
-- [gmail](../gmail) - Missing OAuth credentials
-- [kommo](../kommo) - Missing KOMMO_DOMAIN, KOMMO_ACCESS_TOKEN
-- [pdf4me](../pdf4me) - Missing PDF4ME_API_KEY
-- [pdfco](../pdfco) - Missing PDFCO_API_KEY
-- [reportei](../reportei) - Missing REPORTEI_API_KEY
-- [streak](../streak) - Missing STREAK_API_KEY
+## ❌ Skills with Issues (17)
 
 ### Partial Functionality (8)
 - [apify](../apify) - 11/12 tests passed; Amazon Crawler requires paid subscription
@@ -87,6 +76,23 @@
 - [resend](../resend) - API failures
 - [slack](../slack) - 2/11 tests failed; bot not in channels, missing OAuth scopes
 
+## ⏸️ Not Covered (12)
+
+Skills not covered by automated testing due to missing credentials. These skills may work correctly once proper API keys are configured.
+
+- [axiom](../axiom) - AXIOM_PERSONAL_ACCESS_TOKEN, AXIOM_ORG_ID
+- [bright-data](../bright-data) - BRIGHTDATA_API_KEY
+- [chatwoot](../chatwoot) - CHATWOOT credentials
+- [gmail](../gmail) - OAuth credentials
+- [kommo](../kommo) - KOMMO_DOMAIN, KOMMO_ACCESS_TOKEN
+- [pdf4me](../pdf4me) - PDF4ME_API_KEY
+- [pdfco](../pdfco) - PDFCO_API_KEY
+- [reportei](../reportei) - REPORTEI_API_KEY
+- [streak](../streak) - STREAK_API_KEY
+- [figma](../figma) - FIGMA_ACCESS_TOKEN
+- [intercom](../intercom) - INTERCOM_ACCESS_TOKEN
+- [sentry](../sentry) - SENTRY_AUTH_TOKEN
+
 ## Test Categories
 
 ### Success Rate by Category
@@ -103,11 +109,6 @@
 1. **jira** - Fix JQL syntax in documentation
 2. **openai** - Resolve API connection issues
 3. **slack** - Fix OAuth scopes and channel permissions
-4. **gmail** - Add OAuth setup instructions
-
-### Credential Setup Guides
-Skills that would benefit from setup guides:
-- bright-data, axiom, chatwoot, kommo, pdf4me, pdfco, reportei, streak
 
 ### API Service Validation
 Skills needing API endpoint verification:
@@ -115,4 +116,4 @@ Skills needing API endpoint verification:
 
 ---
 
-**Note**: This report is generated automatically from test results. Skills marked as "Missing API Keys" may be fully functional once proper credentials are configured.
+**Note**: This report is generated automatically from test results. Skills in the "Not Covered" section lack automated test coverage due to missing credentials, but may work correctly once configured.
