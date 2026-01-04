@@ -26,7 +26,7 @@ This agent performs automated testing of all skills in the vm0-skills repository
    - For each skill folder in the repo, add a todo item to `TODO.md`
 
 3. **Test Each Skill**
-   - Create a sub-agent for each skill to test
+   - Create a sub-agent for each skill to test, run test one by one
    - Each sub-agent should:
      - Verify all required environment variables exist
      - Test each example command in the skill's SKILL.md
