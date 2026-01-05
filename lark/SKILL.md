@@ -39,264 +39,492 @@ Enable these API scopes in your Lark app:
 - `contact:user.base:readonly` - Read contacts
 - `calendar:calendar` - Manage calendars
 
-## How to Use
+## Token Management
 
-### Commands
-
-The script supports 6 modules: `auth`, `message`, `chat`, `contact`, `calendar`, `bot`
-
----
-
-### 1. Auth - Get Access Token
-
-Obtain and cache tenant access token.
+Lark uses tenant access tokens that expire after 2 hours. Use this helper to get or refresh the token:
 
 ```bash
-scripts/lark.sh auth
+# Get or refresh token (cached to /tmp/lark_token.json)
+get_lark_token() {
+  local token_file="/tmp/lark_token.json"
+  local current_time=$(date +%s)
+
+  # Check if cached token is still valid
+  if [ -f "$token_file" ]; then
+    local expire_time=$(jq -r '.expire_time // 0' "$token_file" 2>/dev/null || echo "0")
+    if [ "$current_time" -lt "$expire_time" ]; then
+      jq -r '.tenant_access_token' "$token_file"
+      return 0
+    fi
+  fi
+
+  # Get new token
+  local response=$(curl -s -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
+    -H "Content-Type: application/json" \
+    -d "{\"app_id\": \"${LARK_APP_ID}\", \"app_secret\": \"${LARK_APP_SECRET}\"}")
+
+  local code=$(echo "$response" | jq -r '.code // -1')
+  if [ "$code" != "0" ]; then
+    echo "Error: $(echo "$response" | jq -r '.msg')" >&2
+    return 1
+  fi
+
+  local expire=$(echo "$response" | jq -r '.expire')
+  local expire_time=$((current_time + expire - 300))
+  echo "$response" | jq ". + {expire_time: $expire_time}" > "$token_file"
+  jq -r '.tenant_access_token' "$token_file"
+}
+
+# Usage in commands
+TOKEN=$(get_lark_token)
 ```
 
-Token is cached to `/tmp/lark/token.json` and reused until expiration.
-
----
-
-### 2. Message - Send and Manage Messages
-
-#### Send Text Message
+Or get token directly without caching:
 
 ```bash
-scripts/lark.sh message send --to "ou_xxx" --type "open_id" --text "Hello World"
-scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --text "Group message"
+TOKEN=$(bash -c 'curl -s -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
+  -H "Content-Type: application/json" \
+  -d "{\"app_id\": \"${LARK_APP_ID}\", \"app_secret\": \"${LARK_APP_SECRET}\"}"' | jq -r '.tenant_access_token')
 ```
 
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| --to | Yes | - | Recipient ID (user or chat) |
-| --type | No | open_id | ID type: open_id, user_id, union_id, email, chat_id |
-| --text | Yes* | - | Text message content |
+## Examples
 
-#### Send Rich Text (Post)
+### 1. Authentication - Get Access Token
 
-Write to `/tmp/post.json`:
+Get and display tenant access token:
 
+Write to `/tmp/lark_request.json`:
 ```json
 {
-  "zh_cn": {
-    "title": "Title",
-    "content": [[{"tag": "text", "text": "Content"}]]
-  }
+  "app_id": "${LARK_APP_ID}",
+  "app_secret": "${LARK_APP_SECRET}"
 }
 ```
 
 ```bash
-scripts/lark.sh message send --to "ou_xxx" --type "open_id" --post "$(bash -c 'cat /tmp/post.json')"
+bash -c 'curl -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json'
 ```
 
-#### Send Card Message
+### 2. Messaging - Send Messages
 
-Write to `/tmp/card.json`:
+#### Send Text Message to User
 
+Write to `/tmp/lark_request.json`:
 ```json
 {
-  "header": {"title": {"tag": "plain_text", "content": "Alert"}},
-  "elements": [{"tag": "div", "text": {"tag": "plain_text", "content": "Message"}}]
+  "receive_id": "ou_xxx",
+  "msg_type": "text",
+  "content": "{\"text\": \"Hello World\"}"
 }
 ```
 
 ```bash
-scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card "$(bash -c 'cat /tmp/card.json')"
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
+```
+
+#### Send Text Message to Group Chat
+
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "receive_id": "oc_xxx",
+  "msg_type": "text",
+  "content": "{\"text\": \"Group message\"}"
+}
+```
+
+```bash
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
+```
+
+#### Send Rich Text (Post) Message
+
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "receive_id": "ou_xxx",
+  "msg_type": "post",
+  "content": "{\"zh_cn\": {\"title\": \"Title\", \"content\": [[{\"tag\": \"text\", \"text\": \"Content\"}]]}}"
+}
+```
+
+```bash
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
+```
+
+#### Send Interactive Card Message
+
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "receive_id": "oc_xxx",
+  "msg_type": "interactive",
+  "content": "{\"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"Alert\"}}, \"elements\": [{\"tag\": \"div\", \"text\": {\"tag\": \"plain_text\", \"content\": \"Message\"}}]}"
+}
+```
+
+```bash
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
 #### Reply to Message
 
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "msg_type": "text",
+  "content": "{\"text\": \"Reply content\"}"
+}
+```
+
 ```bash
-scripts/lark.sh message reply --message-id "om_xxx" --text "Reply content"
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages/om_xxx/reply" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
 #### Get Chat History
 
 ```bash
-scripts/lark.sh message list --chat-id "oc_xxx" --limit 20
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/im/v1/messages?container_id_type=chat&container_id=oc_xxx&page_size=20" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
 
----
+### 3. Chat Management - Group Operations
 
-### 3. Chat - Group Management
+#### Create Group Chat
 
-#### Create Group
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "name": "Project Team",
+  "description": "Project discussion group",
+  "user_id_list": ["ou_xxx", "ou_yyy"]
+}
+```
 
 ```bash
-scripts/lark.sh chat create --name "Project Team" --members "ou_xxx,ou_yyy"
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats?user_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| --name | Yes | - | Group name |
-| --members | No | - | Comma-separated member IDs |
-| --description | No | - | Group description |
-
-#### List Groups
+#### List All Chats
 
 ```bash
-scripts/lark.sh chat list
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/im/v1/chats" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
 
-#### Get Group Info
+#### Get Chat Info
 
 ```bash
-scripts/lark.sh chat info --chat-id "oc_xxx"
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/im/v1/chats/oc_xxx" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
 
-#### Add Members
+#### Add Members to Chat
+
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "id_list": ["ou_xxx", "ou_yyy"]
+}
+```
 
 ```bash
-scripts/lark.sh chat add-member --chat-id "oc_xxx" --members "ou_xxx,ou_yyy"
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats/oc_xxx/members?member_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
-#### Remove Members
+#### Remove Members from Chat
+
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "id_list": ["ou_xxx"]
+}
+```
 
 ```bash
-scripts/lark.sh chat remove-member --chat-id "oc_xxx" --members "ou_xxx"
+TOKEN=$(get_lark_token)
+curl -X DELETE "https://open.feishu.cn/open-apis/im/v1/chats/oc_xxx/members?member_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
----
-
-### 4. Contact - Directory Queries
+### 4. Contacts - Directory Queries
 
 #### Get User Info
 
 ```bash
-scripts/lark.sh contact user --user-id "ou_xxx" --type "open_id"
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/contact/v3/users/ou_xxx?user_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| --user-id | Yes | - | User ID |
-| --type | No | open_id | ID type: open_id, user_id, union_id |
 
 #### Search Users
 
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "query": "John"
+}
+```
+
 ```bash
-scripts/lark.sh contact search --query "John"
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/contact/v3/users/search?user_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
 #### List Departments
 
 ```bash
-scripts/lark.sh contact departments --parent-id "0"
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/contact/v3/departments?parent_department_id=0" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
 
 #### Get Department Members
 
 ```bash
-scripts/lark.sh contact members --department-id "xxx"
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/contact/v3/users/find_by_department?department_id=od_xxx&user_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
-
----
 
 ### 5. Calendar - Schedule Management
 
 #### List Calendars
 
 ```bash
-scripts/lark.sh calendar list
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/calendar/v4/calendars" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
 
-#### Create Event
+#### Create Calendar
 
-```bash
-scripts/lark.sh calendar create-event --calendar-id "xxx" --summary "Team Meeting" --start "2025-01-15T10:00:00+08:00" --end "2025-01-15T11:00:00+08:00" --description "Weekly sync"
-```
-
-| Parameter | Required | Default | Description |
-|-----------|----------|---------|-------------|
-| --calendar-id | Yes | - | Calendar ID |
-| --summary | Yes | - | Event title |
-| --start | Yes | - | Start time (ISO 8601) |
-| --end | Yes | - | End time (ISO 8601) |
-| --description | No | - | Event description |
-
-#### List Events
-
-```bash
-scripts/lark.sh calendar events --calendar-id "xxx" --start "2025-01-01T00:00:00+08:00" --end "2025-01-31T23:59:59+08:00"
-```
-
----
-
-### 6. Bot - Bot Information
-
-```bash
-scripts/lark.sh bot info
-```
-
-Returns bot name, open_id, and capabilities.
-
----
-
-## Message Types
-
-| Type | Parameter | Example |
-|------|-----------|---------|
-| Text | --text | `--text "Hello"` |
-| Rich Text | --post | `--post '{"zh_cn":{"title":"..."}}'` |
-| Image | --image | `--image "img_xxx"` |
-| Card | --card | `--card '{"header":...}'` |
-
-## Examples
-
-### Send Alert to Group
-
-Write to `/tmp/alert.json`:
-
+Write to `/tmp/lark_request.json`:
 ```json
 {
-  "header": {
-    "title": {"tag": "plain_text", "content": "System Alert"},
-    "template": "red"
-  },
-  "elements": [{
-    "tag": "div",
-    "text": {"tag": "lark_md", "content": "**Error:** Service down"}
-  }]
+  "summary": "Project Calendar",
+  "description": "Calendar for project events"
 }
 ```
 
 ```bash
-scripts/lark.sh message send --to "oc_xxx" --type "chat_id" --card "$(bash -c 'cat /tmp/alert.json')"
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
+```
+
+#### Create Calendar Event
+
+Note: Replace `<calendar_id>` with an actual calendar ID from List Calendars API.
+
+```bash
+TOKEN=$(get_lark_token)
+
+# Convert ISO 8601 to Unix timestamp
+START_TS=$(date -d "2025-01-15T10:00:00+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-15T10:00:00+08:00" +%s)
+END_TS=$(date -d "2025-01-15T11:00:00+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-15T11:00:00+08:00" +%s)
+
+# Write request with timestamps
+cat > /tmp/lark_request.json <<EOF
+{
+  "summary": "Team Meeting",
+  "description": "Weekly sync",
+  "start_time": {"timestamp": "${START_TS}"},
+  "end_time": {"timestamp": "${END_TS}"}
+}
+EOF
+
+curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
+```
+
+#### List Calendar Events
+
+```bash
+TOKEN=$(get_lark_token)
+
+# Convert date range
+START_TS=$(date -d "2025-01-01T00:00:00+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-01T00:00:00+08:00" +%s)
+END_TS=$(date -d "2025-01-31T23:59:59+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-31T23:59:59+08:00" +%s)
+
+curl -X GET "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events?start_time=${START_TS}&end_time=${END_TS}" \
+  -H "Authorization: Bearer ${TOKEN}"
+```
+
+### 6. Bot Information
+
+#### Get Bot Info
+
+```bash
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.feishu.cn/open-apis/bot/v3/info" \
+  -H "Authorization: Bearer ${TOKEN}"
+```
+
+## Workflows
+
+### Send System Alert to Group
+
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "receive_id": "oc_xxx",
+  "msg_type": "interactive",
+  "content": "{\"header\": {\"title\": {\"tag\": \"plain_text\", \"content\": \"System Alert\"}, \"template\": \"red\"}, \"elements\": [{\"tag\": \"div\", \"text\": {\"tag\": \"lark_md\", \"content\": \"**Error:** Service down\"}}]}"
+}
+```
+
+```bash
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
 ### Create Team Group with Members
 
+Write to `/tmp/lark_request.json`:
+```json
+{
+  "name": "Q1 Project",
+  "description": "Q1 project discussion",
+  "user_id_list": ["ou_abc", "ou_def", "ou_ghi"]
+}
+```
+
 ```bash
-scripts/lark.sh chat create --name "Q1 Project" --members "ou_abc,ou_def,ou_ghi" --description "Q1 project discussion"
+TOKEN=$(get_lark_token)
+curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats?user_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
 
 ### Query Organization Structure
 
 ```bash
+TOKEN=$(get_lark_token)
+
 # Get root departments
-scripts/lark.sh contact departments --parent-id "0"
+curl -X GET "https://open.feishu.cn/open-apis/contact/v3/departments?parent_department_id=0" \
+  -H "Authorization: Bearer ${TOKEN}" | jq '.data.items[] | {id: .department_id, name: .name}'
 
 # Get members in a department
-scripts/lark.sh contact members --department-id "od_xxx"
+curl -X GET "https://open.feishu.cn/open-apis/contact/v3/users/find_by_department?department_id=od_xxx&user_id_type=open_id" \
+  -H "Authorization: Bearer ${TOKEN}" | jq '.data.items[] | {id: .user_id, name: .name}'
 ```
 
 ### Schedule a Meeting
 
 ```bash
-scripts/lark.sh calendar create-event --calendar-id "primary" --summary "Sprint Planning" --start "2025-01-20T09:00:00+08:00" --end "2025-01-20T10:30:00+08:00" --description "Sprint 5 planning session"
+TOKEN=$(get_lark_token)
+
+START_TS=$(date -d "2025-01-20T09:00:00+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-20T09:00:00+08:00" +%s)
+END_TS=$(date -d "2025-01-20T10:30:00+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-20T10:30:00+08:00" +%s)
+
+# Write request with timestamps
+cat > /tmp/lark_request.json <<EOF
+{
+  "summary": "Sprint Planning",
+  "description": "Sprint 5 planning session",
+  "start_time": {"timestamp": "${START_TS}"},
+  "end_time": {"timestamp": "${END_TS}"}
+}
+EOF
+
+curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/lark_request.json
 ```
+
+## Message Types Reference
+
+| Type | msg_type | content Format |
+|------|----------|----------------|
+| Text | `text` | `{"text": "message"}` |
+| Rich Text | `post` | `{"zh_cn": {"title": "...", "content": [...]}}` |
+| Image | `image` | `{"image_key": "img_xxx"}` |
+| Card | `interactive` | `{"header": {...}, "elements": [...]}` |
+
+## ID Types Reference
+
+| ID Type | Description | Example |
+|---------|-------------|---------|
+| `open_id` | User open ID (default) | `ou_xxx` |
+| `user_id` | User ID | `abc123` |
+| `union_id` | Union ID across apps | `on_xxx` |
+| `email` | User email address | `user@example.com` |
+| `chat_id` | Group chat ID | `oc_xxx` |
 
 ## Guidelines
 
-1. **Token Caching**: Tokens are cached for 2 hours. Run `auth` to refresh if expired.
-2. **Rate Limits**: Lark has rate limits. Add delays for bulk operations.
-3. **ID Types**: Use correct ID type (open_id for most cases, chat_id for groups).
-4. **Card Builder**: Use Lark Card Builder for complex cards: https://open.larkoffice.com/tool/cardbuilder
-5. **Error Codes**: Check response code field. 0 means success.
+1. **Token Management**: Tokens expire after 2 hours. Use the `get_lark_token` helper function for automatic caching and refresh.
+
+2. **Rate Limits**: Lark has rate limits per app. Add delays for bulk operations to avoid hitting limits.
+
+3. **ID Types**: Use `open_id` for most user operations. Use `chat_id` when targeting group chats.
+
+4. **Card Builder**: Design complex interactive cards using Lark Card Builder: https://open.larkoffice.com/tool/cardbuilder
+
+5. **Error Handling**: Check the `code` field in responses. `0` means success, non-zero indicates an error.
+
+6. **Content Escaping**: Message content must be JSON-escaped when passed as string. Use `jq` to build complex payloads:
+   ```bash
+   CONTENT=$(jq -n --arg text "Hello" '{text: $text}')
+   curl ... -d "{\"content\": \"$(echo $CONTENT | jq -c .)\"}"
+   ```
+
+7. **Date Conversion**: Calendar events require Unix timestamps. Use `date` command with appropriate flags for your OS:
+   - Linux: `date -d "2025-01-15T10:00:00+08:00" +%s`
+   - macOS: `date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-15T10:00:00+08:00" +%s`
 
 ## API Reference
 
-- Documentation: https://open.larkoffice.com/document/home/index
+- API Documentation: https://open.larkoffice.com/document/home/index
 - API Explorer: https://open.larkoffice.com/api-explorer
 - Card Builder: https://open.larkoffice.com/tool/cardbuilder
+- Permissions: https://open.larkoffice.com/document/home/introduction-to-scope-and-authorization/overview
