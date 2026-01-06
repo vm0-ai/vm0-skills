@@ -6,9 +6,16 @@ agents:
     provider: claude-code
     instructions: AGENTS.md
     skills:
-      - https://github.com/vm0-ai/vm0-skills/tree/main/github
-      - https://github.com/vm0-ai/vm0-skills/tree/main/slack
-      - https://github.com/vm0-ai/vm0-skills/tree/main/discord
+      # Shorthand format: [org/repo]:[path][#branch]
+      # - Default org/repo: vm0-ai/vm0-skills
+      # - Default branch: main
+      # Examples:
+      #   "github"                      -> https://github.com/vm0-ai/vm0-skills/tree/main/github
+      #   "vm0-ai/vm0-apps:slack"       -> https://github.com/vm0-ai/vm0-apps/tree/main/slack
+      #   "other/repo:path#dev"         -> https://github.com/other/repo/tree/dev/path
+      - github
+      - slack
+      - discord
     environment:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
       # ANTHROPIC_DEFAULT_OPUS_MODEL: claude-haiku-4-5-20251001
