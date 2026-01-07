@@ -44,106 +44,104 @@ After installation, restart Claude Code, then ask "What skills are available?" t
 
 ## Skills Test Status
 
-Last tested: 2026-01-04 | Total: 67 skills | Passed: 22 | Failed: 28 | Unclear: 17 | Success Rate: 32.8%
+Last tested: 2026-01-07 | Total: 67 skills | Passed: 21 | Failed: 46 | Success Rate: 31.34%
 
-### Fully Tested & Working Skills (22)
+### Fully Tested & Working Skills (21)
 
 **AI & ML:**
-- [openai](./openai) - GPT models and completions - PASSED
-- [deepseek](./deepseek) - AI language model for chat - PASSED
-- [elevenlabs](./elevenlabs) - Text-to-speech voice generation - PASSED
-- [fal.ai](./fal.ai) - AI image generation - PASSED
+- [deepseek](./deepseek) - AI language model for chat - All 9 examples passed
+- [elevenlabs](./elevenlabs) - Text-to-speech voice generation - All 7 examples passed
+- [fal.ai](./fal.ai) - AI image generation - All 8 examples passed
+- [openai](./openai) - GPT models and completions - 10/12 examples passed
 
 **Web & Data:**
-- [apify](./apify) - Web scraping and automation platform - PASSED
-- [brave-search](./brave-search) - Privacy-focused web search - PASSED
-- [serpapi](./serpapi) - Search engine results - PASSED
-- [firecrawl](./firecrawl) - Web scraping and crawling - PASSED
-- [browserless](./browserless) - Headless browser automation - PASSED
-- [hackernews](./hackernews) - Hacker News API access - PASSED
+- [brave-search](./brave-search) - Privacy-focused web search - All 9 examples passed
+- [bright-data](./bright-data) - Proxy and web unlocker service - All 4 examples passed
+- [hackernews](./hackernews) - Hacker News API access - 12/16 examples passed
+- [rss-fetch](./rss-fetch) - RSS feed parsing - 2/10 examples passed (requires xmllint)
+- [serpapi](./serpapi) - Search engine results - All 10 examples passed
+- [tavily](./tavily) - AI research with citations - All 2 examples passed
 
 **Data & Analytics:**
-- [axiom](./axiom) - Log management and analytics - PASSED
-- [cronlytic](./cronlytic) - Cron job monitoring - PASSED
+- [axiom](./axiom) - Log management and analytics - 10/11 examples passed
+- [cronlytic](./cronlytic) - Cron job monitoring - All 9 examples passed
+- [plausible](./plausible) - Privacy-focused analytics - 10/17 examples passed
 
 **Communication & Collaboration:**
-- [chatwoot](./chatwoot) - Customer engagement platform - PASSED
-- [instantly](./instantly) - Cold email automation - PASSED
+- [chatwoot](./chatwoot) - Customer engagement platform - All 13 examples passed
+- [instantly](./instantly) - Cold email automation - 16/17 examples passed
+- [dev.to](./dev.to) - Developer community platform - All 13 examples passed
 
 **Productivity & Development:**
-- [linear](./linear) - Issue tracking for software teams - PASSED
-- [monday](./monday) - Work management platform - PASSED
-- [tavily](./tavily) - AI research with citations - PASSED
+- [github](./github) - GitHub API integration - 16/17 examples passed
+- [gitlab](./gitlab) - GitLab API integration - All 20 examples passed
+- [linear](./linear) - Issue tracking for software teams - All 13 examples passed
+- [qiita](./qiita) - Japanese tech community platform - 7/11 examples passed
 
 **Storage & Media:**
-- [cloudinary](./cloudinary) - Image management and transformation - PASSED
-- [minio](./minio) - Object storage service - PASSED
+- [cloudinary](./cloudinary) - Image management and transformation - All 7 examples passed
+- [minio](./minio) - Object storage service - 21/23 examples passed
 
-**Document Processing:**
-- [pdfco](./pdfco) - PDF creation and manipulation - PASSED
+**Messaging & Notifications:**
+- [discord-webhook](./discord-webhook) - Discord webhook integration - All 10 examples passed
+- [pushinator](./pushinator) - Push notification service - All 3 examples passed
+- [slack-webhook](./slack-webhook) - Slack incoming webhooks - All 6 examples passed
 
-**Monitoring & Notifications:**
-- [pushinator](./pushinator) - Push notification service - PASSED
+**Data Enrichment:**
+- [supadata](./supadata) - Data enrichment API - 9/11 examples passed
 
-### Partially Working / Unclear Status (17)
-
-These skills have some passing tests but may have limitations or require specific configuration:
-
-- [bright-data](./bright-data) - Proxy and web unlocker service - 5 passed
-- [discord](./discord) - Discord bot API - 15 passed, 2 failed
-- [discord-webhook](./discord-webhook) - Discord webhook integration - 10 passed, 1 failed
-- [github](./github) - GitHub API integration - 18 passed, 1 failed
-- [gitlab](./gitlab) - GitLab API integration - 16 passed
-- [jira](./jira) - Issue and project tracking - 8 passed, 6 failed
-- [pdf4me](./pdf4me) - PDF processing service - 5 passed, 9 failed
-- [pdforge](./pdforge) - PDF generation service - 6 failed
-- [plausible](./plausible) - Privacy-focused analytics - 12 passed, 2 failed
-- [qiita](./qiita) - Japanese tech community platform - 11 passed, 4 failed
-- [rss-fetch](./rss-fetch) - RSS feed parsing - 8 passed, 9 failed
-- [runway](./runway) - AI video generation - 2 passed, 7 failed
-- [scrapeninja](./scrapeninja) - Web scraping service - 5 passed, 5 failed
-- [sentry](./sentry) - Error tracking and monitoring - 8 passed, 1 failed
-- [shortio](./shortio) - URL shortening service - 6 passed, 5 failed
-- [slack-webhook](./slack-webhook) - Slack incoming webhooks - 8 passed
-- [zapsign](./zapsign) - Electronic signature service - 6 passed, 5 failed
-
-### Known Issues / Failing Skills (28)
+### Known Issues / Failing Skills (46)
 
 These skills require environment variables, API permissions, or configuration updates:
 
-**Missing Environment Variables:**
+**Missing Environment Variables (22 skills):**
+- [bitrix](./bitrix) - CRM and collaboration platform - Missing: BITRIX_WEBHOOK_URL
 - [browserbase](./browserbase) - Browser automation platform - Missing: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID
+- [firecrawl](./firecrawl) - Web scraping and crawling - Insufficient credits
+- [github-copilot](./github-copilot) - AI pair programming - Missing: GITHUB_TOKEN
+- [gmail](./gmail) - Google Mail API - Missing: GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN
+- [google-sheets](./google-sheets) - Spreadsheet automation - Missing: GOOGLE_SHEETS_CLIENT_ID, GOOGLE_SHEETS_CLIENT_SECRET, GOOGLE_SHEETS_REFRESH_TOKEN
+- [htmlcsstoimage](./htmlcsstoimage) - HTML/CSS to image conversion - Plan limit exceeded
+- [imgur](./imgur) - Image hosting and sharing - Missing: IMGUR_CLIENT_ID (rate limited)
 - [instagram](./instagram) - Instagram API integration - Missing: INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_BUSINESS_ACCOUNT_ID
-- [intercom](./intercom) - Customer messaging platform - Missing environment variables
+- [intercom](./intercom) - Customer messaging platform - Missing: INTERCOM_ACCESS_TOKEN
+- [kommo](./kommo) - Sales automation CRM - Invalid credentials
 - [mercury](./mercury) - Web parser API - Missing: MERCURY_API_TOKEN
+- [minimax](./minimax) - AI language model API - Insufficient balance
+- [pdforge](./pdforge) - PDF generation service - Invalid token
+- [perplexity](./perplexity) - AI search engine - HTTP 401 unauthorized
 - [podchaser](./podchaser) - Podcast database API - Missing: PODCHASER_CLIENT_ID, PODCHASER_CLIENT_SECRET
+- [qdrant](./qdrant) - Vector database - Invalid API key format
 - [reportei](./reportei) - Marketing reports - Missing: REPORTEI_API_TOKEN
 - [resend](./resend) - Transactional email service - Missing: RESEND_API_KEY
 - [streak](./streak) - CRM for Gmail - Missing: STREAK_API_KEY
 - [supabase](./supabase) - Backend as a service - Missing: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY
 - [zendesk](./zendesk) - Customer support platform - Missing: ZENDESK_API_TOKEN, ZENDESK_EMAIL, ZENDESK_SUBDOMAIN
 
-**Permission/OAuth Issues:**
-- [figma](./figma) - Design tool API - 4 passed, 13 failed - Needs OAuth scopes
-- [github-copilot](./github-copilot) - AI pair programming - Needs API permissions
-- [gmail](./gmail) - Google Mail API - Needs OAuth scopes
-- [google-sheets](./google-sheets) - Spreadsheet automation - Needs OAuth scopes
-- [notion](./notion) - Note-taking and database - 4 passed, 19 failed - Needs OAuth scopes
-- [slack](./slack) - Team collaboration platform - 4 passed, 11 failed - Needs OAuth scopes
+**API Issues (8 skills):**
+- [apify](./apify) - Web scraping and automation platform - 10/11 examples passed (1 actor requires paid rental)
+- [browserless](./browserless) - Headless browser automation - 18/20 examples passed (/content endpoint 401, JS runtime error)
+- [discord](./discord) - Discord bot API - 13/15 examples passed (missing OAuth scopes + bot not in channel)
+- [figma](./figma) - Design tool API - 2/24 examples passed (missing test data, jq syntax error)
+- [jira](./jira) - Issue and project tracking - 12/16 examples passed (missing write permissions)
+- [monday](./monday) - Work management platform - 6/10 examples passed (missing write permissions)
+- [pdfco](./pdfco) - PDF creation and manipulation - 10/11 examples passed (invalid page range in example)
+- [pdf4me](./pdf4me) - PDF processing service - 2/12 examples passed (command syntax errors + empty API responses)
+- [runway](./runway) - AI video generation - 2/9 examples passed (insufficient credits + doc errors)
+- [scrapeninja](./scrapeninja) - Web scraping service - 5/9 examples passed (JS rendering quota exceeded)
+- [sentry](./sentry) - Error tracking and monitoring - 17/20 examples passed (missing permissions)
+- [slack](./slack) - Team collaboration platform - 5/11 examples passed (missing OAuth scopes)
+- [twenty](./twenty) - CRM platform - 12/17 examples passed (documentation errors)
+- [youtube](./youtube) - YouTube data and video management - 0/16 examples passed (invalid API key)
+- [zapsign](./zapsign) - Electronic signature service - 5/10 examples passed (non-existent placeholder URLs)
 
-**API/Configuration Issues:**
-- [bitrix](./bitrix) - CRM and collaboration platform - 21 failed
-- [htmlcsstoimage](./htmlcsstoimage) - HTML/CSS to image conversion - 13 failed
-- [imgur](./imgur) - Image hosting and sharing - 6 failed
-- [kommo](./kommo) - Sales automation CRM - 13 failed
-- [lark](./lark) - Team collaboration suite - 21 failed
-- [minimax](./minimax) - AI language model API - 7 passed, 5 failed
-- [perplexity](./perplexity) - AI search engine - 13 failed
-- [qdrant](./qdrant) - Vector database - 13 failed
-- [supadata](./supadata) - Data enrichment API - 10 passed, 3 failed
-- [twenty](./twenty) - CRM platform - 10 passed, 7 failed
-- [youtube](./youtube) - YouTube data and video management - 17 failed
-- [zeptomail](./zeptomail) - Email service - 10 failed
+**Documentation Errors (6 skills):**
+- [figma](./figma) - jq filter syntax error (Example 8)
+- [instantly](./instantly) - status filter expects number not string
+- [notion](./notion) - Note-taking and database - 18/20 examples passed (property name mismatch)
+- [supadata](./supadata) - Wrong parameter name (url vs id)
+- [twenty](./twenty) - Field format errors (domainName, email, body)
+- [zeptomail](./zeptomail) - Email service - 0/9 examples passed (duplicate "Zoho-enczapikey" prefix in authorization header)
 
 ## Contributing
 
