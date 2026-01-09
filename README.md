@@ -44,101 +44,122 @@ After installation, restart Claude Code, then ask "What skills are available?" t
 
 ## Skills Test Status
 
-Last tested: 2026-01-08 | Total: 67 skills | Passed: 25 | Failed: 42 | Success Rate: 37.3%
+Last tested: 2026-01-09 | Total: 67 skills | Working: 20 (7 fully + 13 partially) | Failed: 47 | Success Rate: 29.9%
 
-### Fully Tested & Working Skills (25)
-
-**AI & ML:**
-- [deepseek](./deepseek) - AI language model for chat - All 9 examples passed
-- [elevenlabs](./elevenlabs) - Text-to-speech voice generation - All 7 examples passed
-- [openai](./openai) - GPT models and completions - All 12 examples passed
-- [runway](./runway) - AI video generation - All 9 examples passed
+### Fully Tested & Working Skills (7)
 
 **Web & Data:**
-- [brave-search](./brave-search) - Privacy-focused web search - All 9 examples passed
-- [browserless](./browserless) - Headless browser automation - All 20 examples passed
-- [hackernews](./hackernews) - Hacker News API access - All 17 examples passed
-- [rss-fetch](./rss-fetch) - RSS feed parsing - 14/17 examples passed
-- [serpapi](./serpapi) - Search engine results - All 9 examples passed
-- [tavily](./tavily) - AI research with citations - All 2 examples passed
+- [brave-search](./brave-search) - Privacy-focused web search - All tests passed
+- [hackernews](./hackernews) - Hacker News API access - All tests passed
 
 **Data & Analytics:**
-- [apify](./apify) - Web scraping and automation - 9/10 examples passed
-- [axiom](./axiom) - Log management and analytics - 10/11 examples passed
-- [cronlytic](./cronlytic) - Cron job monitoring - All 9 examples passed
-- [plausible](./plausible) - Privacy-focused analytics - 11/16 examples passed
-- [supadata](./supadata) - Data enrichment API - All 11 examples passed
-
-**Communication & Collaboration:**
-- [dev.to](./dev.to) - Developer community platform - All 13 examples passed
-- [notion](./notion) - Note-taking and database - 2/17 examples passed (most features working, some property mismatches)
+- [cronlytic](./cronlytic) - Cron job monitoring - All tests passed
 
 **Productivity & Development:**
-- [github](./github) - GitHub automation via gh CLI - All 15 examples passed
-- [gitlab](./gitlab) - GitLab API integration - All 18 examples passed
-- [linear](./linear) - Issue tracking for software teams - All 13 examples passed
-- [shortio](./shortio) - URL shortening service - All 10 examples passed
-- [twenty](./twenty) - CRM platform - 8/13 examples passed
+- [gitlab](./gitlab) - GitLab API integration - All tests passed (note: API rate limited during testing)
+- [jira](./jira) - Issue and project tracking - All tests passed
 
 **Storage & Media:**
-- [cloudinary](./cloudinary) - Image management and transformation - 16/17 examples passed
+- [minio](./minio) - Object storage service - All tests passed
 
 **Messaging & Notifications:**
-- [discord-webhook](./discord-webhook) - Discord webhook integration - All 10 examples passed
-- [slack-webhook](./slack-webhook) - Slack incoming webhooks - All 6 examples passed
+- [discord-webhook](./discord-webhook) - Discord webhook integration - All tests passed
 
-### Known Issues / Failing Skills (42)
+### Partially Working Skills (13)
+
+These skills have core functionality working but encountered some issues:
+
+**Web & Data:**
+- [rss-fetch](./rss-fetch) - RSS feed parsing - Partially working (7/9 tests passed)
+
+**Data & Analytics:**
+- [apify](./apify) - Web scraping and automation - Partially working
+- [axiom](./axiom) - Log management and analytics - Partially working (missing some environment variables)
+- [bright-data](./bright-data) - Proxy and web unlocker - Partially working (account suspended/locked)
+- [scrapeninja](./scrapeninja) - Web scraping service - Partially working (account suspended/locked)
+- [supadata](./supadata) - Data enrichment API - Partially working
+
+**Communication & Collaboration:**
+- [dev.to](./dev.to) - Developer community platform - Partially working (API rate limited)
+- [discord](./discord) - Discord bot API - Partially working (account suspended/locked)
+
+**Productivity & Development:**
+- [figma](./figma) - Design tool API - Partially working
+- [intercom](./intercom) - Customer messaging platform - Partially working (missing environment variables)
+- [lark](./lark) - Team collaboration platform - Partially working
+- [monday](./monday) - Work management platform - Partially working
+- [shortio](./shortio) - URL shortening service - Partially working
+
+### Known Issues / Failing Skills (47)
 
 These skills require environment variables, API permissions, or configuration updates:
 
-**Missing Environment Variables (26 skills):**
+**Missing Environment Variables (18 skills):**
+- [axiom](./axiom) - Log management and analytics - Missing: Required API keys
 - [bitrix](./bitrix) - CRM and collaboration platform - Missing: BITRIX_WEBHOOK_URL
-- [browserbase](./browserbase) - Browser automation platform - Missing: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID
-- [fal.ai](./fal.ai) - AI image generation - Authentication error (all 8 examples failed)
-- [firecrawl](./firecrawl) - Web scraping and crawling - Insufficient credits
+- [cloudinary](./cloudinary) - Image management and transformation - Missing: Required API keys
+- [firecrawl](./firecrawl) - Web scraping and crawling - Missing: Required API keys
 - [github-copilot](./github-copilot) - AI pair programming - Missing: GITHUB_TOKEN
-- [gmail](./gmail) - Google Mail API - Missing: GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN
+- [gmail](./gmail) - Google Mail API - Missing: GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN (27 examples failed)
 - [google-sheets](./google-sheets) - Spreadsheet automation - Missing: GOOGLE_SHEETS_CLIENT_SECRET, GOOGLE_SHEETS_REFRESH_TOKEN
-- [htmlcsstoimage](./htmlcsstoimage) - HTML/CSS to image conversion - Plan limit exceeded (56/50 renders used)
 - [imgur](./imgur) - Image hosting and sharing - Missing: IMGUR_CLIENT_ID
 - [instagram](./instagram) - Instagram API integration - Missing: INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_BUSINESS_ACCOUNT_ID
 - [intercom](./intercom) - Customer messaging platform - Missing: INTERCOM_ACCESS_TOKEN
-- [kommo](./kommo) - Sales automation CRM - Invalid credentials (HTTP 401)
 - [mercury](./mercury) - Web parser API - Missing: MERCURY_API_TOKEN
-- [minimax](./minimax) - AI language model API - Insufficient account balance
-- [minio](./minio) - Object storage service - Rate limiting on test server (HTTP 403)
-- [pdf4me](./pdf4me) - PDF processing service - API key present but most endpoints return 404
-- [pdforge](./pdforge) - PDF generation service - Invalid token
-- [perplexity](./perplexity) - AI search engine - HTTP 401 unauthorized
 - [podchaser](./podchaser) - Podcast database API - Missing: PODCHASER_CLIENT_ID, PODCHASER_CLIENT_SECRET
-- [qdrant](./qdrant) - Vector database - HTTP 403 forbidden (invalid API key format)
-- [reportei](./reportei) - Marketing reports - Missing: REPORTEI_API_TOKEN
+- [qiita](./qiita) - Japanese tech community - Missing: Required API token
+- [reportei](./reportei) - Marketing reports - Missing: REPORTEI_API_TOKEN (16 examples failed)
 - [resend](./resend) - Transactional email service - Missing: RESEND_API_KEY
-- [sentry](./sentry) - Error tracking and monitoring - 7/20 examples passed (missing permissions)
 - [streak](./streak) - CRM for Gmail - Missing: STREAK_API_KEY
 - [supabase](./supabase) - Backend as a service - Missing: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY
-- [youtube](./youtube) - YouTube data and video management - Invalid API key (all 15 examples failed)
 - [zendesk](./zendesk) - Customer support platform - Missing: ZENDESK_API_TOKEN, ZENDESK_EMAIL, ZENDESK_SUBDOMAIN
 
-**API Issues & Permissions (10 skills):**
-- [bright-data](./bright-data) - Proxy and web unlocker - 8/11 examples passed (some permission issues)
-- [chatwoot](./chatwoot) - Customer engagement platform - 11/13 examples passed (minor API issues)
-- [discord](./discord) - Discord bot API - 13/15 examples passed (missing OAuth scopes, bot not in channel)
-- [figma](./figma) - Design tool API - 1/18 examples passed (missing test data)
-- [jira](./jira) - Issue and project tracking - Authentication failure (HTTP 401)
-- [lark](./lark) - Team collaboration platform - Authentication error
-- [monday](./monday) - Work management platform - 3/10 examples passed (missing write permissions)
-- [pdfco](./pdfco) - PDF creation and manipulation - 11/12 examples passed (invalid page range in one example)
-- [slack](./slack) - Team collaboration platform - 5/11 examples passed (missing OAuth scopes, bot not in channel)
-- [zapsign](./zapsign) - Electronic signature service - 5/10 examples passed (non-existent placeholder URLs)
+**Insufficient API Credits / Account Issues (7 skills):**
+- [bright-data](./bright-data) - Proxy and web unlocker - Account suspended/locked
+- [browserbase](./browserbase) - Browser automation platform - Account suspended/locked
+- [discord](./discord) - Discord bot API - Account suspended/locked
+- [fal.ai](./fal.ai) - AI image generation - Insufficient API credits
+- [rss-fetch](./rss-fetch) - RSS feed parsing - Account suspended/locked
+- [runway](./runway) - AI video generation - Insufficient API credits (4/9 tests passed before credit exhaustion)
+- [scrapeninja](./scrapeninja) - Web scraping service - Account suspended/locked
 
-**Documentation Errors (6 skills):**
-- [figma](./figma) - jq filter syntax error
-- [instantly](./instantly) - 13/14 examples passed (status filter expects number not string)
-- [notion](./notion) - Property name mismatches in some examples
-- [qiita](./qiita) - Japanese tech community - 6/19 examples passed (many authenticated operations need token)
-- [twenty](./twenty) - Field format errors (domainName, email, body)
-- [zeptomail](./zeptomail) - Email service - 0/9 examples passed (duplicate "Zoho-enczapikey" prefix in authorization header)
+**Authentication Failed (5 skills):**
+- [kommo](./kommo) - Sales automation CRM - Authentication credentials invalid or expired
+- [pdfco](./pdfco) - PDF creation and manipulation - Authentication credentials invalid or expired
+- [pdforge](./pdforge) - PDF generation service - Authentication credentials invalid or expired
+- [perplexity](./perplexity) - AI search engine - Authentication credentials invalid or expired
+- [pushinator](./pushinator) - Push notification service - Authentication credentials invalid or expired
+
+**Permission Denied (2 skills):**
+- [qdrant](./qdrant) - Vector database - API permissions insufficient for requested operations
+- [sentry](./sentry) - Error tracking and monitoring - API permissions insufficient for requested operations
+
+**API Rate Limit (5 skills):**
+- [dev.to](./dev.to) - Developer community platform - API rate limit exceeded during testing
+- [elevenlabs](./elevenlabs) - Text-to-speech voice generation - API rate limit exceeded during testing
+- [gitlab](./gitlab) - GitLab API integration - API rate limit exceeded (20 tests attempted)
+- [htmlcsstoimage](./htmlcsstoimage) - HTML/CSS to image conversion - API rate limit exceeded during testing
+- [plausible](./plausible) - Privacy-focused analytics - API rate limit exceeded during testing
+
+**Other Issues (18 skills):**
+- [browserless](./browserless) - Headless browser automation - See detailed report
+- [chatwoot](./chatwoot) - Customer engagement platform - See detailed report
+- [deepseek](./deepseek) - AI language model for chat - See detailed report
+- [github](./github) - GitHub automation via gh CLI - See detailed report
+- [instantly](./instantly) - Email outreach platform - See detailed report
+- [linear](./linear) - Issue tracking for software teams - See detailed report
+- [minimax](./minimax) - AI language model API - See detailed report
+- [notion](./notion) - Note-taking and database - See detailed report
+- [openai](./openai) - GPT models and completions - See detailed report
+- [pdf4me](./pdf4me) - PDF processing service - See detailed report
+- [serpapi](./serpapi) - Search engine results - See detailed report
+- [slack](./slack) - Team collaboration platform - See detailed report
+- [slack-webhook](./slack-webhook) - Slack incoming webhooks - See detailed report
+- [tavily](./tavily) - AI research with citations - See detailed report
+- [twenty](./twenty) - CRM platform - See detailed report
+- [youtube](./youtube) - YouTube data and video management - See detailed report
+- [zapsign](./zapsign) - Electronic signature service - See detailed report (5/10 tests passed)
+- [zeptomail](./zeptomail) - Email service - See detailed report
 
 ## Contributing
 
