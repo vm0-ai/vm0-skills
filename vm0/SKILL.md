@@ -1,6 +1,6 @@
 ---
 name: vm0
-description: VM0 API for running AI agents in secure sandboxes. Use this skill to execute agents, manage runs, upload input files (volumes), and download output files (artifacts) via the VM0 platform API.
+description: VM0 API for running AI agents in secure sandboxes. Use this skill to execute agents, manage runs, and download outputs (artifacts) and inputs (volumes) via the VM0 platform API.
 vm0_secrets:
   - VM0_API_KEY
 ---
@@ -13,9 +13,8 @@ Execute AI agents in secure sandboxed environments and manage their inputs/outpu
 
 - Execute AI agents in isolated sandbox environments
 - Monitor and manage agent runs (status, logs, metrics)
-- Upload input files to agents via volumes
-- Download output files from agents via artifacts
-- Create and manage agent configurations
+- List and download input files (volumes) provided to agents
+- List and download output files (artifacts) created by agents
 
 ## Prerequisites
 
@@ -65,7 +64,7 @@ bash -c 'curl -s -X POST "https://api.vm0.ai/v1/runs" -H "Authorization: Bearer 
 Replace `<run-id>` with your run ID:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, status, output}'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, status, error, execution_time_ms}'
 ```
 
 ### Get Run Logs
@@ -87,10 +86,10 @@ bash -c 'curl -s "https://api.vm0.ai/v1/agents" -H "Authorization: Bearer $VM0_A
 Get agent details:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/agents/<agent-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, name, config}'
+bash -c 'curl -s "https://api.vm0.ai/v1/agents/<agent-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, name, description}'
 ```
 
-See [references/agents.md](references/agents.md) for create, update, delete, and version operations.
+See [references/agents.md](references/agents.md) for version listing.
 
 ### Runs
 
@@ -130,20 +129,14 @@ List volumes:
 bash -c 'curl -s "https://api.vm0.ai/v1/volumes" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name}'
 ```
 
-Create a volume:
+Download volume as tar.gz archive (follows 302 redirect):
 
 ```bash
-curl -s -X POST "https://api.vm0.ai/v1/volumes" \
-  -H "Authorization: Bearer $VM0_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d @- << 'EOF'
-{
-  "name": "my-input-data"
-}
-EOF
+curl -L -o volume.tar.gz "https://api.vm0.ai/v1/volumes/<volume-id>/download" \
+  -H "Authorization: Bearer $VM0_API_KEY"
 ```
 
-See [references/volumes.md](references/volumes.md) for file upload workflow (3-step process).
+See [references/volumes.md](references/volumes.md) for version listing and download options.
 
 ### Artifacts (Output Storage)
 
@@ -153,19 +146,20 @@ List artifacts:
 bash -c 'curl -s "https://api.vm0.ai/v1/artifacts" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name}'
 ```
 
-Download artifact files:
+Download artifact as tar.gz archive (follows 302 redirect):
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/artifacts/<artifact-id>/download" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.files[] | {path, download_url}'
+curl -L -o artifact.tar.gz "https://api.vm0.ai/v1/artifacts/<artifact-id>/download" \
+  -H "Authorization: Bearer $VM0_API_KEY"
 ```
 
-Response includes presigned URLs for each file. Download with:
+Extract downloaded archive:
 
 ```bash
-curl -o output.txt "<presigned-url>"
+tar -xzf artifact.tar.gz -C ./output/
 ```
 
-See [references/artifacts.md](references/artifacts.md) for upload workflow and version management.
+See [references/artifacts.md](references/artifacts.md) for version listing and download options.
 
 ## Common Patterns
 
@@ -213,15 +207,14 @@ All errors return a consistent format:
 | `authentication_error` | 401 | Invalid or missing API key |
 | `invalid_request_error` | 400 | Invalid parameters |
 | `not_found_error` | 404 | Resource doesn't exist |
-| `conflict_error` | 409 | Resource conflict |
 | `api_error` | 500 | Internal server error |
 
 ## Detailed References
 
-- [Agents API](references/agents.md) - Create, update, delete agents and manage versions
+- [Agents API](references/agents.md) - List agents and versions
 - [Runs API](references/runs.md) - Execute agents, stream events, get logs and metrics
-- [Artifacts API](references/artifacts.md) - Download agent outputs, manage versions
-- [Volumes API](references/volumes.md) - Upload input files for agents
+- [Artifacts API](references/artifacts.md) - List and download agent outputs
+- [Volumes API](references/volumes.md) - List and download input files
 
 ## API Reference
 

@@ -2,12 +2,12 @@
 
 Volumes store input files for agent runs. Use volumes to provide data files, configurations, or other inputs to agents.
 
-> **Note:** Volumes and Artifacts have nearly identical APIs. Volumes are for **inputs** (files you provide to agents), while Artifacts are for **outputs** (files agents create).
+> **Note:** Volumes are created via the CLI (`vm0 push`). Use this API to list and download volume contents.
 
 ## List Volumes
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/volumes" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name}'
+bash -c 'curl -s "https://api.vm0.ai/v1/volumes" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name, size, file_count}'
 ```
 
 ### Pagination
@@ -21,7 +21,7 @@ Docs: https://docs.vm0.ai/docs/reference/api/volumes
 ## Get Volume
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/volumes/<volume-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, name, current_version_id}'
+bash -c 'curl -s "https://api.vm0.ai/v1/volumes/<volume-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, name, current_version_id, size, file_count}'
 ```
 
 Response:
@@ -30,175 +30,78 @@ Response:
 {
   "id": "vol_xxx",
   "name": "input-data",
-  "current_version_id": "ver_xxx",
+  "current_version_id": "abc123def456...",
+  "size": 4096,
+  "file_count": 2,
+  "current_version": {
+    "id": "abc123def456...",
+    "volume_id": "vol_xxx",
+    "size": 4096,
+    "file_count": 2,
+    "message": "Initial upload",
+    "created_by": "user_xxx",
+    "created_at": "2024-01-01T00:00:00Z"
+  },
   "created_at": "2024-01-01T00:00:00Z",
   "updated_at": "2024-01-01T00:00:00Z"
 }
 ```
 
-## Create Volume
-
-Volume names must be:
-- Lowercase alphanumeric with hyphens
-- No leading/trailing hyphens
-
-```bash
-curl -s -X POST "https://api.vm0.ai/v1/volumes" \
-  -H "Authorization: Bearer $VM0_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d @- << 'EOF'
-{
-  "name": "my-input-data"
-}
-EOF
-```
-
-## Delete Volume
-
-```bash
-curl -s -X DELETE "https://api.vm0.ai/v1/volumes/<volume-id>" -H "Authorization: Bearer $VM0_API_KEY"
-```
-
-Returns `204 No Content` on success.
-
 ## List Volume Versions
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/volumes/<volume-id>/versions" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, created_at}'
-```
-
-## Upload Files (3-Step Process)
-
-Uploading files to a volume requires three steps:
-
-### Step 1: Prepare Upload
-
-Request presigned URLs for your files:
-
-Write to `/tmp/vm0_request.json`:
-
-```json
-{
-  "files": [
-    {"path": "data/input.csv", "size": 4096},
-    {"path": "config/settings.json", "size": 512}
-  ],
-  "message": "Initial data upload"
-}
-```
-
-Then run:
-
-```bash
-bash -c 'curl -s -X POST "https://api.vm0.ai/v1/volumes/<volume-id>/upload" -H "Authorization: Bearer $VM0_API_KEY" -H "Content-Type: application/json" -d @/tmp/vm0_request.json' | jq '{upload_session_id, files}'
+bash -c 'curl -s "https://api.vm0.ai/v1/volumes/<volume-id>/versions" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, size, file_count, created_at}'
 ```
 
 Response:
 
 ```json
 {
-  "upload_session_id": "upl_xxx",
-  "files": [
+  "data": [
     {
-      "path": "data/input.csv",
-      "upload_url": "https://storage.vm0.ai/presigned-url-1"
-    },
-    {
-      "path": "config/settings.json",
-      "upload_url": "https://storage.vm0.ai/presigned-url-2"
+      "id": "abc123def456...",
+      "volume_id": "vol_xxx",
+      "size": 4096,
+      "file_count": 2,
+      "message": "Updated data",
+      "created_by": "user_xxx",
+      "created_at": "2024-01-02T00:00:00Z"
     }
-  ]
-}
-```
-
-### Step 2: Upload Files to Presigned URLs
-
-Upload each file to its presigned URL:
-
-```bash
-curl -X PUT "https://storage.vm0.ai/presigned-url-1" \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary @data/input.csv
-```
-
-```bash
-curl -X PUT "https://storage.vm0.ai/presigned-url-2" \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary @config/settings.json
-```
-
-### Step 3: Commit Upload
-
-After all files are uploaded, commit to create a new version:
-
-Write to `/tmp/vm0_request.json`:
-
-```json
-{
-  "upload_session_id": "upl_xxx",
-  "message": "Initial data upload"
-}
-```
-
-Then run:
-
-```bash
-bash -c 'curl -s -X POST "https://api.vm0.ai/v1/volumes/<volume-id>/commit" -H "Authorization: Bearer $VM0_API_KEY" -H "Content-Type: application/json" -d @/tmp/vm0_request.json' | jq '{id, files}'
-```
-
-Response (new version created):
-
-```json
-{
-  "id": "ver_xxx",
-  "volume_id": "vol_xxx",
-  "files": [
-    {"path": "data/input.csv", "size": 4096},
-    {"path": "config/settings.json", "size": 512}
   ],
-  "message": "Initial data upload",
-  "created_at": "2024-01-01T00:00:00Z"
+  "pagination": {
+    "has_more": false,
+    "next_cursor": null
+  }
 }
 ```
 
-## Download Files
+## Download Volume
 
-Get presigned download URLs:
+Downloads the volume as a tar.gz archive. The endpoint returns a **302 redirect** to a presigned URL.
+
+### Download Current Version
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/volumes/<volume-id>/download" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.files[] | {path, download_url}'
+curl -L -o volume.tar.gz "https://api.vm0.ai/v1/volumes/<volume-id>/download" \
+  -H "Authorization: Bearer $VM0_API_KEY"
 ```
 
 ### Download Specific Version
 
-```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/volumes/<volume-id>/download?version_id=ver_xxx" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.files[] | {path, download_url}'
-```
-
-Response:
-
-```json
-{
-  "version_id": "ver_xxx",
-  "files": [
-    {
-      "path": "data/input.csv",
-      "download_url": "https://storage.vm0.ai/download-url-1"
-    },
-    {
-      "path": "config/settings.json",
-      "download_url": "https://storage.vm0.ai/download-url-2"
-    }
-  ]
-}
-```
-
-Download files using the presigned URLs:
+Use a version ID or short prefix (minimum 8 characters):
 
 ```bash
-curl -o input.csv "https://storage.vm0.ai/download-url-1"
-curl -o settings.json "https://storage.vm0.ai/download-url-2"
+curl -L -o volume.tar.gz "https://api.vm0.ai/v1/volumes/<volume-id>/download?version_id=abc123de" \
+  -H "Authorization: Bearer $VM0_API_KEY"
 ```
+
+### Extract Downloaded Archive
+
+```bash
+tar -xzf volume.tar.gz -C ./data/
+```
+
+> **Note:** The `-L` flag tells curl to follow the redirect to the presigned URL.
 
 ## Using Volumes in Runs
 
@@ -214,7 +117,7 @@ curl -s -X POST "https://api.vm0.ai/v1/runs" \
   "prompt": "Process the input data",
   "volumes": {
     "input-data": "latest",
-    "config-files": "ver_xxx"
+    "config-files": "abc123de"
   }
 }
 EOF
@@ -222,6 +125,6 @@ EOF
 
 Volume values can be:
 - `"latest"` - Use the most recent version
-- `"ver_xxx"` - Use a specific version ID
+- `"abc123de"` - Use a specific version ID or short prefix
 
 Docs: https://docs.vm0.ai/docs/reference/api/volumes

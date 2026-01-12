@@ -2,10 +2,12 @@
 
 Artifacts store output files from agent runs. Use artifacts to retrieve work products created by agents.
 
+> **Note:** Artifacts are created automatically by agents during runs. Use this API to list and download artifact contents.
+
 ## List Artifacts
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/artifacts" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name}'
+bash -c 'curl -s "https://api.vm0.ai/v1/artifacts" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name, size, file_count}'
 ```
 
 ### Pagination
@@ -19,7 +21,7 @@ Docs: https://docs.vm0.ai/docs/reference/api/artifacts
 ## Get Artifact
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/artifacts/<artifact-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, name, current_version_id}'
+bash -c 'curl -s "https://api.vm0.ai/v1/artifacts/<artifact-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, name, current_version_id, size, file_count}'
 ```
 
 Response:
@@ -28,174 +30,77 @@ Response:
 {
   "id": "art_xxx",
   "name": "output-results",
-  "current_version_id": "ver_xxx",
+  "current_version_id": "abc123def456...",
+  "size": 4096,
+  "file_count": 2,
+  "current_version": {
+    "id": "abc123def456...",
+    "artifact_id": "art_xxx",
+    "size": 4096,
+    "file_count": 2,
+    "message": "Run output",
+    "created_by": "user_xxx",
+    "created_at": "2024-01-01T00:00:00Z"
+  },
   "created_at": "2024-01-01T00:00:00Z",
   "updated_at": "2024-01-01T00:00:00Z"
 }
 ```
 
-## Create Artifact
-
-Artifact names must be:
-- Lowercase alphanumeric with hyphens
-- No leading/trailing hyphens
-
-```bash
-curl -s -X POST "https://api.vm0.ai/v1/artifacts" \
-  -H "Authorization: Bearer $VM0_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d @- << 'EOF'
-{
-  "name": "my-output-data"
-}
-EOF
-```
-
-## Delete Artifact
-
-```bash
-curl -s -X DELETE "https://api.vm0.ai/v1/artifacts/<artifact-id>" -H "Authorization: Bearer $VM0_API_KEY"
-```
-
-Returns `204 No Content` on success.
-
 ## List Artifact Versions
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/artifacts/<artifact-id>/versions" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, created_at}'
-```
-
-## Upload Files (3-Step Process)
-
-Uploading files to an artifact requires three steps:
-
-### Step 1: Prepare Upload
-
-Request presigned URLs for your files:
-
-Write to `/tmp/vm0_request.json`:
-
-```json
-{
-  "files": [
-    {"path": "results/output.json", "size": 1024},
-    {"path": "results/report.pdf", "size": 2048}
-  ],
-  "message": "Added analysis results"
-}
-```
-
-Then run:
-
-```bash
-bash -c 'curl -s -X POST "https://api.vm0.ai/v1/artifacts/<artifact-id>/upload" -H "Authorization: Bearer $VM0_API_KEY" -H "Content-Type: application/json" -d @/tmp/vm0_request.json' | jq '{upload_session_id, files}'
+bash -c 'curl -s "https://api.vm0.ai/v1/artifacts/<artifact-id>/versions" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, size, file_count, created_at}'
 ```
 
 Response:
 
 ```json
 {
-  "upload_session_id": "upl_xxx",
-  "files": [
+  "data": [
     {
-      "path": "results/output.json",
-      "upload_url": "https://storage.vm0.ai/presigned-url-1"
-    },
-    {
-      "path": "results/report.pdf",
-      "upload_url": "https://storage.vm0.ai/presigned-url-2"
+      "id": "abc123def456...",
+      "artifact_id": "art_xxx",
+      "size": 4096,
+      "file_count": 2,
+      "message": "Latest output",
+      "created_by": "user_xxx",
+      "created_at": "2024-01-02T00:00:00Z"
     }
-  ]
-}
-```
-
-### Step 2: Upload Files to Presigned URLs
-
-Upload each file to its presigned URL:
-
-```bash
-curl -X PUT "https://storage.vm0.ai/presigned-url-1" \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary @results/output.json
-```
-
-```bash
-curl -X PUT "https://storage.vm0.ai/presigned-url-2" \
-  -H "Content-Type: application/octet-stream" \
-  --data-binary @results/report.pdf
-```
-
-### Step 3: Commit Upload
-
-After all files are uploaded, commit to create a new version:
-
-Write to `/tmp/vm0_request.json`:
-
-```json
-{
-  "upload_session_id": "upl_xxx",
-  "message": "Added analysis results"
-}
-```
-
-Then run:
-
-```bash
-bash -c 'curl -s -X POST "https://api.vm0.ai/v1/artifacts/<artifact-id>/commit" -H "Authorization: Bearer $VM0_API_KEY" -H "Content-Type: application/json" -d @/tmp/vm0_request.json' | jq '{id, files}'
-```
-
-Response (new version created):
-
-```json
-{
-  "id": "ver_xxx",
-  "artifact_id": "art_xxx",
-  "files": [
-    {"path": "results/output.json", "size": 1024},
-    {"path": "results/report.pdf", "size": 2048}
   ],
-  "message": "Added analysis results",
-  "created_at": "2024-01-01T00:00:00Z"
+  "pagination": {
+    "has_more": false,
+    "next_cursor": null
+  }
 }
 ```
 
-## Download Files
+## Download Artifact
 
-Get presigned download URLs:
+Downloads the artifact as a tar.gz archive. The endpoint returns a **302 redirect** to a presigned URL.
+
+### Download Current Version
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/artifacts/<artifact-id>/download" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.files[] | {path, download_url}'
+curl -L -o artifact.tar.gz "https://api.vm0.ai/v1/artifacts/<artifact-id>/download" \
+  -H "Authorization: Bearer $VM0_API_KEY"
 ```
 
 ### Download Specific Version
 
-```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/artifacts/<artifact-id>/download?version_id=ver_xxx" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.files[] | {path, download_url}'
-```
-
-Response:
-
-```json
-{
-  "version_id": "ver_xxx",
-  "files": [
-    {
-      "path": "results/output.json",
-      "download_url": "https://storage.vm0.ai/download-url-1"
-    },
-    {
-      "path": "results/report.pdf",
-      "download_url": "https://storage.vm0.ai/download-url-2"
-    }
-  ]
-}
-```
-
-Download files using the presigned URLs:
+Use a version ID or short prefix (minimum 8 characters):
 
 ```bash
-curl -o output.json "https://storage.vm0.ai/download-url-1"
-curl -o report.pdf "https://storage.vm0.ai/download-url-2"
+curl -L -o artifact.tar.gz "https://api.vm0.ai/v1/artifacts/<artifact-id>/download?version_id=abc123de" \
+  -H "Authorization: Bearer $VM0_API_KEY"
 ```
+
+### Extract Downloaded Archive
+
+```bash
+tar -xzf artifact.tar.gz -C ./output/
+```
+
+> **Note:** The `-L` flag tells curl to follow the redirect to the presigned URL.
 
 Docs: https://docs.vm0.ai/docs/reference/api/artifacts

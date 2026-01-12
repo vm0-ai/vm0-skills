@@ -5,27 +5,21 @@ Runs represent agent executions. Create a run to execute an agent with a prompt.
 ## List Runs
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, status, agent_id}'
-```
-
-### Filter by Agent
-
-```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs?agent_id=<agent-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, status, agent_name}'
 ```
 
 ### Filter by Status
 
-Status values: `pending`, `running`, `completed`, `failed`, `cancelled`
+Status values: `pending`, `running`, `completed`, `failed`, `timeout`, `cancelled`
 
 ```bash
 bash -c 'curl -s "https://api.vm0.ai/v1/runs?status=running" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
 ```
 
-### Filter by Time
+### Pagination
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs?since=2024-01-01T00:00:00Z" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs?limit=10&cursor=<cursor>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{data, pagination}'
 ```
 
 Docs: https://docs.vm0.ai/docs/reference/api/runs
@@ -72,9 +66,9 @@ curl -s -X POST "https://api.vm0.ai/v1/runs" \
 EOF
 ```
 
-### Run with Volumes and Artifacts
+### Run with Volumes and Artifact
 
-Mount input volumes and output artifacts:
+Mount input volumes and specify output artifact:
 
 ```bash
 curl -s -X POST "https://api.vm0.ai/v1/runs" \
@@ -86,11 +80,10 @@ curl -s -X POST "https://api.vm0.ai/v1/runs" \
   "prompt": "Process input files and save results",
   "volumes": {
     "input-data": "latest",
-    "config-files": "ver_xxx"
+    "config-files": "abc123de"
   },
-  "artifacts": {
-    "output-results": "latest"
-  }
+  "artifact_name": "output-results",
+  "artifact_version": "latest"
 }
 EOF
 ```
@@ -147,26 +140,41 @@ Response (202 Accepted):
   "id": "run_xxx",
   "status": "pending",
   "agent_id": "agt_xxx",
-  "created_at": "2024-01-01T00:00:00Z"
+  "agent_name": "my-agent",
+  "prompt": "Use specific version",
+  "created_at": "2024-01-01T00:00:00Z",
+  "started_at": null,
+  "completed_at": null
 }
 ```
 
 ## Get Run
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, status, output}'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, status, error, execution_time_ms}'
 ```
 
-Response includes `output` when completed:
+Response includes details when completed:
 
 ```json
 {
   "id": "run_xxx",
   "status": "completed",
   "agent_id": "agt_xxx",
-  "output": "Agent output text...",
+  "agent_name": "my-agent",
+  "prompt": "Process the data",
   "created_at": "2024-01-01T00:00:00Z",
-  "completed_at": "2024-01-01T00:01:00Z"
+  "started_at": "2024-01-01T00:00:01Z",
+  "completed_at": "2024-01-01T00:01:00Z",
+  "error": null,
+  "execution_time_ms": 59000,
+  "checkpoint_id": "chk_xxx",
+  "session_id": "ses_xxx",
+  "artifact_name": "output-results",
+  "artifact_version": "abc123def456...",
+  "volumes": {
+    "input-data": "def456abc123..."
+  }
 }
 ```
 
@@ -175,6 +183,8 @@ Response includes `output` when completed:
 ```bash
 bash -c 'curl -s -X POST "https://api.vm0.ai/v1/runs/<run-id>/cancel" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, status}'
 ```
+
+Only `pending` and `running` runs can be cancelled.
 
 ## Stream Events
 
@@ -211,24 +221,18 @@ Docs: https://docs.vm0.ai/docs/reference/api/runs
 bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[]'
 ```
 
-### Filter by Type
+### Filter by Level
 
-Log types: `all`, `agent`, `system`, `network`
+Log levels: `debug`, `info`, `warn`, `error`
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs?type=agent" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[]'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs?level=error" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[]'
 ```
 
-### Filter by Time Range
+### Pagination
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs?since=2024-01-01T00:00:00Z&until=2024-01-01T01:00:00Z" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[]'
-```
-
-### Sort Order
-
-```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs?order=desc" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[]'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs?limit=100&cursor=<cursor>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{data, pagination}'
 ```
 
 ## Get Metrics
@@ -236,24 +240,31 @@ bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs?order=desc" -H "Autho
 Resource usage statistics:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/metrics" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{cpu, memory, disk}'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/metrics" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{summary, data}'
 ```
 
-Response includes CPU, memory, and disk usage:
+Response includes CPU, memory, and network usage:
 
 ```json
 {
-  "cpu": {
-    "usage_percent": 45.2,
-    "cores_used": 1.8
+  "summary": {
+    "cpu_avg_percent": 45.2,
+    "memory_max_bytes": 2147483648,
+    "network_rx_bytes": 1048576,
+    "network_tx_bytes": 524288
   },
-  "memory": {
-    "used_bytes": 2147483648,
-    "limit_bytes": 4294967296
-  },
-  "disk": {
-    "read_bytes": 1048576,
-    "write_bytes": 524288
+  "data": [
+    {
+      "timestamp": "2024-01-01T00:00:00Z",
+      "cpu_percent": 45.2,
+      "memory_bytes": 2147483648,
+      "network_rx_bytes": 1048576,
+      "network_tx_bytes": 524288
+    }
+  ],
+  "pagination": {
+    "has_more": false,
+    "next_cursor": null
   }
 }
 ```
