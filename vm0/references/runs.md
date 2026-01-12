@@ -16,6 +16,18 @@ Status values: `pending`, `running`, `completed`, `failed`, `timeout`, `cancelle
 bash -c 'curl -s "https://api.vm0.ai/v1/runs?status=running" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
 ```
 
+### Filter by Agent
+
+```bash
+bash -c 'curl -s "https://api.vm0.ai/v1/runs?agent_id=<agent-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
+```
+
+### Filter by Time
+
+```bash
+bash -c 'curl -s "https://api.vm0.ai/v1/runs?since=2024-01-01T00:00:00Z" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
+```
+
 ### Pagination
 
 ```bash
