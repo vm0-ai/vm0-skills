@@ -44,113 +44,119 @@ After installation, restart Claude Code, then ask "What skills are available?" t
 
 ## Skills Test Status
 
-Last tested: 2026-01-11 | Total: 67 skills | Fully Passed: 37 | Partially Passed: 2 | Failed: 23 | Unknown: 5 | Success Rate: 89.3%
+Last tested: 2026-01-13 | Total: 68 skills | Passed: 8 | Failed: 60 | Pass Rate: 11.8%
 
-### Fully Tested & Working Skills (37)
+### Fully Functional Skills (8)
 
-**Web & Data:**
-- [brave-search](./brave-search) - Privacy-focused web search - All tests passed
-- [hackernews](./hackernews) - Hacker News API access - All tests passed
-- [rss-fetch](./rss-fetch) - RSS feed parsing - All tests passed
-
-**Data & Analytics:**
-- [apify](./apify) - Web scraping and automation platform - 12/13 tests passed (92.3% success rate)
-- [axiom](./axiom) - Log management and analytics - All tests passed
-- [bright-data](./bright-data) - Proxy and web unlocker - All 9 tests passed
-- [cronlytic](./cronlytic) - Cron job monitoring - All 9 tests passed
-- [scrapeninja](./scrapeninja) - Web scraping service - All tests passed
-- [supadata](./supadata) - Data enrichment API - All tests passed
-
-**Communication & Collaboration:**
-- [dev.to](./dev.to) - Developer community platform - All 12 tests passed
-- [discord](./discord) - Discord bot API - All tests passed
-
-**Productivity & Development:**
-- [browserless](./browserless) - Headless browser automation - All tests passed
-- [chatwoot](./chatwoot) - Customer engagement platform - All tests passed
-- [cloudinary](./cloudinary) - Cloud-based image and video management - All tests passed
-- [deepseek](./deepseek) - AI language model for chat - All tests passed
-- [elevenlabs](./elevenlabs) - Text-to-speech voice generation - All tests passed
-- [figma](./figma) - Design tool API - All tests passed
-- [github](./github) - GitHub automation via gh CLI - All tests passed
-- [gitlab](./gitlab) - GitLab API integration - 19/20 tests passed (95% success rate)
-- [instantly](./instantly) - Email outreach platform - All tests passed
-- [jira](./jira) - Issue and project tracking - Tests passed
-- [lark](./lark) - Team collaboration platform - All tests passed
-- [linear](./linear) - Issue tracking for software teams - All tests passed
-- [monday](./monday) - Work management platform - All tests passed
+These skills have all tests passing with valid API credentials configured:
 
 **AI & Machine Learning:**
-- [openai](./openai) - GPT models and completions - All tests passed
-- [runway](./runway) - AI video generation - All tests passed
-- [tavily](./tavily) - AI research with citations - All tests passed
+- [linear](./linear) - Issue tracking for software teams - 13/13 tests passed (100%)
+- [openai](./openai) - GPT models and completions - 13/13 tests passed (100%)
+- [perplexity](./perplexity) - AI-powered search - 4/4 tests passed (100%)
+- [tavily](./tavily) - Web search with AI - 2/2 tests passed (100%)
 
-**Storage & Media:**
-- [minio](./minio) - Object storage service - All 15 tests passed
+**Productivity & Collaboration:**
+- [notion](./notion) - Documentation and database management - 11/11 tests passed (100%)
 
-**Messaging & Notifications:**
-- [discord-webhook](./discord-webhook) - Discord webhook integration - All 10 tests passed
-- [slack-webhook](./slack-webhook) - Slack incoming webhooks - All tests passed
+**Communication:**
+- [resend](./resend) - Transactional email delivery - 12/12 tests passed (100%)
 
-**Document Processing:**
-- [pdfco](./pdfco) - PDF creation and manipulation - All tests passed
-- [pdf4me](./pdf4me) - PDF processing service - All tests passed
-- [pdforge](./pdforge) - PDF generation service - All tests passed (note: 5 tests had permission issues)
-- [qiita](./qiita) - Japanese tech community - All tests passed
+**Utilities:**
+- [shortio](./shortio) - URL shortening service - 9/10 tests passed (90% - statistics endpoint deprecated)
+- [youtube](./youtube) - YouTube data and video management - 16/16 tests passed (100%)
 
-**Other:**
-- [sentry](./sentry) - Error tracking and monitoring - All tests passed
-- [serpapi](./serpapi) - Search engine results - All tests passed
-- [shortio](./shortio) - URL shortening service - All tests passed
-- [twenty](./twenty) - CRM platform - All 15 tests passed
+### Failed Skills by Category
 
-### Partially Working Skills (2)
+#### Missing Environment Variables (45 skills)
 
-**Data & Analytics:**
-- [apify](./apify) - Web scraping and automation - 12/13 tests passed (92.3%) - One permission error on Amazon Product Scraper
-- [zapsign](./zapsign) - Electronic signature service - 5/10 tests passed (50.0%)
+These skills require API keys or configuration to be set:
 
-### Known Issues / Failing Skills (23)
-
-These skills require environment variables, API permissions, or configuration updates:
-
-**Missing Environment Variables (14 skills):**
-- [bitrix](./bitrix) - CRM and collaboration platform - Missing: BITRIX_WEBHOOK_URL (19 tests failed)
-- [firecrawl](./firecrawl) - Web scraping and crawling - Missing: Required API keys (16 tests failed)
-- [github-copilot](./github-copilot) - AI pair programming - Missing: GITHUB_TOKEN
-- [gmail](./gmail) - Google Mail API - Missing: GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN
-- [google-sheets](./google-sheets) - Spreadsheet automation - Missing: GOOGLE_SHEETS_CLIENT_SECRET, GOOGLE_SHEETS_REFRESH_TOKEN
+- [apify](./apify) - Web scraping and automation - Missing: APIFY_API_TOKEN
+- [axiom](./axiom) - Log management and analytics - Missing: AXIOM_API_TOKEN, AXIOM_DATASET
+- [bitrix](./bitrix) - CRM and collaboration platform - Missing: BITRIX_WEBHOOK_URL
+- [brave-search](./brave-search) - Privacy-focused web search - Missing: BRAVE_API_KEY
+- [bright-data](./bright-data) - Proxy and web unlocker - Missing: BRIGHTDATA_API_TOKEN, BRIGHTDATA_CUSTOMER_ID, BRIGHTDATA_ZONE
+- [browserbase](./browserbase) - Browser automation - Missing: BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID
+- [browserless](./browserless) - Headless browser automation - Missing: BROWSERLESS_API_TOKEN
+- [chatwoot](./chatwoot) - Customer engagement platform - Missing: CHATWOOT_API_TOKEN, CHATWOOT_ACCOUNT_ID, CHATWOOT_BASE_URL
+- [cloudinary](./cloudinary) - Media management - Missing: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
+- [cronlytic](./cronlytic) - Cron job monitoring - Missing: CRONLYTIC_API_KEY
+- [deepseek](./deepseek) - AI language model - Missing: DEEPSEEK_API_KEY
+- [dev.to](./dev.to) - Developer community platform - Missing: DEVTO_API_KEY
+- [discord-webhook](./discord-webhook) - Discord webhook integration - Missing: DISCORD_WEBHOOK_URL
+- [elevenlabs](./elevenlabs) - Text-to-speech voice generation - Missing: ELEVENLABS_API_KEY
+- [fal.ai](./fal.ai) - AI image generation - Missing: FAL_KEY
+- [figma](./figma) - Design tool API - Missing: FIGMA_ACCESS_TOKEN
+- [firecrawl](./firecrawl) - Web scraping and crawling - Missing: FIRECRAWL_API_KEY
+- [github-copilot](./github-copilot) - AI pair programming - Missing: GITHUB_TOKEN, GITHUB_COPILOT_TOKEN
+- [gitlab](./gitlab) - GitLab API integration - Missing: GITLAB_ACCESS_TOKEN, GITLAB_PROJECT_ID
+- [google-sheets](./google-sheets) - Spreadsheet automation - Missing: GOOGLE_SHEETS_SERVICE_ACCOUNT_JSON
+- [htmlcsstoimage](./htmlcsstoimage) - HTML/CSS to image conversion - Missing: HTMLCSSTOIMAGE_USER_ID, HTMLCSSTOIMAGE_API_KEY
 - [imgur](./imgur) - Image hosting and sharing - Missing: IMGUR_CLIENT_ID
-- [instagram](./instagram) - Instagram API integration - Missing: INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_BUSINESS_ACCOUNT_ID
+- [instantly](./instantly) - Email outreach platform - Missing: INSTANTLY_API_KEY
 - [intercom](./intercom) - Customer messaging platform - Missing: INTERCOM_ACCESS_TOKEN
-- [mercury](./mercury) - Web parser API - Missing: MERCURY_API_TOKEN
+- [jira](./jira) - Issue and project tracking - Missing: JIRA_API_TOKEN, JIRA_EMAIL, JIRA_DOMAIN
+- [kommo](./kommo) - Sales automation CRM - Missing: KOMMO_API_TOKEN, KOMMO_DOMAIN
+- [lark](./lark) - Team collaboration platform - Missing: LARK_APP_ID, LARK_APP_SECRET, LARK_TENANT_ACCESS_TOKEN
+- [mercury](./mercury) - Banking API - Missing: MERCURY_API_TOKEN
+- [minimax](./minimax) - AI language model API - Missing: MINIMAX_API_KEY, MINIMAX_GROUP_ID
+- [minio](./minio) - Object storage service - Missing: MINIO_ENDPOINT, MINIO_ACCESS_KEY, MINIO_SECRET_KEY, MINIO_BUCKET
+- [monday](./monday) - Work management platform - Missing: MONDAY_API_TOKEN
+- [pdf4me](./pdf4me) - PDF processing service - Missing: PDF4ME_TOKEN
+- [pdfco](./pdfco) - PDF creation and manipulation - Missing: PDFCO_API_KEY
+- [pdforge](./pdforge) - PDF generation service - Missing: PDFORGE_API_KEY
+- [plausible](./plausible) - Privacy-focused analytics - Missing: PLAUSIBLE_API_KEY, PLAUSIBLE_SITE_ID
+- [podchaser](./podchaser) - Podcast database API - Missing: PODCHASER_API_KEY
+- [pushinator](./pushinator) - Push notification service - Missing: PUSHINATOR_API_TOKEN
+- [qdrant](./qdrant) - Vector database - Missing: QDRANT_API_KEY, QDRANT_URL
+- [qiita](./qiita) - Japanese tech community - Missing: QIITA_ACCESS_TOKEN
 - [reportei](./reportei) - Marketing reports - Missing: REPORTEI_API_TOKEN
-- [resend](./resend) - Transactional email service - Missing: RESEND_API_KEY
-- [streak](./streak) - CRM for Gmail - Missing: STREAK_API_KEY
-- [supabase](./supabase) - Backend as a service - Missing: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY
+- [runway](./runway) - AI video generation - Missing: RUNWAY_API_SECRET
+- [scrapeninja](./scrapeninja) - Web scraping service - Missing: SCRAPENINJA_API_KEY
+- [sentry](./sentry) - Error tracking and monitoring - Missing: SENTRY_AUTH_TOKEN, SENTRY_ORG_SLUG
+- [serpapi](./serpapi) - Search engine results - Missing: SERPAPI_API_KEY
+- [supabase](./supabase) - Backend as a service - Missing: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_ANON_KEY
+- [vm0](./vm0) - Agent execution platform - Missing: VM0_API_KEY
 - [zendesk](./zendesk) - Customer support platform - Missing: ZENDESK_API_TOKEN, ZENDESK_EMAIL, ZENDESK_SUBDOMAIN
 
-**Account/API Issues (5 skills):**
-- [browserbase](./browserbase) - Browser automation platform - Account or API configuration issue
-- [htmlcsstoimage](./htmlcsstoimage) - HTML/CSS to image conversion - Account or API configuration issue
-- [kommo](./kommo) - Sales automation CRM - Account or API configuration issue
-- [perplexity](./perplexity) - AI search engine - Account or API configuration issue
-- [pushinator](./pushinator) - Push notification service - Account or API configuration issue
+#### Invalid/Expired API Keys (10 skills)
 
-**Other Issues (4 skills):**
-- [minimax](./minimax) - AI language model API - Configuration required
-- [plausible](./plausible) - Privacy-focused analytics - Configuration required
-- [youtube](./youtube) - YouTube data and video management - 15 tests failed
-- [zeptomail](./zeptomail) - Email service - Configuration required
+These skills have credentials configured but they are invalid or expired:
 
-### Status Unknown (5)
+- [discord](./discord) - Discord bot API - Invalid bot token (401 Unauthorized)
+- [gmail](./gmail) - Google Mail API - Invalid service account credentials (401 invalid_grant)
+- [github](./github) - GitHub automation - Invalid GitHub token (401 Bad credentials)
+- [instagram](./instagram) - Instagram API integration - Invalid/expired OAuth token (Error 190)
+- [slack-webhook](./slack-webhook) - Slack incoming webhooks - Invalid webhook URL (invalid_payload)
+- [streak](./streak) - CRM for Gmail - Invalid API key (401 Unauthorized)
+- [supadata](./supadata) - Data enrichment API - API usage limit exceeded (429 rate limit)
+- [twenty](./twenty) - CRM platform - Workspace not found or inaccessible (401 WORKSPACE_NOT_FOUND)
+- [zapsign](./zapsign) - Electronic signature service - Valid API but 6/10 tests use placeholder URLs
 
-These skills need further investigation:
-- [fal.ai](./fal.ai) - AI image generation - Status unknown
-- [notion](./notion) - Note-taking and database - Status unknown (3 tests failed)
-- [podchaser](./podchaser) - Podcast database API - Status unknown
-- [qdrant](./qdrant) - Vector database - Status unknown
-- [slack](./slack) - Team collaboration platform - Status unknown
+#### Critical Documentation Issues (1 skill)
+
+- **[zeptomail](./zeptomail)** - Email service - CRITICAL BUG: Documentation contains double "Zoho-enczapikey" prefix causing all tests to fail. Skill is functional but documentation needs immediate fix.
+
+#### Missing OAuth Scopes (1 skill)
+
+- [slack](./slack) - Team collaboration platform - Missing required OAuth scopes (channels:read, channels:write, chat:write, etc.) - 2/11 tests passed
+
+#### External API Issues (1 skill)
+
+- [hackernews](./hackernews) - Hacker News API access - External API unavailable (521 Origin Down)
+
+#### Other Issues (2 skills)
+
+- [rss-fetch](./rss-fetch) - RSS feed parsing - Curl download errors (exit code 23)
+
+### Critical Issues Requiring Immediate Action
+
+1. **ZeptoMail Documentation Bug** (CRITICAL): All 9 example commands in SKILL.md have incorrect Authorization header format causing 100% test failure even with valid credentials. Needs immediate fix.
+
+2. **High-Value Skills with Invalid Keys**: GitHub, Gmail, Discord, Slack need credential refresh
+
+3. **Missing Environment Variables**: 45 skills (66%) cannot be tested without proper API credentials
 
 ## Contributing
 
