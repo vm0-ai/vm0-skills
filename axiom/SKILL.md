@@ -3,9 +3,6 @@ name: axiom
 description: Axiom observability platform for logs, events, and analytics via REST API
 vm0_secrets:
   - AXIOM_API_TOKEN
-  - AXIOM_PERSONAL_ACCESS_TOKEN (optional, for /v2/user endpoint)
-vm0_vars:
-  - AXIOM_ORG_ID (optional, required with PAT)
 ---
 
 # Axiom
@@ -47,10 +44,6 @@ Set environment variables:
 ```bash
 # Required: API Token for most operations
 export AXIOM_API_TOKEN="xaat-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-
-# Optional: For endpoints that require PAT (e.g., Get Current User)
-export AXIOM_PERSONAL_ACCESS_TOKEN="xapt-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-export AXIOM_ORG_ID="your-org-id"
 ```
 
 ---
@@ -190,15 +183,7 @@ bash -c 'curl -s -X POST "https://api.axiom.co/v2/annotations" -H "Authorization
 bash -c 'curl -s "https://api.axiom.co/v2/monitors" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"'
 ```
 
-### 10. Get Current User (Requires PAT)
-
-> **Note:** This endpoint requires a Personal Access Token (PAT), not an API Token.
-
-```bash
-bash -c 'curl -s "https://api.axiom.co/v2/user" -H "Authorization: Bearer ${AXIOM_PERSONAL_ACCESS_TOKEN}" -H "x-axiom-org-id: ${AXIOM_ORG_ID}"'
-```
-
-### 11. Delete Dataset
+### 10. Delete Dataset
 
 ```bash
 bash -c 'curl -s -X DELETE "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer ${AXIOM_API_TOKEN}"'
