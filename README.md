@@ -44,141 +44,168 @@ After installation, restart Claude Code, then ask "What skills are available?" t
 
 ## Skills Test Status
 
-Last tested: 2026-01-14 | Total: 68 skills | Fully Passing: 5 | Partially Passing: 12 | Failed: 51 | Success Rate: 25%
+Last tested: 2026-01-15 | Total: 69 skills | Passing: 19 | Failed: 50 | Success Rate: 27.5%
 
 ### Test Summary
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| **Fully Passing** | 5 | 7.4% |
-| **Partially Passing** | 12 | 17.6% |
-| **Fully Failing** | 51 | 75.0% |
+| **Passing** | 19 | 27.5% |
+| **Partial** | 1 | 1.4% |
+| **Failing** | 49 | 71.0% |
 
 ### All Skills List
 
-Below is a comprehensive list of all 68 skills with their test status, description, and key capabilities:
+Below is a comprehensive list of all 69 skills organized by test status:
 
-#### Fully Passing Skills (5)
+#### Passing Skills (19)
 
-| Skill | Status | Description | Test Results |
-|-------|--------|-------------|--------------|
-| [openai](./openai) | ✓ PASSED | GPT models, completions, vision, embeddings, DALL-E, TTS | 11/12 passed (1 skipped) |
-| [pdfco](./pdfco) | ✓ PASSED | PDF processing: convert, merge, split, compress, parse | 11/12 passed |
-| [rss-fetch](./rss-fetch) | ✓ PASSED | RSS/Atom feed fetching and parsing | 12/15 passed |
-| [serpapi](./serpapi) | ✓ PASSED | Google search, news, shopping, YouTube, maps results | 9/9 passed |
-| [tavily](./tavily) | ✓ PASSED | AI-powered web search with domain filtering | 2/2 passed |
+All skills in this section passed all test cases successfully.
 
-#### Partially Passing Skills (12)
+| Skill | Description | Capabilities |
+|-------|-------------|--------------|
+| [axiom](./axiom) | Log management and analytics | Event logging, querying, aggregation |
+| [brave-search](./brave-search) | Privacy-focused web search | Web search without tracking |
+| [browserless](./browserless) | Headless browser automation | Screenshot, PDF, content extraction |
+| [chatwoot](./chatwoot) | Customer engagement platform | Conversation, contact, ticket management |
+| [cloudinary](./cloudinary) | Media management and transformation | Image upload, transformation, delivery |
+| [cronlytic](./cronlytic) | Cron job monitoring service | Health checks, monitoring, alerts |
+| [deepseek](./deepseek) | AI language model API | Text generation, chat completions |
+| [discord-webhook](./discord-webhook) | Discord webhook integration | Message posting, notifications |
+| [elevenlabs](./elevenlabs) | AI text-to-speech voice generation | Voice synthesis, audio generation |
+| [gitlab](./gitlab) | GitLab API integration | Repository management, CI/CD |
+| [hackernews](./hackernews) | Hacker News API access | Story fetching, comment retrieval |
+| [linear](./linear) | Software project management | Issue tracking, project management |
+| [minio](./minio) | Object storage service | File upload, storage, retrieval |
+| [openai](./openai) | GPT models, completions, vision, embeddings | Chat, completions, embeddings, vision, DALL-E, TTS |
+| [pushinator](./pushinator) | Push notification service | Push messaging, notifications |
+| [runway](./runway) | AI video and image generation | Image/video generation, asset creation |
+| [slack-webhook](./slack-webhook) | Slack incoming webhooks | Message posting, notifications |
+| [tavily](./tavily) | AI-powered web search with domain filtering | Web search with filtering capabilities |
+| [workflow-migration](./workflow-migration) | Workflow migration tool | Workflow conversion, migration |
 
-| Skill | Status | Description | Test Results | Issues |
-|-------|--------|-------------|--------------|--------|
-| [lark](./lark) | ⚠ PARTIAL | Team collaboration platform by ByteDance | 10/11 passed | 1 endpoint 404 |
-| [monday](./monday) | ⚠ PARTIAL | Work management platform | 6/10 passed | Write ops need permissions |
-| [pdf4me](./pdf4me) | ⚠ PARTIAL | PDF conversion and processing service | 4/12 passed | 8 endpoints restricted |
-| [plausible](./plausible) | ⚠ PARTIAL | Privacy-focused web analytics | 11/16 passed | Sites API needs permissions |
-| [qiita](./qiita) | ⚠ PARTIAL | Japanese tech community platform | 17/24 passed | Write ops need token |
-| [runway](./runway) | ⚠ PARTIAL | AI video and image generation | 5/9 passed | Invalid examples, low credits |
-| [scrapeninja](./scrapeninja) | ⚠ PARTIAL | Web scraping with JS rendering | 7/9 passed | 2 tests missing data |
-| [sentry](./sentry) | ⚠ PARTIAL | Error tracking and monitoring | 13/20 passed | Write ops have errors |
-| [shortio](./shortio) | ⚠ PARTIAL | URL shortening service | 8/10 passed | 1 deprecated endpoint |
-| [slack](./slack) | ⚠ PARTIAL | Team collaboration platform | 2/11 passed | Missing OAuth scopes |
-| [slack-webhook](./slack-webhook) | ✓ PASSED | Slack incoming webhooks | 6/6 passed | All tests passed |
-| [zapsign](./zapsign) | ⚠ PARTIAL | Electronic signature service | 5/10 passed | Placeholder URLs in docs |
+#### Partial Skills (1)
 
-#### Failed Skills - Missing Environment Variables (25)
+Skills that have passing tests but some failures due to expected issues (placeholder data, missing resources, etc.).
 
-| Skill | Status | Description | Missing Variables |
-|-------|--------|-------------|-------------------|
-| [apify](./apify) | ✗ FAILED | Web scraping and automation platform | APIFY_API_TOKEN |
-| [axiom](./axiom) | ✗ FAILED | Log management and analytics | AXIOM_TOKEN, AXIOM_DATASET_ID |
-| [bitrix](./bitrix) | ✗ FAILED | CRM and collaboration platform | BITRIX_WEBHOOK_URL |
-| [bright-data](./bright-data) | ✗ FAILED | Proxy network and web unlocker | BRIGHT_DATA_CUSTOMER_ID, BRIGHT_DATA_API_TOKEN, BRIGHT_DATA_ZONE |
-| [browserbase](./browserbase) | ✗ FAILED | Serverless browser automation | BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID |
-| [browserless](./browserless) | ✗ FAILED | Headless browser automation | BROWSERLESS_API_KEY |
-| [chatwoot](./chatwoot) | ✗ FAILED | Customer engagement platform | CHATWOOT_API_KEY, CHATWOOT_ACCOUNT_ID, CHATWOOT_BASE_URL |
-| [cloudinary](./cloudinary) | ✗ FAILED | Media management and transformation | CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET |
-| [cronlytic](./cronlytic) | ✗ FAILED | Cron job monitoring service | CRONLYTIC_API_KEY |
-| [deepseek](./deepseek) | ✗ FAILED | AI language model API | DEEPSEEK_API_KEY |
-| [dev.to](./dev.to) | ✗ FAILED | Developer community platform | DEV_TO_API_KEY |
-| [discord](./discord) | ✗ FAILED | Discord bot API | DISCORD_BOT_TOKEN |
-| [discord-webhook](./discord-webhook) | ✗ FAILED | Discord webhook integration | DISCORD_WEBHOOK_URL |
-| [elevenlabs](./elevenlabs) | ✗ FAILED | AI text-to-speech voice generation | ELEVENLABS_API_KEY |
-| [fal.ai](./fal.ai) | ✗ FAILED | AI image generation platform | FAL_KEY |
-| [figma](./figma) | ✗ FAILED | Design tool API integration | FIGMA_ACCESS_TOKEN |
-| [firecrawl](./firecrawl) | ✗ FAILED | Web scraping and crawling | FIRECRAWL_API_KEY |
-| [notion](./notion) | ✗ FAILED | Documentation and database management | NOTION_API_KEY |
-| [podchaser](./podchaser) | ✗ FAILED | Podcast database API | PODCHASER_CLIENT_ID, PODCHASER_CLIENT_SECRET |
-| [reportei](./reportei) | ✗ FAILED | Marketing analytics reports | REPORTEI_API_TOKEN |
-| [resend](./resend) | ✗ FAILED | Transactional email delivery | RESEND_API_KEY |
-| [streak](./streak) | ✗ FAILED | CRM for Gmail | STREAK_API_KEY |
-| [supabase](./supabase) | ✗ FAILED | Backend as a service platform | SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY |
-| [vm0](./vm0) | ✗ FAILED | Agent execution platform | VM0_API_KEY |
-| [zendesk](./zendesk) | ✗ FAILED | Customer support platform | ZENDESK_API_TOKEN, ZENDESK_EMAIL, ZENDESK_SUBDOMAIN |
+| Skill | Status | Description | Key Issues |
+|-------|--------|-------------|------------|
+| [figma](./figma) | ⚠ PARTIAL | Design tool API integration | jq parsing errors with 404 responses; some examples have syntax issues (17/18 passed) |
 
-#### Failed Skills - Invalid/Expired API Keys (15)
+#### Failed Skills (49)
 
-| Skill | Status | Description | Error Details |
-|-------|--------|-------------|---------------|
-| [github-copilot](./github-copilot) | ✗ FAILED | AI pair programming assistant | Invalid token format |
-| [gmail](./gmail) | ✗ FAILED | Google Mail API integration | Access token issues |
-| [google-sheets](./google-sheets) | ✗ FAILED | Spreadsheet automation | Authentication errors |
-| [hackernews](./hackernews) | ✗ FAILED | Hacker News API access | No API key but tests failed |
-| [htmlcsstoimage](./htmlcsstoimage) | ✗ FAILED | HTML/CSS to image conversion | HTTP 403 Forbidden |
-| [imgur](./imgur) | ✗ FAILED | Image hosting and sharing | HTTP 403 Forbidden |
-| [instagram](./instagram) | ✗ FAILED | Instagram API integration | HTTP 400 Bad Request |
-| [instantly](./instantly) | ✗ FAILED | Email outreach platform | HTTP 401 Unauthorized |
-| [intercom](./intercom) | ✗ FAILED | Customer messaging platform | HTTP 401 Unauthorized |
-| [kommo](./kommo) | ✗ FAILED | Sales automation CRM | HTTP 401 expired JWT |
-| [pdforge](./pdforge) | ✗ FAILED | PDF generation service | HTTP 403 Invalid Token |
-| [perplexity](./perplexity) | ✗ FAILED | AI-powered search engine | HTTP 401 Authorization Required |
-| [pushinator](./pushinator) | ✗ FAILED | Push notification service | HTTP 400 Channel not exists |
-| [twenty](./twenty) | ✗ FAILED | Modern CRM platform | HTTP 401 WORKSPACE_NOT_FOUND |
-| [youtube](./youtube) | ✗ FAILED | YouTube Data API v3 | HTTP 400 API Key Invalid |
+##### Missing Environment Variables (17 skills)
 
-#### Failed Skills - Quota/Balance/Permission Issues (8)
+These skills require proper API keys or credentials to function. No tests can proceed without them.
 
-| Skill | Status | Description | Error Details |
-|-------|--------|-------------|---------------|
-| [gitlab](./gitlab) | ✗ FAILED | GitLab API integration | HTTP 401 token issues |
-| [jira](./jira) | ✗ FAILED | Issue and project tracking | Connection/auth issues |
-| [linear](./linear) | ✗ FAILED | Software project management | GraphQL errors |
-| [mercury](./mercury) | ✗ FAILED | Banking API for startups | HTTP 402 Insufficient funds |
-| [minimax](./minimax) | ✗ FAILED | AI language model API | Insufficient balance |
-| [minio](./minio) | ✗ FAILED | Object storage service | Connection refused |
-| [supadata](./supadata) | ✗ FAILED | Data enrichment API | Plan usage limit exceeded |
-| [zeptomail](./zeptomail) | ✗ FAILED | Transactional email service | HTTP 500 Internal Server Error |
+| Skill | Description | Required Variables |
+|-------|-------------|-------------------|
+| [bitrix](./bitrix) | CRM and collaboration platform | BITRIX_WEBHOOK_URL |
+| [bright-data](./bright-data) | Proxy network and web unlocker | BRIGHT_DATA_CUSTOMER_ID, BRIGHT_DATA_API_TOKEN, BRIGHT_DATA_ZONE |
+| [browserbase](./browserbase) | Serverless browser automation | BROWSERBASE_API_KEY, BROWSERBASE_PROJECT_ID |
+| [dev.to](./dev.to) | Developer community platform | DEV_TO_API_KEY |
+| [discord](./discord) | Discord bot API with permissions | DISCORD_BOT_TOKEN, proper intents/permissions |
+| [fal.ai](./fal.ai) | AI image generation platform | FAL_KEY with sufficient balance |
+| [gmail](./gmail) | Google Mail API integration | GOOGLE_OAUTH_TOKEN (OAuth 2.0 access token) |
+| [github-copilot](./github-copilot) | AI pair programming assistant | GITHUB_TOKEN (valid PAT or GitHub App token) |
+| [google-sheets](./google-sheets) | Spreadsheet automation | GOOGLE_SHEETS_CLIENT_ID, GOOGLE_SHEETS_ACCESS_TOKEN |
+| [intercom](./intercom) | Customer messaging platform | INTERCOM_ACCESS_TOKEN |
+| [jira](./jira) | Issue and project tracking | JIRA_URL, JIRA_USERNAME, JIRA_API_TOKEN, existing projects |
+| [kommo](./kommo) | Sales automation CRM | KOMMO_API_TOKEN (valid, non-expired JWT) |
+| [lark](./lark) | Team collaboration platform | LARK_API_TOKEN, valid resource IDs |
+| [mercury](./mercury) | Banking API for startups | MERCURY_API_TOKEN |
+| [podchaser](./podchaser) | Podcast database API | PODCHASER_CLIENT_ID, PODCHASER_CLIENT_SECRET |
+| [reportei](./reportei) | Marketing analytics reports | REPORTEI_API_TOKEN |
+| [streak](./streak) | CRM for Gmail | STREAK_API_KEY |
+| [supabase](./supabase) | Backend as a service platform | SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY |
+| [zendesk](./zendesk) | Customer support platform | ZENDESK_SUBDOMAIN, ZENDESK_EMAIL, ZENDESK_API_TOKEN |
 
-#### Failed Skills - Infrastructure/Service Issues (2)
+**Action:** Export missing environment variables with valid credentials
 
-| Skill | Status | Description | Error Details |
-|-------|--------|-------------|---------------|
-| [qdrant](./qdrant) | ✗ FAILED | Vector database for AI | HTTP 404 on all endpoints - cluster may be down |
-| [brave-search](./brave-search) | ✗ FAILED | Privacy-focused web search | API endpoint issues |
+##### API Credential/Authentication Issues (11 skills)
 
-### Failure Analysis Summary
+These skills have API keys available but they are invalid, expired, or lack proper permissions.
 
-| Category | Count | Percentage | Action Required |
-|----------|-------|------------|-----------------|
-| Missing Environment Variables | 25 | 36.8% | Set up accounts and export API keys |
-| Invalid/Expired API Keys | 15 | 22.1% | Regenerate keys, verify permissions |
-| Quota/Balance Issues | 8 | 11.8% | Upgrade accounts, add funding |
-| API Plan Restrictions | 6 | 8.8% | Upgrade plans, request scopes |
-| Documentation Issues | 3 | 4.4% | Update examples with valid data |
-| Infrastructure Issues | 2 | 2.9% | Verify service availability |
+| Skill | Description | Issue | HTTP Status |
+|-------|-------------|-------|-------------|
+| [apify](./apify) | Web scraping and automation platform | Actor not rented; service errors | 403 |
+| [firecrawl](./firecrawl) | Web scraping and crawling | Insufficient API credits (requires paid plan) | 402 |
+| [htmlcsstoimage](./htmlcsstoimage) | HTML/CSS to image conversion | Free tier limit exceeded (56/50 renders); requires paid plan upgrade | 429 |
+| [imgur](./imgur) | Image hosting and sharing | API rate limiting on requests | 429 |
+| [instagram](./instagram) | Instagram Graph API integration | Missing auth token; invalid business account ID | 400 |
+| [instantly](./instantly) | Email outreach platform | API validation error with status parameters | 400 |
+| [pdforge](./pdforge) | PDF generation service | Invalid API token | 403 |
+| [perplexity](./perplexity) | AI-powered search engine | Invalid or expired API key | 401 |
+| [plausible](./plausible) | Privacy-focused web analytics | Invalid or insufficient API key for some endpoints | 401 |
+| [resend](./resend) | Transactional email delivery | Invalid API key | 401 |
+| [youtube](./youtube) | YouTube Data API v3 | Invalid API key (API_KEY_INVALID) | 400 |
 
-### High Priority Skills for Fixing
+**Action:** Regenerate valid API keys, verify permissions, and upgrade accounts if needed
 
-**Critical for Core Functionality:**
-1. **OpenAI** - ✓ Working (91.7% pass rate) - Critical AI features operational
-2. **Notion** - ✗ Missing API key - Widely used documentation platform
-3. **Supabase** - ✗ Missing credentials - Database operations blocked
-4. **Resend** - ✗ Missing API key - Email functionality blocked
+##### Quota/Balance/Account Issues (10 skills)
 
-**High Value Partial Success:**
-1. **Monday** - Read works, write needs permissions
-2. **Slack** - Basic operations work, needs additional scopes
-3. **Sentry** - Monitoring works, issue management needs fixes
-4. **Plausible** - Stats work, site management needs permissions
+These services have accounts set up but are hitting limits, account suspensions, or insufficient funds.
+
+| Skill | Description | Issue | Impact |
+|-------|-------------|-------|--------|
+| [github](./github) | GitHub API via gh CLI | Invalid search qualifiers, issues/PRs not found, permission denied | Query syntax and resource access |
+| [minimax](./minimax) | AI language model API | Insufficient balance; invalid parameters | Cannot process requests |
+| [monday](./monday) | Work management platform | Insufficient token scopes for write operations | Read works (6/10), write blocked |
+| [notion](./notion) | Documentation and database management | Resource not found (non-existent/unshared resources) | 404 errors |
+| [qdrant](./qdrant) | Vector database for AI | API endpoint 404; cluster may be down | Infrastructure issue |
+| [scrapeninja](./scrapeninja) | Web scraping with JS rendering | Monthly quota exceeded for JS rendering; tunnel errors | 403 CONNECT failures |
+| [sentry](./sentry) | Error tracking and monitoring | Missing token scopes (release:write); PUT request protocol errors | Limited operations (13/20 passed) |
+| [serpapi](./serpapi) | Search API via SerpAPI | Account quota exhausted ("run out of searches") | Rate limited |
+| [slack](./slack) | Team collaboration platform | Bot not in channel; missing OAuth scopes (users:read.email, files:write, reactions:write) | Limited operations (2/11 passed) |
+| [supadata](./supadata) | Data enrichment API | Plan usage limit exceeded; account exhausted quota | Blocked from all requests |
+
+**Action:** Upgrade accounts, add funds, request additional scopes, or verify service availability
+
+##### Documentation/Configuration Issues (7 skills)
+
+These skills have implementation issues in examples or configuration problems in the test data.
+
+| Skill | Description | Issue | Pass Rate |
+|-------|-------------|-------|-----------|
+| [pdfco](./pdfco) | PDF processing service | Invalid page range specification in test example | 1/12 (8.3%) |
+| [pdf4me](./pdf4me) | PDF conversion and processing | File content encoding issue in merge operation; restricted endpoints | 0/12 |
+| [rss-fetch](./rss-fetch) | RSS/Atom feed fetching | Tool dependency (xmllint) not installed; network access blocked | 0/2 |
+| [shortio](./shortio) | URL shortening service | API endpoint not found; missing domain parameter in example | 1/1 |
+| [twenty](./twenty) | Modern CRM platform | Workspace not found (auth token invalid); URL encoding issue in examples | 0/16 |
+| [vm0](./vm0) | Agent execution platform | Invalid API key parameter mapping (VM0_API_TOKEN vs VM0_API_KEY) | 1/15 (6.7%) |
+| [zapsign](./zapsign) | Electronic signature service | Placeholder URLs in documentation; file not found | 0/1 |
+
+**Action:** Fix examples with valid test data, install missing dependencies, correct parameter mappings
+
+### Failure Statistics by Category
+
+| Category | Count | Percentage | Remediation |
+|----------|-------|------------|-------------|
+| **Missing Environment Variables** | 19 | 27.5% | Set up accounts and export API keys |
+| **Invalid/Expired Credentials** | 11 | 15.9% | Regenerate keys, verify permissions, upgrade accounts |
+| **Quota/Balance/Scope Issues** | 10 | 14.5% | Upgrade plans, add funding, request additional scopes |
+| **Documentation/Configuration Issues** | 7 | 10.1% | Update examples, fix parameters, install dependencies |
+| **Partial Success** | 1 | 1.4% | Fix jq parsing for 404 responses, update examples |
+| **Passing** | 19 | 27.5% | Stable and working |
+
+### Recommendations for Improvement
+
+**Immediate Actions (High Priority):**
+1. Set environment variables for the 19 skills missing credentials
+2. Regenerate expired API keys for 11 skills with authentication issues
+3. Upgrade free-tier accounts that have hit quota limits (HTMLCSStoImage, FalAI, Supadata, Imgur)
+4. Update GitHub scopes and Slack bot permissions for limited access
+
+**Medium Priority:**
+1. Fix documentation examples with placeholder values (Zapsign, Lark, Twenty)
+2. Correct parameter mappings (VM0 API key naming)
+3. Install missing system dependencies (xmllint for rss-fetch)
+4. Add fund/balance to accounts with insufficient funds (Minimax, Mercury)
+
+**Low Priority:**
+1. Investigate Qdrant service availability
+2. Review Sentry PUT request protocol errors
+3. Optimize Scrapeninja configuration for JS rendering quota
 
 ## Contributing
 
