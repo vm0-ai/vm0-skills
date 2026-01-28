@@ -539,26 +539,26 @@ vm0 model-provider delete anthropic-api-key
 
 ---
 
-## Credential Management (Experimental)
+## Credential Management
 
 Store credentials for agent runs.
 
 **List credentials:**
 
 ```bash
-vm0 experimental-credential list
+vm0 credential list
 ```
 
 **Set a credential:**
 
 ```bash
-vm0 experimental-credential set MY_API_KEY "secret-value"
+vm0 credential set MY_API_KEY "secret-value"
 ```
 
 **Delete a credential:**
 
 ```bash
-vm0 experimental-credential delete MY_API_KEY
+vm0 credential delete MY_API_KEY
 ```
 
 ---
