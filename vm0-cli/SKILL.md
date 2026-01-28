@@ -1,6 +1,6 @@
 ---
 name: vm0-cli
-description: VM0 CLI for building and running AI agents in secure sandboxes. Use this skill when users need to install vm0, create agent projects, deploy agents, run agents, manage volumes/artifacts, or schedule agent runs.
+description: VM0 CLI for building and running AI agents in secure sandboxes. Use this skill when users need to install vm0, create agent projects, deploy agents, run agents, manage volumes/artifacts.
 vm0_secrets:
   - VM0_TOKEN
 ---
@@ -22,7 +22,6 @@ Use this skill when you need to:
 - Deploy agents to the VM0 platform
 - Run agents with prompts and inputs
 - Manage input files (volumes) and output files (artifacts)
-- Schedule recurring agent runs
 - View logs and usage statistics
 
 ---
@@ -397,94 +396,6 @@ vm0 agent inspect my-agent:abc123
 
 ---
 
-## Scheduling
-
-Create scheduled agent runs with cron expressions.
-
-### Initialize Schedule
-
-**Interactive mode:**
-
-```bash
-vm0 schedule init
-```
-
-**Non-interactive mode:**
-
-```bash
-vm0 schedule init --name my-schedule --frequency daily --time 09:00 --prompt "Run daily task"
-```
-
-### Deploy Schedule
-
-```bash
-vm0 schedule deploy schedule.yaml
-```
-
-Or deploy from default file:
-
-```bash
-vm0 schedule deploy
-```
-
-### Manage Schedules
-
-**List all schedules:**
-
-```bash
-vm0 schedule list
-```
-
-**View schedule status:**
-
-```bash
-vm0 schedule status my-schedule
-```
-
-**Enable a schedule:**
-
-```bash
-vm0 schedule enable my-schedule
-```
-
-**Disable a schedule:**
-
-```bash
-vm0 schedule disable my-schedule
-```
-
-**Delete a schedule (with confirmation):**
-
-```bash
-vm0 schedule delete my-schedule
-```
-
-**Delete a schedule (non-interactive):**
-
-```bash
-vm0 schedule delete my-schedule --force
-```
-
----
-
-## Scope Management
-
-Scopes are namespaces for organizing your agents and resources.
-
-**View current scope:**
-
-```bash
-vm0 scope status
-```
-
-**Set scope:**
-
-```bash
-vm0 scope set my-team
-```
-
----
-
 ## Usage Statistics
 
 View your usage statistics:
@@ -633,8 +544,6 @@ export VM0_TOKEN=vm0_live_your-api-key
 | `vm0 cook` | `-y, --yes` | Skip all confirmation prompts |
 | `vm0 volume init` | `--name <name>` | Required in non-TTY |
 | `vm0 artifact init` | `--name <name>` | Required in non-TTY |
-| `vm0 schedule init` | `--name`, `--frequency`, `--time`, `--prompt` | All required; `--day` for weekly/monthly |
-| `vm0 schedule delete` | `-f, --force` | Skip deletion confirmation |
 | `vm0 model-provider setup` | `--type <type> --credential <value>` | Both required together |
 
 ### CI/CD Example
@@ -680,41 +589,6 @@ jobs:
         run: |
           vm0 compose vm0.yaml -y
           vm0 run my-agent --artifact-name output "Generate daily report"
-```
-
-### Schedule Init (Non-Interactive)
-
-Create schedules without prompts:
-
-```bash
-# Daily schedule
-vm0 schedule init \
-  --name daily-report \
-  --frequency daily \
-  --time 09:00 \
-  --timezone America/New_York \
-  --prompt "Generate daily report" \
-  --force
-
-# Weekly schedule (Monday)
-vm0 schedule init \
-  --name weekly-summary \
-  --frequency weekly \
-  --day mon \
-  --time 09:00 \
-  --timezone UTC \
-  --prompt "Generate weekly summary" \
-  --force
-
-# Monthly schedule (1st of month)
-vm0 schedule init \
-  --name monthly-report \
-  --frequency monthly \
-  --day 1 \
-  --time 09:00 \
-  --timezone UTC \
-  --prompt "Generate monthly report" \
-  --force
 ```
 
 ### Model Provider Setup (Non-Interactive)
