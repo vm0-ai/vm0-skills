@@ -577,6 +577,24 @@
       ]
     },
     {
+      "name": "vm0",
+      "description": "VM0 API for running AI agents in secure sandboxes. Use this skill to execute agents, manage runs, and download outputs (artifacts) and inputs (volumes) via the VM0 platform API.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./vm0"
+      ]
+    },
+    {
+      "name": "vm0-cli",
+      "description": "VM0 CLI for building and running AI agents in secure sandboxes. Use this skill when users need to install vm0, create agent projects, deploy agents, run agents, manage volumes/artifacts.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./vm0-cli"
+      ]
+    },
+    {
       "name": "youtube",
       "description": "YouTube Data API v3 via curl. Use this skill to search videos, get video/channel info, list playlists, and fetch comments.",
       "source": "./",
