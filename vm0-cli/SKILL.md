@@ -150,6 +150,21 @@ vm0 run my-agent "Your prompt here"
 vm0 run my-agent "Process data" --vars DEBUG=true --secrets API_KEY=xxx
 ```
 
+**Run with environment file:**
+
+```bash
+vm0 run my-agent "Process data" --env-file=.env.local
+```
+
+Load environment variables from a file. The file should contain `KEY=value` pairs (one per line). This is useful for local development when you don't want to use the `${{ secrets.* }}` syntax in `vm0.yaml`.
+
+Example `.env.local` file:
+```bash
+GH_TOKEN=github_pat_xxx
+API_KEY=sk-xxx
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/xxx
+```
+
 **Run with artifact storage:**
 
 ```bash
@@ -192,6 +207,18 @@ Skip confirmation:
 
 ```bash
 vm0 cook -y "Your prompt"
+```
+
+**Run with environment file:**
+
+```bash
+vm0 cook --env-file=.env.local "Your prompt"
+```
+
+Load environment variables from a file for the agent run. Combine with `-y` to skip confirmation:
+
+```bash
+vm0 cook -y --env-file=.env.local "Your prompt"
 ```
 
 Continue last session:
@@ -450,26 +477,26 @@ vm0 model-provider delete anthropic-api-key
 
 ---
 
-## Credential Management
+## Credential Management (Experimental)
 
 Store credentials for agent runs.
 
 **List credentials:**
 
 ```bash
-vm0 credential list
+vm0 experimental-credential list
 ```
 
 **Set a credential:**
 
 ```bash
-vm0 credential set MY_API_KEY "secret-value"
+vm0 experimental-credential set MY_API_KEY "secret-value"
 ```
 
 **Delete a credential:**
 
 ```bash
-vm0 credential delete MY_API_KEY
+vm0 experimental-credential delete MY_API_KEY
 ```
 
 ---
@@ -496,14 +523,14 @@ agents:
 
 ### Fields
 
-| Field | Description |
-|-------|-------------|
-| `version` | Configuration version (currently "1.0") |
-| `agents` | Map of agent definitions |
-| `framework` | Agent framework (e.g., `claude-code`) |
-| `instructions` | Path to instructions file |
-| `skills` | List of skill URLs to include |
-| `environment` | Environment variables for the agent |
+| Field          | Description                             |
+| -------------- | --------------------------------------- |
+| `version`      | Configuration version (currently "1.0") |
+| `agents`       | Map of agent definitions                |
+| `framework`    | Agent framework (e.g., `claude-code`)   |
+| `instructions` | Path to instructions file               |
+| `skills`       | List of skill URLs to include           |
+| `environment`  | Environment variables for the agent     |
 
 ### Variable Syntax
 
@@ -541,9 +568,12 @@ export VM0_TOKEN=vm0_live_your-api-key
 |---------|----------------------|-------|
 | `vm0 init` | `--name <name>` | Required in non-TTY |
 | `vm0 compose` | `-y, --yes` | Skip new secrets confirmation |
-| `vm0 cook` | `-y, --yes` | Skip all confirmation prompts |
+| `vm0 run` | `--env-file <file>` | Load environment variables from file |
+| `vm0 cook` | `-y, --yes`, `--env-file <file>` | Skip prompts; load env vars from file |
 | `vm0 volume init` | `--name <name>` | Required in non-TTY |
 | `vm0 artifact init` | `--name <name>` | Required in non-TTY |
+| `vm0 schedule init` | `--name`, `--frequency`, `--time`, `--prompt` | All required; `--day` for weekly/monthly |
+| `vm0 schedule delete` | `-f, --force` | Skip deletion confirmation |
 | `vm0 model-provider setup` | `--type <type> --credential <value>` | Both required together |
 
 ### CI/CD Example
@@ -562,8 +592,8 @@ cd artifact && vm0 artifact init --name artifact && cd ..
 # Deploy agent (skip confirmation)
 vm0 compose vm0.yaml -y
 
-# Run agent
-vm0 run my-agent --artifact-name artifact "Execute the task"
+# Run agent with environment file
+vm0 run my-agent --artifact-name artifact --env-file=.env.local "Execute the task"
 ```
 
 ### GitHub Actions Example
@@ -578,7 +608,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install VM0 CLI
         run: npm install -g @vm0/cli
@@ -588,7 +618,7 @@ jobs:
           VM0_TOKEN: ${{ secrets.VM0_TOKEN }}
         run: |
           vm0 compose vm0.yaml -y
-          vm0 run my-agent --artifact-name output "Generate daily report"
+          vm0 run my-agent --artifact-name output --env-file=.env "Generate daily report"
 ```
 
 ### Model Provider Setup (Non-Interactive)
