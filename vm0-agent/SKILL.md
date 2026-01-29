@@ -103,4 +103,86 @@ AGENTS.md is used to describe a workflow. It is an ordinary, natural language-de
 
 # vm0.yaml
 
-Go to https://docs.vm0.ai/docs/reference/configuration/vm0-yaml to learn about technical details
+vm0.yaml is the primary configuration file for VM0 agents.
+
+## Key Documentation URLs
+
+- **vm0.yaml Reference**: https://docs.vm0.ai/docs/reference/configuration/vm0-yaml
+- **Environment Variables**: https://docs.vm0.ai/docs/core-concept/environment-variable
+- **Skills**: https://docs.vm0.ai/docs/core-concept/skills
+- **Volumes**: https://docs.vm0.ai/docs/core-concept/volume
+- **Artifacts**: https://docs.vm0.ai/docs/core-concept/artifact
+
+## File Structure
+
+```yaml
+version: "1.0"
+
+agents:
+  my-agent:
+    framework: claude-code # Required
+    instructions: AGENTS.md # Path to instruction file
+    apps: # Pre-installed tools
+      - github
+    skills: # Skill URLs for extended capabilities
+      - https://github.com/vm0-ai/vm0-skills/tree/main/slack
+      - https://github.com/vm0-ai/vm0-skills/tree/main/hackernews
+    environment: # Additional environment variables (optional)
+      MY_CUSTOM_VAR: ${{ vars.MY_VAR }}
+      MY_CUSTOM_SECRET: ${{ secrets.MY_SECRET }}
+```
+
+## Environment Variable Types
+
+VM0 supports three template variable types:
+
+> **Note**: The `environment` section is optional in most cases:
+> - `CLAUDE_CODE_OAUTH_TOKEN` is automatically provided when `framework: claude-code` is set
+> - Skills with `vm0_secrets` or `vm0_vars` in their SKILL.md frontmatter are automatically injected (e.g., if you use the `slack` skill which has `vm0_secrets: [SLACK_BOT_TOKEN]`, you don't need to declare it again)
+
+| Type        | Syntax                | Storage         | Use Case                                  |
+| ----------- | --------------------- | --------------- | ----------------------------------------- |
+| **vars**    | `${{ vars.NAME }}`    | CLI (ephemeral) | Feature flags, environment names          |
+| **secrets** | `${{ secrets.NAME }}` | CLI (ephemeral) | API keys from CI/CD, per-execution tokens |
+
+### Passing Values
+
+**CLI flags:**
+
+```bash
+vm0 run my-agent "prompt" --secrets API_KEY=sk-xxx --vars ENV_NAME=production
+```
+
+**Environment file (.env.local):**
+
+```
+API_KEY=sk-xxx
+ENV_NAME=production
+```
+
+```bash
+vm0 run my-agent "prompt" --env-file .env.local
+```
+
+## Skills
+
+Skills are reusable capabilities declared using GitHub tree URLs:
+
+```yaml
+skills:
+  - https://github.com/vm0-ai/vm0-skills/tree/main/slack
+  - https://github.com/vm0-ai/vm0-skills/tree/main/notion
+  - https://github.com/anthropics/skills/tree/main/skills/pdf
+```
+
+70+ pre-built skills available at: https://github.com/vm0-ai/vm0-skills
+
+## Volumes vs Artifacts
+
+| Aspect          | Volume                                  | Artifact               |
+| --------------- | --------------------------------------- | ---------------------- |
+| **Role**        | Pre-installed agent environment (input) | Agent-produced output  |
+| **Contents**    | Skills, configs, scripts                | Created/modified files |
+| **Persistence** | Manual management                       | Automatic after runs   |
+
+Use volumes for private skills, custom scripts, or configuration directories. Artifacts are automatically persisted when using `--artifact-name`.
