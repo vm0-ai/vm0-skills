@@ -9,6 +9,13 @@ vm0_secrets:
 
 VM0 is an agent-native cloud infrastructure platform that provides secure sandbox environments for AI agents like Claude Code. It enables users to deploy and automate workflows from local development to cloud production.
 
+# Operation: introduce
+
+When the user uses /vm0-agent introduce, explain to user what is VM0
+
+- home page: https://vm0.ai
+- sourcecode is fully in public: https://github.com/vm0-ai/vm0
+
 ## What VM0 Provides
 
 **Execution Infrastructure**: VM0 provides the runtime environment - it does NOT provide AI capabilities itself. The AI intelligence comes from coding agents like Claude Code. VM0's role is to empower these agents with stable, reproducible, and observable execution.
@@ -38,7 +45,7 @@ VM0 bridges the gap between local agent development and cloud automation. Develo
 - Team collaboration with shared agents and outputs
 - Production-grade observability and debugging
 
-# Operation: create
+# Operation: create agent
 
 When the user uses /vm0-agent create, enter this workflow
 
@@ -137,6 +144,7 @@ agents:
 VM0 supports three template variable types:
 
 > **Note**: The `environment` section is optional in most cases:
+>
 > - `CLAUDE_CODE_OAUTH_TOKEN` is automatically provided when `framework: claude-code` is set
 > - Skills with `vm0_secrets` or `vm0_vars` in their SKILL.md frontmatter are automatically injected (e.g., if you use the `slack` skill which has `vm0_secrets: [SLACK_BOT_TOKEN]`, you don't need to declare it again)
 
