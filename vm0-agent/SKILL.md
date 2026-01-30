@@ -211,6 +211,32 @@ vm0 run my-agent "prompt" --env-file .env.local
 vm0 run my-agent "prompt" --secrets API_KEY=sk-xxx --vars ENV_NAME=production
 ```
 
+### Troubleshooting: Missing required secrets
+
+If you see an error like `Missing required secrets: API_KEY`, follow these steps:
+
+1. **Check if the variable is declared in the skill's SKILL.md**
+   - Look for `vm0_secrets` or `vm0_vars` in the skill's frontmatter
+   - If declared there, the variable is automatically injected when provided via `--env-file`
+
+2. **If not declared in the skill, add it to vm0.yaml's environment section:**
+   ```yaml
+   environment:
+     API_KEY: ${{ secrets.API_KEY }}
+     # or for non-sensitive values:
+     MY_VAR: ${{ vars.MY_VAR }}
+   ```
+
+3. **Ensure the value exists in .env.local:**
+   ```
+   API_KEY=your-actual-key-here
+   ```
+
+4. **Ensure you're using `--env-file` when running:**
+   ```bash
+   vm0 run my-agent "prompt" --env-file .env.local
+   ```
+
 ## Skills
 
 Skills are reusable capabilities declared using GitHub tree URLs:
