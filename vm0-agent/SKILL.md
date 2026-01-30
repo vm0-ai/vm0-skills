@@ -73,7 +73,32 @@ After the user answers the question, use 1-5 questions to refine it, such as whi
 
 ## Innovate
 
-In this step, refine the technical details in the user's workflow. This step requires understanding the various SaaS capabilities under https://github.com/vm0-ai/vm0-skills to help users generate a vm0.yaml and AGENTS.md for use in vm0
+In this step, refine the technical details in the user's workflow by finding suitable skills from two sources.
+
+### Step 1: Search vm0-skills
+
+First, check https://github.com/vm0-ai/vm0-skills for available skills.
+
+Browse the repository directory for the full list of 70+ integrations.
+
+### Step 2: Search skills.sh Ecosystem
+
+If vm0-skills doesn't have what you need, search the skills.sh ecosystem (33,700+ skills) using:
+
+```bash
+curl -s "https://skills.sh/api/search?q=<keyword>"
+```
+
+### Step 3: Convert to vm0.yaml URL Format
+
+Convert search results to GitHub tree URLs for vm0.yaml:
+
+| Source | URL Format |
+|--------|------------|
+| vm0-ai/vm0-skills | `https://github.com/vm0-ai/vm0-skills/tree/main/{skill-name}` |
+| anthropics/skills | `https://github.com/anthropics/skills/tree/main/skills/{skill-name}` |
+| vercel-labs/agent-skills | `https://github.com/vercel-labs/agent-skills/tree/main/skills/{skill-name}` |
+| Other repos | `https://github.com/{owner}/{repo}/tree/main/skills/{skill-name}` (most use `skills/` subdirectory) |
 
 Give the user several options for confirmation using the ask user tools. Users can also add more information. This process can be repeated several times
 
@@ -84,8 +109,15 @@ Give the user several options for confirmation using the ask user tools. Users c
 
 ## Token Collect
 
-- [ ] For each skill used and each secret used in vm0.yaml, you can learn how to obtain it from the corresponding skill or search online, and guide the user to get the token
-- [ ] Confirm that the user has provided each token, and record these tokens in the .env.local file as TOKEN=value
+- [ ] For each skill used in vm0.yaml, read its SKILL.md to find required credentials:
+  - Check frontmatter for `vm0_secrets` and `vm0_vars` fields
+  - If no frontmatter, infer from skill content (look for env vars like `API_KEY`, `TOKEN`, etc.)
+- [ ] For each token needed:
+  - Read the skill's documentation for how to obtain it
+  - If not documented, search online for the service's API key/token setup guide
+  - Provide step-by-step instructions to help user get the token
+  - Ask user to paste the token
+  - Write to .env.local as `KEY=value`
 
 ## Test run
 
