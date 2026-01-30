@@ -175,33 +175,40 @@ agents:
 
 VM0 supports three template variable types:
 
-> **Note**: The `environment` section is optional in most cases:
+| Type            | Syntax                     | Storage              | Use Case                                           |
+| --------------- | -------------------------- | -------------------- | -------------------------------------------------- |
+| **credentials** | `${{ credentials.NAME }}`  | Platform (persistent)| Model provider tokens only (e.g., `CLAUDE_CODE_OAUTH_TOKEN`) |
+| **secrets**     | `${{ secrets.NAME }}`      | CLI (ephemeral)      | API keys for skills, per-execution tokens          |
+| **vars**        | `${{ vars.NAME }}`         | CLI (ephemeral)      | Feature flags, environment names                   |
+
+### Credentials vs Secrets
+
+> **Important**: Use the right type for the right purpose:
 >
-> - `CLAUDE_CODE_OAUTH_TOKEN` is automatically provided when `framework: claude-code` is set
-> - Skills with `vm0_secrets` or `vm0_vars` in their SKILL.md frontmatter are automatically injected (e.g., if you use the `slack` skill which has `vm0_secrets: [SLACK_BOT_TOKEN]`, you don't need to declare it again)
+> - **credentials**: Reserved for model provider authentication only (e.g., `CLAUDE_CODE_OAUTH_TOKEN`). These are stored persistently on the VM0 platform and managed via `vm0 credential set/list/delete`.
+> - **secrets/vars**: Use for ALL skill and AGENTS.md environment variables. Always pass via `--env-file .env.local`.
 
-| Type        | Syntax                | Storage         | Use Case                                  |
-| ----------- | --------------------- | --------------- | ----------------------------------------- |
-| **vars**    | `${{ vars.NAME }}`    | CLI (ephemeral) | Feature flags, environment names          |
-| **secrets** | `${{ secrets.NAME }}` | CLI (ephemeral) | API keys from CI/CD, per-execution tokens |
+Skills with `vm0_secrets` or `vm0_vars` in their SKILL.md frontmatter are automatically injected when you provide them via `--env-file`.
 
-### Passing Values
+### Passing Secrets and Vars
 
-**CLI flags:**
-
-```bash
-vm0 run my-agent "prompt" --secrets API_KEY=sk-xxx --vars ENV_NAME=production
-```
-
-**Environment file (.env.local):**
+**Always use `--env-file .env.local` for skills and workflow variables:**
 
 ```
-API_KEY=sk-xxx
+# .env.local
+SLACK_BOT_TOKEN=xoxb-xxx
+NOTION_API_KEY=secret_xxx
 ENV_NAME=production
 ```
 
 ```bash
 vm0 run my-agent "prompt" --env-file .env.local
+```
+
+**CLI flags (alternative):**
+
+```bash
+vm0 run my-agent "prompt" --secrets API_KEY=sk-xxx --vars ENV_NAME=production
 ```
 
 ## Skills
