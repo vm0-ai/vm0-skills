@@ -123,7 +123,43 @@ Give the user several options for confirmation using the ask user tools. Users c
 - [ ] Use the vm0-cli skill capabilities to run the agent with cook, using --env-file=.env.local to pass the token
 - [ ] If the workflow writes files to the workspace, explain to the user where and how to view the artifact
 - [ ] Explain to the user what command cook executed, and introduce the CLI capabilities of vm0
-- [ ] Ask the user if the results meet expectations and what needs further adjustment. If the user wants adjustments, update the entire todo.md as it may need to return to the Research phase. However, starting over should also be based on previously discussed information and the vm0.yaml / AGENTS.md in the current project
+
+### Log Analysis & Optimization
+
+After the first run completes, perform a detailed analysis of the execution logs:
+
+- [ ] **Analyze run logs**: Review the complete execution logs to understand what happened
+- [ ] **Check behavior alignment**: Determine if the agent's behavior matches the user's original intent and expectations
+- [ ] **Identify successful patterns**: Note which instructions executed successfully and produced expected results
+- [ ] **Identify failure points**: Document any errors, timeouts, or unexpected behaviors
+
+Based on the analysis, propose optimization suggestions:
+
+- [ ] **Inline successful commands**: Suggest adding proven, successfully executed commands directly into AGENTS.md to make future runs more stable and deterministic
+- [ ] **Document error patterns**: Identify instructions that failed and suggest:
+  - Removing or rewriting problematic instructions
+  - Adding error handling or fallback approaches
+  - Clarifying ambiguous instructions that caused unexpected behavior
+- [ ] **Improve instruction specificity**: Suggest making vague instructions more concrete based on what actually worked
+- [ ] **Add guardrails**: Recommend adding validation steps or checkpoints for critical operations
+
+Present findings to the user:
+
+- [ ] **Report trial run quality**: Summarize the overall quality of the test run (success rate, key achievements, notable issues)
+- [ ] **Present optimization suggestions**: List specific, actionable improvements with clear explanations of why each would help
+- [ ] **Ask user for decision**: Use ask user tools to let user choose:
+  - Option 1: Accept optimizations - Apply the suggested improvements to AGENTS.md and vm0.yaml, then re-run to verify
+  - Option 2: Skip optimizations - Proceed directly to Schedule phase with current configuration
+  - Option 3: Manual adjustments - User wants to make their own changes before proceeding
+
+If user accepts optimizations:
+- [ ] Apply the approved changes to AGENTS.md and/or vm0.yaml
+- [ ] Run the agent again to verify improvements
+- [ ] Repeat log analysis if needed
+
+If user wants manual adjustments:
+- [ ] Update the entire todo.md as it may need to return to earlier phases
+- [ ] Continue based on previously discussed information and current project state
 
 ## Schedule
 
