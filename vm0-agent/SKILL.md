@@ -75,21 +75,19 @@ After the user answers the question, use 1-5 questions to refine it, such as whi
 
 In this step, refine the technical details in the user's workflow by finding suitable skills from two sources.
 
-### Step 1: Search vm0-skills
+### Step 1: Search skills
 
-First, check https://github.com/vm0-ai/vm0-skills for available skills.
+There is two skill marketplace, search theme both.
 
-Browse the repository directory for the full list of 70+ integrations.
-
-### Step 2: Search skills.sh Ecosystem
-
-If vm0-skills doesn't have what you need, search the skills.sh ecosystem (33,700+ skills) using:
+Search the skills.sh ecosystem (33,700+ skills) using:
 
 ```bash
 curl -s "https://skills.sh/api/search?q=<keyword>"
 ```
 
-### Step 3: Convert to vm0.yaml URL Format
+Search https://github.com/vm0-ai/vm0-skills for 70+ integrations available skills.
+
+### Step 2: Convert to vm0.yaml URL Format
 
 Convert search results to GitHub tree URLs for vm0.yaml:
 
