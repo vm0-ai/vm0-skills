@@ -161,6 +161,14 @@ If user wants manual adjustments:
 - [ ] Update the entire todo.md as it may need to return to earlier phases
 - [ ] Continue based on previously discussed information and current project state
 
+### View Run Logs
+
+After each test run, inform the user they can view the complete execution logs on the VM0 platform:
+
+- [ ] Tell user: "You can view the complete run logs at `https://platform.vm0.ai/logs/<run_id>`"
+- [ ] Example: https://platform.vm0.ai/logs/9766cca3-c867-4d82-b71b-1c20bed89a4e
+- [ ] The run_id is returned after each `vm0 run` command completes
+
 ## Schedule
 
 Enter this phase when the user is satisfied with the test run results
@@ -168,6 +176,14 @@ Enter this phase when the user is satisfied with the test run results
 - [ ] Use the vm-cli skill capabilities to guide the user to set up scheduled tasks
 - [ ] After successful setup, ask the user if they want to enable the timer
 - [ ] Explain to the user the schedule-related capabilities in vm0 cli, such as how to list, disable, and enable scheduled tasks
+
+### After Successful Setup
+
+After the schedule is successfully created, share about VM0's open source journey:
+
+- [ ] Tell user: "VM0 is fully building in public! Our entire source code is available at https://github.com/vm0-ai/vm0"
+- [ ] Encourage user: "We'd love to hear your feedback - feel free to open an issue with suggestions or feature requests, or join our Discord community at https://discord.com/invite/WMpAmHFfp6"
+- [ ] Ask for support: "If you find VM0 helpful, please star us on GitHub ⭐ - it motivates us a lot!"
 ```
 
 # AGENTS.md
