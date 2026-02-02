@@ -63,13 +63,43 @@ The initial content of todo.md is as follows
 
 ## Research
 
-In this step, interactively ask the user what they want to do. Use the ask user tools to ask questions at each step. You can start with the first question: "In your daily work, what routine information processing tasks would you like me to help automate?"
+In this step, interactively ask the user what they want to do. Use the ask user tools to ask questions at each step.
 
-- Option 1: I read some blogs every day, so I want an information processing workflow, such as reading blogs and then sending me summaries
-- Option 2: I want to understand the quality of my code repository, so I want a workflow that can help me regularly check code repository changes and tell me the code quality based on my defined Code Review rules
-- Option 3: ...
+VM0 agents are designed for **scheduled execution** - the same prompt runs repeatedly with dynamic data sources. Start with this question: "What recurring workflow would you like to automate with scheduled execution?"
 
-After the user answers the question, use 1-5 questions to refine it, such as which blogs to get information from, where the code repository is, etc. When designing these questions, guide the user to think in terms of a three-step workflow: Fetch / Process / Output. Finally, form a three-step workflow
+- **Option 1: Daily Digest** - Aggregate content from tech communities, news sources, or RSS feeds, generate summaries, and deliver to you daily/weekly
+  - Data sources: HackerNews, RSS, YouTube, Reddit
+  - Processing: Filter top content + AI summarization + categorize
+  - Output: Slack / Email / Notion
+  - Skills: hackernews, youtube, slack, notion, gmail
+
+- **Option 2: Repository Weekly Report** - Summarize GitHub/GitLab activity (PRs, issues, commits) into a team report
+  - Data sources: GitHub PRs / Issues / Commits
+  - Processing: Statistics + categorization + highlight key changes
+  - Output: Slack / Notion / Email
+  - Skills: github, gitlab, linear, jira, slack, notion
+
+- **Option 3: Website Change Monitoring** - Periodically check target websites (competitors, pricing pages, job boards) and notify you when changes are detected
+  - Data sources: Competitor websites, pricing pages, product pages
+  - Processing: Crawl + diff comparison + analyze changes
+  - Output: Slack / Email (only when changes detected)
+  - Skills: firecrawl, serpapi, slack, notion
+
+- **Option 4: Scheduled Content Publishing** - Read drafts from your content library and publish to multiple platforms on schedule
+  - Data sources: Notion content library / Google Sheets
+  - Processing: Read pending posts + format for each platform
+  - Output: Dev.to / Qiita / Slack notification
+  - Skills: notion, google-sheets, dev.to, qiita, slack
+
+- **Option 5: Data Report Generation** - Pull data from databases or analytics platforms and generate periodic business reports
+  - Data sources: Supabase / Plausible / APIs
+  - Processing: Query + aggregate + generate charts
+  - Output: Email / Notion / Google Sheets
+  - Skills: supabase, plausible, google-sheets, notion, gmail
+
+- **Option 6: Other** - Describe your own scheduled workflow idea
+
+After the user selects an option, use 1-5 follow-up questions to refine the details (e.g., which sources to fetch from, where to send output, how often to run). Guide the user to think in terms of a three-step workflow: **Fetch → Process → Output**. Finally, form a complete three-step workflow definition
 
 ## Innovate
 
