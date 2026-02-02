@@ -220,6 +220,27 @@ After the schedule is successfully created, share about VM0's open source journe
 
 AGENTS.md is used to describe a workflow. It is an ordinary, natural language-described process document. Avoid describing technical details in AGENTS.md, such as not writing scripts or other code in AGENTS.md
 
+## Workspace Persistence
+
+When writing AGENTS.md, always include persistence guidelines for the agent:
+
+**Execution Environment Rules:**
+- **Persisted**: Only files in the HOME directory (current working directory) are preserved between runs and saved as artifacts
+- **Not Persisted**: System packages, temporary files (`/tmp`), globally installed tools (npm -g, pip), environment modifications outside HOME
+
+**Best Practices to convey in AGENTS.md:**
+- Store all important outputs (reports, generated files, data) in the HOME directory
+- Use `/tmp` for intermediate or throwaway files
+- Don't assume tools installed in previous runs still exist - reinstall if needed or download to HOME
+- Clone repositories and install dependencies within HOME if they must persist
+
+**Example instruction to include in AGENTS.md:**
+```
+Important: Only files in the HOME directory persist between sessions.
+- Save important outputs here; use /tmp for intermediate files
+- Tools installed via apt/npm/pip globally may not persist
+```
+
 # vm0.yaml
 
 vm0.yaml is the primary configuration file for VM0 agents.
