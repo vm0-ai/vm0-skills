@@ -134,21 +134,33 @@ If skills changed:
 - If missing, guide user to obtain and paste new tokens
 - Update .env.local with new entries
 
-### 6. Test Run
+### 6. Deploy Changes
+
+Deploy the updated configuration:
+
+```bash
+vm0 compose vm0.yaml
+```
+
+**Important**: `vm0 compose` is idempotent. If the configuration hasn't actually changed, the version hash stays the same - this is normal, not an error. Do not try flags like `--force` (they don't exist). If compose succeeds without error, the deployment is complete.
+
+Verify with `vm0 agent ls` to see the agent and its version.
+
+### 7. Test Run
 
 - Look for existing .env.local in current directory
 - If found, use it: `vm0 cook --env-file=.env.local "test prompt"`
 - If not found, guide user to create one with required tokens
 - Run the agent and review results with user
 
-### 7. Iterate Until Satisfied
+### 8. Iterate Until Satisfied
 
 Follow the test run loop from create operation:
 - Analyze logs for issues
 - Propose optimizations if needed
 - Re-run until user is satisfied
 
-### 8. Update Schedule (if needed)
+### 9. Update Schedule (if needed)
 
 Determine if schedule needs updating:
 - **New secrets required**: If new skills added that need secrets not in the original schedule, user must run `vm0 schedule setup` to upload new tokens
@@ -157,7 +169,7 @@ Determine if schedule needs updating:
 
 Tell user clearly whether schedule reconfiguration is needed and why.
 
-### 9. Celebrate Success
+### 10. Celebrate Success
 
 If user is satisfied:
 - Remind them VM0 is open source: https://github.com/vm0-ai/vm0
