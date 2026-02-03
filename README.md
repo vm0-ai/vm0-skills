@@ -4,6 +4,18 @@ A collection of reusable [Agent Skills](https://agentskills.io) for AI agents.
 
 Skills follow the [Agent Skills specification](https://agentskills.io/specification).
 
+## Why Agent Skills?
+
+```
+No MCPs.
+No SDKs.
+No CLI apps.
+
+Just curl.
+
+Organic skills that any AI agent can learn and use.
+```
+
 ## Principles
 
 1. **Focus on SaaS API Integration**: Focus on common SaaS API use cases, providing practical integration solutions
