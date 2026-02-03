@@ -85,19 +85,13 @@ VM0 agents are designed for **scheduled execution** - the same prompt runs repea
   - Output: Slack / Email (only when changes detected)
   - Skills: firecrawl, serpapi, slack, notion
 
-- **Option 4: Scheduled Content Publishing** - Read drafts from your content library and publish to multiple platforms on schedule
-  - Data sources: Notion content library / Google Sheets
-  - Processing: Read pending posts + format for each platform
-  - Output: Dev.to / Qiita / Slack notification
-  - Skills: notion, google-sheets, dev.to, qiita, slack
+- **Option 4: Crypto Morning Briefing** - Generate overnight crypto market reports covering price movements, news, and trends - ready for your morning review
+  - Data sources: CoinGecko, Crypto news feeds, DeFiLlama, X/Twitter
+  - Processing: Price change summary + top news extraction + sentiment analysis + highlight unusual movements
+  - Output: Slack / Email / Notion
+  - Skills: firecrawl, rss-fetch, perplexity, slack, gmail, notion
 
-- **Option 5: Data Report Generation** - Pull data from databases or analytics platforms and generate periodic business reports
-  - Data sources: Supabase / Plausible / APIs
-  - Processing: Query + aggregate + generate charts
-  - Output: Email / Notion / Google Sheets
-  - Skills: supabase, plausible, google-sheets, notion, gmail
-
-- **Option 6: Other** - Describe your own scheduled workflow idea
+- **Option 5: Other** - Describe your own scheduled workflow idea
 
 After the user selects an option, use 1-5 follow-up questions to refine the details (e.g., which sources to fetch from, where to send output, how often to run). Guide the user to think in terms of a three-step workflow: **Fetch → Process → Output**. Finally, form a complete three-step workflow definition
 
