@@ -45,6 +45,112 @@ VM0 bridges the gap between local agent development and cloud automation. Develo
 - Team collaboration with shared agents and outputs
 - Production-grade observability and debugging
 
+## Available Operations
+
+- `/vm0-agent create` - Create a new agent with guided workflow
+- `/vm0-agent update` - Modify an existing agent or schedule
+- `/vm0-agent status` - View current agents and schedules
+
+# Operation: status
+
+When the user uses /vm0-agent status, or asks about current state/status, enter this operation.
+
+Help user understand their current VM0 setup:
+
+1. **List schedules**: Run `vm0 schedule ls` to show scheduled tasks
+2. **List agents**: Run `vm0 agent ls` to show deployed agents
+3. **Summarize**: Present a clear overview of what's running, when, and any recent activity
+
+This is an informational operation - answer follow-up questions and suggest `/vm0-agent update` if user wants to make changes.
+
+# Operation: update
+
+When the user uses /vm0-agent update, or mentions wanting to modify/change an agent or schedule, enter this operation.
+
+This is a flexible operation - combine commands as needed based on user intent.
+
+## Available Commands
+
+- `vm0 schedule ls` - List scheduled tasks (shows schedule name, frequency, associated agent)
+- `vm0 agent ls` - List deployed agents
+- `vm0 agent clone <agent-name> [directory]` - Download agent's vm0.yaml and AGENTS.md from cloud
+
+## Workflow
+
+### 1. Understand Current State
+
+- Run `vm0 schedule ls` and `vm0 agent ls` to see what exists
+- Ask user which agent or schedule they want to modify
+
+### 2. Sync Local and Remote
+
+- Check if local vm0.yaml and AGENTS.md exist in current directory
+- If user wants to modify an agent, use `vm0 agent clone <agent-name> /tmp/<agent-name>` to fetch remote version
+- Compare local vs remote configurations
+- If they differ, ask user which version to use as base:
+  - Option 1: Use local version (keep current local files)
+  - Option 2: Use remote version (copy from /tmp to current directory)
+  - Option 3: Merge manually (user will handle)
+
+### 3. Gather Modification Intent
+
+- Ask user what they want to change:
+  - Schedule timing (frequency, time of day)
+  - Agent behavior (modify AGENTS.md instructions)
+  - Add/remove skills
+  - Change output destinations
+  - Other customizations
+
+### 4. Find Skills (if needed)
+
+If user wants new capabilities, search for skills:
+
+```bash
+curl -s "https://skills.sh/api/search?q=<keyword>"
+```
+
+Also check https://github.com/vm0-ai/vm0-skills for VM0-specific integrations.
+
+Present 1-3 options for user to choose from (similar to create operation's innovate phase).
+
+### 5. Handle New Tokens (if needed)
+
+If skills changed:
+- Read each new skill's SKILL.md to find required credentials (`vm0_secrets`, `vm0_vars`)
+- Check if existing .env.local has the required tokens
+- If missing, guide user to obtain and paste new tokens
+- Update .env.local with new entries
+
+### 6. Test Run
+
+- Look for existing .env.local in current directory
+- If found, use it: `vm0 cook --env-file=.env.local "test prompt"`
+- If not found, guide user to create one with required tokens
+- Run the agent and review results with user
+
+### 7. Iterate Until Satisfied
+
+Follow the test run loop from create operation:
+- Analyze logs for issues
+- Propose optimizations if needed
+- Re-run until user is satisfied
+
+### 8. Update Schedule (if needed)
+
+Determine if schedule needs updating:
+- **New secrets required**: If new skills added that need secrets not in the original schedule, user must run `vm0 schedule setup` to upload new tokens
+- **Timing change only**: Use `vm0 schedule update` to modify frequency/time
+- **No change needed**: If only AGENTS.md content changed with same skills, existing schedule continues to work after `vm0 compose`
+
+Tell user clearly whether schedule reconfiguration is needed and why.
+
+### 9. Celebrate Success
+
+If user is satisfied:
+- Remind them VM0 is open source: https://github.com/vm0-ai/vm0
+- Invite to Discord: https://discord.com/invite/WMpAmHFfp6
+- Ask for GitHub star if they found it helpful
+
 # Operation: create agent
 
 When the user uses /vm0-agent create, enter this workflow
