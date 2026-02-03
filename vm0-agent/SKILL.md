@@ -69,28 +69,41 @@ When the user uses /vm0-agent update, or mentions wanting to modify/change an ag
 
 This is a flexible operation - combine commands as needed based on user intent.
 
-## Available Commands
+## Key Command
 
-- `vm0 schedule ls` - List scheduled tasks (shows schedule name, frequency, associated agent)
+**To get an agent's configuration from cloud, use `vm0 agent clone`:**
+
+```bash
+vm0 agent clone <agent-name> /tmp/<agent-name>
+```
+
+This downloads vm0.yaml and AGENTS.md from the cloud. There is no other way to fetch remote agent configuration.
+
+## Other Commands
+
+- `vm0 schedule ls` - List scheduled tasks
 - `vm0 agent ls` - List deployed agents
-- `vm0 agent clone <agent-name> [directory]` - Download agent's vm0.yaml and AGENTS.md from cloud
 
 ## Workflow
 
-### 1. Understand Current State
+### 1. Fetch Remote Configuration First
 
-- Run `vm0 schedule ls` and `vm0 agent ls` to see what exists
-- Ask user which agent or schedule they want to modify
+When user wants to update an agent:
 
-### 2. Sync Local and Remote
+```bash
+vm0 agent clone <agent-name> /tmp/<agent-name>
+```
 
-- Look for existing vm0.yaml and AGENTS.md in **current directory and one-level subdirectories only** (avoid unbounded searches)
-- If user wants to modify an agent, use `vm0 agent clone <agent-name> /tmp/<agent-name>` to fetch remote version
-- Compare local vs remote configurations
+This ensures you have the current cloud version to work with.
+
+### 2. Compare with Local (if exists)
+
+- Check current directory and one-level subdirectories for existing vm0.yaml and AGENTS.md
+- If local files exist, compare with the cloned version
 - If they differ, ask user which version to use as base:
-  - Option 1: Use local version (keep current local files)
+  - Option 1: Use local version
   - Option 2: Use remote version (copy from /tmp to current directory)
-  - Option 3: Merge manually (user will handle)
+  - Option 3: Merge manually
 
 ### 3. Gather Modification Intent
 
