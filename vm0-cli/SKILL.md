@@ -421,6 +421,26 @@ View specific version:
 vm0 agent inspect my-agent:abc123
 ```
 
+### Clone Agent
+
+Download an agent's compose configuration to local directory:
+
+```bash
+vm0 agent clone my-agent
+```
+
+Clone to a specific directory:
+
+```bash
+vm0 agent clone my-agent ./my-project
+```
+
+This command:
+- Downloads compose configuration and saves as `vm0.yaml`
+- Downloads instructions file (e.g., `AGENTS.md`) if exists
+- Preserves environment variables with `${{ secrets.X }}` syntax
+- Fails if destination directory already exists
+
 ---
 
 ## Usage Statistics
@@ -444,6 +464,15 @@ vm0 usage --since 2024-01-01 --until 2024-01-31
 ## Model Provider Configuration
 
 Manage LLM model providers for agent runs.
+
+### Supported Provider Types
+
+| Type | Description |
+|------|-------------|
+| `anthropic-api-key` | Anthropic API key (Claude models) |
+| `openrouter-api-key` | OpenRouter API with auto model routing |
+| `moonshot-api-key` | Moonshot AI (Kimi) API key |
+| `minimax-api-key` | MiniMax API key |
 
 **List providers:**
 
@@ -474,6 +503,24 @@ vm0 model-provider set-default anthropic-api-key
 ```bash
 vm0 model-provider delete anthropic-api-key
 ```
+
+### OpenRouter Provider
+
+OpenRouter supports multiple model providers through a single API. Two modes available:
+
+**Auto mode (default):** OpenRouter automatically routes to the best available model.
+
+```bash
+vm0 model-provider setup --type openrouter-api-key --credential "sk-or-xxx"
+```
+
+**Explicit model selection:** Specify a model from supported list.
+
+```bash
+vm0 model-provider setup --type openrouter-api-key --credential "sk-or-xxx" --model anthropic/claude-sonnet-4.5
+```
+
+Supported models include Claude (anthropic/claude-*), Kimi (moonshotai/kimi-*), DeepSeek (deepseek/*), GLM (z-ai/glm-*), MiniMax (minimax/*), and Qwen (qwen/*) series.
 
 ---
 
