@@ -84,7 +84,7 @@ This is a flexible operation - combine commands as needed based on user intent.
 
 ### 2. Sync Local and Remote
 
-- Check if local vm0.yaml and AGENTS.md exist in current directory
+- Look for existing vm0.yaml and AGENTS.md in **current directory and one-level subdirectories only** (avoid unbounded searches)
 - If user wants to modify an agent, use `vm0 agent clone <agent-name> /tmp/<agent-name>` to fetch remote version
 - Compare local vs remote configurations
 - If they differ, ask user which version to use as base:
