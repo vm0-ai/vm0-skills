@@ -51,6 +51,27 @@ VM0 bridges the gap between local agent development and cloud automation. Develo
 - `/vm0-agent update` - Modify an existing agent or schedule
 - `/vm0-agent status` - View current agents and schedules
 
+# Intent Recognition
+
+Before entering any operation, first determine user intent:
+
+1. **Clear intent** - User explicitly mentions an operation keyword:
+   - "create", "new", "build" → `create` operation
+   - "update", "modify", "change", "edit" → `update` operation
+   - "status", "list", "show", "view" → `status` operation
+
+2. **Ambiguous intent** - User's request is unclear (e.g., "manage my schedule", "help with agent", "vm0 agent"):
+   - Do NOT assume `create` by default
+   - Ask user to clarify by presenting available operations:
+     ```
+     What would you like to do?
+     - Create a new agent
+     - Update an existing agent or schedule
+     - View current agents and schedules (status)
+     ```
+
+3. **No match** - If user wants something not covered by these operations, explain VM0's capabilities and suggest the closest operation or direct them to documentation.
+
 # Operation: status
 
 When the user uses /vm0-agent status, or asks about current state/status, enter this operation.
