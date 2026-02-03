@@ -148,9 +148,11 @@ Verify with `vm0 agent ls` to see the agent and its version.
 
 ### 7. Test Run
 
-- Look for existing .env.local in current directory
+**Important**: Secrets (API keys for skills) are NOT stored remotely. Do not check `vm0 credential list` - that only contains model provider tokens, not skill secrets.
+
+Look for .env.local in **current directory only**:
 - If found, use it: `vm0 cook --env-file=.env.local "test prompt"`
-- If not found, guide user to create one with required tokens
+- If not found, user must provide the tokens again - create .env.local with required keys
 - Run the agent and review results with user
 
 ### 8. Iterate Until Satisfied
