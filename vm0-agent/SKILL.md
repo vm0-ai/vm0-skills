@@ -2,7 +2,7 @@
 name: vm0-agent
 description: Build and deploy AI agents using VM0's agent-native infrastructure. This skill guides you through the complete agent creation workflow - from understanding requirements to deployment and scheduling.
 vm0_secrets:
-  - VM0_API_KEY
+  - VM0_TOKEN
 ---
 
 # About VM0

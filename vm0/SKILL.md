@@ -2,7 +2,7 @@
 name: vm0
 description: VM0 API for running AI agents in secure sandboxes. Use this skill to execute agents, manage runs, and download outputs (artifacts) and inputs (volumes) via the VM0 platform API.
 vm0_secrets:
-  - VM0_API_KEY
+  - VM0_TOKEN
 ---
 
 # VM0 API
@@ -19,7 +19,7 @@ Execute AI agents in secure sandboxed environments and manage their inputs/outpu
 ## Prerequisites
 
 ```bash
-export VM0_API_KEY=vm0_live_your-api-key
+export VM0_TOKEN=vm0_live_your-api-key
 ```
 
 ### Get API Key
@@ -31,7 +31,7 @@ export VM0_API_KEY=vm0_live_your-api-key
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap only the curl command in `bash -c '...'`, then pipe to jq outside. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 > ```bash
-> bash -c 'curl -s "https://api.vm0.ai/v1/agents" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
+> bash -c 'curl -s "https://api.vm0.ai/v1/agents" -H "Authorization: Bearer $VM0_TOKEN"' | jq '.data'
 > ```
 
 ## Quick Start
@@ -39,7 +39,7 @@ export VM0_API_KEY=vm0_live_your-api-key
 ### List Your Agents
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/agents" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name}'
+bash -c 'curl -s "https://api.vm0.ai/v1/agents" -H "Authorization: Bearer $VM0_TOKEN"' | jq '.data[] | {id, name}'
 ```
 
 ### Run an Agent
@@ -56,7 +56,7 @@ Write to `/tmp/vm0_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.vm0.ai/v1/runs" -H "Authorization: Bearer $VM0_API_KEY" -H "Content-Type: application/json" -d @/tmp/vm0_request.json' | jq '{id, status}'
+bash -c 'curl -s -X POST "https://api.vm0.ai/v1/runs" -H "Authorization: Bearer $VM0_TOKEN" -H "Content-Type: application/json" -d @/tmp/vm0_request.json' | jq '{id, status}'
 ```
 
 ### Check Run Status
@@ -64,13 +64,13 @@ bash -c 'curl -s -X POST "https://api.vm0.ai/v1/runs" -H "Authorization: Bearer 
 Replace `<run-id>` with your run ID:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, status, error, execution_time_ms}'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>" -H "Authorization: Bearer $VM0_TOKEN"' | jq '{id, status, error, execution_time_ms}'
 ```
 
 ### Get Run Logs
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[]'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs" -H "Authorization: Bearer $VM0_TOKEN"' | jq '.data[]'
 ```
 
 ## Core Operations
@@ -80,13 +80,13 @@ bash -c 'curl -s "https://api.vm0.ai/v1/runs/<run-id>/logs" -H "Authorization: B
 List all agents:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/agents" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data'
+bash -c 'curl -s "https://api.vm0.ai/v1/agents" -H "Authorization: Bearer $VM0_TOKEN"' | jq '.data'
 ```
 
 Get agent details:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/agents/<agent-id>" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, name, description}'
+bash -c 'curl -s "https://api.vm0.ai/v1/agents/<agent-id>" -H "Authorization: Bearer $VM0_TOKEN"' | jq '{id, name, description}'
 ```
 
 See [references/agents.md](references/agents.md) for version listing.
@@ -97,7 +97,7 @@ Create a run with variables:
 
 ```bash
 curl -s -X POST "https://api.vm0.ai/v1/runs" \
-  -H "Authorization: Bearer $VM0_API_KEY" \
+  -H "Authorization: Bearer $VM0_TOKEN" \
   -H "Content-Type: application/json" \
   -d @- << 'EOF'
 {
@@ -116,7 +116,7 @@ EOF
 Cancel a running execution:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.vm0.ai/v1/runs/<run-id>/cancel" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{id, status}'
+bash -c 'curl -s -X POST "https://api.vm0.ai/v1/runs/<run-id>/cancel" -H "Authorization: Bearer $VM0_TOKEN"' | jq '{id, status}'
 ```
 
 See [references/runs.md](references/runs.md) for events streaming, logs filtering, and metrics.
@@ -126,14 +126,14 @@ See [references/runs.md](references/runs.md) for events streaming, logs filterin
 List volumes:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/volumes" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name}'
+bash -c 'curl -s "https://api.vm0.ai/v1/volumes" -H "Authorization: Bearer $VM0_TOKEN"' | jq '.data[] | {id, name}'
 ```
 
 Download volume as tar.gz archive (follows 302 redirect):
 
 ```bash
 curl -L -o volume.tar.gz "https://api.vm0.ai/v1/volumes/<volume-id>/download" \
-  -H "Authorization: Bearer $VM0_API_KEY"
+  -H "Authorization: Bearer $VM0_TOKEN"
 ```
 
 See [references/volumes.md](references/volumes.md) for version listing and download options.
@@ -143,14 +143,14 @@ See [references/volumes.md](references/volumes.md) for version listing and downl
 List artifacts:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/artifacts" -H "Authorization: Bearer $VM0_API_KEY"' | jq '.data[] | {id, name}'
+bash -c 'curl -s "https://api.vm0.ai/v1/artifacts" -H "Authorization: Bearer $VM0_TOKEN"' | jq '.data[] | {id, name}'
 ```
 
 Download artifact as tar.gz archive (follows 302 redirect):
 
 ```bash
 curl -L -o artifact.tar.gz "https://api.vm0.ai/v1/artifacts/<artifact-id>/download" \
-  -H "Authorization: Bearer $VM0_API_KEY"
+  -H "Authorization: Bearer $VM0_TOKEN"
 ```
 
 Extract downloaded archive:
@@ -168,7 +168,7 @@ See [references/artifacts.md](references/artifacts.md) for version listing and d
 List endpoints support cursor-based pagination:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs?limit=10" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{data, pagination}'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs?limit=10" -H "Authorization: Bearer $VM0_TOKEN"' | jq '{data, pagination}'
 ```
 
 Response includes:
@@ -184,7 +184,7 @@ Response includes:
 Fetch next page:
 
 ```bash
-bash -c 'curl -s "https://api.vm0.ai/v1/runs?limit=10&cursor=abc123" -H "Authorization: Bearer $VM0_API_KEY"' | jq '{data, pagination}'
+bash -c 'curl -s "https://api.vm0.ai/v1/runs?limit=10&cursor=abc123" -H "Authorization: Bearer $VM0_TOKEN"' | jq '{data, pagination}'
 ```
 
 ### Error Handling
