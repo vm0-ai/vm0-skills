@@ -153,8 +153,7 @@ If skills changed:
 - Read each new skill's SKILL.md to find required credentials (`vm0_secrets`, `vm0_vars`)
 - Check if tokens are already stored remotely: `vm0 secret list`
 - If missing, guide user to obtain and paste new tokens
-- **Store remotely via `vm0 secret set`** (recommended — persists across runs and schedules)
-- Alternatively, update .env.local with new entries (for local-only development)
+- **Store remotely via `vm0 secret set`** (persists across runs and schedules)
 
 ### 6. Deploy Changes
 
@@ -170,22 +169,15 @@ Verify with `vm0 agent ls` to see the agent and its version.
 
 ### 7. Test Run
 
-**Secrets and variables are now stored remotely.** Check what's available with `vm0 secret list` and `vm0 variable list`.
-
-- If secrets are stored remotely (via `vm0 secret set`), no `--env-file` is needed
-- If using .env.local instead, pass it explicitly
+**Secrets and variables are stored remotely.** Check what's available with `vm0 secret list` and `vm0 variable list`.
 
 **Run command** (do not guess additional flags):
 
 ```bash
-# If secrets are stored remotely (recommended)
 vm0 cook "your test prompt"
-
-# If using .env.local
-vm0 cook "your test prompt" --env-file .env.local
 ```
 
-The `cook` command only supports these options: `--env-file`, `-y` (skip confirmation). Do not add flags like `--artifact-name` (use `vm0 run` for that).
+The `cook` command only supports these options: `-y` (skip confirmation). Do not add flags like `--artifact-name` (use `vm0 run` for that).
 
 ### 8. Iterate Until Satisfied
 
@@ -304,7 +296,7 @@ Give the user several options for confirmation using the ask user tools. Users c
   - If not documented, search online for the service's API key/token setup guide
   - Provide step-by-step instructions to help user get the token
   - Ask user to paste the token
-  - **Store remotely via `vm0 secret set`** (primary method — persists across runs and schedules):
+  - **Store remotely via `vm0 secret set`** (persists across runs and schedules):
     ```bash
     vm0 secret set SLACK_BOT_TOKEN --body "xoxb-xxx"
     ```
@@ -312,14 +304,11 @@ Give the user several options for confirmation using the ask user tools. Users c
     ```bash
     vm0 variable set ENV_NAME production
     ```
-  - Alternatively, write to .env.local as `KEY=value` (for local-only development)
 
 ## Test run
 
 - [ ] Explain in advance that the run may take a relatively long time, 1-20 minutes
-- [ ] Use the vm0-cli skill capabilities to run the agent with cook:
-  - If secrets were stored remotely via `vm0 secret set`, simply run: `vm0 cook "your test prompt"`
-  - If using .env.local instead, run: `vm0 cook --env-file=.env.local "your test prompt"`
+- [ ] Use the vm0-cli skill capabilities to run the agent with cook: `vm0 cook "your test prompt"`
 - [ ] If the workflow writes files to the workspace, explain to the user where and how to view the artifact
 - [ ] Explain to the user what command cook executed, and introduce the CLI capabilities of vm0
 
@@ -463,7 +452,7 @@ Skills with `vm0_secrets` or `vm0_vars` in their SKILL.md frontmatter are automa
 
 ### Passing Secrets and Vars
 
-**Primary method — store remotely via CLI (recommended):**
+**Store remotely via CLI:**
 
 ```bash
 # Store a secret (interactive — prompts for value securely)
@@ -480,22 +469,9 @@ vm0 secret list
 vm0 variable list
 ```
 
-Once stored, secrets and variables are automatically available to all agent runs and schedules — no `--env-file` needed.
+Once stored, secrets and variables are automatically available to all agent runs and schedules.
 
-**Alternative — env file (for local development or migration):**
-
-```
-# .env.local
-SLACK_BOT_TOKEN=xoxb-xxx
-NOTION_API_KEY=secret_xxx
-ENV_NAME=production
-```
-
-```bash
-vm0 run my-agent "prompt" --env-file .env.local
-```
-
-**Alternative — CLI flags (for one-off runs):**
+**CLI flags (for one-off runs):**
 
 ```bash
 vm0 run my-agent "prompt" --secrets API_KEY=sk-xxx --vars ENV_NAME=production
@@ -507,7 +483,7 @@ If you see an error like `Missing required secrets: API_KEY`, follow these steps
 
 1. **Check if the variable is declared in the skill's SKILL.md**
    - Look for `vm0_secrets` or `vm0_vars` in the skill's frontmatter
-   - If declared there, the variable is automatically injected when provided via `--env-file`
+   - If declared there, the variable is automatically injected when stored remotely
 
 2. **If not declared in the skill, add it to vm0.yaml's environment section:**
    ```yaml
@@ -517,14 +493,9 @@ If you see an error like `Missing required secrets: API_KEY`, follow these steps
      MY_VAR: ${{ vars.MY_VAR }}
    ```
 
-3. **Ensure the value exists in .env.local:**
-   ```
-   API_KEY=your-actual-key-here
-   ```
-
-4. **Ensure you're using `--env-file` when running:**
+3. **Ensure the value is stored remotely:**
    ```bash
-   vm0 run my-agent "prompt" --env-file .env.local
+   vm0 secret set API_KEY
    ```
 
 ## Skills
