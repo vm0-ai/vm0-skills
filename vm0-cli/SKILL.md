@@ -524,26 +524,80 @@ Supported models include Claude (anthropic/claude-*), Kimi (moonshotai/kimi-*), 
 
 ---
 
-## Credential Management (Experimental)
+## Secret Management
 
-Store credentials for agent runs.
+Store secrets remotely for agent runs. Secrets are for sensitive values (API keys, tokens) and are referenced in vm0.yaml as `${{ secrets.NAME }}`.
 
-**List credentials:**
+**List secrets:**
 
 ```bash
-vm0 experimental-credential list
+vm0 secret list
 ```
 
-**Set a credential:**
+**Set a secret (interactive — prompts for value):**
 
 ```bash
-vm0 experimental-credential set MY_API_KEY "secret-value"
+vm0 secret set MY_API_KEY
 ```
 
-**Delete a credential:**
+**Set a secret (non-interactive):**
 
 ```bash
-vm0 experimental-credential delete MY_API_KEY
+vm0 secret set MY_API_KEY --body "sk-xxx-secret-value"
+```
+
+**Set a secret with description:**
+
+```bash
+vm0 secret set MY_API_KEY --body "sk-xxx" --description "OpenAI API key for summarization"
+```
+
+**Delete a secret:**
+
+```bash
+vm0 secret delete MY_API_KEY
+```
+
+**Delete without confirmation:**
+
+```bash
+vm0 secret delete MY_API_KEY -y
+```
+
+---
+
+## Variable Management
+
+Store variables remotely for agent runs. Variables are for non-sensitive configuration and are referenced in vm0.yaml as `${{ vars.NAME }}`.
+
+**List variables:**
+
+```bash
+vm0 variable list
+```
+
+**Set a variable:**
+
+```bash
+vm0 variable set DEBUG true
+```
+
+**Set a variable with description:**
+
+```bash
+vm0 variable set ENV_NAME production --description "Target environment"
+```
+
+**Delete a variable:**
+
+```bash
+vm0 variable delete DEBUG
+```
+
+**Delete without confirmation:**
+
+```bash
+vm0 variable delete ENV_NAME -y
 ```
 
 ---
@@ -621,6 +675,9 @@ export VM0_TOKEN=vm0_live_your-api-key
 | `vm0 artifact init` | `--name <name>` | Required in non-TTY |
 | `vm0 schedule init` | `--name`, `--frequency`, `--time`, `--prompt` | All required; `--day` for weekly/monthly |
 | `vm0 schedule delete` | `-f, --force` | Skip deletion confirmation |
+| `vm0 secret set` | `-b, --body <value>` | Required in non-TTY |
+| `vm0 secret delete` | `-y, --yes` | Skip confirmation |
+| `vm0 variable delete` | `-y, --yes` | Skip confirmation |
 | `vm0 model-provider setup` | `--type <type> --credential <value>` | Both required together |
 
 ### CI/CD Example

@@ -151,9 +151,10 @@ Present 1-3 options for user to choose from (similar to create operation's innov
 
 If skills changed:
 - Read each new skill's SKILL.md to find required credentials (`vm0_secrets`, `vm0_vars`)
-- Check if existing .env.local has the required tokens
+- Check if tokens are already stored remotely: `vm0 secret list`
 - If missing, guide user to obtain and paste new tokens
-- Update .env.local with new entries
+- **Store remotely via `vm0 secret set`** (recommended — persists across runs and schedules)
+- Alternatively, update .env.local with new entries (for local-only development)
 
 ### 6. Deploy Changes
 
@@ -169,15 +170,18 @@ Verify with `vm0 agent ls` to see the agent and its version.
 
 ### 7. Test Run
 
-**Important**: Secrets (API keys for skills) are NOT stored remotely. Do not check `vm0 credential list` - that only contains model provider tokens, not skill secrets.
+**Secrets and variables are now stored remotely.** Check what's available with `vm0 secret list` and `vm0 variable list`.
 
-Look for .env.local in **current directory only**:
-- If found, use it for the test run
-- If not found, user must provide the tokens again - create .env.local with required keys
+- If secrets are stored remotely (via `vm0 secret set`), no `--env-file` is needed
+- If using .env.local instead, pass it explicitly
 
 **Run command** (do not guess additional flags):
 
 ```bash
+# If secrets are stored remotely (recommended)
+vm0 cook "your test prompt"
+
+# If using .env.local
 vm0 cook "your test prompt" --env-file .env.local
 ```
 
@@ -193,7 +197,7 @@ Follow the test run loop from create operation:
 ### 9. Update Schedule (if needed)
 
 Determine if schedule needs updating:
-- **New secrets required**: If new skills added that need secrets not in the original schedule, user must run `vm0 schedule setup` to upload new tokens
+- **New secrets required**: If new skills added that need secrets, store them via `vm0 secret set` — they will be automatically available to scheduled runs
 - **Timing change only**: Use `vm0 schedule update` to modify frequency/time
 - **No change needed**: If only AGENTS.md content changed with same skills, existing schedule continues to work after `vm0 compose`
 
@@ -300,12 +304,22 @@ Give the user several options for confirmation using the ask user tools. Users c
   - If not documented, search online for the service's API key/token setup guide
   - Provide step-by-step instructions to help user get the token
   - Ask user to paste the token
-  - Write to .env.local as `KEY=value`
+  - **Store remotely via `vm0 secret set`** (primary method — persists across runs and schedules):
+    ```bash
+    vm0 secret set SLACK_BOT_TOKEN --body "xoxb-xxx"
+    ```
+  - For non-sensitive config, use `vm0 variable set`:
+    ```bash
+    vm0 variable set ENV_NAME production
+    ```
+  - Alternatively, write to .env.local as `KEY=value` (for local-only development)
 
 ## Test run
 
 - [ ] Explain in advance that the run may take a relatively long time, 1-20 minutes
-- [ ] Use the vm0-cli skill capabilities to run the agent with cook, using --env-file=.env.local to pass the token
+- [ ] Use the vm0-cli skill capabilities to run the agent with cook:
+  - If secrets were stored remotely via `vm0 secret set`, simply run: `vm0 cook "your test prompt"`
+  - If using .env.local instead, run: `vm0 cook --env-file=.env.local "your test prompt"`
 - [ ] If the workflow writes files to the workspace, explain to the user where and how to view the artifact
 - [ ] Explain to the user what command cook executed, and introduce the CLI capabilities of vm0
 
@@ -434,21 +448,41 @@ VM0 supports three template variable types:
 | Type            | Syntax                     | Storage              | Use Case                                           |
 | --------------- | -------------------------- | -------------------- | -------------------------------------------------- |
 | **credentials** | `${{ credentials.NAME }}`  | Platform (persistent)| Model provider tokens only (e.g., `CLAUDE_CODE_OAUTH_TOKEN`) |
-| **secrets**     | `${{ secrets.NAME }}`      | CLI (ephemeral)      | API keys for skills, per-execution tokens          |
-| **vars**        | `${{ vars.NAME }}`         | CLI (ephemeral)      | Feature flags, environment names                   |
+| **secrets**     | `${{ secrets.NAME }}`      | Remote (stored via CLI) | API keys for skills, per-execution tokens          |
+| **vars**        | `${{ vars.NAME }}`         | Remote (stored via CLI) | Feature flags, environment names                   |
 
 ### Credentials vs Secrets
 
 > **Important**: Use the right type for the right purpose:
 >
-> - **credentials**: Reserved for model provider authentication only (e.g., `CLAUDE_CODE_OAUTH_TOKEN`). These are stored persistently on the VM0 platform and managed via `vm0 credential set/list/delete`.
-> - **secrets/vars**: Use for ALL skill and AGENTS.md environment variables. Always pass via `--env-file .env.local`.
+> - **credentials**: Reserved for model provider authentication only (e.g., `CLAUDE_CODE_OAUTH_TOKEN`). These are stored persistently on the VM0 platform and managed via `vm0 model-provider setup/set-default/delete`.
+> - **secrets**: Use for ALL sensitive skill API keys and tokens. Store remotely via `vm0 secret set` — they persist across runs and schedules.
+> - **vars**: Use for non-sensitive configuration (feature flags, environment names). Store remotely via `vm0 variable set`.
 
-Skills with `vm0_secrets` or `vm0_vars` in their SKILL.md frontmatter are automatically injected when you provide them via `--env-file`.
+Skills with `vm0_secrets` or `vm0_vars` in their SKILL.md frontmatter are automatically injected when stored remotely.
 
 ### Passing Secrets and Vars
 
-**Always use `--env-file .env.local` for skills and workflow variables:**
+**Primary method — store remotely via CLI (recommended):**
+
+```bash
+# Store a secret (interactive — prompts for value securely)
+vm0 secret set SLACK_BOT_TOKEN
+
+# Store a secret (non-interactive)
+vm0 secret set NOTION_API_KEY --body "secret_xxx"
+
+# Store a variable
+vm0 variable set ENV_NAME production
+
+# List what's stored
+vm0 secret list
+vm0 variable list
+```
+
+Once stored, secrets and variables are automatically available to all agent runs and schedules — no `--env-file` needed.
+
+**Alternative — env file (for local development or migration):**
 
 ```
 # .env.local
@@ -461,7 +495,7 @@ ENV_NAME=production
 vm0 run my-agent "prompt" --env-file .env.local
 ```
 
-**CLI flags (alternative):**
+**Alternative — CLI flags (for one-off runs):**
 
 ```bash
 vm0 run my-agent "prompt" --secrets API_KEY=sk-xxx --vars ENV_NAME=production
