@@ -225,28 +225,28 @@ In this step, interactively ask the user what they want to do. Use the ask user 
 VM0 agents are designed for **scheduled execution** - the same prompt runs repeatedly with dynamic data sources. Start with this question: "What recurring workflow would you like to automate with scheduled execution?"
 
 - **Option 1: Daily Digest** - Aggregate content from tech communities, news sources, or RSS feeds, generate summaries, and deliver to you daily/weekly
-  - Data sources: HackerNews, RSS, YouTube, Reddit
+  - Data sources: HackerNews, RSS, YouTube
   - Processing: Filter top content + AI summarization + categorize
-  - Output: Slack / Email / Notion
-  - Skills: hackernews, youtube, slack, notion, gmail
+  - Output: Slack / Notion
+  - Skills: hackernews, youtube, slack, notion
 
 - **Option 2: Repository Weekly Report** - Summarize GitHub/GitLab activity (PRs, issues, commits) into a team report
   - Data sources: GitHub PRs / Issues / Commits
   - Processing: Statistics + categorization + highlight key changes
-  - Output: Slack / Notion / Email
+  - Output: Slack / Notion
   - Skills: github, gitlab, linear, jira, slack, notion
 
 - **Option 3: Website Change Monitoring** - Periodically check target websites (competitors, pricing pages, job boards) and notify you when changes are detected
   - Data sources: Competitor websites, pricing pages, product pages
   - Processing: Crawl + diff comparison + analyze changes
-  - Output: Slack / Email (only when changes detected)
+  - Output: Slack / Notion (only when changes detected)
   - Skills: firecrawl, serpapi, slack, notion
 
 - **Option 4: Crypto Morning Briefing** - Generate overnight crypto market reports covering price movements, news, and trends - ready for your morning review
-  - Data sources: CoinGecko, Crypto news feeds, DeFiLlama, X/Twitter
+  - Data sources: CoinGecko, Crypto news feeds, DeFiLlama
   - Processing: Price change summary + top news extraction + sentiment analysis + highlight unusual movements
-  - Output: Slack / Email / Notion
-  - Skills: firecrawl, rss-fetch, perplexity, slack, gmail, notion
+  - Output: Slack / Notion
+  - Skills: firecrawl, rss-fetch, perplexity, slack, notion
 
 - **Option 5: Other** - Describe your own scheduled workflow idea
 
