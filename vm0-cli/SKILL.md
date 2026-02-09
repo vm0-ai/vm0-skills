@@ -36,6 +36,8 @@ Install the VM0 CLI globally via npm:
 npm install -g @vm0/cli
 ```
 
+> **Tip:** If you don't want to install globally, you can run VM0 CLI directly using `npx -y @vm0/cli` (e.g., `npx -y @vm0/cli --version`).
+
 Verify installation:
 
 ```bash
