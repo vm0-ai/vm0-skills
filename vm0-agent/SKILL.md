@@ -227,28 +227,34 @@ VM0 agents are designed for **scheduled execution** - the same prompt runs repea
 - **Option 1: Daily Digest** - Aggregate content from tech communities, news sources, or RSS feeds, generate summaries, and deliver to you daily/weekly
   - Data sources: HackerNews, RSS, YouTube
   - Processing: Filter top content + AI summarization + categorize
-  - Output: Slack / Notion
-  - Skills: hackernews, youtube, slack, notion
+  - Output: Slack / Notion / Email
+  - Skills: hackernews, youtube, slack, notion, agentmail
 
 - **Option 2: Repository Weekly Report** - Summarize GitHub/GitLab activity (PRs, issues, commits) into a team report
   - Data sources: GitHub PRs / Issues / Commits
   - Processing: Statistics + categorization + highlight key changes
-  - Output: Slack / Notion
-  - Skills: github, gitlab, linear, jira, slack, notion
+  - Output: Slack / Notion / Email
+  - Skills: github, gitlab, linear, jira, slack, notion, agentmail
 
 - **Option 3: Website Change Monitoring** - Periodically check target websites (competitors, pricing pages, job boards) and notify you when changes are detected
   - Data sources: Competitor websites, pricing pages, product pages
   - Processing: Crawl + diff comparison + analyze changes
-  - Output: Slack / Notion (only when changes detected)
-  - Skills: firecrawl, serpapi, slack, notion
+  - Output: Slack / Notion / Email (only when changes detected)
+  - Skills: firecrawl, serpapi, slack, notion, agentmail
 
 - **Option 4: Crypto Morning Briefing** - Generate overnight crypto market reports covering price movements, news, and trends - ready for your morning review
   - Data sources: CoinGecko, Crypto news feeds, DeFiLlama
   - Processing: Price change summary + top news extraction + sentiment analysis + highlight unusual movements
-  - Output: Slack / Notion
-  - Skills: firecrawl, rss-fetch, perplexity, slack, notion
+  - Output: Slack / Notion / Email
+  - Skills: firecrawl, rss-fetch, perplexity, slack, notion, agentmail
 
-- **Option 5: Other** - Describe your own scheduled workflow idea
+- **Option 5: Customer Support Agent** - AI agent that monitors a support inbox, auto-replies to customer emails on a schedule, sends Slack notifications to the team for escalation, and generates daily email reports summarizing ticket volume and resolution
+  - Data sources: AgentMail inbox (inbound customer emails via webhook or polling)
+  - Processing: Classify intent (FAQ / bug report / feature request / escalation) + generate contextual replies from thread history + aggregate daily stats (tickets received, replied, pending)
+  - Output: Email (auto-reply to customers) / Slack (team escalation notifications) / Email (daily report to team)
+  - Skills: agentmail, slack
+
+- **Option 6: Other** - Describe your own scheduled workflow idea
 
 After the user selects an option, use 1-5 follow-up questions to refine the details (e.g., which sources to fetch from, where to send output, how often to run). Guide the user to think in terms of a three-step workflow: **Fetch → Process → Output**. Finally, form a complete three-step workflow definition
 
