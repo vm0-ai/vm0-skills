@@ -9,6 +9,8 @@ vm0_secrets:
 
 Execute AI agents in secure sandboxed environments and manage their inputs/outputs.
 
+> **Note:** If you have the VM0 CLI installed and the vm0-cli skill available, prefer using the vm0-cli skill instead. It provides a higher-level interface with more convenient operations.
+
 ## When to Use
 
 - Execute AI agents in isolated sandbox environments
