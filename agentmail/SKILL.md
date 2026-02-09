@@ -629,6 +629,8 @@ Your endpoint should return HTTP 200 immediately and process the payload asynchr
 | Status | Description |
 |--------|-------------|
 | `200` | Success |
+| `202` | Accepted (async delete for inboxes, threads) |
+| `204` | No Content (delete success for webhooks, pods, API keys) |
 | `400` | Invalid parameters |
 | `403` | Forbidden (sending not allowed) |
 | `404` | Resource not found |
