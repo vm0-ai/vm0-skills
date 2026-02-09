@@ -264,7 +264,7 @@ In this step, refine the technical details in the user's workflow by finding sui
 
 ### Step 1: Search skills
 
-There is two skill marketplace, search theme both.
+There are two skill marketplaces, search them both.
 
 Search the skills.sh ecosystem (33,700+ skills) using:
 
@@ -272,7 +272,9 @@ Search the skills.sh ecosystem (33,700+ skills) using:
 curl -s "https://skills.sh/api/search?q=<keyword>"
 ```
 
-Search https://github.com/vm0-ai/vm0-skills for 70+ integrations available skills.
+Search https://github.com/vm0-ai/vm0-skills for 70+ curated SaaS integration skills.
+
+**Priority rule**: If a skill is found in both marketplaces, always prefer the vm0-ai/vm0-skills version — it is optimized for VM0 agent workflows and has consistent quality.
 
 ### Step 2: Convert to vm0.yaml URL Format
 
