@@ -27,6 +27,95 @@ Use this skill when you need to:
 
 ---
 
+## Scenarios
+
+### 1. Customer Support Agent
+
+An AI agent handles inbound support emails automatically.
+
+1. **Create a dedicated inbox** for support: `POST /v0/inboxes` with `username: "support"`
+2. **Register a webhook** listening for `message.received`: `POST /v0/webhooks` with `inbox_ids` scoped to the support inbox
+3. When a customer emails `support@agentmail.to`, the webhook fires with the message payload
+4. **Read the full thread** for context: `GET /v0/inboxes/{inbox-id}/threads/{thread-id}`
+5. Generate a response with your LLM, then **reply in-thread**: `POST /v0/inboxes/{inbox-id}/messages/{message-id}/reply`
+6. **Update labels** to track state: `PATCH /v0/inboxes/{inbox-id}/messages/{message-id}` with `add_labels: ["replied"]`, `remove_labels: ["unreplied"]`
+7. Periodically **check for stale threads**: `GET /v0/inboxes/{inbox-id}/threads?labels=unreplied` to find conversations that still need attention
+
+### 2. Sales Outreach with Scheduled Follow-ups
+
+An AI agent sends personalized cold emails and manages follow-up sequences.
+
+1. **Create an inbox** per sales campaign: `POST /v0/inboxes` with `client_id: "campaign-q1"` for idempotency
+2. **Send initial outreach**: `POST /v0/inboxes/{inbox-id}/messages/send` with personalized subject/body
+3. **Create scheduled follow-up drafts** for non-responders: `POST /v0/inboxes/{inbox-id}/drafts` with `send_at` set to 3 days later
+4. **Register a webhook** for `message.received` to detect replies
+5. When a prospect replies, **cancel the scheduled draft**: `DELETE /v0/inboxes/{inbox-id}/drafts/{draft-id}`
+6. **Monitor delivery health**: `GET /v0/metrics?event_types=message.bounced&event_types=message.complained` to detect reputation issues early
+
+### 3. Document Processing Pipeline
+
+An AI agent receives documents via email, processes them, and sends results back.
+
+1. **Create an inbox**: `POST /v0/inboxes` with `username: "doc-processor"`
+2. **Set up a webhook** for `message.received`
+3. When an email arrives with attachments, the webhook payload includes attachment metadata
+4. **Download the attachment**: `GET /v0/inboxes/{inbox-id}/messages/{message-id}/attachments/{attachment-id}` → returns a temporary `download_url`
+5. Download and process the file (OCR, summarization, data extraction, etc.)
+6. **Reply with results**: `POST /v0/inboxes/{inbox-id}/messages/{message-id}/reply` including processed output in the body or a new attachment
+
+### 4. Multi-Agent Team Coordination
+
+Multiple AI agents each have their own inbox, organized by team.
+
+1. **Create a pod** for the team: `POST /v0/pods` with `name: "Research Team"`
+2. **Create an inbox per agent** with `pod_id`: `POST /v0/inboxes` for each agent (e.g. `researcher-1`, `researcher-2`, `summarizer`)
+3. **Set up per-inbox webhooks** to route events to each agent's handler: `POST /v0/webhooks` with `inbox_ids` scoped per agent
+4. Agents **send emails to each other** using their `@agentmail.to` addresses for inter-agent communication
+5. **List all inboxes in the pod** for oversight: `GET /v0/inboxes` filtered by pod
+
+### 5. Human-in-the-Loop Draft Approval
+
+An AI agent drafts emails for human review before sending.
+
+1. **Create a draft** with the AI-generated content: `POST /v0/inboxes/{inbox-id}/drafts`
+2. Notify the human reviewer (via Slack, UI, etc.) with the draft ID
+3. Human **reviews the draft**: `GET /v0/inboxes/{inbox-id}/drafts/{draft-id}`
+4. If approved, **send the draft**: `POST /v0/inboxes/{inbox-id}/drafts/{draft-id}/send`
+5. If changes needed, **update and re-review**: `PATCH /v0/inboxes/{inbox-id}/drafts/{draft-id}` with revised content
+6. If rejected, **delete the draft**: `DELETE /v0/inboxes/{inbox-id}/drafts/{draft-id}`
+
+### 6. Ephemeral Inboxes for One-off Tasks
+
+Create disposable inboxes for short-lived tasks, then clean up.
+
+1. **Create a temporary inbox** with `client_id` tied to the task ID: `POST /v0/inboxes` with `client_id: "task-abc123"`
+2. Use the inbox to **send/receive emails** for this specific task (e.g. verifying an account, requesting info from an external party)
+3. **Poll or webhook** for responses
+4. When the task is complete, **delete the inbox**: `DELETE /v0/inboxes/{inbox-id}` — all associated threads and messages are cleaned up
+
+### 7. Email Monitoring and Analytics
+
+Track email delivery health across all agent inboxes.
+
+1. **Query delivery metrics** over a time range: `GET /v0/metrics?start_timestamp=...&end_timestamp=...`
+2. **Filter by event type** to find problems: `GET /v0/metrics?event_types=message.bounced&event_types=message.rejected`
+3. If bounce rates are high, investigate specific inboxes using `GET /v0/inboxes/{inbox-id}/messages?labels=bounced`
+4. **Set up a webhook** for `message.bounced` and `message.complained` to get real-time alerts on deliverability issues
+
+### 8. Inbound Lead Qualification
+
+An AI agent triages inbound emails and routes them appropriately.
+
+1. **Create an inbox** as the public-facing entry point: `POST /v0/inboxes` with `username: "hello"`
+2. **Register a webhook** for `message.received`
+3. When a new email arrives, use your LLM to classify intent (sales inquiry, support request, partnership, spam)
+4. **Label the message** by category: `PATCH /v0/inboxes/{inbox-id}/messages/{message-id}` with `add_labels: ["sales-lead"]`
+5. **Send an auto-acknowledgment**: `POST /v0/inboxes/{inbox-id}/messages/{message-id}/reply`
+6. **Forward to the right team** by sending a new email from a different inbox or notifying via webhook
+7. **Review unhandled messages**: `GET /v0/inboxes/{inbox-id}/messages?labels=needs-review`
+
+---
+
 ## Prerequisites
 
 1. Sign up at https://console.agentmail.to
