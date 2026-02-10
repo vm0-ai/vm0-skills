@@ -31,13 +31,14 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Go to Sentry → Settings → Developer Settings → Internal Integrations
-2. Create a new Internal Integration with required scopes (see below)
-3. Copy the generated token
+1. Go to Sentry → Settings (gear icon in sidebar) → Account → API → Personal Tokens
+2. Click **Create New Token**
+3. Select the required scopes (see below) — **scopes cannot be edited after creation**
+4. Copy the generated token
 
 ```bash
 export SENTRY_HOST="sentry.io" # Or your self-hosted Sentry domain
-export SENTRY_TOKEN="sntrys_..." # Auth token from Internal Integration
+export SENTRY_TOKEN="sntrys_..." # Personal Auth Token
 export SENTRY_ORG="your-org-slug" # Your organization slug
 ```
 
@@ -46,8 +47,7 @@ export SENTRY_ORG="your-org-slug" # Your organization slug
 - `project:read` - List and view projects
 - `event:read` - View issues and events
 - `event:write` - Update issues (resolve, ignore, assign)
-- `release:read` - View releases
-- `release:write` - Create releases
+- `project:releases` - View and create releases
 
 ---
 
