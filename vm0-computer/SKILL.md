@@ -84,19 +84,19 @@ bash -c 'curl -s -X PROPFIND "http://127.0.0.1:8080"'
 List a subdirectory:
 
 ```bash
-bash -c 'curl -s -X PROPFIND "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/reports/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Depth: 1"'
+curl -s -X PROPFIND "http://127.0.0.1:8080/reports/" --header "Depth: 1"
 ```
 
 ### 2. Download a File from the Local Machine
 
 ```bash
-bash -c 'curl -s -o /tmp/myfile.pdf "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/myfile.pdf" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+curl -s -o /tmp/myfile.pdf "http://127.0.0.1:8080/myfile.pdf"
 ```
 
 Read a text file directly:
 
 ```bash
-bash -c 'curl -s "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/notes.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+curl -s "http://127.0.0.1:8080/notes.txt"
 ```
 
 ### 3. Upload a File to the Local Machine
@@ -104,23 +104,23 @@ bash -c 'curl -s "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/notes.txt" --header 
 Write a local sandbox file to the user's `~/Downloads`:
 
 ```bash
-bash -c 'curl -s -X PUT "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/output-report.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Content-Type: text/plain" --data-binary @/home/user/output-report.txt'
+curl -s -X PUT "http://127.0.0.1:8080/output-report.txt" --header "Content-Type: text/plain" --data-binary @/home/user/output-report.txt
 ```
 
 Upload from stdin (inline content):
 
 ```bash
-bash -c 'curl -s -X PUT "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/result.json" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Content-Type: application/json" -d '\"'\"'{"status": "done"}'\"'\"''
+curl -s -X PUT "http://127.0.0.1:8080/result.json" --header "Content-Type: application/json" -d '{"status": "done"}'
 ```
 
 ### 4. Delete a File
 
 ```bash
-bash -c 'curl -s -X DELETE "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/old-file.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+curl -s -X DELETE "http://127.0.0.1:8080/old-file.txt"
 ```
 
 ### 5. Create a Directory
 
 ```bash
-bash -c 'curl -s -X MKCOL "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/new-folder/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+curl -s -X MKCOL "http://127.0.0.1:8080/new-folder/"
 ```
