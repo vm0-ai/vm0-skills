@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 ### Setup
 
+> **Note on Proxy Persistence:** VM0 sandboxes are stateless environments. The proxy process and `/tmp/proxy.mjs` file will be cleared between sessions. This is expected behavior - you'll need to reinstall `ws` and recreate the proxy each time you start a new sandbox session.
+
 Write the proxy script to `/tmp/proxy.mjs`:
 
 ```javascript
@@ -154,3 +156,20 @@ for f in $(curl -s -X PROPFIND "http://127.0.0.1:8080/" --header "Depth: infinit
   echo "$content" | grep -q "keyword" && echo "Found in: $f"
 done
 ```
+
+---
+
+## Troubleshooting
+
+### SSL Certificate Error (`ERR_TLS_CERT_ALTNAME_INVALID`)
+
+**Issue:** The first connection attempt may fail with `ERR_TLS_CERT_ALTNAME_INVALID` or similar SSL certificate errors.
+
+**Cause:** The ngrok tunnel needs a few minutes to provision and propagate SSL certificates after the Computer Connector starts.
+
+**Solution:**
+1. **Wait 2-3 minutes** after starting the Computer Connector for SSL certificates to be fully provisioned
+2. The proxy will automatically work once certificates are ready - no code changes needed
+3. Test with a simple curl command: `curl -s "http://127.0.0.1:8080/"`
+
+**Note:** Do NOT add `rejectUnauthorized: false` to the proxy code as a workaround. This weakens security and is unnecessary - simply wait for proper certificate provisioning.
