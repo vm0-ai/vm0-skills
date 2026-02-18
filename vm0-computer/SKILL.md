@@ -25,71 +25,6 @@ Use this skill when you need to:
 
 ## How to Use
 
-The WebDAV root is `https://webdav.$COMPUTER_CONNECTOR_DOMAIN/`. All requests must include the `x-vm0-token` authentication header.
-
-> **Important:** Wrap curl commands that use `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-
-### 1. List Files in a Directory
-
-Use `PROPFIND` to list the contents of a directory (depth 1):
-
-```bash
-bash -c 'curl -s -X PROPFIND "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Depth: 1"'
-```
-
-List a subdirectory:
-
-```bash
-bash -c 'curl -s -X PROPFIND "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/reports/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Depth: 1"'
-```
-
-### 2. Download a File from the Local Machine
-
-```bash
-bash -c 'curl -s -o /tmp/myfile.pdf "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/myfile.pdf" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
-```
-
-Read a text file directly:
-
-```bash
-bash -c 'curl -s "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/notes.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
-```
-
-### 3. Upload a File to the Local Machine
-
-Write a local sandbox file to the user's `~/Downloads`:
-
-```bash
-bash -c 'curl -s -X PUT "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/output-report.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Content-Type: text/plain" --data-binary @/home/user/output-report.txt'
-```
-
-Upload from stdin (inline content):
-
-```bash
-bash -c 'curl -s -X PUT "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/result.json" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Content-Type: application/json" -d '\"'\"'{"status": "done"}'\"'\"''
-```
-
-### 4. Delete a File
-
-```bash
-bash -c 'curl -s -X DELETE "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/old-file.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
-```
-
-### 5. Create a Directory
-
-```bash
-bash -c 'curl -s -X MKCOL "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/new-folder/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
-```
-
----
-
-## Local Port Forwarding
-
-Some tools (browser automation, WebDAV clients) require a plain `localhost` address instead of a remote HTTPS/WSS URL. Use this Node.js proxy to forward local ports to the computer connector:
-
-- **WebDAV** → `http://127.0.0.1:8080` proxies to `https://webdav.$COMPUTER_CONNECTOR_DOMAIN`
-- **Chrome CDP** → `ws://127.0.0.1:9222` proxies to `wss://chrome.$COMPUTER_CONNECTOR_DOMAIN`
-
 ### Setup
 
 Write the proxy script to `/tmp/proxy.mjs`:
@@ -135,3 +70,57 @@ npm install ws && node /tmp/proxy.mjs &
 ```
 
 The proxy runs in the background. Tools can now connect to `http://127.0.0.1:8080` (WebDAV) and `ws://127.0.0.1:9222` (Chrome CDP) without any additional headers.
+
+> **Important:** Wrap curl commands that use `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+
+### 1. List Files in a Directory
+
+Use `PROPFIND` to list the contents of a directory (depth 1):
+
+```bash
+bash -c 'curl -s -X PROPFIND "http://127.0.0.1:8080"'
+```
+
+List a subdirectory:
+
+```bash
+bash -c 'curl -s -X PROPFIND "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/reports/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Depth: 1"'
+```
+
+### 2. Download a File from the Local Machine
+
+```bash
+bash -c 'curl -s -o /tmp/myfile.pdf "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/myfile.pdf" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+```
+
+Read a text file directly:
+
+```bash
+bash -c 'curl -s "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/notes.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+```
+
+### 3. Upload a File to the Local Machine
+
+Write a local sandbox file to the user's `~/Downloads`:
+
+```bash
+bash -c 'curl -s -X PUT "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/output-report.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Content-Type: text/plain" --data-binary @/home/user/output-report.txt'
+```
+
+Upload from stdin (inline content):
+
+```bash
+bash -c 'curl -s -X PUT "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/result.json" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN" --header "Content-Type: application/json" -d '\"'\"'{"status": "done"}'\"'\"''
+```
+
+### 4. Delete a File
+
+```bash
+bash -c 'curl -s -X DELETE "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/old-file.txt" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+```
+
+### 5. Create a Directory
+
+```bash
+bash -c 'curl -s -X MKCOL "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/new-folder/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
+```
