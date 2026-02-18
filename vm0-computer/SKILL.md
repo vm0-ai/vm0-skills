@@ -80,3 +80,58 @@ bash -c 'curl -s -X DELETE "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/old-file.t
 ```bash
 bash -c 'curl -s -X MKCOL "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/new-folder/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
 ```
+
+---
+
+## Local Port Forwarding
+
+Some tools (browser automation, WebDAV clients) require a plain `localhost` address instead of a remote HTTPS/WSS URL. Use this Node.js proxy to forward local ports to the computer connector:
+
+- **WebDAV** → `http://127.0.0.1:8080` proxies to `https://webdav.$COMPUTER_CONNECTOR_DOMAIN`
+- **Chrome CDP** → `ws://127.0.0.1:9222` proxies to `wss://chrome.$COMPUTER_CONNECTOR_DOMAIN`
+
+### Setup
+
+Write the proxy script to `~/proxy.mjs`:
+
+```javascript
+import { WebSocket, WebSocketServer } from "ws";
+import http from "http";
+import https from "https";
+
+const TOKEN = process.env.COMPUTER_CONNECTOR_BRIDGE_TOKEN;
+const DOMAIN = process.env.COMPUTER_CONNECTOR_DOMAIN;
+
+// Chrome CDP WebSocket proxy: ws://127.0.0.1:9222 → wss://chrome.{DOMAIN}
+const wss = new WebSocketServer({ host: "127.0.0.1", port: 9222 });
+wss.on("connection", (local) => {
+  const remote = new WebSocket(`wss://chrome.${DOMAIN}`, {
+    headers: { "x-vm0-token": TOKEN },
+  });
+  local.on("message", (msg) => remote.send(msg));
+  remote.on("message", (msg) => local.send(msg));
+  local.on("close", () => remote.close());
+  remote.on("close", () => local.close());
+});
+
+// WebDAV HTTP proxy: http://127.0.0.1:8080 → https://webdav.{DOMAIN}
+http.createServer((req, res) => {
+  const upstream = https.request(
+    `https://webdav.${DOMAIN}${req.url}`,
+    { method: req.method, headers: { ...req.headers, "x-vm0-token": TOKEN, host: `webdav.${DOMAIN}` } },
+    (proxyRes) => { res.writeHead(proxyRes.statusCode, proxyRes.headers); proxyRes.pipe(res); }
+  );
+  req.pipe(upstream);
+}).listen(8080, "127.0.0.1");
+
+console.log("WebDAV proxy: http://127.0.0.1:8080");
+console.log("CDP proxy:    ws://127.0.0.1:9222");
+```
+
+### Run
+
+```bash
+npm install ws && node ~/proxy.mjs &
+```
+
+The proxy runs in the background. Tools can now connect to `http://127.0.0.1:8080` (WebDAV) and `ws://127.0.0.1:9222` (Chrome CDP) without any additional headers.
