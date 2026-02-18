@@ -101,7 +101,7 @@ curl -s "http://127.0.0.1:8080/notes.txt"
 
 ### 3. Upload a File to the Local Machine
 
-Write a local sandbox file to the user's `~/Downloads`:
+Write a local sandbox file to remote:
 
 ```bash
 curl -s -X PUT "http://127.0.0.1:8080/output-report.txt" --header "Content-Type: text/plain" --data-binary @/home/user/output-report.txt
