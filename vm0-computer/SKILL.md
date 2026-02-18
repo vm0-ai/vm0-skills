@@ -92,7 +92,7 @@ Some tools (browser automation, WebDAV clients) require a plain `localhost` addr
 
 ### Setup
 
-Write the proxy script to `~/proxy.mjs`:
+Write the proxy script to `/tmp/proxy.mjs`:
 
 ```javascript
 import { WebSocket, WebSocketServer } from "ws";
@@ -131,7 +131,7 @@ console.log("CDP proxy:    ws://127.0.0.1:9222");
 ### Run
 
 ```bash
-npm install ws && node ~/proxy.mjs &
+npm install ws && node /tmp/proxy.mjs &
 ```
 
 The proxy runs in the background. Tools can now connect to `http://127.0.0.1:8080` (WebDAV) and `ws://127.0.0.1:9222` (Chrome CDP) without any additional headers.
