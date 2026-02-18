@@ -10,8 +10,6 @@ vm0_secrets:
 
 Access the user's local filesystem from a VM0 sandbox over a secure WebDAV tunnel established by the VM0 Computer Connector.
 
-> Official docs: `https://docs.vm0.ai`
-
 ---
 
 ## When to Use
@@ -22,45 +20,6 @@ Use this skill when you need to:
 - Read files from the user's computer into the sandbox
 - Write or update files on the user's local machine
 - Transfer outputs back to the user's local filesystem
-
----
-
-## Prerequisites
-
-### 1. Start the Computer Connector on Your Local Machine
-
-The user must run the following command on their local machine **before** starting the agent run. Keep it running in the foreground — press Ctrl+C to disconnect.
-
-```bash
-vm0 connector connect computer
-```
-
-This starts a WebDAV server exposing `~/Downloads` and creates a secure ngrok tunnel to the VM0 platform.
-
-### 2. Declare Environment Variables in vm0.yaml
-
-Add the following to your agent's `vm0.yaml` `environment` section so the connector credentials are injected into the sandbox:
-
-```yaml
-version: "1.0"
-
-agents:
-  my-agent:
-    framework: claude-code
-    instructions: AGENTS.md
-    environment:
-      COMPUTER_CONNECTOR_BRIDGE_TOKEN: ${{ secrets.COMPUTER_CONNECTOR_BRIDGE_TOKEN }}
-      COMPUTER_CONNECTOR_DOMAIN: ${{ secrets.COMPUTER_CONNECTOR_DOMAIN }}
-```
-
-The credentials are automatically stored as secrets when the connector is started — no manual `vm0 secret set` is needed.
-
-### 3. Environment Variables
-
-```bash
-export COMPUTER_CONNECTOR_BRIDGE_TOKEN="your-bridge-token"
-export COMPUTER_CONNECTOR_DOMAIN="your-connector-domain"
-```
 
 ---
 
@@ -121,13 +80,3 @@ bash -c 'curl -s -X DELETE "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/old-file.t
 ```bash
 bash -c 'curl -s -X MKCOL "https://webdav.$COMPUTER_CONNECTOR_DOMAIN/new-folder/" --header "x-vm0-token: $COMPUTER_CONNECTOR_BRIDGE_TOKEN"'
 ```
-
----
-
-## Guidelines
-
-1. **Connector must be running** - The `vm0 connector connect computer` command must be active on the user's local machine throughout the agent run
-2. **Root maps to ~/Downloads** - The WebDAV root (`/`) corresponds to `~/Downloads` on the user's machine
-3. **Always use bash -c wrapper** - Wrap any curl command using `$COMPUTER_CONNECTOR_BRIDGE_TOKEN` or `$COMPUTER_CONNECTOR_DOMAIN` in `bash -c '...'`
-4. **Use --header not -H** - Use the `--header` flag for better compatibility
-5. **Declare env vars in vm0.yaml** - The `${{ secrets.COMPUTER_CONNECTOR_BRIDGE_TOKEN }}` and `${{ secrets.COMPUTER_CONNECTOR_DOMAIN }}` references must be present in `vm0.yaml` for automatic injection to work
