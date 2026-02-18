@@ -124,3 +124,33 @@ curl -s -X DELETE "http://127.0.0.1:8080/old-file.txt"
 ```bash
 curl -s -X MKCOL "http://127.0.0.1:8080/new-folder/"
 ```
+
+### 6. Move (Rename) a File
+
+```bash
+curl -s -X MOVE "http://127.0.0.1:8080/old-name.txt" --header "Destination: http://127.0.0.1:8080/new-name.txt"
+```
+
+Move to a subdirectory:
+
+```bash
+curl -s -X MOVE "http://127.0.0.1:8080/report.pdf" --header "Destination: http://127.0.0.1:8080/archive/report.pdf"
+```
+
+### 7. Search File Contents
+
+WebDAV does not support full-text search natively. Use PROPFIND with `Depth: infinity` to list all files recursively, then download and search:
+
+```bash
+# List all files recursively
+curl -s -X PROPFIND "http://127.0.0.1:8080/" --header "Depth: infinity" | grep -o '<D:href>[^<]*</D:href>' | sed 's/<[^>]*>//g'
+```
+
+Search for a keyword across all text files:
+
+```bash
+for f in $(curl -s -X PROPFIND "http://127.0.0.1:8080/" --header "Depth: infinity" | grep -o '<D:href>[^<]*</D:href>' | sed 's/<[^>]*>//g' | grep '\.txt$'); do
+  content=$(curl -s "http://127.0.0.1:8080${f}")
+  echo "$content" | grep -q "keyword" && echo "Found in: $f"
+done
+```
