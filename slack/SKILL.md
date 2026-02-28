@@ -2,7 +2,7 @@
 name: slack
 description: Slack API for sending messages, reading channels, and managing conversations. Use this skill to post messages, upload files, and interact with Slack workspaces.
 vm0_secrets:
-  - SLACK_BOT_TOKEN
+  - SLACK_TOKEN
 ---
 
 # Slack API
@@ -20,13 +20,38 @@ Send messages, read channels, and interact with Slack workspaces.
 ## Prerequisites
 
 ```bash
-export SLACK_BOT_TOKEN=xoxb-your-bot-token
+export SLACK_TOKEN=xoxp-your-user-token
 ```
 
-### Get Token
+### Token Types
+
+Slack has two types of tokens:
+
+- **User token** (`xoxp-...`) — Acts as a specific user. Required for accessing DMs, private channels the user is in, and user-specific actions. Obtained via OAuth on behalf of a user.
+- **Bot token** (`xoxb-...`) — Acts as a bot app. Can only access channels the bot has been invited to. Obtained by installing a Slack app to a workspace.
+
+If you're using the **vm0 Slack connector** (Settings → Connectors → Slack), `SLACK_TOKEN` is automatically injected as a user token (`xoxp-`). No manual setup needed.
+
+### Get Token Manually
+
+**User token (`xoxp-`):**
 
 1. Create app: https://api.slack.com/apps
-2. Add Bot Token Scopes (OAuth & Permissions):
+2. Under "OAuth & Permissions", add User Token Scopes:
+  - `channels:read` - List public channels
+  - `channels:history` - Read channel messages
+  - `chat:write` - Send messages as the user
+  - `files:read` - Read files
+  - `users:read` - List users
+  - `users:read.email` - Look up users by email
+  - `reactions:write` - Add reactions
+3. Install to Workspace
+4. Copy "User OAuth Token" (`xoxp-...`)
+
+**Bot token (`xoxb-`):**
+
+1. Create app: https://api.slack.com/apps
+2. Under "OAuth & Permissions", add Bot Token Scopes:
   - `chat:write` - Send messages
   - `channels:read` - List public channels
   - `channels:history` - Read channel messages
@@ -46,7 +71,7 @@ export SLACK_BOT_TOKEN=xoxb-your-bot-token
 ### List Channels
 
 ```bash
-bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/conversations.list?types=public_channel"' | jq '.channels[] | {id, name}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.list?types=public_channel"' | jq '.channels[] | {id, name}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.list
@@ -56,7 +81,7 @@ Docs: https://docs.slack.dev/reference/methods/conversations.list
 Replace `<channel-id>` with the actual channel ID:
 
 ```bash
-bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/conversations.history?channel=<channel-id>&limit=10"' | jq '.messages[] | {ts, user, text}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/conversations.history?channel=<channel-id>&limit=10"' | jq '.messages[] | {ts, user, text}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/conversations.history
@@ -73,7 +98,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
+bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/chat.postmessage
@@ -103,7 +128,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
+bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Block Kit Builder: https://app.slack.com/block-kit-builder
@@ -121,7 +146,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
+bash -c 'curl -s -X POST "https://slack.com/api/chat.postMessage" -H "Authorization: Bearer $SLACK_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 ### Update Message
@@ -137,7 +162,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://slack.com/api/chat.update" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
+bash -c 'curl -s -X POST "https://slack.com/api/chat.update" -H "Authorization: Bearer $SLACK_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/chat.update
@@ -154,13 +179,13 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://slack.com/api/chat.delete" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
+bash -c 'curl -s -X POST "https://slack.com/api/chat.delete" -H "Authorization: Bearer $SLACK_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 ### List Users
 
 ```bash
-bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/users.list"' | jq '.members[] | {id, name, real_name}'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/users.list"' | jq '.members[] | {id, name, real_name}'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/users.list
@@ -170,7 +195,7 @@ Docs: https://docs.slack.dev/reference/methods/users.list
 Replace `<user-email>` with the actual email address:
 
 ```bash
-bash -c 'curl -s -H "Authorization: Bearer $SLACK_BOT_TOKEN" "https://slack.com/api/users.lookupByEmail?email=<user-email>"'
+bash -c 'curl -s -H "Authorization: Bearer $SLACK_TOKEN" "https://slack.com/api/users.lookupByEmail?email=<user-email>"'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/users.lookupbyemail
@@ -178,7 +203,7 @@ Docs: https://docs.slack.dev/reference/methods/users.lookupbyemail
 ### Upload File
 
 ```bash
-curl -s -X POST 'https://slack.com/api/files.upload' -H "Authorization: Bearer $SLACK_BOT_TOKEN" -F 'channels=C1234567890' -F 'file=@/path/to/file.txt' -F 'title=My File'
+curl -s -X POST 'https://slack.com/api/files.upload' -H "Authorization: Bearer $SLACK_TOKEN" -F 'channels=C1234567890' -F 'file=@/path/to/file.txt' -F 'title=My File'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/files.upload
@@ -196,7 +221,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://slack.com/api/reactions.add" -H "Authorization: Bearer $SLACK_BOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
+bash -c 'curl -s -X POST "https://slack.com/api/reactions.add" -H "Authorization: Bearer $SLACK_TOKEN" -H "Content-Type: application/json" -d @/tmp/request.json'
 ```
 
 Docs: https://docs.slack.dev/reference/methods/reactions.add
