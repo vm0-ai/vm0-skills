@@ -30,42 +30,6 @@ Slack has two types of tokens:
 - **User token** (`xoxp-...`) — Acts as a specific user. Required for accessing DMs, private channels the user is in, and user-specific actions. Obtained via OAuth on behalf of a user.
 - **Bot token** (`xoxb-...`) — Acts as a bot app. Can only access channels the bot has been invited to. Obtained by installing a Slack app to a workspace.
 
-If you're using the **vm0 Slack connector** (Settings → Connectors → Slack), `SLACK_TOKEN` is automatically injected as a user token (`xoxp-`). No manual setup needed.
-
-### Get Token Manually
-
-**User token (`xoxp-`):**
-
-1. Create app: https://api.slack.com/apps
-2. Under "OAuth & Permissions", add User Token Scopes:
-  - `channels:read` - List public channels
-  - `channels:history` - Read channel messages
-  - `chat:write` - Send messages as the user
-  - `files:read` - Read files
-  - `users:read` - List users
-  - `users:read.email` - Look up users by email
-  - `reactions:write` - Add reactions
-3. Install to Workspace
-4. Copy "User OAuth Token" (`xoxp-...`)
-
-**Bot token (`xoxb-`):**
-
-1. Create app: https://api.slack.com/apps
-2. Under "OAuth & Permissions", add Bot Token Scopes:
-  - `chat:write` - Send messages
-  - `channels:read` - List public channels
-  - `channels:history` - Read channel messages
-  - `files:write` - Upload files
-  - `users:read` - List users
-  - `reactions:write` - Add reactions
-3. Install to Workspace
-4. Copy "Bot User OAuth Token" (`xoxb-...`)
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
-
 ## Core APIs
 
 ### List Channels
