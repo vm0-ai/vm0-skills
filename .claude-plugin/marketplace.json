@@ -484,6 +484,13 @@
       "source": "./",
       "strict": false,
       "skills": ["./zeptomail"]
+    },
+    {
+      "name": "strava",
+      "description": "Strava API v3 via curl. Use this skill to query athlete activities, segments, clubs, gear, and routes on Strava. Use when users mention Strava, running/cycling activities, fitness tracking, or want to retrieve workout data.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./strava"]
     }
   ]
 }
