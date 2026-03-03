@@ -172,6 +172,9 @@
 - [x] [Resend](https://resend.com/docs/api-reference/introduction) - Developer Email API
 - [x] [Pushinator](https://pushinator.com/) - Push Notification Service
 - [ ] [Morgen](https://docs.morgen.so/) - Calendar & Task Scheduling
+- [x] [Google Calendar](https://developers.google.com/workspace/calendar/api) - Calendar & Event Management
+- [x] [Google Docs](https://developers.google.com/workspace/docs/api) - Document Creation & Editing
+- [x] [Google Drive](https://developers.google.com/drive/api) - File Storage & Management
 - [x] [Google Sheets](https://developers.google.com/sheets/api) - Spreadsheet Platform
 - [x] [Podchaser](https://api-docs.podchaser.com/) - Podcast Database & Discovery API
 
@@ -194,9 +197,9 @@
 | Security & Compliance | 4 |
 | Automation | 2 |
 | Design & Media | 4 |
-| Miscellaneous | 8 |
-| **Total** | **101** |
+| Miscellaneous | 11 |
+| **Total** | **104** |
 
 ---
 
-> Last updated: 2025-12-28
+> Last updated: 2026-03-03
