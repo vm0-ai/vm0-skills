@@ -71,9 +71,7 @@ Get a user's profile by their username:
 > **Note:** Replace `elonmusk` with the actual username you want to look up.
 
 ```bash
-USERNAME="elonmusk"
-
-bash -c 'curl -s "https://api.x.com/2/users/by/username/$USERNAME?user.fields=id,name,username,description,public_metrics,created_at,verified,profile_image_url" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq .data
+USERNAME=elonmusk bash -c 'curl -s "https://api.x.com/2/users/by/username/$USERNAME?user.fields=id,name,username,description,public_metrics,created_at,verified,profile_image_url" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq .data
 ```
 
 ---
@@ -85,9 +83,7 @@ Get a user's profile by their user ID:
 > **Note:** Replace `12345` with the actual user ID. You can obtain user IDs from other endpoint responses.
 
 ```bash
-USER_ID="12345"
-
-bash -c 'curl -s "https://api.x.com/2/users/$USER_ID?user.fields=id,name,username,description,public_metrics,created_at" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq .data
+USER_ID=12345 bash -c 'curl -s "https://api.x.com/2/users/$USER_ID?user.fields=id,name,username,description,public_metrics,created_at" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq .data
 ```
 
 ---
@@ -106,14 +102,12 @@ bash -c 'curl -s "https://api.x.com/2/users?ids=12345,67890&user.fields=id,name,
 
 ### 5. Get a Tweet by ID
 
-Get details of a specific tweet:
+Get details of a specific tweet. Use the batch endpoint with a single ID (the singular `/2/tweets/:id` endpoint has redirect issues):
 
 > **Note:** Replace `1234567890` with the actual tweet ID.
 
 ```bash
-TWEET_ID="1234567890"
-
-bash -c 'curl -s "https://api.x.com/2/tweets/$TWEET_ID?tweet.fields=created_at,public_metrics,author_id,conversation_id,lang&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq .
+TWEET_ID=1234567890 bash -c 'curl -s "https://api.x.com/2/tweets?ids=$TWEET_ID&tweet.fields=created_at,public_metrics,author_id,conversation_id,lang&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq .
 ```
 
 ---
@@ -134,12 +128,10 @@ bash -c 'curl -s "https://api.x.com/2/tweets?ids=1234567890,0987654321&tweet.fie
 
 Get recent tweets posted by a user:
 
-> **Note:** Replace `USER_ID` with the actual user ID. Use the "Look Up User by Username" endpoint first to get the ID.
+> **Note:** Replace `12345` with the actual user ID. Use the "Look Up User by Username" endpoint first to get the ID.
 
 ```bash
-USER_ID="12345"
-
-bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&expansions=referenced_tweets.id" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
+USER_ID=12345 bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&expansions=referenced_tweets.id" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
 ```
 
 Query parameters:
@@ -155,12 +147,10 @@ Query parameters:
 
 Get recent tweets that mention a user:
 
-> **Note:** Replace `USER_ID` with the actual user ID.
+> **Note:** Replace `12345` with the actual user ID.
 
 ```bash
-USER_ID="12345"
-
-bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/mentions?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, text: .text[0:120], author: .author_id, created_at}'
+USER_ID=12345 bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/mentions?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, text: .text[0:120], author: .author_id, created_at}'
 ```
 
 ---
@@ -169,12 +159,10 @@ bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/mentions?max_results=10&twe
 
 Get the authenticated user's home timeline (tweets from people they follow):
 
-> **Note:** Replace `USER_ID` with the authenticated user's ID (from "Get Authenticated User Profile").
+> **Note:** Replace `12345` with the authenticated user's ID (from "Get Authenticated User Profile").
 
 ```bash
-USER_ID="12345"
-
-bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/timelines/reverse_chronological?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, text: .text[0:120], created_at}'
+USER_ID=12345 bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/timelines/reverse_chronological?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, text: .text[0:120], created_at}'
 ```
 
 ---
@@ -206,12 +194,10 @@ Common search operators:
 
 Get a list of users who follow a specific user:
 
-> **Note:** Replace `USER_ID` with the actual user ID.
+> **Note:** Replace `12345` with the actual user ID.
 
 ```bash
-USER_ID="12345"
-
-bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/followers?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
+USER_ID=12345 bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/followers?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
 ```
 
 ---
@@ -220,12 +206,10 @@ bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/followers?max_results=20&us
 
 Get a list of users that a specific user follows:
 
-> **Note:** Replace `USER_ID` with the actual user ID.
+> **Note:** Replace `12345` with the actual user ID.
 
 ```bash
-USER_ID="12345"
-
-bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/following?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
+USER_ID=12345 bash -c 'curl -s "https://api.x.com/2/users/$USER_ID/following?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $X_ACCESS_TOKEN"' | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
 ```
 
 ---
