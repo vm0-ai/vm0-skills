@@ -28,15 +28,14 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect your Sentry account via the vm0 platform (OAuth connector). The `SENTRY_TOKEN` environment variable is automatically configured.
+1. Connect your Sentry account at [vm0 Settings > Connectors](https://app.vm0.ai/settings/connectors) and click **sentry**
+2. The `SENTRY_TOKEN` environment variable is automatically configured
 
 Verify authentication:
 
 ```bash
 bash -c 'curl -s "https://sentry.io/api/0/organizations/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[0] | {slug, name}'
 ```
-
-Expected response: Your organization information (slug, name).
 
 ### Discovering Your Organization Slug
 
