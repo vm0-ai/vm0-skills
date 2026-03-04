@@ -19,16 +19,7 @@ Send messages, read channels, and interact with Slack workspaces.
 
 ## Prerequisites
 
-```bash
-export SLACK_TOKEN=xoxp-your-user-token
-```
-
-### Token Types
-
-Slack has two types of tokens:
-
-- **User token** (`xoxp-...`) — Acts as a specific user. Required for accessing DMs, private channels the user is in, and user-specific actions. Obtained via OAuth on behalf of a user.
-- **Bot token** (`xoxb-...`) — Acts as a bot app. Can only access channels the bot has been invited to. Obtained by installing a Slack app to a workspace.
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Slack**. vm0 will automatically inject the required `SLACK_TOKEN` environment variable.
 
 ## Core APIs
 

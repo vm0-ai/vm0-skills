@@ -26,6 +26,10 @@ Use this skill when you need to:
 
 ---
 
+## Prerequisites
+
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Gmail**. vm0 will automatically inject the required `GMAIL_TOKEN` environment variable.
+
 ---
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.

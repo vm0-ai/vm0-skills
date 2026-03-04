@@ -29,19 +29,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Obtain an OAuth 2.0 access token with the required scope:
-
-1. Go to https://developers.google.com/oauthplayground/
-2. In the left panel, enter scope: `https://www.googleapis.com/auth/documents`
-3. Click **Authorize APIs** → sign in with your Google account
-4. Click **Exchange authorization code for tokens**
-5. Copy the **Access token**
-
-```bash
-export GOOGLE_DOCS_TOKEN="your-access-token"
-```
-
-> Note: Access tokens expire after ~1 hour. Repeat the above steps to refresh.
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Google Docs**. vm0 will automatically inject the required `GOOGLE_DOCS_TOKEN` environment variable.
 
 ---
 

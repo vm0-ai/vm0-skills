@@ -21,7 +21,9 @@ This Skill helps you manage GitHub operations using the `gh` CLI, including repo
 
 ## Authentication
 
-The `GITHUB_TOKEN` environment variable is pre-configured. Verify with:
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **GitHub**. vm0 will automatically inject the required token.
+
+Verify with:
 ```bash
 gh auth status
 ```
@@ -129,17 +131,7 @@ gh pr view <number> --repo <owner>/<repo> --json title,state,reviews,checks
 
 ## Prerequisites
 
-This Skill requires the GitHub CLI (`gh`) to be installed and authenticated:
-```bash
-gh auth status
-```
-
-If not authenticated, run:
-```bash
-gh auth login
-```
-
-Alternatively, set the `GITHUB_TOKEN` environment variable with a personal access token.
+This Skill requires the GitHub CLI (`gh`) to be installed. Token is automatically provided by vm0 — connect GitHub in [vm0.ai](https://vm0.ai) **Settings → Connectors**.
 
 **Important:** When using environment variables in commands with pipes, wrap the command in `bash -c '...'` to avoid variable substitution issues:
 ```bash
