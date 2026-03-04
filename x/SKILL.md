@@ -27,8 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Connect your X account via the vm0 platform (OAuth connector)
-2. The `X_ACCESS_TOKEN` environment variable is automatically configured
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **X (Twitter)**. vm0 will automatically inject the required `X_ACCESS_TOKEN` environment variable.
 
 Verify authentication:
 

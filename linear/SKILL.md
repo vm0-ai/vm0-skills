@@ -28,13 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to [Linear](https://linear.app/) and go to Settings
-2. Navigate to **Security & access** → **Personal API keys**
-3. Create a new API key with appropriate permissions
-
-```bash
-export LINEAR_API_KEY="lin_api_..."
-```
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Linear**. vm0 will automatically inject the required `LINEAR_API_KEY` environment variable.
 
 ### Rate Limits
 

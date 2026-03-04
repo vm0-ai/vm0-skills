@@ -19,17 +19,9 @@ Manage pages, databases, and content blocks in Notion workspaces.
 
 ## Prerequisites
 
-```bash
-export NOTION_TOKEN=ntn_your-integration-token
-```
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Notion**. vm0 will automatically inject the required `NOTION_TOKEN` environment variable.
 
-### Get API Key
-
-1. Go to https://www.notion.so/profile/integrations
-2. Click "New integration"
-3. Name your integration and select workspace
-4. Copy the "Internal Integration Secret" (`ntn_...` or `secret_...`)
-5. **Important**: Share pages/databases with the integration via "Add connections" in Notion
+**Important**: Share pages/databases with the integration via "Add connections" in Notion.
 
 ### Page ID Format
 
