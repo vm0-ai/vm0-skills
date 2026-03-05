@@ -21,7 +21,6 @@ Use this skill when you need to:
 - **Monitor deployments** - list deployments and check their status
 - **Manage domains** - list, add, and configure domains
 - **Handle environment variables** - create, update, and delete env vars
-- **View teams** - list teams and team members
 
 ---
 
@@ -164,17 +163,7 @@ PROJECT=my-project bash -c 'curl -s -X POST "https://api.vercel.com/v10/projects
 
 ---
 
-### 11. List Teams
-
-Get all teams you belong to:
-
-```bash
-bash -c 'curl -s "https://api.vercel.com/v2/teams" -H "Authorization: Bearer $VERCEL_TOKEN"' | jq '.teams[] | {id, slug, name, createdAt}'
-```
-
----
-
-### 12. Cancel Deployment
+### 11. Cancel Deployment
 
 Cancel a deployment that is currently `BUILDING` or `QUEUED`. Deployments already in `READY` state cannot be canceled.
 
@@ -200,7 +189,6 @@ DEPLOY_ID=dpl_xxx bash -c 'curl -s -X PATCH "https://api.vercel.com/v12/deployme
 
 ## Guidelines
 
-1. **Team scope**: For team resources, add `?teamId=<team-id>` to requests
-2. **Pagination**: Use `?limit=N&until=<timestamp>` for paginated results
+1. **Pagination**: Use `?limit=N&until=<timestamp>` for paginated results
 3. **Rate limits**: Vercel has rate limits; implement backoff for 429 responses
 4. **Project references**: You can use either project ID or project name in most endpoints
