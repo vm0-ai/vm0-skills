@@ -33,16 +33,16 @@ Use this skill when you need to:
 Verify authentication and get your athlete ID:
 
 ```bash
-bash -c 'curl -s "https://intervals.icu/api/v1/athlete/0" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '{id, name, email, locale}'
+bash -c 'curl -s "https://intervals.icu/api/v1/athlete/0/activities?oldest=2025-01-01&newest=2025-12-31" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '.[0] | {icu_athlete_id}'
 ```
 
-> The special athlete ID `0` returns the authenticated user's profile. Save the `id` value (e.g., `i230851`) for use in other endpoints.
+> Save the `icu_athlete_id` value (e.g., `i230851`) for use in other endpoints that require an athlete ID.
 
 ---
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
-> **Placeholders:** Values in `<angle-brackets>` like `<athlete-id>` are placeholders. Replace them with actual values when executing. Use the athlete ID from the profile endpoint above.
+> **Placeholders:** Values in `<angle-brackets>` like `<athlete-id>` are placeholders. Replace them with actual values when executing.
 
 ## How to Use
 
@@ -54,7 +54,7 @@ Base URL: `https://intervals.icu`
 
 ### 1. Get Athlete Profile
 
-Get the authenticated athlete's profile:
+Get the authenticated athlete's profile and settings:
 
 ```bash
 bash -c 'curl -s "https://intervals.icu/api/v1/athlete/0" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '{id, name, email, locale, weight, ftp, max_hr, resting_hr}'
@@ -78,7 +78,7 @@ ATHLETE=<athlete-id> bash -c 'curl -s "https://intervals.icu/api/v1/athlete/$ATH
 
 Get details for a specific activity:
 
-> **Note:** Replace `<activity-id>` with an actual activity ID from the "List Activities" output.
+> **Note:** Replace `<activity-id>` with an actual activity ID from the "List Activities" output. Activities imported from Strava may have limited data.
 
 ```bash
 ACTIVITY=<activity-id> bash -c 'curl -s "https://intervals.icu/api/v1/activity/$ACTIVITY" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '{id, name, type, start_date_local, moving_time, distance, average_speed, average_watts, average_heartrate, icu_training_load}'
@@ -90,7 +90,7 @@ ACTIVITY=<activity-id> bash -c 'curl -s "https://intervals.icu/api/v1/activity/$
 
 Get detailed data streams (GPS, heart rate, power, etc.) for an activity:
 
-> **Note:** Replace `<activity-id>` with an actual activity ID. Available stream types: `time`, `watts`, `heartrate`, `cadence`, `distance`, `altitude`, `latlng`, `velocity_smooth`, `temp`.
+> **Note:** Replace `<activity-id>` with an actual activity ID. Available stream types: `time`, `watts`, `heartrate`, `cadence`, `distance`, `altitude`, `latlng`, `velocity_smooth`, `temp`. Only activities with recorded sensor data will have streams.
 
 ```bash
 ACTIVITY=<activity-id> bash -c 'curl -s "https://intervals.icu/api/v1/activity/$ACTIVITY/streams?types=watts,heartrate,cadence" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq 'keys'
@@ -102,7 +102,7 @@ ACTIVITY=<activity-id> bash -c 'curl -s "https://intervals.icu/api/v1/activity/$
 
 Get the power curve for an activity:
 
-> **Note:** Replace `<activity-id>` with an actual activity ID.
+> **Note:** Replace `<activity-id>` with an actual activity ID. Only activities with power data will have a power curve.
 
 ```bash
 ACTIVITY=<activity-id> bash -c 'curl -s "https://intervals.icu/api/v1/activity/$ACTIVITY/power-curve" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '.[0:10]'
@@ -141,7 +141,7 @@ Get planned workouts and events for a date range:
 > **Note:** Replace `<athlete-id>` with your athlete ID.
 
 ```bash
-ATHLETE=<athlete-id> bash -c 'curl -s "https://intervals.icu/api/v1/athlete/$ATHLETE/events?oldest=2025-01-01&newest=2025-01-31" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '.[] | {id, start_date_local, name, category, type, description}'
+ATHLETE=<athlete-id> bash -c 'curl -s "https://intervals.icu/api/v1/athlete/$ATHLETE/events?oldest=2025-01-01&newest=2025-12-31" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '.[] | {id, start_date_local, name, category, type, description}'
 ```
 
 ---
@@ -150,10 +150,10 @@ ATHLETE=<athlete-id> bash -c 'curl -s "https://intervals.icu/api/v1/athlete/$ATH
 
 Create a planned workout or event:
 
-> **Note:** Replace `<athlete-id>` with your athlete ID.
+> **Note:** Replace `<athlete-id>` with your athlete ID. `start_date_local` must include a time component.
 
 ```bash
-ATHLETE=<athlete-id> bash -c 'curl -s -X POST "https://intervals.icu/api/v1/athlete/$ATHLETE/events" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN" -H "Content-Type: application/json" -d "{\"category\":\"WORKOUT\",\"start_date_local\":\"2025-02-01\",\"name\":\"Easy Run\",\"description\":\"30 min easy run\",\"type\":\"Run\"}"' | jq '{id, name, start_date_local, category, type}'
+ATHLETE=<athlete-id> bash -c 'curl -s -X POST "https://intervals.icu/api/v1/athlete/$ATHLETE/events" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN" -H "Content-Type: application/json" -d "{\"category\":\"WORKOUT\",\"start_date_local\":\"2025-02-01T09:00:00\",\"name\":\"Easy Run\",\"description\":\"30 min easy run\",\"type\":\"Run\"}"' | jq '{id, name, start_date_local, category, type}'
 ```
 
 ---
@@ -174,7 +174,7 @@ ATHLETE=<athlete-id> bash -c 'curl -s "https://intervals.icu/api/v1/athlete/$ATH
 
 Create a manual activity entry:
 
-> **Note:** Replace `<athlete-id>` with your athlete ID.
+> **Note:** Replace `<athlete-id>` with your athlete ID. `start_date_local` must include a time component.
 
 ```bash
 ATHLETE=<athlete-id> bash -c 'curl -s -X POST "https://intervals.icu/api/v1/athlete/$ATHLETE/activities/manual" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN" -H "Content-Type: application/json" -d "{\"type\":\"Run\",\"name\":\"Morning Run\",\"start_date_local\":\"2025-02-01T07:00:00\",\"moving_time\":1800,\"distance\":5000,\"description\":\"Easy morning run\"}"' | jq '{id, name, type, start_date_local, moving_time, distance}'
@@ -196,7 +196,9 @@ ACTIVITY=<activity-id> bash -c 'curl -s -X DELETE "https://intervals.icu/api/v1/
 
 ## Guidelines
 
-1. **Athlete ID**: Use `0` as a shortcut for the authenticated athlete in the `/athlete/{id}` endpoint. For other endpoints, use the actual athlete ID (e.g., `i230851`).
+1. **Athlete ID**: Use `0` as a shortcut for the authenticated athlete in the `/athlete/{id}` endpoint only. For all other endpoints, use the actual athlete ID (e.g., `i230851`).
 2. **Date ranges**: Most list endpoints require `oldest` and `newest` query parameters in `YYYY-MM-DD` format.
-3. **Rate limits**: Be mindful of API rate limits. Avoid rapid successive calls.
-4. **Activity types**: Common types include `Ride`, `Run`, `Swim`, `WeightTraining`, `Yoga`, `Walk`, `Hike`.
+3. **Datetime fields**: When creating activities or events, `start_date_local` must include a time component (e.g., `2025-02-01T09:00:00`), not just a date.
+4. **Rate limits**: Be mindful of API rate limits. Avoid rapid successive calls.
+5. **Activity types**: Common types include `Ride`, `Run`, `Swim`, `WeightTraining`, `Yoga`, `Walk`, `Hike`.
+6. **Strava activities**: Activities imported from Strava may have limited data and show a note that they are not fully available via the API.
