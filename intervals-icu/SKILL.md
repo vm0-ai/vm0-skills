@@ -57,7 +57,7 @@ Base URL: `https://intervals.icu`
 Get the authenticated athlete's profile and settings:
 
 ```bash
-bash -c 'curl -s "https://intervals.icu/api/v1/athlete/0" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '{id, name, email, locale, weight, ftp, max_hr, resting_hr}'
+bash -c 'curl -s "https://intervals.icu/api/v1/athlete/0" -H "Authorization: Bearer $INTERVALS_ICU_TOKEN"' | jq '{id, name, firstname, lastname, email, locale, weight, icu_weight, icu_resting_hr, sex, country, city, timezone}'
 ```
 
 ---
