@@ -159,7 +159,7 @@ Add an environment variable to a project:
 > **Note:** Replace `my-project` with your actual project name or ID.
 
 ```bash
-PROJECT=my-project bash -c 'curl -s -X POST "https://api.vercel.com/v10/projects/$PROJECT/env" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d "{\"key\":\"MY_VAR\",\"value\":\"my-value\",\"type\":\"encrypted\",\"target\":[\"production\",\"preview\",\"development\"]}"' | jq '{key, target, type}'
+PROJECT=my-project bash -c 'curl -s -X POST "https://api.vercel.com/v10/projects/$PROJECT/env" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d "{\"key\":\"MY_VAR\",\"value\":\"my-value\",\"type\":\"encrypted\",\"target\":[\"production\",\"preview\",\"development\"]}"' | jq '.created | {key, target, type}'
 ```
 
 ---
@@ -176,9 +176,9 @@ bash -c 'curl -s "https://api.vercel.com/v2/teams" -H "Authorization: Bearer $VE
 
 ### 12. Cancel Deployment
 
-Cancel a running deployment:
+Cancel a deployment that is currently `BUILDING` or `QUEUED`. Deployments already in `READY` state cannot be canceled.
 
-> **Note:** Replace `dpl_xxx` with an actual deployment ID.
+> **Note:** Replace `dpl_xxx` with an actual deployment ID of a building/queued deployment.
 
 ```bash
 DEPLOY_ID=dpl_xxx bash -c 'curl -s -X PATCH "https://api.vercel.com/v12/deployments/$DEPLOY_ID/cancel" -H "Authorization: Bearer $VERCEL_TOKEN"' | jq '{id, readyState}'
