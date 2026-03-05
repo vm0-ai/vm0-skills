@@ -337,6 +337,8 @@ Only AUTHORISED invoices can be voided. DRAFT/SUBMITTED should use Status: DELET
 
 ### Email Invoice
 
+Email requires a paying Xero plan. Returns 204 on success. Limits: 1000/day (paying), 20/day (trial), 0/day (demo).
+
 ```bash
 bash -c 'curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Email" \
   --header "Authorization: Bearer $XERO_TOKEN" \
@@ -344,8 +346,6 @@ bash -c 'curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>
   --header "Content-Type: application/json" \
   -d "{}"'
 ```
-
-Returns 204 on success. Limits: 1000/day (paying), 20/day (trial).
 
 ---
 
@@ -841,17 +841,7 @@ bash -c 'curl -s "https://api.xero.com/api.xro/2.0/Currencies" \
   --header "xero-tenant-id: <tenant-id>"'
 ```
 
-### Add Currency
-
-Currencies cannot be removed once added.
-
-```bash
-bash -c 'curl -s -X PUT "https://api.xero.com/api.xro/2.0/Currencies" \
-  --header "Authorization: Bearer $XERO_TOKEN" \
-  --header "xero-tenant-id: <tenant-id>" \
-  --header "Content-Type: application/json" \
-  -d "{\"Code\": \"EUR\"}"'
-```
+Adding currencies requires a plan that supports multi-currency. See docs: `https://r.jina.ai/https://developer.xero.com/documentation/api/accounting/currencies`
 
 ---
 
@@ -946,58 +936,10 @@ Attachments work on: Invoices, CreditNotes, BankTransactions, Contacts, Accounts
 Base URL: `https://api.xero.com/assets.xro/1.0` (different from accounting API).
 
 > **Note:** Fixed Assets API requires a Xero plan that includes the Fixed Assets feature (Business or above). Starter plans will return "Forbidden".
-
-### List Asset Types
-
-```bash
-bash -c 'curl -s "https://api.xero.com/assets.xro/1.0/AssetTypes" \
-  --header "Authorization: Bearer $XERO_TOKEN" \
-  --header "xero-tenant-id: <tenant-id>"'
-```
-
-### Create Asset Type
-
-Required: assetTypeName, fixedAssetAccountId, depreciationExpenseAccountId, accumulatedDepreciationAccountId, bookDepreciationSetting.
-
-```bash
-bash -c 'curl -s -X POST "https://api.xero.com/assets.xro/1.0/AssetTypes" \
-  --header "Authorization: Bearer $XERO_TOKEN" \
-  --header "xero-tenant-id: <tenant-id>" \
-  --header "Content-Type: application/json" \
-  -d "{\"assetTypeName\": \"Computer Equipment\", \"fixedAssetAccountId\": \"<fixed-asset-account-id>\", \"depreciationExpenseAccountId\": \"<depreciation-expense-account-id>\", \"accumulatedDepreciationAccountId\": \"<accumulated-depreciation-account-id>\", \"bookDepreciationSetting\": {\"depreciationMethod\": \"StraightLine\", \"averagingMethod\": \"ActualDays\", \"depreciationRate\": 25, \"depreciationCalculationMethod\": \"None\"}}"'
-```
-
-### List Assets
-
-Status is required for listing: `Draft`, `Registered`, `Disposed`.
-
-```bash
-bash -c 'curl -s "https://api.xero.com/assets.xro/1.0/Assets?status=Registered&page=1&pageSize=50" \
-  --header "Authorization: Bearer $XERO_TOKEN" \
-  --header "xero-tenant-id: <tenant-id>"'
-```
-
-Params: `status` (required), `page`, `pageSize` (max 200), `orderBy` (AssetName/AssetNumber/PurchaseDate/PurchasePrice), `sortDirection` (ASC/DESC), `filterBy` (search on AssetName/AssetNumber/Description).
-
-### Get Asset by ID
-
-```bash
-bash -c 'curl -s "https://api.xero.com/assets.xro/1.0/Assets/<asset-id>" \
-  --header "Authorization: Bearer $XERO_TOKEN" \
-  --header "xero-tenant-id: <tenant-id>"'
-```
-
-### Create Asset (Draft)
-
-New assets can only be created with Draft status. `assetNumber` must be unique.
-
-```bash
-bash -c 'curl -s -X POST "https://api.xero.com/assets.xro/1.0/Assets" \
-  --header "Authorization: Bearer $XERO_TOKEN" \
-  --header "xero-tenant-id: <tenant-id>" \
-  --header "Content-Type: application/json" \
-  -d "{\"assetName\": \"MacBook Pro 16\", \"assetNumber\": \"COMP-001\", \"purchaseDate\": \"2026-03-01\", \"purchasePrice\": 3500.00, \"assetTypeId\": \"<asset-type-id>\", \"description\": \"Developer laptop\", \"serialNumber\": \"SN12345\"}"'
-```
+>
+> Documentation:
+> - Assets: `https://r.jina.ai/https://developer.xero.com/documentation/api/assets/assets`
+> - Asset Types: `https://r.jina.ai/https://developer.xero.com/documentation/api/assets/asset-types`
 
 ---
 
