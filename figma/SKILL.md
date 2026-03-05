@@ -143,12 +143,12 @@ FILE_KEY=my-file-key bash -c 'curl -s "https://api.figma.com/v1/files/$FILE_KEY/
 
 ### 7. Post Comment
 
-Add a comment to a file.
+Add a comment to a file. Figma requires `client_meta` with a `node_id` to anchor the comment.
 
-> **Note:** Replace `my-file-key` with your file key.
+> **Note:** Replace `my-file-key` with your file key and `1:2` with an actual node ID.
 
 ```bash
-FILE_KEY=my-file-key bash -c 'curl -s -X POST "https://api.figma.com/v1/files/$FILE_KEY/comments" -H "Authorization: Bearer $FIGMA_TOKEN" -H "Content-Type: application/json" -d "{\"message\":\"This looks great!\"}"' | jq '{id, message}'
+FILE_KEY=my-file-key NODE_ID=1:2 bash -c 'curl -s -X POST "https://api.figma.com/v1/files/$FILE_KEY/comments" -H "Authorization: Bearer $FIGMA_TOKEN" -H "Content-Type: application/json" -d "{\"message\":\"This looks great!\",\"client_meta\":{\"node_id\":\"'$NODE_ID'\",\"node_offset\":{\"x\":0,\"y\":0}}}"' | jq '{id, message}'
 ```
 
 ---
