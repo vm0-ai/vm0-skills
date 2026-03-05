@@ -526,16 +526,20 @@ bash -c 'curl -s "https://api.xero.com/api.xro/2.0/Reports/TrialBalance?date=202
 
 ### Aged Receivables
 
+The `contactId` parameter is required. Get it from the Contacts endpoint first.
+
 ```bash
-bash -c 'curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedReceivablesByContact?date=2026-03-05" \
+bash -c 'curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedReceivablesByContact?contactId=<contact-id>&date=2026-03-05" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"'
 ```
 
 ### Aged Payables
 
+The `contactId` parameter is required. Get it from the Contacts endpoint first.
+
 ```bash
-bash -c 'curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedPayablesByContact?date=2026-03-05" \
+bash -c 'curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedPayablesByContact?contactId=<contact-id>&date=2026-03-05" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"'
 ```
@@ -649,15 +653,17 @@ bash -c 'curl -s "https://api.xero.com/api.xro/2.0/Users" \
 ## Guidelines
 
 1. **Tenant ID Required**: Always call `/connections` first to get the `tenantId`, then include it as `xero-tenant-id` header in every API call.
-2. **Create vs Update**: Xero uses `PUT` to create and `POST` to update for most endpoints.
-3. **Invoice Types**: `ACCREC` = sales invoice (accounts receivable), `ACCPAY` = bill (accounts payable).
-4. **Credit Note Types**: `ACCRECCREDIT` = customer credit, `ACCPAYCREDIT` = supplier credit.
-5. **Bank Transaction Types**: `SPEND` = money out, `RECEIVE` = money in.
-6. **Status Workflow**: Draft -> SUBMITTED -> AUTHORISED -> PAID (for invoices). Use POST to update status.
-7. **Deleting**: Most entities use `Status: DELETED` or `Status: VOIDED` via POST rather than HTTP DELETE.
-8. **Rate Limits**: Xero enforces rate limits. Use `If-Modified-Since` header and pagination for large datasets.
-9. **Pagination**: Bank transactions use `page` and `pageSize` parameters. Default 100 per page.
-10. **Date Format**: Use `YYYY-MM-DD` for dates.
+2. **Account Codes Vary by Org**: Account codes (e.g. `200`, `400`) differ between organisations. Always call `GET /Accounts` first to discover valid codes. Common patterns: revenue accounts (`4000`-`4999`), expense accounts (`5000`-`6999`), but these are not guaranteed.
+3. **Bank Accounts Required**: Payments, bank transactions, and bank transfers require a BANK-type account. If none exists, create one first via `PUT /Accounts` with `Type: BANK`.
+4. **Create vs Update**: Xero uses `PUT` to create and `POST` to update for most endpoints.
+5. **Invoice Types**: `ACCREC` = sales invoice (accounts receivable), `ACCPAY` = bill (accounts payable).
+6. **Credit Note Types**: `ACCRECCREDIT` = customer credit, `ACCPAYCREDIT` = supplier credit.
+7. **Bank Transaction Types**: `SPEND` = money out, `RECEIVE` = money in.
+8. **Status Workflow**: Draft -> SUBMITTED -> AUTHORISED -> PAID (for invoices). Use POST to update status.
+9. **Deleting**: Most entities use `Status: DELETED` or `Status: VOIDED` via POST rather than HTTP DELETE.
+10. **Rate Limits**: Xero enforces rate limits. Use `If-Modified-Since` header and pagination for large datasets.
+11. **Pagination**: Bank transactions use `page` and `pageSize` parameters. Default 100 per page.
+12. **Date Format**: Use `YYYY-MM-DD` for dates.
 
 ---
 
