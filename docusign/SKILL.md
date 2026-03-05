@@ -58,7 +58,7 @@ Use the `base_uri` and `account_id` from the default account (where `is_default`
 List envelopes from the last 30 days. Replace `<base-uri>` and `<account-id>` with values from userinfo.
 
 ```bash
-bash -c 'curl -s "https://demo.docusign.net/restapi/v2.1/accounts/<account-id>/envelopes?from_date=2025-01-01T00:00:00Z&count=10" --header "Authorization: Bearer $DOCUSIGN_TOKEN"' | jq '.envelopes[] | {envelopeId, status, emailSubject, sentDateTime}'
+bash -c 'curl -s "https://demo.docusign.net/restapi/v2.1/accounts/<account-id>/envelopes?from_date=2025-01-01T00:00:00Z&count=10" --header "Authorization: Bearer $DOCUSIGN_TOKEN"' | jq '{totalSetSize, envelopes: [.envelopes[]? | {envelopeId, status, emailSubject, sentDateTime}]}'
 ```
 
 ### Get Envelope
