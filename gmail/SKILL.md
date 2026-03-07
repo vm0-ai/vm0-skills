@@ -87,8 +87,11 @@ bash -c 'curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages/{messa
 ### Send Email
 
 ```bash
+# Encode subject using RFC 2047 MIME encoding for non-ASCII characters
+ENCODED_SUBJECT="=?UTF-8?B?$(printf '%s' "{subject}" | base64 -w 0)?="
+
 # Create RFC 2822 message and base64url encode
-RAW_MESSAGE=$(echo -e "To: {recipient-email}\r\nSubject: {subject}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 | tr '+/' '-_' | tr -d '=')
+RAW_MESSAGE=$(printf "To: {recipient-email}\r\nSubject: ${ENCODED_SUBJECT}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 -w 0 | tr '+/' '-_' | tr -d '=')
 ```
 
 Write to `/tmp/gmail_request.json`:
@@ -108,8 +111,11 @@ bash -c 'curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/message
 ### Reply to Thread
 
 ```bash
+# Encode subject using RFC 2047 MIME encoding for non-ASCII characters
+ENCODED_SUBJECT="=?UTF-8?B?$(printf '%s' "Re: {original-subject}" | base64 -w 0)?="
+
 # Include In-Reply-To and References headers for proper threading
-RAW_MESSAGE=$(echo -e "To: {recipient-email}\r\nSubject: Re: {original-subject}\r\nIn-Reply-To: <{original-message-id}>\r\nReferences: <{original-message-id}>\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{reply-text}" | base64 | tr '+/' '-_' | tr -d '=')
+RAW_MESSAGE=$(printf "To: {recipient-email}\r\nSubject: ${ENCODED_SUBJECT}\r\nIn-Reply-To: <{original-message-id}>\r\nReferences: <{original-message-id}>\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{reply-text}" | base64 -w 0 | tr '+/' '-_' | tr -d '=')
 ```
 
 Write to `/tmp/gmail_request.json`:
@@ -225,7 +231,10 @@ bash -c 'curl -s "https://gmail.googleapis.com/gmail/v1/users/me/drafts" --heade
 ### Create Draft
 
 ```bash
-RAW_MESSAGE=$(echo -e "To: {recipient-email}\r\nSubject: {subject}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 | tr '+/' '-_' | tr -d '=')
+# Encode subject using RFC 2047 MIME encoding for non-ASCII characters
+ENCODED_SUBJECT="=?UTF-8?B?$(printf '%s' "{subject}" | base64 -w 0)?="
+
+RAW_MESSAGE=$(printf "To: {recipient-email}\r\nSubject: ${ENCODED_SUBJECT}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 -w 0 | tr '+/' '-_' | tr -d '=')
 ```
 
 Write to `/tmp/gmail_request.json`:
