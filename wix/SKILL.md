@@ -25,6 +25,8 @@ Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Wix**. 
 
 > **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
+> **Note:** The CRM Contacts, Blog, Store, and Orders APIs are only available if the corresponding features are enabled on the Wix site. A blank site will return 404 for these endpoints.
+
 ## Core APIs
 
 ### Get Site Info
@@ -34,6 +36,8 @@ bash -c 'curl -s "https://www.wixapis.com/apps/v1/instance" --header "Authorizat
 ```
 
 ### List Contacts
+
+Requires CRM feature enabled on the site.
 
 ```bash
 cat > /tmp/request.json << 'EOF'
@@ -46,7 +50,7 @@ cat > /tmp/request.json << 'EOF'
   }
 }
 EOF
-bash -c 'curl -s -X POST "https://www.wixapis.com/crm/v3/contacts/search" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '.contacts[] | {id, name: (.primaryInfo.email // .info.name.full // "Unknown"), email: .primaryInfo.email, phone: .primaryInfo.phone}'
+bash -c 'curl -s -X POST "https://www.wixapis.com/crm/v3/contacts/search" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '.contacts[] | {id, email: .primaryInfo.email, name: .info.name}'
 ```
 
 ### Get a Contact
@@ -109,6 +113,8 @@ bash -c 'curl -s -X PATCH "https://www.wixapis.com/crm/v3/contacts/<contact-id>"
 
 ### List Blog Posts
 
+Requires Blog feature enabled on the site.
+
 ```bash
 cat > /tmp/request.json << 'EOF'
 {
@@ -132,13 +138,14 @@ bash -c 'curl -s "https://www.wixapis.com/blog/v3/posts/<post-id>" --header "Aut
 
 ### Create a Draft Blog Post
 
+Requires Blog feature enabled on the site. The `memberId` field is optional — omit it if you don't have a specific author ID.
+
 ```bash
 cat > /tmp/request.json << 'EOF'
 {
   "draftPost": {
     "title": "My New Blog Post",
-    "excerpt": "A brief summary of the post.",
-    "memberId": ""
+    "excerpt": "A brief summary of the post."
   }
 }
 EOF
@@ -146,6 +153,8 @@ bash -c 'curl -s -X POST "https://www.wixapis.com/blog/v3/draft-posts" --header 
 ```
 
 ### Query Store Products
+
+Requires Wix Stores feature enabled on the site.
 
 ```bash
 cat > /tmp/request.json << 'EOF'
@@ -170,6 +179,8 @@ bash -c 'curl -s "https://www.wixapis.com/stores/v1/products/<product-id>" --hea
 ```
 
 ### Search Orders
+
+Requires Wix Stores feature enabled on the site.
 
 ```bash
 cat > /tmp/request.json << 'EOF'
@@ -197,5 +208,6 @@ bash -c 'curl -s "https://www.wixapis.com/ecom/v1/orders/<order-id>" --header "A
 
 - All API endpoints require a Wix site to have the VM0 app installed
 - The access token is tied to the specific site where the app was installed
-- Blog and store APIs only work if the site has those features enabled
+- CRM, Blog, and Store APIs only work if the site has those features installed/enabled
 - Contacts API: use `MAIN` tag for primary email/phone
+- The `memberId` field in blog post creation is optional — omit it if no specific author ID is available
