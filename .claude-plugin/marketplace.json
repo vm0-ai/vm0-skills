@@ -283,6 +283,13 @@
       "skills": ["./intercom"]
     },
     {
+      "name": "jam",
+      "description": "Jam bug reporting and debugging API via MCP. Use this skill to access bug reports, console logs, network requests, user events, screenshots, and video analysis for debugging.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./jam"]
+    },
+    {
       "name": "jira",
       "description": "Jira Cloud REST API via curl. Use this skill to create, update, search, and manage issues, projects, and workflows in Jira.",
       "source": "./",
