@@ -143,6 +143,13 @@
       "skills": ["./elevenlabs"]
     },
     {
+      "name": "explorium",
+      "description": "Explorium B2B data enrichment API via curl. Use this skill to enrich business and prospect data, discover leads, and track business events.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./explorium"]
+    },
+    {
       "name": "fal",
       "description": "fal.ai AI image generation. Use this skill when you need to use fal, fal.ai, or generate images from text prompts using AI text-to-image models.",
       "source": "./",
