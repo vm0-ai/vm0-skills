@@ -332,6 +332,13 @@
       "skills": ["./linear"]
     },
     {
+      "name": "make",
+      "description": "Make (formerly Integromat) REST API via curl. Use this skill to manage scenarios, organizations, teams, connections, data stores, and webhooks.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./make"]
+    },
+    {
       "name": "mercury",
       "description": "Mercury Banking API via curl. Use this skill to manage bank accounts, transactions, transfers, and financial operations.",
       "source": "./",
