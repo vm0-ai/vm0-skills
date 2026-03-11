@@ -318,6 +318,13 @@
       "skills": ["./lark"]
     },
     {
+      "name": "line",
+      "description": "LINE Messaging API via curl. Use this skill to send messages, manage users, rich menus, webhooks, and access analytics for LINE bots.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./line"]
+    },
+    {
       "name": "linear",
       "description": "Linear issue tracking API via curl. Use this skill to create, update, and query issues, projects, and teams using GraphQL.",
       "source": "./",
