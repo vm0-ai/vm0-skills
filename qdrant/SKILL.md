@@ -2,7 +2,7 @@
 name: qdrant
 description: Qdrant vector database REST API via curl. Use this skill to store, search, and manage vector embeddings.
 vm0_secrets:
-  - QDRANT_API_KEY
+  - QDRANT_TOKEN
 vm0_vars:
   - QDRANT_URL
 ---
@@ -37,7 +37,7 @@ Use this skill when you need to:
 
 ```bash
 export QDRANT_URL="https://xyz-example.aws.cloud.qdrant.io:6333"
-export QDRANT_API_KEY="your-api-key"
+export QDRANT_TOKEN="your-api-key"
 ```
 
 ### Option 2: Self-hosted
@@ -50,7 +50,7 @@ docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
 
 ```bash
 export QDRANT_URL="http://localhost:6333"
-export QDRANT_API_KEY="" # Optional for local
+export QDRANT_TOKEN="" # Optional for local
 ```
 
 ---
@@ -63,7 +63,7 @@ export QDRANT_API_KEY="" # Optional for local
 
 ## How to Use
 
-All examples below assume you have `QDRANT_URL` and `QDRANT_API_KEY` set.
+All examples below assume you have `QDRANT_URL` and `QDRANT_TOKEN` set.
 
 ---
 
@@ -72,7 +72,7 @@ All examples below assume you have `QDRANT_URL` and `QDRANT_API_KEY` set.
 Verify connection to Qdrant:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}"'
+bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_TOKEN}"'
 ```
 
 ---
@@ -82,7 +82,7 @@ bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_API_KEY}"'
 Get all collections:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_API_KEY}"'
+bash -c 'curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_TOKEN}"'
 ```
 
 ---
@@ -105,7 +105,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 **Distance metrics:**
@@ -126,7 +126,7 @@ bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-
 Get details about a collection:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}"'
+bash -c 'curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_TOKEN}"'
 ```
 
 ---
@@ -157,7 +157,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 ---
@@ -179,7 +179,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 **Response:**
@@ -217,7 +217,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 **Filter operators:**
@@ -244,7 +244,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 ---
@@ -264,7 +264,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 Delete by filter:
@@ -284,7 +284,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 ---
@@ -294,7 +294,7 @@ bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete"
 Remove a collection entirely:
 
 ```bash
-bash -c 'curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_API_KEY}"'
+bash -c 'curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_TOKEN}"'
 ```
 
 ---
@@ -314,7 +314,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" --header "api-key: ${QDRANT_API_KEY}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
 ```
 
 ---
