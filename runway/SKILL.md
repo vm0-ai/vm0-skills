@@ -2,7 +2,7 @@
 name: runway
 description: Runway AI API for video generation via curl. Use this skill to generate videos from images, text, or other videos.
 vm0_secrets:
-  - RUNWAY_API_KEY
+  - RUNWAY_TOKEN
 ---
 
 # Runway API
@@ -31,10 +31,10 @@ Use this skill when you need to:
 1. Sign up at [Runway Developer Portal](https://dev.runwayml.com/)
 2. Purchase credits ($10 for 1000 credits)
 3. Create an API key in the dashboard
-4. Store it in the environment variable `RUNWAY_API_KEY`
+4. Store it in the environment variable `RUNWAY_TOKEN`
 
 ```bash
-export RUNWAY_API_KEY="your-api-key"
+export RUNWAY_TOKEN="your-api-key"
 ```
 
 ### Pricing
@@ -52,12 +52,12 @@ export RUNWAY_API_KEY="your-api-key"
 
 ## How to Use
 
-All examples below assume you have `RUNWAY_API_KEY` set.
+All examples below assume you have `RUNWAY_TOKEN` set.
 
 Base URL: `https://api.dev.runwayml.com/v1`
 
 **Required headers for all requests:**
-- `Authorization: Bearer ${RUNWAY_API_KEY}`
+- `Authorization: Bearer ${RUNWAY_TOKEN}`
 - `X-Runway-Version: 2024-11-06`
 - `Content-Type: application/json`
 
@@ -68,7 +68,7 @@ Base URL: `https://api.dev.runwayml.com/v1`
 Check your credit balance:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
+bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06"'
 ```
 
 ---
@@ -92,7 +92,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 **Response:**
@@ -124,7 +124,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
@@ -147,7 +147,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
@@ -170,7 +170,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
@@ -180,7 +180,7 @@ bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --heade
 Poll for task completion. Replace `<your-task-id>` with the actual task ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
+bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06"'
 ```
 
 **Response when complete:**
@@ -201,7 +201,7 @@ bash -c 'curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" -
 Cancel a running task. Replace `<your-task-id>` with the actual task ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06"'
+bash -c 'curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06"'
 ```
 
 ---
@@ -222,7 +222,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
@@ -243,7 +243,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_API_KEY}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
+bash -c 'curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer ${RUNWAY_TOKEN}" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json'
 ```
 
 ---
