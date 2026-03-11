@@ -2,7 +2,7 @@
 name: shortio
 description: Short.io URL shortener API via curl. Use this skill to create, manage, and track short links on custom branded domains.
 vm0_secrets:
-  - SHORTIO_API_KEY
+  - SHORTIO_TOKEN
 vm0_vars:
   - SHORTIO_DOMAIN
 ---
@@ -35,7 +35,7 @@ Use this skill when you need to:
 4. Get your domain ID from Domain Settings (visible in browser URL bar)
 
 ```bash
-export SHORTIO_API_KEY="your-secret-api-key"
+export SHORTIO_TOKEN="your-secret-api-key"
 export SHORTIO_DOMAIN="your-domain.com"
 export SHORTIO_DOMAIN_ID="123456" # Optional, needed for list/stats operations
 ```
@@ -55,7 +55,7 @@ export SHORTIO_DOMAIN_ID="123456" # Optional, needed for list/stats operations
 
 ## How to Use
 
-All examples below assume you have `SHORTIO_API_KEY` and `SHORTIO_DOMAIN` set.
+All examples below assume you have `SHORTIO_TOKEN` and `SHORTIO_DOMAIN` set.
 
 Base URL: `https://api.short.io`
 
@@ -77,7 +77,7 @@ Write to `/tmp/shortio_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
+curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_TOKEN}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
 
 ---
@@ -99,7 +99,7 @@ Write to `/tmp/shortio_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
+curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_TOKEN}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
 
 ---
@@ -121,7 +121,7 @@ Write to `/tmp/shortio_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, ttl}'
+curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_TOKEN}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, ttl}'
 ```
 
 ---
@@ -131,7 +131,7 @@ curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_
 Get details of a short link using domain and path:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/links/expand?domain=${SHORTIO_DOMAIN}&path=my-custom-slug" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{originalURL, shortURL, path, idString, createdAt, cloaking}
+bash -c 'curl -s -X GET "https://api.short.io/links/expand?domain=${SHORTIO_DOMAIN}&path=my-custom-slug" --header "Authorization: ${SHORTIO_TOKEN}" --header "Accept: application/json"' | jq '{originalURL, shortURL, path, idString, createdAt, cloaking}
 ```
 
 ---
@@ -143,7 +143,7 @@ Get details of a short link using its ID:
 ```bash
 LINK_ID="lnk_abc123xyz"
 
-bash -c 'curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{originalURL, shortURL, path, idString, createdAt}
+bash -c 'curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_TOKEN}" --header "Accept: application/json"' | jq '{originalURL, shortURL, path, idString, createdAt}
 ```
 
 ---
@@ -153,7 +153,7 @@ bash -c 'curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Author
 Get a list of links for a domain (max 150 per request):
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/api/links?domain_id=${SHORTIO_DOMAIN_ID}&limit=20" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{count, links: [.links[] | {shortURL, originalURL, path, idString}]}'
+bash -c 'curl -s -X GET "https://api.short.io/api/links?domain_id=${SHORTIO_DOMAIN_ID}&limit=20" --header "Authorization: ${SHORTIO_TOKEN}" --header "Accept: application/json"' | jq '{count, links: [.links[] | {shortURL, originalURL, path, idString}]}'
 ```
 
 ---
@@ -178,7 +178,7 @@ Write to `/tmp/shortio_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json' | jq '{shortURL, originalURL, path, idString}'
+bash -c 'curl -s -X POST "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_TOKEN}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json' | jq '{shortURL, originalURL, path, idString}'
 ```
 
 ---
@@ -190,7 +190,7 @@ Delete a short link by ID:
 ```bash
 LINK_ID="lnk_abc123xyz"
 
-bash -c 'curl -s -X DELETE "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{success, idString}'
+bash -c 'curl -s -X DELETE "https://api.short.io/links/${LINK_ID}" --header "Authorization: ${SHORTIO_TOKEN}" --header "Accept: application/json"' | jq '{success, idString}'
 ```
 
 ---
@@ -200,7 +200,7 @@ bash -c 'curl -s -X DELETE "https://api.short.io/links/${LINK_ID}" --header "Aut
 Get all domains associated with your account:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/api/domains" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '.[] | {id, hostname, state, linkType}'
+bash -c 'curl -s -X GET "https://api.short.io/api/domains" --header "Authorization: ${SHORTIO_TOKEN}" --header "Accept: application/json"' | jq '.[] | {id, hostname, state, linkType}'
 ```
 
 ---
@@ -210,7 +210,7 @@ bash -c 'curl -s -X GET "https://api.short.io/api/domains" --header "Authorizati
 Get click counts for specific links:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.short.io/domains/${SHORTIO_DOMAIN_ID}/link_clicks?link_ids=${LINK_ID}" --header "Authorization: ${SHORTIO_API_KEY}" --header "Accept: application/json"' | jq '{linkId: .linkId, clicks}'
+bash -c 'curl -s -X GET "https://api.short.io/domains/${SHORTIO_DOMAIN_ID}/link_clicks?link_ids=${LINK_ID}" --header "Authorization: ${SHORTIO_TOKEN}" --header "Accept: application/json"' | jq '{linkId: .linkId, clicks}'
 ```
 
 ---
