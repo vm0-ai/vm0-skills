@@ -395,6 +395,13 @@
       "skills": ["./podchaser"]
     },
     {
+      "name": "prisma-postgres",
+      "description": "Prisma Postgres Management API via curl. Use this skill to manage projects, databases, connections, backups, and usage metrics on the Prisma Data Platform.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./prisma-postgres"]
+    },
+    {
       "name": "pushinator",
       "description": "Pushinator push notification API via curl. Use this skill to send push notifications to mobile devices.",
       "source": "./",
