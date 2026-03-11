@@ -346,6 +346,13 @@
       "skills": ["./mercury"]
     },
     {
+      "name": "metabase",
+      "description": "Metabase REST API via curl. Use this skill to query data, manage dashboards, cards (questions), collections, databases, and users.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./metabase"]
+    },
+    {
       "name": "minimax",
       "description": "MiniMax API via curl. Use this skill for Chinese LLM chat, text-to-speech, and AI video generation.",
       "source": "./",
