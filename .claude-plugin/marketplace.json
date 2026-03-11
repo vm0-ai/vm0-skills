@@ -290,6 +290,13 @@
       "skills": ["./jam"]
     },
     {
+      "name": "jotform",
+      "description": "Jotform REST API via curl. Use this skill to manage forms, submissions, questions, webhooks, and user account data.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./jotform"]
+    },
+    {
       "name": "jira",
       "description": "Jira Cloud REST API via curl. Use this skill to create, update, search, and manage issues, projects, and workflows in Jira.",
       "source": "./",
