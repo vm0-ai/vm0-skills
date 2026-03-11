@@ -2,7 +2,7 @@
 name: tavily
 description: Tavily AI search API integration via curl. Use this skill to perform live web search and RAG-style retrieval.
 vm0_secrets:
-  - TAVILY_API_KEY
+  - TAVILY_TOKEN
 ---
 
 # Tavily Search API
@@ -27,12 +27,12 @@ Use this skill when you need:
 ## Prerequisites
 
 1. Sign up for Tavily and create an API key
-2. Store your Tavily API key in the environment variable `TAVILY_API_KEY`
+2. Store your Tavily API key in the environment variable `TAVILY_TOKEN`
 
 Set it in your local shell or runtime environment, for example:
 
 ```bash
-export TAVILY_API_KEY="tvly-xxxxxxxxxxxxxxxx"
+export TAVILY_TOKEN="tvly-xxxxxxxxxxxxxxxx"
 ```
 
 ---
@@ -45,7 +45,7 @@ export TAVILY_API_KEY="tvly-xxxxxxxxxxxxxxxx"
 
 ## How to Use
 
-All examples below assume you have `TAVILY_API_KEY` set in your environment.
+All examples below assume you have `TAVILY_TOKEN` set in your environment.
 The base endpoint for the Tavily search API is a `POST` request to:
 
 - `https://api.tavily.com/search`
@@ -69,7 +69,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json'
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_TOKEN}" -d @/tmp/tavily_request.json'
 ```
 
 **Key parameters:**
@@ -101,7 +101,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_API_KEY}" -d @/tmp/tavily_request.json'
+bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_TOKEN}" -d @/tmp/tavily_request.json'
 ```
 
 **Common advanced parameters:**
@@ -146,7 +146,7 @@ To integrate Tavily in n8n with the HTTP Request node:
 - **URL**: `https://api.tavily.com/search`
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `Authorization`: `Bearer {{ $env.TAVILY_API_KEY }}`
+  - `Authorization`: `Bearer {{ $env.TAVILY_TOKEN }}`
 - **Body**: JSON, for example:
 
 ```json
