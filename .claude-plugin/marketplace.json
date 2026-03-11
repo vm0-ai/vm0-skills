@@ -768,6 +768,15 @@
       ]
     },
     {
+      "name": "zapier",
+      "description": "Zapier AI Actions API via curl. Use this skill to trigger zaps, execute AI-powered actions across 6000+ apps, and automate workflows using natural language instructions.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./zapier"
+      ]
+    },
+    {
       "name": "zapsign",
       "description": "ZapSign electronic signature API via curl. Use this skill to create documents for signature, manage signers, and track signing status.",
       "source": "./",
