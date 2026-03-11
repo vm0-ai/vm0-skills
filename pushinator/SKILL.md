@@ -2,7 +2,7 @@
 name: pushinator
 description: Pushinator push notification API via curl. Use this skill to send push notifications to mobile devices.
 vm0_secrets:
-  - PUSHINATOR_API_KEY
+  - PUSHINATOR_TOKEN
 ---
 
 # Pushinator API
@@ -33,7 +33,7 @@ Use this skill when you need to:
 5. Store credentials in environment variables
 
 ```bash
-export PUSHINATOR_API_KEY="your-api-token"
+export PUSHINATOR_TOKEN="your-api-token"
 ```
 
 ### Pricing
@@ -55,7 +55,7 @@ export PUSHINATOR_API_KEY="your-api-token"
 Base URL: `https://api.pushinator.com`
 
 **Required headers:**
-- `Authorization: Bearer ${PUSHINATOR_API_KEY}`
+- `Authorization: Bearer ${PUSHINATOR_TOKEN}`
 - `Content-Type: application/json`
 
 ---
@@ -77,7 +77,7 @@ Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
+  --header "Authorization: Bearer ${PUSHINATOR_TOKEN}" \
   --header "Content-Type: application/json" \
   -d @/tmp/pushinator_request.json
 ```
@@ -109,7 +109,7 @@ Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
+  --header "Authorization: Bearer ${PUSHINATOR_TOKEN}" \
   --header "Content-Type: application/json" \
   -d @/tmp/pushinator_request.json
 ```
@@ -133,7 +133,7 @@ Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer ${PUSHINATOR_API_KEY}" \
+  --header "Authorization: Bearer ${PUSHINATOR_TOKEN}" \
   --header "Content-Type: application/json" \
   -d @/tmp/pushinator_request.json
 ```
