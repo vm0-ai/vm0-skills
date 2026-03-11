@@ -2,7 +2,7 @@
 name: qiita
 description: Qiita API integration for searching, reading, and publishing technical articles. Use this skill to search articles, get user posts, publish content, and manage comments on Qiita.
 vm0_secrets:
-  - QIITA_ACCESS_TOKEN
+  - QIITA_TOKEN
 ---
 
 # Qiita API
@@ -22,7 +22,7 @@ Qiita is a technical knowledge sharing platform popular in Japan. This skill pro
 Set the following environment variable:
 
 ```bash
-export QIITA_ACCESS_TOKEN=your_access_token
+export QIITA_TOKEN=your_access_token
 ```
 
 Get your access token from: https://qiita.com/settings/tokens/new
@@ -33,10 +33,10 @@ When using environment variables in commands with pipes, always wrap the command
 
 ```bash
 # Good - wraps curl in bash -c, pipe is outside
-bash -c 'curl -H "Authorization: Bearer ${QIITA_ACCESS_TOKEN}" https://api.qiita.com/api/v2/users'
+bash -c 'curl -H "Authorization: Bearer ${QIITA_TOKEN}" https://api.qiita.com/api/v2/users'
 
 # Bad - environment variable with pipe causes issues
-curl -H "Authorization: Bearer ${QIITA_ACCESS_TOKEN}" https://api.qiita.com/api/v2/users
+curl -H "Authorization: Bearer ${QIITA_TOKEN}" https://api.qiita.com/api/v2/users
 ```
 
 ### Required Scopes
