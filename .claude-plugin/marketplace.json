@@ -241,6 +241,13 @@
       "skills": ["./htmlcsstoimage"]
     },
     {
+      "name": "hume",
+      "description": "Hume AI API via curl. Use this skill to analyze emotions in media, generate expressive speech with text-to-speech, and manage EVI (speech-to-speech) configurations, prompts, and chats.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./hume"]
+    },
+    {
       "name": "hugging-face",
       "description": "Hugging Face Hub and Inference API via curl. Use this skill to search models, datasets, spaces, run serverless inference, and manage repositories.",
       "source": "./",
