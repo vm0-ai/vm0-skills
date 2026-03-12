@@ -3,7 +3,7 @@ name: cloudflare
 description: Cloudflare API for DNS and zone management. Use when user mentions "Cloudflare",
   "DNS record", "zone", or "CDN settings".
 vm0_secrets:
-- CLOUDFLARE_TOKEN
+  - CLOUDFLARE_TOKEN
 ---
 
 # Cloudflare

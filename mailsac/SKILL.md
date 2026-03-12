@@ -3,7 +3,7 @@ name: mailsac
 description: MailSac API for disposable email testing. Use when user mentions "MailSac",
   "test email", "disposable email", or email testing.
 vm0_secrets:
-- MAILSAC_API_KEY
+  - MAILSAC_API_KEY
 ---
 
 # Mailsac

@@ -3,9 +3,9 @@ name: twenty
 description: Twenty CRM API for customer management. Use when user mentions "Twenty",
   "Twenty CRM", "open source CRM", or asks about Twenty.
 vm0_secrets:
-- TWENTY_TOKEN
+  - TWENTY_TOKEN
 vm0_vars:
-- TWENTY_API_URL
+  - TWENTY_API_URL
 ---
 
 # Twenty CRM

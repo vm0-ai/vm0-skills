@@ -3,7 +3,7 @@ name: github-copilot
 description: GitHub Copilot API for AI coding assistance. Use when user mentions "Copilot",
   "GitHub Copilot", "AI coding", or asks about Copilot features.
 vm0_secrets:
-- GITHUB_TOKEN
+  - GITHUB_TOKEN
 ---
 
 # GitHub Copilot API

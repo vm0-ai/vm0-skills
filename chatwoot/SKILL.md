@@ -3,9 +3,9 @@ name: chatwoot
 description: Chatwoot API for customer support. Use when user mentions "Chatwoot",
   "conversations", "support chat", or customer messaging.
 vm0_secrets:
-- CHATWOOT_API_TOKEN
+  - CHATWOOT_API_TOKEN
 vm0_vars:
-- CHATWOOT_ACCOUNT_ID
+  - CHATWOOT_ACCOUNT_ID
 - CHATWOOT_BASE_URL
 ---
 

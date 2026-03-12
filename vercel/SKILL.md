@@ -3,7 +3,7 @@ name: vercel
 description: Vercel API for deployments. Use when user mentions "Vercel", "vercel.app",
   "vercel.com", shares a Vercel link, "deploy", or asks about hosting.
 vm0_secrets:
-- VERCEL_TOKEN
+  - VERCEL_TOKEN
 ---
 
 # Vercel API

@@ -3,7 +3,7 @@ name: gmail
 description: Gmail API for email management. Use when user says "check email", "send
   email", "search Gmail", "my inbox", or mentions Gmail messages.
 vm0_secrets:
-- GMAIL_TOKEN
+  - GMAIL_TOKEN
 ---
 
 # Gmail API

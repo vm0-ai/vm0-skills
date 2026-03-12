@@ -3,7 +3,7 @@ name: agentmail
 description: AgentMail API for email inboxes. Use when user says "create email inbox",
   "send email", "check messages", or mentions "agentmail" or email for agents.
 vm0_secrets:
-- AGENTMAIL_TOKEN
+  - AGENTMAIL_TOKEN
 ---
 
 # AgentMail API

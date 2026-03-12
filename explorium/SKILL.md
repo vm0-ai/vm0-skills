@@ -3,7 +3,7 @@ name: explorium
 description: Explorium API for external data enrichment. Use when user mentions "Explorium",
   "data enrichment", "business data", or external datasets.
 vm0_secrets:
-- EXPLORIUM_TOKEN
+  - EXPLORIUM_TOKEN
 ---
 
 # Explorium API

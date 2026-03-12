@@ -4,7 +4,7 @@ description: Slack API for messages and channels. Use when user mentions "Slack"
   "slack.com", shares a Slack link, "send to Slack", "Slack channel", or asks about
   workspace.
 vm0_secrets:
-- SLACK_TOKEN
+  - SLACK_TOKEN
 ---
 
 # Slack API

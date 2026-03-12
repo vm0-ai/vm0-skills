@@ -4,9 +4,9 @@ description: Instagram API for posts and media. Use when user mentions "Instagra
   "instagram.com", shares an IG link, "Instagram post", or asks about social media
   content.
 vm0_secrets:
-- INSTAGRAM_ACCESS_TOKEN
+  - INSTAGRAM_ACCESS_TOKEN
 vm0_vars:
-- INSTAGRAM_BUSINESS_ACCOUNT_ID
+  - INSTAGRAM_BUSINESS_ACCOUNT_ID
 ---
 
 # Instagram API (Graph API)

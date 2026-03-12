@@ -3,7 +3,7 @@ name: vm0-computer
 description: VM0 Computer API for secure sandbox. Use when user mentions "VM0 Computer",
   "secure sandbox", "browser sandbox", or asks about computer use.
 vm0_secrets:
-- COMPUTER_CONNECTOR_BRIDGE_TOKEN
+  - COMPUTER_CONNECTOR_BRIDGE_TOKEN
 - COMPUTER_CONNECTOR_DOMAIN
 ---
 

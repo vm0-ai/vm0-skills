@@ -4,7 +4,7 @@ description: Figma API for design files and assets. Use when user mentions "Figm
   "figma.com", shares a Figma link, "design specs", "export from Figma", or asks about
   designs.
 vm0_secrets:
-- FIGMA_TOKEN
+  - FIGMA_TOKEN
 ---
 
 # Figma API
