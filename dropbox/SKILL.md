@@ -1,8 +1,9 @@
 ---
 name: dropbox
-description: Dropbox API for managing files and folders. Use this skill to list, upload, download, search, and manage files and folders in Dropbox.
+description: Dropbox API for file storage. Use when user mentions "Dropbox", "upload
+  to Dropbox", "Dropbox files", or asks about cloud storage.
 vm0_secrets:
-  - DROPBOX_TOKEN
+- DROPBOX_TOKEN
 ---
 
 # Dropbox API

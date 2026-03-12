@@ -1,8 +1,9 @@
 ---
 name: neon
-description: Neon serverless Postgres API for managing projects, branches, databases, and endpoints. Use this skill to create and manage Neon Postgres projects, branches, and compute endpoints.
+description: Neon API for serverless Postgres. Use when user mentions "Neon", "Neon
+  database", "serverless Postgres", or asks about Neon projects.
 vm0_secrets:
-  - NEON_TOKEN
+- NEON_TOKEN
 ---
 
 # Neon API

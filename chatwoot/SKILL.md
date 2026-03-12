@@ -1,11 +1,12 @@
 ---
 name: chatwoot
-description: Chatwoot customer support API via curl. Use this skill to manage contacts, conversations, and messages for multi-channel customer support.
+description: Chatwoot API for customer support. Use when user mentions "Chatwoot",
+  "conversations", "support chat", or customer messaging.
 vm0_secrets:
-  - CHATWOOT_API_TOKEN
+- CHATWOOT_API_TOKEN
 vm0_vars:
-  - CHATWOOT_ACCOUNT_ID
-  - CHATWOOT_BASE_URL
+- CHATWOOT_ACCOUNT_ID
+- CHATWOOT_BASE_URL
 ---
 
 # Chatwoot

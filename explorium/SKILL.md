@@ -1,8 +1,9 @@
 ---
 name: explorium
-description: Explorium B2B data enrichment API via curl. Use this skill to enrich business and prospect data, discover leads, and track business events.
+description: Explorium API for external data enrichment. Use when user mentions "Explorium",
+  "data enrichment", "business data", or external datasets.
 vm0_secrets:
-  - EXPLORIUM_TOKEN
+- EXPLORIUM_TOKEN
 ---
 
 # Explorium API

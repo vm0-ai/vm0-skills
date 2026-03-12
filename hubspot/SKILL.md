@@ -1,8 +1,9 @@
 ---
 name: hubspot
-description: HubSpot CRM API for managing contacts, companies, deals, and tickets. Use this skill to create, update, search, and manage CRM objects and associations.
+description: HubSpot CRM API for marketing and sales. Use when user mentions "HubSpot",
+  "CRM", "HubSpot contacts", or asks about marketing automation.
 vm0_secrets:
-  - HUBSPOT_TOKEN
+- HUBSPOT_TOKEN
 ---
 
 # HubSpot CRM API

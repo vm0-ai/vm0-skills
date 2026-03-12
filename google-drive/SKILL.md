@@ -1,8 +1,9 @@
 ---
 name: google-drive
-description: Google Drive API via curl. Use this skill to manage files, folders, search, upload, download, share, and control permissions.
+description: Google Drive API for file management. Use when user mentions "Google
+  Drive", "upload file", "Drive folder", or asks about cloud storage.
 vm0_secrets:
-  - GOOGLE_DRIVE_TOKEN
+- GOOGLE_DRIVE_TOKEN
 ---
 
 # Google Drive API

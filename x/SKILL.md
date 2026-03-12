@@ -1,8 +1,9 @@
 ---
 name: x
-description: X (Twitter) API v2 via curl. Use this skill to read tweets, search posts, view user profiles, timelines, followers, and following on X.
+description: X (Twitter) API for tweets and profiles. Use when user mentions "X",
+  "Twitter", "tweet", "check X", "search Twitter", or asks about social media posts.
 vm0_secrets:
-  - X_ACCESS_TOKEN
+- X_ACCESS_TOKEN
 ---
 
 # X (Twitter) API

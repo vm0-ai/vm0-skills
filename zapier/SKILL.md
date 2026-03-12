@@ -1,8 +1,9 @@
 ---
 name: zapier
-description: Zapier AI Actions API via curl. Use this skill to trigger zaps, execute AI-powered actions across 6000+ apps, and automate workflows using natural language instructions.
+description: Zapier API for workflow automation. Use when user mentions "Zapier",
+  "zap", "automation", or asks about connecting apps.
 vm0_secrets:
-  - ZAPIER_TOKEN
+- ZAPIER_TOKEN
 ---
 
 # Zapier AI Actions API

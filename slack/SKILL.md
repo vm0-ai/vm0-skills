@@ -1,8 +1,9 @@
 ---
 name: slack
-description: Slack API for sending messages, reading channels, and managing conversations. Use this skill to post messages, upload files, and interact with Slack workspaces.
+description: Slack API for messages and channels. Use when user mentions "Slack",
+  "send to Slack", "Slack channel", "Slack message", or asks about workspace.
 vm0_secrets:
-  - SLACK_TOKEN
+- SLACK_TOKEN
 ---
 
 # Slack API

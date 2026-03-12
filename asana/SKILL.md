@@ -1,8 +1,9 @@
 ---
 name: asana
-description: Asana REST API via curl. Use this skill to manage tasks, projects, sections, tags, portfolios, and goals in Asana workspaces.
+description: Asana API for tasks and projects. Use when user mentions "Asana", "create
+  task", "my Asana projects", or asks about "Asana workspace".
 vm0_secrets:
-  - ASANA_TOKEN
+- ASANA_TOKEN
 ---
 
 # Asana API

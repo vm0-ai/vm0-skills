@@ -1,11 +1,12 @@
 ---
 name: atlassian
-description: Atlassian REST API via curl. Use this skill to manage Jira issues, Confluence pages, and other Atlassian Cloud products.
+description: Atlassian API for Confluence and Jira. Use when user mentions "Confluence
+  page", "Atlassian", or asks about wiki/documentation management.
 vm0_secrets:
-  - ATLASSIAN_TOKEN
+- ATLASSIAN_TOKEN
 vm0_vars:
-  - ATLASSIAN_DOMAIN
-  - ATLASSIAN_EMAIL
+- ATLASSIAN_DOMAIN
+- ATLASSIAN_EMAIL
 ---
 
 # Atlassian API

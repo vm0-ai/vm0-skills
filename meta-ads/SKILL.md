@@ -1,8 +1,9 @@
 ---
 name: meta-ads
-description: Meta Marketing API via curl. Use this skill to manage Facebook and Instagram ad campaigns, ad sets, ads, and retrieve performance insights.
+description: Meta Ads API for Facebook/Instagram advertising. Use when user mentions
+  "Meta Ads", "Facebook Ads", "Instagram Ads", or ad campaigns.
 vm0_secrets:
-  - META_ADS_TOKEN
+- META_ADS_TOKEN
 ---
 
 # Meta Marketing API

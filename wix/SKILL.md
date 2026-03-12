@@ -1,8 +1,9 @@
 ---
 name: wix
-description: Wix REST API for managing site contacts, blog posts, store products, and orders. Use this skill to interact with a Wix site's CRM, e-commerce, and content management features.
+description: Wix API for website management. Use when user mentions "Wix", "Wix site",
+  "update Wix", or asks about Wix CMS.
 vm0_secrets:
-  - WIX_TOKEN
+- WIX_TOKEN
 ---
 
 # Wix API

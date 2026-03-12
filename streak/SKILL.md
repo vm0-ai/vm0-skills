@@ -1,8 +1,9 @@
 ---
 name: streak
-description: Gmail-integrated CRM for managing pipelines, deals (boxes), contacts, and email threads
+description: Streak CRM API for Gmail. Use when user mentions "Streak", "Gmail CRM",
+  "email CRM", or pipeline in Gmail.
 vm0_secrets:
-  - STREAK_TOKEN
+- STREAK_TOKEN
 ---
 
 # Streak CRM

@@ -1,8 +1,9 @@
 ---
 name: apify
-description: Web scraping and automation platform with pre-built Actors for common tasks
+description: Apify web scraping platform. Use when user mentions "scrape website",
+  "web crawler", "scraping", or asks to "extract data from" a site.
 vm0_secrets:
-  - APIFY_TOKEN
+- APIFY_TOKEN
 ---
 
 # Apify

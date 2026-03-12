@@ -1,8 +1,9 @@
 ---
 name: monday
-description: Monday.com GraphQL API via curl. Use this skill to manage boards, items, and projects.
+description: Monday.com API for work management. Use when user mentions "Monday.com",
+  "Monday board", or asks about Monday workspace.
 vm0_secrets:
-  - MONDAY_TOKEN
+- MONDAY_TOKEN
 ---
 
 # Monday.com API

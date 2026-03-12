@@ -1,8 +1,9 @@
 ---
 name: firecrawl
-description: Firecrawl web scraping API via curl. Use this skill to scrape webpages, crawl websites, discover URLs, search the web, or extract structured data.
+description: Firecrawl API for web scraping and crawling. Use when user mentions "Firecrawl",
+  "crawl website", "scrape site", or web extraction.
 vm0_secrets:
-  - FIRECRAWL_TOKEN
+- FIRECRAWL_TOKEN
 ---
 
 # Firecrawl

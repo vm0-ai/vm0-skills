@@ -1,8 +1,9 @@
 ---
 name: elevenlabs
-description: ElevenLabs AI voice generation API via curl. Use this skill to convert text to speech with realistic AI voices.
+description: ElevenLabs API for text-to-speech and voice. Use when user mentions "ElevenLabs",
+  "text to speech", "voice cloning", or "AI voice".
 vm0_secrets:
-  - ELEVENLABS_API_KEY
+- ELEVENLABS_API_KEY
 ---
 
 # ElevenLabs API

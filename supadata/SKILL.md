@@ -1,8 +1,9 @@
 ---
 name: supadata
-description: Supadata API via curl. Use this skill to extract transcripts from YouTube/TikTok/Instagram videos and scrape web content to markdown.
+description: Supadata API for YouTube/web data. Use when user mentions "Supadata",
+  "YouTube data", "channel stats", or web scraping data.
 vm0_secrets:
-  - SUPADATA_TOKEN
+- SUPADATA_TOKEN
 ---
 
 # Supadata API

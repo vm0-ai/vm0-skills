@@ -1,8 +1,9 @@
 ---
 name: zapsign
-description: ZapSign electronic signature API via curl. Use this skill to create documents for signature, manage signers, and track signing status.
+description: ZapSign API for e-signatures. Use when user mentions "ZapSign", "e-signature",
+  "sign document", or Brazilian e-signature.
 vm0_secrets:
-  - ZAPSIGN_TOKEN
+- ZAPSIGN_TOKEN
 ---
 
 # ZapSign

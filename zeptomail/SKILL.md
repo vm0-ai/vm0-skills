@@ -1,8 +1,9 @@
 ---
 name: zeptomail
-description: Zoho ZeptoMail transactional email API. Use this skill for sending password resets, OTPs, order confirmations, and other transactional emails.
+description: ZeptoMail API for transactional email. Use when user mentions "ZeptoMail",
+  "transactional email", "send email", or Zoho email.
 vm0_secrets:
-  - ZEPTOMAIL_API_KEY
+- ZEPTOMAIL_API_KEY
 ---
 
 # Zoho ZeptoMail

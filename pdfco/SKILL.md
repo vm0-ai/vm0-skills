@@ -1,8 +1,9 @@
 ---
 name: pdfco
-description: PDF processing API for conversion, extraction, merging, splitting and more
+description: PDF.co API for PDF processing. Use when user mentions "PDF.co", "extract
+  PDF", "parse PDF", or PDF automation.
 vm0_secrets:
-  - PDFCO_API_KEY
+- PDFCO_API_KEY
 ---
 
 # PDF.co

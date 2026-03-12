@@ -1,8 +1,9 @@
 ---
 name: todoist
-description: Todoist REST API for managing tasks, projects, sections, labels, and comments. Use this skill to create, update, list, and delete tasks and organize them into projects.
+description: Todoist API for task management. Use when user mentions "Todoist", "my
+  tasks", "create todo", or asks about Todoist projects.
 vm0_secrets:
-  - TODOIST_TOKEN
+- TODOIST_TOKEN
 ---
 
 # Todoist API

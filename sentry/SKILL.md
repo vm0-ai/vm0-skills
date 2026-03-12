@@ -1,8 +1,9 @@
 ---
 name: sentry
-description: Sentry API via curl. Use this skill to manage error tracking, list issues, resolve errors, and monitor releases in Sentry.
+description: Sentry API for error tracking. Use when user mentions "Sentry", "error
+  tracking", "crash report", "exceptions", or asks about monitoring errors.
 vm0_secrets:
-  - SENTRY_TOKEN
+- SENTRY_TOKEN
 ---
 
 # Sentry API

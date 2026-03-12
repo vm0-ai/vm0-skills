@@ -1,8 +1,9 @@
 ---
 name: xero
-description: Xero Accounting API via curl. Use this skill to manage invoices, contacts, bank transactions, payments, accounts, reports, assets, projects, files, and organisation data.
+description: Xero API for accounting. Use when user mentions "Xero", "accounting",
+  "invoices", "bookkeeping", or asks about financial management.
 vm0_secrets:
-  - XERO_TOKEN
+- XERO_TOKEN
 ---
 
 # Xero Accounting API

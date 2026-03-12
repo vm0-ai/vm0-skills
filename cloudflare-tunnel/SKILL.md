@@ -1,9 +1,10 @@
 ---
 name: cloudflare-tunnel
-description: Authenticate requests through Cloudflare Access / Cloudflare Tunnel using Service Token headers. Use when accessing services protected by Cloudflare Zero Trust.
+description: Cloudflare Tunnel API for secure tunnels. Use when user mentions "Cloudflare
+  tunnel", "argo tunnel", or secure connectivity.
 vm0_secrets:
-  - CF_ACCESS_CLIENT_ID
-  - CF_ACCESS_CLIENT_SECRET
+- CF_ACCESS_CLIENT_ID
+- CF_ACCESS_CLIENT_SECRET
 ---
 
 # Cloudflare Tunnel / Access Authentication

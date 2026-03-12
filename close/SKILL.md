@@ -1,8 +1,9 @@
 ---
 name: close
-description: Close CRM API for managing leads, contacts, opportunities, tasks, and activities. Use this skill to list leads, create contacts, track deals, manage tasks, and interact with Close CRM data.
+description: Close CRM API for sales management. Use when user mentions "Close CRM",
+  "Close.io", "sales leads", or asks about sales pipeline.
 vm0_secrets:
-  - CLOSE_TOKEN
+- CLOSE_TOKEN
 ---
 
 # Close CRM API

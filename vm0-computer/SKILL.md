@@ -1,9 +1,10 @@
 ---
 name: vm0-computer
-description: Access the user's local computer files via WebDAV through the VM0 Computer Connector. Use when you need to read, write, or list files on the user's local machine from within a VM0 sandbox.
+description: VM0 Computer API for secure sandbox. Use when user mentions "VM0 Computer",
+  "secure sandbox", "browser sandbox", or asks about computer use.
 vm0_secrets:
-  - COMPUTER_CONNECTOR_BRIDGE_TOKEN
-  - COMPUTER_CONNECTOR_DOMAIN
+- COMPUTER_CONNECTOR_BRIDGE_TOKEN
+- COMPUTER_CONNECTOR_DOMAIN
 ---
 
 # VM0 Computer Connector

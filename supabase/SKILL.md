@@ -1,11 +1,12 @@
 ---
 name: supabase
-description: Supabase REST API via curl. Use this skill for database CRUD operations, filtering, pagination, and real-time data management.
+description: Supabase API for Postgres and auth. Use when user mentions "Supabase",
+  "Supabase database", "Postgres", or asks about Supabase project.
 vm0_secrets:
-  - SUPABASE_TOKEN
+- SUPABASE_TOKEN
 vm0_vars:
-  - SUPABASE_URL
-  - SUPABASE_PUBLISHABLE_KEY
+- SUPABASE_URL
+- SUPABASE_PUBLISHABLE_KEY
 ---
 
 # Supabase REST API

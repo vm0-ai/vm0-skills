@@ -1,8 +1,9 @@
 ---
 name: jotform
-description: Jotform REST API via curl. Use this skill to manage forms, submissions, questions, webhooks, and user account data.
+description: JotForm API for form management. Use when user mentions "JotForm", "forms",
+  "submissions", or asks about form data.
 vm0_secrets:
-  - JOTFORM_TOKEN
+- JOTFORM_TOKEN
 ---
 
 # Jotform API

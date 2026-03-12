@@ -1,6 +1,6 @@
+---
 name: rss-fetch
-description: Fetch RSS/Atom feeds via curl. Use this skill to gather news and articles from RSS sources.
-
+description: RSS feed API for fetching news and articles. Use when user mentions "RSS", "feed", "RSS reader", "fetch feed", or asks to get news from RSS sources.
 ---
 
 # RSS Feed Fetcher

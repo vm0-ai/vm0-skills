@@ -1,8 +1,9 @@
 ---
 name: metabase
-description: Metabase REST API via curl. Use this skill to query data, manage dashboards, cards (questions), collections, databases, and users.
+description: Metabase API for business intelligence. Use when user mentions "Metabase",
+  "dashboard", "BI", "SQL query", or data visualization.
 vm0_secrets:
-  - METABASE_TOKEN
+- METABASE_TOKEN
 ---
 
 # Metabase API

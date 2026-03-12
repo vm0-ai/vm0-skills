@@ -1,8 +1,9 @@
 ---
 name: vercel
-description: Vercel API via curl. Use this skill to manage deployments, projects, domains, environment variables, and webhooks on Vercel.
+description: Vercel API for deployments. Use when user mentions "Vercel", "deploy",
+  "Vercel project", "deployment", or asks about hosting.
 vm0_secrets:
-  - VERCEL_TOKEN
+- VERCEL_TOKEN
 ---
 
 # Vercel API

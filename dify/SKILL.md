@@ -1,8 +1,9 @@
 ---
 name: dify
-description: Dify AI platform API via curl. Use this skill to run AI workflows, chat with AI apps, generate text completions, and manage knowledge bases.
+description: Dify API for LLM app building. Use when user mentions "Dify", "LLM app",
+  "AI workflow", or asks about Dify platform.
 vm0_secrets:
-  - DIFY_TOKEN
+- DIFY_TOKEN
 ---
 
 # Dify API

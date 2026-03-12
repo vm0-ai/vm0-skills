@@ -1,8 +1,9 @@
 ---
 name: youtube
-description: YouTube Data API v3 via curl. Use this skill to search videos, get video/channel info, list playlists, and fetch comments.
+description: YouTube API for videos and channels. Use when user mentions "YouTube",
+  "YouTube video", "channel stats", or asks about video content.
 vm0_secrets:
-  - YOUTUBE_TOKEN
+- YOUTUBE_TOKEN
 ---
 
 # YouTube Data API

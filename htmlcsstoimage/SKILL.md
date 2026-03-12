@@ -1,10 +1,11 @@
 ---
 name: htmlcsstoimage
-description: HTMLCSStoImage API via curl. Use this skill to generate images from HTML/CSS or capture screenshots of web pages.
+description: HTML/CSS to Image API for rendering. Use when user mentions "HTML to
+  image", "render HTML", "screenshot", or "convert to image".
 vm0_secrets:
-  - HCTI_API_KEY
+- HCTI_API_KEY
 vm0_vars:
-  - HCTI_USER_ID
+- HCTI_USER_ID
 ---
 
 # HTMLCSStoImage API
