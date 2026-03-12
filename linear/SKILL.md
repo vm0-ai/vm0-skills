@@ -1,8 +1,9 @@
 ---
 name: linear
-description: Linear issue tracking API via curl. Use this skill to create, update, and query issues, projects, and teams using GraphQL.
+description: Linear API for issue tracking. Use when user mentions "Linear", "linear.app",
+  shares a Linear link, "~ENG-123", "create issue", or asks about Linear tasks.
 vm0_secrets:
-  - LINEAR_TOKEN
+- LINEAR_TOKEN
 ---
 
 # Linear API

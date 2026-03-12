@@ -1,8 +1,10 @@
 ---
 name: notion
-description: Notion API for managing pages, databases, and blocks. Use this skill to create pages, query databases, search content, and build integrations with Notion workspaces.
+description: Notion API for pages and databases. Use when user mentions "Notion",
+  "notion.so", "notion.site", shares a Notion link, "Notion page", "query Notion",
+  or asks about Notion workspace.
 vm0_secrets:
-  - NOTION_TOKEN
+- NOTION_TOKEN
 ---
 
 # Notion API

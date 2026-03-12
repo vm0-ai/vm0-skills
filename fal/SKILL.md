@@ -1,8 +1,9 @@
 ---
 name: fal
-description: fal.ai AI image generation. Use this skill when you need to use fal, fal.ai, or generate images from text prompts using AI text-to-image models.
+description: Fal.ai API for AI image and video generation. Use when user mentions
+  "Fal.ai", "AI image generation", "video generation", or "fal" models.
 vm0_secrets:
-  - FAL_TOKEN
+- FAL_TOKEN
 ---
 
 # fal.ai Image Generator

@@ -1,8 +1,9 @@
 ---
 name: hugging-face
-description: Hugging Face Hub and Inference API via curl. Use this skill to search models, datasets, spaces, run serverless inference, and manage repositories.
+description: Hugging Face API for ML models. Use when user mentions "Hugging Face",
+  "HF", "transformers", or asks about ML model inference.
 vm0_secrets:
-  - HUGGING_FACE_TOKEN
+- HUGGING_FACE_TOKEN
 ---
 
 # Hugging Face API

@@ -1,8 +1,9 @@
 ---
 name: pushinator
-description: Pushinator push notification API via curl. Use this skill to send push notifications to mobile devices.
+description: Pushinator API for push notifications. Use when user mentions "Pushinator",
+  "push notification", "web push", or notifications.
 vm0_secrets:
-  - PUSHINATOR_TOKEN
+- PUSHINATOR_TOKEN
 ---
 
 # Pushinator API

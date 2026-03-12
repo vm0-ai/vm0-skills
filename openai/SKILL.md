@@ -1,8 +1,9 @@
 ---
 name: openai
-description: OpenAI API via curl. Use this skill for GPT chat completions, DALL-E image generation, Whisper audio transcription, embeddings, and text-to-speech.
+description: OpenAI API for GPT models. Use when user mentions "OpenAI", "GPT", "ChatGPT
+  API", or asks about OpenAI models (do NOT use for Anthropic/Claude).
 vm0_secrets:
-  - OPENAI_API_KEY
+- OPENAI_API_KEY
 ---
 
 # OpenAI API

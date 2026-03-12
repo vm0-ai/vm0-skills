@@ -1,8 +1,9 @@
 ---
 name: imgur
-description: Upload images to Imgur for free hosting. Use this skill when you need to upload images and get public URLs for sharing or embedding in articles.
+description: Imgur API for image hosting. Use when user mentions "Imgur", "upload
+  image", "image hosting", or asks about image sharing.
 vm0_secrets:
-  - IMGUR_CLIENT_ID
+- IMGUR_CLIENT_ID
 ---
 
 # Imgur Image Hosting

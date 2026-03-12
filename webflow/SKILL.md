@@ -1,8 +1,9 @@
 ---
 name: webflow
-description: Webflow REST API v2 for managing sites, pages, CMS collections, CMS items, assets, and forms. Use this skill to read site structure, manage CMS content, list assets, and retrieve form submissions.
+description: Webflow API for CMS and sites. Use when user mentions "Webflow", "webflow.com",
+  "webflow.io", shares a Webflow link, "update Webflow", or asks about Webflow site.
 vm0_secrets:
-  - WEBFLOW_TOKEN
+- WEBFLOW_TOKEN
 ---
 
 # Webflow API

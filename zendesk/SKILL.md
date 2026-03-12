@@ -1,11 +1,12 @@
 ---
 name: zendesk
-description: Zendesk Support REST API for managing tickets, users, organizations, and support operations. Use this skill to create tickets, manage users, search, and automate customer support workflows.
+description: Zendesk API for customer support. Use when user mentions "Zendesk", "support
+  ticket", "customer service", or help desk.
 vm0_secrets:
-  - ZENDESK_API_TOKEN
+- ZENDESK_API_TOKEN
 vm0_vars:
-  - ZENDESK_EMAIL
-  - ZENDESK_SUBDOMAIN
+- ZENDESK_EMAIL
+- ZENDESK_SUBDOMAIN
 ---
 
 # Zendesk API

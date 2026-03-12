@@ -1,8 +1,9 @@
 ---
 name: deepseek
-description: DeepSeek AI large language model API via curl. Use this skill for chat completions, reasoning, and code generation with OpenAI-compatible endpoints.
+description: DeepSeek API for AI model inference. Use when user mentions "DeepSeek",
+  "DeepSeek API", or asks about DeepSeek models.
 vm0_secrets:
-  - DEEPSEEK_API_KEY
+- DEEPSEEK_API_KEY
 ---
 
 # DeepSeek API

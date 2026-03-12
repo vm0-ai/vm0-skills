@@ -1,8 +1,9 @@
 ---
 name: ahrefs
-description: Ahrefs SEO API for backlink analysis, keyword research, and domain metrics. Use this skill to check domain ratings, backlinks, organic keywords, and site health.
+description: Ahrefs SEO API for backlink and keyword analysis. Use when user mentions
+  "SEO", "backlinks", "domain rating", "keyword research", or asks about site metrics.
 vm0_secrets:
-  - AHREFS_TOKEN
+- AHREFS_TOKEN
 ---
 
 # Ahrefs API

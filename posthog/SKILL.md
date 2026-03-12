@@ -1,8 +1,9 @@
 ---
 name: posthog
-description: PostHog API via curl. Use this skill to manage product analytics, feature flags, experiments, insights, dashboards, and more in PostHog.
+description: PostHog API for product analytics. Use when user mentions "PostHog",
+  "product analytics", "event tracking", or user analytics.
 vm0_secrets:
-  - POSTHOG_TOKEN
+- POSTHOG_TOKEN
 ---
 
 # PostHog API

@@ -1,8 +1,9 @@
 ---
 name: similarweb
-description: SimilarWeb API for website traffic analytics, competitive intelligence, and market insights. Use this skill to analyze website traffic, engagement metrics, traffic sources, keywords, and competitors.
+description: Similarweb API for web analytics. Use when user mentions "Similarweb",
+  "website traffic", "competitor analysis", or market intelligence.
 vm0_secrets:
-  - SIMILARWEB_TOKEN
+- SIMILARWEB_TOKEN
 ---
 
 # SimilarWeb API

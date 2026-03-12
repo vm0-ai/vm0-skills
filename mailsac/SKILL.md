@@ -1,8 +1,9 @@
 ---
 name: mailsac
-description: Mailsac disposable email API via curl. Use this skill to receive test emails, validate email addresses, manage inboxes, and automate email-based QA testing.
+description: MailSac API for disposable email testing. Use when user mentions "MailSac",
+  "test email", "disposable email", or email testing.
 vm0_secrets:
-  - MAILSAC_API_KEY
+- MAILSAC_API_KEY
 ---
 
 # Mailsac

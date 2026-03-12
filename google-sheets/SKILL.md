@@ -1,8 +1,10 @@
 ---
 name: google-sheets
-description: Google Sheets API via curl. Use this skill to read, write, and manage spreadsheet data programmatically.
+description: Google Sheets API for spreadsheets. Use when user mentions "Google Sheets",
+  "sheets.google.com", shares a spreadsheet link, "update sheet", or asks about Excel/Sheets
+  data.
 vm0_secrets:
-  - GOOGLE_SHEETS_TOKEN
+- GOOGLE_SHEETS_TOKEN
 ---
 
 # Google Sheets API

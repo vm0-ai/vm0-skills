@@ -1,8 +1,9 @@
 ---
 name: bright-data
-description: Bright Data Web Scraper API via curl. Use this skill for scraping social media (Twitter/X, Reddit, YouTube, Instagram, TikTok), account management, and usage monitoring.
+description: Bright Data proxy and web scraping API. Use when user mentions "Bright
+  Data", "proxy", "web scraping at scale", or data collection.
 vm0_secrets:
-  - BRIGHTDATA_TOKEN
+- BRIGHTDATA_TOKEN
 ---
 
 # Bright Data Web Scraper API

@@ -1,8 +1,9 @@
 ---
 name: perplexity
-description: AI-powered search engine with real-time web grounding and citations
+description: Perplexity API for AI search. Use when user mentions "Perplexity", "AI
+  search", or asks to search with citations.
 vm0_secrets:
-  - PERPLEXITY_API_KEY
+- PERPLEXITY_API_KEY
 ---
 
 # Perplexity AI

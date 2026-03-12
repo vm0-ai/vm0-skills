@@ -1,8 +1,9 @@
 ---
 name: wrike
-description: Wrike REST API via curl. Use this skill to manage tasks, folders, projects, spaces, comments, timelogs, and workflows in Wrike.
+description: Wrike API for project management. Use when user mentions "Wrike", "wrike.com",
+  shares a Wrike link, "Wrike task", or asks about Wrike workspace.
 vm0_secrets:
-  - WRIKE_TOKEN
+- WRIKE_TOKEN
 ---
 
 # Wrike API

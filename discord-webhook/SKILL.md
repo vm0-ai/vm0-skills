@@ -1,8 +1,9 @@
 ---
 name: discord-webhook
-description: Discord Webhook API via curl. Use this skill to send messages, embeds, and files to Discord channels without a bot.
+description: Discord Webhook API for sending messages. Use when user says "send Discord
+  message", "Discord webhook", or "post to Discord".
 vm0_secrets:
-  - DISCORD_WEBHOOK_URL
+- DISCORD_WEBHOOK_URL
 ---
 
 # Discord Webhook

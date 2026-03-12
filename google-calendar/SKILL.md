@@ -1,8 +1,10 @@
 ---
 name: google-calendar
-description: Google Calendar API via curl. Use this skill to manage calendars, events, attendees, reminders, and check availability.
+description: Google Calendar API for scheduling. Use when user mentions "calendar",
+  "calendar.google.com", shares a calendar link, "schedule meeting", "check availability",
+  or "when am I free".
 vm0_secrets:
-  - GOOGLE_CALENDAR_TOKEN
+- GOOGLE_CALENDAR_TOKEN
 ---
 
 # Google Calendar API

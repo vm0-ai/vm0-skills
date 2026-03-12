@@ -1,8 +1,9 @@
+---
+name: workflow-migration
+description: VM0 migration helper for Claude Code workflows. Use when user says "migrate to VM0", "move to VM0", "convert skill to VM0", or asks about migrating local Claude Code workflows.
+---
+
 # Local Claude Code Workflow to VM0 Migration
-
-**Description**: Migrate local Claude Code workflows with custom skills to VM0 agents, preserving functionality and automation logic.
-
-**Required Environment Variables**: None
 
 ---
 

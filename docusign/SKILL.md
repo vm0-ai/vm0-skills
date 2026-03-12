@@ -1,8 +1,9 @@
 ---
 name: docusign
-description: DocuSign eSignature API via curl. Use this skill to create, send, and manage envelopes, templates, and electronic signatures.
+description: DocuSign API for electronic signatures. Use when user mentions "DocuSign",
+  "e-signature", "sign document", or "send for signature".
 vm0_secrets:
-  - DOCUSIGN_TOKEN
+- DOCUSIGN_TOKEN
 ---
 
 # DocuSign eSignature API

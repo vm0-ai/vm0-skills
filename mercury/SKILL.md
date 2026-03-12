@@ -1,8 +1,9 @@
 ---
 name: mercury
-description: Mercury Banking API via curl. Use this skill to manage bank accounts, transactions, transfers, and financial operations.
+description: Mercury API for banking. Use when user mentions "Mercury", "business
+  banking", "bank account", or fintech operations.
 vm0_secrets:
-  - MERCURY_TOKEN
+- MERCURY_TOKEN
 ---
 
 # Mercury Banking API

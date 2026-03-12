@@ -1,9 +1,10 @@
 ---
 name: pikvm
-description: Remote KVM control via PiKVM REST API. Use for controlling remote computers through PiKVM - taking screenshots, moving mouse, clicking, typing text, pressing keys, keyboard shortcuts, scrolling, or power management.
+description: PiKVM API for remote KVM. Use when user mentions "PiKVM", "KVM over IP",
+  "remote server", or hardware management.
 vm0_secrets:
-  - PIKVM_AUTH
-  - PIKVM_URL
+- PIKVM_AUTH
+- PIKVM_URL
 ---
 
 # PiKVM Remote Control

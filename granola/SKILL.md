@@ -1,8 +1,9 @@
 ---
 name: granola
-description: Granola AI meeting notes platform for accessing notes, transcripts, summaries, and calendar event details via REST API
+description: Granola API for meeting notes. Use when user mentions "Granola", "meeting
+  notes", or AI note-taking.
 vm0_secrets:
-  - GRANOLA_TOKEN
+- GRANOLA_TOKEN
 ---
 
 # Granola

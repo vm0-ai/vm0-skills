@@ -1,8 +1,9 @@
 ---
 name: deel
-description: Deel API for managing contracts, people, and HR operations. Use this skill to list contracts, manage employees and contractors, handle time off, and access organization data.
+description: Deel API for global payroll and contractors. Use when user mentions "Deel",
+  "contractors", "global payroll", or "EOR".
 vm0_secrets:
-  - DEEL_TOKEN
+- DEEL_TOKEN
 ---
 
 # Deel API

@@ -1,8 +1,9 @@
 ---
 name: browserless
-description: Headless browser as a service for screenshots, PDFs, scraping, and automation
+description: Browserless API for headless Chrome. Use when user mentions "headless
+  Chrome", "browserless", or needs browser automation.
 vm0_secrets:
-  - BROWSERLESS_TOKEN
+- BROWSERLESS_TOKEN
 ---
 
 # Browserless

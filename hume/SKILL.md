@@ -1,8 +1,9 @@
 ---
 name: hume
-description: Hume AI API via curl. Use this skill to analyze emotions in media, generate expressive speech with text-to-speech, and manage EVI (speech-to-speech) configurations, prompts, and chats.
+description: Hume AI API for emotion analysis. Use when user mentions "Hume", "emotion
+  AI", "sentiment analysis", or voice emotion detection.
 vm0_secrets:
-  - HUME_TOKEN
+- HUME_TOKEN
 ---
 
 # Hume AI API

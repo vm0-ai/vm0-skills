@@ -1,8 +1,9 @@
 ---
 name: gmail
-description: Gmail API via curl. Use this skill to read, send, and manage emails, labels, drafts, and threads.
+description: Gmail API for email management. Use when user says "check email", "send
+  email", "search Gmail", "my inbox", or mentions Gmail messages.
 vm0_secrets:
-  - GMAIL_TOKEN
+- GMAIL_TOKEN
 ---
 
 # Gmail API

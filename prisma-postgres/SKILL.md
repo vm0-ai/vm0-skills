@@ -1,8 +1,9 @@
 ---
 name: prisma-postgres
-description: Prisma Postgres Management API via curl. Use this skill to manage projects, databases, connections, backups, and usage metrics on the Prisma Data Platform.
+description: Prisma Postgres API for database. Use when user mentions "Prisma Postgres",
+  "Prisma database", or asks about Prisma acceleration.
 vm0_secrets:
-  - PRISMA_POSTGRES_TOKEN
+- PRISMA_POSTGRES_TOKEN
 ---
 
 # Prisma Postgres Management API

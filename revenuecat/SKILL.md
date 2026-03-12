@@ -1,8 +1,9 @@
 ---
 name: revenuecat
-description: RevenueCat REST API via curl. Use this skill to manage in-app subscriptions, customers, entitlements, offerings, and products.
+description: RevenueCat API for in-app purchases. Use when user mentions "RevenueCat",
+  "in-app purchase", "subscription", or mobile monetization.
 vm0_secrets:
-  - REVENUECAT_TOKEN
+- REVENUECAT_TOKEN
 ---
 
 # RevenueCat API

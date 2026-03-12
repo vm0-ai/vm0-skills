@@ -1,8 +1,9 @@
 ---
 name: vm0-cli
-description: VM0 CLI for building and running AI agents in secure sandboxes. Use this skill when users need to install vm0, create agent projects, deploy agents, run agents, manage volumes/artifacts.
+description: VM0 CLI for agent management. Use when user mentions "vm0 cli", "npx
+  @vm0/cli", "vm0 command", or asks about CLI operations.
 vm0_secrets:
-  - VM0_TOKEN
+- VM0_TOKEN
 ---
 
 # VM0 CLI

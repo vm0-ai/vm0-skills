@@ -1,8 +1,10 @@
 ---
 name: airtable
-description: Airtable API for managing bases, tables, records, and comments. Use this skill to list bases, read/write records, manage table schemas, and interact with Airtable data.
+description: Airtable API for bases and records. Use when user mentions "Airtable",
+  "airtable.com", shares an Airtable link, "create record", or asks about Airtable
+  base.
 vm0_secrets:
-  - AIRTABLE_TOKEN
+- AIRTABLE_TOKEN
 ---
 
 # Airtable API

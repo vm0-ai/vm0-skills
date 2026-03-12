@@ -1,8 +1,9 @@
 ---
 name: mailchimp
-description: Mailchimp Marketing API for managing audiences, campaigns, templates, and automations. Use this skill to create and send email campaigns, manage subscriber lists, and analyze campaign performance.
+description: Mailchimp API for email marketing. Use when user mentions "Mailchimp",
+  "email campaign", "newsletter", or marketing automation.
 vm0_secrets:
-  - MAILCHIMP_TOKEN
+- MAILCHIMP_TOKEN
 ---
 
 # Mailchimp Marketing API

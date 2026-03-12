@@ -1,8 +1,9 @@
 ---
 name: make
-description: Make (formerly Integromat) REST API via curl. Use this skill to manage scenarios, organizations, teams, connections, data stores, and webhooks.
+description: Make (Integromat) API for automation. Use when user mentions "Make",
+  "Integromat", "automation", or workflow building.
 vm0_secrets:
-  - MAKE_TOKEN
+- MAKE_TOKEN
 ---
 
 # Make API

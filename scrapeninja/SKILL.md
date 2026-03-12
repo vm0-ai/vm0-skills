@@ -1,8 +1,9 @@
 ---
 name: scrapeninja
-description: High-performance web scraping API with Chrome TLS fingerprint and JS rendering
+description: ScrapeNinja API for web scraping. Use when user mentions "ScrapeNinja",
+  "scrape", "web scraping", or data extraction.
 vm0_secrets:
-  - SCRAPENINJA_TOKEN
+- SCRAPENINJA_TOKEN
 ---
 
 # ScrapeNinja

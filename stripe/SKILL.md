@@ -1,8 +1,9 @@
 ---
 name: stripe
-description: Stripe API for managing payments, customers, subscriptions, and billing. Use this skill to create customers, products, prices, subscriptions, invoices, and payment intents.
+description: Stripe API for payments. Use when user mentions "Stripe", "payment",
+  "subscription", "billing", "invoice", or asks about payment processing.
 vm0_secrets:
-  - STRIPE_TOKEN
+- STRIPE_TOKEN
 ---
 
 # Stripe API

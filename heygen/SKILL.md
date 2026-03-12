@@ -1,8 +1,9 @@
 ---
 name: heygen
-description: HeyGen AI video generation API via curl. Use this skill to create avatar videos, manage avatars and voices, generate videos from templates, and translate videos.
+description: HeyGen API for AI video avatars. Use when user mentions "HeyGen", "AI
+  avatar", "video avatar", or "AI presenter".
 vm0_secrets:
-  - HEYGEN_TOKEN
+- HEYGEN_TOKEN
 ---
 
 # HeyGen API

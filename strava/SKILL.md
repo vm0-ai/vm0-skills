@@ -1,8 +1,9 @@
 ---
 name: strava
-description: Strava API v3 via curl. Use this skill to query athlete activities, segments, clubs, gear, and routes on Strava. Create, update, and upload activities. Use when users mention Strava, running/cycling activities, fitness tracking, or want to retrieve workout data.
+description: Strava API for fitness activities. Use when user mentions "Strava", "running",
+  "cycling", "activity", or asks about fitness tracking.
 vm0_secrets:
-  - STRAVA_TOKEN
+- STRAVA_TOKEN
 ---
 
 # Strava API

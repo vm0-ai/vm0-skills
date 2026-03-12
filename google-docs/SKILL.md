@@ -1,8 +1,10 @@
 ---
 name: google-docs
-description: Google Docs API via curl. Use this skill to create, read, update, and format Google Docs documents programmatically.
+description: Google Docs API for document editing. Use when user mentions "Google
+  Doc", "docs.google.com", shares a Doc link, "create document", or asks about document
+  creation.
 vm0_secrets:
-  - GOOGLE_DOCS_TOKEN
+- GOOGLE_DOCS_TOKEN
 ---
 
 # Google Docs API

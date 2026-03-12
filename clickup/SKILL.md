@@ -1,8 +1,9 @@
 ---
 name: clickup
-description: ClickUp REST API via curl. Use this skill to manage tasks, lists, folders, spaces, and workspaces in ClickUp.
+description: ClickUp API for tasks and spaces. Use when user mentions "ClickUp", "clickup.com",
+  shares a ClickUp link, "ClickUp task", or asks about ClickUp workspace.
 vm0_secrets:
-  - CLICKUP_TOKEN
+- CLICKUP_TOKEN
 ---
 
 # ClickUp API

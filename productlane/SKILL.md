@@ -1,8 +1,9 @@
 ---
 name: productlane
-description: Productlane API via curl. Use this skill to manage feedback threads, companies, contacts, changelogs, roadmap projects, and documentation articles.
+description: Productlane API for feedback management. Use when user mentions "Productlane",
+  "feedback", "feature request", or product insights.
 vm0_secrets:
-  - PRODUCTLANE_TOKEN
+- PRODUCTLANE_TOKEN
 ---
 
 # Productlane API

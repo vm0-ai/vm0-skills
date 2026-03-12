@@ -1,8 +1,9 @@
 ---
 name: jam
-description: Jam bug reporting and debugging API via MCP. Use this skill to access bug reports, console logs, network requests, user events, screenshots, and video analysis for debugging.
+description: Jam.dev API for bug reporting. Use when user mentions "Jam", "bug report",
+  "screen recording", or asks about issue capture.
 vm0_secrets:
-  - JAM_TOKEN
+- JAM_TOKEN
 ---
 
 # Jam

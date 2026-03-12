@@ -1,8 +1,9 @@
 ---
 name: line
-description: LINE Messaging API via curl. Use this skill to send messages, manage users, rich menus, webhooks, and access analytics for LINE bots.
+description: LINE API for messaging. Use when user mentions "LINE", "LINE message",
+  "LINE bot", or asks about LINE platform.
 vm0_secrets:
-  - LINE_TOKEN
+- LINE_TOKEN
 ---
 
 # LINE Messaging API

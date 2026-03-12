@@ -1,10 +1,11 @@
 ---
 name: gitlab
-description: GitLab REST API via curl. Use this skill to manage projects, issues, merge requests, and pipelines in GitLab.
+description: GitLab API for repos and CI/CD. Use when user mentions "GitLab", "gitlab.com",
+  shares a GitLab link, "GitLab repo", or asks about GitLab projects.
 vm0_secrets:
-  - GITLAB_TOKEN
+- GITLAB_TOKEN
 vm0_vars:
-  - GITLAB_HOST
+- GITLAB_HOST
 ---
 
 # GitLab API

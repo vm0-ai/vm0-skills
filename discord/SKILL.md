@@ -1,8 +1,10 @@
 ---
 name: discord
-description: Discord Bot API via curl. Use this skill to interact with channels, guilds, users, and messages using a bot token.
+description: Discord API for servers and messages. Use when user mentions "Discord",
+  "discord.com", "discord.gg", shares a Discord link, "Discord server", or asks about
+  Discord bots.
 vm0_secrets:
-  - DISCORD_BOT_TOKEN
+- DISCORD_BOT_TOKEN
 ---
 
 # Discord Bot API

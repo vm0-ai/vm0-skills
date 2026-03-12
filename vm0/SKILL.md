@@ -1,8 +1,9 @@
 ---
 name: vm0
-description: Gives the agent the ability to create other agents or update itself. Use this skill when the agent needs to modify its own vm0.yaml (skills, instructions, environment variables) and redeploy, or spin up a new agent from scratch.
+description: VM0 platform API for agents. Use when user mentions "VM0", "vm0 agent",
+  "deploy agent", or asks about VM0 platform operations.
 vm0_secrets:
-  - VM0_TOKEN
+- VM0_TOKEN
 ---
 
 # VM0 Agent Self-Management
