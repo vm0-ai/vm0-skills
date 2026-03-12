@@ -4,7 +4,7 @@ description: Discord API for servers and messages. Use when user mentions "Disco
   "discord.com", "discord.gg", shares a Discord link, "Discord server", or asks about
   Discord bots.
 vm0_secrets:
-- DISCORD_BOT_TOKEN
+  - DISCORD_BOT_TOKEN
 ---
 
 # Discord Bot API

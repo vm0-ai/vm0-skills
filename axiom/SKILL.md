@@ -3,7 +3,7 @@ name: axiom
 description: Axiom observability API for logs and analytics. Use when user mentions
   "logs", "query logs", "Axiom", or asks about event analytics.
 vm0_secrets:
-- AXIOM_TOKEN
+  - AXIOM_TOKEN
 ---
 
 # Axiom

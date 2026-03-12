@@ -3,7 +3,7 @@ name: dify
 description: Dify API for LLM app building. Use when user mentions "Dify", "LLM app",
   "AI workflow", or asks about Dify platform.
 vm0_secrets:
-- DIFY_TOKEN
+  - DIFY_TOKEN
 ---
 
 # Dify API

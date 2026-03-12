@@ -3,7 +3,7 @@ name: vm0
 description: VM0 platform API for agents. Use when user mentions "VM0", "vm0 agent",
   "deploy agent", or asks about VM0 platform operations.
 vm0_secrets:
-- VM0_TOKEN
+  - VM0_TOKEN
 ---
 
 # VM0 Agent Self-Management

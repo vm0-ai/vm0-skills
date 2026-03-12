@@ -3,7 +3,7 @@ name: stripe
 description: Stripe API for payments. Use when user mentions "Stripe", "payment",
   "subscription", "billing", "invoice", or asks about payment processing.
 vm0_secrets:
-- STRIPE_TOKEN
+  - STRIPE_TOKEN
 ---
 
 # Stripe API

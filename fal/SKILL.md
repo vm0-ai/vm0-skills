@@ -3,7 +3,7 @@ name: fal
 description: Fal.ai API for AI image and video generation. Use when user mentions
   "Fal.ai", "AI image generation", "video generation", or "fal" models.
 vm0_secrets:
-- FAL_TOKEN
+  - FAL_TOKEN
 ---
 
 # fal.ai Image Generator

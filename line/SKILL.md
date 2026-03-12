@@ -3,7 +3,7 @@ name: line
 description: LINE API for messaging. Use when user mentions "LINE", "LINE message",
   "LINE bot", or asks about LINE platform.
 vm0_secrets:
-- LINE_TOKEN
+  - LINE_TOKEN
 ---
 
 # LINE Messaging API

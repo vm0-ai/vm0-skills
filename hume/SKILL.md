@@ -3,7 +3,7 @@ name: hume
 description: Hume AI API for emotion analysis. Use when user mentions "Hume", "emotion
   AI", "sentiment analysis", or voice emotion detection.
 vm0_secrets:
-- HUME_TOKEN
+  - HUME_TOKEN
 ---
 
 # Hume AI API

@@ -3,7 +3,7 @@ name: meta-ads
 description: Meta Ads API for Facebook/Instagram advertising. Use when user mentions
   "Meta Ads", "Facebook Ads", "Instagram Ads", or ad campaigns.
 vm0_secrets:
-- META_ADS_TOKEN
+  - META_ADS_TOKEN
 ---
 
 # Meta Marketing API

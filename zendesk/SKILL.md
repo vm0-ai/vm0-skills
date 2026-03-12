@@ -3,9 +3,9 @@ name: zendesk
 description: Zendesk API for customer support. Use when user mentions "Zendesk", "support
   ticket", "customer service", or help desk.
 vm0_secrets:
-- ZENDESK_API_TOKEN
+  - ZENDESK_API_TOKEN
 vm0_vars:
-- ZENDESK_EMAIL
+  - ZENDESK_EMAIL
 - ZENDESK_SUBDOMAIN
 ---
 

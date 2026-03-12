@@ -4,9 +4,9 @@ description: Supabase API for Postgres and auth. Use when user mentions "Supabas
   "supabase.co", shares a Supabase link, "Supabase database", or asks about Supabase
   project.
 vm0_secrets:
-- SUPABASE_TOKEN
+  - SUPABASE_TOKEN
 vm0_vars:
-- SUPABASE_URL
+  - SUPABASE_URL
 - SUPABASE_PUBLISHABLE_KEY
 ---
 

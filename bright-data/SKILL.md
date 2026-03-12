@@ -3,7 +3,7 @@ name: bright-data
 description: Bright Data proxy and web scraping API. Use when user mentions "Bright
   Data", "proxy", "web scraping at scale", or data collection.
 vm0_secrets:
-- BRIGHTDATA_TOKEN
+  - BRIGHTDATA_TOKEN
 ---
 
 # Bright Data Web Scraper API

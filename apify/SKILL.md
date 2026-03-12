@@ -3,7 +3,7 @@ name: apify
 description: Apify web scraping platform. Use when user mentions "scrape website",
   "web crawler", "scraping", or asks to "extract data from" a site.
 vm0_secrets:
-- APIFY_TOKEN
+  - APIFY_TOKEN
 ---
 
 # Apify

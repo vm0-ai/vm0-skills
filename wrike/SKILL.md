@@ -3,7 +3,7 @@ name: wrike
 description: Wrike API for project management. Use when user mentions "Wrike", "wrike.com",
   shares a Wrike link, "Wrike task", or asks about Wrike workspace.
 vm0_secrets:
-- WRIKE_TOKEN
+  - WRIKE_TOKEN
 ---
 
 # Wrike API

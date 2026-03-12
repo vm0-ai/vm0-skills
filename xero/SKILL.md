@@ -3,7 +3,7 @@ name: xero
 description: Xero API for accounting. Use when user mentions "Xero", "accounting",
   "invoices", "bookkeeping", or asks about financial management.
 vm0_secrets:
-- XERO_TOKEN
+  - XERO_TOKEN
 ---
 
 # Xero Accounting API

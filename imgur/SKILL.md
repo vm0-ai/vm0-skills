@@ -3,7 +3,7 @@ name: imgur
 description: Imgur API for image hosting. Use when user mentions "Imgur", "upload
   image", "image hosting", or asks about image sharing.
 vm0_secrets:
-- IMGUR_CLIENT_ID
+  - IMGUR_CLIENT_ID
 ---
 
 # Imgur Image Hosting

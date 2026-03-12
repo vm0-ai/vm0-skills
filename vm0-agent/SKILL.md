@@ -3,7 +3,7 @@ name: vm0-agent
 description: VM0 Agent SDK for building agents. Use when user mentions "VM0 Agent",
   "agent SDK", "build agent", or asks about agent development.
 vm0_secrets:
-- VM0_TOKEN
+  - VM0_TOKEN
 ---
 
 # About VM0
