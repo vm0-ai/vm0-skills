@@ -1,7 +1,7 @@
 ---
 name: wix
-description: Wix API for website management. Use when user mentions "Wix", "Wix site",
-  "update Wix", or asks about Wix CMS.
+description: Wix API for website management. Use when user mentions "Wix", "wix.com",
+  "wixsite.com", shares a Wix link, "Wix site", or asks about Wix CMS.
 vm0_secrets:
 - WIX_TOKEN
 ---

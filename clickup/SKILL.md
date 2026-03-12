@@ -1,7 +1,7 @@
 ---
 name: clickup
-description: ClickUp API for tasks and spaces. Use when user mentions "ClickUp", "ClickUp
-  task", "my ClickUp", or asks about ClickUp workspace.
+description: ClickUp API for tasks and spaces. Use when user mentions "ClickUp", "clickup.com",
+  shares a ClickUp link, "ClickUp task", or asks about ClickUp workspace.
 vm0_secrets:
 - CLICKUP_TOKEN
 ---

@@ -1,7 +1,8 @@
 ---
 name: supabase
 description: Supabase API for Postgres and auth. Use when user mentions "Supabase",
-  "Supabase database", "Postgres", or asks about Supabase project.
+  "supabase.co", shares a Supabase link, "Supabase database", or asks about Supabase
+  project.
 vm0_secrets:
 - SUPABASE_TOKEN
 vm0_vars:

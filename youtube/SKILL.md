@@ -1,7 +1,8 @@
 ---
 name: youtube
 description: YouTube API for videos and channels. Use when user mentions "YouTube",
-  "YouTube video", "channel stats", or asks about video content.
+  "youtube.com", "youtu.be", shares a video link, "channel stats", or asks about video
+  content.
 vm0_secrets:
 - YOUTUBE_TOKEN
 ---

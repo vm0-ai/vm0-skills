@@ -1,7 +1,7 @@
 ---
 name: linear
-description: Linear API for issue tracking. Use when user mentions "Linear", "~ENG-123",
-  "create issue", "Linear project", or asks about Linear tasks.
+description: Linear API for issue tracking. Use when user mentions "Linear", "linear.app",
+  shares a Linear link, "~ENG-123", "create issue", or asks about Linear tasks.
 vm0_secrets:
 - LINEAR_TOKEN
 ---

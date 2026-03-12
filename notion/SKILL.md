@@ -1,7 +1,8 @@
 ---
 name: notion
 description: Notion API for pages and databases. Use when user mentions "Notion",
-  "Notion page", "Notion database", "query Notion", or asks about Notion workspace.
+  "notion.so", "notion.site", shares a Notion link, "Notion page", "query Notion",
+  or asks about Notion workspace.
 vm0_secrets:
 - NOTION_TOKEN
 ---

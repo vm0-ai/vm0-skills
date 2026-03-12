@@ -1,7 +1,8 @@
 ---
 name: discord
-description: Discord API for servers and messages. Use when user mentions "Discord
-  server", "Discord channel", "Discord messages", or asks about Discord bots.
+description: Discord API for servers and messages. Use when user mentions "Discord",
+  "discord.com", "discord.gg", shares a Discord link, "Discord server", or asks about
+  Discord bots.
 vm0_secrets:
 - DISCORD_BOT_TOKEN
 ---

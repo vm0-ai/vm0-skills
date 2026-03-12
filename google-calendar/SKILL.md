@@ -1,7 +1,8 @@
 ---
 name: google-calendar
 description: Google Calendar API for scheduling. Use when user mentions "calendar",
-  "schedule meeting", "check availability", "create event", or "when am I free".
+  "calendar.google.com", shares a calendar link, "schedule meeting", "check availability",
+  or "when am I free".
 vm0_secrets:
 - GOOGLE_CALENDAR_TOKEN
 ---
