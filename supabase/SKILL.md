@@ -7,7 +7,7 @@ vm0_secrets:
   - SUPABASE_TOKEN
 vm0_vars:
   - SUPABASE_URL
-- SUPABASE_PUBLISHABLE_KEY
+  - SUPABASE_PUBLISHABLE_KEY
 ---
 
 # Supabase REST API

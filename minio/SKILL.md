@@ -4,7 +4,7 @@ description: MinIO API for S3-compatible storage. Use when user mentions "MinIO"
   "S3 storage", "object storage", or self-hosted S3.
 vm0_secrets:
   - MINIO_ACCESS_KEY
-- MINIO_SECRET_KEY
+  - MINIO_SECRET_KEY
 vm0_vars:
   - MINIO_ENDPOINT
 ---
