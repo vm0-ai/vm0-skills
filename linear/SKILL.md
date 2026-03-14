@@ -35,13 +35,19 @@ Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Linear*
 
 Linear's API is rate-limited to ensure fair usage. Limits may vary based on your plan.
 
----
+### Setup API Wrapper
 
+Create a helper script for API calls:
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
+```bash
+cat > /tmp/linear-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" "$@"
+EOF
+chmod +x /tmp/linear-curl
+```
+
+**Usage:** All examples below use `/tmp/linear-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -68,7 +74,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.teams.nodes'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.teams.nodes'
 ```
 
 Save a team ID for subsequent queries.
@@ -90,7 +96,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.team.issues.nodes'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.team.issues.nodes'
 ```
 
 ---
@@ -110,7 +116,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.issue'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.issue'
 ```
 
 ---
@@ -130,7 +136,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.issues.nodes'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.issues.nodes'
 ```
 
 ---
@@ -150,7 +156,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.issueCreate'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.issueCreate'
 ```
 
 ---
@@ -170,7 +176,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.issueCreate'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.issueCreate'
 ```
 
 **Priority values:** 0 (No priority), 1 (Urgent), 2 (High), 3 (Medium), 4 (Low)
@@ -192,7 +198,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.issueUpdate'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.issueUpdate'
 ```
 
 ---
@@ -212,7 +218,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.issueUpdate'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.issueUpdate'
 ```
 
 ---
@@ -232,7 +238,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.team.states.nodes'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.team.states.nodes'
 ```
 
 ---
@@ -252,7 +258,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.commentCreate'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.commentCreate'
 ```
 
 ---
@@ -272,7 +278,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.projects.nodes'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.projects.nodes'
 ```
 
 ---
@@ -292,7 +298,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.viewer'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.viewer'
 ```
 
 ---
@@ -312,7 +318,7 @@ Write to `/tmp/linear_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: ${LINEAR_TOKEN}" -d @/tmp/linear_request.json' | jq '.data.team.labels.nodes'
+/tmp/linear-curl -X POST "https://api.linear.app/graphql" -d @/tmp/linear_request.json | jq '.data.team.labels.nodes'
 ```
 
 ---
