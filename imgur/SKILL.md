@@ -32,10 +32,19 @@ When registering:
 - You only need the Client ID for anonymous uploads
 
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/imgur-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $IMGUR_CLIENT_ID" "$@"
+EOF
+chmod +x /tmp/imgur-curl
+```
+
+**Usage:** All examples below use `/tmp/imgur-curl` instead of direct `curl` calls.
 
 ## How to Use
 

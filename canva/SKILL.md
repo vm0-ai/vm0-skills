@@ -32,16 +32,27 @@ Use this skill when you need to:
 
 Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Canva**. vm0 will automatically inject the required `CANVA_TOKEN` environment variable.
 
-### Rate Limits
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/canva-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $CANVA_TOKEN" "$@"
+EOF
+chmod +x /tmp/canva-curl
+```
+
+**Usage:** All examples below use `/tmp/canva-curl` instead of direct `curl` calls.
+
+## Rate Limits
 
 Canva API has per-user rate limits that vary by endpoint. Most read endpoints allow 100 requests/user, write endpoints allow 20-30 requests/user.
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq '.'
-> ```
 
 ## How to Use
 
@@ -56,7 +67,7 @@ Base URL: `https://api.canva.com/rest/v1`
 Get your user profile information:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/users/me/profile" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.profile'
+/tmp/canva-curl "https://api.canva.com/rest/v1/users/me/profile" | jq '.profile'
 ```
 
 ---
@@ -66,13 +77,13 @@ bash -c 'curl -s "https://api.canva.com/rest/v1/users/me/profile" --header "Auth
 List designs in your account:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/designs?limit=20" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.items[] | {id, title, created_at, updated_at}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/designs?limit=20" | jq '.items[] | {id, title, created_at, updated_at}'
 ```
 
 To search designs by query:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/designs?query=marketing&limit=10" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.items[] | {id, title}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/designs?query=marketing&limit=10" | jq '.items[] | {id, title}'
 ```
 
 Save a design ID from the results for use in subsequent commands.
@@ -84,7 +95,7 @@ Save a design ID from the results for use in subsequent commands.
 Get metadata for a specific design. Replace `<design-id>` with an actual design ID:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/designs/<design-id>" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.design | {id, title, owner, urls, created_at, updated_at, page_count}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/designs/<design-id>" | jq '.design | {id, title, owner, urls, created_at, updated_at, page_count}'
 ```
 
 ---
@@ -108,7 +119,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/designs" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '.design | {id, title, urls}'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/designs" -d @/tmp/canva_request.json | jq '.design | {id, title, urls}'
 ```
 
 **Preset names:** `doc`, `presentation`, `whiteboard`
@@ -131,7 +142,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/designs" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '.design | {id, title, urls}'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/designs" -d @/tmp/canva_request.json | jq '.design | {id, title, urls}'
 ```
 
 ---
@@ -155,13 +166,13 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/exports" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '{id: .job.id, status: .job.status}'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/exports" -d @/tmp/canva_request.json | jq '{id: .job.id, status: .job.status}'
 ```
 
 Then poll for completion. Replace `<export-id>` with the job ID from above:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/exports/<export-id>" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '{status: .job.status, urls: .job.urls}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/exports/<export-id>" | jq '{status: .job.status, urls: .job.urls}'
 ```
 
 When status is `success`, download URLs are valid for 24 hours.
@@ -188,7 +199,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/exports" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '{id: .job.id, status: .job.status}'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/exports" -d @/tmp/canva_request.json | jq '{id: .job.id, status: .job.status}'
 ```
 
 Poll with the same export status endpoint as above.
@@ -200,7 +211,7 @@ Poll with the same export status endpoint as above.
 Get all pages of a design. Replace `<design-id>` with an actual design ID:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/designs/<design-id>/pages" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.items[] | {index: .index, title: .title, width: .width, height: .height}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/designs/<design-id>/pages" | jq '.items[] | {index: .index, title: .title, width: .width, height: .height}'
 ```
 
 ---
@@ -221,7 +232,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/folders" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '.folder | {id, name}'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/folders" -d @/tmp/canva_request.json | jq '.folder | {id, name}'
 ```
 
 ---
@@ -231,7 +242,7 @@ bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/folders" --header "Autho
 List items in a folder. Replace `<folder-id>` with an actual folder ID:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/folders/<folder-id>/items?limit=20" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.items[] | {type, id: .design.id // .folder.id, name: .design.title // .folder.name}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/folders/<folder-id>/items?limit=20" | jq '.items[] | {type, id: .design.id // .folder.id, name: .design.title // .folder.name}'
 ```
 
 ---
@@ -254,7 +265,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/folders/move" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/folders/move" -d @/tmp/canva_request.json
 ```
 
 ---
@@ -264,7 +275,7 @@ bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/folders/move" --header "
 Get metadata for an uploaded asset. Replace `<asset-id>` with an actual asset ID:
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/assets/<asset-id>" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.asset | {id, name, tags, created_at, updated_at, thumbnail}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/assets/<asset-id>" | jq '.asset | {id, name, tags, created_at, updated_at, thumbnail}'
 ```
 
 ---
@@ -285,7 +296,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://api.canva.com/rest/v1/assets/<asset-id>" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '.asset | {id, name, tags}'
+/tmp/canva-curl -X PATCH "https://api.canva.com/rest/v1/assets/<asset-id>" -d @/tmp/canva_request.json | jq '.asset | {id, name, tags}'
 ```
 
 ---
@@ -295,7 +306,7 @@ bash -c 'curl -s -X PATCH "https://api.canva.com/rest/v1/assets/<asset-id>" --he
 Delete an asset (moves to trash). Replace `<asset-id>` with an actual asset ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.canva.com/rest/v1/assets/<asset-id>" --header "Authorization: Bearer $CANVA_TOKEN"'
+/tmp/canva-curl -X DELETE "https://api.canva.com/rest/v1/assets/<asset-id>"
 ```
 
 ---
@@ -318,7 +329,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/designs/<design-id>/comments" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '.thread | {id, message}'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/designs/<design-id>/comments" -d @/tmp/canva_request.json | jq '.thread | {id, message}'
 ```
 
 ---
@@ -338,7 +349,7 @@ Write to `/tmp/canva_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/designs/<design-id>/comments/<thread-id>/replies" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json' | jq '.reply | {id, message}'
+/tmp/canva-curl -X POST "https://api.canva.com/rest/v1/designs/<design-id>/comments/<thread-id>/replies" -d @/tmp/canva_request.json | jq '.reply | {id, message}'
 ```
 
 ---
@@ -348,7 +359,7 @@ bash -c 'curl -s -X POST "https://api.canva.com/rest/v1/designs/<design-id>/comm
 List available brand templates (requires Canva Enterprise):
 
 ```bash
-bash -c 'curl -s "https://api.canva.com/rest/v1/brand-templates?limit=20" --header "Authorization: Bearer $CANVA_TOKEN"' | jq '.items[] | {id, title, created_at}'
+/tmp/canva-curl "https://api.canva.com/rest/v1/brand-templates?limit=20" | jq '.items[] | {id, title, created_at}'
 ```
 
 ---

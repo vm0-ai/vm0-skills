@@ -23,6 +23,36 @@ This Skill helps you manage GitHub operations using the `gh` CLI, including repo
 
 ## Authentication
 
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/github-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $GH_TOKEN" "$@"
+EOF
+chmod +x /tmp/github-curl
+```
+
+**Usage:** All examples below use `/tmp/github-curl` instead of direct `curl` calls.
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/github-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $GH_TOKEN" "$@"
+EOF
+chmod +x /tmp/github-curl
+```
+
+**Usage:** All examples below use `/tmp/github-curl` instead of direct `curl` calls.
+
+
 Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **GitHub**. vm0 will automatically inject the required token.
 
 Verify with:

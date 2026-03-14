@@ -45,10 +45,20 @@ export BROWSERBASE_PROJECT_ID="your-project-id-here"
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
-> ```
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/browserbase-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "api-key: $BROWSERBASE_TOKEN" "$@"
+EOF
+chmod +x /tmp/browserbase-curl
+```
+
+**Usage:** All examples below use `/tmp/browserbase-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -64,7 +74,7 @@ Write `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -d @/tmp/request.json'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/sessions" -d @/tmp/request.json
 ```
 
 **With timeout and keepAlive:**
@@ -79,7 +89,7 @@ Write `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -d @/tmp/request.json'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/sessions" -d @/tmp/request.json
 ```
 
 **With proxy enabled (requires paid plan):**
@@ -93,7 +103,7 @@ Write `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -d @/tmp/request.json'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/sessions" -d @/tmp/request.json
 ```
 
 > **Note:** Proxies are not available on the free plan. You'll receive a 402 error if you try to use this feature without upgrading.
@@ -109,7 +119,7 @@ Write `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -d @/tmp/request.json'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/sessions" -d @/tmp/request.json
 ```
 
 **Response includes:**
@@ -123,13 +133,13 @@ bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Con
 List all sessions with optional filters:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions"
 ```
 
 **Filter by status (RUNNING, ERROR, TIMED_OUT, COMPLETED):**
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions?status=RUNNING" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions?status=RUNNING"
 ```
 
 **Query by user metadata:**
@@ -143,7 +153,7 @@ user_metadata['test']:'true'
 
 Then query sessions:
 ```bash
-bash -c 'curl -s -X GET -G "https://api.browserbase.com/v1/sessions" --data-urlencode "q@/tmp/query.txt" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions"
 ```
 
 **More examples:**
@@ -160,7 +170,7 @@ user_metadata['env']:'production'
 
 Then run:
 ```bash
-bash -c 'curl -s -X GET -G "https://api.browserbase.com/v1/sessions" --data-urlencode "q@/tmp/query.txt" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions"
 ```
 
 ### 3. Get Session Details
@@ -168,7 +178,7 @@ bash -c 'curl -s -X GET -G "https://api.browserbase.com/v1/sessions" --data-urle
 Get details of a specific session. Replace `<your-session-id>` with the actual session ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>"
 ```
 
 ### 4. Update Session (Release)
@@ -183,7 +193,7 @@ Write `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions/<your-session-id>" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -d @/tmp/request.json'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/sessions/<your-session-id>" -d @/tmp/request.json
 ```
 
 The session status will change to `COMPLETED` and `endedAt` timestamp will be set.
@@ -193,7 +203,7 @@ The session status will change to `COMPLETED` and `endedAt` timestamp will be se
 Get live debugging URLs for a running session. Replace `<your-session-id>` with the actual session ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/debug" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/debug"
 ```
 
 > **Note:** Debug URLs may only be available after a browser client has connected to the session via WebSocket.
@@ -209,7 +219,7 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-i
 Retrieve logs from a session. Replace `<your-session-id>` with the actual session ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/logs" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/logs"
 ```
 
 ### 7. Get Session Recording
@@ -217,7 +227,7 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-i
 Get the rrweb recording of a session. Replace `<your-session-id>` with the actual session ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/recording" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/recording"
 ```
 
 ### 8. Get Session Downloads
@@ -225,7 +235,7 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-i
 Retrieve files downloaded during a session (returns ZIP file). Replace `<your-session-id>` with the actual session ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/downloads" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"' --output downloads.zip
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/sessions/<your-session-id>/downloads" --output downloads.zip
 ```
 
 ### 9. Upload Files to Session
@@ -233,7 +243,7 @@ bash -c 'curl -s -X GET "https://api.browserbase.com/v1/sessions/<your-session-i
 Upload files to use in a browser session. Replace `<your-session-id>` with the actual session ID:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions/<your-session-id>/uploads" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -F "file=@/path/to/file.pdf"'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/sessions/<your-session-id>/uploads"
 ```
 
 ---
@@ -252,7 +262,7 @@ Write `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/contexts" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -d @/tmp/request.json'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/contexts" -d @/tmp/request.json
 ```
 
 Save the returned `id` to use in sessions.
@@ -262,7 +272,7 @@ Save the returned `id` to use in sessions.
 Retrieve details of a specific context. Replace `<your-context-id>` with the actual context ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/contexts/<your-context-id>" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/contexts/<your-context-id>"
 ```
 
 **Response includes:**
@@ -289,7 +299,7 @@ Write `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.browserbase.com/v1/sessions" --header "Content-Type: application/json" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -d @/tmp/request.json'
+/tmp/browserbase-curl -X POST "https://api.browserbase.com/v1/sessions" -d @/tmp/request.json
 ```
 
 Set `persist: true` to save updates back to the context after the session ends.
@@ -299,7 +309,7 @@ Set `persist: true` to save updates back to the context after the session ends.
 Delete a context when it's no longer needed. Replace `<your-context-id>` with the actual context ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.browserbase.com/v1/contexts/<your-context-id>" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -w "\nHTTP Status: %{http_code}"'
+/tmp/browserbase-curl -X DELETE "https://api.browserbase.com/v1/contexts/<your-context-id>"
 ```
 
 Successful deletion returns HTTP 204 (No Content).
@@ -313,7 +323,7 @@ Successful deletion returns HTTP 204 (No Content).
 Retrieve project-wide usage statistics (browser minutes and proxy bytes). Replace `<your-project-id>` with your actual project ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.browserbase.com/v1/projects/<your-project-id>/usage" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"'
+/tmp/browserbase-curl -X GET "https://api.browserbase.com/v1/projects/<your-project-id>/usage"
 ```
 
 ---

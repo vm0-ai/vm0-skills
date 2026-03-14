@@ -32,7 +32,37 @@ export LARK_APP_SECRET=xxxxx
 
 Get your credentials from: https://open.larkoffice.com/
 
-### Required Permissions
+#
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/lark-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $LARK_APP_SECRET" "$@"
+EOF
+chmod +x /tmp/lark-curl
+```
+
+**Usage:** All examples below use `/tmp/lark-curl` instead of direct `curl` calls.
+
+## Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/lark-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $LARK_APP_SECRET" "$@"
+EOF
+chmod +x /tmp/lark-curl
+```
+
+**Usage:** All examples below use `/tmp/lark-curl` instead of direct `curl` calls.
+
+## Required Permissions
 
 Enable these API scopes in your Lark app:
 - `im:message` - Send and read messages
@@ -83,9 +113,7 @@ TOKEN=$(get_lark_token)
 Or get token directly without caching:
 
 ```bash
-TOKEN=$(bash -c 'curl -s -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
-  -H "Content-Type: application/json" \
-  -d "{\"app_id\": \"${LARK_APP_ID}\", \"app_secret\": \"${LARK_APP_SECRET}\"}"' | jq -r '.tenant_access_token')
+TOKEN=$(/tmp/lark-curl -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" | jq -r '.tenant_access_token')
 ```
 
 ## Examples

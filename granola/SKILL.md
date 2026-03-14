@@ -40,7 +40,35 @@ export GRANOLA_TOKEN="your-granola-api-key"
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/granola-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $GRANOLA_TOKEN" "$@"
+EOF
+chmod +x /tmp/granola-curl
+```
+
+**Usage:** All examples below use `/tmp/granola-curl` instead of direct `curl` calls.
+
+## Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/granola-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $GRANOLA_TOKEN" "$@"
+EOF
+chmod +x /tmp/granola-curl
+```
+
+**Usage:** All examples below use `/tmp/granola-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -53,7 +81,7 @@ export GRANOLA_TOKEN="your-granola-api-key"
 Retrieve all accessible meeting notes with pagination. Returns up to 30 notes per page.
 
 ```bash
-bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10" --header "Authorization: Bearer $GRANOLA_TOKEN"' | jq .
+/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?page_size=10" | jq .
 ```
 
 ### 2. List Notes with Pagination
@@ -61,7 +89,7 @@ bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10" --
 Use the `cursor` from a previous response to fetch the next page.
 
 ```bash
-bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10&cursor=CURSOR_VALUE" --header "Authorization: Bearer $GRANOLA_TOKEN"' | jq .
+/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?page_size=10&cursor=CURSOR_VALUE" | jq .
 ```
 
 ### 3. List Notes Filtered by Date
@@ -69,15 +97,15 @@ bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10&cur
 Filter notes created after or before a specific date, or updated after a specific date.
 
 ```bash
-bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?created_after=2025-01-01&page_size=20" --header "Authorization: Bearer $GRANOLA_TOKEN"' | jq .
+/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?created_after=2025-01-01&page_size=20" | jq .
 ```
 
 ```bash
-bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?created_before=2025-06-01&created_after=2025-01-01" --header "Authorization: Bearer $GRANOLA_TOKEN"' | jq .
+/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?created_before=2025-06-01&created_after=2025-01-01" | jq .
 ```
 
 ```bash
-bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?updated_after=2025-03-01" --header "Authorization: Bearer $GRANOLA_TOKEN"' | jq .
+/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?updated_after=2025-03-01" | jq .
 ```
 
 ### 4. Get a Specific Note
@@ -85,7 +113,7 @@ bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?updated_after=20
 Retrieve detailed information about a single note including summaries, attendees, and calendar event details. Note IDs follow the pattern `not_` followed by 14 alphanumeric characters.
 
 ```bash
-bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX" --header "Authorization: Bearer $GRANOLA_TOKEN"' | jq .
+/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX" | jq .
 ```
 
 ### 5. Get a Note with Transcript
@@ -93,7 +121,7 @@ bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXX
 Include the full meeting transcript by adding the `include=transcript` query parameter.
 
 ```bash
-bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX?include=transcript" --header "Authorization: Bearer $GRANOLA_TOKEN"' | jq .
+/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX?include=transcript" | jq .
 ```
 
 ### 6. Iterate Through All Notes
@@ -104,7 +132,7 @@ Paginate through all available notes using cursors.
 CURSOR=""
 while true; do
   if [ -z "$CURSOR" ]; then
-    RESPONSE=$(bash -c 'curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=30" --header "Authorization: Bearer $GRANOLA_TOKEN"')
+    RESPONSE=$(/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?page_size=30")
   else
     RESPONSE=$(bash -c "curl -s -X GET \"https://public-api.granola.ai/v1/notes?page_size=30&cursor=$CURSOR\" --header \"Authorization: Bearer \$GRANOLA_TOKEN\"")
   fi

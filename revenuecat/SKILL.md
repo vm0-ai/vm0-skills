@@ -34,7 +34,20 @@ Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **RevenueCa
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/revenuecat-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $REVENUECAT_TOKEN" "$@"
+EOF
+chmod +x /tmp/revenuecat-curl
+```
+
+**Usage:** All examples below use `/tmp/revenuecat-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -57,7 +70,7 @@ Replace `PROJECT_ID` with your RevenueCat project ID and `APP_USER_ID` with the 
 Retrieve a customer's subscription status, entitlements, and purchase history. This is the most commonly used endpoint.
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.subscriber | {entitlements, subscriptions, non_subscriptions}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" | jq '.subscriber | {entitlements, subscriptions, non_subscriptions}'
 ```
 
 ### Get Active Entitlements
@@ -65,7 +78,7 @@ bash -c 'curl -s "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" --heade
 Extract only the active entitlements for a customer.
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.subscriber.entitlements | to_entries[] | select(.value.expires_date == null or (.value.expires_date | fromdateiso8601 > now)) | {name: .key, product: .value.product_identifier, expires: .value.expires_date}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" | jq '.subscriber.entitlements | to_entries[] | select(.value.expires_date == null or (.value.expires_date | fromdateiso8601 > now)) | {name: .key, product: .value.product_identifier, expires: .value.expires_date}'
 ```
 
 ### Create or Update a Customer
@@ -73,7 +86,7 @@ bash -c 'curl -s "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" --heade
 Create a new customer or update attributes for an existing one.
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/attributes" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d '"'"'{"attributes": {"$email": {"value": "user@example.com"}, "$displayName": {"value": "John Doe"}}}'"'"'' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/attributes""'"'{"attributes": {"$email": {"value": "user@example.com"}, "$displayName": {"value": "John Doe"}}}'"'"'' | jq .
 ```
 
 ### Delete a Customer
@@ -81,7 +94,7 @@ bash -c 'curl -s -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/
 Permanently delete a customer and their data (for GDPR compliance).
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl -X DELETE "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" | jq .
 ```
 
 ---
@@ -104,7 +117,7 @@ Write to `/tmp/revenuecat_request.json`:
 Duration values: `daily`, `three_day`, `weekly`, `monthly`, `two_month`, `three_month`, `six_month`, `yearly`, `lifetime`.
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/entitlements/ENTITLEMENT_ID/promotional" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d @/tmp/revenuecat_request.json' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/entitlements/ENTITLEMENT_ID/promotional" -d @/tmp/revenuecat_request.json | jq .
 ```
 
 ### Revoke Promotional Entitlements
@@ -112,7 +125,7 @@ bash -c 'curl -s -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/
 Revoke all promotional entitlements for a customer.
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/entitlements/ENTITLEMENT_ID/revoke_promotionals" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/entitlements/ENTITLEMENT_ID/revoke_promotionals" | jq .
 ```
 
 ---
@@ -134,7 +147,7 @@ Write to `/tmp/revenuecat_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v1/receipts" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d @/tmp/revenuecat_request.json' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v1/receipts" -d @/tmp/revenuecat_request.json | jq .
 ```
 
 ---
@@ -144,13 +157,13 @@ bash -c 'curl -s -X POST "https://api.revenuecat.com/v1/receipts" --header "Cont
 ### List Offerings
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.items[] | {id, lookup_key, display_name, is_current}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings" | jq '.items[] | {id, lookup_key, display_name, is_current}'
 ```
 
 ### Get an Offering
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID" | jq .
 ```
 
 ### Create an Offering
@@ -165,13 +178,13 @@ Write to `/tmp/revenuecat_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d @/tmp/revenuecat_request.json' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings" -d @/tmp/revenuecat_request.json | jq .
 ```
 
 ### Delete an Offering
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID" | jq .
 ```
 
 ---
@@ -181,13 +194,13 @@ bash -c 'curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/of
 ### List Products
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/products" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.items[] | {id, store_identifier, app_id, type}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/products" | jq '.items[] | {id, store_identifier, app_id, type}'
 ```
 
 ### Get a Product
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/products/PRODUCT_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/products/PRODUCT_ID" | jq .
 ```
 
 ### Create a Product
@@ -203,13 +216,13 @@ Write to `/tmp/revenuecat_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/products" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d @/tmp/revenuecat_request.json' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/products" -d @/tmp/revenuecat_request.json | jq .
 ```
 
 ### Delete a Product
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/products/PRODUCT_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/products/PRODUCT_ID" | jq .
 ```
 
 ---
@@ -219,13 +232,13 @@ bash -c 'curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/pr
 ### List Entitlements
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.items[] | {id, lookup_key, display_name}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements" | jq '.items[] | {id, lookup_key, display_name}'
 ```
 
 ### Get an Entitlement
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/ENTITLEMENT_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/ENTITLEMENT_ID" | jq .
 ```
 
 ### Create an Entitlement
@@ -240,19 +253,19 @@ Write to `/tmp/revenuecat_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d @/tmp/revenuecat_request.json' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements" -d @/tmp/revenuecat_request.json | jq .
 ```
 
 ### Attach Products to an Entitlement
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/ENTITLEMENT_ID/actions/attach_products" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d '"'"'{"product_ids": ["PRODUCT_ID_1", "PRODUCT_ID_2"]}'"'"'' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/ENTITLEMENT_ID/actions/attach_products""'"'{"product_ids": ["PRODUCT_ID_1", "PRODUCT_ID_2"]}'"'"'' | jq .
 ```
 
 ### Delete an Entitlement
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/ENTITLEMENT_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq .
+/tmp/revenuecat-curl -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/ENTITLEMENT_ID" | jq .
 ```
 
 ---
@@ -262,7 +275,7 @@ bash -c 'curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/en
 ### List Packages in an Offering
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID/packages" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.items[] | {id, lookup_key, display_name}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID/packages" | jq '.items[] | {id, lookup_key, display_name}'
 ```
 
 ### Create a Package
@@ -278,13 +291,13 @@ Write to `/tmp/revenuecat_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID/packages" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d @/tmp/revenuecat_request.json' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID/packages" -d @/tmp/revenuecat_request.json | jq .
 ```
 
 ### Attach Products to a Package
 
 ```bash
-bash -c 'curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID/packages/PACKAGE_ID/actions/attach_products" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d '"'"'{"product_ids": ["PRODUCT_ID"]}'"'"'' | jq .
+/tmp/revenuecat-curl -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID/packages/PACKAGE_ID/actions/attach_products""'"'{"product_ids": ["PRODUCT_ID"]}'"'"'' | jq .
 ```
 
 ---
@@ -294,13 +307,13 @@ bash -c 'curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offe
 ### List Customer Subscriptions
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/customers/APP_USER_ID/subscriptions" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.items[] | {id, product_identifier, store, status, expires_date}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/customers/APP_USER_ID/subscriptions" | jq '.items[] | {id, product_identifier, store, status, expires_date}'
 ```
 
 ### List Customer Active Entitlements
 
 ```bash
-bash -c 'curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/customers/APP_USER_ID/active_entitlements" --header "Authorization: Bearer $REVENUECAT_TOKEN"' | jq '.items[] | {entitlement_identifier, expires_date}'
+/tmp/revenuecat-curl "https://api.revenuecat.com/v2/projects/PROJECT_ID/customers/APP_USER_ID/active_entitlements" | jq '.items[] | {entitlement_identifier, expires_date}'
 ```
 
 ---

@@ -35,7 +35,37 @@ Use this skill when you need to:
 2. Get access credentials (Access Key and Secret Key)
 3. Install MinIO Client (`mc`)
 
-### Install MinIO Client
+#
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/minio-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $MINIO_ACCESS_KEY" "$@"
+EOF
+chmod +x /tmp/minio-curl
+```
+
+**Usage:** All examples below use `/tmp/minio-curl` instead of direct `curl` calls.
+
+## Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/minio-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $MINIO_ACCESS_KEY" "$@"
+EOF
+chmod +x /tmp/minio-curl
+```
+
+**Usage:** All examples below use `/tmp/minio-curl` instead of direct `curl` calls.
+
+## Install MinIO Client
 
 ```bash
 # macOS
@@ -73,11 +103,6 @@ mc alias set myminio https://${MINIO_ENDPOINT} ${MINIO_ACCESS_KEY} ${MINIO_SECRE
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
-> ```
 
 ## How to Use
 

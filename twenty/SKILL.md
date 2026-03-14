@@ -48,23 +48,32 @@ export TWENTY_API_URL="https://your-domain.com"
 ---
 
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/twenty-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $TWENTY_TOKEN" "$@"
+EOF
+chmod +x /tmp/twenty-curl
+```
+
+**Usage:** All examples below use `/tmp/twenty-curl` instead of direct `curl` calls.
 
 ## How to Use
 
 ### 1. List Companies
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/companies" --header "Authorization: Bearer ${TWENTY_TOKEN}"' | jq '.data.companies[:3]'
+/tmp/twenty-curl -X GET "https://api.example.com" | jq '.data.companies[:3]'
 ```
 
 **With pagination:**
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/companies?limit=10&offset=0" --header "Authorization: Bearer ${TWENTY_TOKEN}"' | jq '.data.companies'
+/tmp/twenty-curl -X GET "https://api.example.com" | jq '.data.companies'
 ```
 
 ### 2. Create a Company
@@ -82,13 +91,13 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${TWENTY_API_URL}/rest/companies" --header "Authorization: Bearer ${TWENTY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/twenty_request.json'
+/tmp/twenty-curl -X POST "https://api.example.com" -d @/tmp/twenty_request.json
 ```
 
 ### 3. List People (Contacts)
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/people" --header "Authorization: Bearer ${TWENTY_TOKEN}"' | jq '.data.people[:3]'
+/tmp/twenty-curl -X GET "https://api.example.com" | jq '.data.people[:3]'
 ```
 
 ### 4. Create a Person
@@ -109,7 +118,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${TWENTY_API_URL}/rest/people" --header "Authorization: Bearer ${TWENTY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/twenty_request.json'
+/tmp/twenty-curl -X POST "https://api.example.com" -d @/tmp/twenty_request.json
 ```
 
 ### 5. Get a Specific Record
@@ -118,10 +127,10 @@ bash -c 'curl -s -X POST "${TWENTY_API_URL}/rest/people" --header "Authorization
 
 ```bash
 # Get company by ID
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_TOKEN}"'
+/tmp/twenty-curl -X GET "https://api.example.com"
 
 # Get person by ID
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/people/{personId}" --header "Authorization: Bearer ${TWENTY_TOKEN}"'
+/tmp/twenty-curl -X GET "https://api.example.com"
 ```
 
 ### 6. Update a Record
@@ -140,7 +149,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/twenty_request.json'
+/tmp/twenty-curl -X PATCH "https://api.example.com" -d @/tmp/twenty_request.json
 ```
 
 ### 7. Delete a Record
@@ -154,7 +163,7 @@ curl -s -X DELETE "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Autho
 ### 8. List Notes
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/notes" --header "Authorization: Bearer ${TWENTY_TOKEN}"' | jq '.data.notes[:3]'
+/tmp/twenty-curl -X GET "https://api.example.com" | jq '.data.notes[:3]'
 ```
 
 ### 9. Create a Note
@@ -171,13 +180,13 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${TWENTY_API_URL}/rest/notes" --header "Authorization: Bearer ${TWENTY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/twenty_request.json'
+/tmp/twenty-curl -X POST "https://api.example.com" -d @/tmp/twenty_request.json
 ```
 
 ### 10. List Tasks
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/tasks" --header "Authorization: Bearer ${TWENTY_TOKEN}"' | jq '.data.tasks[:3]'
+/tmp/twenty-curl -X GET "https://api.example.com" | jq '.data.tasks[:3]'
 ```
 
 ### 11. Create a Task
@@ -195,7 +204,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${TWENTY_API_URL}/rest/tasks" --header "Authorization: Bearer ${TWENTY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/twenty_request.json'
+/tmp/twenty-curl -X POST "https://api.example.com" -d @/tmp/twenty_request.json
 ```
 
 ### 12. Get Metadata (Object Schema)
@@ -203,13 +212,13 @@ bash -c 'curl -s -X POST "${TWENTY_API_URL}/rest/tasks" --header "Authorization:
 List all object types and their fields:
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/metadata/objects" --header "Authorization: Bearer ${TWENTY_TOKEN}"' | jq '.data.objects[] | {name: .nameSingular, fields: [.fields[].name]}'
+/tmp/twenty-curl -X GET "https://api.example.com" | jq '.data.objects[] | {name: .nameSingular, fields: [.fields[].name]}'
 ```
 
 **Get metadata for a specific object:**
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/metadata/objects/companies" --header "Authorization: Bearer ${TWENTY_TOKEN}"'
+/tmp/twenty-curl -X GET "https://api.example.com"
 ```
 
 ### 13. GraphQL Query
@@ -225,7 +234,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${TWENTY_API_URL}/graphql" --header "Authorization: Bearer ${TWENTY_TOKEN}" --header "Content-Type: application/json" -d @/tmp/twenty_request.json' | jq '.data.companies.edges'
+/tmp/twenty-curl -X POST "https://api.example.com" -d @/tmp/twenty_request.json | jq '.data.companies.edges'
 ```
 
 ---
@@ -259,7 +268,7 @@ bash -c 'curl -s -X POST "${TWENTY_API_URL}/graphql" --header "Authorization: Be
 **Example with filters:**
 
 ```bash
-bash -c 'curl -s -X GET "${TWENTY_API_URL}/rest/companies?filter={\"name\":{\"like\":\"%Acme%\"}}" --header "Authorization: Bearer ${TWENTY_TOKEN}"' | jq '.data.companies'
+/tmp/twenty-curl -X GET "https://api.example.com" | jq '.data.companies'
 ```
 
 ---

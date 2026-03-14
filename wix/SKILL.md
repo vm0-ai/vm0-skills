@@ -24,16 +24,30 @@ Manage contacts, blog posts, store products, and orders on a connected Wix site.
 
 Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Wix**. vm0 will automatically inject the required `WIX_TOKEN` environment variable.
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 > **Note:** The CRM Contacts, Blog, Store, and Orders APIs are only available if the corresponding features are enabled on the Wix site. A blank site will return 404 for these endpoints.
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/wix-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $WIX_TOKEN" "$@"
+EOF
+chmod +x /tmp/wix-curl
+```
+
+**Usage:** All examples below use `/tmp/wix-curl` instead of direct `curl` calls.
 
 ## Core APIs
 
 ### Get Site Info
 
 ```bash
-bash -c 'curl -s "https://www.wixapis.com/apps/v1/instance" --header "Authorization: Bearer $WIX_TOKEN"' | jq '{instanceId: .instance.instanceId, appName: .instance.appName, siteName: .site.siteDisplayName, ownerEmail: .site.ownerEmail}'
+/tmp/wix-curl "https://www.wixapis.com/apps/v1/instance" | jq '{instanceId: .instance.instanceId, appName: .instance.appName, siteName: .site.siteDisplayName, ownerEmail: .site.ownerEmail}'
 ```
 
 ### List Contacts
@@ -51,7 +65,7 @@ cat > /tmp/request.json << 'EOF'
   }
 }
 EOF
-bash -c 'curl -s -X POST "https://www.wixapis.com/crm/v3/contacts/search" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '.contacts[] | {id, email: .primaryInfo.email, name: .info.name}'
+/tmp/wix-curl -X POST "https://www.wixapis.com/crm/v3/contacts/search" -d @/tmp/request.json | jq '.contacts[] | {id, email: .primaryInfo.email, name: .info.name}'
 ```
 
 ### Get a Contact
@@ -59,7 +73,7 @@ bash -c 'curl -s -X POST "https://www.wixapis.com/crm/v3/contacts/search" --head
 Replace `<contact-id>` with the contact's ID:
 
 ```bash
-bash -c 'curl -s "https://www.wixapis.com/crm/v3/contacts/<contact-id>" --header "Authorization: Bearer $WIX_TOKEN"' | jq '{id, name: .info.name, emails: .info.emails, phones: .info.phones, createdDate}'
+/tmp/wix-curl "https://www.wixapis.com/crm/v3/contacts/<contact-id>" | jq '{id, name: .info.name, emails: .info.emails, phones: .info.phones, createdDate}'
 ```
 
 ### Create a Contact
@@ -91,7 +105,7 @@ cat > /tmp/request.json << 'EOF'
   }
 }
 EOF
-bash -c 'curl -s -X POST "https://www.wixapis.com/crm/v3/contacts" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '{id: .contact.id, name: .contact.info.name}'
+/tmp/wix-curl -X POST "https://www.wixapis.com/crm/v3/contacts" -d @/tmp/request.json | jq '{id: .contact.id, name: .contact.info.name}'
 ```
 
 ### Update a Contact
@@ -109,7 +123,7 @@ cat > /tmp/request.json << 'EOF'
   }
 }
 EOF
-bash -c 'curl -s -X PATCH "https://www.wixapis.com/crm/v3/contacts/<contact-id>" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '.contact | {id, name: .info.name}'
+/tmp/wix-curl -X PATCH "https://www.wixapis.com/crm/v3/contacts/<contact-id>" -d @/tmp/request.json | jq '.contact | {id, name: .info.name}'
 ```
 
 ### List Blog Posts
@@ -126,7 +140,7 @@ cat > /tmp/request.json << 'EOF'
   "fieldsets": ["URL", "RICH_CONTENT"]
 }
 EOF
-bash -c 'curl -s -X POST "https://www.wixapis.com/blog/v3/posts/list" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '.posts[] | {id, title, status, publishedDate, url: .url.base}'
+/tmp/wix-curl -X POST "https://www.wixapis.com/blog/v3/posts/list" -d @/tmp/request.json | jq '.posts[] | {id, title, status, publishedDate, url: .url.base}'
 ```
 
 ### Get a Blog Post
@@ -134,7 +148,7 @@ bash -c 'curl -s -X POST "https://www.wixapis.com/blog/v3/posts/list" --header "
 Replace `<post-id>` with the post's ID:
 
 ```bash
-bash -c 'curl -s "https://www.wixapis.com/blog/v3/posts/<post-id>" --header "Authorization: Bearer $WIX_TOKEN"' | jq '{id, title, status, publishedDate, excerpt}'
+/tmp/wix-curl "https://www.wixapis.com/blog/v3/posts/<post-id>" | jq '{id, title, status, publishedDate, excerpt}'
 ```
 
 ### Create a Draft Blog Post
@@ -150,7 +164,7 @@ cat > /tmp/request.json << 'EOF'
   }
 }
 EOF
-bash -c 'curl -s -X POST "https://www.wixapis.com/blog/v3/draft-posts" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '{id: .draftPost.id, title: .draftPost.title, status: .draftPost.status}'
+/tmp/wix-curl -X POST "https://www.wixapis.com/blog/v3/draft-posts" -d @/tmp/request.json | jq '{id: .draftPost.id, title: .draftPost.title, status: .draftPost.status}'
 ```
 
 ### Query Store Products
@@ -168,7 +182,7 @@ cat > /tmp/request.json << 'EOF'
   }
 }
 EOF
-bash -c 'curl -s -X POST "https://www.wixapis.com/stores/v1/products/query" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '.products[] | {id, name, description, price: .price.formatted.price, inStock}'
+/tmp/wix-curl -X POST "https://www.wixapis.com/stores/v1/products/query" -d @/tmp/request.json | jq '.products[] | {id, name, description, price: .price.formatted.price, inStock}'
 ```
 
 ### Get a Product
@@ -176,7 +190,7 @@ bash -c 'curl -s -X POST "https://www.wixapis.com/stores/v1/products/query" --he
 Replace `<product-id>` with the product's ID:
 
 ```bash
-bash -c 'curl -s "https://www.wixapis.com/stores/v1/products/<product-id>" --header "Authorization: Bearer $WIX_TOKEN"' | jq '{id, name, description, price: .product.price.formatted.price, stock: .product.stock}'
+/tmp/wix-curl "https://www.wixapis.com/stores/v1/products/<product-id>" | jq '{id, name, description, price: .product.price.formatted.price, stock: .product.stock}'
 ```
 
 ### Search Orders
@@ -194,7 +208,7 @@ cat > /tmp/request.json << 'EOF'
   }
 }
 EOF
-bash -c 'curl -s -X POST "https://www.wixapis.com/ecom/v1/orders/search" --header "Authorization: Bearer $WIX_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json' | jq '.orders[] | {id, number, status, buyerInfo: .buyerInfo.email, total: .priceSummary.total.formattedAmount, createdDate}'
+/tmp/wix-curl -X POST "https://www.wixapis.com/ecom/v1/orders/search" -d @/tmp/request.json | jq '.orders[] | {id, number, status, buyerInfo: .buyerInfo.email, total: .priceSummary.total.formattedAmount, createdDate}'
 ```
 
 ### Get an Order
@@ -202,7 +216,7 @@ bash -c 'curl -s -X POST "https://www.wixapis.com/ecom/v1/orders/search" --heade
 Replace `<order-id>` with the order's ID:
 
 ```bash
-bash -c 'curl -s "https://www.wixapis.com/ecom/v1/orders/<order-id>" --header "Authorization: Bearer $WIX_TOKEN"' | jq '{id, number, status, buyer: .buyerInfo.email, total: .priceSummary.total.formattedAmount, lineItems: [.lineItems[] | {name: .productName.original, quantity, price: .price.formattedAmount}]}'
+/tmp/wix-curl "https://www.wixapis.com/ecom/v1/orders/<order-id>" | jq '{id, number, status, buyer: .buyerInfo.email, total: .priceSummary.total.formattedAmount, lineItems: [.lineItems[] | {name: .productName.original, quantity, price: .price.formattedAmount}]}'
 ```
 
 ## Notes

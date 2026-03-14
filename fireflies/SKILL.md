@@ -37,7 +37,20 @@ export FIREFLIES_TOKEN="your-api-key"
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/fireflies-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $FIREFLIES_TOKEN" "$@"
+EOF
+chmod +x /tmp/fireflies-curl
+```
+
+**Usage:** All examples below use `/tmp/fireflies-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -64,7 +77,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.user'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.user'
 ```
 
 ---
@@ -84,7 +97,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcripts'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 ### Search by Keyword
@@ -101,7 +114,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcripts'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 ### Filter by Date Range
@@ -118,7 +131,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcripts'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 ### Filter by Participant
@@ -135,7 +148,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcripts'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 **Transcripts Parameters:**
@@ -171,7 +184,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcript'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcript'
 ```
 
 ### With Summary and Action Items
@@ -188,7 +201,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcript.summary'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcript.summary'
 ```
 
 ### With Sentences (Full Transcript)
@@ -205,7 +218,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcript.sentences'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcript.sentences'
 ```
 
 ### With Analytics
@@ -222,7 +235,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.transcript.analytics'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.transcript.analytics'
 ```
 
 ---
@@ -248,7 +261,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.uploadAudio'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.uploadAudio'
 ```
 
 ### Upload with Attendees
@@ -274,7 +287,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.uploadAudio'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.uploadAudio'
 ```
 
 **Upload Parameters:**
@@ -306,7 +319,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json' | jq '.data.users'
+/tmp/fireflies-curl -X POST "https://api.fireflies.ai/graphql" -d @/tmp/fireflies_request.json | jq '.data.users'
 ```
 
 ---

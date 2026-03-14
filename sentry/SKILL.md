@@ -35,20 +35,30 @@ Use this skill when you need to:
 Verify authentication:
 
 ```bash
-bash -c 'curl -s "https://sentry.io/api/0/organizations/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[0] | {slug, name}'
+/tmp/sentry-curl "https://sentry.io/api/0/organizations/" | jq '.[0] | {slug, name}'
 ```
 
-### Discovering Your Organization Slug
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/sentry-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $SENTRY_TOKEN" "$@"
+EOF
+chmod +x /tmp/sentry-curl
+```
+
+**Usage:** All examples below use `/tmp/sentry-curl` instead of direct `curl` calls.
+
+## Discovering Your Organization Slug
 
 Most endpoints require your organization slug. Get it from the organizations endpoint above — the `slug` field is what you need.
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
 
 ## How to Use
 
@@ -63,7 +73,7 @@ Base URL: `https://sentry.io/api/0`
 Get all organizations you have access to:
 
 ```bash
-bash -c 'curl -s "https://sentry.io/api/0/organizations/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[] | {slug, name, dateCreated}'
+/tmp/sentry-curl "https://sentry.io/api/0/organizations/" | jq '.[] | {slug, name, dateCreated}'
 ```
 
 ---
@@ -73,7 +83,7 @@ bash -c 'curl -s "https://sentry.io/api/0/organizations/" -H "Authorization: Bea
 Get all projects you have access to:
 
 ```bash
-bash -c 'curl -s "https://sentry.io/api/0/projects/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[] | {slug, name, platform, dateCreated}'
+/tmp/sentry-curl "https://sentry.io/api/0/projects/" | jq '.[] | {slug, name, platform, dateCreated}'
 ```
 
 ---
@@ -85,7 +95,7 @@ Get details for a specific project:
 > **Note:** Replace `my-org` with your organization slug and `my-project` with your actual project slug from the "List Your Projects" output.
 
 ```bash
-ORG=my-org PROJECT=my-project bash -c 'curl -s "https://sentry.io/api/0/projects/$ORG/$PROJECT/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '{slug, name, platform, status, dateCreated}'
+ORG=my-org PROJECT=my-project /tmp/sentry-curl "https://sentry.io/api/0/projects/$ORG/$PROJECT/" | jq '{slug, name, platform, status, dateCreated}'
 ```
 
 ---
@@ -97,7 +107,7 @@ Get all issues across the organization:
 > **Note:** Replace `my-org` with your organization slug.
 
 ```bash
-ORG=my-org bash -c 'curl -s "https://sentry.io/api/0/organizations/$ORG/issues/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[] | {id, shortId, title, culprit, status, count, userCount, firstSeen, lastSeen}'
+ORG=my-org /tmp/sentry-curl "https://sentry.io/api/0/organizations/$ORG/issues/" | jq '.[] | {id, shortId, title, culprit, status, count, userCount, firstSeen, lastSeen}'
 ```
 
 Query parameters:
@@ -116,7 +126,7 @@ Get issues for a specific project:
 > **Note:** Replace `my-org` and `my-project` with your actual values.
 
 ```bash
-ORG=my-org PROJECT=my-project bash -c 'curl -s "https://sentry.io/api/0/projects/$ORG/$PROJECT/issues/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[] | {id, shortId, title, status, count, lastSeen}'
+ORG=my-org PROJECT=my-project /tmp/sentry-curl "https://sentry.io/api/0/projects/$ORG/$PROJECT/issues/" | jq '.[] | {id, shortId, title, status, count, lastSeen}'
 ```
 
 ---
@@ -128,7 +138,7 @@ Search issues with query:
 > **Note:** Replace `my-org` with your organization slug.
 
 ```bash
-ORG=my-org bash -c 'curl -s -G "https://sentry.io/api/0/organizations/$ORG/issues/" -H "Authorization: Bearer $SENTRY_TOKEN" --data-urlencode "query=is:unresolved level:error"' | jq '.[] | {shortId, title, level, count}'
+ORG=my-org /tmp/sentry-curl "https://sentry.io/api/0/organizations/$ORG/issues/" | jq '.[] | {shortId, title, level, count}'
 ```
 
 Common query filters:
@@ -146,7 +156,7 @@ Get details for a specific issue:
 > **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID from the "List Issues" output (use the `id` field, not `shortId`).
 
 ```bash
-ORG=my-org ISSUE_ID=123456789 bash -c 'curl -s "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '{id, shortId, title, culprit, status, level, count, userCount, firstSeen, lastSeen, assignedTo}'
+ORG=my-org ISSUE_ID=123456789 /tmp/sentry-curl "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" | jq '{id, shortId, title, culprit, status, level, count, userCount, firstSeen, lastSeen, assignedTo}'
 ```
 
 ---
@@ -158,7 +168,7 @@ Get the most recent event for an issue:
 > **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
 
 ```bash
-ORG=my-org ISSUE_ID=123456789 bash -c 'curl -s "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/events/latest/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '{eventID, message, platform, dateCreated, tags, contexts}'
+ORG=my-org ISSUE_ID=123456789 /tmp/sentry-curl "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/events/latest/" | jq '{eventID, message, platform, dateCreated, tags, contexts}'
 ```
 
 ---
@@ -170,7 +180,7 @@ Get all events for an issue:
 > **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
 
 ```bash
-ORG=my-org ISSUE_ID=123456789 bash -c 'curl -s "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/events/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[] | {eventID, message, dateCreated}'
+ORG=my-org ISSUE_ID=123456789 /tmp/sentry-curl "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/events/" | jq '.[] | {eventID, message, dateCreated}'
 ```
 
 ---
@@ -182,7 +192,7 @@ Mark an issue as resolved:
 > **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
 
 ```bash
-ORG=my-org ISSUE_ID=123456789 bash -c 'curl -s -X PUT "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" -H "Authorization: Bearer $SENTRY_TOKEN" -H "Content-Type: application/json" -d "{\"status\":\"resolved\"}"' | jq '{id, shortId, status}'
+ORG=my-org ISSUE_ID=123456789 /tmp/sentry-curl -X PUT "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" | jq '{id, shortId, status}'
 ```
 
 ---
@@ -194,7 +204,7 @@ Ignore an issue:
 > **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
 
 ```bash
-ORG=my-org ISSUE_ID=123456789 bash -c 'curl -s -X PUT "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" -H "Authorization: Bearer $SENTRY_TOKEN" -H "Content-Type: application/json" -d "{\"status\":\"ignored\"}"' | jq '{id, shortId, status}'
+ORG=my-org ISSUE_ID=123456789 /tmp/sentry-curl -X PUT "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" | jq '{id, shortId, status}'
 ```
 
 ---
@@ -206,7 +216,7 @@ Reopen a resolved issue:
 > **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
 
 ```bash
-ORG=my-org ISSUE_ID=123456789 bash -c 'curl -s -X PUT "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" -H "Authorization: Bearer $SENTRY_TOKEN" -H "Content-Type: application/json" -d "{\"status\":\"unresolved\"}"' | jq '{id, shortId, status}'
+ORG=my-org ISSUE_ID=123456789 /tmp/sentry-curl -X PUT "https://sentry.io/api/0/organizations/$ORG/issues/$ISSUE_ID/" | jq '{id, shortId, status}'
 ```
 
 ---
@@ -218,7 +228,7 @@ Get all releases for the organization:
 > **Note:** Replace `my-org` with your organization slug.
 
 ```bash
-ORG=my-org bash -c 'curl -s "https://sentry.io/api/0/organizations/$ORG/releases/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[] | {version, dateCreated, newGroups, projects: [.projects[].slug]}'
+ORG=my-org /tmp/sentry-curl "https://sentry.io/api/0/organizations/$ORG/releases/" | jq '.[] | {version, dateCreated, newGroups, projects: [.projects[].slug]}'
 ```
 
 ---
@@ -230,7 +240,7 @@ Get details for a specific release:
 > **Note:** Replace `my-org` with your organization slug and `1.0.0` with an actual release version.
 
 ```bash
-ORG=my-org RELEASE=1.0.0 bash -c 'curl -s "https://sentry.io/api/0/organizations/$ORG/releases/$RELEASE/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '{version, dateCreated, dateReleased, newGroups, lastEvent, projects}'
+ORG=my-org RELEASE=1.0.0 /tmp/sentry-curl "https://sentry.io/api/0/organizations/$ORG/releases/$RELEASE/" | jq '{version, dateCreated, dateReleased, newGroups, lastEvent, projects}'
 ```
 
 ---
@@ -242,7 +252,7 @@ Get recent error events for a project:
 > **Note:** Replace `my-org` and `my-project` with your actual values.
 
 ```bash
-ORG=my-org PROJECT=my-project bash -c 'curl -s "https://sentry.io/api/0/projects/$ORG/$PROJECT/events/" -H "Authorization: Bearer $SENTRY_TOKEN"' | jq '.[] | {eventID, title, message, dateCreated}'
+ORG=my-org PROJECT=my-project /tmp/sentry-curl "https://sentry.io/api/0/projects/$ORG/$PROJECT/events/" | jq '.[] | {eventID, title, message, dateCreated}'
 ```
 
 ---

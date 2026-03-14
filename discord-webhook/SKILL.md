@@ -42,10 +42,19 @@ export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/1234567890/abcdefg.
 ---
 
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/discord-webhook-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $DISCORD_WEBHOOK_URL" "$@"
+EOF
+chmod +x /tmp/discord-webhook-curl
+```
+
+**Usage:** All examples below use `/tmp/discord-webhook-curl` instead of direct `curl` calls.
 
 ## How to Use
 

@@ -32,7 +32,20 @@ Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Wrike**. 
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/wrike-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $WRIKE_TOKEN" "$@"
+EOF
+chmod +x /tmp/wrike-curl
+```
+
+**Usage:** All examples below use `/tmp/wrike-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -49,13 +62,13 @@ Wrike uses alphanumeric IDs for all resources. The hierarchy is: Space > Folder/
 ### List All Spaces
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/spaces" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, title}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/spaces" | jq '.data[] | {id, title}'
 ```
 
 ### Get Space by ID
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[0]'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/spaces/<space_id>" | jq '.data[0]'
 ```
 
 ### Create Space
@@ -69,13 +82,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://www.wrike.com/api/v4/spaces" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0] | {id, title}'
+/tmp/wrike-curl -X POST "https://www.wrike.com/api/v4/spaces" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
 ```
 
 ### Delete Space
 
 ```bash
-bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Authorization: Bearer $WRIKE_TOKEN"'
+/tmp/wrike-curl -X DELETE "https://www.wrike.com/api/v4/spaces/<space_id>"
 ```
 
 ---
@@ -85,25 +98,25 @@ bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/spaces/<space_id>" --he
 ### Get Folder Tree
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/folders" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, title, scope}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/folders" | jq '.data[] | {id, title, scope}'
 ```
 
 ### Get Folders in a Space
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/spaces/<space_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, title, childIds}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/spaces/<space_id>/folders" | jq '.data[] | {id, title, childIds}'
 ```
 
 ### Get Subfolders
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, title}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/folders/<folder_id>/folders" | jq '.data[] | {id, title}'
 ```
 
 ### Get Folder by ID
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[0]'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/folders/<folder_id>" | jq '.data[0]'
 ```
 
 ### Create Folder
@@ -117,7 +130,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0] | {id, title}'
+/tmp/wrike-curl -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
 ```
 
 ### Create Project
@@ -136,7 +149,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0] | {id, title, project}'
+/tmp/wrike-curl -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, project}'
 ```
 
 ### Update Folder
@@ -150,13 +163,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0] | {id, title}'
+/tmp/wrike-curl -X PUT "https://www.wrike.com/api/v4/folders/<folder_id>" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
 ```
 
 ### Delete Folder
 
 ```bash
-bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $WRIKE_TOKEN"'
+/tmp/wrike-curl -X DELETE "https://www.wrike.com/api/v4/folders/<folder_id>"
 ```
 
 ---
@@ -166,19 +179,19 @@ bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/folders/<folder_id>" --
 ### List Tasks in a Folder
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, title, status, importance, dates}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" | jq '.data[] | {id, title, status, importance, dates}'
 ```
 
 ### List Tasks in a Space
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/spaces/<space_id>/tasks" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, title, status, importance}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/spaces/<space_id>/tasks" | jq '.data[] | {id, title, status, importance}'
 ```
 
 ### Get Task by ID
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[0] | {id, title, description, status, importance, dates, responsibleIds}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/tasks/<task_id>" | jq '.data[0] | {id, title, description, status, importance, dates, responsibleIds}'
 ```
 
 ### Create Task
@@ -200,7 +213,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0] | {id, title, status}'
+/tmp/wrike-curl -X POST "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, status}'
 ```
 
 ### Update Task
@@ -216,13 +229,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0] | {id, title, status}'
+/tmp/wrike-curl -X PUT "https://www.wrike.com/api/v4/tasks/<task_id>" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, status}'
 ```
 
 ### Delete Task
 
 ```bash
-bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $WRIKE_TOKEN"'
+/tmp/wrike-curl -X DELETE "https://www.wrike.com/api/v4/tasks/<task_id>"
 ```
 
 ---
@@ -232,13 +245,13 @@ bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/tasks/<task_id>" --head
 ### List Comments on a Task
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/tasks/<task_id>/comments" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, text, authorId, createdDate}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/tasks/<task_id>/comments" | jq '.data[] | {id, text, authorId, createdDate}'
 ```
 
 ### List Comments on a Folder
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/comments" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, text, authorId, createdDate}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/folders/<folder_id>/comments" | jq '.data[] | {id, text, authorId, createdDate}'
 ```
 
 ### Create Comment on a Task
@@ -252,7 +265,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/comments" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0]'
+/tmp/wrike-curl -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/comments" -d @/tmp/wrike_request.json | jq '.data[0]'
 ```
 
 ### Update Comment
@@ -266,13 +279,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0]'
+/tmp/wrike-curl -X PUT "https://www.wrike.com/api/v4/comments/<comment_id>" -d @/tmp/wrike_request.json | jq '.data[0]'
 ```
 
 ### Delete Comment
 
 ```bash
-bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Authorization: Bearer $WRIKE_TOKEN"'
+/tmp/wrike-curl -X DELETE "https://www.wrike.com/api/v4/comments/<comment_id>"
 ```
 
 ---
@@ -282,13 +295,13 @@ bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/comments/<comment_id>" 
 ### List All Contacts
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/contacts" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, firstName, lastName, type, profiles}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/contacts" | jq '.data[] | {id, firstName, lastName, type, profiles}'
 ```
 
 ### Get Contact by ID
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/contacts/<contact_id>" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[0]'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/contacts/<contact_id>" | jq '.data[0]'
 ```
 
 ---
@@ -298,7 +311,7 @@ bash -c 'curl -s "https://www.wrike.com/api/v4/contacts/<contact_id>" --header "
 ### List Timelogs for a Task
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, taskId, hours, trackedDate, comment}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" | jq '.data[] | {id, taskId, hours, trackedDate, comment}'
 ```
 
 ### Create Timelog
@@ -314,13 +327,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json' | jq '.data[0] | {id, hours, trackedDate}'
+/tmp/wrike-curl -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" -d @/tmp/wrike_request.json | jq '.data[0] | {id, hours, trackedDate}'
 ```
 
 ### Delete Timelog
 
 ```bash
-bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>" --header "Authorization: Bearer $WRIKE_TOKEN"'
+/tmp/wrike-curl -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>"
 ```
 
 ---
@@ -330,7 +343,7 @@ bash -c 'curl -s -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>" 
 ### List Workflows
 
 ```bash
-bash -c 'curl -s "https://www.wrike.com/api/v4/workflows" --header "Authorization: Bearer $WRIKE_TOKEN"' | jq '.data[] | {id, name, customStatuses}'
+/tmp/wrike-curl "https://www.wrike.com/api/v4/workflows" | jq '.data[] | {id, name, customStatuses}'
 ```
 
 ---

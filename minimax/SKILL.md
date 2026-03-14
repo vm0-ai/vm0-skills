@@ -35,7 +35,22 @@ Use this skill when you need to:
 export MINIMAX_API_KEY="your-api-key"
 ```
 
-### API Hosts
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/minimax-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $MINIMAX_API_KEY" "$@"
+EOF
+chmod +x /tmp/minimax-curl
+```
+
+**Usage:** All examples below use `/tmp/minimax-curl` instead of direct `curl` calls.
+
+## API Hosts
 
 | Region | Base URL |
 |--------|----------|
@@ -44,11 +59,6 @@ export MINIMAX_API_KEY="your-api-key"
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
 
 ## How to Use
 
@@ -77,7 +87,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.choices[0].message.content'
+/tmp/minimax-curl -X POST "https://api.minimax.io/v1/text/chatcompletion_v2" -d @/tmp/minimax_request.json | jq '.choices[0].message.content'
 ```
 
 **Available models:**
@@ -108,7 +118,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.choices[0].message.content'
+/tmp/minimax-curl -X POST "https://api.minimax.io/v1/text/chatcompletion_v2" -d @/tmp/minimax_request.json | jq '.choices[0].message.content'
 ```
 
 **Parameters:**
@@ -275,7 +285,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
+/tmp/minimax-curl -X POST "https://api.minimax.io/v1/video_generation" -d @/tmp/minimax_request.json | jq '.task_id'
 ```
 
 Video generation is async - returns a task ID to poll for completion.
@@ -300,7 +310,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
+/tmp/minimax-curl -X POST "https://api.minimax.io/v1/video_generation" -d @/tmp/minimax_request.json | jq '.task_id'
 ```
 
 **Camera commands (in brackets):**
@@ -335,7 +345,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
+/tmp/minimax-curl -X POST "https://api.minimax.io/v1/video_generation" -d @/tmp/minimax_request.json | jq '.task_id'
 ```
 
 Provide `first_frame_image` as URL or base64-encoded image.
@@ -377,7 +387,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.choices[0]'
+/tmp/minimax-curl -X POST "https://api.minimax.io/v1/text/chatcompletion_v2" -d @/tmp/minimax_request.json | jq '.choices[0]'
 ```
 
 ---

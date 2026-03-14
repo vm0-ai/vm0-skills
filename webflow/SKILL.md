@@ -34,17 +34,27 @@ Connect your Webflow account via the vm0 platform (OAuth connector). The `WEBFLO
 Verify authentication:
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/token/authorized_by" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{id, email, firstName, lastName}'
+/tmp/webflow-curl "https://api.webflow.com/v2/token/authorized_by" | jq '{id, email, firstName, lastName}'
 ```
 
 Expected response: Your user information (id, email, name).
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq '.[0]'
-> ```
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/webflow-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $WEBFLOW_TOKEN" "$@"
+EOF
+chmod +x /tmp/webflow-curl
+```
+
+**Usage:** All examples below use `/tmp/webflow-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -59,7 +69,7 @@ Base URL: `https://api.webflow.com/v2`
 Get information about the authenticated user:
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/token/authorized_by" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{id, email, firstName, lastName}'
+/tmp/webflow-curl "https://api.webflow.com/v2/token/authorized_by" | jq '{id, email, firstName, lastName}'
 ```
 
 ---
@@ -69,7 +79,7 @@ bash -c 'curl -s "https://api.webflow.com/v2/token/authorized_by" --header "Auth
 List all sites accessible to the authenticated user:
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/sites" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '.sites[] | {id, displayName, shortName, lastPublished}'
+/tmp/webflow-curl "https://api.webflow.com/v2/sites" | jq '.sites[] | {id, displayName, shortName, lastPublished}'
 ```
 
 ---
@@ -79,7 +89,7 @@ bash -c 'curl -s "https://api.webflow.com/v2/sites" --header "Authorization: Bea
 Retrieve details for a specific site. Replace `<site-id>` with an actual site ID from the list sites response.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{id, displayName, shortName, lastPublished, previewUrl}'
+/tmp/webflow-curl "https://api.webflow.com/v2/sites/<site-id>" | jq '{id, displayName, shortName, lastPublished, previewUrl}'
 ```
 
 ---
@@ -89,7 +99,7 @@ bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>" --header "Authoriz
 List all pages for a site. Replace `<site-id>` with your site ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>/pages" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '.pages[] | {id, title, slug, createdOn, lastUpdated}'
+/tmp/webflow-curl "https://api.webflow.com/v2/sites/<site-id>/pages" | jq '.pages[] | {id, title, slug, createdOn, lastUpdated}'
 ```
 
 ---
@@ -99,7 +109,7 @@ bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>/pages" --header "Au
 Retrieve metadata for a specific page. Replace `<page-id>` with an actual page ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/pages/<page-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{id, title, slug, seo: {title: .seo.title, description: .seo.description}}'
+/tmp/webflow-curl "https://api.webflow.com/v2/pages/<page-id>" | jq '{id, title, slug, seo: {title: .seo.title, description: .seo.description}}'
 ```
 
 ---
@@ -122,7 +132,7 @@ Write to `/tmp/webflow_page_update.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PATCH "https://api.webflow.com/v2/pages/<page-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN" --header "Content-Type: application/json" -d @/tmp/webflow_page_update.json' | jq '{id, title, slug}'
+/tmp/webflow-curl -X PATCH "https://api.webflow.com/v2/pages/<page-id>" -d @/tmp/webflow_page_update.json | jq '{id, title, slug}'
 ```
 
 ---
@@ -132,7 +142,7 @@ bash -c 'curl -s -X PATCH "https://api.webflow.com/v2/pages/<page-id>" --header 
 List all CMS collections for a site. Replace `<site-id>` with your site ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>/collections" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '.collections[] | {id, displayName, singularName, slug}'
+/tmp/webflow-curl "https://api.webflow.com/v2/sites/<site-id>/collections" | jq '.collections[] | {id, displayName, singularName, slug}'
 ```
 
 ---
@@ -142,7 +152,7 @@ bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>/collections" --head
 Retrieve schema and details for a specific collection, including field definitions. Replace `<collection-id>` with your collection ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/collections/<collection-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{id, displayName, singularName, slug, fields: [.fields[] | {id, displayName, slug, type, isRequired}]}'
+/tmp/webflow-curl "https://api.webflow.com/v2/collections/<collection-id>" | jq '{id, displayName, singularName, slug, fields: [.fields[] | {id, displayName, slug, type, isRequired}]}'
 ```
 
 ---
@@ -152,13 +162,13 @@ bash -c 'curl -s "https://api.webflow.com/v2/collections/<collection-id>" --head
 List all items in a CMS collection. Replace `<collection-id>` with your collection ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/collections/<collection-id>/items" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '.items[] | {id, fieldData: .fieldData}'
+/tmp/webflow-curl "https://api.webflow.com/v2/collections/<collection-id>/items" | jq '.items[] | {id, fieldData: .fieldData}'
 ```
 
 Supports pagination with `offset` and `limit` query parameters:
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/collections/<collection-id>/items?offset=0&limit=10" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{pagination, items: [.items[] | {id, fieldData: .fieldData}]}'
+/tmp/webflow-curl "https://api.webflow.com/v2/collections/<collection-id>/items?offset=0&limit=10" | jq '{pagination, items: [.items[] | {id, fieldData: .fieldData}]}'
 ```
 
 ---
@@ -168,7 +178,7 @@ bash -c 'curl -s "https://api.webflow.com/v2/collections/<collection-id>/items?o
 Get a single item by ID. Replace `<collection-id>` and `<item-id>`.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/collections/<collection-id>/items/<item-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{id, fieldData}'
+/tmp/webflow-curl "https://api.webflow.com/v2/collections/<collection-id>/items/<item-id>" | jq '{id, fieldData}'
 ```
 
 ---
@@ -189,7 +199,7 @@ Write to `/tmp/webflow_item.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.webflow.com/v2/collections/<collection-id>/items" --header "Authorization: Bearer $WEBFLOW_TOKEN" --header "Content-Type: application/json" -d @/tmp/webflow_item.json' | jq '{id, fieldData}'
+/tmp/webflow-curl -X POST "https://api.webflow.com/v2/collections/<collection-id>/items" -d @/tmp/webflow_item.json | jq '{id, fieldData}'
 ```
 
 ---
@@ -209,7 +219,7 @@ Write to `/tmp/webflow_item_update.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PATCH "https://api.webflow.com/v2/collections/<collection-id>/items/<item-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN" --header "Content-Type: application/json" -d @/tmp/webflow_item_update.json' | jq '{id, fieldData}'
+/tmp/webflow-curl -X PATCH "https://api.webflow.com/v2/collections/<collection-id>/items/<item-id>" -d @/tmp/webflow_item_update.json | jq '{id, fieldData}'
 ```
 
 ---
@@ -219,7 +229,7 @@ bash -c 'curl -s -X PATCH "https://api.webflow.com/v2/collections/<collection-id
 Delete an item from a collection. Replace `<collection-id>` and `<item-id>`.
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.webflow.com/v2/collections/<collection-id>/items/<item-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN"'
+/tmp/webflow-curl -X DELETE "https://api.webflow.com/v2/collections/<collection-id>/items/<item-id>"
 ```
 
 ---
@@ -237,7 +247,7 @@ Write to `/tmp/webflow_publish.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.webflow.com/v2/collections/<collection-id>/items/publish" --header "Authorization: Bearer $WEBFLOW_TOKEN" --header "Content-Type: application/json" -d @/tmp/webflow_publish.json' | jq '{publishedItemIds}'
+/tmp/webflow-curl -X POST "https://api.webflow.com/v2/collections/<collection-id>/items/publish" -d @/tmp/webflow_publish.json | jq '{publishedItemIds}'
 ```
 
 ---
@@ -247,7 +257,7 @@ bash -c 'curl -s -X POST "https://api.webflow.com/v2/collections/<collection-id>
 List all assets (images, files) for a site. Replace `<site-id>` with your site ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>/assets" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '.assets[] | {id, displayName, url, fileSize, contentType}'
+/tmp/webflow-curl "https://api.webflow.com/v2/sites/<site-id>/assets" | jq '.assets[] | {id, displayName, url, fileSize, contentType}'
 ```
 
 ---
@@ -257,7 +267,7 @@ bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>/assets" --header "A
 Get details for a specific asset. Replace `<asset-id>` with your asset ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/assets/<asset-id>" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '{id, displayName, url, fileSize, contentType, createdOn}'
+/tmp/webflow-curl "https://api.webflow.com/v2/assets/<asset-id>" | jq '{id, displayName, url, fileSize, contentType, createdOn}'
 ```
 
 ---
@@ -267,13 +277,13 @@ bash -c 'curl -s "https://api.webflow.com/v2/assets/<asset-id>" --header "Author
 List submissions for a specific form. Replace `<form-id>` with your form ID.
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/forms/<form-id>/submissions" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '.formSubmissions[] | {id, submittedAt, formData}'
+/tmp/webflow-curl "https://api.webflow.com/v2/forms/<form-id>/submissions" | jq '.formSubmissions[] | {id, submittedAt, formData}'
 ```
 
 To find form IDs, list all forms for a site first:
 
 ```bash
-bash -c 'curl -s "https://api.webflow.com/v2/sites/<site-id>/forms" --header "Authorization: Bearer $WEBFLOW_TOKEN"' | jq '.forms[] | {id, displayName, siteId}'
+/tmp/webflow-curl "https://api.webflow.com/v2/sites/<site-id>/forms" | jq '.forms[] | {id, displayName, siteId}'
 ```
 
 ---
@@ -291,7 +301,7 @@ Write to `/tmp/webflow_publish_site.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.webflow.com/v2/sites/<site-id>/publish" --header "Authorization: Bearer $WEBFLOW_TOKEN" --header "Content-Type: application/json" -d @/tmp/webflow_publish_site.json'
+/tmp/webflow-curl -X POST "https://api.webflow.com/v2/sites/<site-id>/publish" -d @/tmp/webflow_publish_site.json
 ```
 
 ---

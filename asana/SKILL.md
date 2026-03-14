@@ -33,7 +33,20 @@ Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Asana**. 
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/asana-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $ASANA_TOKEN" "$@"
+EOF
+chmod +x /tmp/asana-curl
+```
+
+**Usage:** All examples below use `/tmp/asana-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -50,13 +63,13 @@ Asana wraps all responses in a `data` field. Use `jq '.data'` to extract the act
 ### Get Current User
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/users/me" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data | {gid, name, email}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/users/me" | jq '.data | {gid, name, email}'
 ```
 
 ### List Workspaces
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/workspaces" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/workspaces" | jq '.data[] | {gid, name}'
 ```
 
 ---
@@ -66,13 +79,13 @@ bash -c 'curl -s "https://app.asana.com/api/1.0/workspaces" --header "Authorizat
 ### List Projects in a Workspace
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/projects?workspace=<workspace-gid>&opt_fields=name,color,archived,created_at" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name, archived}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/projects?workspace=<workspace-gid>&opt_fields=name,color,archived,created_at" | jq '.data[] | {gid, name, archived}'
 ```
 
 ### Get Project Details
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/projects/<project-gid>?opt_fields=name,notes,color,archived,created_at,modified_at,owner.name" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data'
+/tmp/asana-curl "https://app.asana.com/api/1.0/projects/<project-gid>?opt_fields=name,notes,color,archived,created_at,modified_at,owner.name" | jq '.data'
 ```
 
 ### Create Project
@@ -91,7 +104,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/projects" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name}'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/projects" -d @/tmp/asana_request.json | jq '.data | {gid, name}'
 ```
 
 ### Update Project
@@ -108,13 +121,13 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://app.asana.com/api/1.0/projects/<project-gid>" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name}'
+/tmp/asana-curl -X PUT "https://app.asana.com/api/1.0/projects/<project-gid>" -d @/tmp/asana_request.json | jq '.data | {gid, name}'
 ```
 
 ### Delete Project
 
 ```bash
-bash -c 'curl -s -X DELETE "https://app.asana.com/api/1.0/projects/<project-gid>" --header "Authorization: Bearer $ASANA_TOKEN"'
+/tmp/asana-curl -X DELETE "https://app.asana.com/api/1.0/projects/<project-gid>"
 ```
 
 ---
@@ -124,13 +137,13 @@ bash -c 'curl -s -X DELETE "https://app.asana.com/api/1.0/projects/<project-gid>
 ### List Tasks in a Project
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/tasks?project=<project-gid>&opt_fields=name,completed,assignee.name,due_on,tags.name" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name, completed, due_on}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/tasks?project=<project-gid>&opt_fields=name,completed,assignee.name,due_on,tags.name" | jq '.data[] | {gid, name, completed, due_on}'
 ```
 
 ### Get Task Details
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/tasks/<task-gid>?opt_fields=name,notes,completed,assignee.name,due_on,projects.name,tags.name,created_at,modified_at" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data'
+/tmp/asana-curl "https://app.asana.com/api/1.0/tasks/<task-gid>?opt_fields=name,notes,completed,assignee.name,due_on,projects.name,tags.name,created_at,modified_at" | jq '.data'
 ```
 
 ### Create Task
@@ -149,7 +162,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/tasks" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name, due_on}'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/tasks" -d @/tmp/asana_request.json | jq '.data | {gid, name, due_on}'
 ```
 
 ### Create Task with Assignee
@@ -169,7 +182,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/tasks" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name, assignee}'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/tasks" -d @/tmp/asana_request.json | jq '.data | {gid, name, assignee}'
 ```
 
 ### Update Task
@@ -187,7 +200,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://app.asana.com/api/1.0/tasks/<task-gid>" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name, completed, due_on}'
+/tmp/asana-curl -X PUT "https://app.asana.com/api/1.0/tasks/<task-gid>" -d @/tmp/asana_request.json | jq '.data | {gid, name, completed, due_on}'
 ```
 
 ### Complete Task
@@ -203,19 +216,19 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://app.asana.com/api/1.0/tasks/<task-gid>" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name, completed}'
+/tmp/asana-curl -X PUT "https://app.asana.com/api/1.0/tasks/<task-gid>" -d @/tmp/asana_request.json | jq '.data | {gid, name, completed}'
 ```
 
 ### Delete Task
 
 ```bash
-bash -c 'curl -s -X DELETE "https://app.asana.com/api/1.0/tasks/<task-gid>" --header "Authorization: Bearer $ASANA_TOKEN"'
+/tmp/asana-curl -X DELETE "https://app.asana.com/api/1.0/tasks/<task-gid>"
 ```
 
 ### Search Tasks in a Workspace
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/workspaces/<workspace-gid>/tasks/search?text=<search-text>&opt_fields=name,completed,assignee.name,due_on" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name, completed}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/workspaces/<workspace-gid>/tasks/search?text=<search-text>&opt_fields=name,completed,assignee.name,due_on" | jq '.data[] | {gid, name, completed}'
 ```
 
 ---
@@ -225,7 +238,7 @@ bash -c 'curl -s "https://app.asana.com/api/1.0/workspaces/<workspace-gid>/tasks
 ### List Sections in a Project
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/projects/<project-gid>/sections" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/projects/<project-gid>/sections" | jq '.data[] | {gid, name}'
 ```
 
 ### Create Section
@@ -241,7 +254,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/projects/<project-gid>/sections" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name}'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/projects/<project-gid>/sections" -d @/tmp/asana_request.json | jq '.data | {gid, name}'
 ```
 
 ### Add Task to Section
@@ -257,7 +270,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/sections/<section-gid>/addTask" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/sections/<section-gid>/addTask" -d @/tmp/asana_request.json
 ```
 
 ---
@@ -267,7 +280,7 @@ bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/sections/<section-gid>/a
 ### List Tags in a Workspace
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/tags?workspace=<workspace-gid>" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/tags?workspace=<workspace-gid>" | jq '.data[] | {gid, name}'
 ```
 
 ### Create Tag
@@ -284,7 +297,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/tags" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name}'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/tags" -d @/tmp/asana_request.json | jq '.data | {gid, name}'
 ```
 
 ### Add Tag to Task
@@ -300,7 +313,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/addTag" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/addTag" -d @/tmp/asana_request.json
 ```
 
 ### Remove Tag from Task
@@ -316,7 +329,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/removeTag" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/removeTag" -d @/tmp/asana_request.json
 ```
 
 ---
@@ -326,13 +339,13 @@ bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/removeT
 ### List Portfolios
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/portfolios?workspace=<workspace-gid>&owner=me&opt_fields=name,color,created_at" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/portfolios?workspace=<workspace-gid>&owner=me&opt_fields=name,color,created_at" | jq '.data[] | {gid, name}'
 ```
 
 ### Get Portfolio Items
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/portfolios/<portfolio-gid>/items?opt_fields=name,created_at" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/portfolios/<portfolio-gid>/items?opt_fields=name,created_at" | jq '.data[] | {gid, name}'
 ```
 
 ---
@@ -342,7 +355,7 @@ bash -c 'curl -s "https://app.asana.com/api/1.0/portfolios/<portfolio-gid>/items
 ### List Goals
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/goals?workspace=<workspace-gid>&opt_fields=name,status,due_on,owner.name" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name, status, due_on}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/goals?workspace=<workspace-gid>&opt_fields=name,status,due_on,owner.name" | jq '.data[] | {gid, name, status, due_on}'
 ```
 
 ---
@@ -352,7 +365,7 @@ bash -c 'curl -s "https://app.asana.com/api/1.0/goals?workspace=<workspace-gid>&
 ### List Subtasks
 
 ```bash
-bash -c 'curl -s "https://app.asana.com/api/1.0/tasks/<task-gid>/subtasks?opt_fields=name,completed" --header "Authorization: Bearer $ASANA_TOKEN"' | jq '.data[] | {gid, name, completed}'
+/tmp/asana-curl "https://app.asana.com/api/1.0/tasks/<task-gid>/subtasks?opt_fields=name,completed" | jq '.data[] | {gid, name, completed}'
 ```
 
 ### Create Subtask
@@ -369,7 +382,7 @@ Write to `/tmp/asana_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/subtasks" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json' | jq '.data | {gid, name}'
+/tmp/asana-curl -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/subtasks" -d @/tmp/asana_request.json | jq '.data | {gid, name}'
 ```
 
 ---

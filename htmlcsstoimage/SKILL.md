@@ -38,7 +38,22 @@ export HCTI_USER_ID="your-user-id"
 export HCTI_API_KEY="your-api-key"
 ```
 
-### Authentication
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/htmlcsstoimage-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $HCTI_API_KEY" "$@"
+EOF
+chmod +x /tmp/htmlcsstoimage-curl
+```
+
+**Usage:** All examples below use `/tmp/htmlcsstoimage-curl` instead of direct `curl` calls.
+
+## Authentication
 
 The API uses HTTP Basic Authentication:
 - Username: Your User ID
@@ -51,11 +66,6 @@ The API uses HTTP Basic Authentication:
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
 
 ## How to Use
 
@@ -80,7 +90,7 @@ Write to `/tmp/hcti_html.txt`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "html@/tmp/hcti_html.txt"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 Response:
@@ -113,7 +123,7 @@ Write to `/tmp/hcti_css.txt`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "html@/tmp/hcti_html.txt" --data-urlencode "css@/tmp/hcti_css.txt"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 ---
@@ -137,7 +147,7 @@ Write to `/tmp/hcti_css.txt`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "html@/tmp/hcti_html.txt" --data-urlencode "css@/tmp/hcti_css.txt" -d "google_fonts=Playfair Display"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 Multiple fonts: `google_fonts=Playfair Display|Roboto|Open Sans`
@@ -155,7 +165,7 @@ https://example.com
 ```
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 ---
@@ -171,7 +181,7 @@ https://example.com
 ```
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "ms_delay=1500"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 `ms_delay` waits specified milliseconds before taking the screenshot.
@@ -183,7 +193,7 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 Screenshot only a specific element on the page:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "selector=h1"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 Use any CSS selector: `#id`, `.class`, `div > p`, etc.
@@ -203,7 +213,7 @@ Write to `/tmp/hcti_html.txt`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "html@/tmp/hcti_html.txt" -d "device_scale=2"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 `device_scale` accepts values 1-3 (default: 1).
@@ -215,7 +225,7 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 Set specific viewport dimensions:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "viewport_width=1200" -d "viewport_height=630"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 Perfect for generating OG images (1200x630).
@@ -227,7 +237,7 @@ Perfect for generating OG images (1200x630).
 Capture the entire page height:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "full_screen=true"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 ---
@@ -237,7 +247,7 @@ bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_A
 Automatically hide consent/cookie popups:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "url@/tmp/hcti_url.txt" -d "block_consent_banners=true"'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image"
 ```
 
 ---
@@ -255,7 +265,7 @@ Write to `/tmp/hcti_html.txt`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "html@/tmp/hcti_html.txt"' | jq -r '.url'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image" | jq -r '.url'
 ```
 
 This will output the image URL. Copy the URL and download with:
@@ -279,7 +289,7 @@ Write to `/tmp/hcti_html.txt`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://hcti.io/v1/image" -X POST -u "${HCTI_USER_ID}:${HCTI_API_KEY}" --data-urlencode "html@/tmp/hcti_html.txt"' | jq -r '.url'
+/tmp/htmlcsstoimage-curl -X POST "https://hcti.io/v1/image" | jq -r '.url'
 ```
 
 This outputs the image URL. Add query parameters to resize:

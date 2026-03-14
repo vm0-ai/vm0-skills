@@ -15,6 +15,21 @@ Access the user's local filesystem from a VM0 sandbox over a secure WebDAV tunne
 
 ## When to Use
 
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/vm0-computer-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $COMPUTER_CONNECTOR_BRIDGE_TOKEN" "$@"
+EOF
+chmod +x /tmp/vm0-computer-curl
+```
+
+**Usage:** All examples below use `/tmp/vm0-computer-curl` instead of direct `curl` calls.
+
+
 Use this skill when you need to:
 
 - List files and directories on the user's local machine
@@ -74,14 +89,13 @@ cd /tmp && npm install ws && node /tmp/proxy.mjs &
 
 The proxy runs in the background. Tools can now connect to `http://127.0.0.1:8080` (WebDAV) and `ws://127.0.0.1:9222` (Chrome CDP) without any additional headers.
 
-> **Important:** Wrap curl commands that use `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 ### 1. List Files in a Directory
 
 Use `PROPFIND` to list the contents of a directory (depth 1):
 
 ```bash
-bash -c 'curl -s -X PROPFIND "http://127.0.0.1:8080"'
+/tmp/vm0-computer-curl -X PROPFIND "http://127.0.0.1:8080"
 ```
 
 List a subdirectory:
