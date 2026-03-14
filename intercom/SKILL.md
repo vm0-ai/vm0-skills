@@ -153,7 +153,7 @@ Then run:
 Retrieve a specific contact by ID. Replace `<your-contact-id>` with the actual contact ID:
 
 ```bash
-curl -s "https://api.intercom.io/contacts/<your-contact-id>" -H "Authorization: Bearer ${INTERCOM_TOKEN}" -H "Accept: application/json" -H "Intercom-Version: 2.14"
+/tmp/intercom-curl "https://api.intercom.io/contacts/<your-contact-id>"
 ```
 
 ---
@@ -176,7 +176,7 @@ Write to `/tmp/intercom_request.json`:
 Then run:
 
 ```bash
-curl -s -X PATCH "https://api.intercom.io/contacts/<your-contact-id>" -H "Authorization: Bearer ${INTERCOM_TOKEN}" -H "Content-Type: application/json" -H "Accept: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
+/tmp/intercom-curl -X PATCH "https://api.intercom.io/contacts/<your-contact-id>" -d @/tmp/intercom_request.json
 ```
 
 **Note**: Newly created contacts may need a few seconds before they can be updated.
@@ -188,7 +188,7 @@ curl -s -X PATCH "https://api.intercom.io/contacts/<your-contact-id>" -H "Author
 Permanently delete a contact. Replace `<your-contact-id>` with the actual contact ID:
 
 ```bash
-curl -s -X DELETE "https://api.intercom.io/contacts/<your-contact-id>" -H "Authorization: Bearer ${INTERCOM_TOKEN}" -H "Accept: application/json" -H "Intercom-Version: 2.14"
+/tmp/intercom-curl -X DELETE "https://api.intercom.io/contacts/<your-contact-id>"
 ```
 
 ---
@@ -461,7 +461,7 @@ Then run:
 Remove a tag from a contact. Replace `<your-contact-id>` and `<your-tag-id>` with actual IDs:
 
 ```bash
-curl -s -X DELETE "https://api.intercom.io/contacts/<your-contact-id>/tags/<your-tag-id>" -H "Authorization: Bearer ${INTERCOM_TOKEN}" -H "Intercom-Version: 2.14"
+/tmp/intercom-curl -X DELETE "https://api.intercom.io/contacts/<your-contact-id>/tags/<your-tag-id>"
 ```
 
 ---

@@ -134,7 +134,7 @@ while true; do
   if [ -z "$CURSOR" ]; then
     RESPONSE=$(/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?page_size=30")
   else
-    RESPONSE=$(bash -c "curl -s -X GET \"https://public-api.granola.ai/v1/notes?page_size=30&cursor=$CURSOR\" --header \"Authorization: Bearer \$GRANOLA_TOKEN\"")
+    RESPONSE=$(/tmp/granola-curl -X GET "https://public-api.granola.ai/v1/notes?page_size=30&cursor=$CURSOR")
   fi
   echo "$RESPONSE" | jq '.data[] | {id, title}'
   HAS_MORE=$(echo "$RESPONSE" | jq -r '.hasMore')

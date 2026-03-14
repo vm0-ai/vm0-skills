@@ -81,7 +81,7 @@ For 1920x1080 screen:
 ### Take Screenshot
 
 ```bash
-bash -c 'curl -k -s -o /tmp/screenshot.jpg -u "$PIKVM_AUTH" "${PIKVM_URL}/api/streamer/snapshot"'
+/tmp/pikvm-curl -k -s -o /tmp/screenshot.jpg "${PIKVM_URL}/api/streamer/snapshot"
 ```
 
 ### Type Text
@@ -89,7 +89,7 @@ bash -c 'curl -k -s -o /tmp/screenshot.jpg -u "$PIKVM_AUTH" "${PIKVM_URL}/api/st
 Text must be sent as raw body with `Content-Type: text/plain`:
 
 ```bash
-bash -c 'curl -k -s -X POST \
+/tmp/pikvm-curl -k -s -X POST -d '{"event": "click", "button": "left"}' "${PIKVM_URL}/api/hid/events"
   -H "Content-Type: text/plain" \
   -u "$PIKVM_AUTH" \
   -d "Hello World" \
@@ -101,7 +101,7 @@ bash -c 'curl -k -s -X POST \
 Move to absolute position (0,0 = screen center):
 
 ```bash
-bash -c 'curl -k -s -X POST \
+/tmp/pikvm-curl -k -s -X POST -d '{"event": "key", "key": "Enter"}' "${PIKVM_URL}/api/hid/events"
   -u "$PIKVM_AUTH" \
   "${PIKVM_URL}/api/hid/events/send_mouse_move?to_x=-500&to_y=-300"'
 ```
@@ -110,14 +110,10 @@ bash -c 'curl -k -s -X POST \
 
 ```bash
 # Press
-bash -c 'curl -k -s -X POST \
-  -u "$PIKVM_AUTH" \
-  "${PIKVM_URL}/api/hid/events/send_mouse_button?button=left&state=true"'
+/tmp/pikvm-curl -X POST
 
 # Release
-bash -c 'curl -k -s -X POST \
-  -u "$PIKVM_AUTH" \
-  "${PIKVM_URL}/api/hid/events/send_mouse_button?button=left&state=false"'
+/tmp/pikvm-curl -X POST
 ```
 
 ### Press Key
@@ -126,13 +122,9 @@ Press and release with `state=true` then `state=false`:
 
 ```bash
 # Press Enter
-bash -c 'curl -k -s -X POST \
-  -u "$PIKVM_AUTH" \
-  "${PIKVM_URL}/api/hid/events/send_key?key=Enter&state=true"'
+/tmp/pikvm-curl -X POST
 
-bash -c 'curl -k -s -X POST \
-  -u "$PIKVM_AUTH" \
-  "${PIKVM_URL}/api/hid/events/send_key?key=Enter&state=false"'
+/tmp/pikvm-curl -X POST
 ```
 
 ### Key Combo (e.g., Cmd+Space for Spotlight)
@@ -141,47 +133,41 @@ Press all keys in order, then release in reverse:
 
 ```bash
 # Press Cmd
-bash -c 'curl -k -s -X POST -u "$PIKVM_AUTH" "${PIKVM_URL}/api/hid/events/send_key?key=MetaLeft&state=true"'
+/tmp/pikvm-curl -X POST
 
 # Press Space
-bash -c 'curl -k -s -X POST -u "$PIKVM_AUTH" "${PIKVM_URL}/api/hid/events/send_key?key=Space&state=true"'
+/tmp/pikvm-curl -X POST
 
 # Release Space
-bash -c 'curl -k -s -X POST -u "$PIKVM_AUTH" "${PIKVM_URL}/api/hid/events/send_key?key=Space&state=false"'
+/tmp/pikvm-curl -X POST
 
 # Release Cmd
-bash -c 'curl -k -s -X POST -u "$PIKVM_AUTH" "${PIKVM_URL}/api/hid/events/send_key?key=MetaLeft&state=false"'
+/tmp/pikvm-curl -X POST
 ```
 
 ### Mouse Scroll
 
 ```bash
-bash -c 'curl -k -s -X POST \
-  -u "$PIKVM_AUTH" \
-  "${PIKVM_URL}/api/hid/events/send_mouse_wheel?delta_x=0&delta_y=-50"'
+/tmp/pikvm-curl -X POST
 ```
 
 ### Get Device Info
 
 ```bash
-bash -c 'curl -k -s \
-  -u "$PIKVM_AUTH" \
-  "${PIKVM_URL}/api/info"' | jq .
+/tmp/pikvm-curl | jq .
 ```
 
 ### ATX Power Control
 
 ```bash
 # Power on
-bash -c 'curl -k -s -X POST \
-  -u "$PIKVM_AUTH" \
-  "${PIKVM_URL}/api/atx/power?action=on"'
+/tmp/pikvm-curl -X POST
 
 # Power off
-bash -c 'curl -k -s -X POST -u "$PIKVM_AUTH" "${PIKVM_URL}/api/atx/power?action=off"'
+/tmp/pikvm-curl -X POST
 
 # Hard reset
-bash -c 'curl -k -s -X POST -u "$PIKVM_AUTH" "${PIKVM_URL}/api/atx/power?action=reset_hard"'
+/tmp/pikvm-curl -X POST
 ```
 
 ---

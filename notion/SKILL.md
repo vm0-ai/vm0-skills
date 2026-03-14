@@ -34,7 +34,7 @@ Create a helper script for API calls:
 ```bash
 cat > /tmp/notion-curl << 'EOF'
 #!/bin/bash
-curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $NOTION_TOKEN" "$@"
+/tmp/notion-curl
 EOF
 chmod +x /tmp/notion-curl
 ```
@@ -48,7 +48,7 @@ Create a helper script for API calls:
 ```bash
 cat > /tmp/notion-curl << 'EOF'
 #!/bin/bash
-curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $NOTION_TOKEN" "$@"
+/tmp/notion-curl
 EOF
 chmod +x /tmp/notion-curl
 ```
@@ -134,7 +134,7 @@ Docs: https://developers.notion.com/reference/post-database-query
 Replace `<your-database-id>` with your actual database ID:
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+/tmp/notion-curl -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" -d @- << 'EOF'
 {
   "filter": {
   "property": "Status",
@@ -151,7 +151,7 @@ EOF
 Replace `<your-database-id>` with your actual database ID:
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+/tmp/notion-curl -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" -d @- << 'EOF'
 {
   "filter": {
   "and": [
@@ -186,7 +186,7 @@ Docs: https://developers.notion.com/reference/retrieve-a-page
 ### Create Page in Database
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/pages' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+/tmp/notion-curl -X POST -d @- << 'EOF'
 {
   "parent": {"database_id": "your-database-id"},
   "properties": {
@@ -203,7 +203,7 @@ Docs: https://developers.notion.com/reference/post-page
 ### Create Page with Content
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/pages' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+/tmp/notion-curl -X POST -d @- << 'EOF'
 {
   "parent": {"page_id": "parent-page-id"},
   "properties": {
@@ -230,7 +230,7 @@ EOF
 Replace `<your-page-id>` with your actual page ID:
 
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+/tmp/notion-curl -X PATCH "https://api.notion.com/v1/pages/<your-page-id>" -d @- << 'EOF'
 {
   "properties": {
   "Status": {"select": {"name": "In Progress"}}
@@ -272,7 +272,7 @@ Docs: https://developers.notion.com/reference/get-block-children
 Replace `<your-page-id>` with your actual page ID:
 
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/blocks/<your-page-id>/children" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+/tmp/notion-curl -X PATCH "https://api.notion.com/v1/blocks/<your-page-id>/children" -d @- << 'EOF'
 {
   "children": [
   {
@@ -300,13 +300,13 @@ Docs: https://developers.notion.com/reference/patch-block-children
 Replace `<your-block-id>` with your actual block ID:
 
 ```bash
-curl -s -X DELETE "https://api.notion.com/v1/blocks/<your-block-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28'
+/tmp/notion-curl -X DELETE "https://api.notion.com/v1/blocks/<your-block-id>"
 ```
 
 ### List Users
 
 ```bash
-bash -c 'curl -s '"'"'https://api.notion.com/v1/users'"'"' --header "Authorization: Bearer $NOTION_TOKEN" --header '"'"'Notion-Version: 2022-06-28'"'"' | jq '"'"'.results[] | {id, name, type}'"'"
+/tmp/notion-curl 'https://api.notion.com/v1/users' | jq '.results[] | {id, name, type}'
 ```
 
 Docs: https://developers.notion.com/reference/get-users
@@ -314,13 +314,13 @@ Docs: https://developers.notion.com/reference/get-users
 ### Get Current Bot
 
 ```bash
-curl -s 'https://api.notion.com/v1/users/me' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28'
+/tmp/notion-curl
 ```
 
 ### Create Database
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/databases' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+/tmp/notion-curl -X POST -d @- << 'EOF'
 {
   "parent": {"page_id": "parent-page-id"},
   "title": [{"text": {"content": "Task Tracker"}}],

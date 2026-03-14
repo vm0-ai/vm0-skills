@@ -157,7 +157,7 @@ Then run:
 > **Note:** Replace `{companyId}` with an actual company ID from the "List Companies" endpoint above.
 
 ```bash
-curl -s -X DELETE "${TWENTY_API_URL}/rest/companies/{companyId}" --header "Authorization: Bearer ${TWENTY_TOKEN}"
+/tmp/twenty-curl -X DELETE
 ```
 
 ### 8. List Notes

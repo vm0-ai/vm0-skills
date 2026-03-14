@@ -175,7 +175,7 @@ Docs: https://docs.slack.dev/reference/methods/users.lookupbyemail
 ### Upload File
 
 ```bash
-curl -s -X POST 'https://slack.com/api/files.upload' -H "Authorization: Bearer $SLACK_TOKEN" -F 'channels=C1234567890' -F 'file=@/path/to/file.txt' -F 'title=My File'
+/tmp/slack-curl -X POST "https://slack.com/api/files.upload" -F "channels=C1234567890" -F "file=@/path/to/file.txt" -F "title=My File"
 ```
 
 Docs: https://docs.slack.dev/reference/methods/files.upload

@@ -258,7 +258,7 @@ Permanently delete a ticket:
 ```bash
 TICKET_ID="123"
 
-curl -s -X DELETE "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}"
+/tmp/zendesk-curl -X DELETE "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets/${TICKET_ID}.json"
 ```
 
 ---
@@ -608,7 +608,7 @@ Then run:
 
 ```bash
 # Create ticket
-TICKET_RESPONSE=$(curl -s -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" -d @/tmp/zendesk_request.json)
+/tmp/zendesk-curl -X POST "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" -d @/tmp/zendesk_request.json)
 
 TICKET_ID=$(echo $TICKET_RESPONSE | jq -r '.ticket.id')
 
@@ -717,7 +717,7 @@ Retry-After: 45                      # Seconds to wait if exceeded
 
 ```bash
 # Use curl retry flags
-curl "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json" \
+/tmp/zendesk-curl "https://${ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/tickets.json"
   -u "${ZENDESK_EMAIL}/token:${ZENDESK_API_TOKEN}" \
   --retry 3 --retry-delay 5
 ```

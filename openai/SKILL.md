@@ -148,7 +148,7 @@ Write to `/tmp/openai_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json
+/tmp/openai-curl "https://api.openai.com/v1/chat/completions" -d @/tmp/openai_request.json
 ```
 
 Streaming returns Server-Sent Events (SSE) with delta chunks.
@@ -333,7 +333,7 @@ Write to `/tmp/openai_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.openai.com/v1/audio/speech" -H "Content-Type: application/json" -H "Authorization: Bearer ${OPENAI_API_KEY}" -d @/tmp/openai_request.json --output speech.mp3
+/tmp/openai-curl "https://api.openai.com/v1/audio/speech" -d @/tmp/openai_request.json
 ```
 
 **Voices:** `alloy`, `echo`, `fable`, `onyx`, `nova`, `shimmer`
