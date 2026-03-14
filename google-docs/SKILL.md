@@ -35,11 +35,25 @@ Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Google 
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 > **Placeholders:** Values in `{curly-braces}` like `{document-id}` are placeholders. Replace them with actual values when executing.
 
 ---
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/google-docs-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $GOOGLE_DOCS_TOKEN" "$@"
+EOF
+chmod +x /tmp/google-docs-curl
+```
+
+**Usage:** All examples below use `/tmp/google-docs-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -65,7 +79,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '{documentId, title, documentUrl: ("https://docs.google.com/document/d/" + .documentId + "/edit")}'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents" -d @/tmp/gdocs_request.json | jq '{documentId, title, documentUrl: ("https://docs.google.com/document/d/" + .documentId + "/edit")}'
 ```
 
 ---
@@ -75,7 +89,7 @@ bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents" --header "Au
 Read the entire document structure and content:
 
 ```bash
-bash -c 'curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN"' | jq '{title: .title, body: .body.content}'
+/tmp/google-docs-curl "https://docs.googleapis.com/v1/documents/{document-id}" | jq '{title: .title, body: .body.content}'
 ```
 
 ---
@@ -85,7 +99,7 @@ bash -c 'curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --head
 Get just the title and basic properties:
 
 ```bash
-bash -c 'curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN"' | jq '{documentId, title, revisionId, suggestionsViewMode}'
+/tmp/google-docs-curl "https://docs.googleapis.com/v1/documents/{document-id}" | jq '{documentId, title, revisionId, suggestionsViewMode}'
 ```
 
 ---
@@ -114,7 +128,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -143,7 +157,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -172,7 +186,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -202,7 +216,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies[0].replaceAllText'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies[0].replaceAllText'
 ```
 
 ---
@@ -235,7 +249,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -282,7 +296,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -315,7 +329,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -345,7 +359,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 **Available bullet presets:**
@@ -382,7 +396,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -410,7 +424,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -449,7 +463,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // .replies // "done"'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
 ---
@@ -502,7 +516,7 @@ Write to `/tmp/gdocs_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json' | jq '.error // (.replies | length)'
+/tmp/google-docs-curl -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" -d @/tmp/gdocs_request.json | jq '.error // (.replies | length)'
 ```
 
 ---
@@ -512,7 +526,7 @@ bash -c 'curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}
 Get just the text content from a document:
 
 ```bash
-bash -c 'curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN"' | jq -r '.body.content[]?.paragraph?.elements[]?.textRun?.content' | tr -d '\0'
+/tmp/google-docs-curl "https://docs.googleapis.com/v1/documents/{document-id}" | jq -r '.body.content[]?.paragraph?.elements[]?.textRun?.content' | tr -d '\0'
 ```
 
 ---
@@ -522,7 +536,7 @@ bash -c 'curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --head
 View document structure with element types and indexes:
 
 ```bash
-bash -c 'curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN"' | jq '.body.content[] | {startIndex, endIndex, paragraph: .paragraph.elements[0].textRun.content}'
+/tmp/google-docs-curl "https://docs.googleapis.com/v1/documents/{document-id}" | jq '.body.content[] | {startIndex, endIndex, paragraph: .paragraph.elements[0].textRun.content}'
 ```
 
 ---

@@ -33,10 +33,19 @@ Optional tools for parsing:
 ---
 
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/rss-fetch-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $RSS_FETCH_TOKEN" "$@"
+EOF
+chmod +x /tmp/rss-fetch-curl
+```
+
+**Usage:** All examples below use `/tmp/rss-fetch-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -63,7 +72,7 @@ curl -s "https://hnrss.org/frontpage" | xmllint --format - | grep -E '<title>|<l
 ### 3. Get Items with Details
 
 ```bash
-bash -c 'curl -s "https://hnrss.org/frontpage"' | xmllint --xpath '//item' - 2>/dev/null | xmllint --format - | head -50
+/tmp/rss-fetch-curl "https://hnrss.org/frontpage" | xmllint --xpath '//item' - 2>/dev/null | xmllint --format - | head -50
 ```
 
 ### 4. Parse Atom Feeds
@@ -114,7 +123,7 @@ FEEDS=(
 
 for feed in "${FEEDS[@]}"; do
   echo "=== $feed ==="
-  bash -c 'curl -s "'"$feed"'"' | xmllint --xpath '//item/title/text()' - 2>/dev/null | head -5
+  /tmp/rss-fetch-curl "https://api.example.com""$feed"'"' | xmllint --xpath '//item/title/text()' - 2>/dev/null | head -5
   echo ""
 done
 ```

@@ -27,12 +27,41 @@ export PIKVM_URL=https://pikvm.example.com
 export PIKVM_AUTH=admin:admin
 ```
 
-### Get Credentials
+#
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/pikvm-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $PIKVM_AUTH" "$@"
+EOF
+chmod +x /tmp/pikvm-curl
+```
+
+**Usage:** All examples below use `/tmp/pikvm-curl` instead of direct `curl` calls.
+
+## Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/pikvm-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $PIKVM_AUTH" "$@"
+EOF
+chmod +x /tmp/pikvm-curl
+```
+
+**Usage:** All examples below use `/tmp/pikvm-curl` instead of direct `curl` calls.
+
+## Get Credentials
 
 1. Access your PiKVM web interface
 2. Default credentials: `admin:admin`
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 ## Coordinate System
 

@@ -22,7 +22,37 @@ Send messages to a Slack channel using Incoming Webhooks. No OAuth or bot setup 
 export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXX
 ```
 
-### Get Webhook URL
+#
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/slack-webhook-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $SLACK_WEBHOOK_URL" "$@"
+EOF
+chmod +x /tmp/slack-webhook-curl
+```
+
+**Usage:** All examples below use `/tmp/slack-webhook-curl` instead of direct `curl` calls.
+
+## Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/slack-webhook-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $SLACK_WEBHOOK_URL" "$@"
+EOF
+chmod +x /tmp/slack-webhook-curl
+```
+
+**Usage:** All examples below use `/tmp/slack-webhook-curl` instead of direct `curl` calls.
+
+## Get Webhook URL
 
 1. Create app: https://api.slack.com/apps → **Create New App** → **From scratch**
 2. Select **Incoming Webhooks** → Toggle **On**
@@ -30,10 +60,6 @@ export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XX
 4. Select channel → **Allow**
 5. Copy Webhook URL
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
-> ```
 
 ## Usage
 
@@ -165,7 +191,7 @@ bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d 
 Messages with `!` may fail due to shell history expansion. Use heredoc:
 
 ```bash
-bash -c 'curl -s -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @-' << 'EOF'
+/tmp/slack-webhook-curl -X POST "https://api.example.com" << 'EOF'
 {"text":"Deploy completed! :rocket:"}
 EOF
 ```

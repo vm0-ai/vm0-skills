@@ -37,11 +37,25 @@ Set environment variable:
 export HUME_TOKEN="your-api-key"
 ```
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 > **Placeholders:** Values in `{curly-braces}` like `{job-id}` are placeholders. Replace them with actual values when executing.
 
 ---
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/hume-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "api-key: $HUME_TOKEN" "$@"
+EOF
+chmod +x /tmp/hume-curl
+```
+
+**Usage:** All examples below use `/tmp/hume-curl` instead of direct `curl` calls.
 
 ## Expression Measurement (Batch)
 
@@ -64,7 +78,7 @@ Write to `/tmp/hume_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/batch/jobs" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq .
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/batch/jobs" -d @/tmp/hume_request.json | jq .
 ```
 
 ### Start Inference Job with Text
@@ -83,37 +97,37 @@ Write to `/tmp/hume_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/batch/jobs" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq .
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/batch/jobs" -d @/tmp/hume_request.json | jq .
 ```
 
 ### List Jobs
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/batch/jobs?limit=10" --header "X-Hume-Api-Key: $HUME_TOKEN"' | jq .
+/tmp/hume-curl "https://api.hume.ai/v0/batch/jobs?limit=10" | jq .
 ```
 
 ### List Jobs by Status
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/batch/jobs?limit=10&status=COMPLETED" --header "X-Hume-Api-Key: $HUME_TOKEN"' | jq .
+/tmp/hume-curl "https://api.hume.ai/v0/batch/jobs?limit=10&status=COMPLETED" | jq .
 ```
 
 ### Get Job Details
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/batch/jobs/{job-id}" --header "X-Hume-Api-Key: $HUME_TOKEN"' | jq .
+/tmp/hume-curl "https://api.hume.ai/v0/batch/jobs/{job-id}" | jq .
 ```
 
 ### Get Job Predictions
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/batch/jobs/{job-id}/predictions" --header "X-Hume-Api-Key: $HUME_TOKEN"' | jq .
+/tmp/hume-curl "https://api.hume.ai/v0/batch/jobs/{job-id}/predictions" | jq .
 ```
 
 ### Download Job Artifacts
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/batch/jobs/{job-id}/artifacts" --header "X-Hume-Api-Key: $HUME_TOKEN" --output /tmp/hume_artifacts.zip'
+/tmp/hume-curl "https://api.hume.ai/v0/batch/jobs/{job-id}/artifacts"
 ```
 
 ---
@@ -141,7 +155,7 @@ Write to `/tmp/hume_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/tts" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq .
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/tts" -d @/tmp/hume_request.json | jq .
 ```
 
 The response contains base64-encoded audio in `.generations[].audio`.
@@ -170,7 +184,7 @@ Write to `/tmp/hume_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/tts" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq .
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/tts" -d @/tmp/hume_request.json | jq .
 ```
 
 ### Synthesize and Save Audio File
@@ -193,7 +207,7 @@ Write to `/tmp/hume_request.json`:
 Then extract and decode the audio:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/tts" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq -r '.generations[0].audio' | base64 -d > /tmp/hume_output.mp3
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/tts" -d @/tmp/hume_request.json | jq -r '.generations[0].audio' | base64 -d > /tmp/hume_output.mp3
 ```
 
 ### Synthesize Multiple Utterances
@@ -222,7 +236,7 @@ Write to `/tmp/hume_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/tts" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq .
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/tts" -d @/tmp/hume_request.json | jq .
 ```
 
 ---
@@ -232,7 +246,7 @@ bash -c 'curl -s -X POST "https://api.hume.ai/v0/tts" --header "Content-Type: ap
 ### List Configs
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/evi/configs?page_size=20" --header "X-Hume-Api-Key: $HUME_TOKEN"' | jq .
+/tmp/hume-curl "https://api.hume.ai/v0/evi/configs?page_size=20" | jq .
 ```
 
 ### Create Config
@@ -248,7 +262,7 @@ Write to `/tmp/hume_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/evi/configs" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq .
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/evi/configs" -d @/tmp/hume_request.json | jq .
 ```
 
 ---
@@ -258,7 +272,7 @@ bash -c 'curl -s -X POST "https://api.hume.ai/v0/evi/configs" --header "Content-
 ### List Prompts
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/evi/prompts?page_size=20" --header "X-Hume-Api-Key: $HUME_TOKEN"' | jq .
+/tmp/hume-curl "https://api.hume.ai/v0/evi/prompts?page_size=20" | jq .
 ```
 
 ### Create Prompt
@@ -275,7 +289,7 @@ Write to `/tmp/hume_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.hume.ai/v0/evi/prompts" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json' | jq .
+/tmp/hume-curl -X POST "https://api.hume.ai/v0/evi/prompts" -d @/tmp/hume_request.json | jq .
 ```
 
 ---
@@ -285,7 +299,7 @@ bash -c 'curl -s -X POST "https://api.hume.ai/v0/evi/prompts" --header "Content-
 ### List Chat Events
 
 ```bash
-bash -c 'curl -s "https://api.hume.ai/v0/evi/chats/{chat-id}?page_size=50&ascending_order=true" --header "X-Hume-Api-Key: $HUME_TOKEN"' | jq .
+/tmp/hume-curl "https://api.hume.ai/v0/evi/chats/{chat-id}?page_size=50&ascending_order=true" | jq .
 ```
 
 ---

@@ -30,7 +30,22 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-### 1. Create Google Cloud Project
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/youtube-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $YOUTUBE_TOKEN" "$@"
+EOF
+chmod +x /tmp/youtube-curl
+```
+
+**Usage:** All examples below use `/tmp/youtube-curl` instead of direct `curl` calls.
+
+## 1. Create Google Cloud Project
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select existing one
@@ -56,11 +71,6 @@ For production use, restrict the key:
 ---
 
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" | jq .'
-> ```
-
 ## How to Use
 
 Base URL: `https://www.googleapis.com/youtube/v3`
@@ -70,7 +80,7 @@ Base URL: `https://www.googleapis.com/youtube/v3`
 ### 1. Search Videos
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&q=kubernetes+tutorial&type=video&maxResults=5&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {videoId: .id.videoId, title: .snippet.title, channel: .snippet.channelTitle}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/search?part=snippet&q=kubernetes+tutorial&type=video&maxResults=5&key=${YOUTUBE_TOKEN}" | jq '.items[] | {videoId: .id.videoId, title: .snippet.title, channel: .snippet.channelTitle}'
 ```
 
 ---
@@ -80,7 +90,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&q=ku
 Search for videos uploaded this year, ordered by view count:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&q=react+hooks&type=video&order=viewCount&publishedAfter=2024-01-01T00:00:00Z&maxResults=10&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {videoId: .id.videoId, title: .snippet.title}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/search?part=snippet&q=react+hooks&type=video&order=viewCount&publishedAfter=2024-01-01T00:00:00Z&maxResults=10&key=${YOUTUBE_TOKEN}" | jq '.items[] | {videoId: .id.videoId, title: .snippet.title}'
 ```
 
 ---
@@ -90,7 +100,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&q=re
 Replace `<your-video-id>` with an actual video ID:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=<your-video-id>&key=${YOUTUBE_TOKEN}"' | jq '.items[0] | {title: .snippet.title, views: .statistics.viewCount, likes: .statistics.likeCount, duration: .contentDetails.duration}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=<your-video-id>&key=${YOUTUBE_TOKEN}" | jq '.items[0] | {title: .snippet.title, views: .statistics.viewCount, likes: .statistics.likeCount, duration: .contentDetails.duration}'
 ```
 
 ---
@@ -100,7 +110,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videos?part=snippet,stat
 Replace `<your-video-id-1>`, `<your-video-id-2>`, `<your-video-id-3>` with actual video IDs:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=<your-video-id-1>,<your-video-id-2>,<your-video-id-3>&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {id: .id, title: .snippet.title, views: .statistics.viewCount}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=<your-video-id-1>,<your-video-id-2>,<your-video-id-3>&key=${YOUTUBE_TOKEN}" | jq '.items[] | {id: .id, title: .snippet.title, views: .statistics.viewCount}'
 ```
 
 ---
@@ -108,7 +118,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videos?part=snippet,stat
 ### 5. Get Trending Videos
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=US&maxResults=10&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {title: .snippet.title, channel: .snippet.channelTitle, views: .statistics.viewCount}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=US&maxResults=10&key=${YOUTUBE_TOKEN}" | jq '.items[] | {title: .snippet.title, channel: .snippet.channelTitle, views: .statistics.viewCount}'
 ```
 
 ---
@@ -118,7 +128,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videos?part=snippet,stat
 Replace `<your-channel-id>` with an actual channel ID:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=<your-channel-id>&key=${YOUTUBE_TOKEN}"' | jq '.items[0] | {title: .snippet.title, subscribers: .statistics.subscriberCount, videos: .statistics.videoCount}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=<your-channel-id>&key=${YOUTUBE_TOKEN}" | jq '.items[0] | {title: .snippet.title, subscribers: .statistics.subscriberCount, videos: .statistics.videoCount}'
 ```
 
 ---
@@ -126,7 +136,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=snippet,st
 ### 7. Get Channel by Handle
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=@GoogleDevelopers&key=${YOUTUBE_TOKEN}"' | jq '.items[0] | {id: .id, title: .snippet.title, subscribers: .statistics.subscriberCount}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=@GoogleDevelopers&key=${YOUTUBE_TOKEN}" | jq '.items[0] | {id: .id, title: .snippet.title, subscribers: .statistics.subscriberCount}'
 ```
 
 ---
@@ -134,7 +144,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=snippet,st
 ### 8. Get Channel by Username
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forUsername=GoogleDevelopers&key=${YOUTUBE_TOKEN}"' | jq '.items[0] | {id: .id, title: .snippet.title, description: .snippet.description}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forUsername=GoogleDevelopers&key=${YOUTUBE_TOKEN}" | jq '.items[0] | {id: .id, title: .snippet.title, description: .snippet.description}'
 ```
 
 ---
@@ -144,7 +154,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=snippet,st
 Replace `<your-playlist-id>` with an actual playlist ID:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=<your-playlist-id>&maxResults=20&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {position: .snippet.position, title: .snippet.title, videoId: .snippet.resourceId.videoId}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=<your-playlist-id>&maxResults=20&key=${YOUTUBE_TOKEN}" | jq '.items[] | {position: .snippet.position, title: .snippet.title, videoId: .snippet.resourceId.videoId}'
 ```
 
 ---
@@ -154,7 +164,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/playlistItems?part=snipp
 First get the channel's uploads playlist ID, then list videos. Replace `<your-channel-id>` with an actual channel ID:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=<your-channel-id>&key=${YOUTUBE_TOKEN}"' | jq -r '.items[0].contentDetails.relatedPlaylists.uploads'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=<your-channel-id>&key=${YOUTUBE_TOKEN}" | jq -r '.items[0].contentDetails.relatedPlaylists.uploads'
 ```
 
 ---
@@ -164,7 +174,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/channels?part=contentDet
 Replace `<your-video-id>` with an actual video ID:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=<your-video-id>&maxResults=20&order=relevance&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {author: .snippet.topLevelComment.snippet.authorDisplayName, text: .snippet.topLevelComment.snippet.textDisplay, likes: .snippet.topLevelComment.snippet.likeCount}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=<your-video-id>&maxResults=20&order=relevance&key=${YOUTUBE_TOKEN}" | jq '.items[] | {author: .snippet.topLevelComment.snippet.authorDisplayName, text: .snippet.topLevelComment.snippet.textDisplay, likes: .snippet.topLevelComment.snippet.likeCount}'
 ```
 
 ---
@@ -174,7 +184,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/commentThreads?part=snip
 Replace `<your-video-id>` with an actual video ID:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=<your-video-id>&searchTerms=great+video&maxResults=10&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {author: .snippet.topLevelComment.snippet.authorDisplayName, text: .snippet.topLevelComment.snippet.textDisplay}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=<your-video-id>&searchTerms=great+video&maxResults=10&key=${YOUTUBE_TOKEN}" | jq '.items[] | {author: .snippet.topLevelComment.snippet.authorDisplayName, text: .snippet.topLevelComment.snippet.textDisplay}'
 ```
 
 ---
@@ -182,7 +192,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/commentThreads?part=snip
 ### 13. Get Video Categories
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {id: .id, title: .snippet.title}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key=${YOUTUBE_TOKEN}" | jq '.items[] | {id: .id, title: .snippet.title}'
 ```
 
 ---
@@ -190,7 +200,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/videoCategories?part=sni
 ### 14. Search Videos by Category
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=28&maxResults=10&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {videoId: .id.videoId, title: .snippet.title}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=28&maxResults=10&key=${YOUTUBE_TOKEN}" | jq '.items[] | {videoId: .id.videoId, title: .snippet.title}'
 ```
 
 Note: Category 28 = Science & Technology
@@ -202,7 +212,7 @@ Note: Category 28 = Science & Technology
 Replace `<your-channel-id>` with an actual channel ID:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=<your-channel-id>&maxResults=20&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {id: .id, title: .snippet.title, description: .snippet.description}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=<your-channel-id>&maxResults=20&key=${YOUTUBE_TOKEN}" | jq '.items[] | {id: .id, title: .snippet.title, description: .snippet.description}'
 ```
 
 ---
@@ -246,7 +256,7 @@ bash -c 'curl -s "https://www.googleapis.com/youtube/v3/playlists?part=snippet&c
 Use `nextPageToken` from response to get more results. Replace `<your-next-page-token>` with the actual token from the previous response:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/youtube/v3/search?part=snippet&q=python&type=video&maxResults=50&pageToken=<your-next-page-token>&key=${YOUTUBE_TOKEN}"' | jq '.items[] | {title: .snippet.title}'
+/tmp/youtube-curl "https://www.googleapis.com/youtube/v3/search?part=snippet&q=python&type=video&maxResults=50&pageToken=<your-next-page-token>&key=${YOUTUBE_TOKEN}" | jq '.items[] | {title: .snippet.title}'
 ```
 
 ---

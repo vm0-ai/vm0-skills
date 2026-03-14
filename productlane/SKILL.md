@@ -39,12 +39,23 @@ Set environment variable:
 export PRODUCTLANE_TOKEN="your-api-key"
 ```
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"'
-> ```
 
 ---
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/productlane-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $PRODUCTLANE_TOKEN" "$@"
+EOF
+chmod +x /tmp/productlane-curl
+```
+
+**Usage:** All examples below use `/tmp/productlane-curl` instead of direct `curl` calls.
 
 ## Workspaces
 
@@ -53,7 +64,7 @@ export PRODUCTLANE_TOKEN="your-api-key"
 Retrieve workspace information. Replace `<workspace-id>` with the actual workspace ID:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/workspaces/<workspace-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/workspaces/<workspace-id>"
 ```
 
 ---
@@ -63,7 +74,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/workspaces/<workspace-id>" --he
 ### List Companies
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/companies?take=20" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/companies?take=20"
 ```
 
 ### List Companies with Filters
@@ -71,7 +82,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/companies?take=20" --header "Au
 Filter by name or domain:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/companies?name=Acme&take=10" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/companies?name=Acme&take=10"
 ```
 
 ### Get Company by ID
@@ -79,7 +90,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/companies?name=Acme&take=10" --
 Replace `<company-id>` with the actual company ID:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/companies/<company-id>?groupUpvotes=true" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/companies/<company-id>?groupUpvotes=true"
 ```
 
 ### Create Company
@@ -98,7 +109,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/companies" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/companies" -d @/tmp/productlane_request.json
 ```
 
 ### Update Company
@@ -115,7 +126,7 @@ Write to `/tmp/productlane_request.json`:
 Then run. Replace `<company-id>` with the actual company ID:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/companies/<company-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X PATCH "https://productlane.com/api/v1/companies/<company-id>" -d @/tmp/productlane_request.json
 ```
 
 ### Delete Company
@@ -123,7 +134,7 @@ bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/companies/<company-id>
 Replace `<company-id>` with the actual company ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/companies/<company-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl -X DELETE "https://productlane.com/api/v1/companies/<company-id>"
 ```
 
 ### Get Linear Customer Options
@@ -131,7 +142,7 @@ bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/companies/<company-id
 Get available Linear customer statuses and tiers. Requires Linear integration with `customer:read` or `customer:write` scope:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/companies/linear-options" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/companies/linear-options"
 ```
 
 ---
@@ -141,7 +152,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/companies/linear-options" --hea
 ### List Contacts
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/contacts?take=20" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/contacts?take=20"
 ```
 
 ### Get Contact by ID or Email
@@ -149,7 +160,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/contacts?take=20" --header "Aut
 Replace `<contact-id-or-email>` with the actual contact ID or email address:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/contacts/<contact-id-or-email>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/contacts/<contact-id-or-email>"
 ```
 
 ### Create Contact
@@ -169,7 +180,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/contacts" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/contacts" -d @/tmp/productlane_request.json
 ```
 
 ### Update Contact
@@ -185,7 +196,7 @@ Write to `/tmp/productlane_request.json`:
 Then run. Replace `<contact-id>` with the actual contact ID:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/contacts/<contact-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X PATCH "https://productlane.com/api/v1/contacts/<contact-id>" -d @/tmp/productlane_request.json
 ```
 
 ### Delete Contact
@@ -193,7 +204,7 @@ bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/contacts/<contact-id>"
 Replace `<contact-id>` with the actual contact ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/contacts/<contact-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl -X DELETE "https://productlane.com/api/v1/contacts/<contact-id>"
 ```
 
 ---
@@ -203,7 +214,7 @@ bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/contacts/<contact-id>
 ### List Threads
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/threads?take=20" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/threads?take=20"
 ```
 
 ### List Threads with Filters
@@ -211,7 +222,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/threads?take=20" --header "Auth
 Filter by state (`NEW`, `PROCESSED`), issue, or project:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/threads?state=NEW&take=50" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/threads?state=NEW&take=50"
 ```
 
 ### Get Thread by ID
@@ -219,7 +230,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/threads?state=NEW&take=50" --he
 Replace `<thread-id>` with the actual thread ID:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/threads/<thread-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/threads/<thread-id>"
 ```
 
 ### Create Thread
@@ -243,7 +254,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/threads" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/threads" -d @/tmp/productlane_request.json
 ```
 
 ### Update Thread
@@ -259,7 +270,7 @@ Write to `/tmp/productlane_request.json`:
 Then run. Replace `<thread-id>` with the actual thread ID:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/threads/<thread-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X PATCH "https://productlane.com/api/v1/threads/<thread-id>" -d @/tmp/productlane_request.json
 ```
 
 ### Send Message to Thread
@@ -277,7 +288,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/threads/<thread-id>/messages" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/threads/<thread-id>/messages" -d @/tmp/productlane_request.json
 ```
 
 ---
@@ -289,7 +300,7 @@ bash -c 'curl -s -X POST "https://productlane.com/api/v1/threads/<thread-id>/mes
 Replace `<workspace-id>` with the actual workspace ID:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/changelogs/<workspace-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/changelogs/<workspace-id>"
 ```
 
 ### Get Changelog
@@ -297,7 +308,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/changelogs/<workspace-id>" --he
 Replace `<workspace-id>` and `<changelog-id>` with the actual IDs:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/changelogs/<workspace-id>/<changelog-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/changelogs/<workspace-id>/<changelog-id>"
 ```
 
 ### Create Changelog
@@ -314,7 +325,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/changelogs" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/changelogs" -d @/tmp/productlane_request.json
 ```
 
 ### Update Changelog
@@ -331,7 +342,7 @@ Write to `/tmp/productlane_request.json`:
 Then run. Replace `<changelog-id>` with the actual changelog ID:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/changelogs/<changelog-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X PATCH "https://productlane.com/api/v1/changelogs/<changelog-id>" -d @/tmp/productlane_request.json
 ```
 
 ### Delete Changelog
@@ -339,7 +350,7 @@ bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/changelogs/<changelog-
 Replace `<changelog-id>` with the actual changelog ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/changelogs/<changelog-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl -X DELETE "https://productlane.com/api/v1/changelogs/<changelog-id>"
 ```
 
 ---
@@ -351,7 +362,7 @@ bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/changelogs/<changelog
 Replace `<workspace-id>` with the actual workspace ID. The workspace must have its portal published:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/projects/<workspace-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/projects/<workspace-id>"
 ```
 
 ### Get Project
@@ -359,7 +370,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/projects/<workspace-id>" --head
 Replace `<workspace-id>` and `<project-id>` with the actual IDs:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/projects/<workspace-id>/<project-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/projects/<workspace-id>/<project-id>"
 ```
 
 ### List Issues
@@ -367,7 +378,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/projects/<workspace-id>/<projec
 Replace `<workspace-id>` with the actual workspace ID:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/issues/<workspace-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/issues/<workspace-id>"
 ```
 
 ### Get Issue
@@ -375,7 +386,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/issues/<workspace-id>" --header
 Replace `<workspace-id>` and `<issue-id>` with the actual IDs:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/issues/<workspace-id>/<issue-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/issues/<workspace-id>/<issue-id>"
 ```
 
 ### Upvote a Project or Issue
@@ -392,13 +403,13 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/portal/upvotes" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/portal/upvotes" -d @/tmp/productlane_request.json
 ```
 
 ### Get Upvotes
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/portal/upvotes?projectId=<project-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/portal/upvotes?projectId=<project-id>"
 ```
 
 ### Delete Upvote
@@ -406,7 +417,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/portal/upvotes?projectId=<proje
 Replace `<upvote-id>` with the actual upvote ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/portal/upvotes/<upvote-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl -X DELETE "https://productlane.com/api/v1/portal/upvotes/<upvote-id>"
 ```
 
 ---
@@ -418,7 +429,7 @@ bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/portal/upvotes/<upvot
 Replace `<workspace-id>` with the actual workspace ID:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/docs/articles/<workspace-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/docs/articles/<workspace-id>"
 ```
 
 ### Get Article
@@ -426,7 +437,7 @@ bash -c 'curl -s "https://productlane.com/api/v1/docs/articles/<workspace-id>" -
 Replace `<workspace-id>` and `<article-id>` with the actual IDs:
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/docs/articles/<workspace-id>/<article-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/docs/articles/<workspace-id>/<article-id>"
 ```
 
 ### Create Article
@@ -446,7 +457,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/docs/articles" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/docs/articles" -d @/tmp/productlane_request.json
 ```
 
 ### Update Article
@@ -463,7 +474,7 @@ Write to `/tmp/productlane_request.json`:
 Then run. Replace `<article-id>` with the actual article ID:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/docs/articles/<article-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X PATCH "https://productlane.com/api/v1/docs/articles/<article-id>" -d @/tmp/productlane_request.json
 ```
 
 ### Delete Article
@@ -471,7 +482,7 @@ bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/docs/articles/<article
 Replace `<article-id>` with the actual article ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://productlane.com/api/v1/docs/articles/<article-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl -X DELETE "https://productlane.com/api/v1/docs/articles/<article-id>"
 ```
 
 ### Create Doc Group
@@ -487,7 +498,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/docs/groups" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/docs/groups" -d @/tmp/productlane_request.json
 ```
 
 ### Move Articles to Group
@@ -504,7 +515,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/docs/groups/move-articles" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/docs/groups/move-articles" -d @/tmp/productlane_request.json
 ```
 
 ---
@@ -514,7 +525,7 @@ bash -c 'curl -s -X POST "https://productlane.com/api/v1/docs/groups/move-articl
 ### List Members
 
 ```bash
-bash -c 'curl -s "https://productlane.com/api/v1/users" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"'
+/tmp/productlane-curl "https://productlane.com/api/v1/users"
 ```
 
 ### Invite User
@@ -530,7 +541,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://productlane.com/api/v1/users/invite" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X POST "https://productlane.com/api/v1/users/invite" -d @/tmp/productlane_request.json
 ```
 
 ### Update User Role
@@ -549,7 +560,7 @@ Write to `/tmp/productlane_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://productlane.com/api/v1/users/role" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json'
+/tmp/productlane-curl -X PATCH "https://productlane.com/api/v1/users/role" -d @/tmp/productlane_request.json
 ```
 
 ---

@@ -41,10 +41,19 @@ export PERPLEXITY_API_KEY="pplx-your-api-key"
 ---
 
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
-> ```
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/perplexity-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $PERPLEXITY_API_KEY" "$@"
+EOF
+chmod +x /tmp/perplexity-curl
+```
+
+**Usage:** All examples below use `/tmp/perplexity-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -68,7 +77,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 **With system prompt:**
@@ -88,7 +97,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 **Advanced query with sonar-pro:**
@@ -111,7 +120,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 ### 2. Search with Domain Filter
@@ -133,7 +142,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 **Exclude domains (add `-` prefix):**
@@ -153,7 +162,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 ### 3. Search with Time Filter
@@ -175,7 +184,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 **Filter by date range:**
@@ -196,7 +205,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 ### 4. Academic Search
@@ -218,7 +227,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 ### 5. Raw Search API
@@ -237,7 +246,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/search" -d @/tmp/perplexity_request.json
 ```
 
 **With domain and time filters:**
@@ -257,7 +266,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/search" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/search" -d @/tmp/perplexity_request.json
 ```
 
 ### 6. Deep Research (Long-form)
@@ -279,7 +288,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 ### 7. Reasoning Model
@@ -300,7 +309,7 @@ Write to `/tmp/perplexity_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer ${PERPLEXITY_API_KEY}" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json'
+/tmp/perplexity-curl -X POST "https://api.perplexity.ai/chat/completions" -d @/tmp/perplexity_request.json
 ```
 
 ---

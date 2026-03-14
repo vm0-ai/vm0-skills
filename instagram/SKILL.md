@@ -45,7 +45,22 @@ export INSTAGRAM_BUSINESS_ACCOUNT_ID="1784140xxxxxxx"
 
 These examples use Graph API version `v21.0`. You can replace this with the latest version if needed.
 
-### Required permissions (scopes)
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/instagram-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $INSTAGRAM_ACCESS_TOKEN" "$@"
+EOF
+chmod +x /tmp/instagram-curl
+```
+
+**Usage:** All examples below use `/tmp/instagram-curl` instead of direct `curl` calls.
+
+## Required permissions (scopes)
 
 Depending on which endpoints you use, make sure your app has requested and been approved for (at least):
 
@@ -56,11 +71,6 @@ Depending on which endpoints you use, make sure your app has requested and been 
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq '.'
-> ```
 
 ## How to Use
 
@@ -76,7 +86,7 @@ INSTAGRAM_BUSINESS_ACCOUNT_ID
 Fetch the most recent media (photos / videos / Reels) for the account:
 
 ```bash
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media?fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
+/tmp/instagram-curl -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media?fields=id,caption,media_type,media_url,permalink,timestamp"
 ```
 
 **Notes:**
@@ -97,7 +107,7 @@ bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_A
 If you already have a media `id`, you can fetch more complete information. Replace `<your-media-id>` with the `id` field from the "Get User Media" response (section 1 above):
 
 ```bash
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/<your-media-id>?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
+/tmp/instagram-curl -X GET "https://graph.facebook.com/v21.0/<your-media-id>?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username"
 ```
 
 ---
@@ -113,7 +123,7 @@ This usually involves two steps:
 Replace `<hashtag-name>` with any hashtag name you want to search for (without the # symbol), e.g., "travel", "food", "photography":
 
 ```bash
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&q=<hashtag-name>" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
+/tmp/instagram-curl -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&q=<hashtag-name>"
 ```
 
 Note the `id` field in the returned JSON for use in the next step.
@@ -123,7 +133,7 @@ Note the `id` field in the returned JSON for use in the next step.
 Replace `<hashtag-id>` with the `id` field from the "Search Hashtag" response (section 3.1 above):
 
 ```bash
-bash -c 'curl -s -X GET "https://graph.facebook.com/v21.0/<hashtag-id>/recent_media?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
+/tmp/instagram-curl -X GET "https://graph.facebook.com/v21.0/<hashtag-id>/recent_media?user_id=${INSTAGRAM_BUSINESS_ACCOUNT_ID}&fields=id,caption,media_type,media_url,permalink,timestamp"
 ```
 
 ---
@@ -149,7 +159,7 @@ Write the request data to `/tmp/request.json`:
 Replace `https://example.com/image.jpg` with any publicly accessible image URL and update the caption text as needed.
 
 ```bash
-bash -c 'curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
+/tmp/instagram-curl -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media" -d @/tmp/request.json
 ```
 
 The response will contain an `id` (media container ID), for example:
@@ -175,7 +185,7 @@ Write the request data to `/tmp/request.json`:
 Replace `<your-creation-id>` with the `id` field from the "Create Media Container" response (section 4.1 above):
 
 ```bash
-bash -c 'curl -s -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer ${INSTAGRAM_ACCESS_TOKEN}"'
+/tmp/instagram-curl -X POST "https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish" -d @/tmp/request.json
 ```
 
 If successful, the response will contain the final media `id`:

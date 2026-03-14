@@ -37,10 +37,20 @@ export MAILSAC_API_KEY="your-api-key"
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://mailsac.com/api/..." --header "Mailsac-Key: $MAILSAC_API_KEY"'
-> ```
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/mailsac-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $MAILSAC_API_KEY" "$@"
+EOF
+chmod +x /tmp/mailsac-curl
+```
+
+**Usage:** All examples below use `/tmp/mailsac-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -57,7 +67,7 @@ Retrieve and read emails from any inbox.
 ### List Messages in Inbox
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/addresses/test@mailsac.com/messages" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq .
+/tmp/mailsac-curl "https://mailsac.com/api/addresses/test@mailsac.com/messages" | jq .
 ```
 
 ### Read Message Content (Plain Text)
@@ -65,25 +75,25 @@ bash -c 'curl -s "https://mailsac.com/api/addresses/test@mailsac.com/messages" -
 Replace `<message-id>` with the actual messageId from the list:
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/text/test@mailsac.com/<message-id>" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl "https://mailsac.com/api/text/test@mailsac.com/<message-id>"
 ```
 
 ### Read Message Content (HTML)
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/body/test@mailsac.com/<message-id>" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl "https://mailsac.com/api/body/test@mailsac.com/<message-id>"
 ```
 
 ### Get Raw SMTP Message (with headers and attachments)
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/raw/test@mailsac.com/<message-id>" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl "https://mailsac.com/api/raw/test@mailsac.com/<message-id>"
 ```
 
 ### Get Message Headers as JSON
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/headers/test@mailsac.com/<message-id>" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq .
+/tmp/mailsac-curl "https://mailsac.com/api/headers/test@mailsac.com/<message-id>" | jq .
 ```
 
 **Message Format Endpoints:**
@@ -105,13 +115,13 @@ Delete single messages or purge entire inboxes.
 ### Delete Single Message
 
 ```bash
-bash -c 'curl -s -X DELETE "https://mailsac.com/api/addresses/test@mailsac.com/messages/<message-id>" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl -X DELETE "https://mailsac.com/api/addresses/test@mailsac.com/messages/<message-id>"
 ```
 
 ### Purge Entire Inbox (Enhanced Address only)
 
 ```bash
-bash -c 'curl -s -X DELETE "https://mailsac.com/api/addresses/test@mailsac.com/messages" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl -X DELETE "https://mailsac.com/api/addresses/test@mailsac.com/messages"
 ```
 
 Note: Starred messages will NOT be purged. Unstar them first if you want to delete everything.
@@ -119,7 +129,7 @@ Note: Starred messages will NOT be purged. Unstar them first if you want to dele
 ### Delete All Messages in Custom Domain
 
 ```bash
-bash -c 'curl -s -X PUT "https://mailsac.com/api/domains/yourdomain.com/delete-all-domain-mail" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl -X PUT "https://mailsac.com/api/domains/yourdomain.com/delete-all-domain-mail"
 ```
 
 ---
@@ -131,7 +141,7 @@ Manage private email addresses for exclusive use.
 ### Reserve a Private Address
 
 ```bash
-bash -c 'curl -s -X POST "https://mailsac.com/api/addresses/mytest@mailsac.com" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq .
+/tmp/mailsac-curl -X POST "https://mailsac.com/api/addresses/mytest@mailsac.com" | jq .
 ```
 
 **Response:**
@@ -152,19 +162,19 @@ bash -c 'curl -s -X POST "https://mailsac.com/api/addresses/mytest@mailsac.com" 
 ### List Your Private Addresses
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/addresses" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq .
+/tmp/mailsac-curl "https://mailsac.com/api/addresses" | jq .
 ```
 
 ### Release a Private Address
 
 ```bash
-bash -c 'curl -s -X DELETE "https://mailsac.com/api/addresses/mytest@mailsac.com" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl -X DELETE "https://mailsac.com/api/addresses/mytest@mailsac.com"
 ```
 
 ### Release Address and Delete All Messages
 
 ```bash
-bash -c 'curl -s -X DELETE "https://mailsac.com/api/addresses/mytest@mailsac.com?deleteAddressMessages=true" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl -X DELETE "https://mailsac.com/api/addresses/mytest@mailsac.com?deleteAddressMessages=true"
 ```
 
 ---
@@ -186,7 +196,7 @@ Write to `/tmp/mailsac_webhook.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "https://mailsac.com/api/private-address-forwarding/mytest@mailsac.com" --header "Mailsac-Key: $MAILSAC_API_KEY" --header "Content-Type: application/json" -d @/tmp/mailsac_webhook.json' | jq .
+/tmp/mailsac-curl -X PUT "https://mailsac.com/api/private-address-forwarding/mytest@mailsac.com" -d @/tmp/mailsac_webhook.json | jq .
 ```
 
 ### Remove Webhook
@@ -202,7 +212,7 @@ Write to `/tmp/mailsac_webhook.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "https://mailsac.com/api/private-address-forwarding/mytest@mailsac.com" --header "Mailsac-Key: $MAILSAC_API_KEY" --header "Content-Type: application/json" -d @/tmp/mailsac_webhook.json' | jq .
+/tmp/mailsac-curl -X PUT "https://mailsac.com/api/private-address-forwarding/mytest@mailsac.com" -d @/tmp/mailsac_webhook.json | jq .
 ```
 
 **Webhook Payload Format:**
@@ -230,7 +240,7 @@ Validate email addresses and detect disposable email services.
 ### Validate Single Email
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/validations/addresses/test@example.com" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq .
+/tmp/mailsac-curl "https://mailsac.com/api/validations/addresses/test@example.com" | jq .
 ```
 
 **Response:**
@@ -250,7 +260,7 @@ bash -c 'curl -s "https://mailsac.com/api/validations/addresses/test@example.com
 ### Check if Email is Disposable
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/validations/addresses/test@mailsac.com" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq '{email, isDisposable}'
+/tmp/mailsac-curl "https://mailsac.com/api/validations/addresses/test@mailsac.com" | jq '{email, isDisposable}'
 ```
 
 **Validation Response Fields:**
@@ -284,7 +294,7 @@ Write to `/tmp/mailsac_outgoing.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://mailsac.com/api/outgoing-messages" --header "Mailsac-Key: $MAILSAC_API_KEY" --header "Content-Type: application/json" -d @/tmp/mailsac_outgoing.json' | jq .
+/tmp/mailsac-curl -X POST "https://mailsac.com/api/outgoing-messages" -d @/tmp/mailsac_outgoing.json | jq .
 ```
 
 Note: Sending requires purchased credits unless sending within your custom domain.
@@ -298,13 +308,13 @@ Download attachments from received emails.
 ### Get Attachment by MD5 Hash
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/addresses/test@mailsac.com/messages/<message-id>/attachments/<attachment-md5>" --header "Mailsac-Key: $MAILSAC_API_KEY"' > attachment.bin
+/tmp/mailsac-curl "https://mailsac.com/api/addresses/test@mailsac.com/messages/<message-id>/attachments/<attachment-md5>" > attachment.bin
 ```
 
 ### Get Raw Message and Parse Attachments
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/raw/test@mailsac.com/<message-id>" --header "Mailsac-Key: $MAILSAC_API_KEY"' > message.eml
+/tmp/mailsac-curl "https://mailsac.com/api/raw/test@mailsac.com/<message-id>" > message.eml
 ```
 
 Note: For public addresses, attachments must be downloaded via API; they are not viewable on the website.
@@ -318,7 +328,7 @@ Prevent messages from being auto-deleted by starring them.
 ### Star a Message
 
 ```bash
-bash -c 'curl -s -X PUT "https://mailsac.com/api/addresses/test@mailsac.com/messages/<message-id>/star" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq .
+/tmp/mailsac-curl -X PUT "https://mailsac.com/api/addresses/test@mailsac.com/messages/<message-id>/star" | jq .
 ```
 
 ---
@@ -333,12 +343,12 @@ echo "Use this email for registration: $EMAIL"
 
 # Poll for new message (check every 5 seconds, max 60 seconds)
 for i in $(seq 1 12); do
-  MESSAGES=$(bash -c 'curl -s "https://mailsac.com/api/addresses/'"$EMAIL"'/messages" --header "Mailsac-Key: $MAILSAC_API_KEY"')
+  MESSAGES=$(/tmp/mailsac-curl "https://api.example.com""$EMAIL"'/messages" --header "Mailsac-Key: $MAILSAC_API_KEY"')
   COUNT=$(echo "$MESSAGES" | jq 'length')
   if [ "$COUNT" -gt "0" ]; then
     MESSAGE_ID=$(echo "$MESSAGES" | jq -r '.[0]._id')
     echo "Message received: $MESSAGE_ID"
-    bash -c 'curl -s "https://mailsac.com/api/text/'"$EMAIL"'/'"$MESSAGE_ID"'" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+    /tmp/mailsac-curl "https://api.example.com""$EMAIL"'/'"$MESSAGE_ID"'" --header "Mailsac-Key: $MAILSAC_API_KEY"'
     break
   fi
   echo "Waiting for email... ($i/12)"
@@ -349,20 +359,20 @@ done
 ### List Recent Messages with Subject and Sender
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/addresses/test@mailsac.com/messages" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq '.[] | {subject, from: .from[0].address, received: .received}'
+/tmp/mailsac-curl "https://mailsac.com/api/addresses/test@mailsac.com/messages" | jq '.[] | {subject, from: .from[0].address, received: .received}'
 ```
 
 ### Clean Up Test Inbox Before Tests
 
 ```bash
-bash -c 'curl -s -X DELETE "https://mailsac.com/api/addresses/test@mailsac.com/messages" --header "Mailsac-Key: $MAILSAC_API_KEY"'
+/tmp/mailsac-curl -X DELETE "https://mailsac.com/api/addresses/test@mailsac.com/messages"
 echo "Inbox purged"
 ```
 
 ### Check if Email Service is Disposable
 
 ```bash
-bash -c 'curl -s "https://mailsac.com/api/validations/addresses/user@tempmail.com" --header "Mailsac-Key: $MAILSAC_API_KEY"' | jq 'if .isDisposable then "DISPOSABLE" else "LEGITIMATE" end'
+/tmp/mailsac-curl "https://mailsac.com/api/validations/addresses/user@tempmail.com" | jq 'if .isDisposable then "DISPOSABLE" else "LEGITIMATE" end'
 ```
 
 ---

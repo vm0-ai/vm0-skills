@@ -35,18 +35,28 @@ Use this skill when you need to:
 export ELEVENLABS_API_KEY="your-api-key"
 ```
 
-### API Limits
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/elevenlabs-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "api-key: $ELEVENLABS_API_KEY" "$@"
+EOF
+chmod +x /tmp/elevenlabs-curl
+```
+
+**Usage:** All examples below use `/tmp/elevenlabs-curl` instead of direct `curl` calls.
+
+## API Limits
 
 - Free tier: limited characters per month
 - API key is passed via the `xi-api-key` header
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
-> ```
 
 ## How to Use
 
@@ -63,7 +73,7 @@ The base URL for the ElevenLabs API is:
 Get all voices available to your account:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.elevenlabs.io/v1/voices" --header "xi-api-key: ${ELEVENLABS_API_KEY}"' | jq '.voices[] | {voice_id, name, category}'
+/tmp/elevenlabs-curl -X GET "https://api.elevenlabs.io/v1/voices" | jq '.voices[] | {voice_id, name, category}'
 ```
 
 This returns voice IDs needed for text-to-speech. Common voice categories:
@@ -78,7 +88,7 @@ This returns voice IDs needed for text-to-speech. Common voice categories:
 Get detailed information about a specific voice. Replace `<your-voice-id>` with an actual voice ID:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.elevenlabs.io/v1/voices/<your-voice-id>" --header "xi-api-key: ${ELEVENLABS_API_KEY}"'
+/tmp/elevenlabs-curl -X GET "https://api.elevenlabs.io/v1/voices/<your-voice-id>"
 ```
 
 ---
@@ -88,7 +98,7 @@ bash -c 'curl -s -X GET "https://api.elevenlabs.io/v1/voices/<your-voice-id>" --
 Get all available TTS models:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.elevenlabs.io/v1/models" --header "xi-api-key: ${ELEVENLABS_API_KEY}"' | jq '.[] | {model_id, name, can_do_text_to_speech}'
+/tmp/elevenlabs-curl -X GET "https://api.elevenlabs.io/v1/models" | jq '.[] | {model_id, name, can_do_text_to_speech}'
 ```
 
 Common models:
@@ -154,7 +164,7 @@ curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>/str
 Check your usage and character limits:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.elevenlabs.io/v1/user/subscription" --header "xi-api-key: ${ELEVENLABS_API_KEY}"' | jq '{character_count, character_limit, tier}'
+/tmp/elevenlabs-curl -X GET "https://api.elevenlabs.io/v1/user/subscription" | jq '{character_count, character_limit, tier}'
 ```
 
 ---

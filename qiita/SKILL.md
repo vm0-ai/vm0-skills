@@ -28,7 +28,37 @@ export QIITA_TOKEN=your_access_token
 
 Get your access token from: https://qiita.com/settings/tokens/new
 
-### Important: Environment Variables and Pipes
+#
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/qiita-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $QIITA_TOKEN" "$@"
+EOF
+chmod +x /tmp/qiita-curl
+```
+
+**Usage:** All examples below use `/tmp/qiita-curl` instead of direct `curl` calls.
+
+## Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/qiita-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $QIITA_TOKEN" "$@"
+EOF
+chmod +x /tmp/qiita-curl
+```
+
+**Usage:** All examples below use `/tmp/qiita-curl` instead of direct `curl` calls.
+
+## Important: Environment Variables and Pipes
 
 When using environment variables in commands with pipes, always wrap the command in `bash -c '...'` and keep the pipe outside. This ensures proper variable substitution:
 

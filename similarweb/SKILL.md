@@ -24,9 +24,23 @@ Analyze website traffic, engagement metrics, traffic sources, keywords, and comp
 
 Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **SimilarWeb** by entering your API key. vm0 will automatically inject the required `SIMILARWEB_TOKEN` environment variable.
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 > **Note:** SimilarWeb REST API passes the API key as a query parameter (`api_key`). The Batch API uses the `api-key` header instead.
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/similarweb-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "api-key: $SIMILARWEB_TOKEN" "$@"
+EOF
+chmod +x /tmp/similarweb-curl
+```
+
+**Usage:** All examples below use `/tmp/similarweb-curl` instead of direct `curl` calls.
 
 ## Core APIs
 
@@ -35,7 +49,7 @@ Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **SimilarWe
 Check what data your API key has access to:
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/capabilities?api_key=$SIMILARWEB_TOKEN"' | jq '{remaining_hits: .remaining_hits, web_desktop_data, web_mobile_data}'
+/tmp/similarweb-curl "https://api.similarweb.com/capabilities?api_key=$SIMILARWEB_TOKEN" | jq '{remaining_hits: .remaining_hits, web_desktop_data, web_mobile_data}'
 ```
 
 ### Total Traffic and Engagement
@@ -43,21 +57,21 @@ bash -c 'curl -s "https://api.similarweb.com/capabilities?api_key=$SIMILARWEB_TO
 Get total visits for a domain. Replace `<domain>` with the target domain (e.g., `amazon.com`):
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/visits?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false"' | jq '.[] | {date, visits}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/visits?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false" | jq '.[] | {date, visits}'
 ```
 
 ### Engagement Metrics (Pages per Visit, Average Duration, Bounce Rate)
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/pages-per-visit?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false"' | jq '.[] | {date, pages_per_visit}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/pages-per-visit?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false" | jq '.[] | {date, pages_per_visit}'
 ```
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/average-visit-duration?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false"' | jq '.[] | {date, average_visit_duration}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/average-visit-duration?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false" | jq '.[] | {date, average_visit_duration}'
 ```
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/bounce-rate?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false"' | jq '.[] | {date, bounce_rate}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/total-traffic-and-engagement/bounce-rate?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false" | jq '.[] | {date, bounce_rate}'
 ```
 
 ### Traffic Sources Overview
@@ -65,7 +79,7 @@ bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/total-traffic-a
 Get breakdown of traffic by channel (direct, search, social, referral, mail, display):
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/traffic-sources/overview?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false"' | jq '.overview[] | {source_type, share: (.share[0].visits // .share[0].value)}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/traffic-sources/overview?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&granularity=monthly&main_domain_only=false" | jq '.overview[] | {source_type, share: (.share[0].visits // .share[0].value)}'
 ```
 
 ### Organic Search Keywords
@@ -73,7 +87,7 @@ bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/traffic-sources
 Get top organic keywords driving traffic to a domain:
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/search/organic-keywords?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&limit=10"' | jq '.search[] | {keyword: .search_term, share, visits, position}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/search/organic-keywords?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&limit=10" | jq '.search[] | {keyword: .search_term, share, visits, position}'
 ```
 
 ### Paid Search Keywords
@@ -81,7 +95,7 @@ bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/search/organic-
 Get top paid keywords:
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/search/paid-keywords?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&limit=10"' | jq '.search[] | {keyword: .search_term, share, visits, position}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/search/paid-keywords?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&limit=10" | jq '.search[] | {keyword: .search_term, share, visits, position}'
 ```
 
 ### Referral Sites
@@ -89,7 +103,7 @@ bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/search/paid-key
 Get top referring websites:
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/referrals/referrals?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&limit=10"' | jq '.referrals[] | {site, share, visits}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/referrals/referrals?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world&limit=10" | jq '.referrals[] | {site, share, visits}'
 ```
 
 ### Social Traffic
@@ -97,7 +111,7 @@ bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/referrals/refer
 Get traffic breakdown by social network:
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/traffic-sources/social?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world"' | jq '.social[] | {page: .page, visits}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/traffic-sources/social?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&country=world" | jq '.social[] | {page: .page, visits}'
 ```
 
 ### Similar Sites (Competitors)
@@ -105,13 +119,13 @@ bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/traffic-sources
 Find websites similar to a given domain:
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/similar-sites/similarsites?api_key=$SIMILARWEB_TOKEN"' | jq '.similar_sites[] | {url, score}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/similar-sites/similarsites?api_key=$SIMILARWEB_TOKEN" | jq '.similar_sites[] | {url, score}'
 ```
 
 ### Website Category and Global Rank
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/category-rank/category-rank?api_key=$SIMILARWEB_TOKEN"' | jq '{category, global_rank, category_rank}'
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/category-rank/category-rank?api_key=$SIMILARWEB_TOKEN" | jq '{category, global_rank, category_rank}'
 ```
 
 ### Audience Geography
@@ -119,7 +133,7 @@ bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/category-rank/c
 Get traffic distribution by country:
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v1/website/<domain>/geo/traffic-by-country?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&main_domain_only=false"' | jq '.records[] | {country: .country_code, share, visits}' | head -20
+/tmp/similarweb-curl "https://api.similarweb.com/v1/website/<domain>/geo/traffic-by-country?api_key=$SIMILARWEB_TOKEN&start_date=2025-01&end_date=2025-03&main_domain_only=false" | jq '.records[] | {country: .country_code, share, visits}' | head -20
 ```
 
 ## Batch API
@@ -129,13 +143,13 @@ The Batch API uses a different authentication method (header-based) and is for l
 ### Check Batch API Credits
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v3/batch/credits" --header "api-key: $SIMILARWEB_TOKEN"' | jq '{total_credits, used_credits, remaining_credits}'
+/tmp/similarweb-curl "https://api.similarweb.com/v3/batch/credits" | jq '{total_credits, used_credits, remaining_credits}'
 ```
 
 ### Describe Available Tables
 
 ```bash
-bash -c 'curl -s "https://api.similarweb.com/v3/batch/tables/describe" --header "api-key: $SIMILARWEB_TOKEN"' | jq '.tables[] | {name, description}'
+/tmp/similarweb-curl "https://api.similarweb.com/v3/batch/tables/describe" | jq '.tables[] | {name, description}'
 ```
 
 ## Guidelines

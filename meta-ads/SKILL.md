@@ -33,24 +33,38 @@ Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Meta Ad
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 > **Placeholders:** Values in `{curly-braces}` like `{ad-account-id}` are placeholders. Replace them with actual values when executing. Ad account IDs must be prefixed with `act_` (e.g., `act_123456789`).
 
 ---
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/meta-ads-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $META_ADS_TOKEN" "$@"
+EOF
+chmod +x /tmp/meta-ads-curl
+```
+
+**Usage:** All examples below use `/tmp/meta-ads-curl` instead of direct `curl` calls.
 
 ## Ad Accounts
 
 ### List Ad Accounts
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/me/adaccounts?fields=id,name,account_status,currency,timezone_name,amount_spent&access_token=$META_ADS_TOKEN"' | jq '.data[] | {id, name, account_status, currency}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/me/adaccounts?fields=id,name,account_status,currency,timezone_name,amount_spent&access_token=$META_ADS_TOKEN" | jq '.data[] | {id, name, account_status, currency}'
 ```
 
 ### Get Ad Account Details
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}?fields=id,name,account_status,currency,timezone_name,balance,amount_spent,spend_cap&access_token=$META_ADS_TOKEN"'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}?fields=id,name,account_status,currency,timezone_name,balance,amount_spent,spend_cap&access_token=$META_ADS_TOKEN"
 ```
 
 ---
@@ -60,13 +74,13 @@ bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}?fields=id,nam
 ### List Campaigns
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/campaigns?fields=id,name,status,objective,daily_budget,lifetime_budget,start_time,stop_time&access_token=$META_ADS_TOKEN"' | jq '.data[] | {id, name, status, objective}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/campaigns?fields=id,name,status,objective,daily_budget,lifetime_budget,start_time,stop_time&access_token=$META_ADS_TOKEN" | jq '.data[] | {id, name, status, objective}'
 ```
 
 ### Get Campaign Details
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{campaign-id}?fields=id,name,status,objective,daily_budget,lifetime_budget,start_time,stop_time,created_time,updated_time&access_token=$META_ADS_TOKEN"'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{campaign-id}?fields=id,name,status,objective,daily_budget,lifetime_budget,start_time,stop_time,created_time,updated_time&access_token=$META_ADS_TOKEN"
 ```
 
 ### Create Campaign
@@ -82,7 +96,7 @@ cat > /tmp/campaign.json << 'EOF'
   "special_ad_categories": []
 }
 EOF
-bash -c 'curl -s -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/campaigns?access_token=$META_ADS_TOKEN" --header "Content-Type: application/json" -d @/tmp/campaign.json'
+/tmp/meta-ads-curl -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/campaigns?access_token=$META_ADS_TOKEN" -d @/tmp/campaign.json
 ```
 
 ### Update Campaign
@@ -94,13 +108,13 @@ cat > /tmp/campaign-update.json << 'EOF'
   "status": "PAUSED"
 }
 EOF
-bash -c 'curl -s -X POST "https://graph.facebook.com/v22.0/{campaign-id}?access_token=$META_ADS_TOKEN" --header "Content-Type: application/json" -d @/tmp/campaign-update.json'
+/tmp/meta-ads-curl -X POST "https://graph.facebook.com/v22.0/{campaign-id}?access_token=$META_ADS_TOKEN" -d @/tmp/campaign-update.json
 ```
 
 ### Delete Campaign
 
 ```bash
-bash -c 'curl -s -X DELETE "https://graph.facebook.com/v22.0/{campaign-id}?access_token=$META_ADS_TOKEN"'
+/tmp/meta-ads-curl -X DELETE "https://graph.facebook.com/v22.0/{campaign-id}?access_token=$META_ADS_TOKEN"
 ```
 
 ---
@@ -110,13 +124,13 @@ bash -c 'curl -s -X DELETE "https://graph.facebook.com/v22.0/{campaign-id}?acces
 ### List Ad Sets
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/adsets?fields=id,name,status,campaign_id,daily_budget,lifetime_budget,start_time,end_time,targeting&access_token=$META_ADS_TOKEN"' | jq '.data[] | {id, name, status, campaign_id, daily_budget}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/adsets?fields=id,name,status,campaign_id,daily_budget,lifetime_budget,start_time,end_time,targeting&access_token=$META_ADS_TOKEN" | jq '.data[] | {id, name, status, campaign_id, daily_budget}'
 ```
 
 ### Get Ad Set Details
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{adset-id}?fields=id,name,status,campaign_id,daily_budget,lifetime_budget,bid_amount,billing_event,optimization_goal,start_time,end_time,targeting&access_token=$META_ADS_TOKEN"'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{adset-id}?fields=id,name,status,campaign_id,daily_budget,lifetime_budget,bid_amount,billing_event,optimization_goal,start_time,end_time,targeting&access_token=$META_ADS_TOKEN"
 ```
 
 ### Create Ad Set
@@ -141,7 +155,7 @@ cat > /tmp/adset.json << 'EOF'
   "status": "PAUSED"
 }
 EOF
-bash -c 'curl -s -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/adsets?access_token=$META_ADS_TOKEN" --header "Content-Type: application/json" -d @/tmp/adset.json'
+/tmp/meta-ads-curl -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/adsets?access_token=$META_ADS_TOKEN" -d @/tmp/adset.json
 ```
 
 ---
@@ -151,13 +165,13 @@ bash -c 'curl -s -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/adset
 ### List Ads
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/ads?fields=id,name,status,adset_id,campaign_id,created_time&access_token=$META_ADS_TOKEN"' | jq '.data[] | {id, name, status, adset_id}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/ads?fields=id,name,status,adset_id,campaign_id,created_time&access_token=$META_ADS_TOKEN" | jq '.data[] | {id, name, status, adset_id}'
 ```
 
 ### Get Ad Details
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-id}?fields=id,name,status,adset_id,campaign_id,creative,created_time,updated_time&access_token=$META_ADS_TOKEN"'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-id}?fields=id,name,status,adset_id,campaign_id,creative,created_time,updated_time&access_token=$META_ADS_TOKEN"
 ```
 
 ---
@@ -169,31 +183,31 @@ bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-id}?fields=id,name,status
 Get overall account performance for the last 7 days:
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr,cpc,cpm,reach,frequency&date_preset=last_7d&access_token=$META_ADS_TOKEN"' | jq '.data[0]'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr,cpc,cpm,reach,frequency&date_preset=last_7d&access_token=$META_ADS_TOKEN" | jq '.data[0]'
 ```
 
 ### Campaign-Level Insights
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=campaign_name,campaign_id,impressions,clicks,spend,ctr,cpc,actions&level=campaign&date_preset=last_30d&access_token=$META_ADS_TOKEN"' | jq '.data[] | {campaign_name, impressions, clicks, spend, ctr}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=campaign_name,campaign_id,impressions,clicks,spend,ctr,cpc,actions&level=campaign&date_preset=last_30d&access_token=$META_ADS_TOKEN" | jq '.data[] | {campaign_name, impressions, clicks, spend, ctr}'
 ```
 
 ### Insights with Date Range
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr,cpc,reach,actions&time_range={\"since\":\"2026-01-01\",\"until\":\"2026-01-31\"}&access_token=$META_ADS_TOKEN"' | jq '.data[0]'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr,cpc,reach,actions&time_range={\" | jq '.data[0]'
 ```
 
 ### Insights with Daily Breakdown
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr&date_preset=last_7d&time_increment=1&access_token=$META_ADS_TOKEN"' | jq '.data[] | {date_start, impressions, clicks, spend}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr&date_preset=last_7d&time_increment=1&access_token=$META_ADS_TOKEN" | jq '.data[] | {date_start, impressions, clicks, spend}'
 ```
 
 ### Insights by Age and Gender
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend&date_preset=last_30d&breakdowns=age,gender&access_token=$META_ADS_TOKEN"' | jq '.data[] | {age, gender, impressions, clicks, spend}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend&date_preset=last_30d&breakdowns=age,gender&access_token=$META_ADS_TOKEN" | jq '.data[] | {age, gender, impressions, clicks, spend}'
 ```
 
 ---
@@ -203,7 +217,7 @@ bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fiel
 ### List Custom Audiences
 
 ```bash
-bash -c 'curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/customaudiences?fields=id,name,approximate_count_lower_bound,approximate_count_upper_bound&access_token=$META_ADS_TOKEN"' | jq '.data[] | {id, name, approximate_count_lower_bound}'
+/tmp/meta-ads-curl "https://graph.facebook.com/v22.0/{ad-account-id}/customaudiences?fields=id,name,approximate_count_lower_bound,approximate_count_upper_bound&access_token=$META_ADS_TOKEN" | jq '.data[] | {id, name, approximate_count_lower_bound}'
 ```
 
 ---

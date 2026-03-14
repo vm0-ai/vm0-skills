@@ -25,7 +25,37 @@ export CF_ACCESS_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx.access
 export CF_ACCESS_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-### Create Service Token
+#
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/cloudflare-tunnel-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $CF_ACCESS_CLIENT_ID" "$@"
+EOF
+chmod +x /tmp/cloudflare-tunnel-curl
+```
+
+**Usage:** All examples below use `/tmp/cloudflare-tunnel-curl` instead of direct `curl` calls.
+
+## Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/cloudflare-tunnel-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $CF_ACCESS_CLIENT_ID" "$@"
+EOF
+chmod +x /tmp/cloudflare-tunnel-curl
+```
+
+**Usage:** All examples below use `/tmp/cloudflare-tunnel-curl` instead of direct `curl` calls.
+
+## Create Service Token
 
 1. Go to [Cloudflare Zero Trust Dashboard](https://one.dash.cloudflare.com/)
 2. Navigate to **Access** → **Service Auth** → **Service Tokens**
@@ -41,7 +71,6 @@ Ensure your Access Application allows service token authentication:
 2. Add a policy with **Service Token** as Include rule
 3. Select your created token
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 ---
 
@@ -52,10 +81,7 @@ Ensure your Access Application allows service token authentication:
 Add two headers to authenticate through Cloudflare Access:
 
 ```bash
-bash -c 'curl -s \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  "https://your-protected-service.example.com/api/endpoint"'
+/tmp/cloudflare-tunnel-curl "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ### With Additional Authentication
@@ -63,21 +89,13 @@ bash -c 'curl -s \
 Many services require both Cloudflare Access AND their own authentication:
 
 ```bash
-bash -c 'curl -s \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  -H "Authorization: Bearer $API_TOKEN" \
-  "https://your-protected-service.example.com/api/endpoint"'
+/tmp/cloudflare-tunnel-curl "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ### With Basic Auth
 
 ```bash
-bash -c 'curl -s \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  -u "username:password" \
-  "https://your-protected-service.example.com/api/endpoint"'
+/tmp/cloudflare-tunnel-curl "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ### POST Request with JSON Body
@@ -93,21 +111,13 @@ Write to `/tmp/request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  -H "Content-Type: application/json" \
-  -d @/tmp/request.json \
-  "https://your-protected-service.example.com/api/endpoint"'
+/tmp/cloudflare-tunnel-curl -X POST "https://your-protected-service.example.com/api/endpoint" -d @/tmp/request.json
 ```
 
 ### Download File
 
 ```bash
-bash -c 'curl -s -o /tmp/output.file \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  "https://your-protected-service.example.com/file"'
+/tmp/cloudflare-tunnel-curl "https://your-protected-service.example.com/file"
 ```
 
 ### Skip SSL Verification (Self-signed certs)

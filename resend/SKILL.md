@@ -38,11 +38,25 @@ Set environment variable:
 export RESEND_TOKEN="re_xxxxxxxxx"
 ```
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
 
 > **Placeholders:** Values in `{curly-braces}` like `{email-id}` are placeholders. Replace them with actual values when executing.
 
 ---
+
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/resend-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $RESEND_TOKEN" "$@"
+EOF
+chmod +x /tmp/resend-curl
+```
+
+**Usage:** All examples below use `/tmp/resend-curl` instead of direct `curl` calls.
 
 ## Emails
 
@@ -62,7 +76,7 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/emails" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/emails" -d @/tmp/resend_request.json
 ```
 
 ### Send Email with Plain Text
@@ -81,7 +95,7 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/emails" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/emails" -d @/tmp/resend_request.json
 ```
 
 ### Send Email with CC/BCC
@@ -102,7 +116,7 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/emails" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/emails" -d @/tmp/resend_request.json
 ```
 
 ### Send Email with Reply-To
@@ -122,7 +136,7 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/emails" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/emails" -d @/tmp/resend_request.json
 ```
 
 ### Send Scheduled Email
@@ -144,7 +158,7 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/emails" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/emails" -d @/tmp/resend_request.json
 ```
 
 ### Send Batch Emails
@@ -173,25 +187,25 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/emails/batch" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/emails/batch" -d @/tmp/resend_request.json
 ```
 
 ### Retrieve Email
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/emails/<your-email-id>" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/emails/<your-email-id>"
 ```
 
 ### List Sent Emails
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/emails" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/emails"
 ```
 
 ### Cancel Scheduled Email
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/emails/<your-email-id>/cancel" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl -X POST "https://api.resend.com/emails/<your-email-id>/cancel"
 ```
 
 ---
@@ -214,7 +228,7 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/contacts" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/contacts" -d @/tmp/resend_request.json
 ```
 
 ### Create Contact with Custom Properties
@@ -236,25 +250,25 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/contacts" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/contacts" -d @/tmp/resend_request.json
 ```
 
 ### Retrieve Contact
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/contacts/<your-contact-id>" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/contacts/<your-contact-id>"
 ```
 
 ### List Contacts
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/contacts" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/contacts"
 ```
 
 ### List Contacts with Pagination
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/contacts?limit=50" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/contacts?limit=50"
 ```
 
 ### Update Contact
@@ -271,13 +285,13 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://api.resend.com/contacts/<your-contact-id>" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X PATCH "https://api.resend.com/contacts/<your-contact-id>" -d @/tmp/resend_request.json
 ```
 
 ### Delete Contact
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.resend.com/contacts/<your-contact-id>" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl -X DELETE "https://api.resend.com/contacts/<your-contact-id>"
 ```
 
 ---
@@ -287,13 +301,13 @@ bash -c 'curl -s -X DELETE "https://api.resend.com/contacts/<your-contact-id>" -
 ### List Domains
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/domains" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/domains"
 ```
 
 ### Retrieve Domain
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/domains/<your-domain-id>" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/domains/<your-domain-id>"
 ```
 
 ### Create Domain
@@ -309,19 +323,19 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/domains" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/domains" -d @/tmp/resend_request.json
 ```
 
 ### Verify Domain
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/domains/<your-domain-id>/verify" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl -X POST "https://api.resend.com/domains/<your-domain-id>/verify"
 ```
 
 ### Delete Domain
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.resend.com/domains/<your-domain-id>" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl -X DELETE "https://api.resend.com/domains/<your-domain-id>"
 ```
 
 ---
@@ -331,7 +345,7 @@ bash -c 'curl -s -X DELETE "https://api.resend.com/domains/<your-domain-id>" --h
 ### List API Keys
 
 ```bash
-bash -c 'curl -s "https://api.resend.com/api-keys" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl "https://api.resend.com/api-keys"
 ```
 
 ### Create API Key
@@ -347,7 +361,7 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/api-keys" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/api-keys" -d @/tmp/resend_request.json
 ```
 
 ### Create API Key with Permissions
@@ -364,13 +378,13 @@ Write to `/tmp/resend_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.resend.com/api-keys" --header "Authorization: Bearer $RESEND_TOKEN" --header "Content-Type: application/json" -d @/tmp/resend_request.json'
+/tmp/resend-curl -X POST "https://api.resend.com/api-keys" -d @/tmp/resend_request.json
 ```
 
 ### Delete API Key
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>" --header "Authorization: Bearer $RESEND_TOKEN"'
+/tmp/resend-curl -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>"
 ```
 
 ---

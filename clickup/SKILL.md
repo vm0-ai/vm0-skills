@@ -32,7 +32,20 @@ Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **ClickUp**
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
+
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/clickup-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $CLICKUP_TOKEN" "$@"
+EOF
+chmod +x /tmp/clickup-curl
+```
+
+**Usage:** All examples below use `/tmp/clickup-curl` instead of direct `curl` calls.
 
 ## How to Use
 
@@ -49,13 +62,13 @@ ClickUp uses numeric IDs for all resources. The hierarchy is: Workspace (team) >
 ### Get Authorized User
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/user" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.user | {id, username, email}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/user" | jq '.user | {id, username, email}'
 ```
 
 ### List Workspaces
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/team" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.teams[] | {id, name}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/team" | jq '.teams[] | {id, name}'
 ```
 
 ---
@@ -65,13 +78,13 @@ bash -c 'curl -s "https://api.clickup.com/api/v2/team" --header "Authorization: 
 ### List Spaces in a Workspace
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/team/<team_id>/space?archived=false" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.spaces[] | {id, name}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/team/<team_id>/space?archived=false" | jq '.spaces[] | {id, name}'
 ```
 
 ### Get Space Details
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/space/<space_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/space/<space_id>" | jq '.'
 ```
 
 ### Create Space
@@ -90,13 +103,13 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/team/<team_id>/space" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name}'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/team/<team_id>/space" -d @/tmp/clickup_request.json | jq '{id, name}'
 ```
 
 ### Delete Space
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/space/<space_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X DELETE "https://api.clickup.com/api/v2/space/<space_id>"
 ```
 
 ---
@@ -106,7 +119,7 @@ bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/space/<space_id>" --h
 ### List Folders in a Space
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/space/<space_id>/folder?archived=false" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.folders[] | {id, name}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/space/<space_id>/folder?archived=false" | jq '.folders[] | {id, name}'
 ```
 
 ### Create Folder
@@ -120,7 +133,7 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/space/<space_id>/folder" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name}'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/space/<space_id>/folder" -d @/tmp/clickup_request.json | jq '{id, name}'
 ```
 
 ### Update Folder
@@ -134,13 +147,13 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://api.clickup.com/api/v2/folder/<folder_id>" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name}'
+/tmp/clickup-curl -X PUT "https://api.clickup.com/api/v2/folder/<folder_id>" -d @/tmp/clickup_request.json | jq '{id, name}'
 ```
 
 ### Delete Folder
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/folder/<folder_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X DELETE "https://api.clickup.com/api/v2/folder/<folder_id>"
 ```
 
 ---
@@ -150,13 +163,13 @@ bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/folder/<folder_id>" -
 ### List Lists in a Folder
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/folder/<folder_id>/list?archived=false" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.lists[] | {id, name, task_count}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/folder/<folder_id>/list?archived=false" | jq '.lists[] | {id, name, task_count}'
 ```
 
 ### List Folderless Lists in a Space
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/space/<space_id>/list?archived=false" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.lists[] | {id, name, task_count}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/space/<space_id>/list?archived=false" | jq '.lists[] | {id, name, task_count}'
 ```
 
 ### Create List
@@ -171,7 +184,7 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/folder/<folder_id>/list" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name}'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/folder/<folder_id>/list" -d @/tmp/clickup_request.json | jq '{id, name}'
 ```
 
 ### Update List
@@ -186,13 +199,13 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://api.clickup.com/api/v2/list/<list_id>" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name}'
+/tmp/clickup-curl -X PUT "https://api.clickup.com/api/v2/list/<list_id>" -d @/tmp/clickup_request.json | jq '{id, name}'
 ```
 
 ### Delete List
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/list/<list_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X DELETE "https://api.clickup.com/api/v2/list/<list_id>"
 ```
 
 ---
@@ -202,13 +215,13 @@ bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/list/<list_id>" --hea
 ### List Tasks in a List
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/list/<list_id>/task?archived=false" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.tasks[] | {id, name, status: .status.status, assignees: [.assignees[].username], due_date}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/list/<list_id>/task?archived=false" | jq '.tasks[] | {id, name, status: .status.status, assignees: [.assignees[].username], due_date}'
 ```
 
 ### Get Task Details
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/task/<task_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '{id, name, description, status: .status.status, priority: .priority, due_date, assignees: [.assignees[].username]}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/task/<task_id>" | jq '{id, name, description, status: .status.status, priority: .priority, due_date, assignees: [.assignees[].username]}'
 ```
 
 ### Create Task
@@ -227,7 +240,7 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/list/<list_id>/task" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name, status: .status.status}'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/list/<list_id>/task" -d @/tmp/clickup_request.json | jq '{id, name, status: .status.status}'
 ```
 
 ### Create Task with Assignees
@@ -245,7 +258,7 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/list/<list_id>/task" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name, assignees: [.assignees[].username]}'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/list/<list_id>/task" -d @/tmp/clickup_request.json | jq '{id, name, assignees: [.assignees[].username]}'
 ```
 
 ### Update Task
@@ -262,19 +275,19 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://api.clickup.com/api/v2/task/<task_id>" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '{id, name, status: .status.status}'
+/tmp/clickup-curl -X PUT "https://api.clickup.com/api/v2/task/<task_id>" -d @/tmp/clickup_request.json | jq '{id, name, status: .status.status}'
 ```
 
 ### Delete Task
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/task/<task_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X DELETE "https://api.clickup.com/api/v2/task/<task_id>"
 ```
 
 ### Get Filtered Team Tasks
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/team/<team_id>/task?statuses[]=to%20do&statuses[]=in%20progress&assignees[]=<user_id>&page=0" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.tasks[] | {id, name, status: .status.status}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/team/<team_id>/task?statuses[]=to%20do&statuses[]=in%20progress&assignees[]=<user_id>&page=0" | jq '.tasks[] | {id, name, status: .status.status}'
 ```
 
 ---
@@ -284,7 +297,7 @@ bash -c 'curl -s "https://api.clickup.com/api/v2/team/<team_id>/task?statuses[]=
 ### List Task Comments
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/task/<task_id>/comment" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.comments[] | {id, comment_text, user: .user.username, date}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/task/<task_id>/comment" | jq '.comments[] | {id, comment_text, user: .user.username, date}'
 ```
 
 ### Create Task Comment
@@ -298,7 +311,7 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/task/<task_id>/comment" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '.'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/task/<task_id>/comment" -d @/tmp/clickup_request.json | jq '.'
 ```
 
 ### Update Comment
@@ -312,13 +325,13 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://api.clickup.com/api/v2/comment/<comment_id>" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '.'
+/tmp/clickup-curl -X PUT "https://api.clickup.com/api/v2/comment/<comment_id>" -d @/tmp/clickup_request.json | jq '.'
 ```
 
 ### Delete Comment
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/comment/<comment_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X DELETE "https://api.clickup.com/api/v2/comment/<comment_id>"
 ```
 
 ---
@@ -328,7 +341,7 @@ bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/comment/<comment_id>"
 ### List Time Entries
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/team/<team_id>/time_entries" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.data[] | {id, task: .task.name, duration, start, end}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/team/<team_id>/time_entries" | jq '.data[] | {id, task: .task.name, duration, start, end}'
 ```
 
 ### Create Time Entry
@@ -345,13 +358,13 @@ Write to `/tmp/clickup_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/team/<team_id>/time_entries" --header "Authorization: Bearer $CLICKUP_TOKEN" --header "Content-Type: application/json" -d @/tmp/clickup_request.json' | jq '.data | {id, duration, start}'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/team/<team_id>/time_entries" -d @/tmp/clickup_request.json | jq '.data | {id, duration, start}'
 ```
 
 ### Delete Time Entry
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/team/<team_id>/time_entries/<timer_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X DELETE "https://api.clickup.com/api/v2/team/<team_id>/time_entries/<timer_id>"
 ```
 
 ---
@@ -361,19 +374,19 @@ bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/team/<team_id>/time_e
 ### List Space Tags
 
 ```bash
-bash -c 'curl -s "https://api.clickup.com/api/v2/space/<space_id>/tag" --header "Authorization: Bearer $CLICKUP_TOKEN"' | jq '.tags[] | {name, tag_fg, tag_bg}'
+/tmp/clickup-curl "https://api.clickup.com/api/v2/space/<space_id>/tag" | jq '.tags[] | {name, tag_fg, tag_bg}'
 ```
 
 ### Add Tag to Task
 
 ```bash
-bash -c 'curl -s -X POST "https://api.clickup.com/api/v2/task/<task_id>/tag/<tag_name>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X POST "https://api.clickup.com/api/v2/task/<task_id>/tag/<tag_name>"
 ```
 
 ### Remove Tag from Task
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.clickup.com/api/v2/task/<task_id>/tag/<tag_name>" --header "Authorization: Bearer $CLICKUP_TOKEN"'
+/tmp/clickup-curl -X DELETE "https://api.clickup.com/api/v2/task/<task_id>/tag/<tag_name>"
 ```
 
 ---

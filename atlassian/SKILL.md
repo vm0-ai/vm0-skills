@@ -44,7 +44,22 @@ export ATLASSIAN_EMAIL="you@example.com"     # Your Atlassian account email
 export ATLASSIAN_TOKEN="your-api-token"      # API token from step 2
 ```
 
-### Authentication
+#
+### Setup API Wrapper
+
+Create a helper script for API calls:
+
+```bash
+cat > /tmp/atlassian-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $ATLASSIAN_TOKEN" "$@"
+EOF
+chmod +x /tmp/atlassian-curl
+```
+
+**Usage:** All examples below use `/tmp/atlassian-curl` instead of direct `curl` calls.
+
+## Authentication
 
 All Atlassian Cloud APIs use HTTP Basic authentication with your email and API token:
 
@@ -58,10 +73,6 @@ Jira Cloud and Confluence Cloud have rate limits that vary by endpoint. For most
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq '.field'
-> ```
 
 ## How to Use
 
@@ -80,7 +91,7 @@ Base URLs:
 Verify your authentication:
 
 ```bash
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/myself" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/myself"
 ```
 
 ---
@@ -90,7 +101,7 @@ bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/my
 Get all Jira projects you have access to:
 
 ```bash
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/project" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/project"
 ```
 
 ---
@@ -112,7 +123,7 @@ Write to `/tmp/atlassian_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/search/jql" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json' | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name}'
+/tmp/atlassian-curl -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/search/jql" -d @/tmp/atlassian_request.json | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name}'
 ```
 
 Common JQL examples:
@@ -132,7 +143,7 @@ Get full details of a Jira issue:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}"
 ```
 
 ---
@@ -170,7 +181,7 @@ Write to `/tmp/atlassian_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue" -d @/tmp/atlassian_request.json
 ```
 
 ---
@@ -196,7 +207,7 @@ Then run:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -d @/tmp/atlassian_request.json
 ```
 
 Returns 204 No Content on success.
@@ -210,7 +221,7 @@ Get possible status transitions for a Jira issue:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions"
 ```
 
 ---
@@ -234,7 +245,7 @@ Then run:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -d @/tmp/atlassian_request.json
 ```
 
 Returns 204 No Content on success.
@@ -269,7 +280,7 @@ Then run:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/comment" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/comment" -d @/tmp/atlassian_request.json
 ```
 
 ---
@@ -291,7 +302,7 @@ Then run:
 ```bash
 ISSUE_KEY="PROJ-123"
 
-bash -c 'curl -s -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/assignee" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/assignee" -d @/tmp/atlassian_request.json
 ```
 
 ---
@@ -301,7 +312,7 @@ bash -c 'curl -s -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/is
 Find Jira users by email or name:
 
 ```bash
-bash -c 'curl -s -G "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/user/search" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --data-urlencode "query=john"'
+/tmp/atlassian-curl "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/user/search"
 ```
 
 ---
@@ -313,7 +324,7 @@ bash -c 'curl -s -G "https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3/user/s
 Get all Confluence spaces you have access to:
 
 ```bash
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/spaces" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"' | jq '.results[] | {id, key, name, type}'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/spaces" | jq '.results[] | {id, key, name, type}'
 ```
 
 ---
@@ -325,7 +336,7 @@ Get details for a specific Confluence space:
 ```bash
 SPACE_ID="12345"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/spaces/${SPACE_ID}" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/spaces/${SPACE_ID}"
 ```
 
 ---
@@ -337,7 +348,7 @@ Get pages within a specific space:
 ```bash
 SPACE_ID="12345"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/spaces/${SPACE_ID}/pages" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"' | jq '.results[] | {id, title, status}'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/spaces/${SPACE_ID}/pages" | jq '.results[] | {id, title, status}'
 ```
 
 ---
@@ -349,7 +360,7 @@ Get a specific Confluence page with its body content:
 ```bash
 PAGE_ID="67890"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}?body-format=storage" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}?body-format=storage"
 ```
 
 Body format options: `storage` (XHTML), `atlas_doc_format` (ADF), `view` (rendered HTML).
@@ -377,7 +388,7 @@ Write to `/tmp/atlassian_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages" -d @/tmp/atlassian_request.json
 ```
 
 ---
@@ -404,7 +415,7 @@ Write to `/tmp/atlassian_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages" -d @/tmp/atlassian_request.json
 ```
 
 ---
@@ -418,7 +429,7 @@ First get the current version:
 ```bash
 PAGE_ID="67890"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"' | jq '.version.number'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" | jq '.version.number'
 ```
 
 Then write to `/tmp/atlassian_request.json` (increment the version number):
@@ -444,7 +455,7 @@ Then run:
 ```bash
 PAGE_ID="67890"
 
-bash -c 'curl -s -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" -d @/tmp/atlassian_request.json
 ```
 
 ---
@@ -454,7 +465,7 @@ bash -c 'curl -s -X PUT "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/p
 Search Confluence using CQL (Confluence Query Language):
 
 ```bash
-bash -c 'curl -s -G "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/rest/api/search" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --data-urlencode "cql=type=page AND space=DEV AND text~\"deployment guide\"" --data-urlencode "limit=10"' | jq '.results[] | {title: .content.title, id: .content.id, space: .content._expandable.space}'
+/tmp/atlassian-curl "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/rest/api/search" | jq '.results[] | {title: .content.title, id: .content.id, space: .content._expandable.space}'
 ```
 
 Common CQL examples:
@@ -474,7 +485,7 @@ List comments on a Confluence page:
 ```bash
 PAGE_ID="67890"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}/footer-comments" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}/footer-comments"
 ```
 
 ---
@@ -498,7 +509,7 @@ Write to `/tmp/atlassian_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/footer-comments" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json'
+/tmp/atlassian-curl -X POST "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/footer-comments" -d @/tmp/atlassian_request.json
 ```
 
 ---
@@ -510,7 +521,7 @@ Delete a Confluence page:
 ```bash
 PAGE_ID="67890"
 
-bash -c 'curl -s -X DELETE "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}"'
+/tmp/atlassian-curl -X DELETE "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}"
 ```
 
 Returns 204 No Content on success.
@@ -524,7 +535,7 @@ Get all labels attached to a Confluence page:
 ```bash
 PAGE_ID="67890"
 
-bash -c 'curl -s -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}/labels" -u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}" --header "Accept: application/json"' | jq '.results[] | {id, name}'
+/tmp/atlassian-curl -X GET "https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2/pages/${PAGE_ID}/labels" | jq '.results[] | {id, name}'
 ```
 
 ---
