@@ -88,7 +88,7 @@ Write to `/tmp/shortio_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_TOKEN}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
+/tmp/shortio-curl -X POST "https://api.short.io/links" -d @/tmp/shortio_request.json
 ```
 
 ---
@@ -110,7 +110,7 @@ Write to `/tmp/shortio_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_TOKEN}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
+/tmp/shortio-curl -X POST "https://api.short.io/links" -d @/tmp/shortio_request.json
 ```
 
 ---
@@ -132,7 +132,7 @@ Write to `/tmp/shortio_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.short.io/links" --header "Authorization: ${SHORTIO_TOKEN}" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, ttl}'
+/tmp/shortio-curl -X POST "https://api.short.io/links" -d @/tmp/shortio_request.json
 ```
 
 ---

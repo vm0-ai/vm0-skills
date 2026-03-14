@@ -67,7 +67,7 @@ When using environment variables in commands with pipes, always wrap the command
 /tmp/qiita-curl https://api.qiita.com/api/v2/users
 
 # Bad - environment variable with pipe causes issues
-curl -H "Authorization: Bearer ${QIITA_TOKEN}" https://api.qiita.com/api/v2/users
+/tmp/qiita-curl
 ```
 
 ### Required Scopes

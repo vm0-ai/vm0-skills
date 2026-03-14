@@ -51,19 +51,19 @@ chmod +x /tmp/imgur-curl
 ### Upload Local Image
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID ${IMGUR_CLIENT_ID}" -F "image=@/path/to/image.png"
+/tmp/imgur-curl -X POST
 ```
 
 ### Upload from URL
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID ${IMGUR_CLIENT_ID}" -F "image=https://example.com/image.png" -F "type=url"
+/tmp/imgur-curl -X POST
 ```
 
 ### Upload Base64
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID ${IMGUR_CLIENT_ID}" -F "image=$(base64 -i /path/to/image.png)" -F "type=base64"
+/tmp/imgur-curl -X POST
 ```
 
 ### Optional Parameters
@@ -75,7 +75,7 @@ curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID ${IMGUR_
 | name | Filename |
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID ${IMGUR_CLIENT_ID}" -F "image=@screenshot.png" -F "title=My Screenshot" -F "description=Screenshot from my app"
+/tmp/imgur-curl -X POST
 ```
 
 ## Response
@@ -101,7 +101,7 @@ Key fields:
 Replace `<your-deletehash>` with the deletehash from the upload response:
 
 ```bash
-curl -X DELETE https://api.imgur.com/3/image/<your-deletehash> -H "Authorization: Client-ID ${IMGUR_CLIENT_ID}"
+/tmp/imgur-curl -X DELETE
 ```
 
 ## Rate Limits

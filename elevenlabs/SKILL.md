@@ -128,7 +128,7 @@ Write to `/tmp/elevenlabs_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output speech.mp3
+/tmp/elevenlabs-curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>" -d @/tmp/elevenlabs_request.json
 ```
 
 **Voice settings:**
@@ -154,7 +154,7 @@ Write to `/tmp/elevenlabs_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>/stream" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output streamed.mp3
+/tmp/elevenlabs-curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>/stream" -d @/tmp/elevenlabs_request.json
 ```
 
 ---
@@ -185,7 +185,7 @@ Write to `/tmp/elevenlabs_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>?output_format=pcm_16000" --header "xi-api-key: ${ELEVENLABS_API_KEY}" --header "Content-Type: application/json" -d @/tmp/elevenlabs_request.json --output speech.pcm
+/tmp/elevenlabs-curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>?output_format=pcm_16000" -d @/tmp/elevenlabs_request.json
 ```
 
 Available formats:

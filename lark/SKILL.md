@@ -418,7 +418,7 @@ TOKEN=$(get_lark_token)
 START_TS=$(date -d "2025-01-01T00:00:00+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-01T00:00:00+08:00" +%s)
 END_TS=$(date -d "2025-01-31T23:59:59+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-31T23:59:59+08:00" +%s)
 
-curl -X GET "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events?start_time=${START_TS}&end_time=${END_TS}" \
+/tmp/lark-curl -X GET "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events?start_time=${START_TS}&end_time=${END_TS}"
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
