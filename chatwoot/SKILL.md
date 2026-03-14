@@ -6,7 +6,7 @@ vm0_secrets:
   - CHATWOOT_API_TOKEN
 vm0_vars:
   - CHATWOOT_ACCOUNT_ID
-- CHATWOOT_BASE_URL
+  - CHATWOOT_BASE_URL
 ---
 
 # Chatwoot

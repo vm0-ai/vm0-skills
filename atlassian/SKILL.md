@@ -6,7 +6,7 @@ vm0_secrets:
   - ATLASSIAN_TOKEN
 vm0_vars:
   - ATLASSIAN_DOMAIN
-- ATLASSIAN_EMAIL
+  - ATLASSIAN_EMAIL
 ---
 
 # Atlassian API

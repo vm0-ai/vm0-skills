@@ -6,7 +6,7 @@ vm0_secrets:
   - JIRA_API_TOKEN
 vm0_vars:
   - JIRA_DOMAIN
-- JIRA_EMAIL
+  - JIRA_EMAIL
 ---
 
 # Jira API

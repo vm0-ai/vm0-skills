@@ -4,7 +4,7 @@ description: PiKVM API for remote KVM. Use when user mentions "PiKVM", "KVM over
   "remote server", or hardware management.
 vm0_secrets:
   - PIKVM_AUTH
-- PIKVM_URL
+  - PIKVM_URL
 ---
 
 # PiKVM Remote Control

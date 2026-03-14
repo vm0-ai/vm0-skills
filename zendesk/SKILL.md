@@ -6,7 +6,7 @@ vm0_secrets:
   - ZENDESK_API_TOKEN
 vm0_vars:
   - ZENDESK_EMAIL
-- ZENDESK_SUBDOMAIN
+  - ZENDESK_SUBDOMAIN
 ---
 
 # Zendesk API
