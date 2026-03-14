@@ -18,11 +18,23 @@ curl -H "Authorization: Bearer ${API_TOKEN}" https://api.example.com | jq '.[0]'
 
 ### ✅ Good Case
 
+Create a wrapper script in `/tmp`:
+
 ```bash
-bash -c 'curl -H "Authorization: Bearer ${API_TOKEN}" https://api.example.com' | jq .
+cat > /tmp/example-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Authorization: Bearer ${API_TOKEN}" "$@"
+EOF
+chmod +x /tmp/example-curl
 ```
 
-**Solution:** Wrap the command containing `$VAR` in `bash -c '...'`, keeping the pipe **outside** the wrapper. This ensures the variable is properly substituted before the pipe processes the output.
+Then use the wrapper:
+
+```bash
+/tmp/example-curl https://api.example.com | jq '.[0]'
+```
+
+**Solution:** Create a temporary wrapper script that includes the authorization header. This avoids the variable clearing bug and makes commands cleaner and more readable.
 
 ---
 
@@ -321,7 +333,7 @@ https://example.com/path?param=value&other=123
 
 When writing SKILL.md, verify:
 
-- [ ] All commands with `$VAR` and `|` use `bash -c '...' | command` pattern
+- [ ] All commands use `/tmp/<skill>-curl` wrapper instead of direct curl with `$VAR`
 - [ ] Remove `| jq .` unless doing actual transformation
 - [ ] Use `/tmp/file` with `-d @/tmp/file` instead of inline JSON/data
 - [ ] Use placeholder text (`<your-context-id>`) instead of shell variables (`$CONTEXT_ID`) in URLs

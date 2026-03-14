@@ -106,7 +106,7 @@ bash -c 'curl -s -X POST "https://api.example.com/endpoint" --header "Content-Ty
 - All examples should be copy-paste executable
 - Include the API documentation URL so agents can look up additional endpoints
 - Pass sensitive information (tokens, keys) via environment variables
-- **CRITICAL: Never use variables and pipes together** - see below
+- **CRITICAL: Use `/tmp/xxx-curl` wrapper** - see below
 
 ### Claude Code Bash Bug Workaround
 
@@ -123,34 +123,37 @@ Claude Code has a known bug where **environment variables are silently cleared w
 curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq .
 ```
 
-**The Workaround:**
+**The Solution:**
 
-Wrap the command containing `$VAR` in `bash -c '...'`, keep other commands (like `jq`) outside:
+Create a wrapper script in `/tmp` that includes the authorization header:
 
 ```bash
-# GOOD - only curl (which uses $VAR) is wrapped, jq stays outside
-bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq .
+# Create wrapper script once
+cat > /tmp/example-curl << 'EOF'
+#!/bin/bash
+curl -s -H "Authorization: Bearer ${API_KEY}" "$@"
+EOF
+chmod +x /tmp/example-curl
+
+# Then use it for all API calls
+/tmp/example-curl "https://api.example.com" | jq .
+/tmp/example-curl -X POST "https://api.example.com/items" -d '{"name": "test"}' | jq .
 ```
 
-**Rules:**
-1. Wrap only the command that uses `$VAR` in `bash -c '...'`
-2. Keep `jq` and other processing outside (simpler, no quote escaping needed)
-3. Escape single quotes inside bash -c as `'"'"'` (for JSON bodies)
-4. Use `$VAR` instead of `${VAR}`
+**Benefits:**
+1. No `bash -c` escaping hell
+2. Cleaner, more readable commands
+3. Header is centralized in the wrapper
+4. Pipeline works correctly without variable clearing
 
-**Example with JSON body:**
+**For command substitution:**
 ```bash
-bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"'' | jq .
-```
-
-**For command substitution (use quotes to protect special chars):**
-```bash
-VAR="$(bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq -r .id)"
+VAR="$(/tmp/example-curl "https://api.example.com" | jq -r .id)"
 ```
 
 **For loops:**
 ```bash
-for id in $(bash -c 'curl -s "https://api.example.com/ids" --header "Authorization: Bearer $API_KEY"' | jq -r '.[]'); do
+for id in $(/tmp/example-curl "https://api.example.com/ids" | jq -r '.[]'); do
   echo "Processing $id"
 done
 ```
@@ -211,8 +214,8 @@ Based on test results, document any issues encountered:
 | curl reports blank argument | `-H` has issues in some environments | Use `--header` instead |
 | Authentication failed | Incorrect token format | Check Bearer prefix |
 | Returns 404 | API version outdated | Update version number |
-| API returns 401 but token is correct | Claude Code bug: variables cleared with pipes | Wrap in `bash -c '...'` |
-| Variable appears empty in pipe | Claude Code preprocessing bug | Use `bash -c 'curl ... \| jq'` |
+| API returns 401 but token is correct | Claude Code bug: variables cleared with pipes | Create `/tmp/xxx-curl` wrapper script |
+| Variable appears empty in pipe | Claude Code preprocessing bug | Use `/tmp/xxx-curl` wrapper instead of direct curl |
 
 After fixing SKILL.md, re-test until all examples work correctly.
 
