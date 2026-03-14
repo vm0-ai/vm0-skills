@@ -131,7 +131,7 @@ Write to `/tmp/lark_request.json`:
 ```
 
 ```bash
-bash -c 'curl -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
+/tmp/lark-curl -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" -d @/tmp/lark_request.json
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json'
 ```

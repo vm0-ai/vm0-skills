@@ -87,7 +87,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/convert/to/text" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/convert/to/text" -d @/tmp/request.json
 ```
 
 **With specific pages (1-indexed):**
@@ -103,7 +103,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/convert/to/text" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/convert/to/text" -d @/tmp/request.json
 ```
 
 ### 2. PDF to CSV
@@ -120,7 +120,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/convert/to/csv" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/convert/to/csv" -d @/tmp/request.json
 ```
 
 ### 3. Merge PDFs
@@ -137,7 +137,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/merge" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/merge" -d @/tmp/request.json
 ```
 
 ### 4. Split PDF
@@ -154,7 +154,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/split" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/merge" -d @/tmp/request.json
 ```
 
 ### 5. Compress PDF
@@ -171,7 +171,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/optimize" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/merge" -d @/tmp/request.json
 ```
 
 ### 6. HTML to PDF
@@ -188,7 +188,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/convert/from/html" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/merge" -d @/tmp/request.json
 ```
 
 **From URL:**
@@ -203,7 +203,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/convert/from/url" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/merge" -d @/tmp/request.json
 ```
 
 ### 7. AI Invoice Parser
@@ -220,7 +220,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/ai-invoice-parser" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl "https://api.pdf.co/v1/ai-invoice-parser" -d @/tmp/request.json
 ```
 
 ### 8. Upload Local File
@@ -257,7 +257,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/pdf/convert/to/text" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl --location --request POST "https://api.pdf.co/v1/pdf/merge" -d @/tmp/request.json
 ```
 
 ### 9. Async Mode (Large Files)
@@ -294,7 +294,7 @@ Write to `/tmp/request.json`:
 ```
 
 ```bash
-bash -c 'curl --location --request POST "https://api.pdf.co/v1/job/check" --header "x-api-key: ${PDFCO_API_KEY}" --header "Content-Type: application/json" -d @/tmp/request.json'
+/tmp/pdfco-curl "https://api.pdf.co/v1/job/check" -d @/tmp/request.json
 ```
 
 ---

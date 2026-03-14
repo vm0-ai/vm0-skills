@@ -125,7 +125,7 @@ Then run:
 Add `-k` flag for services with self-signed certificates:
 
 ```bash
-bash -c 'curl -k -s \
+/tmp/cloudflare-tunnel-curl -k -s "${TUNNEL_URL}/quicktunnel"
   -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
   -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
   "https://your-protected-service.example.com/api/endpoint"'

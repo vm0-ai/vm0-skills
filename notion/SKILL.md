@@ -306,7 +306,7 @@ curl -s -X DELETE "https://api.notion.com/v1/blocks/<your-block-id>" --header "A
 ### List Users
 
 ```bash
-bash -c 'curl -s '"'"'https://api.notion.com/v1/users'"'"' --header "Authorization: Bearer $NOTION_TOKEN" --header '"'"'Notion-Version: 2022-06-28'"'"' | jq '"'"'.results[] | {id, name, type}'"'"
+/tmp/notion-curl 'https://api.notion.com/v1/users' | jq '.results[] | {id, name, type}'
 ```
 
 Docs: https://developers.notion.com/reference/get-users

@@ -76,7 +76,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+/tmp/slack-webhook-curl -X POST "$SLACK_WEBHOOK_URL" -d @/tmp/slack_request.json
 ```
 
 ### With Formatting
@@ -92,7 +92,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+/tmp/slack-webhook-curl -X POST "$SLACK_WEBHOOK_URL" -d @/tmp/slack_request.json
 ```
 
 ### With Link
@@ -108,7 +108,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+/tmp/slack-webhook-curl -X POST "$SLACK_WEBHOOK_URL" -d @/tmp/slack_request.json
 ```
 
 ### With Blocks (Rich Layout)
@@ -140,7 +140,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+/tmp/slack-webhook-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
 ```
 
 ### With Fields
@@ -171,7 +171,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+/tmp/slack-webhook-curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
 ```
 
 ## Message Formatting

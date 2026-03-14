@@ -142,7 +142,7 @@ Then run:
 RUN_ID=$(/tmp/apify-curl -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" -d @/tmp/apify_request.json | jq -r '.data.id')
 
 # Step 2: Check the run status
-bash -c "curl -s \"https://api.apify.com/v2/actor-runs/${RUN_ID}\" --header \"Authorization: Bearer \${APIFY_TOKEN}\"" | jq '.data.status'
+/tmp/apify-curl -s "https://api.apify.com/v2/actor-runs/${RUN_ID}" | jq '.data.status'
 ```
 
 **Statuses**: `READY`, `RUNNING`, `SUCCEEDED`, `FAILED`, `ABORTED`, `TIMED-OUT`
@@ -180,7 +180,7 @@ DATASET_ID=$(echo "$RESPONSE" | jq -r '.data.defaultDatasetId')
 
 # Step 2: Wait for completion (poll status)
 while true; do
-  STATUS=$(bash -c "curl -s \"https://api.apify.com/v2/actor-runs/${RUN_ID}\" --header \"Authorization: Bearer \${APIFY_TOKEN}\"" | jq -r '.data.status')
+  STATUS=$(/tmp/apify-curl -s "https://api.apify.com/v2/actor-runs/${RUN_ID}" | jq -r '.data.status')
   echo "Status: $STATUS"
   [[ "$STATUS" == "SUCCEEDED" ]] && break
   [[ "$STATUS" == "FAILED" || "$STATUS" == "ABORTED" ]] && exit 1
@@ -188,7 +188,7 @@ while true; do
 done
 
 # Step 3: Fetch the dataset items
-bash -c "curl -s \"https://api.apify.com/v2/datasets/${DATASET_ID}/items\" --header \"Authorization: Bearer \${APIFY_TOKEN}\""
+/tmp/apify-curl -s "https://api.apify.com/v2/datasets/${DATASET_ID}/items"
 ```
 
 **With pagination:**
@@ -310,7 +310,7 @@ RUN_ID=$(/tmp/apify-curl -X POST "https://api.apify.com/v2/acts/apify~web-scrape
 echo "Started run: $RUN_ID"
 
 # Step 2: Abort the run
-bash -c "curl -s -X POST \"https://api.apify.com/v2/actor-runs/${RUN_ID}/abort\" --header \"Authorization: Bearer \${APIFY_TOKEN}\""
+/tmp/apify-curl -X POSThttps://api.apify.com/v2/actor-runs/${RUN_ID}/abort\" --header \"Authorization: Bearer \${APIFY_TOKEN}\""
 ```
 
 ### 8. List Available Actors
