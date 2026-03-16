@@ -28,18 +28,6 @@ export QIITA_TOKEN=your_access_token
 
 Get your access token from: https://qiita.com/settings/tokens/new
 
-### Important: Environment Variables and Pipes
-
-When using environment variables in commands with pipes, always wrap the command in `bash -c '...'` and keep the pipe outside. This ensures proper variable substitution:
-
-```bash
-# Good - wraps curl in bash -c, pipe is outside
-bash -c 'curl -H "Authorization: Bearer ${QIITA_TOKEN}" https://api.qiita.com/api/v2/users'
-
-# Bad - environment variable with pipe causes issues
-curl -H "Authorization: Bearer ${QIITA_TOKEN}" https://api.qiita.com/api/v2/users
-```
-
 ### Required Scopes
 
 - `read_qiita` - Read articles, comments, users
