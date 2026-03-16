@@ -38,12 +38,6 @@ export TAVILY_TOKEN="tvly-xxxxxxxxxxxxxxxx"
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq '.results[] | {title, url}'
-> ```
-
 ## How to Use
 
 All examples below assume you have `TAVILY_TOKEN` set in your environment.
@@ -70,7 +64,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_TOKEN}" -d @/tmp/tavily_request.json'
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv TAVILY_TOKEN)" -d @/tmp/tavily_request.json
 ```
 
 **Key parameters:**
@@ -102,7 +96,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer ${TAVILY_TOKEN}" -d @/tmp/tavily_request.json'
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv TAVILY_TOKEN)" -d @/tmp/tavily_request.json
 ```
 
 **Common advanced parameters:**
