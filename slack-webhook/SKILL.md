@@ -30,11 +30,6 @@ export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XX
 4. Select channel → **Allow**
 5. Copy Webhook URL
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
-> ```
-
 ## Usage
 
 ### Simple Message
@@ -50,7 +45,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+curl -X POST $(printenv SLACK_WEBHOOK_URL) -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Formatting
@@ -66,7 +61,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+curl -X POST $(printenv SLACK_WEBHOOK_URL) -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Link
@@ -82,7 +77,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+curl -X POST $(printenv SLACK_WEBHOOK_URL) -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Blocks (Rich Layout)
@@ -114,7 +109,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+curl -X POST $(printenv SLACK_WEBHOOK_URL) -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ### With Fields
@@ -145,7 +140,7 @@ Write to `/tmp/slack_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @/tmp/slack_request.json'
+curl -X POST $(printenv SLACK_WEBHOOK_URL) -H "Content-type: application/json" -d @/tmp/slack_request.json
 ```
 
 ## Message Formatting
@@ -165,7 +160,7 @@ bash -c 'curl -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d 
 Messages with `!` may fail due to shell history expansion. Use heredoc:
 
 ```bash
-bash -c 'curl -s -X POST $SLACK_WEBHOOK_URL -H "Content-type: application/json" -d @-' << 'EOF'
+curl -s -X POST $(printenv SLACK_WEBHOOK_URL) -H "Content-type: application/json" -d @- << 'EOF'
 {"text":"Deploy completed! :rocket:"}
 EOF
 ```
