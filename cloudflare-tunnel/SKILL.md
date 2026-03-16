@@ -41,8 +41,6 @@ Ensure your Access Application allows service token authentication:
 2. Add a policy with **Service Token** as Include rule
 3. Select your created token
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-
 ---
 
 ## Usage
@@ -52,10 +50,10 @@ Ensure your Access Application allows service token authentication:
 Add two headers to authenticate through Cloudflare Access:
 
 ```bash
-bash -c 'curl -s \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  "https://your-protected-service.example.com/api/endpoint"'
+curl -s \
+  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
+  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ### With Additional Authentication
@@ -63,21 +61,21 @@ bash -c 'curl -s \
 Many services require both Cloudflare Access AND their own authentication:
 
 ```bash
-bash -c 'curl -s \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  -H "Authorization: Bearer $API_TOKEN" \
-  "https://your-protected-service.example.com/api/endpoint"'
+curl -s \
+  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
+  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  -H "Authorization: Bearer $(printenv API_TOKEN)" \
+  "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ### With Basic Auth
 
 ```bash
-bash -c 'curl -s \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
+curl -s \
+  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
+  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
   -u "username:password" \
-  "https://your-protected-service.example.com/api/endpoint"'
+  "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ### POST Request with JSON Body
@@ -93,21 +91,21 @@ Write to `/tmp/request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
+curl -s -X POST \
+  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
+  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
   -H "Content-Type: application/json" \
   -d @/tmp/request.json \
-  "https://your-protected-service.example.com/api/endpoint"'
+  "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ### Download File
 
 ```bash
-bash -c 'curl -s -o /tmp/output.file \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  "https://your-protected-service.example.com/file"'
+curl -s -o /tmp/output.file \
+  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
+  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  "https://your-protected-service.example.com/file"
 ```
 
 ### Skip SSL Verification (Self-signed certs)
@@ -115,10 +113,10 @@ bash -c 'curl -s -o /tmp/output.file \
 Add `-k` flag for services with self-signed certificates:
 
 ```bash
-bash -c 'curl -k -s \
-  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
-  "https://your-protected-service.example.com/api/endpoint"'
+curl -k -s \
+  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
+  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  "https://your-protected-service.example.com/api/endpoint"
 ```
 
 ---
