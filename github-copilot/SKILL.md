@@ -48,11 +48,6 @@ export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
 ---
 
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
-
 ## How to Use
 
 All examples below assume you have `GITHUB_TOKEN` set.
@@ -71,7 +66,7 @@ Base URL: `https://api.github.com`
 Get seat breakdown and settings for an organization. Replace `your-org-name` with your organization name:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billing" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"'
+curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billing" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"
 ```
 
 **Response:**
@@ -97,7 +92,7 @@ bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billi
 Get all users with Copilot seats. Replace `your-org-name` with your organization name:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billing/seats?per_page=50" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"' | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'
+curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billing/seats?per_page=50" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'
 ```
 
 ---
@@ -107,7 +102,7 @@ bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billi
 Get specific user's Copilot seat information. Replace `your-org-name` with your organization name and `username` with the target username:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/members/username/copilot" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"'
+curl -s -X GET "https://api.github.com/orgs/your-org-name/members/username/copilot" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"
 ```
 
 ---
@@ -127,7 +122,7 @@ Write to `/tmp/github_copilot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.github.com/orgs/your-org-name/copilot/billing/selected_users" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json'
+curl -s -X POST "https://api.github.com/orgs/your-org-name/copilot/billing/selected_users" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json
 ```
 
 **Response:**
@@ -154,7 +149,7 @@ Write to `/tmp/github_copilot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.github.com/orgs/your-org-name/copilot/billing/selected_users" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json'
+curl -s -X DELETE "https://api.github.com/orgs/your-org-name/copilot/billing/selected_users" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json
 ```
 
 **Response:**
@@ -181,7 +176,7 @@ Write to `/tmp/github_copilot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.github.com/orgs/your-org-name/copilot/billing/selected_teams" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json'
+curl -s -X POST "https://api.github.com/orgs/your-org-name/copilot/billing/selected_teams" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json
 ```
 
 ---
@@ -201,7 +196,7 @@ Write to `/tmp/github_copilot_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.github.com/orgs/your-org-name/copilot/billing/selected_teams" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json'
+curl -s -X DELETE "https://api.github.com/orgs/your-org-name/copilot/billing/selected_teams" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json
 ```
 
 ---
@@ -211,7 +206,7 @@ bash -c 'curl -s -X DELETE "https://api.github.com/orgs/your-org-name/copilot/bi
 Get usage statistics (requires 5+ active users). Replace `your-org-name` with your organization name:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/metrics?per_page=7" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"' | jq '.[] | {date, total_active_users, total_engaged_users}'
+curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/metrics?per_page=7" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '.[] | {date, total_active_users, total_engaged_users}'
 ```
 
 **Response:**
@@ -230,7 +225,7 @@ bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/metri
 Get team-specific usage metrics. Replace `your-org-name` with your organization name and `team-name` with the target team:
 
 ```bash
-bash -c 'curl -s -X GET "https://api.github.com/orgs/your-org-name/team/team-name/copilot/metrics" --header "Authorization: Bearer ${GITHUB_TOKEN}" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"'
+curl -s -X GET "https://api.github.com/orgs/your-org-name/team/team-name/copilot/metrics" --header "Authorization: Bearer $(printenv GITHUB_TOKEN)" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"
 ```
 
 ---
