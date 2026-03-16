@@ -44,12 +44,6 @@ export MINIMAX_API_KEY="your-api-key"
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
-
 ## How to Use
 
 All examples below assume you have `MINIMAX_API_KEY` set.
@@ -77,7 +71,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.choices[0].message.content'
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json | jq '.choices[0].message.content'
 ```
 
 **Available models:**
@@ -108,7 +102,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.choices[0].message.content'
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json | jq '.choices[0].message.content'
 ```
 
 **Parameters:**
@@ -138,7 +132,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json
 ```
 
 Streaming is recommended for reasoning models (M1/M2).
@@ -164,7 +158,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json
 ```
 
 Response includes `reasoning_content` field with thought process.
@@ -190,7 +184,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json --output speech.mp3
+curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json --output speech.mp3
 ```
 
 ---
@@ -215,7 +209,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json --output happy_speech.mp3
+curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json --output happy_speech.mp3
 ```
 
 **Emotion options:** `happy`, `sad`, `angry`, `fearful`, `disgusted`, `surprised`, `neutral`
@@ -245,7 +239,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json --output hq_speech.mp3
+curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json --output hq_speech.mp3
 ```
 
 **TTS models:**
@@ -275,7 +269,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
+curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json | jq '.task_id'
 ```
 
 Video generation is async - returns a task ID to poll for completion.
@@ -300,7 +294,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
+curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json | jq '.task_id'
 ```
 
 **Camera commands (in brackets):**
@@ -335,7 +329,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.task_id'
+curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json | jq '.task_id'
 ```
 
 Provide `first_frame_image` as URL or base64-encoded image.
@@ -377,7 +371,7 @@ Write to `/tmp/minimax_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer ${MINIMAX_API_KEY}" -H "Content-Type: application/json" -d @/tmp/minimax_request.json' | jq '.choices[0]'
+curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer $(printenv MINIMAX_API_KEY)" -H "Content-Type: application/json" -d @/tmp/minimax_request.json | jq '.choices[0]'
 ```
 
 ---
