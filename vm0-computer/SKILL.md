@@ -74,14 +74,12 @@ cd /tmp && npm install ws && node /tmp/proxy.mjs &
 
 The proxy runs in the background. Tools can now connect to `http://127.0.0.1:8080` (WebDAV) and `ws://127.0.0.1:9222` (Chrome CDP) without any additional headers.
 
-> **Important:** Wrap curl commands that use `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-
 ### 1. List Files in a Directory
 
 Use `PROPFIND` to list the contents of a directory (depth 1):
 
 ```bash
-bash -c 'curl -s -X PROPFIND "http://127.0.0.1:8080"'
+curl -s -X PROPFIND "http://127.0.0.1:8080"
 ```
 
 List a subdirectory:
