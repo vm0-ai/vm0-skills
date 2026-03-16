@@ -56,12 +56,6 @@ export QDRANT_TOKEN="" # Optional for local
 
 ---
 
-
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-> ```bash
-> bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"'
-> ```
-
 ## How to Use
 
 All examples below assume you have `QDRANT_URL` and `QDRANT_TOKEN` set.
@@ -73,7 +67,7 @@ All examples below assume you have `QDRANT_URL` and `QDRANT_TOKEN` set.
 Verify connection to Qdrant:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_TOKEN}"'
+curl -s -X GET "$(printenv QDRANT_URL)" --header "api-key: $(printenv QDRANT_TOKEN)"
 ```
 
 ---
@@ -83,7 +77,7 @@ bash -c 'curl -s -X GET "${QDRANT_URL}" --header "api-key: ${QDRANT_TOKEN}"'
 Get all collections:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}/collections" --header "api-key: ${QDRANT_TOKEN}"'
+curl -s -X GET "$(printenv QDRANT_URL)/collections" --header "api-key: $(printenv QDRANT_TOKEN)"
 ```
 
 ---
@@ -106,7 +100,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X PUT "$(printenv QDRANT_URL)/collections/my_collection" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 **Distance metrics:**
@@ -127,7 +121,7 @@ bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection" --header "api-
 Get details about a collection:
 
 ```bash
-bash -c 'curl -s -X GET "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_TOKEN}"'
+curl -s -X GET "$(printenv QDRANT_URL)/collections/my_collection" --header "api-key: $(printenv QDRANT_TOKEN)"
 ```
 
 ---
@@ -158,7 +152,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PUT "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X PUT "$(printenv QDRANT_URL)/collections/my_collection/points" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---
@@ -180,7 +174,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X POST "$(printenv QDRANT_URL)/collections/my_collection/points/query" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 **Response:**
@@ -218,7 +212,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/query" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X POST "$(printenv QDRANT_URL)/collections/my_collection/points/query" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 **Filter operators:**
@@ -245,7 +239,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X POST "$(printenv QDRANT_URL)/collections/my_collection/points" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---
@@ -265,7 +259,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X POST "$(printenv QDRANT_URL)/collections/my_collection/points/delete" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 Delete by filter:
@@ -285,7 +279,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X POST "$(printenv QDRANT_URL)/collections/my_collection/points/delete" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---
@@ -295,7 +289,7 @@ bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/delete"
 Remove a collection entirely:
 
 ```bash
-bash -c 'curl -s -X DELETE "${QDRANT_URL}/collections/my_collection" --header "api-key: ${QDRANT_TOKEN}"'
+curl -s -X DELETE "$(printenv QDRANT_URL)/collections/my_collection" --header "api-key: $(printenv QDRANT_TOKEN)"
 ```
 
 ---
@@ -315,7 +309,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "${QDRANT_URL}/collections/my_collection/points/count" --header "api-key: ${QDRANT_TOKEN}" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json'
+curl -s -X POST "$(printenv QDRANT_URL)/collections/my_collection/points/count" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---
