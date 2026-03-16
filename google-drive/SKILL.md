@@ -37,8 +37,6 @@ Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Google 
 
 ---
 
-> **Important:** When using `$VAR` in a command that pipes to another command, wrap the command containing `$VAR` in `bash -c '...'`. Due to a Claude Code bug, environment variables are silently cleared when pipes are used directly.
-
 > **Placeholders:** Values in `{curly-braces}` like `{file-id}` are placeholders. Replace them with actual values when executing.
 
 ---
@@ -56,7 +54,7 @@ Base URL: `https://www.googleapis.com/drive/v3`
 List files in your Google Drive:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?pageSize=10&fields=files(id,name,mimeType,modifiedTime,size)" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' | jq '.files[] | {id, name, mimeType, size}'
+curl -s "https://www.googleapis.com/drive/v3/files?pageSize=10&fields=files(id,name,mimeType,modifiedTime,size)" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" | jq '.files[] | {id, name, mimeType, size}'
 ```
 
 ### List Files with Query
@@ -64,7 +62,7 @@ bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?pageSize=10&fields=f
 Search using query syntax:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?q=name+contains+'"'"'report'"'"'&pageSize=10&fields=files(id,name,mimeType)" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' | jq '.files'
+curl -s "https://www.googleapis.com/drive/v3/files?q=name+contains+'report'&pageSize=10&fields=files(id,name,mimeType)" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" | jq '.files'
 ```
 
 Common query operators:
@@ -79,7 +77,7 @@ Common query operators:
 Combine with `and` or `or`:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?q=mimeType+%3D+'"'"'application/pdf'"'"'+and+trashed+%3D+false&fields=files(id,name)" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' | jq '.files'
+curl -s "https://www.googleapis.com/drive/v3/files?q=mimeType+%3D+'application/pdf'+and+trashed+%3D+false&fields=files(id,name)" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" | jq '.files'
 ```
 
 ### Get File Metadata
@@ -87,7 +85,7 @@ bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?q=mimeType+%3D+'"'"'
 Get detailed information about a file:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}?fields=id,name,mimeType,size,createdTime,modifiedTime,owners,parents,webViewLink,webContentLink" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' | jq .
+curl -s "https://www.googleapis.com/drive/v3/files/{file-id}?fields=id,name,mimeType,size,createdTime,modifiedTime,owners,parents,webViewLink,webContentLink" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" | jq .
 ```
 
 ### Download File
@@ -95,7 +93,7 @@ bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}?fields=id,
 Download a file's content:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}?alt=media" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' > downloaded_file.bin
+curl -s "https://www.googleapis.com/drive/v3/files/{file-id}?alt=media" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" > downloaded_file.bin
 ```
 
 ### Export Google Docs
@@ -103,15 +101,15 @@ bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}?alt=media"
 Export Google Docs, Sheets, Slides to different formats:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/export?mimeType=application/pdf" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' > document.pdf
+curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/export?mimeType=application/pdf" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" > document.pdf
 ```
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/export?mimeType=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' > spreadsheet.xlsx
+curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/export?mimeType=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" > spreadsheet.xlsx
 ```
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/export?mimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' > document.docx
+curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/export?mimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" > document.docx
 ```
 
 Common export MIME types:
@@ -126,7 +124,7 @@ Common export MIME types:
 Upload a file (up to 5MB):
 
 ```bash
-bash -c 'curl -s -X POST "https://www.googleapis.com/upload/drive/v3/files?uploadType=media" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/octet-stream" --data-binary @/path/to/file.txt' | jq '{id, name, mimeType}'
+curl -s -X POST "https://www.googleapis.com/upload/drive/v3/files?uploadType=media" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/octet-stream" --data-binary @/path/to/file.txt | jq '{id, name, mimeType}'
 ```
 
 > **Note:** Simple upload creates the file with an auto-generated name ("Untitled"). Use **Update File Metadata** immediately after to set the filename.
@@ -146,7 +144,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}?fields=id,name,modifiedTime" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq '{id, name, modifiedTime}'
+curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}?fields=id,name,modifiedTime" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq '{id, name, modifiedTime}'
 ```
 
 ### Copy File
@@ -164,7 +162,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://www.googleapis.com/drive/v3/files/{file-id}/copy" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq '{id, name}'
+curl -s -X POST "https://www.googleapis.com/drive/v3/files/{file-id}/copy" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq '{id, name}'
 ```
 
 ### Move File to Trash
@@ -182,7 +180,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}?fields=id,name,trashed" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq '{id, name, trashed}'
+curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}?fields=id,name,trashed" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq '{id, name, trashed}'
 ```
 
 ### Delete File Permanently
@@ -190,7 +188,7 @@ bash -c 'curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}?f
 Permanently delete a file (cannot be restored):
 
 ```bash
-bash -c 'curl -s -X DELETE "https://www.googleapis.com/drive/v3/files/{file-id}" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"'
+curl -s -X DELETE "https://www.googleapis.com/drive/v3/files/{file-id}" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)"
 ```
 
 ---
@@ -202,7 +200,7 @@ bash -c 'curl -s -X DELETE "https://www.googleapis.com/drive/v3/files/{file-id}"
 List only folders:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?q=mimeType+%3D+'"'"'application/vnd.google-apps.folder'"'"'+and+trashed+%3D+false&fields=files(id,name,modifiedTime)" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' | jq '.files'
+curl -s "https://www.googleapis.com/drive/v3/files?q=mimeType+%3D+'application/vnd.google-apps.folder'+and+trashed+%3D+false&fields=files(id,name,modifiedTime)" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" | jq '.files'
 ```
 
 ### Create Folder
@@ -221,7 +219,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://www.googleapis.com/drive/v3/files" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq '{id, name, mimeType}'
+curl -s -X POST "https://www.googleapis.com/drive/v3/files" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq '{id, name, mimeType}'
 ```
 
 ### Create Folder in Parent Folder
@@ -241,7 +239,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://www.googleapis.com/drive/v3/files?fields=id,name,parents" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq '{id, name, parents}'
+curl -s -X POST "https://www.googleapis.com/drive/v3/files?fields=id,name,parents" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq '{id, name, parents}'
 ```
 
 ### List Files in Folder
@@ -249,7 +247,7 @@ bash -c 'curl -s -X POST "https://www.googleapis.com/drive/v3/files?fields=id,na
 List all files in a specific folder:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?q='"'"'{folder-id}'"'"'+in+parents&fields=files(id,name,mimeType,size)" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' | jq '.files'
+curl -s "https://www.googleapis.com/drive/v3/files?q='{folder-id}'+in+parents&fields=files(id,name,mimeType,size)" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" | jq '.files'
 ```
 
 ---
@@ -261,7 +259,7 @@ bash -c 'curl -s "https://www.googleapis.com/drive/v3/files?q='"'"'{folder-id}'"
 List all permissions for a file:
 
 ```bash
-bash -c 'curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/permissions?fields=permissions(id,type,role,emailAddress)" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"' | jq '.permissions'
+curl -s "https://www.googleapis.com/drive/v3/files/{file-id}/permissions?fields=permissions(id,type,role,emailAddress)" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" | jq '.permissions'
 ```
 
 ### Share with Specific User
@@ -281,7 +279,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://www.googleapis.com/drive/v3/files/{file-id}/permissions" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq '{id, type, role, emailAddress}'
+curl -s -X POST "https://www.googleapis.com/drive/v3/files/{file-id}/permissions" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq '{id, type, role, emailAddress}'
 ```
 
 ### Share with Anyone (Public Link)
@@ -300,7 +298,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://www.googleapis.com/drive/v3/files/{file-id}/permissions" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq .
+curl -s -X POST "https://www.googleapis.com/drive/v3/files/{file-id}/permissions" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq .
 ```
 
 ### Update Permission
@@ -318,7 +316,7 @@ Write to `/tmp/drive_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}/permissions/{permission-id}" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" --header "Content-Type: application/json" -d @/tmp/drive_request.json' | jq .
+curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}/permissions/{permission-id}" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/drive_request.json | jq .
 ```
 
 ### Remove Permission
@@ -326,7 +324,7 @@ bash -c 'curl -s -X PATCH "https://www.googleapis.com/drive/v3/files/{file-id}/p
 Revoke access:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://www.googleapis.com/drive/v3/files/{file-id}/permissions/{permission-id}" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"'
+curl -s -X DELETE "https://www.googleapis.com/drive/v3/files/{file-id}/permissions/{permission-id}" --header "Authorization: Bearer $(printenv GOOGLE_DRIVE_TOKEN)"
 ```
 
 Permission roles:
