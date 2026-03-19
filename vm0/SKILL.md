@@ -1,7 +1,11 @@
 ---
 name: vm0
 description: VM0 platform API for agents. Use when user mentions "VM0", "vm0 agent",
-  "deploy agent", or asks about VM0 platform operations.
+  "deploy agent", "create agent", "self update", "update myself", "add skill",
+  "remove skill", "connect to Gmail", "connect to Slack", "connect to Dropbox",
+  "access my Gmail", "access my calendar", or asks about VM0 platform operations,
+  agent configuration, connecting/integrating with external services, or
+  "connect to {service}" / "access my {service}" patterns for SaaS integrations.
 vm0_secrets:
   - VM0_TOKEN
 ---
@@ -150,46 +154,105 @@ If the yaml references secrets that don't yet exist on the platform, `compose` w
 
 ---
 
-## Self-Update Pattern
+## Operation: Self Update
 
-An agent can modify its own configuration by combining clone → edit → compose. This lets the agent update itself — adding new skills, changing instructions, or updating env vars — without any human intervention.
+**Usage:** `self update` or `update myself` or similar
 
-### 1. Clone own config
+This operation enables the agent to update itself based on user requirements.
 
-```bash
-vm0 agent clone {current-agent-name} /tmp/self-config
-```
+### Step 1: Understand the current agent
 
-### 2. Inspect current state
+Use `vm0 whoami` to learn the current agent's name, then clone it to /tmp to work with its current configuration:
 
 ```bash
-cat /tmp/self-config/vm0.yaml
-cat /tmp/self-config/AGENTS.md
+# Use npx to run vm0 commands without installation
+npx -y @vm0/cli agent clone <agent-name> /tmp/<agent-name>
+
+cat /tmp/<agent-name>/AGENTS.md
+cat /tmp/<agent-name>/vm0.yaml
 ```
 
-### 3. Edit vm0.yaml
+### Step 2: Understand User Intent
 
-For example, add a new skill:
+Ask clarifying questions to understand what the user wants to update:
+
+- What new operation should be added?
+- What existing operation needs modification?
+- What skills need to be added/removed?
+- What configuration changes are needed?
+
+### Step 3: Reference Documentation (if needed)
+
+If unsure about file formats, check the official documentation https://docs.vm0.ai/docs/reference/configuration/vm0-yaml
+
+Key vm0.yaml fields:
+
+- `version`: Configuration version (currently "1.0")
+- `agents`: Map of agent definitions
+  - `framework`: Agent framework (claude-code)
+  - `instructions`: Path to AGENTS.md
+  - `skills`: List of skill URLs
+  - `environment`: Environment variables
+
+### Step 4: Modify Configuration Files
+
+Based on user requirements, modify the appropriate files:
+
+**For AGENTS.md changes:**
+
+- Add new operation sections following the existing format
+- Update existing operations as needed
+- Ensure consistent markdown formatting
+
+**For vm0.yaml changes:**
+
+- Add/remove skills from the skills list
+
+### Step 5: Compose the Agent
+
+Deploy the updated configuration:
 
 ```bash
-# Edit /tmp/self-config/vm0.yaml to add a skill entry under skills:
-#   - https://github.com/vm0-ai/vm0-skills/tree/main/notion
+cd /tmp/<agent-name>
+npx -y @vm0/cli compose vm0.yaml
 ```
 
-Or update the instructions file:
+Note: `npx -y @vm0/cli compose` is idempotent. If configuration hasn't changed, the version hash stays the same.
+
+---
+
+## Operation: SaaS/Service Connection
+
+**Usage:** `connect to Gmail`, `access my Dropbox`, `integrate with Slack`, or similar
+
+This operation helps the user connect external SaaS services to their agent.
+
+### Step 1: Check existing skills
+
+First, follow the Self Update workflow (Steps 1) to clone the agent and inspect its `vm0.yaml`. Check if the requested service skill is already in the `skills` list.
+
+### Step 2: If skill exists
+
+Proceed with the standard connection flow — guide the user to `https://app.vm0.ai/team/<agent-name>` for connector setup.
+
+### Step 3: If skill not found
+
+Search for it in the `vm0-ai/vm0-skills` repository:
 
 ```bash
-# Edit /tmp/self-config/AGENTS.md to refine the system prompt
+# List available skills in the official repository
+gh api repos/vm0-ai/vm0-skills/contents --jq '.[].name' | grep -i {service-name}
 ```
 
-### 4. Redeploy
+### Step 4: If found in vm0-skills
 
-```bash
-cd /tmp/self-config
-vm0 compose vm0.yaml -y
-```
+Add the skill to the agent's `vm0.yaml` using the Self Update workflow (Steps 4–5), then guide the user to `https://app.vm0.ai/team/<agent-name>` for connector setup.
 
-The agent is now updated. The next run will use the new configuration.
+### Step 5: If not found anywhere
+
+Inform the user: "This service is not supported yet. Please check the [vm0-ai/vm0-skills repository](https://github.com/vm0-ai/vm0-skills) for available integrations or request a new skill."
+
+**Note:** Available skills can be browsed at https://github.com/vm0-ai/vm0-skills
 
 ---
 
