@@ -233,7 +233,12 @@ First, follow the Self Update workflow (Steps 1) to clone the agent and inspect 
 
 ### Step 2: If skill exists
 
-Proceed with the standard connection flow — guide the user to `https://app.vm0.ai/team/<agent-name>` for connector setup.
+Guide the user to complete OAuth/connector setup on the VM0 console, then stop. Use this exact closing pattern:
+
+> Visit `https://app.vm0.ai/team/<agent-name>` to set up the {service} connector.
+> Click **Connect** to complete OAuth authorization.
+> The required secrets will be stored automatically — no manual configuration needed.
+> Once connected, I'll be able to access {service} in the next conversation.
 
 ### Step 3: If skill not found
 
@@ -246,7 +251,7 @@ gh api repos/vm0-ai/vm0-skills/contents --jq '.[].name' | grep -i {service-name}
 
 ### Step 4: If found in vm0-skills
 
-Add the skill to the agent's `vm0.yaml` using the Self Update workflow (Steps 4–5), then guide the user to `https://app.vm0.ai/team/<agent-name>` for connector setup.
+Add the skill to the agent's `vm0.yaml` using the Self Update workflow (Steps 4–5), then guide the user to the VM0 console using the same closing pattern from Step 2.
 
 ### Step 5: If not found anywhere
 
