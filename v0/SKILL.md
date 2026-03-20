@@ -2,7 +2,7 @@
 name: v0
 description: v0 by Vercel AI app builder API. Use when user mentions "v0", "v0.dev", wants to generate UI components or full-stack apps with AI, or manage v0 projects, chats, and deployments programmatically.
 vm0_secrets:
-  - V0_API_KEY
+  - V0_TOKEN
 ---
 
 # v0 by Vercel API
@@ -34,12 +34,12 @@ Use this skill when you need to:
 Set the environment variable:
 
 ```bash
-export V0_API_KEY="your-api-key"
+export V0_TOKEN="your-api-key"
 ```
 
 **Daily limits:** 10,000 API requests · 1,000 chat messages · 100 deployments
 
-> **Important:** When using `$V0_API_KEY` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
+> **Important:** When using `$V0_TOKEN` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 
 ---
 
@@ -64,7 +64,7 @@ Write to `/tmp/v0_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.v0.dev/v1/chats" --header "Authorization: Bearer $(printenv V0_API_KEY)" --header "Content-Type: application/json" -d @/tmp/v0_request.json
+curl -s -X POST "https://api.v0.dev/v1/chats" --header "Authorization: Bearer $(printenv V0_TOKEN)" --header "Content-Type: application/json" -d @/tmp/v0_request.json
 ```
 
 The response includes:
@@ -90,7 +90,7 @@ Write to `/tmp/v0_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.v0.dev/v1/chats/<chat-id>/messages" --header "Authorization: Bearer $(printenv V0_API_KEY)" --header "Content-Type: application/json" -d @/tmp/v0_request.json
+curl -s -X POST "https://api.v0.dev/v1/chats/<chat-id>/messages" --header "Authorization: Bearer $(printenv V0_TOKEN)" --header "Content-Type: application/json" -d @/tmp/v0_request.json
 ```
 
 ---
@@ -100,7 +100,7 @@ curl -s -X POST "https://api.v0.dev/v1/chats/<chat-id>/messages" --header "Autho
 Fetch the full chat including generated files. Replace `<chat-id>` with the target chat ID:
 
 ```bash
-curl -s "https://api.v0.dev/v1/chats/<chat-id>" --header "Authorization: Bearer $(printenv V0_API_KEY)"
+curl -s "https://api.v0.dev/v1/chats/<chat-id>" --header "Authorization: Bearer $(printenv V0_TOKEN)"
 ```
 
 The `latestVersion.files` array contains the generated source code files.
@@ -110,7 +110,7 @@ The `latestVersion.files` array contains the generated source code files.
 ### 4. List All Chats
 
 ```bash
-bash -c 'curl -s "https://api.v0.dev/v1/chats" --header "Authorization: Bearer $V0_API_KEY"' | jq '.data[] | {id, name, webUrl}'
+bash -c 'curl -s "https://api.v0.dev/v1/chats" --header "Authorization: Bearer $V0_TOKEN"' | jq '.data[] | {id, name, webUrl}'
 ```
 
 ---
@@ -132,7 +132,7 @@ Write to `/tmp/v0_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.v0.dev/v1/projects" --header "Authorization: Bearer $(printenv V0_API_KEY)" --header "Content-Type: application/json" -d @/tmp/v0_request.json
+curl -s -X POST "https://api.v0.dev/v1/projects" --header "Authorization: Bearer $(printenv V0_TOKEN)" --header "Content-Type: application/json" -d @/tmp/v0_request.json
 ```
 
 To create a chat within a project, add `"projectId": "<project-id>"` to the chat creation request.
@@ -142,7 +142,7 @@ To create a chat within a project, add `"projectId": "<project-id>"` to the chat
 ### 6. List Projects
 
 ```bash
-bash -c 'curl -s "https://api.v0.dev/v1/projects" --header "Authorization: Bearer $V0_API_KEY"' | jq '.data[] | {id, name, privacy}'
+bash -c 'curl -s "https://api.v0.dev/v1/projects" --header "Authorization: Bearer $V0_TOKEN"' | jq '.data[] | {id, name, privacy}'
 ```
 
 ---
@@ -150,7 +150,7 @@ bash -c 'curl -s "https://api.v0.dev/v1/projects" --header "Authorization: Beare
 ### 7. List Deployments
 
 ```bash
-bash -c 'curl -s "https://api.v0.dev/v1/deployments" --header "Authorization: Bearer $V0_API_KEY"' | jq '.data[] | {id, webUrl, status}'
+bash -c 'curl -s "https://api.v0.dev/v1/deployments" --header "Authorization: Bearer $V0_TOKEN"' | jq '.data[] | {id, webUrl, status}'
 ```
 
 ---
@@ -173,7 +173,7 @@ Write to `/tmp/v0_request.json`:
 Then run:
 
 ```bash
-bash -c 'curl -s -X POST "https://api.v0.dev/v1/chat/completions" --header "Authorization: Bearer $V0_API_KEY" --header "Content-Type: application/json" -d @/tmp/v0_request.json' | jq '.choices[0].message.content'
+bash -c 'curl -s -X POST "https://api.v0.dev/v1/chat/completions" --header "Authorization: Bearer $V0_TOKEN" --header "Content-Type: application/json" -d @/tmp/v0_request.json' | jq '.choices[0].message.content'
 ```
 
 **Context window:** 128,000 tokens input · 32,000 tokens output
