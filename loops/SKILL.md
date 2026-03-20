@@ -2,7 +2,7 @@
 name: loops
 description: Loops email platform for SaaS. Use when user mentions "Loops", "Loops.so", "email marketing", "onboarding emails", "transactional email", or asks about SaaS lifecycle emails.
 vm0_secrets:
-  - LOOPS_API_KEY
+  - LOOPS_TOKEN
 ---
 
 # Loops API
@@ -20,15 +20,15 @@ Send onboarding, marketing, and transactional emails to SaaS users via Loops.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Loops**. vm0 will automatically inject the required `LOOPS_API_KEY` environment variable.
+Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Loops**. vm0 will automatically inject the required `LOOPS_TOKEN` environment variable.
 
 Alternatively, generate an API key from your Loops dashboard under **Settings > API**, then export it:
 
 ```bash
-export LOOPS_API_KEY=your_api_key_here
+export LOOPS_TOKEN=your_api_key_here
 ```
 
-> **Important:** When using `$LOOPS_API_KEY` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
+> **Important:** When using `$LOOPS_TOKEN` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 
 ## Core APIs
 
@@ -37,7 +37,7 @@ export LOOPS_API_KEY=your_api_key_here
 Verify your API key is valid:
 
 ```bash
-bash -c 'curl -s "https://app.loops.so/api/v1/api-key" --header "Authorization: Bearer $LOOPS_API_KEY"'
+bash -c 'curl -s "https://app.loops.so/api/v1/api-key" --header "Authorization: Bearer $LOOPS_TOKEN"'
 ```
 
 ---
@@ -58,7 +58,7 @@ Write to `/tmp/loops_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.loops.so/api/v1/contacts/create" --header "Authorization: Bearer $LOOPS_API_KEY" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
+bash -c 'curl -s -X POST "https://app.loops.so/api/v1/contacts/create" --header "Authorization: Bearer $LOOPS_TOKEN" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
 ```
 
 Docs: https://loops.so/docs/api-reference/create-contact
@@ -78,7 +78,7 @@ Write to `/tmp/loops_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PUT "https://app.loops.so/api/v1/contacts/update" --header "Authorization: Bearer $LOOPS_API_KEY" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
+bash -c 'curl -s -X PUT "https://app.loops.so/api/v1/contacts/update" --header "Authorization: Bearer $LOOPS_TOKEN" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
 ```
 
 ---
@@ -88,7 +88,7 @@ bash -c 'curl -s -X PUT "https://app.loops.so/api/v1/contacts/update" --header "
 Find a contact by email address. Replace `<email>` with the actual email:
 
 ```bash
-bash -c 'curl -s "https://app.loops.so/api/v1/contacts/find?email=<email>" --header "Authorization: Bearer $LOOPS_API_KEY"'
+bash -c 'curl -s "https://app.loops.so/api/v1/contacts/find?email=<email>" --header "Authorization: Bearer $LOOPS_TOKEN"'
 ```
 
 ---
@@ -104,7 +104,7 @@ Write to `/tmp/loops_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X DELETE "https://app.loops.so/api/v1/contacts/delete" --header "Authorization: Bearer $LOOPS_API_KEY" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
+bash -c 'curl -s -X DELETE "https://app.loops.so/api/v1/contacts/delete" --header "Authorization: Bearer $LOOPS_TOKEN" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
 ```
 
 ---
@@ -127,7 +127,7 @@ Write to `/tmp/loops_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.loops.so/api/v1/events/send" --header "Authorization: Bearer $LOOPS_API_KEY" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
+bash -c 'curl -s -X POST "https://app.loops.so/api/v1/events/send" --header "Authorization: Bearer $LOOPS_TOKEN" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
 ```
 
 Docs: https://loops.so/docs/api-reference/send-event
@@ -152,7 +152,7 @@ Write to `/tmp/loops_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://app.loops.so/api/v1/transactional" --header "Authorization: Bearer $LOOPS_API_KEY" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
+bash -c 'curl -s -X POST "https://app.loops.so/api/v1/transactional" --header "Authorization: Bearer $LOOPS_TOKEN" --header "Content-Type: application/json" -d @/tmp/loops_request.json'
 ```
 
 Docs: https://loops.so/docs/api-reference/send-transactional-email
@@ -162,7 +162,7 @@ Docs: https://loops.so/docs/api-reference/send-transactional-email
 ### List Transactional Emails
 
 ```bash
-bash -c 'curl -s "https://app.loops.so/api/v1/transactional" --header "Authorization: Bearer $LOOPS_API_KEY"' | jq '[.[] | {id, name}]'
+bash -c 'curl -s "https://app.loops.so/api/v1/transactional" --header "Authorization: Bearer $LOOPS_TOKEN"' | jq '[.[] | {id, name}]'
 ```
 
 ---
@@ -170,7 +170,7 @@ bash -c 'curl -s "https://app.loops.so/api/v1/transactional" --header "Authoriza
 ### List Mailing Lists
 
 ```bash
-bash -c 'curl -s "https://app.loops.so/api/v1/lists" --header "Authorization: Bearer $LOOPS_API_KEY"' | jq '[.[] | {id, name}]'
+bash -c 'curl -s "https://app.loops.so/api/v1/lists" --header "Authorization: Bearer $LOOPS_TOKEN"' | jq '[.[] | {id, name}]'
 ```
 
 ---
@@ -178,7 +178,7 @@ bash -c 'curl -s "https://app.loops.so/api/v1/lists" --header "Authorization: Be
 ### List Contact Properties
 
 ```bash
-bash -c 'curl -s "https://app.loops.so/api/v1/contacts/customFields" --header "Authorization: Bearer $LOOPS_API_KEY"' | jq '[.[] | {key, label, type}]'
+bash -c 'curl -s "https://app.loops.so/api/v1/contacts/customFields" --header "Authorization: Bearer $LOOPS_TOKEN"' | jq '[.[] | {key, label, type}]'
 ```
 
 ---

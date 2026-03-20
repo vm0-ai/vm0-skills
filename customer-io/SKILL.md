@@ -2,9 +2,9 @@
 name: customer-io
 description: Customer.io behavioral email and messaging platform. Use when user mentions "Customer.io", "behavioral emails", "lifecycle emails", "triggered messages", or asks about event-based email automation.
 vm0_secrets:
-  - CUSTOMERIO_APP_API_KEY
+  - CUSTOMERIO_APP_TOKEN
   - CUSTOMERIO_SITE_ID
-  - CUSTOMERIO_TRACK_API_KEY
+  - CUSTOMERIO_TRACK_TOKEN
 ---
 
 # Customer.io API
@@ -29,10 +29,10 @@ Alternatively, set these manually:
 ```bash
 # For tracking people and events (Pipelines API)
 export CUSTOMERIO_SITE_ID=your_site_id
-export CUSTOMERIO_TRACK_API_KEY=your_track_api_key
+export CUSTOMERIO_TRACK_TOKEN=your_track_api_key
 
 # For sending transactional messages (App API)
-export CUSTOMERIO_APP_API_KEY=your_app_api_key
+export CUSTOMERIO_APP_TOKEN=your_app_api_key
 ```
 
 Find credentials at **Workspace Settings > API & webhook credentials**.
@@ -61,7 +61,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://cdp.customer.io/v1/identify" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_API_KEY" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
+bash -c 'curl -s -X POST "https://cdp.customer.io/v1/identify" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_TOKEN" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
 ```
 
 Docs: https://docs.customer.io/integrations/data-in/connections/http-api/
@@ -87,7 +87,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://cdp.customer.io/v1/track" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_API_KEY" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
+bash -c 'curl -s -X POST "https://cdp.customer.io/v1/track" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_TOKEN" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
 ```
 
 ---
@@ -113,7 +113,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.customer.io/v1/send/email" --header "Authorization: Bearer $CUSTOMERIO_APP_API_KEY" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
+bash -c 'curl -s -X POST "https://api.customer.io/v1/send/email" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
 ```
 
 Docs: https://docs.customer.io/journeys/transactional-api-examples/
@@ -125,7 +125,7 @@ Docs: https://docs.customer.io/journeys/transactional-api-examples/
 Delete a person by their Customer.io ID. Replace `<person-id>` with the actual ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.customer.io/v1/customers/<person-id>" --header "Authorization: Bearer $CUSTOMERIO_APP_API_KEY"'
+bash -c 'curl -s -X DELETE "https://api.customer.io/v1/customers/<person-id>" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN"'
 ```
 
 ---
@@ -151,7 +151,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.customer.io/v1/customers" --header "Authorization: Bearer $CUSTOMERIO_APP_API_KEY" --header "Content-Type: application/json" -d @/tmp/cio_request.json' | jq '{results: [.results[] | {id, email: .attributes.email}]}'
+bash -c 'curl -s -X POST "https://api.customer.io/v1/customers" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" --header "Content-Type: application/json" -d @/tmp/cio_request.json' | jq '{results: [.results[] | {id, email: .attributes.email}]}'
 ```
 
 ---
@@ -159,7 +159,7 @@ bash -c 'curl -s -X POST "https://api.customer.io/v1/customers" --header "Author
 ### List Segments (App API)
 
 ```bash
-bash -c 'curl -s "https://api.customer.io/v1/segments" --header "Authorization: Bearer $CUSTOMERIO_APP_API_KEY"' | jq '[.segments[] | {id, name, type}]'
+bash -c 'curl -s "https://api.customer.io/v1/segments" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN"' | jq '[.segments[] | {id, name, type}]'
 ```
 
 ---
