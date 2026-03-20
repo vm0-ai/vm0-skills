@@ -28,17 +28,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at https://resend.com
-2. Go to API Keys: https://resend.com/api-keys
-3. Create a new API key
+Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Resend**. vm0 will automatically inject the required `RESEND_TOKEN` environment variable.
 
-Set environment variable:
-
-```bash
-export RESEND_TOKEN="re_xxxxxxxxx"
-```
-
-> **Placeholders:** Values in `{curly-braces}` like `{email-id}` are placeholders. Replace them with actual values when executing.
+> **Important:** When using `$RESEND_TOKEN` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 
 ---
 
@@ -111,7 +103,7 @@ Write to `/tmp/resend_request.json`:
 {
   "from": "Acme <onboarding@resend.dev>",
   "to": ["<your-recipient-email>"],
-  "replyTo": "<your-reply-to-email>",
+  "reply_to": "<your-reply-to-email>",
   "subject": "<your-subject>",
   "html": "<p><your-html-content></p>"
 }
@@ -135,7 +127,7 @@ Write to `/tmp/resend_request.json`:
   "to": ["<your-recipient-email>"],
   "subject": "<your-subject>",
   "html": "<p><your-html-content></p>",
-  "scheduledAt": "in 1 hour"
+  "scheduled_at": "in 1 hour"
 }
 ```
 
@@ -203,8 +195,8 @@ Write to `/tmp/resend_request.json`:
 ```json
 {
   "email": "<your-contact-email>",
-  "firstName": "<your-first-name>",
-  "lastName": "<your-last-name>",
+  "first_name": "<your-first-name>",
+  "last_name": "<your-last-name>",
   "unsubscribed": false
 }
 ```
@@ -222,8 +214,8 @@ Write to `/tmp/resend_request.json`:
 ```json
 {
   "email": "<your-contact-email>",
-  "firstName": "<your-first-name>",
-  "lastName": "<your-last-name>",
+  "first_name": "<your-first-name>",
+  "last_name": "<your-last-name>",
   "properties": {
     "company": "<your-company-name>",
     "role": "<your-role>"
@@ -261,7 +253,7 @@ Write to `/tmp/resend_request.json`:
 
 ```json
 {
-  "firstName": "<your-new-first-name>",
+  "first_name": "<your-new-first-name>",
   "unsubscribed": true
 }
 ```
@@ -384,8 +376,8 @@ curl -s -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>" --header "
 | `text` | string | Plain text content |
 | `cc` | string[] | CC recipients |
 | `bcc` | string[] | BCC recipients |
-| `replyTo` | string | Reply-to address |
-| `scheduledAt` | string | Schedule time (ISO 8601 or natural language) |
+| `reply_to` | string | Reply-to address |
+| `scheduled_at` | string | Schedule time (ISO 8601 or natural language) |
 | `tags` | array | Custom tags for tracking |
 | `attachments` | array | File attachments (max 40MB total) |
 
@@ -411,7 +403,7 @@ curl -s -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>" --header "
 2. **Sender Domain**: Use verified domains for production; `onboarding@resend.dev` for testing
 3. **Batch Emails**: Use `/emails/batch` for sending to multiple recipients efficiently
 4. **Idempotency**: Use `Idempotency-Key` header to prevent duplicate sends
-5. **Scheduling**: Use natural language (`in 1 hour`) or ISO 8601 format for `scheduledAt`
+5. **Scheduling**: Use natural language (`in 1 hour`) or ISO 8601 format for `scheduled_at`
 
 ---
 
