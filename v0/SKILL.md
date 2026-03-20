@@ -69,7 +69,8 @@ curl -s -X POST "https://api.v0.dev/v1/chats" --header "Authorization: Bearer $(
 
 The response includes:
 - `id` — chat ID (used for follow-up messages)
-- `webUrl` — shareable preview link
+- `webUrl` — link to the chat on v0.app
+- `latestVersion.demoUrl` — live sandbox preview of the generated app
 - `latestVersion.files` — generated source files
 
 ---
@@ -109,7 +110,7 @@ The `latestVersion.files` array contains the generated source code files.
 ### 4. List All Chats
 
 ```bash
-bash -c 'curl -s "https://api.v0.dev/v1/chats" --header "Authorization: Bearer $V0_API_KEY"' | jq '.data[] | {id, webUrl, text}'
+bash -c 'curl -s "https://api.v0.dev/v1/chats" --header "Authorization: Bearer $V0_API_KEY"' | jq '.data[] | {id, name, webUrl}'
 ```
 
 ---
@@ -183,6 +184,6 @@ bash -c 'curl -s -X POST "https://api.v0.dev/v1/chat/completions" --header "Auth
 
 1. **Premium plan required**: API access requires a v0 Premium or Team subscription with Vercel usage-based billing enabled
 2. **Iterate with follow-ups**: Use `POST /chats/<id>/messages` to refine code — it preserves full conversation context and is more token-efficient than creating a new chat
-3. **webUrl is the live preview**: Each chat response contains a `webUrl` you can share to preview the generated app
+3. **demoUrl is the live preview**: Each chat response contains `latestVersion.demoUrl` — the live sandbox URL to preview the generated app; `webUrl` is the link to the v0.app chat interface
 4. **Use projects for organization**: Group related chats under a project (via `projectId`) to share instructions and context across conversations
 5. **Rate limits**: 1,000 chat messages and 100 deployments per day — prefer iterating within existing chats over creating new ones
