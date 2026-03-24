@@ -959,6 +959,13 @@
       "source": "./",
       "strict": false,
       "skills": ["./customer-intel", "./research-synthesis"]
+    },
+    {
+      "name": "zero-slack",
+      "description": "Slack integration via vm0 API. Use this skill when Zero agents need to do anything with Slack — send messages, post notifications, interact with channels, or any Slack-related task through the vm0 platform.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./zero-slack"]
     }
   ]
 }
