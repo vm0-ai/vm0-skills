@@ -4,7 +4,7 @@ description: Instagram API for posts and media. Use when user mentions "Instagra
   "instagram.com", shares an IG link, "Instagram post", or asks about social media
   content.
 vm0_secrets:
-  - INSTAGRAM_ACCESS_TOKEN
+  - INSTAGRAM_TOKEN
 vm0_vars:
   - INSTAGRAM_BUSINESS_ACCOUNT_ID
 ---
@@ -33,13 +33,13 @@ Use this skill when you need to:
 1. You must have an **Instagram Business / Creator account** linked to a **Facebook Page**
 2. Create an app in Facebook Developers and enable **Instagram Basic Display / Instagram Graph API** permissions
 3. Obtain:
-  - `INSTAGRAM_ACCESS_TOKEN`: a long-lived user access token
+  - `INSTAGRAM_TOKEN`: a long-lived user access token
   - `INSTAGRAM_BUSINESS_ACCOUNT_ID`: your Instagram Business account ID
 
 Set the environment variables, for example:
 
 ```bash
-export INSTAGRAM_ACCESS_TOKEN="EAAG..."
+export INSTAGRAM_TOKEN="EAAG..."
 export INSTAGRAM_BUSINESS_ACCOUNT_ID="1784140xxxxxxx"
 ```
 
@@ -61,7 +61,7 @@ Depending on which endpoints you use, make sure your app has requested and been 
 All examples below assume you have already set:
 
 ```bash
-INSTAGRAM_ACCESS_TOKEN
+INSTAGRAM_TOKEN
 INSTAGRAM_BUSINESS_ACCOUNT_ID
 ```
 
@@ -70,7 +70,7 @@ INSTAGRAM_BUSINESS_ACCOUNT_ID
 Fetch the most recent media (photos / videos / Reels) for the account:
 
 ```bash
-curl -s -X GET "https://graph.facebook.com/v21.0/$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)/media?fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer $(printenv INSTAGRAM_ACCESS_TOKEN)"
+curl -s -X GET "https://graph.facebook.com/v21.0/$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)/media?fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer $(printenv INSTAGRAM_TOKEN)"
 ```
 
 **Notes:**
@@ -91,7 +91,7 @@ curl -s -X GET "https://graph.facebook.com/v21.0/$(printenv INSTAGRAM_BUSINESS_A
 If you already have a media `id`, you can fetch more complete information. Replace `<your-media-id>` with the `id` field from the "Get User Media" response (section 1 above):
 
 ```bash
-curl -s -X GET "https://graph.facebook.com/v21.0/<your-media-id>?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" --header "Authorization: Bearer $(printenv INSTAGRAM_ACCESS_TOKEN)"
+curl -s -X GET "https://graph.facebook.com/v21.0/<your-media-id>?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" --header "Authorization: Bearer $(printenv INSTAGRAM_TOKEN)"
 ```
 
 ---
@@ -107,7 +107,7 @@ This usually involves two steps:
 Replace `<hashtag-name>` with any hashtag name you want to search for (without the # symbol), e.g., "travel", "food", "photography":
 
 ```bash
-curl -s -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)&q=<hashtag-name>" --header "Authorization: Bearer $(printenv INSTAGRAM_ACCESS_TOKEN)"
+curl -s -X GET "https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)&q=<hashtag-name>" --header "Authorization: Bearer $(printenv INSTAGRAM_TOKEN)"
 ```
 
 Note the `id` field in the returned JSON for use in the next step.
@@ -117,7 +117,7 @@ Note the `id` field in the returned JSON for use in the next step.
 Replace `<hashtag-id>` with the `id` field from the "Search Hashtag" response (section 3.1 above):
 
 ```bash
-curl -s -X GET "https://graph.facebook.com/v21.0/<hashtag-id>/recent_media?user_id=$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)&fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer $(printenv INSTAGRAM_ACCESS_TOKEN)"
+curl -s -X GET "https://graph.facebook.com/v21.0/<hashtag-id>/recent_media?user_id=$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)&fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer $(printenv INSTAGRAM_TOKEN)"
 ```
 
 ---
@@ -143,7 +143,7 @@ Write the request data to `/tmp/request.json`:
 Replace `https://example.com/image.jpg` with any publicly accessible image URL and update the caption text as needed.
 
 ```bash
-curl -s -X POST "https://graph.facebook.com/v21.0/$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)/media" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer $(printenv INSTAGRAM_ACCESS_TOKEN)"
+curl -s -X POST "https://graph.facebook.com/v21.0/$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)/media" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer $(printenv INSTAGRAM_TOKEN)"
 ```
 
 The response will contain an `id` (media container ID), for example:
@@ -169,7 +169,7 @@ Write the request data to `/tmp/request.json`:
 Replace `<your-creation-id>` with the `id` field from the "Create Media Container" response (section 4.1 above):
 
 ```bash
-curl -s -X POST "https://graph.facebook.com/v21.0/$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)/media_publish" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer $(printenv INSTAGRAM_ACCESS_TOKEN)"
+curl -s -X POST "https://graph.facebook.com/v21.0/$(printenv INSTAGRAM_BUSINESS_ACCOUNT_ID)/media_publish" -H "Content-Type: application/json" -d @/tmp/request.json --header "Authorization: Bearer $(printenv INSTAGRAM_TOKEN)"
 ```
 
 If successful, the response will contain the final media `id`:
@@ -192,7 +192,7 @@ You can then use the "Get details for a single media" command to fetch its `perm
   - Check:
   - Whether the app has been reviewed / approved
   - Whether the required Instagram permissions are enabled
-  - Whether `INSTAGRAM_ACCESS_TOKEN` is a valid long-lived token
+  - Whether `INSTAGRAM_TOKEN` is a valid long-lived token
 
 2. **Unsupported account type**
 
@@ -206,7 +206,7 @@ You can then use the "Get details for a single media" command to fetch its `perm
 
 ## Guidelines
 
-1. **Do not log tokens**: `INSTAGRAM_ACCESS_TOKEN` is sensitive; avoid printing it in logs or chat transcripts
+1. **Do not log tokens**: `INSTAGRAM_TOKEN` is sensitive; avoid printing it in logs or chat transcripts
 2. **Validate curl commands in a test environment first**: confirm flows before wiring them into automation / agents
 3. **Keep API version up to date**: periodically check Facebook docs and update the `v21.0` version in URLs to the latest
 4. **Use placeholder text for IDs**: all examples use placeholder text like `<your-media-id>` instead of shell variables in URLs to avoid dependencies and make examples self-contained
