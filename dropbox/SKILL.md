@@ -21,9 +21,6 @@ Manage files and folders in Dropbox using the HTTP API v2.
 - Move, copy, and rename files
 - Get file metadata and sharing links
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### Get Current Account

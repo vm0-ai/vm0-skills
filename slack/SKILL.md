@@ -19,9 +19,6 @@ Send messages, read channels, and interact with Slack workspaces.
 - List channels and users
 - Add reactions to messages
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### List Channels

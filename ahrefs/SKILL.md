@@ -20,9 +20,6 @@ Access SEO data including backlink profiles, domain ratings, organic keywords, a
 - Get site traffic estimates
 - Monitor competitor SEO metrics
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### Get Domain Rating

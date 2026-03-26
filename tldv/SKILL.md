@@ -26,9 +26,6 @@ Use this skill when you need to:
 
 ---
 
-## Prerequisites
-
-
 ---
 
 ## How to Use

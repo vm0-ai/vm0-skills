@@ -21,9 +21,6 @@ Manage leads, contacts, opportunities, tasks, and activities in Close CRM.
 - View activities (calls, emails, notes, meetings)
 - Get current user and organization info
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### Get Current User

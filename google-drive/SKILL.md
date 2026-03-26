@@ -31,9 +31,6 @@ Use this skill when you need to:
 
 ---
 
-## Prerequisites
-
-
 ---
 
 > **Placeholders:** Values in `{curly-braces}` like `{file-id}` are placeholders. Replace them with actual values when executing.

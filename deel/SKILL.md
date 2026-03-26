@@ -20,9 +20,6 @@ Manage contracts, people, time off, and organization data with the Deel REST API
 - Access organization and team information
 - View invoice adjustments and payslips
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### List Contracts

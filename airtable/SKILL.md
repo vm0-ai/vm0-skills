@@ -21,9 +21,6 @@ Manage bases, tables, records, and comments in Airtable.
 - Read and write record comments
 - Get current user info
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### Get Current User

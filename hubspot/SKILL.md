@@ -20,9 +20,6 @@ Manage contacts, companies, deals, tickets, and their associations with the HubS
 - Search and filter CRM records
 - List pipeline stages for deals and tickets
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### List Contacts

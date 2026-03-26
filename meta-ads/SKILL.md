@@ -27,9 +27,6 @@ Use this skill when you need to:
 
 ---
 
-## Prerequisites
-
-
 ---
 
 > **Placeholders:** Values in `{curly-braces}` like `{ad-account-id}` are placeholders. Replace them with actual values when executing. Ad account IDs must be prefixed with `act_` (e.g., `act_123456789`).

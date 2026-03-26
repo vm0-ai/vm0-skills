@@ -20,9 +20,6 @@ Manage tasks, projects, sections, labels, and comments with the Todoist REST API
 - List and filter tasks by project or label
 - Manage projects (create, update, delete)
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### Get All Projects

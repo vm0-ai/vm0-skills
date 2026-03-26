@@ -20,9 +20,6 @@ Manage serverless Postgres projects, branches, databases, roles, and compute end
 - Start/stop and configure compute endpoints
 - Get connection URIs for databases
 
-## Prerequisites
-
-
 ## Core APIs
 
 ### List Projects
