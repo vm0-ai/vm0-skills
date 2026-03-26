@@ -4,7 +4,7 @@ description: X (Twitter) API for tweets and profiles. Use when user mentions "X"
   "Twitter", "x.com", "twitter.com", shares a tweet link, "check X", or asks about
   social media posts.
 vm0_secrets:
-  - X_ACCESS_TOKEN
+  - X_TOKEN
 ---
 
 # X (Twitter) API
@@ -33,7 +33,7 @@ Use this skill when you need to:
 Verify authentication:
 
 ```bash
-curl -s "https://api.x.com/2/users/me" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .
+curl -s "https://api.x.com/2/users/me" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .
 ```
 
 ### Available Scopes
@@ -57,7 +57,7 @@ Base URL: `https://api.x.com/2`
 Get the profile of the currently authenticated user:
 
 ```bash
-curl -s "https://api.x.com/2/users/me?user.fields=id,name,username,description,profile_image_url,public_metrics,created_at,verified" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .data
+curl -s "https://api.x.com/2/users/me?user.fields=id,name,username,description,profile_image_url,public_metrics,created_at,verified" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .data
 ```
 
 ---
@@ -71,7 +71,7 @@ Get a user's profile by their username:
 ```bash
 USERNAME="elonmusk"
 
-curl -s "https://api.x.com/2/users/by/username/$USERNAME?user.fields=id,name,username,description,public_metrics,created_at,verified,profile_image_url" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .data
+curl -s "https://api.x.com/2/users/by/username/$USERNAME?user.fields=id,name,username,description,public_metrics,created_at,verified,profile_image_url" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .data
 ```
 
 ---
@@ -85,7 +85,7 @@ Get a user's profile by their user ID:
 ```bash
 USER_ID="12345"
 
-curl -s "https://api.x.com/2/users/$USER_ID?user.fields=id,name,username,description,public_metrics,created_at" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .data
+curl -s "https://api.x.com/2/users/$USER_ID?user.fields=id,name,username,description,public_metrics,created_at" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .data
 ```
 
 ---
@@ -97,7 +97,7 @@ Get profiles for multiple users at once (up to 100):
 > **Note:** Replace the IDs with actual user IDs, comma-separated.
 
 ```bash
-curl -s "https://api.x.com/2/users?ids=12345,67890&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .data
+curl -s "https://api.x.com/2/users?ids=12345,67890&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .data
 ```
 
 ---
@@ -111,7 +111,7 @@ Get details of a specific tweet:
 ```bash
 TWEET_ID="1234567890"
 
-curl -s "https://api.x.com/2/tweets/$TWEET_ID?tweet.fields=created_at,public_metrics,author_id,conversation_id,lang&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .
+curl -s "https://api.x.com/2/tweets/$TWEET_ID?tweet.fields=created_at,public_metrics,author_id,conversation_id,lang&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .
 ```
 
 ---
@@ -123,7 +123,7 @@ Get details for multiple tweets at once (up to 100):
 > **Note:** Replace the IDs with actual tweet IDs, comma-separated.
 
 ```bash
-curl -s "https://api.x.com/2/tweets?ids=1234567890,0987654321&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .
+curl -s "https://api.x.com/2/tweets?ids=1234567890,0987654321&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .
 ```
 
 ---
@@ -137,7 +137,7 @@ Get recent tweets posted by a user:
 ```bash
 USER_ID="12345"
 
-curl -s "https://api.x.com/2/users/$USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&expansions=referenced_tweets.id" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
+curl -s "https://api.x.com/2/users/$USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&expansions=referenced_tweets.id" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
 ```
 
 Query parameters:
@@ -158,7 +158,7 @@ Get recent tweets that mention a user:
 ```bash
 USER_ID="12345"
 
-curl -s "https://api.x.com/2/users/$USER_ID/mentions?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq '.data[] | {id, text: .text[0:120], author: .author_id, created_at}'
+curl -s "https://api.x.com/2/users/$USER_ID/mentions?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq '.data[] | {id, text: .text[0:120], author: .author_id, created_at}'
 ```
 
 ---
@@ -172,7 +172,7 @@ Get the authenticated user's home timeline (tweets from people they follow):
 ```bash
 USER_ID="12345"
 
-curl -s "https://api.x.com/2/users/$USER_ID/timelines/reverse_chronological?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq '.data[] | {id, text: .text[0:120], created_at}'
+curl -s "https://api.x.com/2/users/$USER_ID/timelines/reverse_chronological?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq '.data[] | {id, text: .text[0:120], created_at}'
 ```
 
 ---
@@ -184,7 +184,7 @@ Search for tweets from the past 7 days:
 > **Note:** Replace the query with your search terms. The query supports operators like `from:`, `to:`, `has:`, `-is:retweet`, etc.
 
 ```bash
-curl -s -G "https://api.x.com/2/tweets/search/recent" --data-urlencode "query=openai lang:en -is:retweet" --data-urlencode "max_results=10" --data-urlencode "tweet.fields=created_at,public_metrics,author_id,text" --data-urlencode "expansions=author_id" --data-urlencode "user.fields=name,username" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
+curl -s -G "https://api.x.com/2/tweets/search/recent" --data-urlencode "query=openai lang:en -is:retweet" --data-urlencode "max_results=10" --data-urlencode "tweet.fields=created_at,public_metrics,author_id,text" --data-urlencode "expansions=author_id" --data-urlencode "user.fields=name,username" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
 ```
 
 Common search operators:
@@ -209,7 +209,7 @@ Get a list of users who follow a specific user:
 ```bash
 USER_ID="12345"
 
-curl -s "https://api.x.com/2/users/$USER_ID/followers?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
+curl -s "https://api.x.com/2/users/$USER_ID/followers?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
 ```
 
 ---
@@ -223,7 +223,7 @@ Get a list of users that a specific user follows:
 ```bash
 USER_ID="12345"
 
-curl -s "https://api.x.com/2/users/$USER_ID/following?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
+curl -s "https://api.x.com/2/users/$USER_ID/following?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
 ```
 
 ---
@@ -233,7 +233,7 @@ curl -s "https://api.x.com/2/users/$USER_ID/following?max_results=20&user.fields
 Most list endpoints support pagination via `pagination_token`. Check the `meta.next_token` field in the response:
 
 ```bash
-curl -s "https://api.x.com/2/tweets/search/recent?query=example&max_results=10" --header "Authorization: Bearer $(printenv X_ACCESS_TOKEN)" | jq .meta
+curl -s "https://api.x.com/2/tweets/search/recent?query=example&max_results=10" --header "Authorization: Bearer $(printenv X_TOKEN)" | jq .meta
 ```
 
 Use the returned `next_token` value as `pagination_token` in the next request to get more results.
