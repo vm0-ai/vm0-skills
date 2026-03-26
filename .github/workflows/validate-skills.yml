@@ -107,3 +107,18 @@ jobs:
 
           echo ""
           echo "All SKILL.md files are valid."
+
+      - name: Ban _ACCESS_TOKEN naming
+        run: |
+          set -euo pipefail
+
+          # Skills should use XXX_TOKEN, not XXX_ACCESS_TOKEN.
+          # The _ACCESS_TOKEN form is an internal OAuth secret name that
+          # gets mapped to XXX_TOKEN via environmentMapping.
+          if grep -rn '_ACCESS_TOKEN' --include='SKILL.md' .; then
+            echo ""
+            echo "::error::Found _ACCESS_TOKEN references in SKILL.md files. Use XXX_TOKEN instead (e.g. GITHUB_TOKEN, not GITHUB_ACCESS_TOKEN)."
+            exit 1
+          fi
+
+          echo "No _ACCESS_TOKEN references found. ✓"
