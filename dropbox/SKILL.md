@@ -23,7 +23,6 @@ Manage files and folders in Dropbox using the HTTP API v2.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Dropbox**. vm0 will automatically inject the required `DROPBOX_TOKEN` environment variable.
 
 ## Core APIs
 

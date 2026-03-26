@@ -22,7 +22,6 @@ Manage contacts, companies, deals, tickets, and their associations with the HubS
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **HubSpot**. vm0 will automatically inject the required `HUBSPOT_TOKEN` environment variable.
 
 ## Core APIs
 

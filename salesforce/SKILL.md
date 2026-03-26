@@ -21,7 +21,6 @@ Manage Contacts, Leads, Accounts, and Opportunities via the Salesforce REST API.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Salesforce**. vm0 will automatically inject the required `SALESFORCE_TOKEN` and `SALESFORCE_INSTANCE_URL` environment variables.
 
 > **Important:** When using `$VAR` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 
@@ -138,7 +137,7 @@ bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/search?q=FIND+%7B
 
 ## Guidelines
 
-1. **Token expiry**: If you receive `401 INVALID_SESSION_ID`, the token has expired — reconnect Salesforce in vm0 **Settings → Connectors** to refresh it.
+1. **Token expiry**: If you receive `401 INVALID_SESSION_ID`, the token has expired.
 2. **API version**: Uses `/v60.0/` (Spring '26). Check supported versions at `$SALESFORCE_INSTANCE_URL/services/data/`.
 3. **Object IDs**: Contact IDs start with `003`, Account IDs with `001`, Lead IDs with `00Q`, Opportunity IDs with `006`.
 4. **SOQL strings**: Single-quote string values in WHERE clauses, URL-encoded as `%27` (e.g., `WHERE+Email=%27user@example.com%27`).

@@ -29,8 +29,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Connect your Sentry account at [vm0 Settings > Connectors](https://app.vm0.ai/settings/connectors) and click **sentry**
-2. The `SENTRY_TOKEN` environment variable is automatically configured
 
 Verify authentication:
 

@@ -23,7 +23,6 @@ This Skill helps you manage GitHub operations using the `gh` CLI, including repo
 
 ## Authentication
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **GitHub**. vm0 will automatically inject the required token.
 
 Verify with:
 ```bash
@@ -133,7 +132,7 @@ gh pr view <number> --repo <owner>/<repo> --json title,state,reviews,checks
 
 ## Prerequisites
 
-This Skill requires the GitHub CLI (`gh`) to be installed. Token is automatically provided by vm0 — connect GitHub in [vm0.ai](https://vm0.ai) **Settings → Connectors**.
+This Skill requires the GitHub CLI (`gh`) to be installed.
 
 When piping output to other commands like `jq`, use `$(printenv VAR)` for environment variables:
 ```bash

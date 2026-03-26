@@ -22,7 +22,6 @@ Manage contacts, blog posts, store products, and orders on a connected Wix site.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Wix**. vm0 will automatically inject the required `WIX_TOKEN` environment variable.
 
 > **Note:** The CRM Contacts, Blog, Store, and Orders APIs are only available if the corresponding features are enabled on the Wix site. A blank site will return 404 for these endpoints.
 

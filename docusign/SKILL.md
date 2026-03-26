@@ -28,7 +28,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **DocuSign**. vm0 will automatically inject the required `DOCUSIGN_TOKEN` environment variable.
 
 > **Important:** DocuSign API requires a `base_uri` and `account_id` obtained from the userinfo endpoint. Always call "Get User Info" first to determine the correct base URI and account ID before making API calls.
 

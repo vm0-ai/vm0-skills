@@ -22,7 +22,6 @@ Access SEO data including backlink profiles, domain ratings, organic keywords, a
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Ahrefs**. vm0 will automatically inject the required `AHREFS_TOKEN` environment variable.
 
 ## Core APIs
 

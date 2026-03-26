@@ -22,7 +22,6 @@ Manage audiences (lists), campaigns, templates, and subscribers with the Mailchi
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Mailchimp**. vm0 will automatically inject the required `MAILCHIMP_TOKEN` environment variable.
 
 ### Datacenter
 

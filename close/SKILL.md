@@ -23,7 +23,6 @@ Manage leads, contacts, opportunities, tasks, and activities in Close CRM.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Close**. vm0 will automatically inject the required `CLOSE_TOKEN` environment variable.
 
 ## Core APIs
 

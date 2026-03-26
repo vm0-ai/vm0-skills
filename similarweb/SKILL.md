@@ -22,7 +22,6 @@ Analyze website traffic, engagement metrics, traffic sources, keywords, and comp
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **SimilarWeb** by entering your API key. vm0 will automatically inject the required `SIMILARWEB_TOKEN` environment variable.
 
 > **Note:** SimilarWeb REST API passes the API key as a query parameter (`api_key`). The Batch API uses the `api-key` header instead.
 

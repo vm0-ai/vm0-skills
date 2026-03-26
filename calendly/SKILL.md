@@ -21,7 +21,6 @@ Read scheduling data, list event types, retrieve scheduled meetings, and access 
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Calendly**. vm0 will automatically inject the required `CALENDLY_TOKEN` environment variable.
 
 Alternatively, generate a Personal Access Token from your Calendly account under **Integrations > API & Webhooks**, then export it:
 

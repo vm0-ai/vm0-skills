@@ -22,7 +22,6 @@ Send behavioral emails, SMS, and push notifications triggered by user events. Tw
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Customer.io**. vm0 will automatically inject the required environment variables.
 
 Alternatively, set these manually:
 

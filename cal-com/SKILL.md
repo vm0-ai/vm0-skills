@@ -20,7 +20,6 @@ Manage bookings, event types, and availability via the Cal.com REST API v2.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Cal.com**. vm0 will automatically inject the required `CALCOM_TOKEN` environment variable.
 
 Alternatively, generate an API key from your Cal.com account under **Settings > Security > API Keys** (key is prefixed with `cal_live_`), then export it:
 

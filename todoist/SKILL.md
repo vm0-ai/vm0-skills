@@ -22,7 +22,6 @@ Manage tasks, projects, sections, labels, and comments with the Todoist REST API
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Todoist**. vm0 will automatically inject the required `TODOIST_TOKEN` environment variable.
 
 ## Core APIs
 

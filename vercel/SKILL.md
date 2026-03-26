@@ -28,8 +28,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Connect your Vercel account at [vm0 Settings > Connectors](https://app.vm0.ai/settings/connectors) and click **vercel**
-2. The `VERCEL_TOKEN` environment variable is automatically configured
 
 Verify authentication:
 

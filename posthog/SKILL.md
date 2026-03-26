@@ -32,8 +32,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Connect your PostHog account at [vm0 Settings > Connectors](https://app.vm0.ai/settings/connectors) and click **posthog**
-2. The `POSTHOG_TOKEN` environment variable is automatically configured
 
 ### Discovering Your Project ID
 

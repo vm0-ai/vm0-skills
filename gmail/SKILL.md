@@ -29,7 +29,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Gmail**. vm0 will automatically inject the required `GMAIL_TOKEN` environment variable.
 
 ---
 

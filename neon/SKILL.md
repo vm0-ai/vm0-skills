@@ -22,7 +22,6 @@ Manage serverless Postgres projects, branches, databases, roles, and compute end
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Neon**. vm0 will automatically inject the required `NEON_TOKEN` environment variable.
 
 ## Core APIs
 

@@ -27,7 +27,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Gamma**. vm0 will automatically inject the required `GAMMA_TOKEN` environment variable.
 
 > **Important:** When using `$GAMMA_TOKEN` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 

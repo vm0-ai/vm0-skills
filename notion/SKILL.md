@@ -21,7 +21,6 @@ Manage pages, databases, and content blocks in Notion workspaces.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Notion**. vm0 will automatically inject the required `NOTION_TOKEN` environment variable.
 
 **Important**: Share pages/databases with the integration via "Add connections" in Notion.
 

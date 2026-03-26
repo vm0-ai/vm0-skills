@@ -21,7 +21,6 @@ Send transactional emails, SMS, and marketing campaigns. Manage contacts and lis
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Brevo**. vm0 will automatically inject the required `BREVO_TOKEN` environment variable.
 
 Alternatively, generate an API key from your Brevo account under **Settings > SMTP & API > API Keys**, then export it:
 

@@ -233,7 +233,7 @@ VM0 agents are designed for **scheduled execution** - the same prompt runs repea
   - Processing: Filter top content + AI summarization + categorize
   - Output: Slack / Notion / Email
   - Skills: hackernews, youtube, x, slack, notion, agentmail
-  - Note: If user wants Twitter/X as a data source, recommend `vm0-ai/vm0-skills/x` — it uses the official X API v2 (read-only: search tweets, view timelines, user profiles). The token is obtained via VM0 connector (Settings → Connectors → X).
+  - Note: If user wants Twitter/X as a data source, recommend `vm0-ai/vm0-skills/x` — it uses the official X API v2 (read-only: search tweets, view timelines, user profiles).
 
 - **Option 2: Repository Weekly Report** - Summarize GitHub/GitLab activity (PRs, issues, commits) into a team report
   - Data sources: GitHub PRs / Issues / Commits
@@ -267,7 +267,7 @@ After the user selects an option, use 1-5 follow-up questions to refine the deta
 
 When users mention specific data sources, proactively recommend the corresponding vm0-skills:
 
-- **Twitter / X**: Recommend `vm0-ai/vm0-skills/x` — official X API v2, supports search tweets, timelines, user profiles (read-only). Token via VM0 connector (Settings → Connectors → X).
+- **Twitter / X**: Recommend `vm0-ai/vm0-skills/x` — official X API v2, supports search tweets, timelines, user profiles (read-only).
 - **HackerNews**: Recommend `vm0-ai/vm0-skills/hackernews`
 - **GitHub**: Recommend `vm0-ai/vm0-skills/github`
 

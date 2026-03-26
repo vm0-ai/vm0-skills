@@ -26,7 +26,6 @@ Manage Prisma Postgres projects, databases, connections, backups, and usage metr
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Prisma Postgres**. vm0 will automatically inject the required `PRISMA_POSTGRES_TOKEN` environment variable.
 
 To obtain a token manually:
 

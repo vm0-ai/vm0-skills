@@ -20,7 +20,6 @@ Send onboarding, marketing, and transactional emails to SaaS users via Loops.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Loops**. vm0 will automatically inject the required `LOOPS_TOKEN` environment variable.
 
 Alternatively, generate an API key from your Loops dashboard under **Settings > API**, then export it:
 

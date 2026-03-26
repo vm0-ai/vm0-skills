@@ -21,7 +21,6 @@ Send messages, read channels, and interact with Slack workspaces.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Slack**. vm0 will automatically inject the required `SLACK_TOKEN` environment variable.
 
 ## Core APIs
 

@@ -23,7 +23,6 @@ Manage payments, customers, subscriptions, and billing with the Stripe API.
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings > Connectors** and connect **Stripe**. vm0 will automatically inject the required `STRIPE_TOKEN` environment variable.
 
 ## Important: Stripe Uses Form-Encoded Bodies
 

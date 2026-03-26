@@ -29,7 +29,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Go to [vm0.ai](https://vm0.ai) **Settings → Connectors** and connect **Meta Ads**. vm0 will automatically inject the required `META_ADS_TOKEN` environment variable.
 
 ---
 

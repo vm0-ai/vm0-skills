@@ -28,8 +28,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Connect your Intervals.icu account at [vm0 Settings > Connectors](https://app.vm0.ai/settings/connectors) and click **intervals-icu**
-2. The `INTERVALS_ICU_TOKEN` environment variable is automatically configured
 
 Verify authentication and get your athlete ID:
 
