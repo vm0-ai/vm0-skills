@@ -1,7 +1,10 @@
 ---
 name: agentmail
-description: AgentMail API for email inboxes. Use when user says "create email inbox",
-  "send email", "check messages", or mentions "agentmail" or email for agents.
+description: AgentMail API for creating inboxes, sending/receiving messages, managing
+  threads, configuring webhooks, handling attachments, and verifying domains. Use when
+  user says "create email inbox", "send email", "check messages", "receive email",
+  "email automation", "read mailbox", "reply to email", "email webhook", or mentions
+  "agentmail" or email for agents.
 vm0_secrets:
   - AGENTMAIL_TOKEN
 ---
