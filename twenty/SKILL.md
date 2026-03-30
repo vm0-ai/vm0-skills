@@ -4,8 +4,6 @@ description: Twenty CRM API for customer management. Use when user mentions "Twe
   "Twenty CRM", "open source CRM", or asks about Twenty.
 vm0_secrets:
   - TWENTY_TOKEN
-vm0_vars:
-  - TWENTY_API_URL
 ---
 
 # Twenty CRM
@@ -37,12 +35,7 @@ Use this skill when you need to:
 Set environment variables:
 
 ```bash
-# For Twenty Cloud
 export TWENTY_TOKEN="your-api-key"
-export TWENTY_API_URL="https://api.twenty.com"
-
-# For self-hosted instances
-export TWENTY_API_URL="https://your-domain.com"
 ```
 
 ---
@@ -52,13 +45,13 @@ export TWENTY_API_URL="https://your-domain.com"
 ### 1. List Companies
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/companies" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.companies[:3]'
+curl -s -X GET "https://api.twenty.com/rest/companies" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.companies[:3]'
 ```
 
 **With pagination:**
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/companies?limit=10&offset=0" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.companies'
+curl -s -X GET "https://api.twenty.com/rest/companies?limit=10&offset=0" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.companies'
 ```
 
 ### 2. Create a Company
@@ -76,13 +69,13 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv TWENTY_API_URL)/rest/companies" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
+curl -s -X POST "https://api.twenty.com/rest/companies" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
 ```
 
 ### 3. List People (Contacts)
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/people" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.people[:3]'
+curl -s -X GET "https://api.twenty.com/rest/people" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.people[:3]'
 ```
 
 ### 4. Create a Person
@@ -103,7 +96,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv TWENTY_API_URL)/rest/people" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
+curl -s -X POST "https://api.twenty.com/rest/people" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
 ```
 
 ### 5. Get a Specific Record
@@ -112,10 +105,10 @@ curl -s -X POST "$(printenv TWENTY_API_URL)/rest/people" --header "Authorization
 
 ```bash
 # Get company by ID
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/companies/{companyId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
+curl -s -X GET "https://api.twenty.com/rest/companies/{companyId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
 
 # Get person by ID
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/people/{personId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
+curl -s -X GET "https://api.twenty.com/rest/people/{personId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
 ```
 
 ### 6. Update a Record
@@ -134,7 +127,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-curl -s -X PATCH "$(printenv TWENTY_API_URL)/rest/companies/{companyId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
+curl -s -X PATCH "https://api.twenty.com/rest/companies/{companyId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
 ```
 
 ### 7. Delete a Record
@@ -142,13 +135,13 @@ curl -s -X PATCH "$(printenv TWENTY_API_URL)/rest/companies/{companyId}" --heade
 > **Note:** Replace `{companyId}` with an actual company ID from the "List Companies" endpoint above.
 
 ```bash
-curl -s -X DELETE "$(printenv TWENTY_API_URL)/rest/companies/{companyId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
+curl -s -X DELETE "https://api.twenty.com/rest/companies/{companyId}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
 ```
 
 ### 8. List Notes
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/notes" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.notes[:3]'
+curl -s -X GET "https://api.twenty.com/rest/notes" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.notes[:3]'
 ```
 
 ### 9. Create a Note
@@ -165,13 +158,13 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv TWENTY_API_URL)/rest/notes" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
+curl -s -X POST "https://api.twenty.com/rest/notes" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
 ```
 
 ### 10. List Tasks
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/tasks" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.tasks[:3]'
+curl -s -X GET "https://api.twenty.com/rest/tasks" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.tasks[:3]'
 ```
 
 ### 11. Create a Task
@@ -189,7 +182,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv TWENTY_API_URL)/rest/tasks" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
+curl -s -X POST "https://api.twenty.com/rest/tasks" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json
 ```
 
 ### 12. Get Metadata (Object Schema)
@@ -197,13 +190,13 @@ curl -s -X POST "$(printenv TWENTY_API_URL)/rest/tasks" --header "Authorization:
 List all object types and their fields:
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/metadata/objects" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.objects[] | {name: .nameSingular, fields: [.fields[].name]}'
+curl -s -X GET "https://api.twenty.com/rest/metadata/objects" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.objects[] | {name: .nameSingular, fields: [.fields[].name]}'
 ```
 
 **Get metadata for a specific object:**
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/metadata/objects/companies" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
+curl -s -X GET "https://api.twenty.com/rest/metadata/objects/companies" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)"
 ```
 
 ### 13. GraphQL Query
@@ -219,7 +212,7 @@ Write to `/tmp/twenty_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv TWENTY_API_URL)/graphql" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json | jq '.data.companies.edges'
+curl -s -X POST "https://api.twenty.com/graphql" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/twenty_request.json | jq '.data.companies.edges'
 ```
 
 ---
@@ -253,7 +246,7 @@ curl -s -X POST "$(printenv TWENTY_API_URL)/graphql" --header "Authorization: Be
 **Example with filters:**
 
 ```bash
-curl -s -X GET "$(printenv TWENTY_API_URL)/rest/companies?filter={\"name\":{\"like\":\"%Acme%\"}}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.companies'
+curl -s -X GET "https://api.twenty.com/rest/companies?filter={\"name\":{\"like\":\"%Acme%\"}}" --header "Authorization: Bearer $(printenv TWENTY_TOKEN)" | jq '.data.companies'
 ```
 
 ---

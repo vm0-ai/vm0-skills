@@ -3,10 +3,9 @@ name: chatwoot
 description: Chatwoot API for customer support. Use when user mentions "Chatwoot",
   "conversations", "support chat", or customer messaging.
 vm0_secrets:
-  - CHATWOOT_API_TOKEN
+  - CHATWOOT_TOKEN
 vm0_vars:
   - CHATWOOT_ACCOUNT_ID
-  - CHATWOOT_BASE_URL
 ---
 
 # Chatwoot
@@ -36,9 +35,8 @@ Use this skill when you need to:
 3. Note your Account ID from the URL (e.g., `/app/accounts/1/...`)
 
 ```bash
-export CHATWOOT_API_TOKEN="your-api-access-token"
+export CHATWOOT_TOKEN="your-api-access-token"
 export CHATWOOT_ACCOUNT_ID="1"
-export CHATWOOT_BASE_URL="https://app.chatwoot.com" # or your self-hosted URL
 ```
 
 ### API Types
@@ -80,7 +78,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/contacts" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
+curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/contacts" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
 ---
@@ -90,7 +88,7 @@ curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWO
 Search contacts by email, phone, or name:
 
 ```bash
-curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/contacts/search?q=john@example.com" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" | jq '.payload[] | {id, name, email}'
+curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/contacts/search?q=john@example.com" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" | jq '.payload[] | {id, name, email}'
 ```
 
 ---
@@ -100,7 +98,7 @@ curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOO
 Get a specific contact by ID. Replace `<contact-id>` with the actual contact ID from the "Search Contacts" or "Create a Contact" response:
 
 ```bash
-curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/contacts/<contact-id>" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)"
+curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/contacts/<contact-id>" -H "api_access_token: $(printenv CHATWOOT_TOKEN)"
 ```
 
 ---
@@ -126,7 +124,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
+curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
 ---
@@ -137,7 +135,7 @@ Get all conversations with optional filters:
 
 ```bash
 # List open conversations
-curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations?status=open" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" | jq '.data.payload[] | {id, status, contact: .meta.sender.name}'
+curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations?status=open" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" | jq '.data.payload[] | {id, status, contact: .meta.sender.name}'
 ```
 
 ---
@@ -147,7 +145,7 @@ curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOO
 Get details of a specific conversation. Replace `<conversation-id>` with the actual conversation ID from the "List Conversations" or "Create a Conversation" response:
 
 ```bash
-curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)"
+curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>" -H "api_access_token: $(printenv CHATWOOT_TOKEN)"
 ```
 
 ---
@@ -169,7 +167,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/messages" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
+curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/messages" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
 ---
@@ -191,7 +189,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/messages" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
+curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/messages" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
 ---
@@ -211,7 +209,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/assignments" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
+curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/assignments" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
 ---
@@ -231,7 +229,7 @@ Write to `/tmp/chatwoot_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/toggle_status" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
+curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/<conversation-id>/toggle_status" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
 ---
@@ -241,7 +239,7 @@ curl -s -X POST "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWO
 Get all agents in the account:
 
 ```bash
-curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/agents" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" | jq '.[] | {id, name, email, role, availability_status}'
+curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/agents" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" | jq '.[] | {id, name, email, role, availability_status}'
 ```
 
 ---
@@ -251,7 +249,7 @@ curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOO
 Get all inboxes (channels) in the account:
 
 ```bash
-curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/inboxes" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" | jq '.payload[] | {id, name, channel_type}'
+curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/inboxes" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" | jq '.payload[] | {id, name, channel_type}'
 ```
 
 ---
@@ -261,7 +259,7 @@ curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOO
 Get counts by status for dashboard:
 
 ```bash
-curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/meta" -H "api_access_token: $(printenv CHATWOOT_API_TOKEN)" | jq '.meta.all_count, .meta.mine_count'
+curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$(printenv CHATWOOT_ACCOUNT_ID)/conversations/meta" -H "api_access_token: $(printenv CHATWOOT_TOKEN)" | jq '.meta.all_count, .meta.mine_count'
 ```
 
 ---
@@ -326,5 +324,5 @@ curl -s -X GET "$(printenv CHATWOOT_BASE_URL)/api/v1/accounts/$(printenv CHATWOO
 3. **Inbox ID is required**: Get inbox IDs first with the list inboxes endpoint
 4. **Use source_id for conversations**: Required to create conversations via API
 5. **Private messages**: Set `private: true` for internal notes
-6. **Self-hosted**: Change `CHATWOOT_BASE_URL` to your instance URL
+6. **Cloud only**: This skill uses the Chatwoot Cloud API at `https://app.chatwoot.com`
 7. **Webhooks recommended**: Use webhooks for real-time updates instead of polling

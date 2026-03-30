@@ -3,7 +3,8 @@ name: salesforce
 description: Salesforce CRM REST API. Use when user mentions "Salesforce", "SFDC", "Salesforce CRM", "leads", "opportunities", "SOQL", or asks about enterprise CRM data.
 vm0_secrets:
   - SALESFORCE_TOKEN
-  - SALESFORCE_INSTANCE_URL
+vm0_vars:
+  - SALESFORCE_INSTANCE
 ---
 
 # Salesforce REST API
@@ -29,7 +30,7 @@ Manage Contacts, Leads, Accounts, and Opportunities via the Salesforce REST API.
 ### Query Contacts (SOQL)
 
 ```bash
-bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/query?q=SELECT+Id,FirstName,LastName,Email,Phone+FROM+Contact+LIMIT+20" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.records[] | {Id, FirstName, LastName, Email, Phone}]'
+bash -c 'curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/query?q=SELECT+Id,FirstName,LastName,Email,Phone+FROM+Contact+LIMIT+20" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.records[] | {Id, FirstName, LastName, Email, Phone}]'
 ```
 
 Docs: https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_query.htm
@@ -41,7 +42,7 @@ Docs: https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/d
 Replace `<email>` with the email address to search for:
 
 ```bash
-bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/query?q=SELECT+Id,FirstName,LastName,Email+FROM+Contact+WHERE+Email=%27<email>%27+LIMIT+5" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.records[] | {Id, FirstName, LastName, Email}]'
+bash -c 'curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/query?q=SELECT+Id,FirstName,LastName,Email+FROM+Contact+WHERE+Email=%27<email>%27+LIMIT+5" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.records[] | {Id, FirstName, LastName, Email}]'
 ```
 
 ---
@@ -51,7 +52,7 @@ bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/query?q=SELECT+Id
 Replace `<contact-id>` with the Salesforce Contact ID (18-char string starting with `003`):
 
 ```bash
-bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/sobjects/Contact/<contact-id>" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '{Id, FirstName, LastName, Email, Phone, AccountId}'
+bash -c 'curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Contact/<contact-id>" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '{Id, FirstName, LastName, Email, Phone, AccountId}'
 ```
 
 ---
@@ -72,7 +73,7 @@ Write to `/tmp/sf_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "$SALESFORCE_INSTANCE_URL/services/data/v60.0/sobjects/Contact/" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json' | jq '{id, success}'
+bash -c 'curl -s -X POST "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Contact/" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json' | jq '{id, success}'
 ```
 
 ---
@@ -91,7 +92,7 @@ Write to `/tmp/sf_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X PATCH "$SALESFORCE_INSTANCE_URL/services/data/v60.0/sobjects/Contact/<contact-id>" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json' -w "\nHTTP Status: %{http_code}\n"
+bash -c 'curl -s -X PATCH "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Contact/<contact-id>" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json' -w "\nHTTP Status: %{http_code}\n"
 ```
 
 ---
@@ -112,7 +113,7 @@ Write to `/tmp/sf_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "$SALESFORCE_INSTANCE_URL/services/data/v60.0/sobjects/Lead/" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json' | jq '{id, success}'
+bash -c 'curl -s -X POST "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Lead/" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json' | jq '{id, success}'
 ```
 
 ---
@@ -120,7 +121,7 @@ bash -c 'curl -s -X POST "$SALESFORCE_INSTANCE_URL/services/data/v60.0/sobjects/
 ### Query Accounts
 
 ```bash
-bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/query?q=SELECT+Id,Name,Industry,AnnualRevenue+FROM+Account+LIMIT+20" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.records[] | {Id, Name, Industry, AnnualRevenue}]'
+bash -c 'curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/query?q=SELECT+Id,Name,Industry,AnnualRevenue+FROM+Account+LIMIT+20" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.records[] | {Id, Name, Industry, AnnualRevenue}]'
 ```
 
 ---
@@ -130,7 +131,7 @@ bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/query?q=SELECT+Id
 Search across multiple objects. Replace `<search-term>`:
 
 ```bash
-bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/search?q=FIND+%7B<search-term>%7D+IN+ALL+FIELDS+RETURNING+Contact(Id,Name,Email),Lead(Id,Name,Email)" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.searchRecords[] | {Id, Name, type: .attributes.type}]'
+bash -c 'curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/search?q=FIND+%7B<search-term>%7D+IN+ALL+FIELDS+RETURNING+Contact(Id,Name,Email),Lead(Id,Name,Email)" --header "Authorization: Bearer $SALESFORCE_TOKEN"' | jq '[.searchRecords[] | {Id, Name, type: .attributes.type}]'
 ```
 
 ---
@@ -138,7 +139,7 @@ bash -c 'curl -s "$SALESFORCE_INSTANCE_URL/services/data/v60.0/search?q=FIND+%7B
 ## Guidelines
 
 1. **Token expiry**: If you receive `401 INVALID_SESSION_ID`, the token has expired.
-2. **API version**: Uses `/v60.0/` (Spring '26). Check supported versions at `$SALESFORCE_INSTANCE_URL/services/data/`.
+2. **API version**: Uses `/v60.0/` (Spring '26). Check supported versions at `https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/`.
 3. **Object IDs**: Contact IDs start with `003`, Account IDs with `001`, Lead IDs with `00Q`, Opportunity IDs with `006`.
 4. **SOQL strings**: Single-quote string values in WHERE clauses, URL-encoded as `%27` (e.g., `WHERE+Email=%27user@example.com%27`).
 5. **Upsert**: Use `PATCH /sobjects/Contact/<external-field>/<value>` to upsert by an external ID field.

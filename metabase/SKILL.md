@@ -4,6 +4,8 @@ description: Metabase API for business intelligence. Use when user mentions "Met
   "dashboard", "BI", "SQL query", or data visualization.
 vm0_secrets:
   - METABASE_TOKEN
+vm0_vars:
+  - METABASE_BASE_URL
 ---
 
 # Metabase API
@@ -37,11 +39,8 @@ Use this skill when you need to:
 
 ```bash
 export METABASE_TOKEN="your-api-key"
+export METABASE_BASE_URL="https://mycompany.metabaseapp.com"  # or your self-hosted URL
 ```
-
-### Base URL
-
-Replace `METABASE_URL` in all examples with your Metabase instance URL (e.g., `https://your-instance.metabase.com`). For Metabase Cloud, this is typically `https://your-instance.metabaseapp.com`.
 
 ---
 
@@ -56,7 +55,7 @@ All examples below assume you have `METABASE_TOKEN` set. Authentication uses the
 Retrieve information about the authenticated user.
 
 ```bash
-curl -s "METABASE_URL/api/user/current" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq .
+curl -s "$(printenv METABASE_BASE_URL)/api/user/current" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq .
 ```
 
 ---
@@ -66,7 +65,7 @@ curl -s "METABASE_URL/api/user/current" --header "x-api-key: $(printenv METABASE
 Retrieve all connected databases.
 
 ```bash
-curl -s "METABASE_URL/api/database" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name, engine}'
+curl -s "$(printenv METABASE_BASE_URL)/api/database" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name, engine}'
 ```
 
 ---
@@ -76,7 +75,7 @@ curl -s "METABASE_URL/api/database" --header "x-api-key: $(printenv METABASE_TOK
 Retrieve details of a specific database including its tables.
 
 ```bash
-curl -s "METABASE_URL/api/database/DATABASE_ID?include=tables" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq .
+curl -s "$(printenv METABASE_BASE_URL)/api/database/DATABASE_ID?include=tables" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq .
 ```
 
 ---
@@ -100,7 +99,7 @@ Write to `/tmp/metabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "METABASE_URL/api/dataset" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq '{columns: [.data.cols[].name], row_count: .row_count}'
+curl -s -X POST "$(printenv METABASE_BASE_URL)/api/dataset" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq '{columns: [.data.cols[].name], row_count: .row_count}'
 ```
 
 ---
@@ -110,7 +109,7 @@ curl -s -X POST "METABASE_URL/api/dataset" --header "Content-Type: application/j
 Retrieve all saved questions.
 
 ```bash
-curl -s "METABASE_URL/api/card" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, display, database_id}'
+curl -s "$(printenv METABASE_BASE_URL)/api/card" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, display, database_id}'
 ```
 
 ---
@@ -120,7 +119,7 @@ curl -s "METABASE_URL/api/card" --header "x-api-key: $(printenv METABASE_TOKEN)"
 Retrieve a specific card (question) by ID.
 
 ```bash
-curl -s "METABASE_URL/api/card/CARD_ID" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{id, name, display, dataset_query}'
+curl -s "$(printenv METABASE_BASE_URL)/api/card/CARD_ID" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{id, name, display, dataset_query}'
 ```
 
 ---
@@ -130,7 +129,7 @@ curl -s "METABASE_URL/api/card/CARD_ID" --header "x-api-key: $(printenv METABASE
 Execute a saved question and return its results.
 
 ```bash
-curl -s -X POST "METABASE_URL/api/card/CARD_ID/query" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{columns: [.data.cols[].name], row_count: .row_count}'
+curl -s -X POST "$(printenv METABASE_BASE_URL)/api/card/CARD_ID/query" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{columns: [.data.cols[].name], row_count: .row_count}'
 ```
 
 ---
@@ -160,7 +159,7 @@ Write to `/tmp/metabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "METABASE_URL/api/card" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq '{id, name}'
+curl -s -X POST "$(printenv METABASE_BASE_URL)/api/card" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq '{id, name}'
 ```
 
 ---
@@ -181,7 +180,7 @@ Write to `/tmp/metabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "METABASE_URL/api/card/CARD_ID" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq .
+curl -s -X PUT "$(printenv METABASE_BASE_URL)/api/card/CARD_ID" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq .
 ```
 
 ---
@@ -191,7 +190,7 @@ curl -s -X PUT "METABASE_URL/api/card/CARD_ID" --header "Content-Type: applicati
 Retrieve all dashboards.
 
 ```bash
-curl -s "METABASE_URL/api/dashboard" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, collection_id}'
+curl -s "$(printenv METABASE_BASE_URL)/api/dashboard" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, collection_id}'
 ```
 
 ---
@@ -201,7 +200,7 @@ curl -s "METABASE_URL/api/dashboard" --header "x-api-key: $(printenv METABASE_TO
 Retrieve a dashboard with all its cards.
 
 ```bash
-curl -s "METABASE_URL/api/dashboard/DASHBOARD_ID" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{id, name, dashcards: [.dashcards[] | {id, card_id, card: .card.name}]}'
+curl -s "$(printenv METABASE_BASE_URL)/api/dashboard/DASHBOARD_ID" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{id, name, dashcards: [.dashcards[] | {id, card_id, card: .card.name}]}'
 ```
 
 ---
@@ -211,7 +210,7 @@ curl -s "METABASE_URL/api/dashboard/DASHBOARD_ID" --header "x-api-key: $(printen
 Create a new dashboard.
 
 ```bash
-curl -s -X POST "METABASE_URL/api/dashboard" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d '{"name":"My Dashboard","collection_id":null}' | jq '{id, name}'
+curl -s -X POST "$(printenv METABASE_BASE_URL)/api/dashboard" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d '{"name":"My Dashboard","collection_id":null}' | jq '{id, name}'
 ```
 
 ---
@@ -235,7 +234,7 @@ Write to `/tmp/metabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "METABASE_URL/api/dashboard/DASHBOARD_ID/cards" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq .
+curl -s -X POST "$(printenv METABASE_BASE_URL)/api/dashboard/DASHBOARD_ID/cards" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d @/tmp/metabase_request.json | jq .
 ```
 
 ---
@@ -245,7 +244,7 @@ curl -s -X POST "METABASE_URL/api/dashboard/DASHBOARD_ID/cards" --header "Conten
 Retrieve all collections (folders for organizing content).
 
 ```bash
-curl -s "METABASE_URL/api/collection" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, location}'
+curl -s "$(printenv METABASE_BASE_URL)/api/collection" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, location}'
 ```
 
 ---
@@ -255,7 +254,7 @@ curl -s "METABASE_URL/api/collection" --header "x-api-key: $(printenv METABASE_T
 Retrieve all items in a specific collection.
 
 ```bash
-curl -s "METABASE_URL/api/collection/COLLECTION_ID/items" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name, model}'
+curl -s "$(printenv METABASE_BASE_URL)/api/collection/COLLECTION_ID/items" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name, model}'
 ```
 
 ---
@@ -265,7 +264,7 @@ curl -s "METABASE_URL/api/collection/COLLECTION_ID/items" --header "x-api-key: $
 Create a new collection for organizing dashboards and questions.
 
 ```bash
-curl -s -X POST "METABASE_URL/api/collection" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d '{"name":"My Collection","parent_id":null}' | jq '{id, name}'
+curl -s -X POST "$(printenv METABASE_BASE_URL)/api/collection" --header "Content-Type: application/json" --header "x-api-key: $(printenv METABASE_TOKEN)" -d '{"name":"My Collection","parent_id":null}' | jq '{id, name}'
 ```
 
 ---
@@ -275,13 +274,13 @@ curl -s -X POST "METABASE_URL/api/collection" --header "Content-Type: applicatio
 Search across cards, dashboards, and collections.
 
 ```bash
-curl -s "METABASE_URL/api/search?q=revenue" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name, model, collection}'
+curl -s "$(printenv METABASE_BASE_URL)/api/search?q=revenue" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name, model, collection}'
 ```
 
 Filter by model type:
 
 ```bash
-curl -s "METABASE_URL/api/search?q=revenue&models=card" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name}'
+curl -s "$(printenv METABASE_BASE_URL)/api/search?q=revenue&models=card" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, name}'
 ```
 
 ---
@@ -291,7 +290,7 @@ curl -s "METABASE_URL/api/search?q=revenue&models=card" --header "x-api-key: $(p
 Retrieve all users in the Metabase instance.
 
 ```bash
-curl -s "METABASE_URL/api/user" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, email, first_name, last_name, is_active}'
+curl -s "$(printenv METABASE_BASE_URL)/api/user" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.data[] | {id, email, first_name, last_name, is_active}'
 ```
 
 ---
@@ -301,7 +300,7 @@ curl -s "METABASE_URL/api/user" --header "x-api-key: $(printenv METABASE_TOKEN)"
 List all permission groups.
 
 ```bash
-curl -s "METABASE_URL/api/permissions/group" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, member_count}'
+curl -s "$(printenv METABASE_BASE_URL)/api/permissions/group" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '.[] | {id, name, member_count}'
 ```
 
 ---
@@ -311,14 +310,14 @@ curl -s "METABASE_URL/api/permissions/group" --header "x-api-key: $(printenv MET
 Retrieve metadata for a specific table including columns and types.
 
 ```bash
-curl -s "METABASE_URL/api/table/TABLE_ID/query_metadata" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{name, fields: [.fields[] | {name, base_type, semantic_type}]}'
+curl -s "$(printenv METABASE_BASE_URL)/api/table/TABLE_ID/query_metadata" --header "x-api-key: $(printenv METABASE_TOKEN)" | jq '{name, fields: [.fields[] | {name, base_type, semantic_type}]}'
 ```
 
 ---
 
 ## Guidelines
 
-1. **Instance URL**: Replace `METABASE_URL` with your actual Metabase instance URL in all requests
+1. **Instance URL**: Set `METABASE_BASE_URL` to your Metabase instance URL
 2. **API keys vs sessions**: API keys (via `x-api-key` header) are recommended over session tokens for programmatic access
 3. **Database IDs**: Most query operations require a database ID. Use the list databases endpoint to find IDs
 4. **Native vs structured queries**: The dataset endpoint supports both `native` (raw SQL) and `query` (structured MBQL) query types
