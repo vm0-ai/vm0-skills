@@ -24,15 +24,7 @@ Manage audiences (lists), campaigns, templates, and subscribers with the Mailchi
 
 ### Datacenter
 
-Mailchimp API URLs are datacenter-specific: `https://<dc>.api.mailchimp.com/3.0`. Before making any API calls, determine the datacenter and store it in `MC_DC`:
-
-**If using an API key** (format `xxxxx-us21`, dc is the suffix after `-`):
-
-```bash
-MC_DC=$(printenv MAILCHIMP_TOKEN | sed 's/.*-//')
-```
-
-**If using an OAuth token** (opaque string, no dc suffix):
+Mailchimp API URLs are datacenter-specific: `https://<dc>.api.mailchimp.com/3.0`. Before making any API calls, determine the datacenter via the metadata endpoint:
 
 ```bash
 MC_DC=$(curl -s "https://login.mailchimp.com/oauth2/metadata" -H "Authorization: OAuth $(printenv MAILCHIMP_TOKEN)" | jq -r '.dc')
@@ -249,7 +241,7 @@ curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/lists" --header "Authori
 
 ## Guidelines
 
-1. **Datacenter routing**: Always determine `MC_DC` first (see Prerequisites). API key embeds dc as suffix; OAuth tokens require a metadata endpoint call
+1. **Datacenter routing**: Always determine `MC_DC` first via the metadata endpoint (see Prerequisites)
 2. **Subscriber hash**: Member endpoints use MD5 hash of lowercase email as the identifier
 3. **Status values**: subscribed, unsubscribed, cleaned, pending, transactional
 4. **Campaign types**: regular, plaintext, absplit, rss, variate
