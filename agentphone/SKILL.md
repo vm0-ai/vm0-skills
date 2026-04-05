@@ -58,7 +58,7 @@ Sign up at [agentphone.to](https://agentphone.to). Your API key will look like `
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/agents \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Support Bot",
@@ -89,7 +89,7 @@ curl -X POST https://api.agentphone.to/v1/agents \
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/numbers \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "country": "US",
@@ -117,7 +117,7 @@ Your agent now has a phone number. It can receive inbound calls immediately.
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/calls \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "agentId": "agent_abc123",
@@ -147,7 +147,7 @@ The AI will hold the entire conversation autonomously based on your prompt. Chec
 
 ```bash
 curl https://api.agentphone.to/v1/calls/call_def456/transcript \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 **Response:**
@@ -209,7 +209,7 @@ Always use **E.164 format** for phone numbers: `+` followed by country code and 
 All API requests require your API key in the `Authorization` header:
 
 ```
-Authorization: Bearer $agent_phone_token
+Authorization: Bearer $AGENTPHONE_TOKEN
 ```
 
 Get your API key at [agentphone.to](https://agentphone.to).
@@ -225,7 +225,7 @@ Get a complete snapshot of your account: agents, phone numbers, webhook status, 
 
 ```bash
 curl https://api.agentphone.to/v1/usage \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 **Response:**
@@ -249,7 +249,7 @@ curl https://api.agentphone.to/v1/usage \
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/agents \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Sales Agent",
@@ -290,7 +290,7 @@ curl -X POST https://api.agentphone.to/v1/agents \
 
 ```bash
 curl "https://api.agentphone.to/v1/agents?limit=20" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 | Parameter | Type | Required | Default | Description |
@@ -301,7 +301,7 @@ curl "https://api.agentphone.to/v1/agents?limit=20" \
 
 ```bash
 curl https://api.agentphone.to/v1/agents/AGENT_ID \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 Returns the agent with its phone numbers and voice configuration.
@@ -312,7 +312,7 @@ Only provided fields are updated — everything else stays the same.
 
 ```bash
 curl -X PATCH https://api.agentphone.to/v1/agents/AGENT_ID \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Updated Bot",
@@ -336,7 +336,7 @@ curl -X PATCH https://api.agentphone.to/v1/agents/AGENT_ID \
 
 ```bash
 curl -X DELETE https://api.agentphone.to/v1/agents/AGENT_ID \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 **Response:**
@@ -353,7 +353,7 @@ curl -X DELETE https://api.agentphone.to/v1/agents/AGENT_ID \
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/agents/AGENT_ID/numbers \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"numberId": "pn_xyz789"}'
 ```
@@ -366,7 +366,7 @@ curl -X POST https://api.agentphone.to/v1/agents/AGENT_ID/numbers \
 
 ```bash
 curl -X DELETE https://api.agentphone.to/v1/agents/AGENT_ID/numbers/NUMBER_ID \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### List Agent Conversations
@@ -375,7 +375,7 @@ Get SMS conversations for a specific agent.
 
 ```bash
 curl "https://api.agentphone.to/v1/agents/AGENT_ID/conversations?limit=20" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### List Agent Calls
@@ -384,7 +384,7 @@ Get calls for a specific agent.
 
 ```bash
 curl "https://api.agentphone.to/v1/agents/AGENT_ID/calls?limit=20" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### List Available Voices
@@ -393,7 +393,7 @@ See all available voice options for agents. Use the `voice_id` when creating or 
 
 ```bash
 curl https://api.agentphone.to/v1/agents/voices \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 **Response:**
@@ -415,7 +415,7 @@ curl https://api.agentphone.to/v1/agents/voices \
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/numbers \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "country": "US",
@@ -447,7 +447,7 @@ curl -X POST https://api.agentphone.to/v1/numbers \
 
 ```bash
 curl "https://api.agentphone.to/v1/numbers?limit=20" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 | Parameter | Type | Required | Default | Description |
@@ -477,7 +477,7 @@ curl "https://api.agentphone.to/v1/numbers?limit=20" \
 
 ```bash
 curl -X DELETE https://api.agentphone.to/v1/numbers/NUMBER_ID \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 
@@ -893,7 +893,7 @@ GET /v1/calls
 
 ```bash
 curl -X GET "https://api.agentphone.to/v1/calls?limit=10&offset=0" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 **Response:**
@@ -933,7 +933,7 @@ GET /v1/calls/{call_id}
 
 ```bash
 curl -X GET "https://api.agentphone.to/v1/calls/call_ghi012" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 **Response:**
@@ -992,7 +992,7 @@ POST /v1/calls
 
 ```bash
 curl -X POST "https://api.agentphone.to/v1/calls" \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "agentId": "agt_abc123",
@@ -1012,14 +1012,14 @@ GET /v1/numbers/{number_id}/calls
 
 ```bash
 curl -X GET "https://api.agentphone.to/v1/numbers/num_xyz789/calls?limit=10" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### Get Call Transcript
 
 ```bash
 curl https://api.agentphone.to/v1/calls/CALL_ID/transcript \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 
@@ -1029,7 +1029,7 @@ curl https://api.agentphone.to/v1/calls/CALL_ID/transcript \
 
 ```bash
 curl "https://api.agentphone.to/v1/numbers/NUMBER_ID/messages?limit=50" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 | Parameter | Type | Required | Default | Description |
@@ -1061,7 +1061,7 @@ Conversations are threaded SMS exchanges between your number and an external con
 
 ```bash
 curl "https://api.agentphone.to/v1/conversations?limit=20" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 | Parameter | Type | Required | Default | Description |
@@ -1092,7 +1092,7 @@ Get a specific conversation with its message history.
 
 ```bash
 curl "https://api.agentphone.to/v1/conversations/CONVERSATION_ID?messageLimit=50" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 | Parameter | Type | Required | Default | Description |
@@ -1108,7 +1108,7 @@ The project-level webhook receives events for **all agents** unless overridden b
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/webhooks \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://your-server.com/webhook",
@@ -1139,7 +1139,7 @@ curl -X POST https://api.agentphone.to/v1/webhooks \
 
 ```bash
 curl https://api.agentphone.to/v1/webhooks \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### Delete Webhook
@@ -1148,21 +1148,21 @@ Agents with their own webhook are not affected.
 
 ```bash
 curl -X DELETE https://api.agentphone.to/v1/webhooks \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### Get Webhook Delivery Stats
 
 ```bash
 curl "https://api.agentphone.to/v1/webhooks/deliveries/stats?hours=24" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### List Recent Deliveries
 
 ```bash
 curl "https://api.agentphone.to/v1/webhooks/deliveries?limit=10" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### Test Webhook
@@ -1171,7 +1171,7 @@ Send a test event to verify your webhook is working.
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/webhooks/test \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 
@@ -1183,7 +1183,7 @@ Route a specific agent's events to a different URL. When set, the agent's events
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/agents/AGENT_ID/webhook \
-  -H "Authorization: Bearer $agent_phone_token" \
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "url": "https://your-server.com/agent-webhook",
@@ -1195,7 +1195,7 @@ curl -X POST https://api.agentphone.to/v1/agents/AGENT_ID/webhook \
 
 ```bash
 curl https://api.agentphone.to/v1/agents/AGENT_ID/webhook \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### Delete Agent Webhook
@@ -1204,14 +1204,14 @@ Events fall back to the project-level webhook.
 
 ```bash
 curl -X DELETE https://api.agentphone.to/v1/agents/AGENT_ID/webhook \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### Test Agent Webhook
 
 ```bash
 curl -X POST https://api.agentphone.to/v1/agents/AGENT_ID/webhook/test \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 
@@ -1219,7 +1219,7 @@ curl -X POST https://api.agentphone.to/v1/agents/AGENT_ID/webhook/test \
 
 ```bash
 curl https://api.agentphone.to/v1/usage \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 **Response:**
@@ -1240,14 +1240,14 @@ curl https://api.agentphone.to/v1/usage \
 
 ```bash
 curl "https://api.agentphone.to/v1/usage/daily?days=7" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 #### Monthly Breakdown
 
 ```bash
 curl "https://api.agentphone.to/v1/usage/monthly?months=3" \
-  -H "Authorization: Bearer $agent_phone_token"
+  -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
 
