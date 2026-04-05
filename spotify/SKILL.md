@@ -41,7 +41,7 @@ Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Spo
 ### Get Current User Profile
 
 ```bash
-curl -s "https://api.spotify.com/v1/me" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '{id, display_name, email, product, followers: .followers.total}'
+curl -s "https://api.spotify.com/v1/me" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '{id, display_name, email, product, followers: .followers.total}'
 ```
 
 ---
@@ -56,13 +56,13 @@ Write to `/tmp/spotify_query.txt`:
 ```
 
 ```bash
-curl -s -G "https://api.spotify.com/v1/search" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" --data-urlencode "q@/tmp/spotify_query.txt" --data-urlencode "type=track,artist,album" -d "limit=5" | jq '{tracks: [.tracks.items[]? | {id, name, artists: [.artists[].name], album: .album.name, uri}], artists: [.artists.items[]? | {id, name, genres, uri}]}'
+curl -s -G "https://api.spotify.com/v1/search" --header "Authorization: Bearer $SPOTIFY_TOKEN" --data-urlencode "q@/tmp/spotify_query.txt" --data-urlencode "type=track,artist,album" -d "limit=5" | jq '{tracks: [.tracks.items[]? | {id, name, artists: [.artists[].name], album: .album.name, uri}], artists: [.artists.items[]? | {id, name, genres, uri}]}'
 ```
 
 To search for playlists only:
 
 ```bash
-curl -s -G "https://api.spotify.com/v1/search" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" --data-urlencode "q@/tmp/spotify_query.txt" --data-urlencode "type=playlist" -d "limit=5" | jq '[.playlists.items[]? | {id, name, owner: .owner.display_name, tracks: .tracks.total, uri}]'
+curl -s -G "https://api.spotify.com/v1/search" --header "Authorization: Bearer $SPOTIFY_TOKEN" --data-urlencode "q@/tmp/spotify_query.txt" --data-urlencode "type=playlist" -d "limit=5" | jq '[.playlists.items[]? | {id, name, owner: .owner.display_name, tracks: .tracks.total, uri}]'
 ```
 
 ---
@@ -76,7 +76,7 @@ Requires scope: `user-top-read`.
 `time_range` options: `short_term` (4 weeks), `medium_term` (6 months), `long_term` (all time).
 
 ```bash
-curl -s "https://api.spotify.com/v1/me/top/tracks?limit=20&time_range=medium_term" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '[.items[] | {name, artists: [.artists[].name], album: .album.name, uri}]'
+curl -s "https://api.spotify.com/v1/me/top/tracks?limit=20&time_range=medium_term" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.items[] | {name, artists: [.artists[].name], album: .album.name, uri}]'
 ```
 
 ### Get Top Artists
@@ -84,7 +84,7 @@ curl -s "https://api.spotify.com/v1/me/top/tracks?limit=20&time_range=medium_ter
 Requires scope: `user-top-read`.
 
 ```bash
-curl -s "https://api.spotify.com/v1/me/top/artists?limit=20&time_range=medium_term" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '[.items[] | {name, genres, popularity, uri}]'
+curl -s "https://api.spotify.com/v1/me/top/artists?limit=20&time_range=medium_term" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.items[] | {name, genres, popularity, uri}]'
 ```
 
 ### Get Recently Played Tracks
@@ -92,7 +92,7 @@ curl -s "https://api.spotify.com/v1/me/top/artists?limit=20&time_range=medium_te
 Requires scope: `user-read-recently-played`.
 
 ```bash
-curl -s "https://api.spotify.com/v1/me/player/recently-played?limit=20" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '[.items[] | {played_at, track: .track.name, artists: [.track.artists[].name], uri: .track.uri}]'
+curl -s "https://api.spotify.com/v1/me/player/recently-played?limit=20" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.items[] | {played_at, track: .track.name, artists: [.track.artists[].name], uri: .track.uri}]'
 ```
 
 ---
@@ -104,7 +104,7 @@ curl -s "https://api.spotify.com/v1/me/player/recently-played?limit=20" --header
 Requires scope: `playlist-read-private`.
 
 ```bash
-curl -s "https://api.spotify.com/v1/me/playlists?limit=20" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '[.items[] | {id, name, owner: .owner.display_name, total_tracks: .tracks.total, uri}]'
+curl -s "https://api.spotify.com/v1/me/playlists?limit=20" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.items[] | {id, name, owner: .owner.display_name, total_tracks: .tracks.total, uri}]'
 ```
 
 ### Get Playlist Tracks
@@ -112,7 +112,7 @@ curl -s "https://api.spotify.com/v1/me/playlists?limit=20" --header "Authorizati
 Replace `<playlist-id>` with the actual playlist ID:
 
 ```bash
-curl -s "https://api.spotify.com/v1/playlists/<playlist-id>/tracks?limit=50&fields=items(track(id,name,artists,album(name),uri))" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '[.items[] | {name: .track.name, artists: [.track.artists[].name], album: .track.album.name, uri: .track.uri}]'
+curl -s "https://api.spotify.com/v1/playlists/<playlist-id>/tracks?limit=50&fields=items(track(id,name,artists,album(name),uri))" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.items[] | {name: .track.name, artists: [.track.artists[].name], album: .track.album.name, uri: .track.uri}]'
 ```
 
 ### Create Playlist
@@ -122,7 +122,7 @@ Requires scope: `playlist-modify-public` or `playlist-modify-private`.
 First, get your user ID:
 
 ```bash
-curl -s "https://api.spotify.com/v1/me" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq -r '.id'
+curl -s "https://api.spotify.com/v1/me" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq -r '.id'
 ```
 
 Write to `/tmp/spotify_playlist.json`:
@@ -137,7 +137,7 @@ Write to `/tmp/spotify_playlist.json`:
 Replace `<user-id>` with your Spotify user ID:
 
 ```bash
-curl -s -X POST "https://api.spotify.com/v1/users/<user-id>/playlists" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/spotify_playlist.json | jq '{id, name, uri}'
+curl -s -X POST "https://api.spotify.com/v1/users/<user-id>/playlists" --header "Authorization: Bearer $SPOTIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/spotify_playlist.json | jq '{id, name, uri}'
 ```
 
 ### Add Tracks to Playlist
@@ -157,7 +157,7 @@ Write to `/tmp/spotify_add_tracks.json`:
 Replace `<playlist-id>` with the target playlist ID:
 
 ```bash
-curl -s -X POST "https://api.spotify.com/v1/playlists/<playlist-id>/tracks" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/spotify_add_tracks.json | jq '{snapshot_id}'
+curl -s -X POST "https://api.spotify.com/v1/playlists/<playlist-id>/tracks" --header "Authorization: Bearer $SPOTIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/spotify_add_tracks.json | jq '{snapshot_id}'
 ```
 
 ---
@@ -171,7 +171,7 @@ curl -s -X POST "https://api.spotify.com/v1/playlists/<playlist-id>/tracks" --he
 Requires scope: `user-read-playback-state`.
 
 ```bash
-curl -s "https://api.spotify.com/v1/me/player" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '{device: .device.name, is_playing, track: .item.name, artists: [.item.artists[]?.name], progress_ms, duration_ms: .item.duration_ms}'
+curl -s "https://api.spotify.com/v1/me/player" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '{device: .device.name, is_playing, track: .item.name, artists: [.item.artists[]?.name], progress_ms, duration_ms: .item.duration_ms}'
 ```
 
 ### Start or Resume Playback
@@ -188,7 +188,7 @@ Write to `/tmp/spotify_play.json`:
 ```
 
 ```bash
-curl -s -X PUT "https://api.spotify.com/v1/me/player/play" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/spotify_play.json
+curl -s -X PUT "https://api.spotify.com/v1/me/player/play" --header "Authorization: Bearer $SPOTIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/spotify_play.json
 ```
 
 Play specific tracks by URI:
@@ -204,7 +204,7 @@ Write to `/tmp/spotify_play.json`:
 ```
 
 ```bash
-curl -s -X PUT "https://api.spotify.com/v1/me/player/play" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/spotify_play.json
+curl -s -X PUT "https://api.spotify.com/v1/me/player/play" --header "Authorization: Bearer $SPOTIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/spotify_play.json
 ```
 
 ### Pause Playback
@@ -212,7 +212,7 @@ curl -s -X PUT "https://api.spotify.com/v1/me/player/play" --header "Authorizati
 Requires scope: `user-modify-playback-state`.
 
 ```bash
-curl -s -X PUT "https://api.spotify.com/v1/me/player/pause" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)"
+curl -s -X PUT "https://api.spotify.com/v1/me/player/pause" --header "Authorization: Bearer $SPOTIFY_TOKEN"
 ```
 
 ### Skip to Next Track
@@ -220,7 +220,7 @@ curl -s -X PUT "https://api.spotify.com/v1/me/player/pause" --header "Authorizat
 Requires scope: `user-modify-playback-state`.
 
 ```bash
-curl -s -X POST "https://api.spotify.com/v1/me/player/next" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)"
+curl -s -X POST "https://api.spotify.com/v1/me/player/next" --header "Authorization: Bearer $SPOTIFY_TOKEN"
 ```
 
 ### Skip to Previous Track
@@ -228,7 +228,7 @@ curl -s -X POST "https://api.spotify.com/v1/me/player/next" --header "Authorizat
 Requires scope: `user-modify-playback-state`.
 
 ```bash
-curl -s -X POST "https://api.spotify.com/v1/me/player/previous" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)"
+curl -s -X POST "https://api.spotify.com/v1/me/player/previous" --header "Authorization: Bearer $SPOTIFY_TOKEN"
 ```
 
 ### Set Volume
@@ -236,7 +236,7 @@ curl -s -X POST "https://api.spotify.com/v1/me/player/previous" --header "Author
 Requires scope: `user-modify-playback-state`. Replace `<volume>` with a value between 0 and 100:
 
 ```bash
-curl -s -X PUT "https://api.spotify.com/v1/me/player/volume?volume_percent=<volume>" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)"
+curl -s -X PUT "https://api.spotify.com/v1/me/player/volume?volume_percent=<volume>" --header "Authorization: Bearer $SPOTIFY_TOKEN"
 ```
 
 ---
@@ -248,7 +248,7 @@ curl -s -X PUT "https://api.spotify.com/v1/me/player/volume?volume_percent=<volu
 Replace `<album-id>` with the Spotify album ID:
 
 ```bash
-curl -s "https://api.spotify.com/v1/albums/<album-id>" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '{id, name, artists: [.artists[].name], release_date, total_tracks, uri}'
+curl -s "https://api.spotify.com/v1/albums/<album-id>" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '{id, name, artists: [.artists[].name], release_date, total_tracks, uri}'
 ```
 
 ### Get Artist
@@ -256,7 +256,7 @@ curl -s "https://api.spotify.com/v1/albums/<album-id>" --header "Authorization: 
 Replace `<artist-id>` with the Spotify artist ID:
 
 ```bash
-curl -s "https://api.spotify.com/v1/artists/<artist-id>" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '{id, name, genres, popularity, followers: .followers.total, uri}'
+curl -s "https://api.spotify.com/v1/artists/<artist-id>" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '{id, name, genres, popularity, followers: .followers.total, uri}'
 ```
 
 ### Get Artist's Top Tracks
@@ -264,7 +264,7 @@ curl -s "https://api.spotify.com/v1/artists/<artist-id>" --header "Authorization
 Replace `<artist-id>` with the Spotify artist ID:
 
 ```bash
-curl -s "https://api.spotify.com/v1/artists/<artist-id>/top-tracks" --header "Authorization: Bearer $(printenv SPOTIFY_TOKEN)" | jq '[.tracks[] | {name, album: .album.name, popularity, uri}]'
+curl -s "https://api.spotify.com/v1/artists/<artist-id>/top-tracks" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.tracks[] | {name, album: .album.name, popularity, uri}]'
 ```
 
 ---

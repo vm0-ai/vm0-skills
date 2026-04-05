@@ -66,7 +66,7 @@ Verify your authentication:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X GET "${JIRA_BASE}/myself" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json"
+curl -s -X GET "${JIRA_BASE}/myself" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
 ---
@@ -78,7 +78,7 @@ Get all projects you have access to:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X GET "${JIRA_BASE}/project" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json"
+curl -s -X GET "${JIRA_BASE}/project" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
 ---
@@ -91,7 +91,7 @@ Get details for a specific project:
 PROJECT_KEY="PROJ"
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X GET "${JIRA_BASE}/project/${PROJECT_KEY}" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json"
+curl -s -X GET "${JIRA_BASE}/project/${PROJECT_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
 ---
@@ -104,7 +104,7 @@ List available issue types (Task, Bug, Story, etc.):
 PROJECT_KEY="PROJ"
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X GET "${JIRA_BASE}/project/${PROJECT_KEY}" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json"
+curl -s -X GET "${JIRA_BASE}/project/${PROJECT_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
 ---
@@ -128,7 +128,7 @@ Then run:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X POST "${JIRA_BASE}/search/jql" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}'
+curl -s -X POST "${JIRA_BASE}/search/jql" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name, assignee: .fields.assignee.displayName, priority: .fields.priority.name}'
 ```
 
 Common JQL examples:
@@ -150,7 +150,7 @@ Get full details of an issue:
 ISSUE_KEY="PROJ-123"
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json"
+curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
 ---
@@ -188,7 +188,7 @@ Then run:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X POST "${JIRA_BASE}/issue" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
+curl -s -X POST "${JIRA_BASE}/issue" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
 ---
@@ -228,7 +228,7 @@ Then run:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X POST "${JIRA_BASE}/issue" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
+curl -s -X POST "${JIRA_BASE}/issue" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
 ---
@@ -258,7 +258,7 @@ Then run:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X PUT "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
+curl -s -X PUT "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
 Returns 204 No Content on success.
@@ -273,7 +273,7 @@ Get possible status transitions for an issue:
 ISSUE_KEY="PROJ-123"
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}/transitions" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json"
+curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}/transitions" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
 ---
@@ -302,7 +302,7 @@ Then run:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X POST "${JIRA_BASE}/issue/${ISSUE_KEY}/transitions" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
+curl -s -X POST "${JIRA_BASE}/issue/${ISSUE_KEY}/transitions" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
 Returns 204 No Content on success.
@@ -341,7 +341,7 @@ Then run:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X POST "${JIRA_BASE}/issue/${ISSUE_KEY}/comment" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
+curl -s -X POST "${JIRA_BASE}/issue/${ISSUE_KEY}/comment" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
 ---
@@ -354,7 +354,7 @@ List all comments on an issue:
 ISSUE_KEY="PROJ-123"
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}/comment" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json"
+curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}/comment" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
 ---
@@ -381,7 +381,7 @@ Then run:
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X PUT "${JIRA_BASE}/issue/${ISSUE_KEY}/assignee" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
+curl -s -X PUT "${JIRA_BASE}/issue/${ISSUE_KEY}/assignee" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
 ---
@@ -399,7 +399,7 @@ john
 ```bash
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -G "${JIRA_BASE}/user/search" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)" --header "Accept: application/json" --data-urlencode "query@/tmp/jira_search.txt"
+curl -s -G "${JIRA_BASE}/user/search" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --data-urlencode "query@/tmp/jira_search.txt"
 ```
 
 ---
@@ -412,7 +412,7 @@ Delete an issue (use with caution):
 ISSUE_KEY="PROJ-123"
 JIRA_BASE="https://$(printenv JIRA_DOMAIN | sed 's/\.atlassian\.net$//').atlassian.net/rest/api/3"
 
-curl -s -X DELETE "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$(printenv JIRA_EMAIL):$(printenv JIRA_API_TOKEN)"
+curl -s -X DELETE "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN"
 ```
 
 Returns 204 No Content on success.

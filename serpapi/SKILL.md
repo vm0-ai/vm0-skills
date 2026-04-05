@@ -56,7 +56,7 @@ Base URL: `https://serpapi.com/search`
 Search Google and get structured JSON results:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google&q=artificial+intelligence&api_key=$(printenv SERPAPI_TOKEN)" | jq '.organic_results[:3] | .[] | {title, link, snippet}'
+curl -s "https://serpapi.com/search?engine=google&q=artificial+intelligence&api_key=$SERPAPI_TOKEN" | jq '.organic_results[:3] | .[] | {title, link, snippet}'
 ```
 
 ---
@@ -66,7 +66,7 @@ curl -s "https://serpapi.com/search?engine=google&q=artificial+intelligence&api_
 Search from a specific location:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=San+Francisco,+California&gl=us&hl=en&api_key=$(printenv SERPAPI_TOKEN)" | jq '.organic_results[:3]'
+curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=San+Francisco,+California&gl=us&hl=en&api_key=$SERPAPI_TOKEN" | jq '.organic_results[:3]'
 ```
 
 **Parameters:**
@@ -81,7 +81,7 @@ curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=S
 Search for images:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_images&q=sunset+beach&api_key=$(printenv SERPAPI_TOKEN)" | jq '.images_results[:3] | .[] | {title, original, thumbnail}'
+curl -s "https://serpapi.com/search?engine=google_images&q=sunset+beach&api_key=$SERPAPI_TOKEN" | jq '.images_results[:3] | .[] | {title, original, thumbnail}'
 ```
 
 ---
@@ -91,7 +91,7 @@ curl -s "https://serpapi.com/search?engine=google_images&q=sunset+beach&api_key=
 Search news articles:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_news&q=technology&api_key=$(printenv SERPAPI_TOKEN)" | jq '.news_results[:3] | .[] | {title, link, source, date}'
+curl -s "https://serpapi.com/search?engine=google_news&q=technology&api_key=$SERPAPI_TOKEN" | jq '.news_results[:3] | .[] | {title, link, source, date}'
 ```
 
 ---
@@ -101,7 +101,7 @@ curl -s "https://serpapi.com/search?engine=google_news&q=technology&api_key=$(pr
 Search products:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_shopping&q=wireless+headphones&api_key=$(printenv SERPAPI_TOKEN)" | jq '.shopping_results[:3] | .[] | {title, price, source}'
+curl -s "https://serpapi.com/search?engine=google_shopping&q=wireless+headphones&api_key=$SERPAPI_TOKEN" | jq '.shopping_results[:3] | .[] | {title, price, source}'
 ```
 
 ---
@@ -111,7 +111,7 @@ curl -s "https://serpapi.com/search?engine=google_shopping&q=wireless+headphones
 Search YouTube videos:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=youtube&search_query=python+tutorial&api_key=$(printenv SERPAPI_TOKEN)" | jq '.video_results[:3] | .[] | {title, link, channel, views}'
+curl -s "https://serpapi.com/search?engine=youtube&search_query=python+tutorial&api_key=$SERPAPI_TOKEN" | jq '.video_results[:3] | .[] | {title, link, channel, views}'
 ```
 
 ---
@@ -121,19 +121,19 @@ curl -s "https://serpapi.com/search?engine=youtube&search_query=python+tutorial&
 Search local businesses:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_maps&q=restaurants&ll=@40.7128,-74.0060,15z&api_key=$(printenv SERPAPI_TOKEN)" | jq '.local_results[:3] | .[] | {title, rating, address}'
+curl -s "https://serpapi.com/search?engine=google_maps&q=restaurants&ll=@40.7128,-74.0060,15z&api_key=$SERPAPI_TOKEN" | jq '.local_results[:3] | .[] | {title, rating, address}'
 ```
 
 If using `location` with Google Maps, include `z` or `m`:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_maps&q=3PL&location=Dallas-Fort+Worth,+Texas&z=14&api_key=$(printenv SERPAPI_TOKEN)"
+curl -s "https://serpapi.com/search?engine=google_maps&q=3PL&location=Dallas-Fort+Worth,+Texas&z=14&api_key=$SERPAPI_TOKEN"
 ```
 
 Defensive local-results extraction:
 
 ```bash
-curl -s "https://serpapi.com/search?engine=google_maps&q=3PL&ll=@32.7767,-96.7970,14z&api_key=$(printenv SERPAPI_TOKEN)" \
+curl -s "https://serpapi.com/search?engine=google_maps&q=3PL&ll=@32.7767,-96.7970,14z&api_key=$SERPAPI_TOKEN" \
   | jq 'if has("error") then .error else (.local_results[:5] | map({title,address,phone,website,link,type})) end'
 ```
 
@@ -148,10 +148,10 @@ Get more results using the `start` parameter:
 
 ```bash
 # First page (results 1-10)
-curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=0&api_key=$(printenv SERPAPI_TOKEN)" | jq '.organic_results | length'
+curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=0&api_key=$SERPAPI_TOKEN" | jq '.organic_results | length'
 
 # Second page (results 11-20)
-curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&api_key=$(printenv SERPAPI_TOKEN)" | jq '.organic_results | length'
+curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&api_key=$SERPAPI_TOKEN" | jq '.organic_results | length'
 ```
 
 ---
@@ -161,7 +161,7 @@ curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&ap
 Check your API usage and credits:
 
 ```bash
-curl -s "https://serpapi.com/account?api_key=$(printenv SERPAPI_TOKEN)" | jq '{plan_name, searches_per_month, this_month_usage}'
+curl -s "https://serpapi.com/account?api_key=$SERPAPI_TOKEN" | jq '{plan_name, searches_per_month, this_month_usage}'
 ```
 
 ---

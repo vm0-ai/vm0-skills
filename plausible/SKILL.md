@@ -52,7 +52,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 Docs: https://plausible.io/docs/stats-api
@@ -73,7 +73,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Top Pages
@@ -96,7 +96,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Geographic Breakdown
@@ -115,7 +115,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Device & Browser Stats
@@ -134,7 +134,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Time Series (Daily)
@@ -153,7 +153,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Filter by Page Path
@@ -172,7 +172,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### UTM Campaign Analysis
@@ -191,7 +191,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Custom Date Range
@@ -209,7 +209,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ## Site Provisioning API
@@ -217,7 +217,7 @@ curl -s -X POST "https://plausible.io/api/v2/query" -H "Authorization: Bearer $(
 ### List Sites
 
 ```bash
-curl -s -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" "https://plausible.io/api/v1/sites"
+curl -s -H "Authorization: Bearer $PLAUSIBLE_TOKEN" "https://plausible.io/api/v1/sites"
 ```
 
 Docs: https://plausible.io/docs/sites-api
@@ -236,7 +236,7 @@ Write to `/tmp/plausible_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://plausible.io/api/v1/sites" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X POST "https://plausible.io/api/v1/sites" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Get Site Details
@@ -244,7 +244,7 @@ curl -s -X POST "https://plausible.io/api/v1/sites" -H "Authorization: Bearer $(
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" "https://plausible.io/api/v1/sites/<your-site-id>"
+curl -s -H "Authorization: Bearer $PLAUSIBLE_TOKEN" "https://plausible.io/api/v1/sites/<your-site-id>"
 ```
 
 ### Delete Site
@@ -254,7 +254,7 @@ curl -s -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" "https://plausibl
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X DELETE -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" "https://plausible.io/api/v1/sites/<your-site-id>"
+curl -s -X DELETE -H "Authorization: Bearer $PLAUSIBLE_TOKEN" "https://plausible.io/api/v1/sites/<your-site-id>"
 ```
 
 ### Create Goal
@@ -272,7 +272,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### Create Page Goal
@@ -290,7 +290,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ### List Goals
@@ -298,7 +298,7 @@ curl -s -X PUT "https://plausible.io/api/v1/sites/goals" -H "Authorization: Bear
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" "https://plausible.io/api/v1/sites/goals?site_id=<your-site-id>"
+curl -s -H "Authorization: Bearer $PLAUSIBLE_TOKEN" "https://plausible.io/api/v1/sites/goals?site_id=<your-site-id>"
 ```
 
 ### Create Shared Link
@@ -315,7 +315,7 @@ Write to `/tmp/plausible_request.json`:
 Replace `<your-site-id>` with your actual site ID (typically your domain like "example.com"):
 
 ```bash
-curl -s -X PUT "https://plausible.io/api/v1/sites/shared-links" -H "Authorization: Bearer $(printenv PLAUSIBLE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
+curl -s -X PUT "https://plausible.io/api/v1/sites/shared-links" -H "Authorization: Bearer $PLAUSIBLE_TOKEN" -H "Content-Type: application/json" -d @/tmp/plausible_request.json
 ```
 
 ## Available Metrics

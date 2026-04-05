@@ -25,7 +25,7 @@ Manage contracts, people, time off, and organization data with the Deel REST API
 ### List Contracts
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/contracts?limit=10" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data[] | {id, title, type, status, worker: .worker.name}'
+curl -s "https://api.deel.com/rest/v2/contracts?limit=10" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data[] | {id, title, type, status, worker: .worker.name}'
 ```
 
 Docs: https://developer.deel.com/reference/list-contracts
@@ -37,7 +37,7 @@ Docs: https://developer.deel.com/reference/list-contracts
 Replace `<contract-id>` with the actual contract ID:
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/contracts/<contract-id>" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data | {id, title, type, status, worker, start_date, client}'
+curl -s "https://api.deel.com/rest/v2/contracts/<contract-id>" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data | {id, title, type, status, worker, start_date, client}'
 ```
 
 ---
@@ -45,7 +45,7 @@ curl -s "https://api.deel.com/rest/v2/contracts/<contract-id>" --header "Authori
 ### List People
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/people?limit=10" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data[] | {id, full_name, email, hiring_status, hiring_type}'
+curl -s "https://api.deel.com/rest/v2/people?limit=10" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data[] | {id, full_name, email, hiring_status, hiring_type}'
 ```
 
 Docs: https://developer.deel.com/reference/list-people
@@ -57,7 +57,7 @@ Docs: https://developer.deel.com/reference/list-people
 Replace `<person-id>` with the actual person ID:
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/people/<person-id>" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data | {id, full_name, email, hiring_status, hiring_type, country, department}'
+curl -s "https://api.deel.com/rest/v2/people/<person-id>" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data | {id, full_name, email, hiring_status, hiring_type, country, department}'
 ```
 
 ---
@@ -67,7 +67,7 @@ curl -s "https://api.deel.com/rest/v2/people/<person-id>" --header "Authorizatio
 Replace `<hris-profile-id>` with the worker's HRIS profile ID:
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/time_offs/profile/<hris-profile-id>?limit=10" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data[] | {id, type, status, start_date, end_date}'
+curl -s "https://api.deel.com/rest/v2/time_offs/profile/<hris-profile-id>?limit=10" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data[] | {id, type, status, start_date, end_date}'
 ```
 
 ---
@@ -87,7 +87,7 @@ Write to `/tmp/deel_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.deel.com/rest/v2/time_offs" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" --header "Content-Type: application/json" -d @/tmp/deel_request.json | jq '.data | {id, type, status, start_date, end_date}'
+curl -s -X POST "https://api.deel.com/rest/v2/time_offs" --header "Authorization: Bearer $DEEL_TOKEN" --header "Content-Type: application/json" -d @/tmp/deel_request.json | jq '.data | {id, type, status, start_date, end_date}'
 ```
 
 ---
@@ -95,7 +95,7 @@ curl -s -X POST "https://api.deel.com/rest/v2/time_offs" --header "Authorization
 ### List Invoice Adjustments
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/invoice-adjustments?limit=10" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data[] | {id, type, amount, currency, status, contract_id}'
+curl -s "https://api.deel.com/rest/v2/invoice-adjustments?limit=10" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data[] | {id, type, amount, currency, status, contract_id}'
 ```
 
 ---
@@ -115,7 +115,7 @@ Write to `/tmp/deel_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.deel.com/rest/v2/invoice-adjustments" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" --header "Content-Type: application/json" -d @/tmp/deel_request.json | jq '.data | {id, type, amount, currency, status}'
+curl -s -X POST "https://api.deel.com/rest/v2/invoice-adjustments" --header "Authorization: Bearer $DEEL_TOKEN" --header "Content-Type: application/json" -d @/tmp/deel_request.json | jq '.data | {id, type, amount, currency, status}'
 ```
 
 ---
@@ -123,7 +123,7 @@ curl -s -X POST "https://api.deel.com/rest/v2/invoice-adjustments" --header "Aut
 ### Get Organization Info
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/organizations" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data | {id, name, country, currency}'
+curl -s "https://api.deel.com/rest/v2/organizations" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data | {id, name, country, currency}'
 ```
 
 ---
@@ -131,7 +131,7 @@ curl -s "https://api.deel.com/rest/v2/organizations" --header "Authorization: Be
 ### List Teams
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/teams?limit=10" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data[] | {id, name, members_count}'
+curl -s "https://api.deel.com/rest/v2/teams?limit=10" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data[] | {id, name, members_count}'
 ```
 
 ---
@@ -141,7 +141,7 @@ curl -s "https://api.deel.com/rest/v2/teams?limit=10" --header "Authorization: B
 Get supported countries for hiring:
 
 ```bash
-curl -s "https://api.deel.com/rest/v2/countries" --header "Authorization: Bearer $(printenv DEEL_TOKEN)" | jq '.data[:5] | .[] | {code, name}'
+curl -s "https://api.deel.com/rest/v2/countries" --header "Authorization: Bearer $DEEL_TOKEN" | jq '.data[:5] | .[] | {code, name}'
 ```
 
 ---

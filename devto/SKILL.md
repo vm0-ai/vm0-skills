@@ -59,7 +59,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
+curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
 ```
 
 **Response:**
@@ -92,7 +92,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
+curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
 ```
 
 ### 3. Publish with Cover Image
@@ -114,7 +114,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url}'
+curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url}'
 ```
 
 ### 4. Publish from Markdown File
@@ -141,7 +141,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
+curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
 ```
 
 ---
@@ -151,19 +151,19 @@ curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_
 ### 5. Get Your Articles
 
 ```bash
-curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: $(printenv DEVTO_API_KEY)" | jq '.[] | {id, title, published, url}'
+curl -s "https://dev.to/api/articles/me?per_page=10" -H "api-key: $DEVTO_API_KEY" | jq '.[] | {id, title, published, url}'
 ```
 
 ### 6. Get Published Articles Only
 
 ```bash
-curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: $(printenv DEVTO_API_KEY)" | jq '.[] | {id, title, url}'
+curl -s "https://dev.to/api/articles/me/published?per_page=10" -H "api-key: $DEVTO_API_KEY" | jq '.[] | {id, title, url}'
 ```
 
 ### 7. Get Unpublished (Drafts)
 
 ```bash
-curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: $(printenv DEVTO_API_KEY)" | jq '.[] | {id, title}'
+curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: $DEVTO_API_KEY" | jq '.[] | {id, title}'
 ```
 
 ### 8. Get Single Article
@@ -171,7 +171,7 @@ curl -s "https://dev.to/api/articles/me/unpublished" -H "api-key: $(printenv DEV
 Replace `<your-article-id>` with an actual article ID from the "List My Articles" response (example 5) or from the `id` field in the create article response (example 1).
 
 ```bash
-curl -s "https://dev.to/api/articles/<your-article-id>" -H "api-key: $(printenv DEVTO_API_KEY)" | jq '{id, title, url, published}'
+curl -s "https://dev.to/api/articles/<your-article-id>" -H "api-key: $DEVTO_API_KEY" | jq '{id, title, url, published}'
 ```
 
 ### 9. Update an Article
@@ -192,7 +192,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url}'
+curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url}'
 ```
 
 ### 10. Publish a Draft
@@ -212,7 +212,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
+curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
 ```
 
 ---
@@ -251,7 +251,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{url}'
+curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{url}'
 ```
 
 ### Cross-post from Blog
@@ -273,7 +273,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{url}'
+curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{url}'
 ```
 
 ### Article in a Series
@@ -295,7 +295,7 @@ Write to `/tmp/devto_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://dev.to/api/articles" -H "api-key: $(printenv DEVTO_API_KEY)" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{url}'
+curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_API_KEY" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{url}'
 ```
 
 ---

@@ -50,7 +50,7 @@ export PUSHINATOR_TOKEN="your-api-token"
 Base URL: `https://api.pushinator.com`
 
 **Required headers:**
-- `Authorization: Bearer $(printenv PUSHINATOR_TOKEN)`
+- `Authorization: Bearer $PUSHINATOR_TOKEN`
 - `Content-Type: application/json`
 
 ---
@@ -72,7 +72,7 @@ Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer $(printenv PUSHINATOR_TOKEN)" \
+  --header "Authorization: Bearer $PUSHINATOR_TOKEN" \
   --header "Content-Type: application/json" \
   -d @/tmp/pushinator_request.json
 ```
@@ -104,7 +104,7 @@ Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer $(printenv PUSHINATOR_TOKEN)" \
+  --header "Authorization: Bearer $PUSHINATOR_TOKEN" \
   --header "Content-Type: application/json" \
   -d @/tmp/pushinator_request.json
 ```
@@ -128,7 +128,7 @@ Replace `<your-channel-uuid>` with your actual channel UUID, then run:
 
 ```bash
 curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
-  --header "Authorization: Bearer $(printenv PUSHINATOR_TOKEN)" \
+  --header "Authorization: Bearer $PUSHINATOR_TOKEN" \
   --header "Content-Type: application/json" \
   -d @/tmp/pushinator_request.json
 ```

@@ -36,19 +36,19 @@ When registering:
 ### Upload Local Image
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $(printenv IMGUR_CLIENT_ID)" -F "image=@/path/to/image.png"
+curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $IMGUR_CLIENT_ID" -F "image=@/path/to/image.png"
 ```
 
 ### Upload from URL
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $(printenv IMGUR_CLIENT_ID)" -F "image=https://example.com/image.png" -F "type=url"
+curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $IMGUR_CLIENT_ID" -F "image=https://example.com/image.png" -F "type=url"
 ```
 
 ### Upload Base64
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $(printenv IMGUR_CLIENT_ID)" -F "image=$(base64 -i /path/to/image.png)" -F "type=base64"
+curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $IMGUR_CLIENT_ID" -F "image=$(base64 -i /path/to/image.png)" -F "type=base64"
 ```
 
 ### Optional Parameters
@@ -60,7 +60,7 @@ curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $(printe
 | name | Filename |
 
 ```bash
-curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $(printenv IMGUR_CLIENT_ID)" -F "image=@screenshot.png" -F "title=My Screenshot" -F "description=Screenshot from my app"
+curl -X POST https://api.imgur.com/3/image -H "Authorization: Client-ID $IMGUR_CLIENT_ID" -F "image=@screenshot.png" -F "title=My Screenshot" -F "description=Screenshot from my app"
 ```
 
 ## Response
@@ -86,7 +86,7 @@ Key fields:
 Replace `<your-deletehash>` with the deletehash from the upload response:
 
 ```bash
-curl -X DELETE https://api.imgur.com/3/image/<your-deletehash> -H "Authorization: Client-ID $(printenv IMGUR_CLIENT_ID)"
+curl -X DELETE https://api.imgur.com/3/image/<your-deletehash> -H "Authorization: Client-ID $IMGUR_CLIENT_ID"
 ```
 
 ## Rate Limits

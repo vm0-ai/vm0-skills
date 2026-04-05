@@ -63,7 +63,7 @@ Base URL: `https://api.dev.runwayml.com/v1`
 Check your credit balance:
 
 ```bash
-curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06"
+curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06"
 ```
 
 ---
@@ -87,7 +87,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
+curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
 **Response:**
@@ -119,7 +119,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
+curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
 ---
@@ -142,7 +142,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
+curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
 ---
@@ -165,7 +165,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
+curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
 ---
@@ -175,7 +175,7 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Author
 Poll for task completion. Replace `<your-task-id>` with the actual task ID:
 
 ```bash
-curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06"
+curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06"
 ```
 
 **Response when complete:**
@@ -196,7 +196,7 @@ curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "
 Cancel a running task. Replace `<your-task-id>` with the actual task ID:
 
 ```bash
-curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06"
+curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06"
 ```
 
 ---
@@ -217,7 +217,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
+curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
 ---
@@ -238,7 +238,7 @@ Write to `/tmp/runway_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer $(printenv RUNWAY_TOKEN)" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
+curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
 ---

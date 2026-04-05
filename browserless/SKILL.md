@@ -61,7 +61,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/scrape?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
+curl -s -X POST "https://production-sfo.browserless.io/scrape?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
 ```
 
 **With wait options:**
@@ -82,7 +82,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/scrape?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data[0].results[:3]'
+curl -s -X POST "https://production-sfo.browserless.io/scrape?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data[0].results[:3]'
 ```
 
 ### 2. Take Screenshots
@@ -104,7 +104,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output screenshot.png
+curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output screenshot.png
 ```
 
 **Element screenshot:**
@@ -124,7 +124,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output element.png
+curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output element.png
 ```
 
 **With viewport size:**
@@ -148,7 +148,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output screenshot.jpg
+curl -s -X POST "https://production-sfo.browserless.io/screenshot?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output screenshot.jpg
 ```
 
 ### 3. Generate PDF
@@ -172,7 +172,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/pdf?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output page.pdf
+curl -s -X POST "https://production-sfo.browserless.io/pdf?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output page.pdf
 ```
 
 ### 4. Get Rendered HTML
@@ -193,7 +193,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/content?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
+curl -s -X POST "https://production-sfo.browserless.io/content?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
 ```
 
 ### 5. Execute Custom JavaScript (Click, Type, etc.)
@@ -215,7 +215,7 @@ export default async ({ page }) => {
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=$(printenv BROWSERLESS_TOKEN)" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
+curl -s -X POST "https://production-sfo.browserless.io/function?token=$BROWSERLESS_TOKEN" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
 ```
 
 **Type into input:**
@@ -235,7 +235,7 @@ export default async ({ page }) => {
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=$(printenv BROWSERLESS_TOKEN)" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
+curl -s -X POST "https://production-sfo.browserless.io/function?token=$BROWSERLESS_TOKEN" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
 ```
 
 **Form submission:**
@@ -255,7 +255,7 @@ export default async ({ page }) => {
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=$(printenv BROWSERLESS_TOKEN)" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
+curl -s -X POST "https://production-sfo.browserless.io/function?token=$BROWSERLESS_TOKEN" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
 ```
 
 **Extract data with custom script:**
@@ -273,7 +273,7 @@ export default async ({ page }) => {
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/function?token=$(printenv BROWSERLESS_TOKEN)" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
+curl -s -X POST "https://production-sfo.browserless.io/function?token=$BROWSERLESS_TOKEN" -H "Content-Type: application/javascript" -d @/tmp/browserless_function.js
 ```
 
 ### 6. Unblock Protected Sites
@@ -295,7 +295,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/unblock?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
+curl -s -X POST "https://production-sfo.browserless.io/unblock?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
 ```
 
 ### 7. Stealth Mode
@@ -314,7 +314,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/scrape?token=$(printenv BROWSERLESS_TOKEN)&stealth=true" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
+curl -s -X POST "https://production-sfo.browserless.io/scrape?token=$BROWSERLESS_TOKEN&stealth=true" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
 ```
 
 ### 8. Export Page with Resources
@@ -334,7 +334,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/export?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output page.html
+curl -s -X POST "https://production-sfo.browserless.io/export?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output page.html
 ```
 
 **Export with all resources as ZIP:**
@@ -351,7 +351,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/export?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output webpage.zip
+curl -s -X POST "https://production-sfo.browserless.io/export?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json --output webpage.zip
 ```
 
 ### 9. Performance Audit (Lighthouse)
@@ -371,7 +371,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/performance?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data.categories | to_entries[] | {category: .key, score: .value.score}'
+curl -s -X POST "https://production-sfo.browserless.io/performance?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data.categories | to_entries[] | {category: .key, score: .value.score}'
 ```
 
 **Specific category (accessibility, performance, seo, best-practices, pwa):**
@@ -393,7 +393,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/performance?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'
+curl -s -X POST "https://production-sfo.browserless.io/performance?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data.audits | to_entries[:5][] | {audit: .key, score: .value.score, display: .value.displayValue}'
 ```
 
 **Specific audit (e.g., unminified-css, first-contentful-paint):**
@@ -415,7 +415,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/performance?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data.audits'
+curl -s -X POST "https://production-sfo.browserless.io/performance?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json | jq '.data.audits'
 ```
 
 ### 10. Create Persistent Session
@@ -435,7 +435,7 @@ Write to `/tmp/browserless_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://production-sfo.browserless.io/session?token=$(printenv BROWSERLESS_TOKEN)" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
+curl -s -X POST "https://production-sfo.browserless.io/session?token=$BROWSERLESS_TOKEN" --header "Content-Type: application/json" -d @/tmp/browserless_request.json
 ```
 
 **Response includes:**

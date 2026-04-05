@@ -67,7 +67,7 @@ Write to `/tmp/monday_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -87,7 +87,7 @@ Write to `/tmp/monday_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -109,7 +109,7 @@ Replace `<your-board-id>` with an actual board ID from the "List All Boards" res
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -131,7 +131,7 @@ Replace `<your-board-id>` with an actual board ID from the "List All Boards" res
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -156,7 +156,7 @@ Replace the following values:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -187,7 +187,7 @@ Replace the following values:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -216,7 +216,7 @@ Replace the following values:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -238,7 +238,7 @@ Replace `<your-item-id>` with an actual item ID from the "Get Items from a Board
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -258,7 +258,7 @@ Write to `/tmp/monday_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---
@@ -280,7 +280,7 @@ Replace `<your-board-id>` with an actual board ID from the "List All Boards" res
 Then run:
 
 ```bash
-curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $(printenv MONDAY_TOKEN)" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
+curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
 ---

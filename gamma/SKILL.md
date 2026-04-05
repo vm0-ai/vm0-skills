@@ -28,7 +28,6 @@ Use this skill when you need to:
 ## Prerequisites
 
 
-> **Important:** When using `$GAMMA_TOKEN` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 
 ---
 
@@ -57,7 +56,7 @@ Write to `/tmp/gamma_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://public-api.gamma.app/v1.0/generations" --header "X-API-KEY: $GAMMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/gamma_request.json'
+curl -s -X POST "https://public-api.gamma.app/v1.0/generations" --header "X-API-KEY: $GAMMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/gamma_request.json
 ```
 
 Response includes `generationId`. Use it to poll for status (see below).
@@ -78,7 +77,7 @@ Response includes `generationId`. Use it to poll for status (see below).
 Poll every 5 seconds until `status` is `completed` or `failed`.
 
 ```bash
-curl -s "https://public-api.gamma.app/v1.0/generations/<your-generation-id>" --header "X-API-KEY: $(printenv GAMMA_TOKEN)"
+curl -s "https://public-api.gamma.app/v1.0/generations/<your-generation-id>" --header "X-API-KEY: $GAMMA_TOKEN"
 ```
 
 **Pending response:**
@@ -119,7 +118,7 @@ Write to `/tmp/gamma_template_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://public-api.gamma.app/v1.0/generations/from-template" --header "X-API-KEY: $GAMMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/gamma_template_request.json'
+curl -s -X POST "https://public-api.gamma.app/v1.0/generations/from-template" --header "X-API-KEY: $GAMMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/gamma_template_request.json
 ```
 
 Response includes `generationId` — poll with the same status endpoint.
@@ -131,13 +130,13 @@ Response includes `generationId` — poll with the same status endpoint.
 Retrieve available workspace themes to use as `themeId` in generation requests.
 
 ```bash
-curl -s "https://public-api.gamma.app/v1.0/themes" --header "X-API-KEY: $(printenv GAMMA_TOKEN)"
+curl -s "https://public-api.gamma.app/v1.0/themes" --header "X-API-KEY: $GAMMA_TOKEN"
 ```
 
 With search filter:
 
 ```bash
-curl -s "https://public-api.gamma.app/v1.0/themes?query=dark&limit=10" --header "X-API-KEY: $(printenv GAMMA_TOKEN)"
+curl -s "https://public-api.gamma.app/v1.0/themes?query=dark&limit=10" --header "X-API-KEY: $GAMMA_TOKEN"
 ```
 
 Use the `id` field value as `themeId` in generation requests.
@@ -149,7 +148,7 @@ Use the `id` field value as `themeId` in generation requests.
 Retrieve workspace folders to use as `folderIds` in generation requests.
 
 ```bash
-curl -s "https://public-api.gamma.app/v1.0/folders" --header "X-API-KEY: $(printenv GAMMA_TOKEN)"
+curl -s "https://public-api.gamma.app/v1.0/folders" --header "X-API-KEY: $GAMMA_TOKEN"
 ```
 
 Use the `id` field value in the `folderIds` array in generation requests.
@@ -180,7 +179,7 @@ Write to `/tmp/gamma_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://public-api.gamma.app/v1.0/generations" --header "X-API-KEY: $GAMMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/gamma_request.json'
+curl -s -X POST "https://public-api.gamma.app/v1.0/generations" --header "X-API-KEY: $GAMMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/gamma_request.json
 ```
 
 Use `\n---\n` in `inputText` to manually split slides/cards.

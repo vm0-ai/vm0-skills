@@ -42,7 +42,7 @@ Use this skill when you need to:
 Call this first to obtain the `base_uri` and `account_id` needed for all subsequent API calls.
 
 ```bash
-curl -s "https://account.docusign.com/oauth/userinfo" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" | jq '{sub: .sub, name: .name, email: .email, accounts: [.accounts[] | {account_id, account_name, base_uri, is_default}]}'
+curl -s "https://account.docusign.com/oauth/userinfo" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '{sub: .sub, name: .name, email: .email, accounts: [.accounts[] | {account_id, account_name, base_uri, is_default}]}'
 ```
 
 Use the `base_uri` and `account_id` from the default account (where `is_default` is `true`) for all subsequent API calls. The API base path is `{base_uri}/restapi/v2.1/accounts/{account_id}`.
@@ -56,13 +56,13 @@ Use the `base_uri` and `account_id` from the default account (where `is_default`
 List envelopes from the last 30 days. Replace `<base-uri>` and `<account-id>` with values from userinfo.
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes?from_date=2025-01-01T00:00:00Z&count=10" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" | jq '{totalSetSize, envelopes: [.envelopes[]? | {envelopeId, status, emailSubject, sentDateTime}]}'
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes?from_date=2025-01-01T00:00:00Z&count=10" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '{totalSetSize, envelopes: [.envelopes[]? | {envelopeId, status, emailSubject, sentDateTime}]}'
 ```
 
 ### Get Envelope
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" | jq '{envelopeId, status, emailSubject, sentDateTime, completedDateTime}'
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '{envelopeId, status, emailSubject, sentDateTime, completedDateTime}'
 ```
 
 ### Create and Send Envelope
@@ -106,7 +106,7 @@ Send a document for signing. First, write the request body to `/tmp/docusign_env
 ```
 
 ```bash
-curl -s -X POST "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" --header "Content-Type: application/json" -d @/tmp/docusign_envelope.json | jq '{envelopeId, status, statusDateTime, uri}'
+curl -s -X POST "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Content-Type: application/json" -d @/tmp/docusign_envelope.json | jq '{envelopeId, status, statusDateTime, uri}'
 ```
 
 ### Create Draft Envelope
@@ -125,7 +125,7 @@ Write to `/tmp/docusign_void.json`:
 ```
 
 ```bash
-curl -s -X PUT "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" --header "Content-Type: application/json" -d @/tmp/docusign_void.json | jq '{envelopeId, status}'
+curl -s -X PUT "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Content-Type: application/json" -d @/tmp/docusign_void.json | jq '{envelopeId, status}'
 ```
 
 ---
@@ -135,7 +135,7 @@ curl -s -X PUT "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelop
 ### List Envelope Recipients
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/recipients" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" | jq '.signers[] | {recipientId, name, email, status, signedDateTime}'
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/recipients" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '.signers[] | {recipientId, name, email, status, signedDateTime}'
 ```
 
 ---
@@ -145,7 +145,7 @@ curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/r
 ### List Envelope Documents
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/documents" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" | jq '.envelopeDocuments[] | {documentId, name, type, uri}'
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/documents" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '.envelopeDocuments[] | {documentId, name, type, uri}'
 ```
 
 ### Download Document
@@ -153,7 +153,7 @@ curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/d
 Downloads the signed document. Save to a file:
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/documents/<document-id>" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" --header "Accept: application/pdf" --output /tmp/signed_document.pdf
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/documents/<document-id>" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Accept: application/pdf" --output /tmp/signed_document.pdf
 ```
 
 ### Download Combined Documents
@@ -161,7 +161,7 @@ curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/d
 Download all documents in the envelope as a single PDF:
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/documents/combined" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" --header "Accept: application/pdf" --output /tmp/combined_documents.pdf
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/documents/combined" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Accept: application/pdf" --output /tmp/combined_documents.pdf
 ```
 
 ---
@@ -171,13 +171,13 @@ curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/d
 ### List Templates
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/templates" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" | jq '.envelopeTemplates[] | {templateId, name, description, created, lastModified}'
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/templates" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '.envelopeTemplates[] | {templateId, name, description, created, lastModified}'
 ```
 
 ### Get Template
 
 ```bash
-curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/templates/<template-id>" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" | jq '{templateId, name, description, emailSubject}'
+curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/templates/<template-id>" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '{templateId, name, description, emailSubject}'
 ```
 
 ### Send Envelope from Template
@@ -199,7 +199,7 @@ Write to `/tmp/docusign_template_envelope.json`:
 ```
 
 ```bash
-curl -s -X POST "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes" --header "Authorization: Bearer $(printenv DOCUSIGN_TOKEN)" --header "Content-Type: application/json" -d @/tmp/docusign_template_envelope.json | jq '{envelopeId, status, statusDateTime, uri}'
+curl -s -X POST "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Content-Type: application/json" -d @/tmp/docusign_template_envelope.json | jq '{envelopeId, status, statusDateTime, uri}'
 ```
 
 ---

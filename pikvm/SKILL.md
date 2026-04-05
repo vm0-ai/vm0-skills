@@ -50,7 +50,7 @@ For 1920x1080 screen:
 ### Take Screenshot
 
 ```bash
-curl -k -s -o /tmp/screenshot.jpg -u "$(printenv PIKVM_AUTH)" "$(printenv PIKVM_URL)/api/streamer/snapshot"
+curl -k -s -o /tmp/screenshot.jpg -u "$PIKVM_AUTH" "$PIKVM_URL/api/streamer/snapshot"
 ```
 
 ### Type Text
@@ -60,9 +60,9 @@ Text must be sent as raw body with `Content-Type: text/plain`:
 ```bash
 curl -k -s -X POST \
   -H "Content-Type: text/plain" \
-  -u "$(printenv PIKVM_AUTH)" \
+  -u "$PIKVM_AUTH" \
   -d "Hello World" \
-  "$(printenv PIKVM_URL)/api/hid/print?limit=0"
+  "$PIKVM_URL/api/hid/print?limit=0"
 ```
 
 ### Move Mouse
@@ -71,8 +71,8 @@ Move to absolute position (0,0 = screen center):
 
 ```bash
 curl -k -s -X POST \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/hid/events/send_mouse_move?to_x=-500&to_y=-300"
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/hid/events/send_mouse_move?to_x=-500&to_y=-300"
 ```
 
 ### Mouse Click
@@ -80,13 +80,13 @@ curl -k -s -X POST \
 ```bash
 # Press
 curl -k -s -X POST \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/hid/events/send_mouse_button?button=left&state=true"
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/hid/events/send_mouse_button?button=left&state=true"
 
 # Release
 curl -k -s -X POST \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/hid/events/send_mouse_button?button=left&state=false"
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/hid/events/send_mouse_button?button=left&state=false"
 ```
 
 ### Press Key
@@ -96,12 +96,12 @@ Press and release with `state=true` then `state=false`:
 ```bash
 # Press Enter
 curl -k -s -X POST \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/hid/events/send_key?key=Enter&state=true"
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/hid/events/send_key?key=Enter&state=true"
 
 curl -k -s -X POST \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/hid/events/send_key?key=Enter&state=false"
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/hid/events/send_key?key=Enter&state=false"
 ```
 
 ### Key Combo (e.g., Cmd+Space for Spotlight)
@@ -110,32 +110,32 @@ Press all keys in order, then release in reverse:
 
 ```bash
 # Press Cmd
-curl -k -s -X POST -u "$(printenv PIKVM_AUTH)" "$(printenv PIKVM_URL)/api/hid/events/send_key?key=MetaLeft&state=true"
+curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/hid/events/send_key?key=MetaLeft&state=true"
 
 # Press Space
-curl -k -s -X POST -u "$(printenv PIKVM_AUTH)" "$(printenv PIKVM_URL)/api/hid/events/send_key?key=Space&state=true"
+curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/hid/events/send_key?key=Space&state=true"
 
 # Release Space
-curl -k -s -X POST -u "$(printenv PIKVM_AUTH)" "$(printenv PIKVM_URL)/api/hid/events/send_key?key=Space&state=false"
+curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/hid/events/send_key?key=Space&state=false"
 
 # Release Cmd
-curl -k -s -X POST -u "$(printenv PIKVM_AUTH)" "$(printenv PIKVM_URL)/api/hid/events/send_key?key=MetaLeft&state=false"
+curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/hid/events/send_key?key=MetaLeft&state=false"
 ```
 
 ### Mouse Scroll
 
 ```bash
 curl -k -s -X POST \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/hid/events/send_mouse_wheel?delta_x=0&delta_y=-50"
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/hid/events/send_mouse_wheel?delta_x=0&delta_y=-50"
 ```
 
 ### Get Device Info
 
 ```bash
 curl -k -s \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/info" | jq .
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/info" | jq .
 ```
 
 ### ATX Power Control
@@ -143,14 +143,14 @@ curl -k -s \
 ```bash
 # Power on
 curl -k -s -X POST \
-  -u "$(printenv PIKVM_AUTH)" \
-  "$(printenv PIKVM_URL)/api/atx/power?action=on"
+  -u "$PIKVM_AUTH" \
+  "$PIKVM_URL/api/atx/power?action=on"
 
 # Power off
-curl -k -s -X POST -u "$(printenv PIKVM_AUTH)" "$(printenv PIKVM_URL)/api/atx/power?action=off"
+curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/atx/power?action=off"
 
 # Hard reset
-curl -k -s -X POST -u "$(printenv PIKVM_AUTH)" "$(printenv PIKVM_URL)/api/atx/power?action=reset_hard"
+curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/atx/power?action=reset_hard"
 ```
 
 ---

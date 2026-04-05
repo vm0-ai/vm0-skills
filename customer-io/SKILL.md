@@ -36,7 +36,6 @@ export CUSTOMERIO_APP_TOKEN=your_app_api_key
 
 Find credentials at **Workspace Settings > API & webhook credentials**.
 
-> **Important:** When using `$VAR` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 
 ## Core APIs
 
@@ -60,7 +59,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://cdp.customer.io/v1/identify" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_TOKEN" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
+curl -s -X POST "https://cdp.customer.io/v1/identify" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_TOKEN" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json
 ```
 
 Docs: https://docs.customer.io/integrations/data-in/connections/http-api/
@@ -86,7 +85,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://cdp.customer.io/v1/track" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_TOKEN" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
+curl -s -X POST "https://cdp.customer.io/v1/track" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_TOKEN" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json
 ```
 
 ---
@@ -112,7 +111,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.customer.io/v1/send/email" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" --header "Content-Type: application/json" -d @/tmp/cio_request.json'
+curl -s -X POST "https://api.customer.io/v1/send/email" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" --header "Content-Type: application/json" -d @/tmp/cio_request.json
 ```
 
 Docs: https://docs.customer.io/journeys/transactional-api-examples/
@@ -124,7 +123,7 @@ Docs: https://docs.customer.io/journeys/transactional-api-examples/
 Delete a person by their Customer.io ID. Replace `<person-id>` with the actual ID:
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.customer.io/v1/customers/<person-id>" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN"'
+curl -s -X DELETE "https://api.customer.io/v1/customers/<person-id>" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN"
 ```
 
 ---
@@ -150,7 +149,7 @@ Write to `/tmp/cio_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.customer.io/v1/customers" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" --header "Content-Type: application/json" -d @/tmp/cio_request.json' | jq '{results: [.results[] | {id, email: .attributes.email}]}'
+curl -s -X POST "https://api.customer.io/v1/customers" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" --header "Content-Type: application/json" -d @/tmp/cio_request.json | jq '{results: [.results[] | {id, email: .attributes.email}]}'
 ```
 
 ---
@@ -158,7 +157,7 @@ bash -c 'curl -s -X POST "https://api.customer.io/v1/customers" --header "Author
 ### List Segments (App API)
 
 ```bash
-bash -c 'curl -s "https://api.customer.io/v1/segments" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN"' | jq '[.segments[] | {id, name, type}]'
+curl -s "https://api.customer.io/v1/segments" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" | jq '[.segments[] | {id, name, type}]'
 ```
 
 ---

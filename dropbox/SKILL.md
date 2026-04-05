@@ -26,7 +26,7 @@ Manage files and folders in Dropbox using the HTTP API v2.
 ### Get Current Account
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/users/get_current_account" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" | jq '{account_id, name: .name.display_name, email}'
+curl -s -X POST "https://api.dropboxapi.com/2/users/get_current_account" --header "Authorization: Bearer $DROPBOX_TOKEN" | jq '{account_id, name: .name.display_name, email}'
 ```
 
 Docs: https://www.dropbox.com/developers/documentation/http/documentation#users-get_current_account
@@ -48,7 +48,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/list_folder" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.entries[] | {name, path_display, ".tag", size, server_modified}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/list_folder" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.entries[] | {name, path_display, ".tag", size, server_modified}'
 ```
 
 Docs: https://www.dropbox.com/developers/documentation/http/documentation#files-list_folder
@@ -68,7 +68,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/list_folder" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.entries[] | {name, ".tag", size}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/list_folder" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.entries[] | {name, ".tag", size}'
 ```
 
 ---
@@ -86,7 +86,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/get_metadata" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '{name, path_display, ".tag", size, server_modified, id}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/get_metadata" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '{name, path_display, ".tag", size, server_modified, id}'
 ```
 
 ---
@@ -106,7 +106,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/search_v2" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.matches[] | {name: .metadata.metadata.name, path: .metadata.metadata.path_display}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/search_v2" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.matches[] | {name: .metadata.metadata.name, path: .metadata.metadata.path_display}'
 ```
 
 Docs: https://www.dropbox.com/developers/documentation/http/documentation#files-search_v2
@@ -125,7 +125,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/create_folder_v2" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display, id}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/create_folder_v2" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display, id}'
 ```
 
 ---
@@ -143,7 +143,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/delete_v2" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display, ".tag"}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/delete_v2" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display, ".tag"}'
 ```
 
 ---
@@ -161,7 +161,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/move_v2" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/move_v2" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display}'
 ```
 
 ---
@@ -179,7 +179,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/files/copy_v2" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display}'
+curl -s -X POST "https://api.dropboxapi.com/2/files/copy_v2" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '.metadata | {name, path_display}'
 ```
 
 ---
@@ -189,7 +189,7 @@ curl -s -X POST "https://api.dropboxapi.com/2/files/copy_v2" --header "Authoriza
 Upload a local file. Replace `<dropbox-path>` with the target path and `<local-file>` with the local file path:
 
 ```bash
-curl -s -X POST "https://content.dropboxapi.com/2/files/upload" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Dropbox-API-Arg: {\"path\": \"<dropbox-path>\", \"mode\": \"add\", \"autorename\": true}" --header "Content-Type: application/octet-stream" --data-binary @<local-file> | jq '{name, path_display, size, id}'
+curl -s -X POST "https://content.dropboxapi.com/2/files/upload" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Dropbox-API-Arg: {\"path\": \"<dropbox-path>\", \"mode\": \"add\", \"autorename\": true}" --header "Content-Type: application/octet-stream" --data-binary @<local-file> | jq '{name, path_display, size, id}'
 ```
 
 Docs: https://www.dropbox.com/developers/documentation/http/documentation#files-upload
@@ -201,7 +201,7 @@ Docs: https://www.dropbox.com/developers/documentation/http/documentation#files-
 Replace `<file-path>` with the actual file path:
 
 ```bash
-curl -s -X POST "https://content.dropboxapi.com/2/files/download" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Dropbox-API-Arg: {\"path\": \"<file-path>\"}" -o /tmp/downloaded_file
+curl -s -X POST "https://content.dropboxapi.com/2/files/download" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Dropbox-API-Arg: {\"path\": \"<file-path>\"}" -o /tmp/downloaded_file
 ```
 
 ---
@@ -222,7 +222,7 @@ Write to `/tmp/dropbox_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '{url, path_lower, link_permissions}'
+curl -s -X POST "https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings" --header "Authorization: Bearer $DROPBOX_TOKEN" --header "Content-Type: application/json" -d @/tmp/dropbox_request.json | jq '{url, path_lower, link_permissions}'
 ```
 
 ---
@@ -230,7 +230,7 @@ curl -s -X POST "https://api.dropboxapi.com/2/sharing/create_shared_link_with_se
 ### Get Space Usage
 
 ```bash
-curl -s -X POST "https://api.dropboxapi.com/2/users/get_space_usage" --header "Authorization: Bearer $(printenv DROPBOX_TOKEN)" | jq '{used, allocated: .allocation.allocated}'
+curl -s -X POST "https://api.dropboxapi.com/2/users/get_space_usage" --header "Authorization: Bearer $DROPBOX_TOKEN" | jq '{used, allocated: .allocation.allocated}'
 ```
 
 ---

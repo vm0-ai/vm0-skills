@@ -27,14 +27,13 @@ Alternatively, generate an API key from your Cal.com account under **Settings > 
 export CALCOM_TOKEN=cal_live_your_key_here
 ```
 
-> **Important:** All Cal.com API v2 requests require the `cal-api-version: 2024-08-13` header. When using `$CALCOM_TOKEN` in commands that contain a pipe (`|`), always wrap the curl command in `bash -c '...'` to avoid silent variable clearing — a known Claude Code issue.
 
 ## Core APIs
 
 ### Get Current User
 
 ```bash
-bash -c 'curl -s "https://api.cal.com/v2/me" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13"' | jq '{id, email, name, username, timeZone}'
+curl -s "https://api.cal.com/v2/me" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '{id, email, name, username, timeZone}'
 ```
 
 ---
@@ -42,7 +41,7 @@ bash -c 'curl -s "https://api.cal.com/v2/me" --header "Authorization: Bearer $CA
 ### List Event Types
 
 ```bash
-bash -c 'curl -s "https://api.cal.com/v2/event-types" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13"' | jq '[.data[] | {id, title, slug, length, hidden}]'
+curl -s "https://api.cal.com/v2/event-types" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '[.data[] | {id, title, slug, length, hidden}]'
 ```
 
 ---
@@ -52,7 +51,7 @@ bash -c 'curl -s "https://api.cal.com/v2/event-types" --header "Authorization: B
 Replace `<event-type-id>` with the numeric ID from the list above:
 
 ```bash
-bash -c 'curl -s "https://api.cal.com/v2/event-types/<event-type-id>" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13"' | jq '.data | {id, title, length, description, locations}'
+curl -s "https://api.cal.com/v2/event-types/<event-type-id>" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '.data | {id, title, length, description, locations}'
 ```
 
 ---
@@ -62,7 +61,7 @@ bash -c 'curl -s "https://api.cal.com/v2/event-types/<event-type-id>" --header "
 Check available slots for an event type. Replace `<username>` and `<event-type-slug>` with actual values. Dates in `YYYY-MM-DD` format:
 
 ```bash
-bash -c 'curl -s "https://api.cal.com/v2/slots/available?username=<username>&eventTypeSlug=<event-type-slug>&startTime=2025-01-15&endTime=2025-01-22&timeZone=America/New_York" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13"' | jq '{slots: [.data.slots | to_entries[] | {date: .key, times: [.value[] | .time]}] | .[0:3]}'
+curl -s "https://api.cal.com/v2/slots/available?username=<username>&eventTypeSlug=<event-type-slug>&startTime=2025-01-15&endTime=2025-01-22&timeZone=America/New_York" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '{slots: [.data.slots | to_entries[] | {date: .key, times: [.value[] | .time]}] | .[0:3]}'
 ```
 
 ---
@@ -88,7 +87,7 @@ Write to `/tmp/calcom_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.cal.com/v2/bookings" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json' | jq '{uid, status, start, end, attendees: [.attendees[] | {name, email}]}'
+curl -s -X POST "https://api.cal.com/v2/bookings" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json | jq '{uid, status, start, end, attendees: [.attendees[] | {name, email}]}'
 ```
 
 Docs: https://cal.com/docs/api-reference/v2/bookings/create-a-booking
@@ -98,7 +97,7 @@ Docs: https://cal.com/docs/api-reference/v2/bookings/create-a-booking
 ### List Bookings
 
 ```bash
-bash -c 'curl -s "https://api.cal.com/v2/bookings?take=20" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13"' | jq '[.data[] | {uid, status, title, start, end, attendeeName: .attendees[0].name}]'
+curl -s "https://api.cal.com/v2/bookings?take=20" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '[.data[] | {uid, status, title, start, end, attendeeName: .attendees[0].name}]'
 ```
 
 ---
@@ -108,7 +107,7 @@ bash -c 'curl -s "https://api.cal.com/v2/bookings?take=20" --header "Authorizati
 Replace `<booking-uid>` with the booking UID from the list above:
 
 ```bash
-bash -c 'curl -s "https://api.cal.com/v2/bookings/<booking-uid>" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13"' | jq '{uid, status, title, start, end, attendees}'
+curl -s "https://api.cal.com/v2/bookings/<booking-uid>" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '{uid, status, title, start, end, attendees}'
 ```
 
 ---
@@ -126,7 +125,7 @@ Write to `/tmp/calcom_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X DELETE "https://api.cal.com/v2/bookings/<booking-uid>/cancel" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json' | jq '{status}'
+curl -s -X DELETE "https://api.cal.com/v2/bookings/<booking-uid>/cancel" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json | jq '{status}'
 ```
 
 ---
@@ -145,7 +144,7 @@ Write to `/tmp/calcom_request.json`:
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.cal.com/v2/bookings/<booking-uid>/reschedule" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json' | jq '{uid, status, start, end}'
+curl -s -X POST "https://api.cal.com/v2/bookings/<booking-uid>/reschedule" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json | jq '{uid, status, start, end}'
 ```
 
 ---

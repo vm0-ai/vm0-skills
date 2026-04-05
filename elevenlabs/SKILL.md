@@ -57,7 +57,7 @@ The base URL for the ElevenLabs API is:
 Get all voices available to your account:
 
 ```bash
-curl -s -X GET "https://api.elevenlabs.io/v1/voices" --header "xi-api-key: $(printenv ELEVENLABS_API_KEY)" | jq '.voices[] | {voice_id, name, category}'
+curl -s -X GET "https://api.elevenlabs.io/v1/voices" --header "xi-api-key: $ELEVENLABS_API_KEY" | jq '.voices[] | {voice_id, name, category}'
 ```
 
 This returns voice IDs needed for text-to-speech. Common voice categories:
@@ -72,7 +72,7 @@ This returns voice IDs needed for text-to-speech. Common voice categories:
 Get detailed information about a specific voice. Replace `<your-voice-id>` with an actual voice ID:
 
 ```bash
-curl -s -X GET "https://api.elevenlabs.io/v1/voices/<your-voice-id>" --header "xi-api-key: $(printenv ELEVENLABS_API_KEY)"
+curl -s -X GET "https://api.elevenlabs.io/v1/voices/<your-voice-id>" --header "xi-api-key: $ELEVENLABS_API_KEY"
 ```
 
 ---
@@ -82,7 +82,7 @@ curl -s -X GET "https://api.elevenlabs.io/v1/voices/<your-voice-id>" --header "x
 Get all available TTS models:
 
 ```bash
-curl -s -X GET "https://api.elevenlabs.io/v1/models" --header "xi-api-key: $(printenv ELEVENLABS_API_KEY)" | jq '.[] | {model_id, name, can_do_text_to_speech}'
+curl -s -X GET "https://api.elevenlabs.io/v1/models" --header "xi-api-key: $ELEVENLABS_API_KEY" | jq '.[] | {model_id, name, can_do_text_to_speech}'
 ```
 
 Common models:
@@ -112,7 +112,7 @@ Write to `/tmp/elevenlabs_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>" --header "xi-api-key: $(printenv ELEVENLABS_API_KEY)" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output speech.mp3
+curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>" --header "xi-api-key: $ELEVENLABS_API_KEY" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output speech.mp3
 ```
 
 **Voice settings:**
@@ -138,7 +138,7 @@ Write to `/tmp/elevenlabs_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>/stream" --header "xi-api-key: $(printenv ELEVENLABS_API_KEY)" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output streamed.mp3
+curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>/stream" --header "xi-api-key: $ELEVENLABS_API_KEY" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output streamed.mp3
 ```
 
 ---
@@ -148,7 +148,7 @@ curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>/str
 Check your usage and character limits:
 
 ```bash
-curl -s -X GET "https://api.elevenlabs.io/v1/user/subscription" --header "xi-api-key: $(printenv ELEVENLABS_API_KEY)" | jq '{character_count, character_limit, tier}'
+curl -s -X GET "https://api.elevenlabs.io/v1/user/subscription" --header "xi-api-key: $ELEVENLABS_API_KEY" | jq '{character_count, character_limit, tier}'
 ```
 
 ---
@@ -169,7 +169,7 @@ Write to `/tmp/elevenlabs_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>?output_format=pcm_16000" --header "xi-api-key: $(printenv ELEVENLABS_API_KEY)" --header "Content-Type: application/json" -d @/tmp/elevenlabs_request.json --output speech.pcm
+curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>?output_format=pcm_16000" --header "xi-api-key: $ELEVENLABS_API_KEY" --header "Content-Type: application/json" -d @/tmp/elevenlabs_request.json --output speech.pcm
 ```
 
 Available formats:

@@ -60,7 +60,7 @@ All examples below assume you have `JOTFORM_TOKEN` set. Authentication uses the 
 Retrieve information about the authenticated user.
 
 ```bash
-curl -s "https://api.jotform.com/user" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq .
+curl -s "https://api.jotform.com/user" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
 ---
@@ -70,7 +70,7 @@ curl -s "https://api.jotform.com/user" --header "APIKEY: $(printenv JOTFORM_TOKE
 Check API usage limits and current consumption.
 
 ```bash
-curl -s "https://api.jotform.com/user/usage" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq .
+curl -s "https://api.jotform.com/user/usage" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
 ---
@@ -80,13 +80,13 @@ curl -s "https://api.jotform.com/user/usage" --header "APIKEY: $(printenv JOTFOR
 Retrieve all forms in the account. Supports pagination with `limit` and `offset`.
 
 ```bash
-curl -s "https://api.jotform.com/user/forms?limit=20&offset=0" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content[] | {id, title, status, created_at}'
+curl -s "https://api.jotform.com/user/forms?limit=20&offset=0" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content[] | {id, title, status, created_at}'
 ```
 
 Filter forms by status:
 
 ```bash
-curl -s "https://api.jotform.com/user/forms?limit=20&filter=%7B%22status%3Ane%22%3A%22DELETED%22%7D" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content[] | {id, title, status}'
+curl -s "https://api.jotform.com/user/forms?limit=20&filter=%7B%22status%3Ane%22%3A%22DELETED%22%7D" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content[] | {id, title, status}'
 ```
 
 ---
@@ -96,7 +96,7 @@ curl -s "https://api.jotform.com/user/forms?limit=20&filter=%7B%22status%3Ane%22
 Retrieve details for a specific form. Replace `FORM_ID` with the actual form ID.
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq .
+curl -s "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
 ---
@@ -106,13 +106,13 @@ curl -s "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $(printenv JOTF
 List all questions (fields) in a form.
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/questions" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/form/FORM_ID/questions" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 Get a specific question by ID:
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/question/QUESTION_ID" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/form/FORM_ID/question/QUESTION_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 ---
@@ -122,7 +122,7 @@ curl -s "https://api.jotform.com/form/FORM_ID/question/QUESTION_ID" --header "AP
 Get submissions for a specific form. Supports `limit`, `offset`, `orderby`, and `filter`.
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/submissions?limit=20&offset=0&orderby=created_at" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content[] | {id, created_at, status}'
+curl -s "https://api.jotform.com/form/FORM_ID/submissions?limit=20&offset=0&orderby=created_at" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content[] | {id, created_at, status}'
 ```
 
 ---
@@ -132,7 +132,7 @@ curl -s "https://api.jotform.com/form/FORM_ID/submissions?limit=20&offset=0&orde
 Retrieve details for a specific submission.
 
 ```bash
-curl -s "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 ---
@@ -142,7 +142,7 @@ curl -s "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $(p
 Submit new data to a form. Field keys follow the format `submission[QUESTION_ID]`.
 
 ```bash
-curl -s -X POST "https://api.jotform.com/form/FORM_ID/submissions" --header "APIKEY: $(printenv JOTFORM_TOKEN)" -d "submission[1]=John" -d "submission[2]=Doe" -d "submission[3]=john@example.com" | jq .
+curl -s -X POST "https://api.jotform.com/form/FORM_ID/submissions" --header "APIKEY: $JOTFORM_TOKEN" -d "submission[1]=John" -d "submission[2]=Doe" -d "submission[3]=john@example.com" | jq .
 ```
 
 ---
@@ -152,7 +152,7 @@ curl -s -X POST "https://api.jotform.com/form/FORM_ID/submissions" --header "API
 Edit an existing submission.
 
 ```bash
-curl -s -X POST "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $(printenv JOTFORM_TOKEN)" -d "submission[1]=Jane" -d "submission[2]=Smith" | jq .
+curl -s -X POST "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $JOTFORM_TOKEN" -d "submission[1]=Jane" -d "submission[2]=Smith" | jq .
 ```
 
 ---
@@ -162,7 +162,7 @@ curl -s -X POST "https://api.jotform.com/submission/SUBMISSION_ID" --header "API
 Delete a submission by ID.
 
 ```bash
-curl -s -X DELETE "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq .
+curl -s -X DELETE "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
 ---
@@ -172,13 +172,13 @@ curl -s -X DELETE "https://api.jotform.com/submission/SUBMISSION_ID" --header "A
 Retrieve all properties of a form (title, colors, fonts, etc.).
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/properties" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/form/FORM_ID/properties" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 Get a specific property:
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/properties/PROPERTY_KEY" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/form/FORM_ID/properties/PROPERTY_KEY" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 ---
@@ -188,7 +188,7 @@ curl -s "https://api.jotform.com/form/FORM_ID/properties/PROPERTY_KEY" --header 
 Get all webhooks configured for a form.
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 ---
@@ -198,7 +198,7 @@ curl -s "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY: $(prin
 Add a webhook URL to receive form submission notifications.
 
 ```bash
-curl -s -X POST "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY: $(printenv JOTFORM_TOKEN)" -d "webhookURL=https://example.com/webhook" | jq .
+curl -s -X POST "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY: $JOTFORM_TOKEN" -d "webhookURL=https://example.com/webhook" | jq .
 ```
 
 ---
@@ -208,7 +208,7 @@ curl -s -X POST "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY
 Remove a webhook from a form.
 
 ```bash
-curl -s -X DELETE "https://api.jotform.com/form/FORM_ID/webhooks/WEBHOOK_ID" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq .
+curl -s -X DELETE "https://api.jotform.com/form/FORM_ID/webhooks/WEBHOOK_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
 ---
@@ -218,7 +218,7 @@ curl -s -X DELETE "https://api.jotform.com/form/FORM_ID/webhooks/WEBHOOK_ID" --h
 Get all files uploaded through a form.
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/files" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/form/FORM_ID/files" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 ---
@@ -228,7 +228,7 @@ curl -s "https://api.jotform.com/form/FORM_ID/files" --header "APIKEY: $(printen
 Create a copy of an existing form.
 
 ```bash
-curl -s -X POST "https://api.jotform.com/form/FORM_ID/clone" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq .
+curl -s -X POST "https://api.jotform.com/form/FORM_ID/clone" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
 ---
@@ -238,7 +238,7 @@ curl -s -X POST "https://api.jotform.com/form/FORM_ID/clone" --header "APIKEY: $
 Delete a form by ID.
 
 ```bash
-curl -s -X DELETE "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq .
+curl -s -X DELETE "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
 ---
@@ -248,7 +248,7 @@ curl -s -X DELETE "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $(pri
 Get all folders in the account.
 
 ```bash
-curl -s "https://api.jotform.com/user/folders" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/user/folders" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 ---
@@ -258,7 +258,7 @@ curl -s "https://api.jotform.com/user/folders" --header "APIKEY: $(printenv JOTF
 Retrieve all submissions across all forms.
 
 ```bash
-curl -s "https://api.jotform.com/user/submissions?limit=20&offset=0" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content[] | {id, form_id, created_at, status}'
+curl -s "https://api.jotform.com/user/submissions?limit=20&offset=0" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content[] | {id, form_id, created_at, status}'
 ```
 
 ---
@@ -268,7 +268,7 @@ curl -s "https://api.jotform.com/user/submissions?limit=20&offset=0" --header "A
 List all reports for a form.
 
 ```bash
-curl -s "https://api.jotform.com/form/FORM_ID/reports" --header "APIKEY: $(printenv JOTFORM_TOKEN)" | jq '.content'
+curl -s "https://api.jotform.com/form/FORM_ID/reports" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
 ---

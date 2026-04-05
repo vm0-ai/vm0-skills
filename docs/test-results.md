@@ -2,7 +2,7 @@
 
 Last updated: 2024-12-25
 
-This document tracks the testing status of all skills after the `bash -c` pattern migration.
+This document tracks the testing status of all skills.
 
 ## Summary
 
@@ -72,27 +72,27 @@ This document tracks the testing status of all skills after the `bash -c` patter
 | kommo | 401 Unauthorized | API key invalid |
 | pdf4me | 404 error | API endpoint may have changed |
 
-**Note**: These issues are API-specific, not related to the `bash -c` curl pattern.
+**Note**: These issues are API-specific, not related to the curl pattern.
 
 <details>
 <summary>Detailed Error Logs</summary>
 
 **axiom** (actually works, but response format differs from expected)
 ```bash
-bash -c 'curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer $AXIOM_API_KEY"' | jq '[.[] | .name]'
+curl -s "https://api.axiom.co/v2/datasets" --header "Authorization: Bearer $AXIOM_API_KEY" | jq '[.[] | .name]'
 # Error: jq: error (at <stdin>:0): Cannot index number with string "name"
 # Root cause: API returns object not array, need different jq query
 ```
 
 **google-sheets**
 ```bash
-bash -c 'curl -s "https://sheets.googleapis.com/v4/spreadsheets" -H "Authorization: Bearer $GOOGLE_ACCESS_TOKEN"'
+curl -s "https://sheets.googleapis.com/v4/spreadsheets" --header "Authorization: Bearer $GOOGLE_ACCESS_TOKEN"
 # Response: Token expired or invalid
 ```
 
 **kommo**
 ```bash
-bash -c 'curl -s "https://api.kommo.com/api/v4/account" -H "Authorization: Bearer $KOMMO_API_KEY"'
+curl -s "https://api.kommo.com/api/v4/account" --header "Authorization: Bearer $KOMMO_API_KEY"
 # Response: Empty
 ```
 
@@ -117,25 +117,15 @@ bash -c 'curl -s "https://api.kommo.com/api/v4/account" -H "Authorization: Beare
 
 ## Pattern Verification
 
-The `bash -c` pattern was verified to work correctly:
+Direct curl with environment variables works correctly:
 
 ```bash
 # Pattern 1: Simple curl with auth + jq
-bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq .
+curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq .
 
-# Pattern 2: Command substitution with quotes
-VAR="$(bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY"' | jq -r .id)"
+# Pattern 2: Command substitution
+VAR="$(curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq -r .id)"
 
-# Pattern 3: With JSON body (escaped quotes)
-bash -c 'curl -s "https://api.example.com" -H "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"'' | jq .
+# Pattern 3: With JSON body (file-based)
+curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" --header "Content-Type: application/json" -d @/tmp/request.json | jq .
 ```
-
-All 45 tested skills confirmed that:
-1. Environment variables are correctly passed inside `bash -c`
-2. Pipes to `jq` work correctly outside `bash -c`
-3. Command substitution with quotes protects special characters
-
-## Related Issues
-
-- [anthropics/claude-code#11225](https://github.com/anthropics/claude-code/issues/11225) - Bash preprocessing bugs
-- [anthropics/claude-code#8318](https://github.com/anthropics/claude-code/issues/8318) - Environment variables cleared with pipes

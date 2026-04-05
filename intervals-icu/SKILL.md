@@ -32,7 +32,7 @@ Use this skill when you need to:
 Verify authentication and get your athlete ID:
 
 ```bash
-curl -s "https://intervals.icu/api/v1/athlete/0/activities?oldest=2025-01-01&newest=2025-12-31" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '.[0] | {icu_athlete_id}'
+curl -s "https://intervals.icu/api/v1/athlete/0/activities?oldest=2025-01-01&newest=2025-12-31" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[0] | {icu_athlete_id}'
 ```
 
 > Save the `icu_athlete_id` value (e.g., `i230851`) for use in other endpoints that require an athlete ID.
@@ -54,7 +54,7 @@ Base URL: `https://intervals.icu`
 Get the authenticated athlete's profile and settings:
 
 ```bash
-curl -s "https://intervals.icu/api/v1/athlete/0" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '{id, name, firstname, lastname, email, locale, weight, icu_weight, icu_resting_hr, sex, country, city, timezone}'
+curl -s "https://intervals.icu/api/v1/athlete/0" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '{id, name, firstname, lastname, email, locale, weight, icu_weight, icu_resting_hr, sex, country, city, timezone}'
 ```
 
 ---
@@ -66,7 +66,7 @@ Get activities for a date range:
 > **Note:** Replace `<athlete-id>` with your athlete ID. Dates are in `YYYY-MM-DD` format.
 
 ```bash
-curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/activities?oldest=2025-01-01&newest=2025-01-31" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '.[] | {id, name, type, start_date_local, moving_time, distance, total_elevation_gain, icu_training_load}'
+curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/activities?oldest=2025-01-01&newest=2025-01-31" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[] | {id, name, type, start_date_local, moving_time, distance, total_elevation_gain, icu_training_load}'
 ```
 
 ---
@@ -78,7 +78,7 @@ Get details for a specific activity:
 > **Note:** Replace `<activity-id>` with an actual activity ID from the "List Activities" output. Activities imported from Strava may have limited data.
 
 ```bash
-curl -s "https://intervals.icu/api/v1/activity/<activity-id>" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '{id, name, type, start_date_local, moving_time, distance, average_speed, average_watts, average_heartrate, icu_training_load}'
+curl -s "https://intervals.icu/api/v1/activity/<activity-id>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '{id, name, type, start_date_local, moving_time, distance, average_speed, average_watts, average_heartrate, icu_training_load}'
 ```
 
 ---
@@ -90,7 +90,7 @@ Get detailed data streams (GPS, heart rate, power, etc.) for an activity:
 > **Note:** Replace `<activity-id>` with an actual activity ID. Available stream types: `time`, `watts`, `heartrate`, `cadence`, `distance`, `altitude`, `latlng`, `velocity_smooth`, `temp`. Only activities with recorded sensor data will have streams.
 
 ```bash
-curl -s "https://intervals.icu/api/v1/activity/<activity-id>/streams?types=watts,heartrate,cadence" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq 'keys'
+curl -s "https://intervals.icu/api/v1/activity/<activity-id>/streams?types=watts,heartrate,cadence" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq 'keys'
 ```
 
 ---
@@ -102,7 +102,7 @@ Get the power curve for an activity:
 > **Note:** Replace `<activity-id>` with an actual activity ID. Only activities with power data will have a power curve.
 
 ```bash
-curl -s "https://intervals.icu/api/v1/activity/<activity-id>/power-curve" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '.[0:10]'
+curl -s "https://intervals.icu/api/v1/activity/<activity-id>/power-curve" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[0:10]'
 ```
 
 ---
@@ -114,7 +114,7 @@ Get wellness record for a specific date:
 > **Note:** Replace `<athlete-id>` with your athlete ID and `<date>` with `YYYY-MM-DD`.
 
 ```bash
-curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/wellness/<date>" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '{id, ctl, atl, rampRate, sleepTime, sleepScore, fatigue, soreness, stress, mood, motivation, weight, restingHR, hrv}'
+curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/wellness/<date>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '{id, ctl, atl, rampRate, sleepTime, sleepScore, fatigue, soreness, stress, mood, motivation, weight, restingHR, hrv}'
 ```
 
 ---
@@ -135,7 +135,7 @@ Write to `/tmp/intervals_wellness.json`:
 ```
 
 ```bash
-curl -s -X PUT "https://intervals.icu/api/v1/athlete/<athlete-id>/wellness/<date>" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" --header "Content-Type: application/json" -d @/tmp/intervals_wellness.json | jq '{id, weight, restingHR}'
+curl -s -X PUT "https://intervals.icu/api/v1/athlete/<athlete-id>/wellness/<date>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" --header "Content-Type: application/json" -d @/tmp/intervals_wellness.json | jq '{id, weight, restingHR}'
 ```
 
 ---
@@ -147,7 +147,7 @@ Get planned workouts and events for a date range:
 > **Note:** Replace `<athlete-id>` with your athlete ID.
 
 ```bash
-curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/events?oldest=2025-01-01&newest=2025-12-31" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '.[] | {id, start_date_local, name, category, type, description}'
+curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/events?oldest=2025-01-01&newest=2025-12-31" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[] | {id, start_date_local, name, category, type, description}'
 ```
 
 ---
@@ -171,7 +171,7 @@ Write to `/tmp/intervals_event.json`:
 ```
 
 ```bash
-curl -s -X POST "https://intervals.icu/api/v1/athlete/<athlete-id>/events" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" --header "Content-Type: application/json" -d @/tmp/intervals_event.json | jq '{id, name, start_date_local, category, type}'
+curl -s -X POST "https://intervals.icu/api/v1/athlete/<athlete-id>/events" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" --header "Content-Type: application/json" -d @/tmp/intervals_event.json | jq '{id, name, start_date_local, category, type}'
 ```
 
 ---
@@ -183,7 +183,7 @@ Get workouts from the workout library:
 > **Note:** Replace `<athlete-id>` with your athlete ID.
 
 ```bash
-curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/workouts" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" | jq '.[] | {id, name, type, description}' | head -40
+curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/workouts" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[] | {id, name, type, description}' | head -40
 ```
 
 ---
@@ -208,7 +208,7 @@ Write to `/tmp/intervals_activity.json`:
 ```
 
 ```bash
-curl -s -X POST "https://intervals.icu/api/v1/athlete/<athlete-id>/activities/manual" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" --header "Content-Type: application/json" -d @/tmp/intervals_activity.json | jq '{id, name, type, start_date_local, moving_time, distance}'
+curl -s -X POST "https://intervals.icu/api/v1/athlete/<athlete-id>/activities/manual" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" --header "Content-Type: application/json" -d @/tmp/intervals_activity.json | jq '{id, name, type, start_date_local, moving_time, distance}'
 ```
 
 ---
@@ -220,7 +220,7 @@ Delete an activity:
 > **Note:** Replace `<activity-id>` with the activity ID.
 
 ```bash
-curl -s -X DELETE "https://intervals.icu/api/v1/activity/<activity-id>" --header "Authorization: Bearer $(printenv INTERVALS_ICU_TOKEN)" -w "\nHTTP Status: %{http_code}\n"
+curl -s -X DELETE "https://intervals.icu/api/v1/activity/<activity-id>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
 
 ---

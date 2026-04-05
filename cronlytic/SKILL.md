@@ -83,7 +83,7 @@ Write to `/tmp/cronlytic_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{job_id, name, status, next_run_at}'
+curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{job_id, name, status, next_run_at}'
 ```
 
 ---
@@ -108,7 +108,7 @@ Write to `/tmp/cronlytic_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{name, status}'
+curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{name, status}'
 ```
 
 ---
@@ -118,7 +118,7 @@ curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $(printenv 
 Get all your scheduled jobs:
 
 ```bash
-curl -s -X GET "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)" | jq '.[] | {job_id, name, status, cron_expression, next_run_at}'
+curl -s -X GET "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" | jq '.[] | {job_id, name, status, cron_expression, next_run_at}'
 ```
 
 ---
@@ -143,7 +143,7 @@ Write to `/tmp/cronlytic_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "https://api.cronlytic.com/prog/jobs/<your-job-id>" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{job_id, name, status, next_run_at}'
+curl -s -X PUT "https://api.cronlytic.com/prog/jobs/<your-job-id>" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{job_id, name, status, next_run_at}'
 ```
 
 ---
@@ -153,7 +153,7 @@ curl -s -X PUT "https://api.cronlytic.com/prog/jobs/<your-job-id>" -H "X-API-Key
 Stop a job from executing. Replace `<your-job-id>` with the actual job ID:
 
 ```bash
-curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/pause" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)"
+curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/pause" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID"
 ```
 
 ---
@@ -163,7 +163,7 @@ curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/pause" -H "X-
 Resume a paused job. Replace `<your-job-id>` with the actual job ID:
 
 ```bash
-curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/resume" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)"
+curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/resume" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID"
 ```
 
 ---
@@ -173,7 +173,7 @@ curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/resume" -H "X
 View execution history (last 50 entries). Replace `<your-job-id>` with the actual job ID:
 
 ```bash
-curl -s -X GET "https://api.cronlytic.com/prog/jobs/<your-job-id>/logs" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)" | jq '.logs[] | {timestamp, status, response_code, response_time}'
+curl -s -X GET "https://api.cronlytic.com/prog/jobs/<your-job-id>/logs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" | jq '.logs[] | {timestamp, status, response_code, response_time}'
 ```
 
 ---
@@ -183,7 +183,7 @@ curl -s -X GET "https://api.cronlytic.com/prog/jobs/<your-job-id>/logs" -H "X-AP
 Permanently delete a job and its logs. Replace `<your-job-id>` with the actual job ID:
 
 ```bash
-curl -s -X DELETE "https://api.cronlytic.com/prog/jobs/<your-job-id>" -H "X-API-Key: $(printenv CRONLYTIC_API_KEY)" -H "X-User-ID: $(printenv CRONLYTIC_USER_ID)"
+curl -s -X DELETE "https://api.cronlytic.com/prog/jobs/<your-job-id>" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID"
 ```
 
 ---

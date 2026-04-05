@@ -60,7 +60,7 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/chat-messages" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
+curl -s -X POST "https://api.dify.ai/v1/chat-messages" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
 ```
 
 ### Send Chat Message (Streaming)
@@ -79,7 +79,7 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/chat-messages" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json
+curl -s -X POST "https://api.dify.ai/v1/chat-messages" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json
 ```
 
 Streaming returns Server-Sent Events (SSE) with incremental chunks.
@@ -103,13 +103,13 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/chat-messages" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
+curl -s -X POST "https://api.dify.ai/v1/chat-messages" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
 ```
 
 ### Stop Chat Message Generation
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/chat-messages/{task_id}/stop" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d '{"user": "user-123"}' | jq .
+curl -s -X POST "https://api.dify.ai/v1/chat-messages/{task_id}/stop" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d '{"user": "user-123"}' | jq .
 ```
 
 ---
@@ -133,7 +133,7 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/completion-messages" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
+curl -s -X POST "https://api.dify.ai/v1/completion-messages" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
 ```
 
 The `inputs` object keys depend on the variables configured in your Dify app's prompt template.
@@ -159,7 +159,7 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/workflows/run" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
+curl -s -X POST "https://api.dify.ai/v1/workflows/run" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
 ```
 
 Response includes `workflow_run_id`, `status`, `outputs`, `elapsed_time`, and `total_tokens`.
@@ -181,13 +181,13 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/workflows/run" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json
+curl -s -X POST "https://api.dify.ai/v1/workflows/run" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json
 ```
 
 ### Get Workflow Run Detail
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/workflows/run/{workflow_run_id}" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/workflows/run/{workflow_run_id}" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ---
@@ -197,25 +197,25 @@ curl -s -X GET "https://api.dify.ai/v1/workflows/run/{workflow_run_id}" --header
 ### List Conversations
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/conversations?user=user-123&limit=20" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/conversations?user=user-123&limit=20" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ### Get Conversation History Messages
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/messages?user=user-123&conversation_id={conversation_id}&limit=20" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/messages?user=user-123&conversation_id={conversation_id}&limit=20" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ### Delete Conversation
 
 ```bash
-curl -s -X DELETE "https://api.dify.ai/v1/conversations/{conversation_id}" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d '{"user": "user-123"}' | jq .
+curl -s -X DELETE "https://api.dify.ai/v1/conversations/{conversation_id}" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d '{"user": "user-123"}' | jq .
 ```
 
 ### Rename Conversation
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/conversations/{conversation_id}/name" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d '{"name": "My Chat Session", "user": "user-123"}' | jq .
+curl -s -X POST "https://api.dify.ai/v1/conversations/{conversation_id}/name" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d '{"name": "My Chat Session", "user": "user-123"}' | jq .
 ```
 
 ---
@@ -223,7 +223,7 @@ curl -s -X POST "https://api.dify.ai/v1/conversations/{conversation_id}/name" --
 ## Message Feedback
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/messages/{message_id}/feedbacks" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d '{"rating": "like", "user": "user-123"}' | jq .
+curl -s -X POST "https://api.dify.ai/v1/messages/{message_id}/feedbacks" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d '{"rating": "like", "user": "user-123"}' | jq .
 ```
 
 Rating values: `like`, `dislike`, or `null` (to remove feedback).
@@ -235,7 +235,7 @@ Rating values: `like`, `dislike`, or `null` (to remove feedback).
 Get follow-up question suggestions after a message:
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/messages/{message_id}/suggested?user=user-123" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/messages/{message_id}/suggested?user=user-123" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ---
@@ -245,7 +245,7 @@ curl -s -X GET "https://api.dify.ai/v1/messages/{message_id}/suggested?user=user
 Upload a file for use in conversations:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/files/upload" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" -F "file=@/path/to/file.png" -F "user=user-123" | jq .
+curl -s -X POST "https://api.dify.ai/v1/files/upload" --header "Authorization: Bearer $DIFY_TOKEN" -F "file=@/path/to/file.png" -F "user=user-123" | jq .
 ```
 
 Use the returned `id` in chat messages by adding it to the `files` array in the request body.
@@ -257,13 +257,13 @@ Use the returned `id` in chat messages by adding it to the `files` array in the 
 ### Get Application Parameters
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/parameters?user=user-123" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/parameters?user=user-123" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ### Get Application Meta Info
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/meta?user=user-123" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/meta?user=user-123" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ---
@@ -275,19 +275,19 @@ Knowledge base APIs use a separate **Dataset API key** (not the app API key). Ge
 ### Create Knowledge Base
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/datasets" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d '{"name": "My Knowledge Base"}' | jq .
+curl -s -X POST "https://api.dify.ai/v1/datasets" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d '{"name": "My Knowledge Base"}' | jq .
 ```
 
 ### List Knowledge Bases
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/datasets?page=1&limit=20" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/datasets?page=1&limit=20" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ### Delete Knowledge Base
 
 ```bash
-curl -s -X DELETE "https://api.dify.ai/v1/datasets/{dataset_id}" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X DELETE "https://api.dify.ai/v1/datasets/{dataset_id}" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ### Create Document by Text
@@ -308,19 +308,19 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/datasets/{dataset_id}/document/create_by_text" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
+curl -s -X POST "https://api.dify.ai/v1/datasets/{dataset_id}/document/create_by_text" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
 ```
 
 ### List Documents in Knowledge Base
 
 ```bash
-curl -s -X GET "https://api.dify.ai/v1/datasets/{dataset_id}/documents?page=1&limit=20" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X GET "https://api.dify.ai/v1/datasets/{dataset_id}/documents?page=1&limit=20" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ### Delete Document
 
 ```bash
-curl -s -X DELETE "https://api.dify.ai/v1/datasets/{dataset_id}/documents/{document_id}" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" | jq .
+curl -s -X DELETE "https://api.dify.ai/v1/datasets/{dataset_id}/documents/{document_id}" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
 ### Query Knowledge Base (Retrieval)
@@ -341,7 +341,7 @@ Write to `/tmp/dify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.dify.ai/v1/datasets/{dataset_id}/retrieve" --header "Authorization: Bearer $(printenv DIFY_TOKEN)" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
+curl -s -X POST "https://api.dify.ai/v1/datasets/{dataset_id}/retrieve" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
 ```
 
 ---

@@ -27,7 +27,7 @@ Manage audiences (lists), campaigns, templates, and subscribers with the Mailchi
 Mailchimp API URLs are datacenter-specific: `https://<dc>.api.mailchimp.com/3.0`. Before making any API calls, determine the datacenter via the metadata endpoint:
 
 ```bash
-MC_DC=$(curl -s "https://login.mailchimp.com/oauth2/metadata" -H "Authorization: OAuth $(printenv MAILCHIMP_TOKEN)" | jq -r '.dc')
+MC_DC=$(curl -s "https://login.mailchimp.com/oauth2/metadata" -H "Authorization: OAuth $MAILCHIMP_TOKEN" | jq -r '.dc')
 ```
 
 ## Core APIs
@@ -37,7 +37,7 @@ MC_DC=$(curl -s "https://login.mailchimp.com/oauth2/metadata" -H "Authorization:
 Use this to verify authentication:
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/ping" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '{health_status}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/ping" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '{health_status}'
 ```
 
 ---
@@ -45,7 +45,7 @@ curl -s "https://${MC_DC}.api.mailchimp.com/3.0/ping" --header "Authorization: B
 ### Get Account Details
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '{account_id, account_name, email, total_subscribers}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '{account_id, account_name, email, total_subscribers}'
 ```
 
 ---
@@ -53,7 +53,7 @@ curl -s "https://${MC_DC}.api.mailchimp.com/3.0/" --header "Authorization: Beare
 ### List Audiences (Lists)
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/lists?count=10" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '.lists[] | {id, name, stats: {member_count: .stats.member_count, campaign_count: .stats.campaign_count}}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/lists?count=10" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '.lists[] | {id, name, stats: {member_count: .stats.member_count, campaign_count: .stats.campaign_count}}'
 ```
 
 Docs: https://mailchimp.com/developer/marketing/api/lists/
@@ -65,7 +65,7 @@ Docs: https://mailchimp.com/developer/marketing/api/lists/
 Replace `<list-id>` with the actual list/audience ID:
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '{id, name, stats, date_created}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '{id, name, stats, date_created}'
 ```
 
 ---
@@ -75,7 +75,7 @@ curl -s "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>" --header "Autho
 Replace `<list-id>` with the actual list ID:
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>/members?count=10" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '.members[] | {id, email_address, status, full_name}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>/members?count=10" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '.members[] | {id, email_address, status, full_name}'
 ```
 
 ---
@@ -98,7 +98,7 @@ Write to `/tmp/mailchimp_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>/members" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, email_address, status, full_name}'
+curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>/members" --header "Authorization: Bearer $MAILCHIMP_TOKEN" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, email_address, status, full_name}'
 ```
 
 Docs: https://mailchimp.com/developer/marketing/api/list-members/
@@ -121,7 +121,7 @@ Write to `/tmp/mailchimp_request.json`:
 ```
 
 ```bash
-curl -s -X PATCH "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>/members/<subscriber-hash>" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, email_address, status, full_name}'
+curl -s -X PATCH "https://${MC_DC}.api.mailchimp.com/3.0/lists/<list-id>/members/<subscriber-hash>" --header "Authorization: Bearer $MAILCHIMP_TOKEN" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, email_address, status, full_name}'
 ```
 
 To compute the subscriber hash: `echo -n "email@example.com" | md5sum | cut -d' ' -f1`
@@ -131,7 +131,7 @@ To compute the subscriber hash: `echo -n "email@example.com" | md5sum | cut -d' 
 ### List Campaigns
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/campaigns?count=10&sort_field=send_time&sort_dir=DESC" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '.campaigns[] | {id, type, status, settings: {subject_line: .settings.subject_line, title: .settings.title}, send_time}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/campaigns?count=10&sort_field=send_time&sort_dir=DESC" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '.campaigns[] | {id, type, status, settings: {subject_line: .settings.subject_line, title: .settings.title}, send_time}'
 ```
 
 Docs: https://mailchimp.com/developer/marketing/api/campaigns/
@@ -143,7 +143,7 @@ Docs: https://mailchimp.com/developer/marketing/api/campaigns/
 Replace `<campaign-id>` with the actual campaign ID:
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/campaigns/<campaign-id>" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '{id, type, status, settings, recipients, send_time}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/campaigns/<campaign-id>" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '{id, type, status, settings, recipients, send_time}'
 ```
 
 ---
@@ -168,7 +168,7 @@ Write to `/tmp/mailchimp_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/campaigns" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, type, status, settings: {subject_line: .settings.subject_line, title: .settings.title}}'
+curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/campaigns" --header "Authorization: Bearer $MAILCHIMP_TOKEN" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, type, status, settings: {subject_line: .settings.subject_line, title: .settings.title}}'
 ```
 
 ---
@@ -178,7 +178,7 @@ curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/campaigns" --header "Aut
 Replace `<campaign-id>` with the actual campaign ID:
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/reports/<campaign-id>" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '{id, campaign_title, subject_line, emails_sent, opens: {opens_total: .opens.opens_total, unique_opens: .opens.unique_opens, open_rate: .opens.open_rate}, clicks: {clicks_total: .clicks.clicks_total, unique_clicks: .clicks.unique_clicks}}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/reports/<campaign-id>" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '{id, campaign_title, subject_line, emails_sent, opens: {opens_total: .opens.opens_total, unique_opens: .opens.unique_opens, open_rate: .opens.open_rate}, clicks: {clicks_total: .clicks.clicks_total, unique_clicks: .clicks.unique_clicks}}'
 ```
 
 Docs: https://mailchimp.com/developer/marketing/api/reports/
@@ -188,7 +188,7 @@ Docs: https://mailchimp.com/developer/marketing/api/reports/
 ### List Templates
 
 ```bash
-curl -s "https://${MC_DC}.api.mailchimp.com/3.0/templates?count=10" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" | jq '.templates[] | {id, name, type, date_created}'
+curl -s "https://${MC_DC}.api.mailchimp.com/3.0/templates?count=10" --header "Authorization: Bearer $MAILCHIMP_TOKEN" | jq '.templates[] | {id, name, type, date_created}'
 ```
 
 ---
@@ -202,7 +202,7 @@ jane@example.com
 ```
 
 ```bash
-curl -s -G "https://${MC_DC}.api.mailchimp.com/3.0/search-members" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" --data-urlencode "query@/tmp/mailchimp_query.txt" | jq '.exact_matches.members[] | {id, email_address, full_name, status}'
+curl -s -G "https://${MC_DC}.api.mailchimp.com/3.0/search-members" --header "Authorization: Bearer $MAILCHIMP_TOKEN" --data-urlencode "query@/tmp/mailchimp_query.txt" | jq '.exact_matches.members[] | {id, email_address, full_name, status}'
 ```
 
 ---
@@ -234,7 +234,7 @@ Write to `/tmp/mailchimp_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/lists" --header "Authorization: Bearer $(printenv MAILCHIMP_TOKEN)" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, name, stats}'
+curl -s -X POST "https://${MC_DC}.api.mailchimp.com/3.0/lists" --header "Authorization: Bearer $MAILCHIMP_TOKEN" --header "Content-Type: application/json" -d @/tmp/mailchimp_request.json | jq '{id, name, stats}'
 ```
 
 ---

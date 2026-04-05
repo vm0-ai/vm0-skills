@@ -24,7 +24,7 @@ Before writing a skill, thoroughly understand the target API:
 
 ```bash
 # Example: search API docs with Tavily
-bash -c 'curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_API_KEY" -d '"'"'{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}'"'"'' | jq .
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_API_KEY" -d '{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}' | jq .
 ```
 
 ---
@@ -79,13 +79,13 @@ export ENV_VAR_2="your-value"
 ### 1. <Feature Name>
 
 \`\`\`bash
-bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $ENV_VAR_1"' | jq .
+curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $ENV_VAR_1" | jq .
 \`\`\`
 
 ### 2. <Feature Name>
 
 \`\`\`bash
-bash -c 'curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer $ENV_VAR_1" -d '"'"'{"key": "value"}'"'"'' | jq .
+curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer $ENV_VAR_1" -d '{"key": "value"}' | jq .
 \`\`\`
 
 ---
@@ -106,61 +106,6 @@ bash -c 'curl -s -X POST "https://api.example.com/endpoint" --header "Content-Ty
 - All examples should be copy-paste executable
 - Include the API documentation URL so agents can look up additional endpoints
 - Pass sensitive information (tokens, keys) via environment variables
-- **CRITICAL: Never use variables and pipes together** - see below
-
-### Claude Code Bash Bug Workaround
-
-Claude Code has a known bug where **environment variables are silently cleared when used with pipe operators**. This affects curl commands with API keys in headers.
-
-**Related issues:**
-- [#29298](https://github.com/anthropics/claude-code/issues/29298) - Bash Tool Silently Empties Environment Variables in Pipelines
-- [#17182](https://github.com/anthropics/claude-code/issues/17182) - Environment variables expand to empty strings when used in piped commands
-- [#18979](https://github.com/anthropics/claude-code/issues/18979) - Environment variables expand to empty string when command contains pipe
-- [#14371](https://github.com/anthropics/claude-code/issues/14371) - Environment variables stripped when command contains pipes
-- [#24956](https://github.com/anthropics/claude-code/issues/24956) - Bash tool drops pipe stdin with command substitution syntax
-- [#14523](https://github.com/anthropics/claude-code/issues/14523) - Bash tool fails with command substitution in pipe arguments
-- [#11225](https://github.com/anthropics/claude-code/issues/11225) - Comprehensive bash preprocessing bugs
-- [#8318](https://github.com/anthropics/claude-code/issues/8318) - Environment variables cleared with pipes
-
-
-**The Problem:**
-
-```bash
-# BAD - variable is silently cleared, API call fails with auth error
-curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" | jq .
-```
-
-**The Workaround:**
-
-Wrap the command containing `$VAR` in `bash -c '...'`, keep other commands (like `jq`) outside:
-
-```bash
-# GOOD - only curl (which uses $VAR) is wrapped, jq stays outside
-bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq .
-```
-
-**Rules:**
-1. Wrap only the command that uses `$VAR` in `bash -c '...'`
-2. Keep `jq` and other processing outside (simpler, no quote escaping needed)
-3. Escape single quotes inside bash -c as `'"'"'` (for JSON bodies)
-4. Use `$VAR` instead of `${VAR}`
-
-**Example with JSON body:**
-```bash
-bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY" -d '"'"'{"key": "value"}'"'"'' | jq .
-```
-
-**For command substitution (use quotes to protect special chars):**
-```bash
-VAR="$(bash -c 'curl -s "https://api.example.com" --header "Authorization: Bearer $API_KEY"' | jq -r .id)"
-```
-
-**For loops:**
-```bash
-for id in $(bash -c 'curl -s "https://api.example.com/ids" --header "Authorization: Bearer $API_KEY"' | jq -r '.[]'); do
-  echo "Processing $id"
-done
-```
 
 ---
 
@@ -197,7 +142,7 @@ After writing, test each curl example in SKILL.md:
 source $HOME/.env.local
 
 # Execute example commands and verify results
-bash -c 'curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY"' | jq .
+curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY" | jq .
 ```
 
 Checklist:
@@ -218,8 +163,6 @@ Based on test results, document any issues encountered:
 | curl reports blank argument | `-H` has issues in some environments | Use `--header` instead |
 | Authentication failed | Incorrect token format | Check Bearer prefix |
 | Returns 404 | API version outdated | Update version number |
-| API returns 401 but token is correct | Claude Code bug: variables cleared with pipes | Wrap in `bash -c '...'` |
-| Variable appears empty in pipe | Claude Code preprocessing bug | Use `bash -c 'curl ... \| jq'` |
 
 After fixing SKILL.md, re-test until all examples work correctly.
 

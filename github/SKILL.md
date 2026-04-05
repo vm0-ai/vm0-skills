@@ -134,7 +134,7 @@ gh pr view <number> --repo <owner>/<repo> --json title,state,reviews,checks
 
 This Skill requires the GitHub CLI (`gh`) to be installed.
 
-When piping output to other commands like `jq`, use `$(printenv VAR)` for environment variables:
+When piping output to other commands like `jq`, use `$VAR` for environment variables:
 ```bash
 gh pr view <number> --repo <owner>/<repo> --json title,state | jq '.title'
 ```

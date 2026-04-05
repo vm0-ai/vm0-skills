@@ -64,7 +64,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv TAVILY_TOKEN)" -d @/tmp/tavily_request.json
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_TOKEN" -d @/tmp/tavily_request.json
 ```
 
 **Key parameters:**
@@ -96,7 +96,7 @@ Write to `/tmp/tavily_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv TAVILY_TOKEN)" -d @/tmp/tavily_request.json
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_TOKEN" -d @/tmp/tavily_request.json
 ```
 
 **Common advanced parameters:**

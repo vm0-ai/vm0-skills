@@ -78,7 +78,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/businesses/stats" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/businesses/stats" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -99,7 +99,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/businesses/match" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/businesses/match" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -129,7 +129,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/businesses" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/businesses" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -149,7 +149,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/businesses/<enrichment_name>/enrich" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/businesses/<enrichment_name>/enrich" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 Common enrichment types:
@@ -178,7 +178,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/businesses/<enrichment_name>/bulk_enrich" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/businesses/<enrichment_name>/bulk_enrich" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -211,7 +211,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/prospects" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/prospects" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -233,7 +233,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/prospects/match" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/prospects/match" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -253,7 +253,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/prospects/contacts_information/enrich" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/prospects/contacts_information/enrich" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -280,7 +280,7 @@ Write to `/tmp/explorium_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.explorium.ai/v1/prospects/stats" --header "Content-Type: application/json" --header "api_key: $(printenv EXPLORIUM_TOKEN)" -d @/tmp/explorium_request.json | jq .
+curl -s -X POST "https://api.explorium.ai/v1/prospects/stats" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
 ---
@@ -290,7 +290,7 @@ curl -s -X POST "https://api.explorium.ai/v1/prospects/stats" --header "Content-
 Search for businesses by partial name for quick lookups:
 
 ```bash
-curl -s -X GET "https://api.explorium.ai/v1/businesses/autocomplete?query=explor" --header "api_key: $(printenv EXPLORIUM_TOKEN)" | jq .
+curl -s -X GET "https://api.explorium.ai/v1/businesses/autocomplete?query=explor" --header "api_key: $EXPLORIUM_TOKEN" | jq .
 ```
 
 ---

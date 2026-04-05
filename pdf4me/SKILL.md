@@ -68,7 +68,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertToPdf" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > /tmp/output.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertToPdf" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > /tmp/output.pdf
 ```
 
 ### 2. HTML to PDF
@@ -93,7 +93,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertHtmlToPdf" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json --output /tmp/from-html.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertHtmlToPdf" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json --output /tmp/from-html.pdf
 ```
 
 ### 3. URL to PDF
@@ -111,7 +111,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertUrlToPdf" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json > /tmp/webpage.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/ConvertUrlToPdf" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json > /tmp/webpage.pdf
 ```
 
 ### 4. Merge PDFs
@@ -135,7 +135,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/Merge" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > merged.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/Merge" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > merged.pdf
 ```
 
 ### 5. Split PDF
@@ -160,7 +160,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/Split" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json
+curl -s -X POST "https://api.pdf4me.com/api/v2/Split" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json
 ```
 
 ### 6. Compress PDF
@@ -183,7 +183,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/Compress" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > compressed.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/Compress" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > compressed.pdf
 ```
 
 ### 7. PDF to Word
@@ -206,7 +206,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/PdfToWord" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > output.docx
+curl -s -X POST "https://api.pdf4me.com/api/v2/PdfToWord" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > output.docx
 ```
 
 ### 8. PDF to Images
@@ -231,7 +231,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/CreateThumbnail" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json
+curl -s -X POST "https://api.pdf4me.com/api/v2/CreateThumbnail" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json
 ```
 
 ### 9. Add Text Stamp/Watermark
@@ -259,7 +259,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/TextStamp" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > stamped.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/TextStamp" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > stamped.pdf
 ```
 
 ### 10. OCR - Extract Text from Scanned PDF
@@ -283,7 +283,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/PdfOcr" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > searchable.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/PdfOcr" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > searchable.pdf
 ```
 
 ### 11. Protect PDF with Password
@@ -305,7 +305,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/ProtectDocument" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > protected.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/ProtectDocument" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > protected.pdf
 ```
 
 ### 12. Extract Pages
@@ -329,7 +329,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/ExtractPages" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > extracted.pdf
+curl -s -X POST "https://api.pdf4me.com/api/v2/ExtractPages" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > extracted.pdf
 ```
 
 ---
@@ -385,7 +385,7 @@ Write to `/tmp/pdf4me_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdf4me.com/api/v2/{endpoint}" --header "Authorization: $(printenv PDF4ME_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json
+curl -s -X POST "https://api.pdf4me.com/api/v2/{endpoint}" --header "Authorization: $PDF4ME_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json
 ```
 
 ## Response Format

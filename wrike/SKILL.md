@@ -43,13 +43,13 @@ Wrike uses alphanumeric IDs for all resources. The hierarchy is: Space > Folder/
 ### List All Spaces
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/spaces" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, title}'
+curl -s "https://www.wrike.com/api/v4/spaces" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, title}'
 ```
 
 ### Get Space by ID
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[0]'
+curl -s "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[0]'
 ```
 
 ### Create Space
@@ -63,13 +63,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://www.wrike.com/api/v4/spaces" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
+curl -s -X POST "https://www.wrike.com/api/v4/spaces" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
 ```
 
 ### Delete Space
 
 ```bash
-curl -s -X DELETE "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)"
+curl -s -X DELETE "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
 ---
@@ -79,25 +79,25 @@ curl -s -X DELETE "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Aut
 ### Get Folder Tree
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/folders" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, title, scope}'
+curl -s "https://www.wrike.com/api/v4/folders" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, title, scope}'
 ```
 
 ### Get Folders in a Space
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/spaces/<space_id>/folders" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, title, childIds}'
+curl -s "https://www.wrike.com/api/v4/spaces/<space_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, title, childIds}'
 ```
 
 ### Get Subfolders
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/folders" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, title}'
+curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, title}'
 ```
 
 ### Get Folder by ID
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[0]'
+curl -s "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[0]'
 ```
 
 ### Create Folder
@@ -111,7 +111,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
+curl -s -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
 ```
 
 ### Create Project
@@ -130,7 +130,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, project}'
+curl -s -X POST "https://www.wrike.com/api/v4/folders/<parent_folder_id>/folders" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, project}'
 ```
 
 ### Update Folder
@@ -144,13 +144,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X PUT "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
+curl -s -X PUT "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title}'
 ```
 
 ### Delete Folder
 
 ```bash
-curl -s -X DELETE "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)"
+curl -s -X DELETE "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
 ---
@@ -160,19 +160,19 @@ curl -s -X DELETE "https://www.wrike.com/api/v4/folders/<folder_id>" --header "A
 ### List Tasks in a Folder
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, title, status, importance, dates}'
+curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, title, status, importance, dates}'
 ```
 
 ### List Tasks in a Space
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/spaces/<space_id>/tasks" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, title, status, importance}'
+curl -s "https://www.wrike.com/api/v4/spaces/<space_id>/tasks" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, title, status, importance}'
 ```
 
 ### Get Task by ID
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[0] | {id, title, description, status, importance, dates, responsibleIds}'
+curl -s "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[0] | {id, title, description, status, importance, dates, responsibleIds}'
 ```
 
 ### Create Task
@@ -194,7 +194,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, status}'
+curl -s -X POST "https://www.wrike.com/api/v4/folders/<folder_id>/tasks" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, status}'
 ```
 
 ### Update Task
@@ -210,13 +210,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X PUT "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, status}'
+curl -s -X PUT "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, title, status}'
 ```
 
 ### Delete Task
 
 ```bash
-curl -s -X DELETE "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)"
+curl -s -X DELETE "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
 ---
@@ -226,13 +226,13 @@ curl -s -X DELETE "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Autho
 ### List Comments on a Task
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/tasks/<task_id>/comments" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, text, authorId, createdDate}'
+curl -s "https://www.wrike.com/api/v4/tasks/<task_id>/comments" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, text, authorId, createdDate}'
 ```
 
 ### List Comments on a Folder
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/comments" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, text, authorId, createdDate}'
+curl -s "https://www.wrike.com/api/v4/folders/<folder_id>/comments" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, text, authorId, createdDate}'
 ```
 
 ### Create Comment on a Task
@@ -246,7 +246,7 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/comments" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0]'
+curl -s -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/comments" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0]'
 ```
 
 ### Update Comment
@@ -260,13 +260,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X PUT "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0]'
+curl -s -X PUT "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0]'
 ```
 
 ### Delete Comment
 
 ```bash
-curl -s -X DELETE "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)"
+curl -s -X DELETE "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
 ---
@@ -276,13 +276,13 @@ curl -s -X DELETE "https://www.wrike.com/api/v4/comments/<comment_id>" --header 
 ### List All Contacts
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/contacts" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, firstName, lastName, type, profiles}'
+curl -s "https://www.wrike.com/api/v4/contacts" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, firstName, lastName, type, profiles}'
 ```
 
 ### Get Contact by ID
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/contacts/<contact_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[0]'
+curl -s "https://www.wrike.com/api/v4/contacts/<contact_id>" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[0]'
 ```
 
 ---
@@ -292,7 +292,7 @@ curl -s "https://www.wrike.com/api/v4/contacts/<contact_id>" --header "Authoriza
 ### List Timelogs for a Task
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, taskId, hours, trackedDate, comment}'
+curl -s "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, taskId, hours, trackedDate, comment}'
 ```
 
 ### Create Timelog
@@ -308,13 +308,13 @@ Write to `/tmp/wrike_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, hours, trackedDate}'
+curl -s -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" --header "Authorization: Bearer $WRIKE_TOKEN" --header "Content-Type: application/json" -d @/tmp/wrike_request.json | jq '.data[0] | {id, hours, trackedDate}'
 ```
 
 ### Delete Timelog
 
 ```bash
-curl -s -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)"
+curl -s -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
 ---
@@ -324,7 +324,7 @@ curl -s -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>" --header 
 ### List Workflows
 
 ```bash
-curl -s "https://www.wrike.com/api/v4/workflows" --header "Authorization: Bearer $(printenv WRIKE_TOKEN)" | jq '.data[] | {id, name, customStatuses}'
+curl -s "https://www.wrike.com/api/v4/workflows" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, name, customStatuses}'
 ```
 
 ---

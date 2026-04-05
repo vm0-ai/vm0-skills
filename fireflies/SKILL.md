@@ -62,7 +62,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.user'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.user'
 ```
 
 ---
@@ -82,7 +82,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 ### Search by Keyword
@@ -99,7 +99,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 ### Filter by Date Range
@@ -116,7 +116,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 ### Filter by Participant
@@ -133,7 +133,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcripts'
 ```
 
 **Transcripts Parameters:**
@@ -169,7 +169,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcript'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcript'
 ```
 
 ### With Summary and Action Items
@@ -186,7 +186,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcript.summary'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcript.summary'
 ```
 
 ### With Sentences (Full Transcript)
@@ -203,7 +203,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcript.sentences'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcript.sentences'
 ```
 
 ### With Analytics
@@ -220,7 +220,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.transcript.analytics'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcript.analytics'
 ```
 
 ---
@@ -246,7 +246,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.uploadAudio'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.uploadAudio'
 ```
 
 ### Upload with Attendees
@@ -272,7 +272,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.uploadAudio'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.uploadAudio'
 ```
 
 **Upload Parameters:**
@@ -304,7 +304,7 @@ Write to `/tmp/fireflies_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv FIREFLIES_TOKEN)" -d @/tmp/fireflies_request.json | jq '.data.users'
+curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.users'
 ```
 
 ---

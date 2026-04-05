@@ -26,13 +26,13 @@ Manage bases, tables, records, and comments in Airtable.
 ### Get Current User
 
 ```bash
-curl -s "https://api.airtable.com/v0/meta/whoami" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq .
+curl -s "https://api.airtable.com/v0/meta/whoami" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq .
 ```
 
 ### List Bases
 
 ```bash
-curl -s "https://api.airtable.com/v0/meta/bases" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq '.bases[] | {id, name, permissionLevel}'
+curl -s "https://api.airtable.com/v0/meta/bases" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq '.bases[] | {id, name, permissionLevel}'
 ```
 
 ### Get Base Schema (List Tables)
@@ -40,7 +40,7 @@ curl -s "https://api.airtable.com/v0/meta/bases" --header "Authorization: Bearer
 Replace `<base-id>` with your actual base ID (starts with `app`):
 
 ```bash
-curl -s "https://api.airtable.com/v0/meta/bases/<base-id>/tables" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq '.tables[] | {id, name, fields: [.fields[] | {id, name, type}]}'
+curl -s "https://api.airtable.com/v0/meta/bases/<base-id>/tables" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq '.tables[] | {id, name, fields: [.fields[] | {id, name, type}]}'
 ```
 
 ### List Records
@@ -48,19 +48,19 @@ curl -s "https://api.airtable.com/v0/meta/bases/<base-id>/tables" --header "Auth
 Replace `<base-id>` and `<table-id-or-name>` with actual values. Table name must be URL-encoded if it contains spaces.
 
 ```bash
-curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>?maxRecords=10" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq '.records[] | {id, fields, createdTime}'
+curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>?maxRecords=10" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq '.records[] | {id, fields, createdTime}'
 ```
 
 ### List Records with Field Selection
 
 ```bash
-curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>?maxRecords=10&fields%5B%5D=Name&fields%5B%5D=Status" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq '.records[] | {id, fields}'
+curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>?maxRecords=10&fields%5B%5D=Name&fields%5B%5D=Status" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq '.records[] | {id, fields}'
 ```
 
 ### Get a Single Record
 
 ```bash
-curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>/<record-id>" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq .
+curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>/<record-id>" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq .
 ```
 
 ### Create Records
@@ -80,7 +80,7 @@ cat > /tmp/request.json << 'BODY'
   ]
 }
 BODY
-curl -s -X POST "https://api.airtable.com/v0/<base-id>/<table-id-or-name>" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/request.json | jq '.records[] | {id, fields}'
+curl -s -X POST "https://api.airtable.com/v0/<base-id>/<table-id-or-name>" --header "Authorization: Bearer $AIRTABLE_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json | jq '.records[] | {id, fields}'
 ```
 
 ### Update Records (PATCH)
@@ -100,19 +100,19 @@ cat > /tmp/request.json << 'BODY'
   ]
 }
 BODY
-curl -s -X PATCH "https://api.airtable.com/v0/<base-id>/<table-id-or-name>" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/request.json | jq '.records[] | {id, fields}'
+curl -s -X PATCH "https://api.airtable.com/v0/<base-id>/<table-id-or-name>" --header "Authorization: Bearer $AIRTABLE_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json | jq '.records[] | {id, fields}'
 ```
 
 ### Delete Records
 
 ```bash
-curl -s -X DELETE "https://api.airtable.com/v0/<base-id>/<table-id-or-name>?records%5B%5D=<record-id>" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq .
+curl -s -X DELETE "https://api.airtable.com/v0/<base-id>/<table-id-or-name>?records%5B%5D=<record-id>" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq .
 ```
 
 ### List Record Comments
 
 ```bash
-curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>/<record-id>/comments" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" | jq '.comments[] | {id, author, text, createdTime}'
+curl -s "https://api.airtable.com/v0/<base-id>/<table-id-or-name>/<record-id>/comments" --header "Authorization: Bearer $AIRTABLE_TOKEN" | jq '.comments[] | {id, author, text, createdTime}'
 ```
 
 ### Add a Comment to a Record
@@ -123,7 +123,7 @@ cat > /tmp/request.json << 'BODY'
   "text": "This is a comment added via the API."
 }
 BODY
-curl -s -X POST "https://api.airtable.com/v0/<base-id>/<table-id-or-name>/<record-id>/comments" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/request.json | jq .
+curl -s -X POST "https://api.airtable.com/v0/<base-id>/<table-id-or-name>/<record-id>/comments" --header "Authorization: Bearer $AIRTABLE_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json | jq .
 ```
 
 ### Create a Table
@@ -139,7 +139,7 @@ cat > /tmp/request.json << 'BODY'
   ]
 }
 BODY
-curl -s -X POST "https://api.airtable.com/v0/meta/bases/<base-id>/tables" --header "Authorization: Bearer $(printenv AIRTABLE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/request.json | jq '{id, name, fields: [.fields[] | {id, name, type}]}'
+curl -s -X POST "https://api.airtable.com/v0/meta/bases/<base-id>/tables" --header "Authorization: Bearer $AIRTABLE_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json | jq '{id, name, fields: [.fields[] | {id, name, type}]}'
 ```
 
 ## Guidelines

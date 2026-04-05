@@ -25,7 +25,7 @@ Manage serverless Postgres projects, branches, databases, roles, and compute end
 ### List Projects
 
 ```bash
-curl -s "https://console.neon.tech/api/v2/projects" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.projects[] | {id, name, region_id, created_at, pg_version}'
+curl -s "https://console.neon.tech/api/v2/projects" --header "Authorization: Bearer $NEON_TOKEN" | jq '.projects[] | {id, name, region_id, created_at, pg_version}'
 ```
 
 Docs: https://api-docs.neon.tech/reference/listprojects
@@ -37,7 +37,7 @@ Docs: https://api-docs.neon.tech/reference/listprojects
 Replace `<project-id>` with the actual project ID:
 
 ```bash
-curl -s "https://console.neon.tech/api/v2/projects/<project-id>" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.project | {id, name, region_id, pg_version, created_at, store_passwords}'
+curl -s "https://console.neon.tech/api/v2/projects/<project-id>" --header "Authorization: Bearer $NEON_TOKEN" | jq '.project | {id, name, region_id, pg_version, created_at, store_passwords}'
 ```
 
 ---
@@ -57,7 +57,7 @@ Write to `/tmp/neon_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://console.neon.tech/api/v2/projects" --header "Authorization: Bearer $(printenv NEON_TOKEN)" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '{project: {id: .project.id, name: .project.name}, connection_uris: .connection_uris}'
+curl -s -X POST "https://console.neon.tech/api/v2/projects" --header "Authorization: Bearer $NEON_TOKEN" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '{project: {id: .project.id, name: .project.name}, connection_uris: .connection_uris}'
 ```
 
 Docs: https://api-docs.neon.tech/reference/createproject
@@ -71,7 +71,7 @@ Available regions: `aws-us-east-2`, `aws-us-west-2`, `aws-eu-central-1`, `aws-ap
 Replace `<project-id>` with the actual project ID:
 
 ```bash
-curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.project | {id, name}'
+curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>" --header "Authorization: Bearer $NEON_TOKEN" | jq '.project | {id, name}'
 ```
 
 ---
@@ -81,7 +81,7 @@ curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>" --hea
 Replace `<project-id>` with the actual project ID:
 
 ```bash
-curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.branches[] | {id, name, primary, created_at, current_state}'
+curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches" --header "Authorization: Bearer $NEON_TOKEN" | jq '.branches[] | {id, name, primary, created_at, current_state}'
 ```
 
 Docs: https://api-docs.neon.tech/reference/listprojectbranches
@@ -108,7 +108,7 @@ Write to `/tmp/neon_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches" --header "Authorization: Bearer $(printenv NEON_TOKEN)" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '{branch: {id: .branch.id, name: .branch.name}, endpoints: [.endpoints[] | {host: .host, id: .id}]}'
+curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches" --header "Authorization: Bearer $NEON_TOKEN" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '{branch: {id: .branch.id, name: .branch.name}, endpoints: [.endpoints[] | {host: .host, id: .id}]}'
 ```
 
 ---
@@ -118,7 +118,7 @@ curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches
 Replace `<project-id>` and `<branch-id>`:
 
 ```bash
-curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.branch | {id, name}'
+curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>" --header "Authorization: Bearer $NEON_TOKEN" | jq '.branch | {id, name}'
 ```
 
 ---
@@ -128,7 +128,7 @@ curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>/branch
 Replace `<project-id>` and `<branch-id>`:
 
 ```bash
-curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/databases" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.databases[] | {id, name, owner_name}'
+curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/databases" --header "Authorization: Bearer $NEON_TOKEN" | jq '.databases[] | {id, name, owner_name}'
 ```
 
 ---
@@ -149,7 +149,7 @@ Write to `/tmp/neon_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/databases" --header "Authorization: Bearer $(printenv NEON_TOKEN)" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '.database | {id, name, owner_name}'
+curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/databases" --header "Authorization: Bearer $NEON_TOKEN" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '.database | {id, name, owner_name}'
 ```
 
 ---
@@ -159,7 +159,7 @@ curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches
 Replace `<project-id>` and `<branch-id>`:
 
 ```bash
-curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/roles" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.roles[] | {name, protected}'
+curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/roles" --header "Authorization: Bearer $NEON_TOKEN" | jq '.roles[] | {name, protected}'
 ```
 
 ---
@@ -169,7 +169,7 @@ curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch
 Replace `<project-id>`:
 
 ```bash
-curl -s "https://console.neon.tech/api/v2/projects/<project-id>/endpoints" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.endpoints[] | {id, host, branch_id, type, current_state, autoscaling_limit_min_cu, autoscaling_limit_max_cu}'
+curl -s "https://console.neon.tech/api/v2/projects/<project-id>/endpoints" --header "Authorization: Bearer $NEON_TOKEN" | jq '.endpoints[] | {id, host, branch_id, type, current_state, autoscaling_limit_min_cu, autoscaling_limit_max_cu}'
 ```
 
 ---
@@ -179,7 +179,7 @@ curl -s "https://console.neon.tech/api/v2/projects/<project-id>/endpoints" --hea
 Replace `<project-id>` with the actual project ID. Optionally add `database_name` and `role_name` query params:
 
 ```bash
-curl -s "https://console.neon.tech/api/v2/projects/<project-id>/connection_uri?database_name=neondb&role_name=neondb_owner" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.uri'
+curl -s "https://console.neon.tech/api/v2/projects/<project-id>/connection_uri?database_name=neondb&role_name=neondb_owner" --header "Authorization: Bearer $NEON_TOKEN" | jq '.uri'
 ```
 
 Docs: https://api-docs.neon.tech/reference/getconnectionuri
@@ -191,7 +191,7 @@ Docs: https://api-docs.neon.tech/reference/getconnectionuri
 Replace `<project-id>` and `<endpoint-id>`:
 
 ```bash
-curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/endpoints/<endpoint-id>/start" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.endpoint | {id, host, current_state}'
+curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/endpoints/<endpoint-id>/start" --header "Authorization: Bearer $NEON_TOKEN" | jq '.endpoint | {id, host, current_state}'
 ```
 
 ---
@@ -201,7 +201,7 @@ curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/endpoint
 Replace `<project-id>` and `<endpoint-id>`:
 
 ```bash
-curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/endpoints/<endpoint-id>/suspend" --header "Authorization: Bearer $(printenv NEON_TOKEN)" | jq '.endpoint | {id, host, current_state}'
+curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/endpoints/<endpoint-id>/suspend" --header "Authorization: Bearer $NEON_TOKEN" | jq '.endpoint | {id, host, current_state}'
 ```
 
 ---

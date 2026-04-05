@@ -59,7 +59,7 @@ The base URLs are:
 Check your token and account information:
 
 ```bash
-curl -s "https://huggingface.co/api/whoami-v2" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '{name: .name, email: .email, type: .type}'
+curl -s "https://huggingface.co/api/whoami-v2" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '{name: .name, email: .email, type: .type}'
 ```
 
 ---
@@ -69,13 +69,13 @@ curl -s "https://huggingface.co/api/whoami-v2" --header "Authorization: Bearer $
 Search for models with filters:
 
 ```bash
-curl -s "https://huggingface.co/api/models?search=llama&sort=downloads&direction=-1&limit=5" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[].id'
+curl -s "https://huggingface.co/api/models?search=llama&sort=downloads&direction=-1&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
 **Filter by pipeline task:**
 
 ```bash
-curl -s "https://huggingface.co/api/models?pipeline_tag=text-generation&sort=trending&limit=5" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[].id'
+curl -s "https://huggingface.co/api/models?pipeline_tag=text-generation&sort=trending&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
 **Common query parameters:**
@@ -95,7 +95,7 @@ curl -s "https://huggingface.co/api/models?pipeline_tag=text-generation&sort=tre
 Get detailed information about a specific model:
 
 ```bash
-curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '{id, downloads, likes, pipeline_tag, tags: .tags[:5]}'
+curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '{id, downloads, likes, pipeline_tag, tags: .tags[:5]}'
 ```
 
 ---
@@ -105,7 +105,7 @@ curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct" --h
 Search for datasets:
 
 ```bash
-curl -s "https://huggingface.co/api/datasets?search=squad&sort=downloads&direction=-1&limit=5" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[].id'
+curl -s "https://huggingface.co/api/datasets?search=squad&sort=downloads&direction=-1&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
 ---
@@ -115,7 +115,7 @@ curl -s "https://huggingface.co/api/datasets?search=squad&sort=downloads&directi
 Get detailed information about a specific dataset:
 
 ```bash
-curl -s "https://huggingface.co/api/datasets/squad" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '{id, downloads, likes, tags: .tags[:5]}'
+curl -s "https://huggingface.co/api/datasets/squad" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '{id, downloads, likes, tags: .tags[:5]}'
 ```
 
 ---
@@ -125,7 +125,7 @@ curl -s "https://huggingface.co/api/datasets/squad" --header "Authorization: Bea
 Search for Spaces:
 
 ```bash
-curl -s "https://huggingface.co/api/spaces?search=chatbot&sort=likes&direction=-1&limit=5" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[].id'
+curl -s "https://huggingface.co/api/spaces?search=chatbot&sort=likes&direction=-1&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
 ---
@@ -135,13 +135,13 @@ curl -s "https://huggingface.co/api/spaces?search=chatbot&sort=likes&direction=-
 List files in a model repository:
 
 ```bash
-curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct/tree/main" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[] | {path: .rfilename, size}'
+curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct/tree/main" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[] | {path: .rfilename, size}'
 ```
 
 For datasets, replace `models` with `datasets`:
 
 ```bash
-curl -s "https://huggingface.co/api/datasets/squad/tree/main" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[] | {path: .rfilename, size}'
+curl -s "https://huggingface.co/api/datasets/squad/tree/main" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[] | {path: .rfilename, size}'
 ```
 
 ---
@@ -168,7 +168,7 @@ Write to `/tmp/hugging_face_request.json`:
 Then run:
 
 ```bash
-curl -s "https://router.huggingface.co/hf-inference/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" -d @/tmp/hugging_face_request.json | jq -r '.choices[0].message.content'
+curl -s "https://router.huggingface.co/hf-inference/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" -d @/tmp/hugging_face_request.json | jq -r '.choices[0].message.content'
 ```
 
 ---
@@ -178,7 +178,7 @@ curl -s "https://router.huggingface.co/hf-inference/v1/chat/completions" --heade
 Generate an image from text:
 
 ```bash
-curl -s "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" --header "Content-Type: application/json" -d '{"inputs": "A cute cat wearing sunglasses"}' --output /tmp/hugging_face_image.png
+curl -s "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-schnell" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d '{"inputs": "A cute cat wearing sunglasses"}' --output /tmp/hugging_face_image.png
 ```
 
 The response is the raw image binary saved to the output file.
@@ -200,7 +200,7 @@ Write to `/tmp/hugging_face_request.json`:
 Then run:
 
 ```bash
-curl -s "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq '.[0][:5]'
+curl -s "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq '.[0][:5]'
 ```
 
 ---
@@ -220,7 +220,7 @@ Write to `/tmp/hugging_face_request.json`:
 Then run:
 
 ```bash
-curl -s "https://router.huggingface.co/hf-inference/models/distilbert-base-uncased-finetuned-sst-2-english" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
+curl -s "https://router.huggingface.co/hf-inference/models/distilbert-base-uncased-finetuned-sst-2-english" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
 ```
 
 ---
@@ -230,13 +230,13 @@ curl -s "https://router.huggingface.co/hf-inference/models/distilbert-base-uncas
 Find models available for serverless inference:
 
 ```bash
-curl -s "https://huggingface.co/api/models?inference_provider=all&pipeline_tag=text-generation&sort=trending&limit=10" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[].id'
+curl -s "https://huggingface.co/api/models?inference_provider=all&pipeline_tag=text-generation&sort=trending&limit=10" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
 Filter by a specific provider:
 
 ```bash
-curl -s "https://huggingface.co/api/models?inference_provider=hf-inference&pipeline_tag=text-to-image&limit=5" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.[].id'
+curl -s "https://huggingface.co/api/models?inference_provider=hf-inference&pipeline_tag=text-to-image&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
 ---
@@ -246,7 +246,7 @@ curl -s "https://huggingface.co/api/models?inference_provider=hf-inference&pipel
 Check which inference providers serve a specific model:
 
 ```bash
-curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct?expand[]=inferenceProviderMapping" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" | jq '.inferenceProviderMapping'
+curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct?expand[]=inferenceProviderMapping" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.inferenceProviderMapping'
 ```
 
 ---
@@ -268,7 +268,7 @@ Write to `/tmp/hugging_face_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://huggingface.co/api/repos/create" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
+curl -s -X POST "https://huggingface.co/api/repos/create" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
 ```
 
 **Repository types:** `model`, `dataset`, `space`
@@ -291,7 +291,7 @@ Write to `/tmp/hugging_face_request.json`:
 Then run:
 
 ```bash
-curl -s -X DELETE "https://huggingface.co/api/repos/delete" --header "Authorization: Bearer $(printenv HUGGING_FACE_TOKEN)" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
+curl -s -X DELETE "https://huggingface.co/api/repos/delete" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
 ```
 
 ---

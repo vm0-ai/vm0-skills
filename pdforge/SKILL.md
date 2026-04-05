@@ -72,7 +72,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer $(printenv PDFORGE_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
+curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
 
 **Response:**
@@ -108,7 +108,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer $(printenv PDFORGE_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
+curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
 
 **Response:**
@@ -138,7 +138,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $(printenv PDFORGE_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
+curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
 
 ---
@@ -158,7 +158,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $(printenv PDFORGE_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
+curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
 
 ---
@@ -179,7 +179,7 @@ Write to `/tmp/pdforge_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $(printenv PDFORGE_API_KEY)" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
+curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
 
 ---

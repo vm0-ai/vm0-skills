@@ -38,13 +38,13 @@ Use this skill when you need to:
 Most endpoints require a project ID. Get it from the projects endpoint:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name}'
+curl -s "https://us.posthog.com/api/projects/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name}'
 ```
 
 ### Verify Authentication
 
 ```bash
-curl -s "https://us.posthog.com/api/users/@me/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{uuid, first_name, email}'
+curl -s "https://us.posthog.com/api/users/@me/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{uuid, first_name, email}'
 ```
 
 ---
@@ -62,7 +62,7 @@ Base URL: `https://us.posthog.com/api`
 ### List Organizations
 
 ```bash
-curl -s "https://us.posthog.com/api/organizations/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name, slug, created_at}'
+curl -s "https://us.posthog.com/api/organizations/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name, slug, created_at}'
 ```
 
 ### Get Organization Details
@@ -70,7 +70,7 @@ curl -s "https://us.posthog.com/api/organizations/" --header "Authorization: Bea
 Replace `<org-id>` with your organization ID:
 
 ```bash
-curl -s "https://us.posthog.com/api/organizations/<org-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{id, name, slug, created_at, membership_level}'
+curl -s "https://us.posthog.com/api/organizations/<org-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, name, slug, created_at, membership_level}'
 ```
 
 ---
@@ -80,7 +80,7 @@ curl -s "https://us.posthog.com/api/organizations/<org-id>/" --header "Authoriza
 ### List Projects
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name, timezone}'
+curl -s "https://us.posthog.com/api/projects/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name, timezone}'
 ```
 
 ### Get Project Details
@@ -88,7 +88,7 @@ curl -s "https://us.posthog.com/api/projects/" --header "Authorization: Bearer $
 Replace `<project-id>` with your project ID:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{id, name, timezone, completed_snippet_onboarding, ingested_event}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, name, timezone, completed_snippet_onboarding, ingested_event}'
 ```
 
 ---
@@ -98,7 +98,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/" --header "Authorizat
 ### List Feature Flags
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/feature_flags/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, key, name, active}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/feature_flags/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, key, name, active}'
 ```
 
 ### Get Feature Flag Details
@@ -106,7 +106,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/feature_flags/" --head
 Replace `<flag-id>` with the feature flag ID:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/feature_flags/<flag-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{id, key, name, active, filters, rollout_percentage}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/feature_flags/<flag-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, key, name, active, filters, rollout_percentage}'
 ```
 
 ### Create Feature Flag
@@ -130,7 +130,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/feature_flags/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, key, name, active}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/feature_flags/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, key, name, active}'
 ```
 
 ### Update Feature Flag
@@ -146,7 +146,7 @@ Write to `/tmp/posthog_request.json`:
 Replace `<flag-id>` with the feature flag ID:
 
 ```bash
-curl -s -X PATCH "https://us.posthog.com/api/projects/<project-id>/feature_flags/<flag-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, key, name, active}'
+curl -s -X PATCH "https://us.posthog.com/api/projects/<project-id>/feature_flags/<flag-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, key, name, active}'
 ```
 
 ### Delete Feature Flag
@@ -154,7 +154,7 @@ curl -s -X PATCH "https://us.posthog.com/api/projects/<project-id>/feature_flags
 Replace `<flag-id>` with the feature flag ID:
 
 ```bash
-curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/feature_flags/<flag-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)"
+curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/feature_flags/<flag-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
 
 ---
@@ -164,7 +164,7 @@ curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/feature_flag
 ### List Experiments
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/experiments/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name, start_date, end_date, feature_flag_key}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/experiments/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name, start_date, end_date, feature_flag_key}'
 ```
 
 ### Get Experiment Details
@@ -172,7 +172,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/experiments/" --header
 Replace `<experiment-id>` with the experiment ID:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/experiments/<experiment-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{id, name, description, start_date, end_date, feature_flag_key, parameters}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/experiments/<experiment-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, name, description, start_date, end_date, feature_flag_key, parameters}'
 ```
 
 ### Create Experiment
@@ -197,7 +197,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/experiments/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name, feature_flag_key}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/experiments/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name, feature_flag_key}'
 ```
 
 ---
@@ -207,7 +207,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/experiments/" 
 ### List Saved Insights
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/insights/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, short_id, name, filters}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/insights/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, short_id, name, filters}'
 ```
 
 ### Get Insight Details
@@ -215,7 +215,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/insights/" --header "A
 Replace `<insight-id>` with the insight ID:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/insights/<insight-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{id, short_id, name, description, filters, last_refresh}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/insights/<insight-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, short_id, name, description, filters, last_refresh}'
 ```
 
 ### Create Trend Insight
@@ -234,7 +234,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/insights/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, short_id, name}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/insights/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, short_id, name}'
 ```
 
 ### Create Funnel Insight
@@ -257,7 +257,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/insights/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, short_id, name}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/insights/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, short_id, name}'
 ```
 
 ### Delete Insight
@@ -265,7 +265,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/insights/" --h
 Replace `<insight-id>` with the insight ID:
 
 ```bash
-curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/insights/<insight-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)"
+curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/insights/<insight-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
 
 ---
@@ -275,7 +275,7 @@ curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/insights/<in
 ### List Dashboards
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/dashboards/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name, description, created_at}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/dashboards/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name, description, created_at}'
 ```
 
 ### Get Dashboard Details
@@ -283,7 +283,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/dashboards/" --header 
 Replace `<dashboard-id>` with the dashboard ID:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/dashboards/<dashboard-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{id, name, description, tiles: [.tiles[] | {id, insight: .insight.name}]}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/dashboards/<dashboard-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, name, description, tiles: [.tiles[] | {id, insight: .insight.name}]}'
 ```
 
 ### Create Dashboard
@@ -298,7 +298,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/dashboards/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/dashboards/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
 ```
 
 ### Delete Dashboard
@@ -306,7 +306,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/dashboards/" -
 Replace `<dashboard-id>` with the dashboard ID:
 
 ```bash
-curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/dashboards/<dashboard-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)"
+curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/dashboards/<dashboard-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
 
 ---
@@ -329,7 +329,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{columns, results}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{columns, results}'
 ```
 
 ### Count Events by Day
@@ -346,7 +346,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{columns, results}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{columns, results}'
 ```
 
 ### Query Persons
@@ -363,7 +363,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{columns, results}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{columns, results}'
 ```
 
 ---
@@ -373,7 +373,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --head
 ### List Recent Events
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/events/?limit=10" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, event, distinct_id, timestamp}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/events/?limit=10" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, event, distinct_id, timestamp}'
 ```
 
 ### Filter Events by Type
@@ -381,7 +381,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/events/?limit=10" --he
 Replace `$pageview` with the event name you want to filter:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/events/?event=%24pageview&limit=10" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, event, distinct_id, timestamp, properties}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/events/?event=%24pageview&limit=10" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, event, distinct_id, timestamp, properties}'
 ```
 
 ---
@@ -391,13 +391,13 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/events/?event=%24pagev
 ### List Persons
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/persons/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, distinct_ids, properties}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/persons/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, distinct_ids, properties}'
 ```
 
 ### Search Persons
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/persons/?search=user@example.com" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, distinct_ids}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/persons/?search=user@example.com" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, distinct_ids}'
 ```
 
 ### Get Person Details
@@ -405,7 +405,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/persons/?search=user@e
 Replace `<person-id>` with the person ID:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/persons/<person-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '{id, distinct_ids, properties, created_at}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/persons/<person-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, distinct_ids, properties, created_at}'
 ```
 
 ---
@@ -415,7 +415,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/persons/<person-id>/" 
 ### List Cohorts
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/cohorts/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name, count, created_at}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/cohorts/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name, count, created_at}'
 ```
 
 ### Create Cohort
@@ -444,7 +444,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/cohorts/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/cohorts/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
 ```
 
 ---
@@ -454,7 +454,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/cohorts/" --he
 ### List Annotations
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/annotations/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, content, date_marker, scope}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/annotations/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, content, date_marker, scope}'
 ```
 
 ### Create Annotation
@@ -470,7 +470,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/annotations/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, content, date_marker}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/annotations/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, content, date_marker}'
 ```
 
 ### Delete Annotation
@@ -478,7 +478,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/annotations/" 
 Replace `<annotation-id>` with the annotation ID:
 
 ```bash
-curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/annotations/<annotation-id>/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)"
+curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/annotations/<annotation-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
 
 ---
@@ -488,7 +488,7 @@ curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/annotations/
 ### List Actions
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/actions/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name, steps}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/actions/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name, steps}'
 ```
 
 ### Create Action
@@ -510,7 +510,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/actions/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/actions/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
 ```
 
 ---
@@ -520,7 +520,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/actions/" --he
 ### List Surveys
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/surveys/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {id, name, type, start_date, end_date}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/surveys/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name, type, start_date, end_date}'
 ```
 
 ### Create Survey
@@ -545,7 +545,7 @@ Write to `/tmp/posthog_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/surveys/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name, type}'
+curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/surveys/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name, type}'
 ```
 
 ---
@@ -557,7 +557,7 @@ curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/surveys/" --he
 Discover what events are tracked in your project:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/event_definitions/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {name, volume_30_day, query_usage_30_day}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/event_definitions/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {name, volume_30_day, query_usage_30_day}'
 ```
 
 ---
@@ -569,7 +569,7 @@ curl -s "https://us.posthog.com/api/projects/<project-id>/event_definitions/" --
 Discover what properties are available:
 
 ```bash
-curl -s "https://us.posthog.com/api/projects/<project-id>/property_definitions/" --header "Authorization: Bearer $(printenv POSTHOG_TOKEN)" | jq '.results[] | {name, property_type, is_numerical}'
+curl -s "https://us.posthog.com/api/projects/<project-id>/property_definitions/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {name, property_type, is_numerical}'
 ```
 
 ---

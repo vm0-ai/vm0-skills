@@ -4,45 +4,15 @@ Common anti-patterns to avoid when writing SKILL.md documentation.
 
 ---
 
-## 1. Environment Variables with Pipes (Claude Code Bug)
 
-**Problem:** Using `$VAR` in commands with pipes triggers a Claude Code variable substitution bug where environment variables get silently cleared.
-
-**Related issues:**
-- [#29298](https://github.com/anthropics/claude-code/issues/29298) - Bash Tool Silently Empties Environment Variables in Pipelines
-- [#17182](https://github.com/anthropics/claude-code/issues/17182) - Environment variables expand to empty strings when used in piped commands
-- [#18979](https://github.com/anthropics/claude-code/issues/18979) - Environment variables expand to empty string when command contains pipe
-- [#14371](https://github.com/anthropics/claude-code/issues/14371) - Environment variables stripped when command contains pipes
-- [#24956](https://github.com/anthropics/claude-code/issues/24956) - Bash tool drops pipe stdin with command substitution syntax
-- [#14523](https://github.com/anthropics/claude-code/issues/14523) - Bash tool fails with command substitution in pipe arguments
-
-
-### ❌ Bad Case
-
-```bash
-curl -H "Authorization: Bearer ${API_TOKEN}" https://api.example.com | jq '.[0]'
-```
-
-**Issue:** The environment variable `${API_TOKEN}` will be cleared when the pipe is processed, causing authentication to fail silently.
-
-### ✅ Good Case
-
-```bash
-bash -c 'curl -H "Authorization: Bearer ${API_TOKEN}" https://api.example.com' | jq .
-```
-
-**Solution:** Wrap the command containing `$VAR` in `bash -c '...'`, keeping the pipe **outside** the wrapper. This ensures the variable is properly substituted before the pipe processes the output.
-
----
-
-## 2. Useless `| jq .`
+## 1. Useless `| jq .`
 
 **Problem:** Using `| jq .` without any transformation only formats JSON but adds no value, making commands unnecessarily complex.
 
 ### ❌ Bad Case
 
 ```bash
-bash -c 'curl -s -X POST "https://api.example.com/data" -H "Content-Type: application/json" -d @/tmp/request.json' | jq .
+curl -s -X POST "https://api.example.com/data" -H "Content-Type: application/json" -d @/tmp/request.json | jq .
 ```
 
 **Issue:** The `| jq .` only pretty-prints the JSON without extracting or transforming any data.
@@ -51,12 +21,12 @@ bash -c 'curl -s -X POST "https://api.example.com/data" -H "Content-Type: applic
 
 **Option 1: Remove jq entirely**
 ```bash
-bash -c 'curl -s -X POST "https://api.example.com/data" -H "Content-Type: application/json" -d @/tmp/request.json'
+curl -s -X POST "https://api.example.com/data" -H "Content-Type: application/json" -d @/tmp/request.json
 ```
 
 **Option 2: Use jq for actual transformation**
 ```bash
-bash -c 'curl -s -X POST "https://api.example.com/data" -H "Content-Type: application/json" -d @/tmp/request.json' | jq '.data.items[] | {id, name}'
+curl -s -X POST "https://api.example.com/data" -H "Content-Type: application/json" -d @/tmp/request.json | jq '.data.items[] | {id, name}'
 ```
 
 **When to keep jq:**
@@ -67,7 +37,7 @@ bash -c 'curl -s -X POST "https://api.example.com/data" -H "Content-Type: applic
 
 ---
 
-## 3. Inline JSON in curl Commands
+## 2. Inline JSON in curl Commands
 
 **Problem:** Constructing complex JSON directly in curl commands leads to escaping hell and makes examples hard to read and maintain.
 
@@ -119,7 +89,7 @@ curl -G "https://api.example.com/sessions" --data-urlencode "q@/tmp/query.txt"
 
 ---
 
-## 4. Using $VAR for URL Parameters
+## 3. Using $VAR for URL Parameters
 
 **Problem:** Using shell variables like `$CONTEXT_ID` in URLs creates dependency on unstable variable expansion and makes examples harder to follow.
 
@@ -158,10 +128,7 @@ curl -X POST "https://api.example.com/sessions" -H "X-API-Key: ${API_KEY}" -d "{
 ```bash
 DATASET_ID="gd_xxxxx"
 
-bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json'
+curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=${DATASET_ID}" --header "Authorization: Bearer ${BRIGHTDATA_API_KEY}" --header "Content-Type: application/json" -d @/tmp/brightdata_request.json
 ```
 
 **Issues:**
@@ -201,11 +168,7 @@ curl -X DELETE "https://api.example.com/contexts/<your-context-id>" -H "X-API-Ke
 Replace `<dataset-id>` with the actual dataset id.
 
 ```bash
-
-bash -c 'curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=<dataset-id>" \
-  -H "Authorization: Bearer ${BRIGHTDATA_API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d @/tmp/brightdata_request.json'
+curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=<dataset-id>" --header "Authorization: Bearer ${BRIGHTDATA_API_KEY}" --header "Content-Type: application/json" -d @/tmp/brightdata_request.json
 ```
 
 **Documentation Pattern:**
@@ -228,7 +191,7 @@ curl -X DELETE "https://api.example.com/contexts/your-context-id" -H "X-API-Key:
 
 ---
 
-## 5. Inline JSON with -d Parameter
+## 4. Inline JSON with -d Parameter
 
 **Problem:** Using `-d '{"key": "value"}'` format for JSON data creates inconsistency with the file-based pattern and makes examples harder to maintain.
 
@@ -255,7 +218,7 @@ curl -s -X POST '.../query' -d '{"page_size": 100, "start_cursor": "abc123"}'
 ```
 
 ```bash
-bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json'
+curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
 ```
 
 **Benefits:**
@@ -269,7 +232,7 @@ bash -c 'curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>
 
 ---
 
-## 6. Simple --data-urlencode Parameters
+## 5. Simple --data-urlencode Parameters
 
 **Problem:** Using `--data-urlencode "key=value"` for simple parameters can cause escaping issues with special characters like `!`, `&`, `?`, etc., creating potential shell escaping nightmares.
 
@@ -330,10 +293,8 @@ https://example.com/path?param=value&other=123
 
 When writing SKILL.md, verify:
 
-- [ ] All commands with `$VAR` and `|` use `bash -c '...' | command` pattern
 - [ ] Remove `| jq .` unless doing actual transformation
 - [ ] Use `/tmp/file` with `-d @/tmp/file` instead of inline JSON/data
 - [ ] Use placeholder text (`<your-context-id>`) instead of shell variables (`$CONTEXT_ID`) in URLs
 - [ ] Always use `-d @/tmp/filename.json` for JSON data, never `-d '{"key": "value"}'`
 - [ ] Always use `--data-urlencode "key@/tmp/file.txt"` for parameters with special characters
-- [ ] Include the "Important" warning about `$VAR` and pipes in Prerequisites section

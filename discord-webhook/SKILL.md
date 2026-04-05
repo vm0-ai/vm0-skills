@@ -60,7 +60,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
@@ -80,7 +80,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
@@ -117,7 +117,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 **Common colors (decimal):**
@@ -161,7 +161,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
@@ -179,7 +179,7 @@ Write to `/tmp/discord_webhook_payload.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -F "file1=@screenshot.png" -F 'payload_json=@/tmp/discord_webhook_payload.json'
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -F "file1=@screenshot.png" -F 'payload_json=@/tmp/discord_webhook_payload.json'
 ```
 
 ---
@@ -197,7 +197,7 @@ Write to `/tmp/discord_webhook_payload.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -F "file1=@error.log" -F "file2=@debug.log" -F 'payload_json=@/tmp/discord_webhook_payload.json'
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -F "file1=@error.log" -F "file2=@debug.log" -F 'payload_json=@/tmp/discord_webhook_payload.json'
 ```
 
 ---
@@ -228,7 +228,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
@@ -249,7 +249,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 Replace `<your-user-id>` with the actual Discord user ID.
@@ -270,7 +270,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---
@@ -316,7 +316,7 @@ Write to `/tmp/discord_webhook_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv DISCORD_WEBHOOK_URL)" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
+curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
 ---

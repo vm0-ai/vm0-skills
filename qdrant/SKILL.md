@@ -67,7 +67,7 @@ All examples below assume you have `QDRANT_BASE_URL` and `QDRANT_TOKEN` set.
 Verify connection to Qdrant:
 
 ```bash
-curl -s -X GET "$(printenv QDRANT_BASE_URL)" --header "api-key: $(printenv QDRANT_TOKEN)"
+curl -s -X GET "$QDRANT_BASE_URL" --header "api-key: $QDRANT_TOKEN"
 ```
 
 ---
@@ -77,7 +77,7 @@ curl -s -X GET "$(printenv QDRANT_BASE_URL)" --header "api-key: $(printenv QDRAN
 Get all collections:
 
 ```bash
-curl -s -X GET "$(printenv QDRANT_BASE_URL)/collections" --header "api-key: $(printenv QDRANT_TOKEN)"
+curl -s -X GET "$QDRANT_BASE_URL/collections" --header "api-key: $QDRANT_TOKEN"
 ```
 
 ---
@@ -100,7 +100,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "$(printenv QDRANT_BASE_URL)/collections/my_collection" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X PUT "$QDRANT_BASE_URL/collections/my_collection" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 **Distance metrics:**
@@ -121,7 +121,7 @@ curl -s -X PUT "$(printenv QDRANT_BASE_URL)/collections/my_collection" --header 
 Get details about a collection:
 
 ```bash
-curl -s -X GET "$(printenv QDRANT_BASE_URL)/collections/my_collection" --header "api-key: $(printenv QDRANT_TOKEN)"
+curl -s -X GET "$QDRANT_BASE_URL/collections/my_collection" --header "api-key: $QDRANT_TOKEN"
 ```
 
 ---
@@ -152,7 +152,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "$(printenv QDRANT_BASE_URL)/collections/my_collection/points" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X PUT "$QDRANT_BASE_URL/collections/my_collection/points" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---
@@ -174,7 +174,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv QDRANT_BASE_URL)/collections/my_collection/points/query" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/query" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 **Response:**
@@ -212,7 +212,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv QDRANT_BASE_URL)/collections/my_collection/points/query" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/query" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 **Filter operators:**
@@ -239,7 +239,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv QDRANT_BASE_URL)/collections/my_collection/points" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---
@@ -259,7 +259,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv QDRANT_BASE_URL)/collections/my_collection/points/delete" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/delete" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 Delete by filter:
@@ -279,7 +279,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv QDRANT_BASE_URL)/collections/my_collection/points/delete" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/delete" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---
@@ -289,7 +289,7 @@ curl -s -X POST "$(printenv QDRANT_BASE_URL)/collections/my_collection/points/de
 Remove a collection entirely:
 
 ```bash
-curl -s -X DELETE "$(printenv QDRANT_BASE_URL)/collections/my_collection" --header "api-key: $(printenv QDRANT_TOKEN)"
+curl -s -X DELETE "$QDRANT_BASE_URL/collections/my_collection" --header "api-key: $QDRANT_TOKEN"
 ```
 
 ---
@@ -309,7 +309,7 @@ Write to `/tmp/qdrant_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv QDRANT_BASE_URL)/collections/my_collection/points/count" --header "api-key: $(printenv QDRANT_TOKEN)" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
+curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/count" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
 ---

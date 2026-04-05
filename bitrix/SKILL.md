@@ -63,7 +63,7 @@ All examples assume `BITRIX_WEBHOOK_URL` is set to your webhook base URL.
 Get information about the authenticated user:
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/user.current.json"
+curl -s -X GET "$BITRIX_WEBHOOK_URL/user.current.json"
 ```
 
 **Response:**
@@ -85,7 +85,7 @@ curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/user.current.json"
 Get a list of users in the workspace:
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/user.get.json" | jq '.result[] | {ID, NAME, LAST_NAME, EMAIL}'
+curl -s -X GET "$BITRIX_WEBHOOK_URL/user.get.json" | jq '.result[] | {ID, NAME, LAST_NAME, EMAIL}'
 ```
 
 ---
@@ -111,7 +111,7 @@ Write to `/tmp/bitrix_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
+curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.lead.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
 **Response:**
@@ -128,7 +128,7 @@ curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.add.json" --header "Con
 Replace `<your-lead-id>` with the actual lead ID:
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.get.json?id=<your-lead-id>"
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.lead.get.json?id=<your-lead-id>"
 ```
 
 ---
@@ -136,7 +136,7 @@ curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.get.json?id=<your-lead-i
 ### 5. List Leads
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.list.json" | jq '.result[] | {ID, TITLE, STATUS_ID}'
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.lead.list.json" | jq '.result[] | {ID, TITLE, STATUS_ID}'
 ```
 
 With filter:
@@ -153,7 +153,7 @@ Write to `/tmp/bitrix_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.list.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
+curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.lead.list.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
 ---
@@ -175,7 +175,7 @@ Write to `/tmp/bitrix_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.update.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
+curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.lead.update.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
 ---
@@ -185,7 +185,7 @@ curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.update.json" --header "
 Replace `<your-lead-id>` with the actual lead ID:
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.delete.json?id=<your-lead-id>"
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.lead.delete.json?id=<your-lead-id>"
 ```
 
 ---
@@ -210,7 +210,7 @@ Write to `/tmp/bitrix_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.contact.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
+curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.contact.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
 ---
@@ -218,7 +218,7 @@ curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.contact.add.json" --header "
 ### 9. List Contacts
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.contact.list.json" | jq '.result[] | {ID, NAME, LAST_NAME}'
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.contact.list.json" | jq '.result[] | {ID, NAME, LAST_NAME}'
 ```
 
 ---
@@ -243,7 +243,7 @@ Write to `/tmp/bitrix_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.deal.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
+curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.deal.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
 ---
@@ -251,7 +251,7 @@ curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.deal.add.json" --header "Con
 ### 11. List Deals
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.deal.list.json" | jq '.result[] | {ID, TITLE, STAGE_ID, OPPORTUNITY}'
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.deal.list.json" | jq '.result[] | {ID, TITLE, STAGE_ID, OPPORTUNITY}'
 ```
 
 ---
@@ -272,7 +272,7 @@ Write to `/tmp/bitrix_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/crm.deal.update.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
+curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.deal.update.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
 ---
@@ -297,7 +297,7 @@ Write to `/tmp/bitrix_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/tasks.task.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
+curl -s -X POST "$BITRIX_WEBHOOK_URL/tasks.task.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
 ---
@@ -305,7 +305,7 @@ curl -s -X POST "$(printenv BITRIX_WEBHOOK_URL)/tasks.task.add.json" --header "C
 ### 14. List Tasks
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/tasks.task.list.json" | jq '.result.tasks[] | {id, title, status}'
+curl -s -X GET "$BITRIX_WEBHOOK_URL/tasks.task.list.json" | jq '.result.tasks[] | {id, title, status}'
 ```
 
 ---
@@ -315,7 +315,7 @@ curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/tasks.task.list.json" | jq '.resu
 Replace `<your-task-id>` with the actual task ID:
 
 ```bash
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/tasks.task.complete.json?taskId=<your-task-id>"
+curl -s -X GET "$BITRIX_WEBHOOK_URL/tasks.task.complete.json?taskId=<your-task-id>"
 ```
 
 ---
@@ -326,13 +326,13 @@ Get available fields for any entity:
 
 ```bash
 # Lead fields
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.lead.fields.json"
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.lead.fields.json"
 
 # Contact fields
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.contact.fields.json"
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.contact.fields.json"
 
 # Deal fields
-curl -s -X GET "$(printenv BITRIX_WEBHOOK_URL)/crm.deal.fields.json"
+curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.deal.fields.json"
 ```
 
 ---

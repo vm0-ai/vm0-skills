@@ -46,7 +46,7 @@ Every Xero API call needs a `xero-tenant-id` header. Get it from the connections
 
 ```bash
 curl -s "https://api.xero.com/connections" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "Content-Type: application/json"
 ```
 
@@ -73,7 +73,7 @@ Store the `tenantId` and use it as the `xero-tenant-id` header in all subsequent
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Organisation" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -83,7 +83,7 @@ Returns: Name, LegalName, BaseCurrency, CountryCode, FinancialYearEndDay/Month, 
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Organisation/Actions" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -97,7 +97,7 @@ Returns array of `{Name, Status}` where Status is "ALLOWED" or "NOT-ALLOWED". Us
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Contacts?page=1&pageSize=100" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -105,7 +105,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Contacts?page=1&pageSize=100" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Contacts?searchTerm=john" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -115,7 +115,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Contacts?searchTerm=john" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Contacts?where=EmailAddress%3D%3D%22email%40example.com%22" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -125,7 +125,7 @@ Optimized `where` filters: `Name`, `EmailAddress`, `AccountNumber`. Use `searchT
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Contacts/<contact-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -135,7 +135,7 @@ Required: `Name` (max 255 chars). Optional: EmailAddress, FirstName, LastName, C
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Contacts" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Name\": \"New Customer\", \"FirstName\": \"Jane\", \"LastName\": \"Doe\", \"EmailAddress\": \"jane@example.com\", \"Phones\": [{\"PhoneType\": \"DEFAULT\", \"PhoneNumber\": \"555-1234\"}], \"Addresses\": [{\"AddressType\": \"STREET\", \"AddressLine1\": \"123 Main St\", \"City\": \"Auckland\", \"PostalCode\": \"1010\", \"Country\": \"NZ\"}]}"
@@ -145,7 +145,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Contacts" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Contacts/<contact-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Name\": \"Updated Name\", \"EmailAddress\": \"updated@example.com\"}"
@@ -155,7 +155,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Contacts/<contact-id>" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Contacts/<contact-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"ContactStatus\": \"ARCHIVED\"}"
@@ -171,7 +171,7 @@ Contacts cannot be deleted — only archived. Use `includeArchived=true` in list
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/ContactGroups" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -179,7 +179,7 @@ curl -s "https://api.xero.com/api.xro/2.0/ContactGroups" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Name\": \"VIP Customers\"}"
@@ -189,7 +189,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>/Contacts" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Contacts\": [{\"ContactID\": \"<contact-id>\"}]}"
@@ -199,7 +199,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>/Contac
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"ContactGroupID\": \"<group-id>\", \"Status\": \"DELETED\"}"
@@ -213,7 +213,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Invoices" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -223,7 +223,7 @@ Without `page`, returns summary data only (no line items). Add `page=1` for full
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Invoices?page=1&pageSize=50" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -231,7 +231,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Invoices?page=1&pageSize=50" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Invoices?Statuses=AUTHORISED,PAID&ContactIDs=<contact-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -241,7 +241,7 @@ Filter params: `IDs`, `InvoiceNumbers`, `ContactIDs`, `Statuses` (DRAFT/SUBMITTE
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Invoices?where=Type%3D%3D%22ACCPAY%22%20AND%20Status%3D%3D%22AUTHORISED%22" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -251,7 +251,7 @@ Optimized WHERE fields: Status, Contact.ContactID, Contact.Name, Reference, Invo
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -259,7 +259,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Invoices/<invoice-number>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -267,7 +267,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Invoices/<invoice-number>" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/OnlineInvoice" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -279,7 +279,7 @@ Required: `Type`, `Contact` (with ContactID or Name), `LineItems` (each needs `D
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Invoices" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Type\": \"ACCREC\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"DueDate\": \"2026-04-05\", \"LineAmountTypes\": \"Exclusive\", \"LineItems\": [{\"Description\": \"Consulting services\", \"Quantity\": 1, \"UnitAmount\": 500.00, \"AccountCode\": \"200\"}]}"
@@ -289,7 +289,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/Invoices" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Invoices" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Type\": \"ACCPAY\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"DueDate\": \"2026-04-05\", \"LineItems\": [{\"Description\": \"Office supplies\", \"Quantity\": 10, \"UnitAmount\": 15.00, \"AccountCode\": \"400\"}]}"
@@ -301,7 +301,7 @@ ACCPAY (bills) do not support DiscountRate/DiscountAmount.
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Invoices" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Type\": \"ACCREC\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"DueDate\": \"2026-04-05\", \"Reference\": \"PO-123\", \"LineItems\": [{\"Description\": \"Widget A\", \"Quantity\": 100, \"UnitAmount\": 10.00, \"DiscountRate\": 5, \"AccountCode\": \"200\", \"Tracking\": [{\"Name\": \"Region\", \"Option\": \"East\"}]}]}"
@@ -311,7 +311,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/Invoices" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"InvoiceID\": \"<invoice-id>\", \"Status\": \"AUTHORISED\"}"
@@ -323,7 +323,7 @@ Status transitions: DRAFT -> SUBMITTED -> AUTHORISED -> PAID (system-assigned wh
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"InvoiceID\": \"<invoice-id>\", \"Status\": \"VOIDED\"}"
@@ -337,7 +337,7 @@ Email requires a paying Xero plan. Returns 204 on success. Limits: 1000/day (pay
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Email" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{}"
@@ -351,7 +351,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Email" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/CreditNotes" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -361,7 +361,7 @@ Type: `ACCRECCREDIT` (customer credit) or `ACCPAYCREDIT` (supplier credit).
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/CreditNotes" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Type\": \"ACCRECCREDIT\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"LineItems\": [{\"Description\": \"Refund for damaged goods\", \"Quantity\": 1, \"UnitAmount\": 100.00, \"AccountCode\": \"200\"}]}"
@@ -373,7 +373,7 @@ Credit note must be AUTHORISED first.
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/CreditNotes/<credit-note-id>/Allocations" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Allocations\": [{\"Amount\": 100.00, \"Invoice\": {\"InvoiceID\": \"<invoice-id>\"}}]}"
@@ -387,7 +387,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/CreditNotes/<credit-note-id>/Al
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Quotes?page=1" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -397,7 +397,7 @@ Filter params: `Status` (DRAFT/SENT/ACCEPTED/DECLINED/INVOICED), `ContactID`, `D
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Quotes" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"ExpiryDate\": \"2026-04-05\", \"Title\": \"Website Redesign\", \"Summary\": \"Complete website redesign including UX audit\", \"LineItems\": [{\"Description\": \"UX Audit\", \"Quantity\": 1, \"UnitAmount\": 2000.00, \"AccountCode\": \"200\"}, {\"Description\": \"Design & Development\", \"Quantity\": 1, \"UnitAmount\": 8000.00, \"AccountCode\": \"200\"}]}"
@@ -409,7 +409,7 @@ Status transitions: DRAFT -> SENT -> ACCEPTED/DECLINED -> INVOICED. All statuses
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Quotes" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"QuoteID\": \"<quote-id>\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"Status\": \"SENT\"}"
@@ -423,7 +423,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Quotes" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/PurchaseOrders?page=1" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -433,7 +433,7 @@ Filter params: `status`, `DateFrom`, `DateTo`, `order`, `page`, `pageSize` (max 
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/PurchaseOrders" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"DeliveryDate\": \"2026-03-20\", \"Reference\": \"PO-001\", \"DeliveryAddress\": \"123 Warehouse St\", \"LineItems\": [{\"Description\": \"Raw materials\", \"Quantity\": 100, \"UnitAmount\": 5.00, \"AccountCode\": \"300\"}]}"
@@ -445,7 +445,7 @@ Include `LineItemID` on existing line items to update them — omitting it delet
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/PurchaseOrders/<po-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"PurchaseOrderID\": \"<po-id>\", \"Status\": \"AUTHORISED\"}"
@@ -459,7 +459,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/PurchaseOrders/<po-id>" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Payments?page=1" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -471,7 +471,7 @@ Required: invoice/credit note ID, bank account (Code or AccountID), Date, Amount
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Payments" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Invoice\": {\"InvoiceID\": \"<invoice-id>\"}, \"Account\": {\"Code\": \"090\"}, \"Date\": \"2026-03-05\", \"Amount\": 500.00}"
@@ -481,7 +481,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/Payments" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Payments" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"CreditNote\": {\"CreditNoteID\": \"<credit-note-id>\"}, \"Account\": {\"Code\": \"090\"}, \"Date\": \"2026-03-05\", \"Amount\": 100.00}"
@@ -493,7 +493,7 @@ Payments cannot be modified, only deleted. Batch-created payments cannot be dele
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Payments/<payment-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"PaymentID\": \"<payment-id>\", \"Status\": \"DELETED\"}"
@@ -507,7 +507,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Payments/<payment-id>" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/BatchPayments" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -519,7 +519,7 @@ curl -s "https://api.xero.com/api.xro/2.0/BatchPayments" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/BankTransactions?page=1&pageSize=50" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -527,7 +527,7 @@ curl -s "https://api.xero.com/api.xro/2.0/BankTransactions?page=1&pageSize=50" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/BankTransactions?where=Type%3D%3D%22SPEND%22%20AND%20Status%3D%3D%22AUTHORISED%22&page=1" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -537,7 +537,7 @@ Types: `SPEND` (money out), `RECEIVE` (money in), `SPEND-TRANSFER`, `RECEIVE-TRA
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Type\": \"SPEND\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"LineItems\": [{\"Description\": \"Office supplies\", \"UnitAmount\": 50.00, \"AccountCode\": \"404\"}], \"BankAccount\": {\"Code\": \"090\"}}"
@@ -547,7 +547,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Type\": \"RECEIVE\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"LineItems\": [{\"Description\": \"Payment received\", \"UnitAmount\": 200.00, \"AccountCode\": \"200\"}], \"BankAccount\": {\"Code\": \"090\"}}"
@@ -557,7 +557,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions/<transaction-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"BankTransactionID\": \"<transaction-id>\", \"Status\": \"DELETED\"}"
@@ -571,7 +571,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions/<transaction-
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/BankTransfers" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -579,7 +579,7 @@ curl -s "https://api.xero.com/api.xro/2.0/BankTransfers" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/BankTransfers" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"BankTransfers\": [{\"FromBankAccount\": {\"Code\": \"090\"}, \"ToBankAccount\": {\"Code\": \"091\"}, \"Amount\": 500.00}]}"
@@ -593,7 +593,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/BankTransfers" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Accounts" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -601,7 +601,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Accounts" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Accounts?where=Type%3D%3D%22BANK%22" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -611,7 +611,7 @@ Account types: BANK, CURRENT, CURRLIAB, DEPRECIATN, DIRECTCOSTS, EQUITY, EXPENSE
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Accounts/<account-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -619,7 +619,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Accounts/<account-id>" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Accounts" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Code\": \"201\", \"Name\": \"Sales - Clearance\", \"Type\": \"SALES\"}"
@@ -629,7 +629,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/Accounts" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Accounts/<account-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"AccountID\": \"<account-id>\", \"Status\": \"ARCHIVED\"}"
@@ -641,7 +641,7 @@ Only accounts with no transactions can be deleted. Otherwise, archive them.
 
 ```bash
 curl -s -X DELETE "https://api.xero.com/api.xro/2.0/Accounts/<account-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -653,7 +653,7 @@ curl -s -X DELETE "https://api.xero.com/api.xro/2.0/Accounts/<account-id>" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/ManualJournals" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -663,7 +663,7 @@ Journal lines must balance (sum to zero). Each line needs LineAmount and Account
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/ManualJournals" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Narration\": \"Year-end adjustment\", \"Date\": \"2026-03-05\", \"JournalLines\": [{\"LineAmount\": 100.00, \"AccountCode\": \"200\", \"Description\": \"Revenue adjustment\"}, {\"LineAmount\": -100.00, \"AccountCode\": \"400\", \"Description\": \"Expense adjustment\"}]}"
@@ -677,7 +677,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/ManualJournals" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Items" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -687,7 +687,7 @@ Required: `Code` (max 30 chars). Optional: Name (max 50), Description (max 4000)
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/Items" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Code\": \"WIDGET-001\", \"Name\": \"Widget\", \"Description\": \"Standard widget for sale\", \"PurchaseDetails\": {\"UnitPrice\": 5.00, \"AccountCode\": \"300\"}, \"SalesDetails\": {\"UnitPrice\": 12.00, \"AccountCode\": \"200\"}}"
@@ -697,7 +697,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/Items" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Items/<item-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Code\": \"WIDGET-001\", \"Name\": \"Widget Premium\", \"SalesDetails\": {\"UnitPrice\": 15.00, \"AccountCode\": \"200\"}}"
@@ -707,7 +707,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Items/<item-id>" \
 
 ```bash
 curl -s -X DELETE "https://api.xero.com/api.xro/2.0/Items/<item-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -721,7 +721,7 @@ All report endpoints are read-only (GET only). Reports return a nested Rows/Cell
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/ProfitAndLoss?fromDate=2026-01-01&toDate=2026-03-31" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -731,7 +731,7 @@ Params: `fromDate`, `toDate`, `periods` (comparison periods), `timeframe` (MONTH
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/ProfitAndLoss?fromDate=2026-01-01&toDate=2026-03-31&periods=2&timeframe=MONTH" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -739,7 +739,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/ProfitAndLoss?fromDate=2026-01
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/BalanceSheet?date=2026-03-05" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -749,7 +749,7 @@ Params: `date` (point-in-time snapshot), `periods`, `timeframe`, `trackingOption
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/BalanceSheet?date=2026-03-31&periods=2&timeframe=MONTH" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -757,7 +757,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/BalanceSheet?date=2026-03-31&p
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/TrialBalance?date=2026-03-05" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -769,7 +769,7 @@ Requires `contactId` parameter. Get it from the Contacts endpoint first.
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedReceivablesByContact?contactId=<contact-id>&date=2026-03-05" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -777,7 +777,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedReceivablesByContact?conta
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedPayablesByContact?contactId=<contact-id>&date=2026-03-05" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -785,7 +785,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/AgedPayablesByContact?contactI
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/BankSummary?fromDate=2026-01-01&toDate=2026-03-31" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -793,7 +793,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/BankSummary?fromDate=2026-01-0
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/ExecutiveSummary?date=2026-03-05" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -801,7 +801,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/ExecutiveSummary?date=2026-03-
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Reports/BudgetSummary?date=2026-03-05" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -813,7 +813,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/BudgetSummary?date=2026-03-05"
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Budgets" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -821,7 +821,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Budgets" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Budgets/<budget-id>?DateFrom=2026-01-01&DateTo=2026-12-31" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -833,7 +833,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Budgets/<budget-id>?DateFrom=2026-01-0
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Currencies" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -847,7 +847,7 @@ Adding currencies requires a plan that supports multi-currency. See docs: `https
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/TaxRates" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -859,7 +859,7 @@ curl -s "https://api.xero.com/api.xro/2.0/TaxRates" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/TrackingCategories" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -867,7 +867,7 @@ curl -s "https://api.xero.com/api.xro/2.0/TrackingCategories" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/TrackingCategories" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Name\": \"Region\"}"
@@ -877,7 +877,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/TrackingCategories" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/api.xro/2.0/TrackingCategories/<category-id>/Options" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Name\": \"North\"}"
@@ -891,7 +891,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/TrackingCategories/<category-id
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/BrandingThemes" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -903,7 +903,7 @@ curl -s "https://api.xero.com/api.xro/2.0/BrandingThemes" \
 
 ```bash
 curl -s "https://api.xero.com/api.xro/2.0/Users" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -917,7 +917,7 @@ Max 10 attachments per entity, 25MB each.
 
 ```bash
 curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Attachments/receipt.pdf" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/pdf" \
   --data-binary @receipt.pdf
@@ -947,7 +947,7 @@ Base URL: `https://api.xero.com/projects.xro/2.0` (different from accounting API
 
 ```bash
 curl -s "https://api.xero.com/projects.xro/2.0/projects?states=INPROGRESS&page=1&pageSize=50" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -957,7 +957,7 @@ Params: `projectIds`, `contactID`, `states` (INPROGRESS/CLOSED), `page`, `pageSi
 
 ```bash
 curl -s "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -967,7 +967,7 @@ Required: `contactId`, `name`. Optional: `deadlineUTC`, `estimateAmount`. Curren
 
 ```bash
 curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"contactId\": \"<contact-id>\", \"name\": \"Website Redesign\", \"deadlineUTC\": \"2026-06-30T00:00:00\", \"estimateAmount\": 10000.00}"
@@ -977,7 +977,7 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"name\": \"Website Redesign v2\", \"estimateAmount\": 15000.00}"
@@ -987,7 +987,7 @@ curl -s -X PUT "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
 
 ```bash
 curl -s -X PATCH "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"status\": \"CLOSED\"}"
@@ -997,7 +997,7 @@ curl -s -X PATCH "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
 
 ```bash
 curl -s "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tasks" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1009,7 +1009,7 @@ Required: `name` (max 100 chars), `rate` ({currency, value}), `chargeType`.
 
 ```bash
 curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tasks" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"name\": \"Design Phase\", \"rate\": {\"currency\": \"NZD\", \"value\": 150.00}, \"chargeType\": \"TIME\", \"estimateMinutes\": 2400}"
@@ -1019,7 +1019,7 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tas
 
 ```bash
 curl -s -X DELETE "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tasks/<task-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1029,7 +1029,7 @@ Fails if task has time entries or INVOICED status.
 
 ```bash
 curl -s "https://api.xero.com/projects.xro/2.0/projects/<project-id>/time?page=1" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1041,7 +1041,7 @@ The Projects API uses its own user IDs, different from the Accounting API `/User
 
 ```bash
 curl -s "https://api.xero.com/projects.xro/2.0/projectsusers" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1051,7 +1051,7 @@ Required: `userId` (from `/projectsusers`, NOT from Accounting `/Users`), `taskI
 
 ```bash
 curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/time" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"userId\": \"<projects-user-id>\", \"taskId\": \"<task-id>\", \"dateUtc\": \"2026-03-05T09:00:00\", \"duration\": 120, \"description\": \"Design mockups\"}"
@@ -1061,7 +1061,7 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tim
 
 ```bash
 curl -s -X DELETE "https://api.xero.com/projects.xro/2.0/projects/<project-id>/time/<time-entry-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1077,7 +1077,7 @@ Base URL: `https://api.xero.com/files.xro/1.0` (different from accounting API).
 
 ```bash
 curl -s "https://api.xero.com/files.xro/1.0/Files?page=1&pagesize=50&sort=CreatedDateUtc&direction=DESC" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1087,7 +1087,7 @@ Params: `page`, `pagesize` (max 100), `sort` (Name/Size/CreatedDateUtc), `direct
 
 ```bash
 curl -s "https://api.xero.com/files.xro/1.0/Files/<file-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1095,7 +1095,7 @@ curl -s "https://api.xero.com/files.xro/1.0/Files/<file-id>" \
 
 ```bash
 curl -s "https://api.xero.com/files.xro/1.0/Files/<file-id>/Content" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   -o downloaded_file.pdf
 ```
@@ -1106,7 +1106,7 @@ Max 10 MB per file. Uses multipart form.
 
 ```bash
 curl -s -X POST "https://api.xero.com/files.xro/1.0/Files" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   -F "Name=receipt.pdf" \
   -F "file=@receipt.pdf"
@@ -1116,7 +1116,7 @@ curl -s -X POST "https://api.xero.com/files.xro/1.0/Files" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/files.xro/1.0/Files/<folder-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   -F "Name=invoice.pdf" \
   -F "file=@invoice.pdf"
@@ -1126,7 +1126,7 @@ curl -s -X POST "https://api.xero.com/files.xro/1.0/Files/<folder-id>" \
 
 ```bash
 curl -s -X PUT "https://api.xero.com/files.xro/1.0/Files/<file-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Name\": \"new_name.pdf\", \"FolderId\": \"<target-folder-id>\"}"
@@ -1136,7 +1136,7 @@ curl -s -X PUT "https://api.xero.com/files.xro/1.0/Files/<file-id>" \
 
 ```bash
 curl -s -X DELETE "https://api.xero.com/files.xro/1.0/Files/<file-id>" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1144,7 +1144,7 @@ curl -s -X DELETE "https://api.xero.com/files.xro/1.0/Files/<file-id>" \
 
 ```bash
 curl -s "https://api.xero.com/files.xro/1.0/Folders" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
@@ -1152,7 +1152,7 @@ curl -s "https://api.xero.com/files.xro/1.0/Folders" \
 
 ```bash
 curl -s -X POST "https://api.xero.com/files.xro/1.0/Folders" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Name\": \"Receipts 2026\"}"
@@ -1162,7 +1162,7 @@ curl -s -X POST "https://api.xero.com/files.xro/1.0/Folders" \
 
 ```bash
 curl -s "https://api.xero.com/files.xro/1.0/Inbox" \
-  --header "Authorization: Bearer $(printenv XERO_TOKEN)" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 

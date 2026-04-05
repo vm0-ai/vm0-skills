@@ -51,8 +51,8 @@ Add two headers to authenticate through Cloudflare Access:
 
 ```bash
 curl -s \
-  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
-  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
   "https://your-protected-service.example.com/api/endpoint"
 ```
 
@@ -62,9 +62,9 @@ Many services require both Cloudflare Access AND their own authentication:
 
 ```bash
 curl -s \
-  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
-  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
-  -H "Authorization: Bearer $(printenv API_TOKEN)" \
+  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
+  -H "Authorization: Bearer $API_TOKEN" \
   "https://your-protected-service.example.com/api/endpoint"
 ```
 
@@ -72,8 +72,8 @@ curl -s \
 
 ```bash
 curl -s \
-  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
-  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
   -u "username:password" \
   "https://your-protected-service.example.com/api/endpoint"
 ```
@@ -92,8 +92,8 @@ Then run:
 
 ```bash
 curl -s -X POST \
-  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
-  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
   -H "Content-Type: application/json" \
   -d @/tmp/request.json \
   "https://your-protected-service.example.com/api/endpoint"
@@ -103,8 +103,8 @@ curl -s -X POST \
 
 ```bash
 curl -s -o /tmp/output.file \
-  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
-  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
   "https://your-protected-service.example.com/file"
 ```
 
@@ -114,8 +114,8 @@ Add `-k` flag for services with self-signed certificates:
 
 ```bash
 curl -k -s \
-  -H "CF-Access-Client-Id: $(printenv CF_ACCESS_CLIENT_ID)" \
-  -H "CF-Access-Client-Secret: $(printenv CF_ACCESS_CLIENT_SECRET)" \
+  -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+  -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
   "https://your-protected-service.example.com/api/endpoint"
 ```
 

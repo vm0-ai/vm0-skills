@@ -60,7 +60,7 @@ The base URL for the HeyGen API is:
 Get all avatars available to your account:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v2/avatars" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq '.data.avatars[] | {avatar_id, avatar_name, gender}'
+curl -s -X GET "https://api.heygen.com/v2/avatars" --header "x-api-key: $HEYGEN_TOKEN" | jq '.data.avatars[] | {avatar_id, avatar_name, gender}'
 ```
 
 Each avatar has an `avatar_id` needed for video generation.
@@ -72,7 +72,7 @@ Each avatar has an `avatar_id` needed for video generation.
 Retrieve detailed information about a specific avatar. Replace `<avatar_id>` with an actual avatar ID:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v2/avatar/<avatar_id>/details" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq .data
+curl -s -X GET "https://api.heygen.com/v2/avatar/<avatar_id>/details" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
 
 ---
@@ -82,7 +82,7 @@ curl -s -X GET "https://api.heygen.com/v2/avatar/<avatar_id>/details" --header "
 Get all AI voices for video narration:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v2/voices" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq '.data.voices[] | {voice_id, name, language, gender}'
+curl -s -X GET "https://api.heygen.com/v2/voices" --header "x-api-key: $HEYGEN_TOKEN" | jq '.data.voices[] | {voice_id, name, language, gender}'
 ```
 
 Voice properties include:
@@ -131,7 +131,7 @@ Write to `/tmp/heygen_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.heygen.com/v2/video/generate" --header "x-api-key: $(printenv HEYGEN_TOKEN)" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
+curl -s -X POST "https://api.heygen.com/v2/video/generate" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
 ```
 
 The response contains a `video_id` to track the generation progress.
@@ -143,7 +143,7 @@ The response contains a `video_id` to track the generation progress.
 Poll for video generation status using the `video_id` from the generate response. Replace `<video_id>` with the actual video ID:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v1/video_status.get?video_id=<video_id>" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq '{status: .data.status, video_url: .data.video_url, duration: .data.duration}'
+curl -s -X GET "https://api.heygen.com/v1/video_status.get?video_id=<video_id>" --header "x-api-key: $HEYGEN_TOKEN" | jq '{status: .data.status, video_url: .data.video_url, duration: .data.duration}'
 ```
 
 Status values:
@@ -159,7 +159,7 @@ Status values:
 Retrieve all videos associated with your account:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v1/video.list" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq .
+curl -s -X GET "https://api.heygen.com/v1/video.list" --header "x-api-key: $HEYGEN_TOKEN" | jq .
 ```
 
 ---
@@ -169,7 +169,7 @@ curl -s -X GET "https://api.heygen.com/v1/video.list" --header "x-api-key: $(pri
 Remove a video from your account. Replace `<video_id>` with the actual video ID:
 
 ```bash
-curl -s -X DELETE "https://api.heygen.com/v1/video.delete" --header "x-api-key: $(printenv HEYGEN_TOKEN)" --header "Content-Type: application/json" -d '{"video_id": "<video_id>"}' | jq .
+curl -s -X DELETE "https://api.heygen.com/v1/video.delete" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d '{"video_id": "<video_id>"}' | jq .
 ```
 
 ---
@@ -179,7 +179,7 @@ curl -s -X DELETE "https://api.heygen.com/v1/video.delete" --header "x-api-key: 
 Get all video templates created in your account:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v2/templates" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq .data
+curl -s -X GET "https://api.heygen.com/v2/templates" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
 
 ---
@@ -189,7 +189,7 @@ curl -s -X GET "https://api.heygen.com/v2/templates" --header "x-api-key: $(prin
 Retrieve a template configuration and its variables. Replace `<template_id>` with the actual template ID:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v2/template/<template_id>" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq .data
+curl -s -X GET "https://api.heygen.com/v2/template/<template_id>" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
 
 ---
@@ -219,7 +219,7 @@ Write to `/tmp/heygen_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.heygen.com/v2/template/<template_id>/generate" --header "x-api-key: $(printenv HEYGEN_TOKEN)" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
+curl -s -X POST "https://api.heygen.com/v2/template/<template_id>/generate" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
 ```
 
 ---
@@ -241,7 +241,7 @@ Write to `/tmp/heygen_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.heygen.com/v2/video_translate" --header "x-api-key: $(printenv HEYGEN_TOKEN)" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
+curl -s -X POST "https://api.heygen.com/v2/video_translate" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
 ```
 
 ---
@@ -251,7 +251,7 @@ curl -s -X POST "https://api.heygen.com/v2/video_translate" --header "x-api-key:
 Get all languages available for video translation:
 
 ```bash
-curl -s -X GET "https://api.heygen.com/v2/video_translate/target_languages" --header "x-api-key: $(printenv HEYGEN_TOKEN)" | jq .data
+curl -s -X GET "https://api.heygen.com/v2/video_translate/target_languages" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
 
 ---
@@ -261,7 +261,7 @@ curl -s -X GET "https://api.heygen.com/v2/video_translate/target_languages" --he
 Generate a public sharing URL for a video. Replace `<video_id>` with the actual video ID:
 
 ```bash
-curl -s -X POST "https://api.heygen.com/v1/video/share" --header "x-api-key: $(printenv HEYGEN_TOKEN)" --header "Content-Type: application/json" -d '{"video_id": "<video_id>"}' | jq .
+curl -s -X POST "https://api.heygen.com/v1/video/share" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d '{"video_id": "<video_id>"}' | jq .
 ```
 
 ---

@@ -44,14 +44,14 @@ export STREAK_TOKEN="your-api-key"
 
 ### Authentication
 
-Streak uses HTTP Basic Auth with your API key as the username and no password. In curl, use `-u "$(printenv STREAK_TOKEN):"` (note the trailing colon).
+Streak uses HTTP Basic Auth with your API key as the username and no password. In curl, use `-u "$STREAK_TOKEN:"` (note the trailing colon).
 
 ---
 
 ### 1. Get Current User
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/users/me" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/users/me" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -61,7 +61,7 @@ curl -s -X GET "https://api.streak.com/api/v1/users/me" -u "$(printenv STREAK_TO
 Pipelines represent business processes (Sales, Hiring, Projects, etc.).
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/pipelines" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -69,7 +69,7 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines" -u "$(printenv STREAK_T
 ### 3. Get a Pipeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -87,7 +87,7 @@ Write to `/tmp/streak_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "$(printenv STREAK_TOKEN):" --header "Content-Type: application/json" -d @/tmp/streak_request.json
+curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "$STREAK_TOKEN:" --header "Content-Type: application/json" -d @/tmp/streak_request.json
 ```
 
 ---
@@ -97,7 +97,7 @@ curl -s -X PUT "https://api.streak.com/api/v1/pipelines" -u "$(printenv STREAK_T
 Boxes are the core data objects (deals, leads, projects) within a pipeline.
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -105,7 +105,7 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u 
 ### 6. Get a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -123,7 +123,7 @@ Write to `/tmp/streak_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "$(printenv STREAK_TOKEN):" --header "Content-Type: application/json" -d @/tmp/streak_request.json
+curl -s -X POST "https://api.streak.com/api/v1/pipelines/{pipelineKey}/boxes" -u "$STREAK_TOKEN:" --header "Content-Type: application/json" -d @/tmp/streak_request.json
 ```
 
 ---
@@ -142,7 +142,7 @@ Write to `/tmp/streak_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "$(printenv STREAK_TOKEN):" --header "Content-Type: application/json" -d @/tmp/streak_request.json
+curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "$STREAK_TOKEN:" --header "Content-Type: application/json" -d @/tmp/streak_request.json
 ```
 
 ---
@@ -150,7 +150,7 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}" -u "$(printenv ST
 ### 9. List Stages in Pipeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/stages" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/stages" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -158,7 +158,7 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/stages" -u
 ### 10. List Fields in Pipeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/fields" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/fields" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -166,7 +166,7 @@ curl -s -X GET "https://api.streak.com/api/v1/pipelines/{pipelineKey}/fields" -u
 ### 11. Get a Contact
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/contacts/{contactKey}" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/contacts/{contactKey}" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -187,7 +187,7 @@ Write to `/tmp/streak_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/contacts" -u "$(printenv STREAK_TOKEN):" --header "Content-Type: application/json" -d @/tmp/streak_request.json
+curl -s -X POST "https://api.streak.com/api/v1/contacts" -u "$STREAK_TOKEN:" --header "Content-Type: application/json" -d @/tmp/streak_request.json
 ```
 
 ---
@@ -195,7 +195,7 @@ curl -s -X POST "https://api.streak.com/api/v1/contacts" -u "$(printenv STREAK_T
 ### 13. Get an Organization
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/organizations/{organizationKey}" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/organizations/{organizationKey}" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -203,7 +203,7 @@ curl -s -X GET "https://api.streak.com/api/v1/organizations/{organizationKey}" -
 ### 14. Search Boxes, Contacts, and Organizations
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/search?query=acme" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/search?query=acme" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -211,7 +211,7 @@ curl -s -X GET "https://api.streak.com/api/v1/search?query=acme" -u "$(printenv 
 ### 15. Get Tasks in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -230,7 +230,7 @@ Write to `/tmp/streak_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "$(printenv STREAK_TOKEN):" --header "Content-Type: application/json" -d @/tmp/streak_request.json
+curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "$STREAK_TOKEN:" --header "Content-Type: application/json" -d @/tmp/streak_request.json
 ```
 
 ---
@@ -238,7 +238,7 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/tasks" -u "$(print
 ### 17. Get Comments in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -256,7 +256,7 @@ Write to `/tmp/streak_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "$(printenv STREAK_TOKEN):" --header "Content-Type: application/json" -d @/tmp/streak_request.json
+curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "$STREAK_TOKEN:" --header "Content-Type: application/json" -d @/tmp/streak_request.json
 ```
 
 ---
@@ -266,7 +266,7 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/comments" -u "$(pr
 Email threads associated with a box.
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/threads" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/threads" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -274,7 +274,7 @@ curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/threads" -u "$(prin
 ### 20. Get Files in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/files" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/files" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -282,7 +282,7 @@ curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/files" -u "$(printe
 ### 21. Get Meetings in a Box
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "$STREAK_TOKEN:"
 ```
 
 ---
@@ -302,7 +302,7 @@ Write to `/tmp/streak_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "$(printenv STREAK_TOKEN):" --header "Content-Type: application/json" -d @/tmp/streak_request.json
+curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "$STREAK_TOKEN:" --header "Content-Type: application/json" -d @/tmp/streak_request.json
 ```
 
 ---
@@ -310,7 +310,7 @@ curl -s -X POST "https://api.streak.com/api/v1/boxes/{boxKey}/meetings" -u "$(pr
 ### 23. Get Box Timeline
 
 ```bash
-curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/timeline" -u "$(printenv STREAK_TOKEN):"
+curl -s -X GET "https://api.streak.com/api/v1/boxes/{boxKey}/timeline" -u "$STREAK_TOKEN:"
 ```
 
 ---

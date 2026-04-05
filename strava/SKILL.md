@@ -36,7 +36,7 @@ Use this skill when you need to:
 ### Get Authenticated Athlete Profile
 
 ```bash
-curl -s "https://www.strava.com/api/v3/athlete" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{id, firstname, lastname, city, country, sex, premium, created_at, follower_count, friend_count}'
+curl -s "https://www.strava.com/api/v3/athlete" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, firstname, lastname, city, country, sex, premium, created_at, follower_count, friend_count}'
 ```
 
 ### Get Athlete Statistics
@@ -44,7 +44,7 @@ curl -s "https://www.strava.com/api/v3/athlete" --header "Authorization: Bearer 
 Replace `<athlete-id>` with the `id` from the athlete profile above:
 
 ```bash
-curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/stats" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{recent_run_totals, recent_ride_totals, ytd_run_totals, ytd_ride_totals, all_run_totals, all_ride_totals}'
+curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/stats" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{recent_run_totals, recent_ride_totals, ytd_run_totals, ytd_ride_totals, all_run_totals, all_ride_totals}'
 ```
 
 ---
@@ -54,7 +54,7 @@ curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/stats" --header "Au
 ### List Recent Activities
 
 ```bash
-curl -s "https://www.strava.com/api/v3/athlete/activities?per_page=30" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {id, name, sport_type, distance, moving_time, elapsed_time, total_elevation_gain, start_date_local, average_speed, max_speed}'
+curl -s "https://www.strava.com/api/v3/athlete/activities?per_page=30" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, name, sport_type, distance, moving_time, elapsed_time, total_elevation_gain, start_date_local, average_speed, max_speed}'
 ```
 
 Query parameters:
@@ -66,7 +66,7 @@ Query parameters:
 ### Get Activity Details
 
 ```bash
-curl -s "https://www.strava.com/api/v3/activities/<activity-id>" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{id, name, sport_type, distance, moving_time, elapsed_time, total_elevation_gain, average_speed, max_speed, average_heartrate, max_heartrate, calories, description, gear_id}'
+curl -s "https://www.strava.com/api/v3/activities/<activity-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, name, sport_type, distance, moving_time, elapsed_time, total_elevation_gain, average_speed, max_speed, average_heartrate, max_heartrate, calories, description, gear_id}'
 ```
 
 ### Create Manual Activity
@@ -87,7 +87,7 @@ Write to `/tmp/strava_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://www.strava.com/api/v3/activities" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" --header "Content-Type: application/json" -d @/tmp/strava_request.json | jq '{id, name, sport_type, distance}'
+curl -s -X POST "https://www.strava.com/api/v3/activities" --header "Authorization: Bearer $STRAVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/strava_request.json | jq '{id, name, sport_type, distance}'
 ```
 
 Required fields: `name`, `sport_type`, `start_date_local` (ISO 8601), `elapsed_time` (seconds).
@@ -113,7 +113,7 @@ Write to `/tmp/strava_request.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "https://www.strava.com/api/v3/activities/<activity-id>" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" --header "Content-Type: application/json" -d @/tmp/strava_request.json | jq '{id, name, description, sport_type}'
+curl -s -X PUT "https://www.strava.com/api/v3/activities/<activity-id>" --header "Authorization: Bearer $STRAVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/strava_request.json | jq '{id, name, description, sport_type}'
 ```
 
 Updatable fields: `name`, `sport_type`, `description`, `gear_id` (set to `"none"` to remove), `trainer`, `commute`, `hide_from_home`.
@@ -125,7 +125,7 @@ Updatable fields: `name`, `sport_type`, `description`, `gear_id` (set to `"none"
 ### Upload Activity File (GPX/FIT/TCX)
 
 ```bash
-curl -s -X POST "https://www.strava.com/api/v3/uploads" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" -F "data_type=gpx" -F "file=@/path/to/activity.gpx" -F "name=My Activity" -F "description=Uploaded via API"
+curl -s -X POST "https://www.strava.com/api/v3/uploads" --header "Authorization: Bearer $STRAVA_TOKEN" -F "data_type=gpx" -F "file=@/path/to/activity.gpx" -F "name=My Activity" -F "description=Uploaded via API"
 ```
 
 Supported formats: `fit`, `fit.gz`, `tcx`, `tcx.gz`, `gpx`, `gpx.gz`.
@@ -135,7 +135,7 @@ Supported formats: `fit`, `fit.gz`, `tcx`, `tcx.gz`, `gpx`, `gpx.gz`.
 Uploads are processed asynchronously. Poll for status:
 
 ```bash
-curl -s "https://www.strava.com/api/v3/uploads/<upload-id>" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{id, status, error, activity_id}'
+curl -s "https://www.strava.com/api/v3/uploads/<upload-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, status, error, activity_id}'
 ```
 
 When `activity_id` is populated, the upload is complete.
@@ -147,31 +147,31 @@ When `activity_id` is populated, the upload is complete.
 ### List Activity Comments
 
 ```bash
-curl -s "https://www.strava.com/api/v3/activities/<activity-id>/comments" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {id, text, created_at, athlete: .athlete.firstname}'
+curl -s "https://www.strava.com/api/v3/activities/<activity-id>/comments" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, text, created_at, athlete: .athlete.firstname}'
 ```
 
 ### List Activity Kudoers
 
 ```bash
-curl -s "https://www.strava.com/api/v3/activities/<activity-id>/kudos" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {id, firstname, lastname}'
+curl -s "https://www.strava.com/api/v3/activities/<activity-id>/kudos" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, firstname, lastname}'
 ```
 
 ### Get Activity Laps
 
 ```bash
-curl -s "https://www.strava.com/api/v3/activities/<activity-id>/laps" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {id, name, elapsed_time, distance, average_speed, average_heartrate}'
+curl -s "https://www.strava.com/api/v3/activities/<activity-id>/laps" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, name, elapsed_time, distance, average_speed, average_heartrate}'
 ```
 
 ### Get Activity Photos
 
 ```bash
-curl -s "https://www.strava.com/api/v3/activities/<activity-id>/photos?photo_sources=true&size=600" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {unique_id, urls, caption, source, location}'
+curl -s "https://www.strava.com/api/v3/activities/<activity-id>/photos?photo_sources=true&size=600" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {unique_id, urls, caption, source, location}'
 ```
 
 ### Get Activity Streams (GPS/HR/Power Data)
 
 ```bash
-curl -s "https://www.strava.com/api/v3/activities/<activity-id>/streams?keys=time,distance,heartrate,velocity_smooth&key_by_type=true" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq 'keys'
+curl -s "https://www.strava.com/api/v3/activities/<activity-id>/streams?keys=time,distance,heartrate,velocity_smooth&key_by_type=true" --header "Authorization: Bearer $STRAVA_TOKEN" | jq 'keys'
 ```
 
 Available stream keys: `time`, `distance`, `latlng`, `altitude`, `velocity_smooth`, `heartrate`, `cadence`, `watts`, `temp`, `moving`, `grade_smooth`.
@@ -183,19 +183,19 @@ Available stream keys: `time`, `distance`, `latlng`, `altitude`, `velocity_smoot
 ### List Starred Segments
 
 ```bash
-curl -s "https://www.strava.com/api/v3/segments/starred" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {id, name, distance, average_grade, maximum_grade, city, state, country}'
+curl -s "https://www.strava.com/api/v3/segments/starred" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, name, distance, average_grade, maximum_grade, city, state, country}'
 ```
 
 ### Get Segment Details
 
 ```bash
-curl -s "https://www.strava.com/api/v3/segments/<segment-id>" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{id, name, activity_type, distance, average_grade, maximum_grade, elevation_high, elevation_low, city, country, effort_count, athlete_count}'
+curl -s "https://www.strava.com/api/v3/segments/<segment-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, name, activity_type, distance, average_grade, maximum_grade, elevation_high, elevation_low, city, country, effort_count, athlete_count}'
 ```
 
 ### Get Segment Leaderboard
 
 ```bash
-curl -s "https://www.strava.com/api/v3/segments/<segment-id>/leaderboard?per_page=10" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{entry_count, entries: [.entries[] | {rank, athlete_name, elapsed_time, moving_time, start_date_local}]}'
+curl -s "https://www.strava.com/api/v3/segments/<segment-id>/leaderboard?per_page=10" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{entry_count, entries: [.entries[] | {rank, athlete_name, elapsed_time, moving_time, start_date_local}]}'
 ```
 
 Parameters: `gender` (M/F), `age_group`, `weight_class`, `following` (true/false), `per_page`.
@@ -207,7 +207,7 @@ Parameters: `gender` (M/F), `age_group`, `weight_class`, `following` (true/false
 ### Get Athlete's Gear
 
 ```bash
-curl -s "https://www.strava.com/api/v3/athlete" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{bikes: .bikes, shoes: .shoes}'
+curl -s "https://www.strava.com/api/v3/athlete" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{bikes: .bikes, shoes: .shoes}'
 ```
 
 ### Get Gear Details
@@ -215,7 +215,7 @@ curl -s "https://www.strava.com/api/v3/athlete" --header "Authorization: Bearer 
 Bike IDs start with `b`, shoe IDs start with `g`:
 
 ```bash
-curl -s "https://www.strava.com/api/v3/gear/<gear-id>" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{id, name, brand_name, model_name, distance, converted_distance}'
+curl -s "https://www.strava.com/api/v3/gear/<gear-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, name, brand_name, model_name, distance, converted_distance}'
 ```
 
 ---
@@ -225,19 +225,19 @@ curl -s "https://www.strava.com/api/v3/gear/<gear-id>" --header "Authorization: 
 ### List Athlete Clubs
 
 ```bash
-curl -s "https://www.strava.com/api/v3/athlete/clubs" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {id, name, sport_type, city, country, member_count}'
+curl -s "https://www.strava.com/api/v3/athlete/clubs" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, name, sport_type, city, country, member_count}'
 ```
 
 ### Get Club Details
 
 ```bash
-curl -s "https://www.strava.com/api/v3/clubs/<club-id>" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '{id, name, sport_type, city, country, member_count, description}'
+curl -s "https://www.strava.com/api/v3/clubs/<club-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, name, sport_type, city, country, member_count, description}'
 ```
 
 ### List Club Activities
 
 ```bash
-curl -s "https://www.strava.com/api/v3/clubs/<club-id>/activities?per_page=20" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {name, sport_type, distance, moving_time, athlete: (.athlete.firstname + " " + .athlete.lastname)}'
+curl -s "https://www.strava.com/api/v3/clubs/<club-id>/activities?per_page=20" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {name, sport_type, distance, moving_time, athlete: (.athlete.firstname + " " + .athlete.lastname)}'
 ```
 
 ---
@@ -247,7 +247,7 @@ curl -s "https://www.strava.com/api/v3/clubs/<club-id>/activities?per_page=20" -
 ### Get Athlete Routes
 
 ```bash
-curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/routes?per_page=20" --header "Authorization: Bearer $(printenv STRAVA_TOKEN)" | jq '.[] | {id, name, type, distance, elevation_gain, estimated_moving_time}'
+curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/routes?per_page=20" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, name, type, distance, elevation_gain, estimated_moving_time}'
 ```
 
 ---

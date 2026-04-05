@@ -32,7 +32,7 @@ Use this skill when you need to:
 Verify authentication:
 
 ```bash
-curl -s "https://api.vercel.com/v2/user" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.user | {id, username, email}'
+curl -s "https://api.vercel.com/v2/user" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.user | {id, username, email}'
 ```
 
 ---
@@ -51,7 +51,7 @@ Base URL: `https://api.vercel.com`
 Get the authenticated user's profile:
 
 ```bash
-curl -s "https://api.vercel.com/v2/user" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.user | {id, username, email, name}'
+curl -s "https://api.vercel.com/v2/user" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.user | {id, username, email, name}'
 ```
 
 ---
@@ -61,7 +61,7 @@ curl -s "https://api.vercel.com/v2/user" -H "Authorization: Bearer $(printenv VE
 Get all projects:
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.projects[] | {id, name, framework, updatedAt}'
+curl -s "https://api.vercel.com/v9/projects" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.projects[] | {id, name, framework, updatedAt}'
 ```
 
 ---
@@ -73,7 +73,7 @@ Get details for a specific project:
 > **Note:** Replace `my-project` with your actual project name or ID from the "List Projects" output.
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects/my-project" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '{id, name, framework, nodeVersion, buildCommand, outputDirectory}'
+curl -s "https://api.vercel.com/v9/projects/my-project" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, name, framework, nodeVersion, buildCommand, outputDirectory}'
 ```
 
 ---
@@ -83,7 +83,7 @@ curl -s "https://api.vercel.com/v9/projects/my-project" -H "Authorization: Beare
 Create a new project:
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v11/projects" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -H "Content-Type: application/json" -d '{"name":"my-new-project","framework":"nextjs"}' | jq '{id, name, framework}'
+curl -s -X POST "https://api.vercel.com/v11/projects" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"name":"my-new-project","framework":"nextjs"}' | jq '{id, name, framework}'
 ```
 
 Only `name` is required. Optional fields: `framework`, `buildCommand`, `outputDirectory`, `rootDirectory`, `installCommand`.
@@ -99,7 +99,7 @@ Delete a project:
 > **Note:** Replace `my-project` with the project name or ID.
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -w "\nHTTP Status: %{http_code}\n"
+curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
 
 Returns `204 No Content` on success.
@@ -111,7 +111,7 @@ Returns `204 No Content` on success.
 Get recent deployments:
 
 ```bash
-curl -s "https://api.vercel.com/v6/deployments?limit=10" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.deployments[] | {uid, name, url, state, created: .created}'
+curl -s "https://api.vercel.com/v6/deployments?limit=10" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.deployments[] | {uid, name, url, state, created: .created}'
 ```
 
 ---
@@ -123,7 +123,7 @@ Get deployments for a specific project:
 > **Note:** Replace `my-project` with your actual project name or ID.
 
 ```bash
-curl -s "https://api.vercel.com/v6/deployments?projectId=my-project&limit=10" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.deployments[] | {uid, url, state, created: .created}'
+curl -s "https://api.vercel.com/v6/deployments?projectId=my-project&limit=10" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.deployments[] | {uid, url, state, created: .created}'
 ```
 
 ---
@@ -135,7 +135,7 @@ Get details for a specific deployment:
 > **Note:** Replace `dpl_xxx` with an actual deployment ID from the "List Deployments" output.
 
 ```bash
-curl -s "https://api.vercel.com/v13/deployments/dpl_xxx" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '{id, url, state, readyState, createdAt, buildingAt, ready}'
+curl -s "https://api.vercel.com/v13/deployments/dpl_xxx" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, url, state, readyState, createdAt, buildingAt, ready}'
 ```
 
 ---
@@ -147,7 +147,7 @@ Get build logs for a deployment:
 > **Note:** Replace `dpl_xxx` with an actual deployment ID. Use `limit=-1` to get all logs.
 
 ```bash
-curl -s "https://api.vercel.com/v3/deployments/dpl_xxx/events?limit=-1" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.[] | select(.type == "command" or .type == "stdout" or .type == "stderr") | {type, text}'
+curl -s "https://api.vercel.com/v3/deployments/dpl_xxx/events?limit=-1" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.[] | select(.type == "command" or .type == "stdout" or .type == "stderr") | {type, text}'
 ```
 
 ---
@@ -159,7 +159,7 @@ Trigger a redeployment of a previous deployment:
 > **Note:** Replace `my-project` with your project name and `dpl_xxx` with the deployment ID to redeploy.
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v13/deployments" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -H "Content-Type: application/json" -d '{"name":"my-project","deploymentId":"dpl_xxx","target":"production"}' | jq '{id, url, readyState, target}'
+curl -s -X POST "https://api.vercel.com/v13/deployments" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"name":"my-project","deploymentId":"dpl_xxx","target":"production"}' | jq '{id, url, readyState, target}'
 ```
 
 Add `"withLatestCommit": true` to force using the latest commit instead of the original deployment's commit.
@@ -173,7 +173,7 @@ Point all production domains to a specific deployment (rollback):
 > **Note:** Replace `prj_xxx` with your project ID and `dpl_xxx` with the deployment ID to promote.
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v1/projects/prj_xxx/rollback/dpl_xxx" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -w "\nHTTP Status: %{http_code}\n"
+curl -s -X POST "https://api.vercel.com/v1/projects/prj_xxx/rollback/dpl_xxx" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
 
 Returns `201 Created` on success.
@@ -187,7 +187,7 @@ Cancel a deployment that is currently `BUILDING` or `QUEUED`. Deployments alread
 > **Note:** Replace `dpl_xxx` with an actual deployment ID of a building/queued deployment.
 
 ```bash
-curl -s -X PATCH "https://api.vercel.com/v12/deployments/dpl_xxx/cancel" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '{id, readyState}'
+curl -s -X PATCH "https://api.vercel.com/v12/deployments/dpl_xxx/cancel" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, readyState}'
 ```
 
 ---
@@ -197,7 +197,7 @@ curl -s -X PATCH "https://api.vercel.com/v12/deployments/dpl_xxx/cancel" -H "Aut
 Get all domains:
 
 ```bash
-curl -s "https://api.vercel.com/v5/domains" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.domains[] | {name, verified, createdAt}'
+curl -s "https://api.vercel.com/v5/domains" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.domains[] | {name, verified, createdAt}'
 ```
 
 ---
@@ -209,7 +209,7 @@ Get domains configured for a specific project:
 > **Note:** Replace `my-project` with your actual project name or ID.
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects/my-project/domains" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.domains[] | {name, redirect, gitBranch}'
+curl -s "https://api.vercel.com/v9/projects/my-project/domains" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.domains[] | {name, redirect, gitBranch}'
 ```
 
 ---
@@ -221,7 +221,7 @@ Add a domain to a project:
 > **Note:** Replace `my-project` with your project name or ID and `example.com` with the domain to add.
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v10/projects/my-project/domains" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -H "Content-Type: application/json" -d '{"name":"example.com"}' | jq '{name, verified, verification}'
+curl -s -X POST "https://api.vercel.com/v10/projects/my-project/domains" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"name":"example.com"}' | jq '{name, verified, verification}'
 ```
 
 If `verified` is `false`, complete the DNS verification challenge shown in the `verification` array.
@@ -235,7 +235,7 @@ Remove a domain from a project:
 > **Note:** Replace `my-project` with your project name or ID and `example.com` with the domain.
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project/domains/example.com" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -w "\nHTTP Status: %{http_code}\n"
+curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project/domains/example.com" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
 
 ---
@@ -247,7 +247,7 @@ Get environment variables for a project:
 > **Note:** Replace `my-project` with your actual project name or ID.
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects/my-project/env" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.envs[] | {id, key, target, type}'
+curl -s "https://api.vercel.com/v9/projects/my-project/env" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.envs[] | {id, key, target, type}'
 ```
 
 ---
@@ -259,7 +259,7 @@ Add an environment variable to a project:
 > **Note:** Replace `my-project` with your actual project name or ID.
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v10/projects/my-project/env" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -H "Content-Type: application/json" -d '{"key":"MY_VAR","value":"my-value","type":"encrypted","target":["production","preview","development"]}' | jq '.created | {key, target, type}'
+curl -s -X POST "https://api.vercel.com/v10/projects/my-project/env" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"key":"MY_VAR","value":"my-value","type":"encrypted","target":["production","preview","development"]}' | jq '.created | {key, target, type}'
 ```
 
 ---
@@ -271,7 +271,7 @@ Delete an environment variable from a project:
 > **Note:** Replace `my-project` with the project name or ID. Get the env var `id` from "List Environment Variables" output.
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project/env/xxx" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '{id, key}'
+curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project/env/xxx" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, key}'
 ```
 
 ---
@@ -281,7 +281,7 @@ curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project/env/xxx" -H "Au
 Get all webhooks:
 
 ```bash
-curl -s "https://api.vercel.com/v1/webhooks" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" | jq '.[] | {id, url, events, projectIds}'
+curl -s "https://api.vercel.com/v1/webhooks" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.[] | {id, url, events, projectIds}'
 ```
 
 ---
@@ -293,7 +293,7 @@ Create a webhook for deployment events:
 > **Note:** Replace the `url` with your webhook endpoint. Optionally scope to specific projects with `projectIds`.
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v1/webhooks" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -H "Content-Type: application/json" -d '{"url":"https://example.com/webhook","events":["deployment.created","deployment.succeeded","deployment.error"]}' | jq '{id, url, events, secret}'
+curl -s -X POST "https://api.vercel.com/v1/webhooks" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"url":"https://example.com/webhook","events":["deployment.created","deployment.succeeded","deployment.error"]}' | jq '{id, url, events, secret}'
 ```
 
 The `secret` is only returned at creation time. Save it to verify webhook payloads via the `x-vercel-signature` header.
@@ -309,7 +309,7 @@ Delete a webhook:
 > **Note:** Replace `hook_xxx` with the webhook ID from "List Webhooks" output.
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v1/webhooks/hook_xxx" -H "Authorization: Bearer $(printenv VERCEL_TOKEN)" -w "\nHTTP Status: %{http_code}\n"
+curl -s -X DELETE "https://api.vercel.com/v1/webhooks/hook_xxx" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
 
 Returns `204 No Content` on success.

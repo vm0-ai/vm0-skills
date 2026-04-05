@@ -70,7 +70,7 @@ All requests require the `apikey` header with your API key.
 Get all rows from a table:
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?select=*" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 ---
@@ -80,7 +80,7 @@ curl -s "$(printenv SUPABASE_URL)/rest/v1/users?select=*" -H "apikey: $(printenv
 Get only specific columns:
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?select=id,name,email" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?select=id,name,email" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 ---
@@ -92,19 +92,19 @@ Filter rows using PostgREST operators.
 **Equal to:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?status=eq.active" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?status=eq.active" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 **Greater than:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/products?price=gt.100" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/products?price=gt.100" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 **Multiple conditions (AND):**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 **Available Operators:**
@@ -129,7 +129,7 @@ curl -s "$(printenv SUPABASE_URL)/rest/v1/users?age=gte.18&status=eq.active" -H 
 Use `or` for OR logic:
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 ---
@@ -141,19 +141,19 @@ Sort results.
 **Ascending:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?order=created_at.asc" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?order=created_at.asc" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 **Descending:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?order=created_at.desc" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?order=created_at.desc" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 **Multiple columns:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 ---
@@ -165,13 +165,13 @@ Use `limit` and `offset`.
 **First 10 rows:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?limit=10" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?limit=10" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 **Page 2 (rows 11-20):**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?limit=10&offset=10" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?limit=10&offset=10" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 ---
@@ -181,7 +181,7 @@ curl -s "$(printenv SUPABASE_URL)/rest/v1/users?limit=10&offset=10" -H "apikey: 
 Use `Prefer: count=exact` header:
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?select=*" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)" -H "Prefer: count=exact" -I | grep -i "content-range"
+curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Prefer: count=exact" -I | grep -i "content-range"
 ```
 
 ---
@@ -200,7 +200,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv SUPABASE_URL)/rest/v1/users" -H "apikey: $(printenv SUPABASE_TOKEN)" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
+curl -s -X POST "$SUPABASE_URL/rest/v1/users" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
 ```
 
 ---
@@ -219,7 +219,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv SUPABASE_URL)/rest/v1/users" -H "apikey: $(printenv SUPABASE_TOKEN)" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
+curl -s -X POST "$SUPABASE_URL/rest/v1/users" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
 ```
 
 ---
@@ -239,7 +239,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X PATCH "$(printenv SUPABASE_URL)/rest/v1/users?id=eq.1" -H "apikey: $(printenv SUPABASE_TOKEN)" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
+curl -s -X PATCH "$SUPABASE_URL/rest/v1/users?id=eq.1" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
 ```
 
 ---
@@ -261,7 +261,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv SUPABASE_URL)/rest/v1/users" -H "apikey: $(printenv SUPABASE_TOKEN)" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d @/tmp/supabase_request.json
+curl -s -X POST "$SUPABASE_URL/rest/v1/users" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d @/tmp/supabase_request.json
 ```
 
 ---
@@ -271,7 +271,7 @@ curl -s -X POST "$(printenv SUPABASE_URL)/rest/v1/users" -H "apikey: $(printenv 
 Delete rows matching a filter:
 
 ```bash
-curl -s -X DELETE "$(printenv SUPABASE_URL)/rest/v1/users?id=eq.1" -H "apikey: $(printenv SUPABASE_TOKEN)" -H "Prefer: return=representation"
+curl -s -X DELETE "$SUPABASE_URL/rest/v1/users?id=eq.1" -H "apikey: $SUPABASE_TOKEN" -H "Prefer: return=representation"
 ```
 
 ---
@@ -283,13 +283,13 @@ Embed related data using foreign keys.
 **Get posts with their author:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/posts?select=*,author:users(*)" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/posts?select=*,author:users(*)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 **Get users with their posts:**
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/users?select=*,posts(*)" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/users?select=*,posts(*)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 ---
@@ -299,7 +299,7 @@ curl -s "$(printenv SUPABASE_URL)/rest/v1/users?select=*,posts(*)" -H "apikey: $
 Search text columns:
 
 ```bash
-curl -s "$(printenv SUPABASE_URL)/rest/v1/posts?title=fts.hello" -H "apikey: $(printenv SUPABASE_PUBLISHABLE_KEY)"
+curl -s "$SUPABASE_URL/rest/v1/posts?title=fts.hello" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
 ---
@@ -319,7 +319,7 @@ Write to `/tmp/supabase_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$(printenv SUPABASE_URL)/rest/v1/rpc/my_function" -H "apikey: $(printenv SUPABASE_TOKEN)" -H "Content-Type: application/json" -d @/tmp/supabase_request.json
+curl -s -X POST "$SUPABASE_URL/rest/v1/rpc/my_function" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -d @/tmp/supabase_request.json
 ```
 
 ---

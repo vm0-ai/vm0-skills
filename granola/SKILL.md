@@ -51,7 +51,7 @@ export GRANOLA_TOKEN="your-granola-api-key"
 Retrieve all accessible meeting notes with pagination. Returns up to 30 notes per page.
 
 ```bash
-curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)" | jq .
+curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10" --header "Authorization: Bearer $GRANOLA_TOKEN" | jq .
 ```
 
 ### 2. List Notes with Pagination
@@ -59,7 +59,7 @@ curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10" --header "A
 Use the `cursor` from a previous response to fetch the next page.
 
 ```bash
-curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10&cursor=CURSOR_VALUE" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)" | jq .
+curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10&cursor=CURSOR_VALUE" --header "Authorization: Bearer $GRANOLA_TOKEN" | jq .
 ```
 
 ### 3. List Notes Filtered by Date
@@ -67,15 +67,15 @@ curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=10&cursor=CURSO
 Filter notes created after or before a specific date, or updated after a specific date.
 
 ```bash
-curl -s -X GET "https://public-api.granola.ai/v1/notes?created_after=2025-01-01&page_size=20" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)" | jq .
+curl -s -X GET "https://public-api.granola.ai/v1/notes?created_after=2025-01-01&page_size=20" --header "Authorization: Bearer $GRANOLA_TOKEN" | jq .
 ```
 
 ```bash
-curl -s -X GET "https://public-api.granola.ai/v1/notes?created_before=2025-06-01&created_after=2025-01-01" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)" | jq .
+curl -s -X GET "https://public-api.granola.ai/v1/notes?created_before=2025-06-01&created_after=2025-01-01" --header "Authorization: Bearer $GRANOLA_TOKEN" | jq .
 ```
 
 ```bash
-curl -s -X GET "https://public-api.granola.ai/v1/notes?updated_after=2025-03-01" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)" | jq .
+curl -s -X GET "https://public-api.granola.ai/v1/notes?updated_after=2025-03-01" --header "Authorization: Bearer $GRANOLA_TOKEN" | jq .
 ```
 
 ### 4. Get a Specific Note
@@ -83,7 +83,7 @@ curl -s -X GET "https://public-api.granola.ai/v1/notes?updated_after=2025-03-01"
 Retrieve detailed information about a single note including summaries, attendees, and calendar event details. Note IDs follow the pattern `not_` followed by 14 alphanumeric characters.
 
 ```bash
-curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)" | jq .
+curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX" --header "Authorization: Bearer $GRANOLA_TOKEN" | jq .
 ```
 
 ### 5. Get a Note with Transcript
@@ -91,7 +91,7 @@ curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX" --hea
 Include the full meeting transcript by adding the `include=transcript` query parameter.
 
 ```bash
-curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX?include=transcript" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)" | jq .
+curl -s -X GET "https://public-api.granola.ai/v1/notes/not_XXXXXXXXXXXXXX?include=transcript" --header "Authorization: Bearer $GRANOLA_TOKEN" | jq .
 ```
 
 ### 6. Iterate Through All Notes
@@ -102,9 +102,9 @@ Paginate through all available notes using cursors.
 CURSOR=""
 while true; do
   if [ -z "$CURSOR" ]; then
-    RESPONSE=$(curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=30" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)")
+    RESPONSE=$(curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=30" --header "Authorization: Bearer $GRANOLA_TOKEN")
   else
-    RESPONSE=$(curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=30&cursor=$CURSOR" --header "Authorization: Bearer $(printenv GRANOLA_TOKEN)")
+    RESPONSE=$(curl -s -X GET "https://public-api.granola.ai/v1/notes?page_size=30&cursor=$CURSOR" --header "Authorization: Bearer $GRANOLA_TOKEN")
   fi
   echo "$RESPONSE" | jq '.data[] | {id, title}'
   HAS_MORE=$(echo "$RESPONSE" | jq -r '.hasMore')
