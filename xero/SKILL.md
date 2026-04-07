@@ -178,7 +178,7 @@ curl -s "https://api.xero.com/api.xro/2.0/ContactGroups" \
 ### Create Contact Group
 
 ```bash
-curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups" \
+curl -s -X PUT "https://api.xero.com/api.xro/2.0/ContactGroups" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
