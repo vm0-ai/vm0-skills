@@ -178,7 +178,7 @@ curl -s "https://api.xero.com/api.xro/2.0/ContactGroups" \
 ### Create Contact Group
 
 ```bash
-curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups" \
+curl -s -X PUT "https://api.xero.com/api.xro/2.0/ContactGroups" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -946,7 +946,7 @@ Base URL: `https://api.xero.com/projects.xro/2.0` (different from accounting API
 ### List Projects
 
 ```bash
-curl -s "https://api.xero.com/projects.xro/2.0/projects?states=INPROGRESS&page=1&pageSize=50" \
+curl -s "https://api.xero.com/projects.xro/2.0/Projects?states=INPROGRESS&page=1&pageSize=50" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
@@ -956,7 +956,7 @@ Params: `projectIds`, `contactID`, `states` (INPROGRESS/CLOSED), `page`, `pageSi
 ### Get Project by ID
 
 ```bash
-curl -s "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
+curl -s "https://api.xero.com/projects.xro/2.0/Projects/<project-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
@@ -966,7 +966,7 @@ curl -s "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
 Required: `contactId`, `name`. Optional: `deadlineUTC`, `estimateAmount`. Currency auto-set to org default. `contactId` cannot be changed after creation.
 
 ```bash
-curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects" \
+curl -s -X POST "https://api.xero.com/projects.xro/2.0/Projects" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -976,7 +976,7 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects" \
 ### Update Project
 
 ```bash
-curl -s -X PUT "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
+curl -s -X PUT "https://api.xero.com/projects.xro/2.0/Projects/<project-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -986,7 +986,7 @@ curl -s -X PUT "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
 ### Close/Reopen Project
 
 ```bash
-curl -s -X PATCH "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
+curl -s -X PATCH "https://api.xero.com/projects.xro/2.0/Projects/<project-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -996,7 +996,7 @@ curl -s -X PATCH "https://api.xero.com/projects.xro/2.0/projects/<project-id>" \
 ### List Tasks in Project
 
 ```bash
-curl -s "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tasks" \
+curl -s "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Tasks" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
@@ -1008,7 +1008,7 @@ Params: `taskIds`, `chargeType` (TIME/FIXED/NON_CHARGEABLE), `page`, `pageSize`.
 Required: `name` (max 100 chars), `rate` ({currency, value}), `chargeType`.
 
 ```bash
-curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tasks" \
+curl -s -X POST "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Tasks" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -1018,7 +1018,7 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tas
 ### Delete Task
 
 ```bash
-curl -s -X DELETE "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tasks/<task-id>" \
+curl -s -X DELETE "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Tasks/<task-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
@@ -1028,7 +1028,7 @@ Fails if task has time entries or INVOICED status.
 ### List Time Entries
 
 ```bash
-curl -s "https://api.xero.com/projects.xro/2.0/projects/<project-id>/time?page=1" \
+curl -s "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Time?page=1" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
@@ -1040,7 +1040,7 @@ Params: `userId`, `taskId`, `dateAfterUtc`, `dateBeforeUtc`, `isChargeable`, `in
 The Projects API uses its own user IDs, different from the Accounting API `/Users` endpoint. Get project-specific user IDs first:
 
 ```bash
-curl -s "https://api.xero.com/projects.xro/2.0/projectsusers" \
+curl -s "https://api.xero.com/projects.xro/2.0/ProjectsUsers" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
@@ -1050,7 +1050,7 @@ curl -s "https://api.xero.com/projects.xro/2.0/projectsusers" \
 Required: `userId` (from `/projectsusers`, NOT from Accounting `/Users`), `taskId`, `dateUtc`, `duration` (minutes, 1-59940).
 
 ```bash
-curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/time" \
+curl -s -X POST "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Time" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -1060,7 +1060,7 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/projects/<project-id>/tim
 ### Delete Time Entry
 
 ```bash
-curl -s -X DELETE "https://api.xero.com/projects.xro/2.0/projects/<project-id>/time/<time-entry-id>" \
+curl -s -X DELETE "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Time/<time-entry-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
