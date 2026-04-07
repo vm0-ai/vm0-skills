@@ -36,7 +36,7 @@ Use this skill when you need to:
 
 Connect Xero via the vm0 connector. The access token is provided as `$XERO_TOKEN`.
 
-> **Important:** Xero API requires a `xero-tenant-id` header for all organisation-scoped requests. You must first call the `/connections` endpoint to get the tenant ID, then use it in subsequent requests.
+> **Important:** Xero API requires a `xero-tenant-id` header for all organisation-scoped requests. You must first call the `/Connections` endpoint to get the tenant ID, then use it in subsequent requests.
 
 ---
 
@@ -45,7 +45,7 @@ Connect Xero via the vm0 connector. The access token is provided as `$XERO_TOKEN
 Every Xero API call needs a `xero-tenant-id` header. Get it from the connections endpoint:
 
 ```bash
-curl -s "https://api.xero.com/connections" \
+curl -s "https://api.xero.com/Connections" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "Content-Type: application/json"
 ```
@@ -1170,7 +1170,7 @@ curl -s "https://api.xero.com/files.xro/1.0/Inbox" \
 
 ## Guidelines
 
-1. **Tenant ID Required**: Always call `/connections` first to get the `tenantId`, then include it as `xero-tenant-id` header in every API call.
+1. **Tenant ID Required**: Always call `/Connections` first to get the `tenantId`, then include it as `xero-tenant-id` header in every API call.
 2. **Account Codes Vary by Org**: Account codes differ between organisations. Always call `GET /Accounts` first to discover valid codes before creating invoices or transactions.
 3. **Bank Accounts Required**: Payments, bank transactions, and bank transfers require a BANK-type account. Use `GET /Accounts?where=Type=="BANK"` to find one.
 4. **Create vs Update**: Xero uses `PUT` to create and `POST` to update for most Accounting API endpoints. Projects API uses standard REST (POST to create, PUT to update).
