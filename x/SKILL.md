@@ -9,9 +9,9 @@ vm0_secrets:
 
 # X (Twitter) API
 
-Use the X API v2 via direct `curl` calls to **read tweets, search posts, view user profiles, timelines, and social graphs**.
+Use `xurl` CLI to **read tweets, search posts, view user profiles, timelines, and social graphs**.
 
-> Official docs: `https://docs.x.com/x-api`
+> xurl docs: `https://github.com/xdevplatform/xurl`
 
 ---
 
@@ -20,7 +20,7 @@ Use the X API v2 via direct `curl` calls to **read tweets, search posts, view us
 Use this skill when you need to:
 
 - **View user profiles** - look up users by username or ID
-- **Read tweets** - get tweet details by ID
+- **Read tweets** - get tweet details by ID or URL
 - **Browse timelines** - get a user's tweets or mentions
 - **Search posts** - find recent tweets matching a query
 - **Explore social graphs** - list followers and following
@@ -29,11 +29,16 @@ Use this skill when you need to:
 
 ## Prerequisites
 
+Configure xurl with the bearer token (run once per session):
+
+```bash
+xurl auth app --bearer-token "$X_TOKEN"
+```
 
 Verify authentication:
 
 ```bash
-curl -s "https://api.x.com/2/users/me" --header "Authorization: Bearer $X_TOKEN" | jq .
+xurl whoami
 ```
 
 ### Available Scopes
@@ -48,44 +53,30 @@ The connector grants read-only access:
 
 ## How to Use
 
-Base URL: `https://api.x.com/2`
-
----
-
 ### 1. Get Authenticated User Profile
 
-Get the profile of the currently authenticated user:
-
 ```bash
-curl -s "https://api.x.com/2/users/me?user.fields=id,name,username,description,profile_image_url,public_metrics,created_at,verified" --header "Authorization: Bearer $X_TOKEN" | jq .data
+xurl whoami
 ```
 
 ---
 
 ### 2. Look Up User by Username
 
-Get a user's profile by their username:
-
-> **Note:** Replace `elonmusk` with the actual username you want to look up.
+> **Note:** Replace `elonmusk` with the actual username. Leading `@` is optional.
 
 ```bash
-USERNAME="elonmusk"
-
-curl -s "https://api.x.com/2/users/by/username/$USERNAME?user.fields=id,name,username,description,public_metrics,created_at,verified,profile_image_url" --header "Authorization: Bearer $X_TOKEN" | jq .data
+xurl user elonmusk
 ```
 
 ---
 
 ### 3. Look Up User by ID
 
-Get a user's profile by their user ID:
-
 > **Note:** Replace `12345` with the actual user ID. You can obtain user IDs from other endpoint responses.
 
 ```bash
-USER_ID="12345"
-
-curl -s "https://api.x.com/2/users/$USER_ID?user.fields=id,name,username,description,public_metrics,created_at" --header "Authorization: Bearer $X_TOKEN" | jq .data
+xurl /2/users/12345?user.fields=id,name,username,description,public_metrics,created_at
 ```
 
 ---
@@ -97,21 +88,17 @@ Get profiles for multiple users at once (up to 100):
 > **Note:** Replace the IDs with actual user IDs, comma-separated.
 
 ```bash
-curl -s "https://api.x.com/2/users?ids=12345,67890&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $X_TOKEN" | jq .data
+xurl '/2/users?ids=12345,67890&user.fields=id,name,username,description,public_metrics'
 ```
 
 ---
 
 ### 5. Get a Tweet by ID
 
-Get details of a specific tweet:
-
-> **Note:** Replace `1234567890` with the actual tweet ID.
+> **Note:** Replace `1234567890` with the actual tweet ID. Full URLs like `https://x.com/user/status/1234567890` also work.
 
 ```bash
-TWEET_ID="1234567890"
-
-curl -s "https://api.x.com/2/tweets/$TWEET_ID?tweet.fields=created_at,public_metrics,author_id,conversation_id,lang&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_TOKEN" | jq .
+xurl read 1234567890
 ```
 
 ---
@@ -123,24 +110,25 @@ Get details for multiple tweets at once (up to 100):
 > **Note:** Replace the IDs with actual tweet IDs, comma-separated.
 
 ```bash
-curl -s "https://api.x.com/2/tweets?ids=1234567890,0987654321&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_TOKEN" | jq .
+xurl '/2/tweets?ids=1234567890,0987654321&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username'
 ```
 
 ---
 
 ### 7. Get User's Tweets (Timeline)
 
-Get recent tweets posted by a user:
-
-> **Note:** Replace `USER_ID` with the actual user ID. Use the "Look Up User by Username" endpoint first to get the ID.
+Get recent tweets posted by the authenticated user:
 
 ```bash
-USER_ID="12345"
-
-curl -s "https://api.x.com/2/users/$USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&expansions=referenced_tweets.id" --header "Authorization: Bearer $X_TOKEN" | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
+xurl timeline -n 10
 ```
 
-Query parameters:
+Query parameters for raw API (if you need another user's timeline):
+
+```bash
+xurl '/2/users/USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&exclude=retweets,replies'
+```
+
 - `max_results` - 5 to 100 (default: 10)
 - `start_time` / `end_time` - ISO 8601 datetime filter
 - `since_id` / `until_id` - Tweet ID boundaries
@@ -151,40 +139,20 @@ Query parameters:
 
 ### 8. Get User's Mentions
 
-Get recent tweets that mention a user:
-
-> **Note:** Replace `USER_ID` with the actual user ID.
-
 ```bash
-USER_ID="12345"
-
-curl -s "https://api.x.com/2/users/$USER_ID/mentions?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_TOKEN" | jq '.data[] | {id, text: .text[0:120], author: .author_id, created_at}'
+xurl mentions -n 10
 ```
 
 ---
 
-### 9. Get Reverse Chronological Timeline
-
-Get the authenticated user's home timeline (tweets from people they follow):
-
-> **Note:** Replace `USER_ID` with the authenticated user's ID (from "Get Authenticated User Profile").
-
-```bash
-USER_ID="12345"
-
-curl -s "https://api.x.com/2/users/$USER_ID/timelines/reverse_chronological?max_results=10&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username" --header "Authorization: Bearer $X_TOKEN" | jq '.data[] | {id, text: .text[0:120], created_at}'
-```
-
----
-
-### 10. Search Recent Tweets
+### 9. Search Recent Tweets
 
 Search for tweets from the past 7 days:
 
-> **Note:** Replace the query with your search terms. The query supports operators like `from:`, `to:`, `has:`, `-is:retweet`, etc.
+> **Note:** Replace the query with your search terms.
 
 ```bash
-curl -s -G "https://api.x.com/2/tweets/search/recent" --data-urlencode "query=openai lang:en -is:retweet" --data-urlencode "max_results=10" --data-urlencode "tweet.fields=created_at,public_metrics,author_id,text" --data-urlencode "expansions=author_id" --data-urlencode "user.fields=name,username" --header "Authorization: Bearer $X_TOKEN" | jq '.data[] | {id, text: .text[0:120], created_at, public_metrics}'
+xurl search "openai lang:en -is:retweet" -n 10
 ```
 
 Common search operators:
@@ -200,40 +168,34 @@ Common search operators:
 
 ---
 
-### 11. Get User's Followers
+### 10. Get User's Followers
 
-Get a list of users who follow a specific user:
-
-> **Note:** Replace `USER_ID` with the actual user ID.
+> **Note:** Replace `elonmusk` with the actual username.
 
 ```bash
-USER_ID="12345"
-
-curl -s "https://api.x.com/2/users/$USER_ID/followers?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $X_TOKEN" | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
+xurl followers --of elonmusk -n 20
 ```
 
 ---
 
-### 12. Get User's Following
+### 11. Get User's Following
 
-Get a list of users that a specific user follows:
-
-> **Note:** Replace `USER_ID` with the actual user ID.
+> **Note:** Replace `elonmusk` with the actual username.
 
 ```bash
-USER_ID="12345"
-
-curl -s "https://api.x.com/2/users/$USER_ID/following?max_results=20&user.fields=id,name,username,description,public_metrics" --header "Authorization: Bearer $X_TOKEN" | jq '.data[] | {id, name, username, followers_count: .public_metrics.followers_count}'
+xurl following --of elonmusk -n 20
 ```
 
 ---
 
 ## Pagination
 
-Most list endpoints support pagination via `pagination_token`. Check the `meta.next_token` field in the response:
+Most list endpoints support pagination. For shortcut commands, use `-n` to control result count.
+
+For raw API endpoints, check the `meta.next_token` field in the response:
 
 ```bash
-curl -s "https://api.x.com/2/tweets/search/recent?query=example&max_results=10" --header "Authorization: Bearer $X_TOKEN" | jq .meta
+xurl '/2/tweets/search/recent?query=example&max_results=10' | jq .meta
 ```
 
 Use the returned `next_token` value as `pagination_token` in the next request to get more results.
@@ -275,7 +237,8 @@ Use the returned `next_token` value as `pagination_token` in the next request to
 
 1. **Read-only access**: This connector only grants read permissions; you cannot post, like, or retweet
 2. **Rate limits**: X API has strict rate limits; avoid rapid successive calls
-3. **User IDs vs usernames**: Most endpoints require numeric user IDs, not usernames. Use the username lookup endpoint first
-4. **Fields are opt-in**: The API only returns `id` and `text` by default; always specify `tweet.fields` and `user.fields` for richer data
-5. **7-day search window**: The recent search endpoint only covers the past 7 days
-6. **Pagination**: Use `max_results` and `pagination_token` for large result sets
+3. **Prefer shortcut commands**: Use `xurl search`, `xurl user`, `xurl read` etc. over raw API paths when possible
+4. **Raw API fallback**: For bulk lookups or advanced queries, use `xurl '/2/...'` with query parameters
+5. **Fields are opt-in (raw API only)**: Raw endpoints only return `id` and `text` by default; specify `tweet.fields` and `user.fields` for richer data. Shortcut commands include common fields automatically
+6. **7-day search window**: The recent search endpoint only covers the past 7 days
+7. **Pagination**: Use `-n` for shortcut commands, `max_results` and `pagination_token` for raw API
