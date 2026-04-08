@@ -5,7 +5,7 @@ description: Infisical Cloud Secrets Manager API for retrieving and listing secr
 
 # Infisical Cloud Secrets Manager API
 
-Infisical is an open-source secrets manager. This skill enables fetching individual secrets or listing all secrets from an Infisical project and environment using a machine identity access token.
+Infisical is an open-source secrets manager. This skill enables fetching individual secrets or listing all secrets from an Infisical project and environment using Machine Identity credentials.
 
 > Official docs: `https://infisical.com/docs/api-reference/overview/introduction`
 
@@ -17,30 +17,59 @@ Infisical is an open-source secrets manager. This skill enables fetching individ
 
 ## Prerequisites
 
-Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Infisical**. vm0 will automatically inject the required `INFISICAL_TOKEN` environment variable.
+Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Infisical**. vm0 will automatically inject `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET` environment variables.
 
-Your `INFISICAL_TOKEN` must be a **machine identity access token** obtained via Universal Auth. Tokens expire after 2 hours by default; renew via `/api/v1/auth/universal-auth/renew` if needed.
-
-> **Important:** When using `$(printenv INFISICAL_TOKEN)` in commands that contain a pipe (`|`), always use `$(printenv ...)` syntax — a known Claude Code issue silently clears `$VAR` references in pipelines.
+> **Important:** When using `$(printenv VAR)` in commands that contain a pipe (`|`), always use `$(printenv ...)` syntax — a known Claude Code issue silently clears `$VAR` references in pipelines.
 
 ## Core APIs
 
-### Fetch a Single Secret by Name
+### 1. Obtain an Access Token
+
+All API calls require a Bearer token. Exchange your Machine Identity credentials for a temporary access token (default TTL: 2 hours):
+
+Write to `/tmp/infisical_login.json`:
+
+```json
+{
+  "clientId": "<client-id>",
+  "clientSecret": "<client-secret>"
+}
+```
+
+Replace `<client-id>` and `<client-secret>` with your actual `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET` values.
+
+Then run:
+
+```bash
+curl -s -X POST "https://app.infisical.com/api/v1/auth/universal-auth/login" --header "Content-Type: application/json" -d @/tmp/infisical_login.json | jq -r '.accessToken' > /tmp/infisical_token.txt
+```
+
+Verify the token was saved:
+
+```bash
+cat /tmp/infisical_token.txt | head -c 50
+```
+
+Use `$(cat /tmp/infisical_token.txt)` in subsequent requests.
+
+---
+
+### 2. Fetch a Single Secret by Name
 
 Retrieve a secret by its key name from a specific Infisical project and environment.
 
 ```bash
-curl -s -X GET "https://app.infisical.com/api/v3/secrets/raw/<SECRET_NAME>?workspaceId=<workspace-id>&environment=<env-slug>&secretPath=/" --header "Authorization: Bearer $(printenv INFISICAL_TOKEN)" | jq '{key: .secret.secretKey, value: .secret.secretValue, environment: .secret.environment}'
+curl -s -X GET "https://app.infisical.com/api/v3/secrets/raw/<SECRET_NAME>?workspaceId=<workspace-id>&environment=<env-slug>&secretPath=/" --header "Authorization: Bearer $(cat /tmp/infisical_token.txt)" | jq '{key: .secret.secretKey, value: .secret.secretValue, environment: .secret.environment}'
 ```
 
 Replace `<SECRET_NAME>` with the exact secret key, `<workspace-id>` with your Infisical project ID (found in project settings), and `<env-slug>` with the environment slug (e.g., `dev`, `staging`, `prod`).
 
 ---
 
-### List All Secrets in a Project/Environment
+### 3. List All Secrets in a Project/Environment
 
 ```bash
-curl -s -X GET "https://app.infisical.com/api/v3/secrets/raw?workspaceId=<workspace-id>&environment=<env-slug>&secretPath=/" --header "Authorization: Bearer $(printenv INFISICAL_TOKEN)" | jq '.secrets[] | {key: .secretKey, value: .secretValue, environment: .environment}'
+curl -s -X GET "https://app.infisical.com/api/v3/secrets/raw?workspaceId=<workspace-id>&environment=<env-slug>&secretPath=/" --header "Authorization: Bearer $(cat /tmp/infisical_token.txt)" | jq '.secrets[] | {key: .secretKey, value: .secretValue, environment: .environment}'
 ```
 
 Replace `<workspace-id>` and `<env-slug>` as above.
@@ -51,9 +80,9 @@ To include secrets from sub-folders recursively, append `&recursive=true` to the
 
 ## Guidelines
 
-1. **Machine identity token:** Obtain via POST `/api/v1/auth/universal-auth/login` with `clientId` and `clientSecret`. Default TTL is 2 hours.
+1. **Token exchange:** POST `/api/v1/auth/universal-auth/login` with `clientId` and `clientSecret`. Default TTL is 2 hours; renew via `/api/v1/auth/universal-auth/renew` if needed.
 2. **Workspace ID:** Found in your Infisical project settings page. This is different from the project name/slug.
 3. **Environment slugs:** Common values are `dev`, `staging`, `prod` — use the exact slug shown in your Infisical dashboard.
 4. **Secret references:** By default, `expandSecretReferences` is `false`. Set to `true` to resolve cross-secret references in values.
 5. **Rate limits (Infisical Cloud):** Free plan allows 200 read requests/min; Pro plan allows 350/min. Self-hosted instances have no rate limits.
-6. **Security:** The `INFISICAL_TOKEN` grants access to all secrets the machine identity is authorized for. Store and rotate it carefully.
+6. **Security:** The access token grants access to all secrets the machine identity is authorized for. Clean up `/tmp/infisical_token.txt` when done.
