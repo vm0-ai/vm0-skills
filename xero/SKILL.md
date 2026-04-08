@@ -24,7 +24,7 @@ Use this skill when you need to:
 - View financial reports (P&L, balance sheet, trial balance, aged reports, etc.)
 - View and manage budgets
 - Manage inventory items
-- Manage fixed assets and depreciation
+- View and create fixed assets (read + create only, no update/delete)
 - Manage projects, tasks, and time entries
 - Upload and organise files
 
@@ -132,7 +132,7 @@ curl -s "https://api.xero.com/api.xro/2.0/Contacts/<contact-id>" \
 Required: `Name` (max 255 chars). Optional: EmailAddress, FirstName, LastName, CompanyNumber, AccountNumber, Phones, Addresses, ContactPersons (max 5), TaxNumber, DefaultCurrency, Website, PaymentTerms.
 
 ```bash
-curl -s -X POST "https://api.xero.com/api.xro/2.0/Contacts" \
+curl -s -X PUT "https://api.xero.com/api.xro/2.0/Contacts" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -193,6 +193,14 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>/Contac
   -d "{\"Contacts\": [{\"ContactID\": \"<contact-id>\"}]}"
 ```
 
+### Remove Contact from Group
+
+```bash
+curl -s -X DELETE "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>/Contacts/<contact-id>" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>"
+```
+
 ### Delete Contact Group
 
 ```bash
@@ -200,7 +208,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
-  -d "{\"ContactGroupID\": \"<group-id>\", \"Status\": \"DELETED\"}"
+  -d "{\"Status\": \"DELETED\"}"
 ```
 
 ---
@@ -406,7 +414,7 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/Quotes" \
 Status transitions: DRAFT -> SENT -> ACCEPTED/DECLINED -> INVOICED. All statuses can go to DELETED. Contact and Date are required even for status-only updates.
 
 ```bash
-curl -s -X POST "https://api.xero.com/api.xro/2.0/Quotes" \
+curl -s -X POST "https://api.xero.com/api.xro/2.0/Quotes/<quote-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -534,7 +542,7 @@ curl -s "https://api.xero.com/api.xro/2.0/BankTransactions?where=Type%3D%3D%22SP
 Types: `SPEND` (money out), `RECEIVE` (money in), `SPEND-TRANSFER`, `RECEIVE-TRANSFER`, `SPEND-OVERPAYMENT`, `RECEIVE-OVERPAYMENT`, `SPEND-PREPAYMENT`, `RECEIVE-PREPAYMENT`.
 
 ```bash
-curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions" \
+curl -s -X PUT "https://api.xero.com/api.xro/2.0/BankTransactions" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -544,7 +552,7 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions" \
 ### Create Receive Money Transaction
 
 ```bash
-curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions" \
+curl -s -X PUT "https://api.xero.com/api.xro/2.0/BankTransactions" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
@@ -914,12 +922,14 @@ curl -s "https://api.xero.com/api.xro/2.0/Users" \
 Max 10 attachments per entity, 25MB each.
 
 ```bash
-curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Attachments/receipt.pdf" \
+curl -s -X PUT "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Attachments/receipt.pdf" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/pdf" \
   --data-binary @receipt.pdf
 ```
+
+Use PUT to create a new attachment (fails if filename exists), POST to overwrite an existing one.
 
 Attachments work on: Invoices, CreditNotes, BankTransactions, Contacts, Accounts, ManualJournals, PurchaseOrders, Receipts, RepeatingInvoices. Replace the entity path accordingly.
 
@@ -931,9 +941,69 @@ Base URL: `https://api.xero.com/assets.xro/1.0` (different from accounting API).
 
 > **Note:** Fixed Assets API requires a Xero plan that includes the Fixed Assets feature (Business or above). Starter plans will return "Forbidden".
 >
-> Documentation:
-> - Assets: `https://r.jina.ai/https://developer.xero.com/documentation/api/assets/assets`
-> - Asset Types: `https://r.jina.ai/https://developer.xero.com/documentation/api/assets/asset-types`
+> **API Limitations:** The Fixed Assets API is **read + create only**. There are no endpoints to update, rename, edit, or delete existing assets. To modify an existing asset, the user must use the Xero Web UI (Organization > Fixed Assets > select asset > Edit). Do not attempt to POST/PUT/PATCH to `/Assets/{id}` — this endpoint only supports GET.
+
+### List Assets
+
+`status` is required. Values: `DRAFT`, `REGISTERED`, `DISPOSED`.
+
+```bash
+curl -s "https://api.xero.com/assets.xro/1.0/Assets?status=REGISTERED&page=1&pageSize=50" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>"
+```
+
+Params: `status` (required), `page` (default 1), `pageSize` (max 200), `orderBy` (AssetType/AssetName/AssetNumber/PurchaseDate/PurchasePrice; also DisposalDate/DisposalPrice for DISPOSED), `sortDirection` (asc/desc), `filterBy` (searches AssetName, AssetNumber, Description, AssetTypeName).
+
+### Get Asset by ID
+
+```bash
+curl -s "https://api.xero.com/assets.xro/1.0/Assets/<asset-id>" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>"
+```
+
+### Create Asset
+
+Required: `assetName`. Optional: `assetNumber` (must be unique), `assetTypeId`, `purchaseDate` (YYYY-MM-DD), `purchasePrice`, `disposalDate`, `disposalPrice`, `assetStatus` (Draft/Registered/Disposed), `warrantyExpiryDate`, `serialNumber`, `bookDepreciationSetting`.
+
+```bash
+curl -s -X POST "https://api.xero.com/assets.xro/1.0/Assets" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>" \
+  --header "Content-Type: application/json" \
+  -d "{\"assetName\": \"Office Laptop\", \"assetNumber\": \"FA-0042\", \"purchaseDate\": \"2026-01-15\", \"purchasePrice\": 1500.00, \"assetStatus\": \"Draft\"}"
+```
+
+### List Asset Types
+
+```bash
+curl -s "https://api.xero.com/assets.xro/1.0/AssetTypes" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>"
+```
+
+### Create Asset Type
+
+Required: `assetTypeName`, `fixedAssetAccountId`, `depreciationExpenseAccountId`, `accumulatedDepreciationAccountId`, `bookDepreciationSetting`.
+
+```bash
+curl -s -X POST "https://api.xero.com/assets.xro/1.0/AssetTypes" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>" \
+  --header "Content-Type: application/json" \
+  -d "{\"assetTypeName\": \"Computer Equipment\", \"fixedAssetAccountId\": \"<account-id>\", \"depreciationExpenseAccountId\": \"<account-id>\", \"accumulatedDepreciationAccountId\": \"<account-id>\", \"bookDepreciationSetting\": {\"depreciationMethod\": \"StraightLine\", \"averagingMethod\": \"ActualDays\", \"depreciationRate\": 25.00, \"depreciationCalculationMethod\": \"None\"}}"
+```
+
+### Get Asset Settings
+
+```bash
+curl -s "https://api.xero.com/assets.xro/1.0/Settings" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>"
+```
+
+Returns: `assetNumberPrefix`, `assetNumberSequence`, `assetStartDate`, `optInForTax`.
 
 ---
 
@@ -1013,6 +1083,16 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Tas
   -d "{\"name\": \"Design Phase\", \"rate\": {\"currency\": \"NZD\", \"value\": 150.00}, \"chargeType\": \"TIME\", \"estimateMinutes\": 2400}"
 ```
 
+### Update Task
+
+```bash
+curl -s -X PUT "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Tasks/<task-id>" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Design Phase v2\", \"rate\": {\"currency\": \"NZD\", \"value\": 175.00}, \"chargeType\": \"TIME\"}"
+```
+
 ### Delete Task
 
 ```bash
@@ -1045,7 +1125,7 @@ curl -s "https://api.xero.com/projects.xro/2.0/ProjectsUsers" \
 
 ### Create Time Entry
 
-Required: `userId` (from `/projectsusers`, NOT from Accounting `/Users`), `taskId`, `dateUtc`, `duration` (minutes, 1-59940).
+Required: `userId` (from `/ProjectsUsers`, NOT from Accounting `/Users`), `taskId`, `dateUtc`, `duration` (minutes, 1-59940).
 
 ```bash
 curl -s -X POST "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Time" \
@@ -1053,6 +1133,16 @@ curl -s -X POST "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Tim
   --header "xero-tenant-id: <tenant-id>" \
   --header "Content-Type: application/json" \
   -d "{\"userId\": \"<projects-user-id>\", \"taskId\": \"<task-id>\", \"dateUtc\": \"2026-03-05T09:00:00\", \"duration\": 120, \"description\": \"Design mockups\"}"
+```
+
+### Update Time Entry
+
+```bash
+curl -s -X PUT "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/Time/<time-entry-id>" \
+  --header "Authorization: Bearer $XERO_TOKEN" \
+  --header "xero-tenant-id: <tenant-id>" \
+  --header "Content-Type: application/json" \
+  -d "{\"userId\": \"<projects-user-id>\", \"taskId\": \"<task-id>\", \"dateUtc\": \"2026-03-05T09:00:00\", \"duration\": 180, \"description\": \"Design mockups (extended)\"}"
 ```
 
 ### Delete Time Entry
@@ -1171,18 +1261,20 @@ curl -s "https://api.xero.com/files.xro/1.0/Inbox" \
 1. **Tenant ID Required**: Always call `/Connections` first to get the `tenantId`, then include it as `xero-tenant-id` header in every API call.
 2. **Account Codes Vary by Org**: Account codes differ between organisations. Always call `GET /Accounts` first to discover valid codes before creating invoices or transactions.
 3. **Bank Accounts Required**: Payments, bank transactions, and bank transfers require a BANK-type account. Use `GET /Accounts?where=Type=="BANK"` to find one.
-4. **Create vs Update**: Xero uses `PUT` to create and `POST` to update for most Accounting API endpoints. Projects API uses standard REST (POST to create, PUT to update).
-5. **Invoice Types**: `ACCREC` = sales invoice (accounts receivable), `ACCPAY` = bill (accounts payable).
-6. **Credit Note Types**: `ACCRECCREDIT` = customer credit, `ACCPAYCREDIT` = supplier credit.
-7. **Bank Transaction Types**: `SPEND` = money out, `RECEIVE` = money in.
-8. **Status Workflow**: DRAFT -> SUBMITTED -> AUTHORISED -> PAID (for invoices). Only AUTHORISED invoices can be voided.
-9. **Deleting**: Most entities use `Status: DELETED` or `Status: VOIDED` via POST rather than HTTP DELETE.
-10. **Rate Limits**: Xero has a 5,000 API calls/day limit. Use `If-Modified-Since` header and pagination for large datasets.
-11. **Pagination**: Default 100 per page for Accounting API. Max varies: 1000 for some, 200 for Assets, 500 for Projects.
-12. **Date Format**: Use `YYYY-MM-DD` for dates. DateTime uses ISO-8601 (`2026-03-05T09:00:00`).
-13. **LineItemID on Updates**: Always include `LineItemID` when updating line items, or they get deleted and recreated.
-14. **100k Record Limit**: GET requests returning >100,000 records return a 400 error. Use filters and pagination.
-15. **Different Base URLs**: Accounting API uses `api.xro/2.0`, Assets API uses `assets.xro/1.0`, Projects API uses `projects.xro/2.0`, Files API uses `files.xro/1.0`.
+4. **Create vs Update (Accounting API)**: Xero Accounting API uses `PUT` to create and `POST` to update. This is the opposite of standard REST conventions.
+5. **Create vs Update (Projects API)**: Projects API uses standard REST — `POST` to create, `PUT` to update, `PATCH` for status changes.
+6. **Create vs Update (Assets API)**: Assets API uses `POST` to create. There are no update or delete endpoints.
+7. **Invoice Types**: `ACCREC` = sales invoice (accounts receivable), `ACCPAY` = bill (accounts payable).
+8. **Credit Note Types**: `ACCRECCREDIT` = customer credit, `ACCPAYCREDIT` = supplier credit.
+9. **Bank Transaction Types**: `SPEND` = money out, `RECEIVE` = money in.
+10. **Status Workflow**: DRAFT -> SUBMITTED -> AUTHORISED -> PAID (for invoices). Only AUTHORISED invoices can be voided.
+11. **Deleting**: Most entities use `Status: DELETED` or `Status: VOIDED` via POST rather than HTTP DELETE.
+12. **Rate Limits**: Xero has a 5,000 API calls/day limit. Use `If-Modified-Since` header and pagination for large datasets.
+13. **Pagination**: Default 100 per page for Accounting API. Max varies: 1000 for some, 200 for Assets, 500 for Projects.
+14. **Date Format**: Use `YYYY-MM-DD` for dates. DateTime uses ISO-8601 (`2026-03-05T09:00:00`).
+15. **LineItemID on Updates**: Always include `LineItemID` when updating line items, or they get deleted and recreated.
+16. **100k Record Limit**: GET requests returning >100,000 records return a 400 error. Use filters and pagination.
+17. **Different Base URLs**: Accounting API uses `api.xro/2.0`, Assets API uses `assets.xro/1.0`, Projects API uses `projects.xro/2.0`, Files API uses `files.xro/1.0`.
 
 ---
 
