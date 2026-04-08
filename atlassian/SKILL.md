@@ -6,11 +6,11 @@ description: Atlassian API for Confluence and Jira. Use when user mentions "Conf
 
 # Atlassian API
 
-Use the Atlassian Cloud REST APIs via direct `curl` calls to manage **Jira issues, Confluence pages, and other Atlassian products**.
+Use the Atlassian Cloud REST APIs to manage Jira issues and Confluence pages.
 
 > Official docs:
-> - Jira: `https://developer.atlassian.com/cloud/jira/platform/rest/v3/`
-> - Confluence: `https://developer.atlassian.com/cloud/confluence/rest/v2/`
+> - Jira: https://developer.atlassian.com/cloud/jira/platform/rest/v3/
+> - Confluence v2: https://developer.atlassian.com/cloud/confluence/rest/v2/
 
 ---
 
@@ -18,510 +18,488 @@ Use the Atlassian Cloud REST APIs via direct `curl` calls to manage **Jira issue
 
 Use this skill when you need to:
 
-- **Create, update, and search Jira issues** using JQL
-- **Transition Jira issues** through workflow states
-- **Create and update Confluence pages** and blog posts
-- **Search Confluence content** using CQL
-- **Manage Confluence spaces** and their content hierarchy
-- **Add comments** to Jira issues or Confluence pages
+- Create, update, and search Jira issues using JQL
+- Transition Jira issues through workflow states
+- Manage Jira comments, labels, worklogs, and attachments
+- Create and update Confluence pages and blog posts
+- Search Confluence content using CQL
+- Manage Confluence spaces, labels, and comments
 
 ---
 
 ## Prerequisites
 
-1. Log in to [Atlassian Account Settings](https://id.atlassian.com/manage-profile/security/api-tokens)
-2. Click **Create API token**, give it a label, and click **Create**
-3. Copy the generated token (you will not see it again)
+Connect Atlassian via the vm0 connector. Authentication uses `$ATLASSIAN_EMAIL` and `$ATLASSIAN_TOKEN` (API token).
 
 ```bash
-export ATLASSIAN_DOMAIN="mycompany"          # e.g., "mycompany" (without .atlassian.net)
-export ATLASSIAN_EMAIL="you@example.com"     # Your Atlassian account email
-export ATLASSIAN_TOKEN="your-api-token"      # API token from step 2
+export ATLASSIAN_DOMAIN="mycompany"          # without .atlassian.net
+export ATLASSIAN_EMAIL="you@example.com"
+export ATLASSIAN_TOKEN="your-api-token"
 ```
 
-### Authentication
-
-All Atlassian Cloud APIs use HTTP Basic authentication with your email and API token:
-
-```
--u "${ATLASSIAN_EMAIL}:${ATLASSIAN_TOKEN}"
-```
-
-### Rate Limits
-
-Jira Cloud and Confluence Cloud have rate limits that vary by endpoint. For most REST API calls, expect limits around 100-500 requests per minute.
-
----
-
-## How to Use
-
-All examples below assume `ATLASSIAN_DOMAIN`, `ATLASSIAN_EMAIL`, and `ATLASSIAN_TOKEN` are set.
+All endpoints use Basic auth: `-u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"`
 
 Base URLs:
 - Jira: `https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3`
-- Confluence: `https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2`
+- Confluence v2: `https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2`
+- Confluence search (v1): `https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/rest/api`
+
+> **Important:** This skill uses Confluence v2 API (`/wiki/api/v2`) for pages, spaces, and comments. The v1 search endpoint (`/wiki/rest/api/search`) is used for CQL because v2 does not have a search equivalent.
 
 ---
 
-## Jira
+## Jira — User
 
-### 1. Get Current User
-
-Verify your authentication:
+### Get Current User
 
 ```bash
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/myself" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json"
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/myself" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
 ```
 
----
-
-### 2. List Projects
-
-Get all Jira projects you have access to:
+### Search Users
 
 ```bash
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/project" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json"
-```
-
----
-
-### 3. Search Issues with JQL
-
-Search issues using Jira Query Language.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "jql": "project = PROJ AND status NOT IN (Done) ORDER BY created DESC",
-  "maxResults": 10,
-  "fields": ["key", "summary", "status", "assignee", "priority"]
-}
-```
-
-Then run:
-
-```bash
-curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/search/jql" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json | jq '.issues[] | {key, summary: .fields.summary, status: .fields.status.name}'
-```
-
-Common JQL examples:
-- `project = PROJ` - Issues in project
-- `assignee = currentUser()` - Your issues
-- `status = "In Progress"` - By status
-- `created >= -7d` - Created in last 7 days
-- `labels = bug` - By label
-- `priority = High` - By priority
-
----
-
-### 4. Get Issue Details
-
-Get full details of a Jira issue:
-
-```bash
-ISSUE_KEY="PROJ-123"
-
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json"
+curl -s -G "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/user/search" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json" \
+  --data-urlencode "query=john"
 ```
 
 ---
 
-### 5. Create Issue
+## Jira — Projects
 
-Create a new Jira issue (API v3 uses Atlassian Document Format for description).
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "fields": {
-    "project": {"key": "PROJ"},
-    "summary": "Bug: Login button not responding",
-    "description": {
-      "type": "doc",
-      "version": 1,
-      "content": [
-        {
-          "type": "paragraph",
-          "content": [
-            {"type": "text", "text": "The login button on the mobile app is not responding when tapped."}
-          ]
-        }
-      ]
-    },
-    "issuetype": {"name": "Bug"},
-    "priority": {"name": "High"},
-    "labels": ["mobile", "urgent"]
-  }
-}
-```
-
-Then run:
+### List Projects
 
 ```bash
-curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/project" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Project
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/project/<project-key>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
 ```
 
 ---
 
-### 6. Update Issue
+## Jira — Issues
 
-Update an existing Jira issue.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "fields": {
-    "summary": "Updated: Login button not responding on iOS",
-    "priority": {"name": "Highest"},
-    "labels": ["bug", "ios", "urgent"]
-  }
-}
-```
-
-Then run:
+### Search Issues (JQL)
 
 ```bash
-ISSUE_KEY="PROJ-123"
-
-curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/${ISSUE_KEY}" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/search/jql" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  -d "{\"jql\": \"project = PROJ AND status != Done ORDER BY created DESC\", \"maxResults\": 10, \"fields\": [\"key\", \"summary\", \"status\", \"assignee\", \"priority\"]}"
 ```
 
-Returns 204 No Content on success.
+Common JQL: `project = PROJ`, `assignee = currentUser()`, `status = 'In Progress'`, `created >= -7d`, `labels = bug`, `priority = High`.
 
----
-
-### 7. Get Available Transitions
-
-Get possible status transitions for a Jira issue:
+### Get Issue
 
 ```bash
-ISSUE_KEY="PROJ-123"
-
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json"
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
 ```
 
----
+### Create Issue
 
-### 8. Transition Issue (Change Status)
-
-Move a Jira issue to a different status.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "transition": {
-    "id": "31"
-  }
-}
-```
-
-Then run:
+Jira v3 uses Atlassian Document Format (ADF) for rich text fields.
 
 ```bash
-ISSUE_KEY="PROJ-123"
-
-curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/transitions" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  -d "{\"fields\": {\"project\": {\"key\": \"PROJ\"}, \"summary\": \"Bug: Login button not responding\", \"description\": {\"type\": \"doc\", \"version\": 1, \"content\": [{\"type\": \"paragraph\", \"content\": [{\"type\": \"text\", \"text\": \"The login button is not responding.\"}]}]}, \"issuetype\": {\"name\": \"Bug\"}, \"priority\": {\"name\": \"High\"}, \"labels\": [\"mobile\"]}}"
 ```
 
-Returns 204 No Content on success.
-
----
-
-### 9. Add Comment to Issue
-
-Add a comment to a Jira issue.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "body": {
-    "type": "doc",
-    "version": 1,
-    "content": [
-      {
-        "type": "paragraph",
-        "content": [
-          {"type": "text", "text": "Investigated and found the root cause. Working on a fix."}
-        ]
-      }
-    ]
-  }
-}
-```
-
-Then run:
+### Update Issue
 
 ```bash
-ISSUE_KEY="PROJ-123"
-
-curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/comment" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json" \
+  --header "Content-Type: application/json" \
+  -d "{\"fields\": {\"summary\": \"Updated summary\", \"priority\": {\"name\": \"Highest\"}}}"
 ```
 
----
-
-### 10. Assign Issue
-
-Assign a Jira issue to a user.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "accountId": "5b10ac8d82e05b22cc7d4ef5"
-}
-```
-
-Then run:
+### Delete Issue
 
 ```bash
-ISSUE_KEY="PROJ-123"
-
-curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/${ISSUE_KEY}/assignee" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s -X DELETE "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"
 ```
 
----
-
-### 11. Search Users
-
-Find Jira users by email or name:
+### Assign Issue
 
 ```bash
-curl -s -G "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/user/search" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --data-urlencode "query=john"
+curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/assignee" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"accountId\": \"<account-id>\"}"
 ```
 
----
-
-## Confluence
-
-### 12. List Spaces
-
-Get all Confluence spaces you have access to:
+### Get Transitions
 
 ```bash
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" | jq '.results[] | {id, key, name, type}'
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/transitions" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Transition Issue (Change Status)
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/transitions" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"transition\": {\"id\": \"31\"}}"
+```
+
+### Add Comment
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/comment" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"body\": {\"type\": \"doc\", \"version\": 1, \"content\": [{\"type\": \"paragraph\", \"content\": [{\"type\": \"text\", \"text\": \"Found the root cause. Working on a fix.\"}]}]}}"
+```
+
+### Get Comments
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/comment" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Add Labels
+
+```bash
+curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"update\": {\"labels\": [{\"add\": \"urgent\"}, {\"add\": \"backend\"}]}}"
+```
+
+### Add Attachment
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/attachments" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "X-Atlassian-Token: no-check" \
+  -F "file=@screenshot.png"
+```
+
+### Get Worklogs
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/worklog" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Add Worklog
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue-key>/worklog" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"timeSpentSeconds\": 3600, \"comment\": {\"type\": \"doc\", \"version\": 1, \"content\": [{\"type\": \"paragraph\", \"content\": [{\"type\": \"text\", \"text\": \"Investigated and fixed the issue.\"}]}]}}"
 ```
 
 ---
 
-### 13. Get Space Details
+## Confluence — Spaces (v2)
 
-Get details for a specific Confluence space:
+### List Spaces
 
 ```bash
-SPACE_ID="12345"
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces?limit=25" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
 
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces/${SPACE_ID}" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json"
+### Get Space
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces/<space-id>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### List Pages in Space
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces/<space-id>/pages?limit=25" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Space Labels
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces/<space-id>/labels" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Space Permissions
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces/<space-id>/permissions" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
 ```
 
 ---
 
-### 14. List Pages in a Space
+## Confluence — Pages (v2)
 
-Get pages within a specific space:
+### List Pages
 
 ```bash
-SPACE_ID="12345"
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages?limit=25" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
 
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces/${SPACE_ID}/pages" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" | jq '.results[] | {id, title, status}'
+Params: `space-id`, `title`, `status` (current/draft/archived), `body-format` (storage/atlas_doc_format/view), `limit`, `cursor`.
+
+### Get Page
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>?body-format=storage" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+Body format: `storage` (XHTML), `atlas_doc_format` (ADF), `view` (rendered HTML).
+
+### Create Page
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"spaceId\": \"<space-id>\", \"status\": \"current\", \"title\": \"My New Page\", \"body\": {\"representation\": \"storage\", \"value\": \"<p>Page content in <strong>XHTML</strong> format.</p>\"}}"
+```
+
+### Create Child Page
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"spaceId\": \"<space-id>\", \"status\": \"current\", \"title\": \"Child Page\", \"parentId\": \"<parent-page-id>\", \"body\": {\"representation\": \"storage\", \"value\": \"<p>Child page content.</p>\"}}"
+```
+
+### Update Page
+
+Requires current version number (increment by 1).
+
+```bash
+curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"id\": \"<page-id>\", \"status\": \"current\", \"title\": \"Updated Title\", \"body\": {\"representation\": \"storage\", \"value\": \"<p>Updated content.</p>\"}, \"version\": {\"number\": 2, \"message\": \"Updated via API\"}}"
+```
+
+### Delete Page
+
+```bash
+curl -s -X DELETE "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"
+```
+
+### Get Page Children
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>/children" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Page Labels
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>/labels" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Page Versions
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>/versions" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Page Attachments
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>/attachments" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Page Ancestors
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>/ancestors" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
 ```
 
 ---
 
-### 15. Get Page Content
+## Confluence — Comments (v2)
 
-Get a specific Confluence page with its body content:
-
-```bash
-PAGE_ID="67890"
-
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/${PAGE_ID}?body-format=storage" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json"
-```
-
-Body format options: `storage` (XHTML), `atlas_doc_format` (ADF), `view` (rendered HTML).
-
----
-
-### 16. Create Page
-
-Create a new Confluence page.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "spaceId": "12345",
-  "status": "current",
-  "title": "My New Page",
-  "body": {
-    "representation": "storage",
-    "value": "<p>This is the page content in <strong>XHTML storage format</strong>.</p><h2>Section 1</h2><p>Details here.</p>"
-  }
-}
-```
-
-Then run:
+### List Footer Comments
 
 ```bash
-curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>/footer-comments" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Create Footer Comment
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/footer-comments" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"pageId\": \"<page-id>\", \"body\": {\"representation\": \"storage\", \"value\": \"<p>This is a comment.</p>\"}}"
+```
+
+### Update Comment
+
+```bash
+curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/footer-comments/<comment-id>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"version\": {\"number\": 2}, \"body\": {\"representation\": \"storage\", \"value\": \"<p>Updated comment.</p>\"}}"
+```
+
+### Delete Comment
+
+```bash
+curl -s -X DELETE "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/footer-comments/<comment-id>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"
 ```
 
 ---
 
-### 17. Create Child Page
+## Confluence — Blog Posts (v2)
 
-Create a page as a child of an existing page.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "spaceId": "12345",
-  "status": "current",
-  "title": "Child Page Title",
-  "parentId": "67890",
-  "body": {
-    "representation": "storage",
-    "value": "<p>Content of the child page.</p>"
-  }
-}
-```
-
-Then run:
+### List Blog Posts
 
 ```bash
-curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/blogposts?limit=25" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Get Blog Post
+
+```bash
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/blogposts/<blogpost-id>?body-format=storage" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
+```
+
+### Create Blog Post
+
+```bash
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/blogposts" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"spaceId\": \"<space-id>\", \"status\": \"current\", \"title\": \"Release Notes v2.0\", \"body\": {\"representation\": \"storage\", \"value\": \"<p>What's new in v2.0.</p>\"}}"
+```
+
+### Update Blog Post
+
+```bash
+curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/blogposts/<blogpost-id>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"id\": \"<blogpost-id>\", \"status\": \"current\", \"title\": \"Release Notes v2.0 (Updated)\", \"body\": {\"representation\": \"storage\", \"value\": \"<p>Updated content.</p>\"}, \"version\": {\"number\": 2}}"
+```
+
+### Delete Blog Post
+
+```bash
+curl -s -X DELETE "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/blogposts/<blogpost-id>" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"
 ```
 
 ---
 
-### 18. Update Page
+## Confluence — Labels (v2)
 
-Update an existing Confluence page (requires current version number).
-
-First get the current version:
+### List Labels
 
 ```bash
-PAGE_ID="67890"
-
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" | jq '.version.number'
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/labels" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
 ```
 
-Then write to `/tmp/atlassian_request.json` (increment the version number):
-
-```json
-{
-  "id": "67890",
-  "status": "current",
-  "title": "Updated Page Title",
-  "body": {
-    "representation": "storage",
-    "value": "<p>Updated content.</p>"
-  },
-  "version": {
-    "number": 2,
-    "message": "Updated via API"
-  }
-}
-```
-
-Then run:
+### Get Pages by Label
 
 ```bash
-PAGE_ID="67890"
-
-curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
+curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/labels/<label-id>/pages" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json"
 ```
 
 ---
 
-### 19. Search Confluence Content (CQL)
+## Confluence — Search (v1)
 
-Search Confluence using CQL (Confluence Query Language):
+> **Note:** CQL search is only available via the v1 API. There is no v2 equivalent.
+
+### Search Content (CQL)
 
 ```bash
-curl -s -G "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/rest/api/search" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --data-urlencode "cql=type=page AND space=DEV AND text~\"deployment guide\"" --data-urlencode "limit=10" | jq '.results[] | {title: .content.title, id: .content.id, space: .content._expandable.space}'
+curl -s -G "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/rest/api/search" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "Accept: application/json" \
+  --data-urlencode "cql=type=page AND space=DEV AND text~\"deployment guide\"" \
+  --data-urlencode "limit=10"
 ```
 
-Common CQL examples:
-- `type=page AND space=DEV` - Pages in a space
-- `text~"search term"` - Full-text search
-- `creator=currentUser()` - Content you created
-- `lastModified >= "2024-01-01"` - Recently modified
-- `label="meeting-notes"` - By label
-- `ancestor=12345` - Child pages of a specific page
+Common CQL: `type=page AND space=DEV`, `text~"search term"`, `creator=currentUser()`, `lastModified >= "2026-01-01"`, `label="meeting-notes"`, `ancestor=12345`.
 
 ---
 
-### 20. Get Page Comments
+## Confluence — Attachments (v1)
 
-List comments on a Confluence page:
-
-```bash
-PAGE_ID="67890"
-
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/${PAGE_ID}/footer-comments" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json"
-```
-
----
-
-### 21. Add Comment to Page
-
-Add a footer comment to a Confluence page.
-
-Write to `/tmp/atlassian_request.json`:
-
-```json
-{
-  "pageId": "67890",
-  "body": {
-    "representation": "storage",
-    "value": "<p>This is a comment added via the API.</p>"
-  }
-}
-```
-
-Then run:
+### Upload Attachment
 
 ```bash
-curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/footer-comments" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/atlassian_request.json
-```
-
----
-
-### 22. Delete Page
-
-Delete a Confluence page:
-
-```bash
-PAGE_ID="67890"
-
-curl -s -X DELETE "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/${PAGE_ID}" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"
-```
-
-Returns 204 No Content on success.
-
----
-
-### 23. List Labels on a Page
-
-Get all labels attached to a Confluence page:
-
-```bash
-PAGE_ID="67890"
-
-curl -s -X GET "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/${PAGE_ID}/labels" -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" --header "Accept: application/json" | jq '.results[] | {id, name}'
+curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/rest/api/content/<page-id>/child/attachment" \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  --header "X-Atlassian-Token: nocheck" \
+  -F "file=@document.pdf"
 ```
 
 ---
 
 ## Atlassian Document Format (ADF)
 
-Jira API v3 uses ADF for rich text fields like `description` and `comment.body`:
+Jira API v3 uses ADF for rich text fields (`description`, `comment.body`):
 
 ```json
 {
@@ -532,15 +510,8 @@ Jira API v3 uses ADF for rich text fields like `description` and `comment.body`:
       "type": "paragraph",
       "content": [
         {"type": "text", "text": "Plain text"},
-        {"type": "text", "text": "Bold text", "marks": [{"type": "strong"}]},
+        {"type": "text", "text": "Bold", "marks": [{"type": "strong"}]},
         {"type": "text", "text": "Code", "marks": [{"type": "code"}]}
-      ]
-    },
-    {
-      "type": "bulletList",
-      "content": [
-        {"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Item 1"}]}]},
-        {"type": "listItem", "content": [{"type": "paragraph", "content": [{"type": "text", "text": "Item 2"}]}]}
       ]
     }
   ]
@@ -549,28 +520,29 @@ Jira API v3 uses ADF for rich text fields like `description` and `comment.body`:
 
 ## Confluence Storage Format (XHTML)
 
-Confluence uses XHTML storage format for page bodies:
-
-- `<p>Paragraph</p>` - Paragraphs
-- `<h1>` through `<h6>` - Headings
-- `<strong>Bold</strong>` - Bold text
-- `<em>Italic</em>` - Italic text
-- `<ul><li>Item</li></ul>` - Bullet lists
-- `<ol><li>Item</li></ol>` - Numbered lists
-- `<ac:structured-macro ac:name="code"><ac:plain-text-body><![CDATA[code here]]></ac:plain-text-body></ac:structured-macro>` - Code blocks
-- `<table><tr><td>Cell</td></tr></table>` - Tables
+Confluence uses XHTML for page bodies: `<p>`, `<h1>`-`<h6>`, `<strong>`, `<em>`, `<ul>/<ol>`, `<table>`, `<ac:structured-macro>`.
 
 ---
 
 ## Guidelines
 
-1. **Use JQL for Jira searches**: JQL is powerful for filtering issues by any field combination
-2. **Use CQL for Confluence searches**: CQL supports full-text search, space filtering, and label-based queries
-3. **Check transitions first**: Before changing Jira issue status, get available transitions for the issue
-4. **Handle pagination**: Jira uses `startAt` and `maxResults`; Confluence v2 uses cursor-based pagination with `cursor` and `limit` parameters
-5. **Version required for page updates**: When updating Confluence pages, always get and increment the current version number
-6. **ADF for Jira rich text**: Jira API v3 requires Atlassian Document Format for description and comments
-7. **XHTML for Confluence**: Confluence uses XHTML storage format for page content
-8. **Use account IDs**: Jira Cloud uses account IDs (not usernames) for user references
-9. **Rate limiting**: Implement exponential backoff if you receive 429 responses
-10. **Confluence v2 API**: Prefer `/wiki/api/v2` endpoints for better pagination and response structure; use `/wiki/rest/api` for CQL search
+1. **JQL for Jira searches**: Powerful filtering by any field combination.
+2. **CQL for Confluence searches**: Full-text search, space filtering, label queries. Uses v1 endpoint.
+3. **Check transitions first**: Before changing issue status, get available transitions.
+4. **Version required for page updates**: Always get and increment the current version number.
+5. **ADF for Jira rich text**: v3 API requires Atlassian Document Format for description and comments.
+6. **XHTML for Confluence**: Use XHTML storage format for page content (representation: "storage").
+7. **Account IDs**: Jira Cloud uses account IDs (not usernames) for user references.
+8. **Pagination**: Jira uses `startAt` + `maxResults`. Confluence v2 uses cursor-based pagination with `cursor` and `limit`.
+9. **Rate limits**: Back off on 429 responses.
+10. **Confluence v2 API**: This skill uses `/wiki/api/v2` for pages, spaces, comments, blog posts. CQL search and attachments still use v1 (`/wiki/rest/api`).
+
+---
+
+## How to Look Up More API Details
+
+- **Jira REST API v3**: https://developer.atlassian.com/cloud/jira/platform/rest/v3/
+- **Confluence REST API v2**: https://developer.atlassian.com/cloud/confluence/rest/v2/
+- **JQL Reference**: https://support.atlassian.com/jira-service-management-cloud/docs/use-advanced-search-with-jira-query-language-jql/
+- **CQL Reference**: https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/
+- **ADF Reference**: https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/
