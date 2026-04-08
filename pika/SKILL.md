@@ -16,8 +16,6 @@ Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Pik
 
 To get a Developer Key: visit [pika.me/dev](https://www.pika.me/dev/) and create a key (format: `dk_...`).
 
-> **Important:** When using `$(printenv PIKA_TOKEN)` in commands that contain a pipe (`|`), always use `$(printenv ...)` syntax — a known Claude Code issue silently clears `$VAR` references in pipelines.
-
 ## Base URL
 
 ```
@@ -29,7 +27,7 @@ https://srkibaanghvsriahb.pika.art
 All requests use a `DevKey` header:
 
 ```
-Authorization: DevKey $(printenv PIKA_TOKEN)
+Authorization: DevKey $PIKA_TOKEN
 ```
 
 ---
@@ -40,7 +38,7 @@ Authorization: DevKey $(printenv PIKA_TOKEN)
 
 ```bash
 curl -s "https://srkibaanghvsriahb.pika.art/developer/balance" \
-  -H "Authorization: DevKey $(printenv PIKA_TOKEN)" | jq '.data // .'
+  -H "Authorization: DevKey $PIKA_TOKEN" | jq '.data // .'
 ```
 
 Returns `{ "balance": <int> }`. Minimum 100 credits required before joining a meeting.
@@ -51,7 +49,7 @@ Returns `{ "balance": <int> }`. Minimum 100 credits required before joining a me
 
 ```bash
 curl -s -X POST "https://srkibaanghvsriahb.pika.art/proxy/realtime/meeting-session" \
-  -H "Authorization: DevKey $(printenv PIKA_TOKEN)" \
+  -H "Authorization: DevKey $PIKA_TOKEN" \
   -H "X-Skill-Name: pikastream" \
   -F "meet_url=<google-meet-or-zoom-url>" \
   -F "bot_name=<display-name>" \
@@ -79,7 +77,7 @@ Returns: `{ "session_id": "...", "platform": "...", "status": "created" }`
 
 ```bash
 curl -s "https://srkibaanghvsriahb.pika.art/proxy/realtime/session/<session_id>" \
-  -H "Authorization: DevKey $(printenv PIKA_TOKEN)" | jq '{status, video_worker_connected, meeting_bot_connected}'
+  -H "Authorization: DevKey $PIKA_TOKEN" | jq '{status, video_worker_connected, meeting_bot_connected}'
 ```
 
 | `status` | Meaning |
@@ -97,7 +95,7 @@ Poll every 2 seconds. The bot is ready when `status == "ready"` or both `video_w
 
 ```bash
 curl -s -X DELETE "https://srkibaanghvsriahb.pika.art/proxy/realtime/session/<session_id>" \
-  -H "Authorization: DevKey $(printenv PIKA_TOKEN)" | jq '.'
+  -H "Authorization: DevKey $PIKA_TOKEN" | jq '.'
 ```
 
 Returns: `{ "session_id": "...", "closed": true }`
@@ -110,18 +108,26 @@ Billing stops when this call completes.
 
 ```bash
 curl -s "https://srkibaanghvsriahb.pika.art/developer/topup/products" \
-  -H "Authorization: DevKey $(printenv PIKA_TOKEN)" | jq '.data // . | .products[]? | {name, numCredits, productId}'
+  -H "Authorization: DevKey $PIKA_TOKEN" | jq '.data // . | .products[]? | {name, numCredits, productId}'
 ```
 
 ---
 
 ### Create Topup Checkout
 
+Write to `/tmp/pika_topup.json`:
+
+```json
+{
+  "product_id": "<productId>"
+}
+```
+
 ```bash
 curl -s -X POST "https://srkibaanghvsriahb.pika.art/developer/topup" \
-  -H "Authorization: DevKey $(printenv PIKA_TOKEN)" \
+  -H "Authorization: DevKey $PIKA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"product_id": "<productId>"}' | jq '.data // . | {checkout_url}'
+  -d @/tmp/pika_topup.json | jq '.data // . | {checkout_url}'
 ```
 
 Returns a `checkout_url`. Share with the user to complete payment, then poll `/developer/balance` until balance ≥ 100.
