@@ -2,10 +2,7 @@
 name: cronlytic
 description: Cronlytic API for cron job monitoring. Use when user mentions "cron job",
   "scheduled task monitoring", or "Cronlytic".
-vm0_secrets:
-  - CRONLYTIC_API_KEY
-vm0_vars:
-  - CRONLYTIC_USER_ID
+
 ---
 
 # Cronlytic

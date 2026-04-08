@@ -2,8 +2,7 @@
 name: posthog
 description: PostHog API for product analytics. Use when user mentions "PostHog",
   "product analytics", "event tracking", or user analytics.
-vm0_secrets:
-  - POSTHOG_TOKEN
+
 ---
 
 # PostHog API

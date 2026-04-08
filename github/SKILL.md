@@ -3,8 +3,7 @@ name: github-automation
 description: GitHub API for repos, issues, and PRs. Use when user mentions "GitHub",
   "github.com", shares a GitHub link, "create PR", "my issues", "repository", or asks
   about code hosting.
-vm0_secrets:
-  - GH_TOKEN
+
 ---
 
 # GitHub Automation

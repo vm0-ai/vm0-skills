@@ -2,8 +2,7 @@
 name: fireflies
 description: Fireflies.ai API for meeting transcription. Use when user mentions "Fireflies",
   "meeting notes", "transcription", or "meeting summary".
-vm0_secrets:
-  - FIREFLIES_TOKEN
+
 ---
 
 # Fireflies

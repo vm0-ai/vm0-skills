@@ -1,10 +1,7 @@
 ---
 name: customer-io
 description: Customer.io behavioral email and messaging platform. Use when user mentions "Customer.io", "behavioral emails", "lifecycle emails", "triggered messages", or asks about event-based email automation.
-vm0_secrets:
-  - CUSTOMERIO_APP_TOKEN
-  - CUSTOMERIO_SITE_ID
-  - CUSTOMERIO_TRACK_TOKEN
+
 ---
 
 # Customer.io API

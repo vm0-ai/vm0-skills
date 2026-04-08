@@ -2,9 +2,7 @@
 name: cloudflare-tunnel
 description: Cloudflare Tunnel API for secure tunnels. Use when user mentions "Cloudflare
   tunnel", "argo tunnel", or secure connectivity.
-vm0_secrets:
-  - CF_ACCESS_CLIENT_ID
-  - CF_ACCESS_CLIENT_SECRET
+
 ---
 
 # Cloudflare Tunnel / Access Authentication

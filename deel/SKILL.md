@@ -2,8 +2,7 @@
 name: deel
 description: Deel API for global payroll and contractors. Use when user mentions "Deel",
   "contractors", "global payroll", or "EOR".
-vm0_secrets:
-  - DEEL_TOKEN
+
 ---
 
 # Deel API

@@ -2,8 +2,7 @@
 name: plausible
 description: Plausible Analytics API for privacy-friendly stats. Use when user mentions
   "Plausible", "analytics", "page views", or website stats.
-vm0_secrets:
-  - PLAUSIBLE_TOKEN
+
 ---
 
 # Plausible Analytics API

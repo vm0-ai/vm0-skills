@@ -2,10 +2,7 @@
 name: kommo
 description: Kommo (formerly amoCRM) API. Use when user mentions "Kommo", "amoCRM",
   "CRM", or sales pipeline management.
-vm0_secrets:
-  - KOMMO_API_KEY
-vm0_vars:
-  - KOMMO_SUBDOMAIN
+
 ---
 
 # Kommo API

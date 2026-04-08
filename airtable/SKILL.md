@@ -3,8 +3,7 @@ name: airtable
 description: Airtable API for bases and records. Use when user mentions "Airtable",
   "airtable.com", shares an Airtable link, "create record", or asks about Airtable
   base.
-vm0_secrets:
-  - AIRTABLE_TOKEN
+
 ---
 
 # Airtable API

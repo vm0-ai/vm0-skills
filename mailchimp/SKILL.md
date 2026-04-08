@@ -2,8 +2,7 @@
 name: mailchimp
 description: Mailchimp API for email marketing. Use when user mentions "Mailchimp",
   "email campaign", "newsletter", or marketing automation.
-vm0_secrets:
-  - MAILCHIMP_TOKEN
+
 ---
 
 # Mailchimp Marketing API

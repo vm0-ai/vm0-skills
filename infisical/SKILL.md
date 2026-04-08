@@ -1,8 +1,7 @@
 ---
 name: infisical
 description: Infisical Cloud Secrets Manager API for retrieving and listing secrets. Use when user mentions "Infisical", "infisical secrets", "machine identity token", or asks about secrets management with Infisical.
-vm0_secrets:
-  - INFISICAL_TOKEN
+
 ---
 
 # Infisical Cloud Secrets Manager API

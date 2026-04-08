@@ -2,8 +2,7 @@
 name: jam
 description: Jam.dev API for bug reporting. Use when user mentions "Jam", "bug report",
   "screen recording", or asks about issue capture.
-vm0_secrets:
-  - JAM_TOKEN
+
 ---
 
 # Jam

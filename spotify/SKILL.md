@@ -1,8 +1,7 @@
 ---
 name: spotify
 description: Spotify Web API for music streaming. Use when user mentions "Spotify", "play music", "Spotify playlist", "top tracks", "now playing", "Spotify artist", or asks about music playback or library.
-vm0_secrets:
-  - SPOTIFY_TOKEN
+
 ---
 
 # Spotify Web API

@@ -1,10 +1,7 @@
 ---
 name: salesforce
 description: Salesforce CRM REST API. Use when user mentions "Salesforce", "SFDC", "Salesforce CRM", "leads", "opportunities", "SOQL", or asks about enterprise CRM data.
-vm0_secrets:
-  - SALESFORCE_TOKEN
-vm0_vars:
-  - SALESFORCE_INSTANCE
+
 ---
 
 # Salesforce REST API

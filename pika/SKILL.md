@@ -1,8 +1,7 @@
 ---
 name: pikastream
 description: Pika Developer API for joining video meetings (Google Meet, Zoom) as a real-time AI avatar with voice cloning. Use when user mentions "Pika", "PikaStream", "pikastream", "join a meeting as AI", "AI avatar meeting", or "video meeting bot".
-vm0_secrets:
-  - PIKA_TOKEN
+
 ---
 
 # Pika Developer API (PikaStream)

@@ -2,8 +2,7 @@
 name: neon
 description: Neon API for serverless Postgres. Use when user mentions "Neon", "Neon
   database", "serverless Postgres", or asks about Neon projects.
-vm0_secrets:
-  - NEON_TOKEN
+
 ---
 
 # Neon API

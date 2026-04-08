@@ -2,8 +2,7 @@
 name: pdforge
 description: PDForge API for PDF generation. Use when user mentions "PDForge", "generate
   PDF", "PDF template", or document generation.
-vm0_secrets:
-  - PDFORGE_API_KEY
+
 ---
 
 # PDForge API (PDF Noodle)

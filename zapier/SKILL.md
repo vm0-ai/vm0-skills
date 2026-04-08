@@ -2,8 +2,7 @@
 name: zapier
 description: Zapier API for workflow automation. Use when user mentions "Zapier",
   "zap", "automation", or asks about connecting apps.
-vm0_secrets:
-  - ZAPIER_TOKEN
+
 ---
 
 # Zapier AI Actions API

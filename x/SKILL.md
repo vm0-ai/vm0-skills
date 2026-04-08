@@ -3,8 +3,7 @@ name: x
 description: X (Twitter) API for tweets and profiles. Use when user mentions "X",
   "Twitter", "x.com", "twitter.com", shares a tweet link, "check X", or asks about
   social media posts.
-vm0_secrets:
-  - X_TOKEN
+
 ---
 
 # X (Twitter) API

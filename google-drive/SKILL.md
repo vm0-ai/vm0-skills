@@ -3,8 +3,7 @@ name: google-drive
 description: Google Drive API for file management. Use when user mentions "Google
   Drive", "drive.google.com", shares a Drive link, "upload file", or asks about cloud
   storage.
-vm0_secrets:
-  - GOOGLE_DRIVE_TOKEN
+
 ---
 
 # Google Drive API

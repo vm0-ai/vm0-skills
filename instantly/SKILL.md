@@ -2,8 +2,7 @@
 name: instantly
 description: Instantly.ai API for cold email campaigns. Use when user mentions "Instantly",
   "cold email", "email campaign", or outreach automation.
-vm0_secrets:
-  - INSTANTLY_API_KEY
+
 ---
 
 # Instantly API

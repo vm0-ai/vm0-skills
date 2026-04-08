@@ -2,8 +2,7 @@
 name: hubspot
 description: HubSpot CRM API for marketing and sales. Use when user mentions "HubSpot",
   "CRM", "HubSpot contacts", or asks about marketing automation.
-vm0_secrets:
-  - HUBSPOT_TOKEN
+
 ---
 
 # HubSpot CRM API

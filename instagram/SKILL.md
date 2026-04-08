@@ -3,10 +3,7 @@ name: instagram
 description: Instagram API for posts and media. Use when user mentions "Instagram",
   "instagram.com", shares an IG link, "Instagram post", or asks about social media
   content.
-vm0_secrets:
-  - INSTAGRAM_TOKEN
-vm0_vars:
-  - INSTAGRAM_BUSINESS_ACCOUNT_ID
+
 ---
 
 # Instagram API (Graph API)

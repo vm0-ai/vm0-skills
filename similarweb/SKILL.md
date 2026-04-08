@@ -2,8 +2,7 @@
 name: similarweb
 description: Similarweb API for web analytics. Use when user mentions "Similarweb",
   "website traffic", "competitor analysis", or market intelligence.
-vm0_secrets:
-  - SIMILARWEB_TOKEN
+
 ---
 
 # SimilarWeb API

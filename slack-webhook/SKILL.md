@@ -2,8 +2,7 @@
 name: slack-webhook
 description: Slack Webhook for posting messages. Use when user says "post to Slack",
   "Slack webhook", or "send Slack notification".
-vm0_secrets:
-  - SLACK_WEBHOOK_URL
+
 ---
 
 # Slack Incoming Webhook

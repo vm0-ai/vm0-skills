@@ -2,8 +2,7 @@
 name: devto
 description: Dev.to API for articles and posts. Use when user mentions "Dev.to", "publish
   article", "dev community", or asks about blog posts.
-vm0_secrets:
-  - DEVTO_API_KEY
+
 ---
 
 # Dev.to Publisher

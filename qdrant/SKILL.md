@@ -2,10 +2,7 @@
 name: qdrant
 description: Qdrant API for vector search. Use when user mentions "Qdrant", "vector
   database", "semantic search", or embeddings storage.
-vm0_secrets:
-  - QDRANT_TOKEN
-vm0_vars:
-  - QDRANT_BASE_URL
+
 ---
 
 # Qdrant API
