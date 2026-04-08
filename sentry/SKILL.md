@@ -92,11 +92,21 @@ curl -s -X DELETE "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/" 
 ### List Organization Issues
 
 ```bash
-curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/?query=is:unresolved" \
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 Params: `query` (Sentry search syntax), `sort` (`date`/`new`/`freq`/`priority`), `cursor`, `limit`.
+
+### Search Issues
+
+Use `query` param with Sentry search syntax and `-G` with `--data-urlencode`:
+
+```bash
+curl -s -G "https://sentry.io/api/0/organizations/<org-slug>/issues/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --data-urlencode "query=is:unresolved level:error"
+```
 
 Common queries: `is:unresolved`, `is:resolved`, `level:error`, `error.type:TypeError`, `assigned:me`, `first-release:1.0.0`.
 
@@ -114,7 +124,7 @@ curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
-### Update Issue (Resolve / Ignore / Assign)
+### Resolve Issue
 
 ```bash
 curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
@@ -123,7 +133,32 @@ curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-i
   -d "{\"status\": \"resolved\"}"
 ```
 
-Status values: `unresolved`, `resolved`, `ignored`. Also supports `assignedTo` (user email or `team:<team-slug>`).
+### Ignore Issue
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"status\": \"ignored\"}"
+```
+
+### Unresolve Issue
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"status\": \"unresolved\"}"
+```
+
+### Assign Issue
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"assignedTo\": \"user@example.com\"}"
+```
 
 ### Bulk Update Issues
 
@@ -144,6 +179,15 @@ curl -s -X DELETE "https://sentry.io/api/0/organizations/<org-slug>/issues/<issu
 ---
 
 ## Events
+
+### Get Latest Event for Issue
+
+> **Note:** This endpoint is documented by Sentry but may not be in the OpenAPI spec. If it returns a firewall error, use List Issue Events with `limit=1` instead.
+
+```bash
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/events/latest/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
 
 ### List Issue Events
 
