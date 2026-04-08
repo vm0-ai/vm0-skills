@@ -90,17 +90,17 @@ Write to `/tmp/notion_request.json`:
 Replace `<your-database-id>` with your actual database ID and run:
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json | jq '.results[] | {id, properties}'
+curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json | jq '.results[] | {id, properties}'
 ```
 
-Docs: https://developers.notion.com/reference/post-database-query
+Docs: https://developers.notion.com/reference/query-a-data-source
 
 ### Query with Filter
 
 Replace `<your-database-id>` with your actual database ID:
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "filter": {
   "property": "Status",
@@ -117,7 +117,7 @@ EOF
 Replace `<your-database-id>` with your actual database ID:
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
 {
   "filter": {
   "and": [
@@ -413,7 +413,7 @@ Write to `/tmp/notion_request.json`:
 
 ```bash
 # First request
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
+curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
 # Response includes: {"next_cursor": "abc123", "has_more": true}
 ```
 
@@ -428,7 +428,7 @@ Write to `/tmp/notion_request.json`:
 
 ```bash
 # Next page
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
+curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
 ```
 
 ## Rate Limits
