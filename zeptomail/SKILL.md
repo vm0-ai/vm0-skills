@@ -2,8 +2,6 @@
 name: zeptomail
 description: ZeptoMail API for transactional email. Use when user mentions "ZeptoMail",
   "transactional email", "send email", or Zoho email.
-vm0_secrets:
-  - ZEPTOMAIL_API_KEY
 ---
 
 # Zoho ZeptoMail

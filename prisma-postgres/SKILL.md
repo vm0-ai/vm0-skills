@@ -2,8 +2,6 @@
 name: prisma-postgres
 description: Prisma Postgres API for database. Use when user mentions "Prisma Postgres",
   "Prisma database", or asks about Prisma acceleration.
-vm0_secrets:
-  - PRISMA_POSTGRES_TOKEN
 ---
 
 # Prisma Postgres Management API

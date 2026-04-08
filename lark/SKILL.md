@@ -2,10 +2,6 @@
 name: lark
 description: Lark/Feishu API for collaboration. Use when user mentions "Lark", "Feishu",
   "Lark docs", or asks about ByteDance workspace tools.
-vm0_secrets:
-  - LARK_APP_SECRET
-vm0_vars:
-  - LARK_APP_ID
 ---
 
 # Lark (Feishu) API

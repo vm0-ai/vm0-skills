@@ -2,8 +2,6 @@
 name: dropbox
 description: Dropbox API for file storage. Use when user mentions "Dropbox", "dropbox.com",
   shares a Dropbox link, "upload to Dropbox", or asks about cloud storage.
-vm0_secrets:
-  - DROPBOX_TOKEN
 ---
 
 # Dropbox API

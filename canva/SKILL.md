@@ -2,8 +2,6 @@
 name: canva
 description: Canva API for design creation. Use when user mentions "Canva", "create
   design", "Canva template", or asks about design graphics.
-vm0_secrets:
-  - CANVA_TOKEN
 ---
 
 # Canva API

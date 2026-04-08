@@ -1,8 +1,6 @@
 ---
 name: gamma
 description: Gamma API for creating presentations, documents, and websites from text. Use when user mentions "Gamma", "create presentation", "generate slides", "make a deck", "create a document with Gamma", or "generate a webpage".
-vm0_secrets:
-  - GAMMA_TOKEN
 ---
 
 # Gamma API

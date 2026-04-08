@@ -2,8 +2,6 @@
 name: tldv
 description: tl;dv API for meeting recordings. Use when user mentions "tl;dv", "meeting
   recording", "meeting summary", or asks about call analysis.
-vm0_secrets:
-  - TLDV_TOKEN
 ---
 
 # tl;dv API

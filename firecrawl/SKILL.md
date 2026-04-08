@@ -2,8 +2,6 @@
 name: firecrawl
 description: Firecrawl API for web scraping and crawling. Use when user mentions "Firecrawl",
   "crawl website", "scrape site", or web extraction.
-vm0_secrets:
-  - FIRECRAWL_TOKEN
 ---
 
 # Firecrawl

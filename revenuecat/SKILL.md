@@ -2,8 +2,6 @@
 name: revenuecat
 description: RevenueCat API for in-app purchases. Use when user mentions "RevenueCat",
   "in-app purchase", "subscription", or mobile monetization.
-vm0_secrets:
-  - REVENUECAT_TOKEN
 ---
 
 # RevenueCat API

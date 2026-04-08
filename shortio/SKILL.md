@@ -2,10 +2,6 @@
 name: shortio
 description: Short.io API for link shortening. Use when user mentions "Short.io",
   "link shortener", "short URL", or URL management.
-vm0_secrets:
-  - SHORTIO_TOKEN
-vm0_vars:
-  - SHORTIO_DOMAIN
 ---
 
 # Short.io

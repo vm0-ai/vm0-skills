@@ -2,8 +2,6 @@
 name: runway
 description: Runway ML API for AI video generation. Use when user mentions "Runway",
   "Runway ML", "AI video", "Gen-2", or video generation.
-vm0_secrets:
-  - RUNWAY_TOKEN
 ---
 
 # Runway API

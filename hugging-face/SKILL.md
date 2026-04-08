@@ -2,8 +2,6 @@
 name: hugging-face
 description: Hugging Face API for ML models. Use when user mentions "Hugging Face",
   "HF", "transformers", or asks about ML model inference.
-vm0_secrets:
-  - HUGGING_FACE_TOKEN
 ---
 
 # Hugging Face API

@@ -2,8 +2,6 @@
 name: productlane
 description: Productlane API for feedback management. Use when user mentions "Productlane",
   "feedback", "feature request", or product insights.
-vm0_secrets:
-  - PRODUCTLANE_TOKEN
 ---
 
 # Productlane API

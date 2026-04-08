@@ -2,11 +2,6 @@
 name: cloudinary
 description: Cloudinary API for image/video management. Use when user mentions "Cloudinary",
   "upload image", "transform image", or media assets.
-vm0_secrets:
-  - CLOUDINARY_TOKEN
-  - CLOUDINARY_API_SECRET
-vm0_vars:
-  - CLOUDINARY_CLOUD_NAME
 ---
 
 # Cloudinary Media Hosting

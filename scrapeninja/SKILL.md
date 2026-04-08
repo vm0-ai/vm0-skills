@@ -2,8 +2,6 @@
 name: scrapeninja
 description: ScrapeNinja API for web scraping. Use when user mentions "ScrapeNinja",
   "scrape", "web scraping", or data extraction.
-vm0_secrets:
-  - SCRAPENINJA_TOKEN
 ---
 
 # ScrapeNinja

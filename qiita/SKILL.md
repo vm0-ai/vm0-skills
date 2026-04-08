@@ -2,8 +2,6 @@
 name: qiita
 description: Qiita API for Japanese tech articles. Use when user mentions "Qiita",
   "Japanese tech blog", or asks about Qiita posts.
-vm0_secrets:
-  - QIITA_TOKEN
 ---
 
 # Qiita API

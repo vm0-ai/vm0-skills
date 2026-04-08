@@ -2,8 +2,6 @@
 name: zapsign
 description: ZapSign API for e-signatures. Use when user mentions "ZapSign", "e-signature",
   "sign document", or Brazilian e-signature.
-vm0_secrets:
-  - ZAPSIGN_TOKEN
 ---
 
 # ZapSign

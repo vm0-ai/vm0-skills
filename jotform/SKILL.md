@@ -2,8 +2,6 @@
 name: jotform
 description: JotForm API for form management. Use when user mentions "JotForm", "forms",
   "submissions", or asks about form data.
-vm0_secrets:
-  - JOTFORM_TOKEN
 ---
 
 # Jotform API

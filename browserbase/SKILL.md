@@ -2,9 +2,6 @@
 name: browserbase
 description: Browserbase API for headless browser automation. Use when user mentions
   "headless browser", "browser automation", or "Browserbase".
-vm0_secrets:
-  - BROWSERBASE_TOKEN
-  - BROWSERBASE_PROJECT_ID
 ---
 
 # Browserbase

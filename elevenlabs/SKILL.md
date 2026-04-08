@@ -2,8 +2,6 @@
 name: elevenlabs
 description: ElevenLabs API for text-to-speech and voice. Use when user mentions "ElevenLabs",
   "text to speech", "voice cloning", or "AI voice".
-vm0_secrets:
-  - ELEVENLABS_API_KEY
 ---
 
 # ElevenLabs API

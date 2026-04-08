@@ -2,8 +2,6 @@
 name: deepseek
 description: DeepSeek API for AI model inference. Use when user mentions "DeepSeek",
   "DeepSeek API", or asks about DeepSeek models.
-vm0_secrets:
-  - DEEPSEEK_API_KEY
 ---
 
 # DeepSeek API

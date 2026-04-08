@@ -1,8 +1,6 @@
 ---
 name: loops
 description: Loops email platform for SaaS. Use when user mentions "Loops", "Loops.so", "email marketing", "onboarding emails", "transactional email", or asks about SaaS lifecycle emails.
-vm0_secrets:
-  - LOOPS_TOKEN
 ---
 
 # Loops API

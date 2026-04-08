@@ -2,8 +2,6 @@
 name: resend
 description: Resend API for email delivery. Use when user mentions "Resend", "send
   email", "email API", or transactional email.
-vm0_secrets:
-  - RESEND_TOKEN
 ---
 
 # Resend Email API

@@ -2,10 +2,6 @@
 name: metabase
 description: Metabase API for business intelligence. Use when user mentions "Metabase",
   "dashboard", "BI", "SQL query", or data visualization.
-vm0_secrets:
-  - METABASE_TOKEN
-vm0_vars:
-  - METABASE_BASE_URL
 ---
 
 # Metabase API

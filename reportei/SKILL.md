@@ -2,8 +2,6 @@
 name: reportei
 description: Reportei API for marketing reports. Use when user mentions "Reportei",
   "marketing report", "digital marketing", or report automation.
-vm0_secrets:
-  - REPORTEI_TOKEN
 ---
 
 # Reportei

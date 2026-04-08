@@ -3,8 +3,6 @@ name: figma
 description: Figma API for design files and assets. Use when user mentions "Figma",
   "figma.com", shares a Figma link, "design specs", "export from Figma", or asks about
   designs.
-vm0_secrets:
-  - FIGMA_TOKEN
 ---
 
 # Figma API
