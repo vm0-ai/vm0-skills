@@ -2,6 +2,7 @@
 name: intervals-icu
 description: Intervals.icu API for fitness data. Use when user mentions "Intervals.icu",
   "cycling data", "fitness tracking", or workout analytics.
+
 ---
 
 # Intervals.icu API

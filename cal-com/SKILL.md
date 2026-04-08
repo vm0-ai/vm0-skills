@@ -1,6 +1,7 @@
 ---
 name: cal-com
 description: Cal.com open-source scheduling API. Use when user mentions "Cal.com", "cal.com", "open source scheduling", "booking", "event types", or asks about interview or meeting scheduling.
+
 ---
 
 # Cal.com API

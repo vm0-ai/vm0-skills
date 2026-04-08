@@ -3,6 +3,7 @@ name: reddit
 description: Reddit API for accessing discussions and content. Use when user mentions
   "Reddit", "reddit.com", shares a Reddit link, "subreddit", or asks about Reddit
   discussions.
+
 ---
 
 # Reddit

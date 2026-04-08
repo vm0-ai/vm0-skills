@@ -2,6 +2,7 @@
 name: minimax
 description: MiniMax API for AI models. Use when user mentions "MiniMax", "Chinese
   AI", or asks about MiniMax language models.
+
 ---
 
 # MiniMax API

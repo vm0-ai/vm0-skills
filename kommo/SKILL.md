@@ -2,6 +2,7 @@
 name: kommo
 description: Kommo (formerly amoCRM) API. Use when user mentions "Kommo", "amoCRM",
   "CRM", or sales pipeline management.
+
 ---
 
 # Kommo API

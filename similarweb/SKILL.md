@@ -2,6 +2,7 @@
 name: similarweb
 description: Similarweb API for web analytics. Use when user mentions "Similarweb",
   "website traffic", "competitor analysis", or market intelligence.
+
 ---
 
 # SimilarWeb API

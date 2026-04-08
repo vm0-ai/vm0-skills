@@ -2,6 +2,7 @@
 name: metabase
 description: Metabase API for business intelligence. Use when user mentions "Metabase",
   "dashboard", "BI", "SQL query", or data visualization.
+
 ---
 
 # Metabase API

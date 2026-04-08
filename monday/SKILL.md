@@ -2,6 +2,7 @@
 name: monday
 description: Monday.com API for work management. Use when user mentions "Monday.com",
   "monday.com", shares a Monday link, "Monday board", or asks about Monday workspace.
+
 ---
 
 # Monday.com API

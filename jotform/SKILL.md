@@ -2,6 +2,7 @@
 name: jotform
 description: JotForm API for form management. Use when user mentions "JotForm", "forms",
   "submissions", or asks about form data.
+
 ---
 
 # Jotform API

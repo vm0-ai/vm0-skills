@@ -2,6 +2,7 @@
 name: streak
 description: Streak CRM API for Gmail. Use when user mentions "Streak", "Gmail CRM",
   "email CRM", or pipeline in Gmail.
+
 ---
 
 # Streak CRM

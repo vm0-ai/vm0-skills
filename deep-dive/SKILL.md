@@ -11,6 +11,7 @@ description: Structured research and solution design workflow. Use when user men
 A two-phase workflow for technical research and solution design. Phase 1 gathers facts without suggesting solutions. Phase 2 explores multiple approaches based on those facts.
 
 All artifacts are written to `deep-dive/{task-name}/`.
+
 ---
 
 ## Operation: deep research

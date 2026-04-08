@@ -2,6 +2,7 @@
 name: bitrix
 description: Bitrix24 CRM API. Use when user mentions "Bitrix", "CRM", "Bitrix24 contacts",
   or asks about CRM management.
+
 ---
 
 # Bitrix24 API

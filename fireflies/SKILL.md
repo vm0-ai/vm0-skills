@@ -2,6 +2,7 @@
 name: fireflies
 description: Fireflies.ai API for meeting transcription. Use when user mentions "Fireflies",
   "meeting notes", "transcription", or "meeting summary".
+
 ---
 
 # Fireflies

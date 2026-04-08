@@ -2,6 +2,7 @@
 name: strava
 description: Strava API for fitness activities. Use when user mentions "Strava", "running",
   "cycling", "activity", or asks about fitness tracking.
+
 ---
 
 # Strava API

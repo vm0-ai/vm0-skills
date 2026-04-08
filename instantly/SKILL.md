@@ -2,6 +2,7 @@
 name: instantly
 description: Instantly.ai API for cold email campaigns. Use when user mentions "Instantly",
   "cold email", "email campaign", or outreach automation.
+
 ---
 
 # Instantly API

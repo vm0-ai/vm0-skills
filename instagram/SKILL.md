@@ -3,6 +3,7 @@ name: instagram
 description: Instagram API for posts and media. Use when user mentions "Instagram",
   "instagram.com", shares an IG link, "Instagram post", or asks about social media
   content.
+
 ---
 
 # Instagram API (Graph API)

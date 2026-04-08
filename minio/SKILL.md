@@ -2,6 +2,7 @@
 name: minio
 description: MinIO API for S3-compatible storage. Use when user mentions "MinIO",
   "S3 storage", "object storage", or self-hosted S3.
+
 ---
 
 # MinIO Object Storage

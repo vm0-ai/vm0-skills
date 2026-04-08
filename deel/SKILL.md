@@ -2,6 +2,7 @@
 name: deel
 description: Deel API for global payroll and contractors. Use when user mentions "Deel",
   "contractors", "global payroll", or "EOR".
+
 ---
 
 # Deel API

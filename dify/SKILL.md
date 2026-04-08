@@ -2,6 +2,7 @@
 name: dify
 description: Dify API for LLM app building. Use when user mentions "Dify", "LLM app",
   "AI workflow", or asks about Dify platform.
+
 ---
 
 # Dify API

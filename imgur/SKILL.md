@@ -2,6 +2,7 @@
 name: imgur
 description: Imgur API for image hosting. Use when user mentions "Imgur", "upload
   image", "image hosting", or asks about image sharing.
+
 ---
 
 # Imgur Image Hosting

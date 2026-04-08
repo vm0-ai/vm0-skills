@@ -2,6 +2,7 @@
 name: zapier
 description: Zapier API for workflow automation. Use when user mentions "Zapier",
   "zap", "automation", or asks about connecting apps.
+
 ---
 
 # Zapier AI Actions API

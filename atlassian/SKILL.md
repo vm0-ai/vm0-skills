@@ -2,6 +2,7 @@
 name: atlassian
 description: Atlassian API for Confluence and Jira. Use when user mentions "Confluence
   page", "Atlassian", or asks about wiki/documentation management.
+
 ---
 
 # Atlassian API

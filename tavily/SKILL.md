@@ -2,6 +2,7 @@
 name: tavily
 description: Tavily API for AI search. Use when user mentions "Tavily", "AI search",
   "research", or asks for cited search results.
+
 ---
 
 # Tavily Search API

@@ -9,6 +9,7 @@ description: Hacker News API for stories and comments. Use when user mentions "H
 Use the official Hacker News API via direct `curl` calls to **fetch stories, comments, and user data**.
 
 > Official docs: `https://github.com/HackerNews/API`
+
 ---
 
 ## When to Use

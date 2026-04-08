@@ -2,6 +2,7 @@
 name: plausible
 description: Plausible Analytics API for privacy-friendly stats. Use when user mentions
   "Plausible", "analytics", "page views", or website stats.
+
 ---
 
 # Plausible Analytics API

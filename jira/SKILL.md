@@ -2,6 +2,7 @@
 name: jira
 description: Jira API for issue tracking. Use when user mentions "Jira", "create ticket",
   "Jira issue", "sprint", or asks about Atlassian project management.
+
 ---
 
 # Jira API

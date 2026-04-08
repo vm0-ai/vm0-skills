@@ -2,6 +2,7 @@
 name: zeptomail
 description: ZeptoMail API for transactional email. Use when user mentions "ZeptoMail",
   "transactional email", "send email", or Zoho email.
+
 ---
 
 # Zoho ZeptoMail

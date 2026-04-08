@@ -2,6 +2,7 @@
 name: qiita
 description: Qiita API for Japanese tech articles. Use when user mentions "Qiita",
   "Japanese tech blog", or asks about Qiita posts.
+
 ---
 
 # Qiita API

@@ -3,6 +3,7 @@ name: google-calendar
 description: Google Calendar API for scheduling. Use when user mentions "calendar",
   "calendar.google.com", shares a calendar link, "schedule meeting", "check availability",
   or "when am I free".
+
 ---
 
 # Google Calendar API

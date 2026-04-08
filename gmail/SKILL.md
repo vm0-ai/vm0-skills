@@ -2,6 +2,7 @@
 name: gmail
 description: Gmail API for email management. Use when user says "check email", "send
   email", "search Gmail", "my inbox", or mentions Gmail messages.
+
 ---
 
 # Gmail API

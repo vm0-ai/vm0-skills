@@ -3,6 +3,7 @@ name: slack
 description: Slack API for messages and channels. Use when user mentions "Slack",
   "slack.com", shares a Slack link, "send to Slack", "Slack channel", or asks about
   workspace.
+
 ---
 
 # Slack API

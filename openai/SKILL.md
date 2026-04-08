@@ -2,6 +2,7 @@
 name: openai
 description: OpenAI API for GPT models. Use when user mentions "OpenAI", "GPT", "ChatGPT
   API", or asks about OpenAI models (do NOT use for Anthropic/Claude).
+
 ---
 
 # OpenAI API

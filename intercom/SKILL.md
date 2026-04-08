@@ -2,6 +2,7 @@
 name: intercom
 description: Intercom API for customer messaging. Use when user mentions "Intercom",
   "customer chat", "messaging", or asks about Intercom conversations.
+
 ---
 
 # Intercom API

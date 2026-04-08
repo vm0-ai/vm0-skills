@@ -1,6 +1,7 @@
 ---
 name: brevo
 description: Brevo email and SMS marketing platform. Use when user mentions "Brevo", "Sendinblue", "email campaigns", "SMS marketing", "contact lists", or asks about multi-channel marketing.
+
 ---
 
 # Brevo API

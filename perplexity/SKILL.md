@@ -2,6 +2,7 @@
 name: perplexity
 description: Perplexity API for AI search. Use when user mentions "Perplexity", "AI
   search", or asks to search with citations.
+
 ---
 
 # Perplexity AI

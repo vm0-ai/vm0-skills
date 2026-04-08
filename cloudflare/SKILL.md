@@ -2,6 +2,7 @@
 name: cloudflare
 description: Cloudflare API for DNS and zone management. Use when user mentions "Cloudflare",
   "DNS record", "zone", or "CDN settings".
+
 ---
 
 # Cloudflare

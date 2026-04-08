@@ -2,6 +2,7 @@
 name: deepseek
 description: DeepSeek API for AI model inference. Use when user mentions "DeepSeek",
   "DeepSeek API", or asks about DeepSeek models.
+
 ---
 
 # DeepSeek API

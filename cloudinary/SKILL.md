@@ -2,6 +2,7 @@
 name: cloudinary
 description: Cloudinary API for image/video management. Use when user mentions "Cloudinary",
   "upload image", "transform image", or media assets.
+
 ---
 
 # Cloudinary Media Hosting

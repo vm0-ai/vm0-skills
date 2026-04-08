@@ -2,6 +2,7 @@
 name: bright-data
 description: Bright Data proxy and web scraping API. Use when user mentions "Bright
   Data", "proxy", "web scraping at scale", or data collection.
+
 ---
 
 # Bright Data Web Scraper API
