@@ -6,9 +6,9 @@ description: Vercel API for deployments. Use when user mentions "Vercel", "verce
 
 # Vercel API
 
-Use the Vercel API via direct `curl` calls to manage **deployments, projects, domains, environment variables, and webhooks**.
+Manage projects, deployments, domains, environment variables, edge config, teams, and webhooks via the Vercel REST API.
 
-> Official docs: `https://vercel.com/docs/rest-api`
+> Official docs: https://vercel.com/docs/rest-api
 
 ---
 
@@ -16,301 +16,597 @@ Use the Vercel API via direct `curl` calls to manage **deployments, projects, do
 
 Use this skill when you need to:
 
-- **List and manage projects** - view, create, delete, and configure projects
-- **Monitor and control deployments** - list, redeploy, promote to production, cancel, and view build logs
-- **Manage domains** - list, add, and remove domains from projects
-- **Handle environment variables** - list, create, and delete env vars
-- **Manage webhooks** - create, list, and delete webhooks for deployment events
+- List and manage projects
+- Monitor, redeploy, promote, and cancel deployments
+- Manage domains and DNS records
+- Handle environment variables
+- Manage Edge Config stores
+- Configure teams and members
+- Manage webhooks and log drains
 
 ---
 
 ## Prerequisites
 
-
-Verify authentication:
-
-```bash
-curl -s "https://api.vercel.com/v2/user" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.user | {id, username, email}'
-```
-
----
-
-
-## How to Use
-
-All examples below assume `VERCEL_TOKEN` is set.
+Connect Vercel via the vm0 connector. The access token is provided as `$VERCEL_TOKEN`.
 
 Base URL: `https://api.vercel.com`
 
 ---
 
-### 1. Get Current User
+## User
 
-Get the authenticated user's profile:
+### Get Current User
 
 ```bash
-curl -s "https://api.vercel.com/v2/user" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.user | {id, username, email, name}'
+curl -s "https://api.vercel.com/v2/user" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### List Auth Tokens
+
+```bash
+curl -s "https://api.vercel.com/v6/user/tokens" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 2. List Projects
+## Projects
 
-Get all projects:
+### List Projects
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.projects[] | {id, name, framework, updatedAt}'
+curl -s "https://api.vercel.com/v10/projects" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Get Project
+
+```bash
+curl -s "https://api.vercel.com/v9/projects/<project-name>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+Use project name or ID.
+
+### Create Project
+
+```bash
+curl -s -X POST "https://api.vercel.com/v11/projects" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"my-new-project\", \"framework\": \"nextjs\"}"
+```
+
+Only `name` is required. Optional: `framework`, `buildCommand`, `outputDirectory`, `rootDirectory`, `installCommand`.
+
+### Update Project
+
+```bash
+curl -s -X PATCH "https://api.vercel.com/v9/projects/<project-name>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"buildCommand\": \"next build\", \"outputDirectory\": \".next\"}"
+```
+
+### Delete Project
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v9/projects/<project-name>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+Returns 204 on success. Permanently deletes the project and all its deployments.
+
+### Pause Project
+
+```bash
+curl -s -X POST "https://api.vercel.com/v1/projects/<project-id>/pause" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Unpause Project
+
+```bash
+curl -s -X POST "https://api.vercel.com/v1/projects/<project-id>/unpause" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 3. Get Project Details
+## Deployments
 
-Get details for a specific project:
-
-> **Note:** Replace `my-project` with your actual project name or ID from the "List Projects" output.
+### List Deployments
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects/my-project" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, name, framework, nodeVersion, buildCommand, outputDirectory}'
+curl -s "https://api.vercel.com/v6/deployments?limit=10" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+Params: `limit`, `projectId`, `state` (BUILDING/READY/ERROR/QUEUED/CANCELED), `target` (production/preview), `until` (pagination timestamp).
+
+### List Deployments for a Project
+
+```bash
+curl -s "https://api.vercel.com/v6/deployments?projectId=<project-name>&limit=10" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Get Deployment
+
+```bash
+curl -s "https://api.vercel.com/v13/deployments/<deployment-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Get Build Logs
+
+```bash
+curl -s "https://api.vercel.com/v3/deployments/<deployment-id>/events?limit=-1" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+Use `limit=-1` to get all log events.
+
+### Get Runtime Logs
+
+```bash
+curl -s "https://api.vercel.com/v1/projects/<project-id>/deployments/<deployment-id>/runtime-logs" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Create Deployment (Redeploy)
+
+```bash
+curl -s -X POST "https://api.vercel.com/v13/deployments" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"my-project\", \"deploymentId\": \"<prev-deployment-id>\", \"target\": \"production\"}"
+```
+
+### Promote to Production (Rollback)
+
+```bash
+curl -s -X POST "https://api.vercel.com/v10/projects/<project-id>/promote/<deployment-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Cancel Deployment
+
+Only works for BUILDING or QUEUED deployments.
+
+```bash
+curl -s -X PATCH "https://api.vercel.com/v12/deployments/<deployment-id>/cancel" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Delete Deployment
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v13/deployments/<deployment-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### List Deployment Aliases
+
+```bash
+curl -s "https://api.vercel.com/v2/deployments/<deployment-id>/aliases" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 4. Create Project
+## Domains
 
-Create a new project:
+### List Domains
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v11/projects" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"name":"my-new-project","framework":"nextjs"}' | jq '{id, name, framework}'
+curl -s "https://api.vercel.com/v5/domains" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
-Only `name` is required. Optional fields: `framework`, `buildCommand`, `outputDirectory`, `rootDirectory`, `installCommand`.
-
----
-
-### 5. Delete Project
-
-Delete a project:
-
-> **Warning:** This permanently deletes the project and all its deployments.
-
-> **Note:** Replace `my-project` with the project name or ID.
+### Get Domain
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
+curl -s "https://api.vercel.com/v5/domains/<domain>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
-Returns `204 No Content` on success.
-
----
-
-### 6. List Deployments
-
-Get recent deployments:
+### Get Domain Config
 
 ```bash
-curl -s "https://api.vercel.com/v6/deployments?limit=10" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.deployments[] | {uid, name, url, state, created: .created}'
+curl -s "https://api.vercel.com/v6/domains/<domain>/config" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
-### 7. List Deployments for a Project
-
-Get deployments for a specific project:
-
-> **Note:** Replace `my-project` with your actual project name or ID.
+### Add Domain
 
 ```bash
-curl -s "https://api.vercel.com/v6/deployments?projectId=my-project&limit=10" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.deployments[] | {uid, url, state, created: .created}'
+curl -s -X POST "https://api.vercel.com/v7/domains" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"example.com\"}"
 ```
 
----
-
-### 8. Get Deployment Details
-
-Get details for a specific deployment:
-
-> **Note:** Replace `dpl_xxx` with an actual deployment ID from the "List Deployments" output.
+### Update Domain
 
 ```bash
-curl -s "https://api.vercel.com/v13/deployments/dpl_xxx" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, url, state, readyState, createdAt, buildingAt, ready}'
+curl -s -X PATCH "https://api.vercel.com/v3/domains/<domain>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"op\": \"update\", \"redirectTarget\": \"www.example.com\"}"
+```
+
+### Delete Domain
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v6/domains/<domain>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 9. Get Deployment Build Logs
+## Project Domains
 
-Get build logs for a deployment:
-
-> **Note:** Replace `dpl_xxx` with an actual deployment ID. Use `limit=-1` to get all logs.
+### List Project Domains
 
 ```bash
-curl -s "https://api.vercel.com/v3/deployments/dpl_xxx/events?limit=-1" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.[] | select(.type == "command" or .type == "stdout" or .type == "stderr") | {type, text}'
+curl -s "https://api.vercel.com/v9/projects/<project-name>/domains" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Add Domain to Project
+
+```bash
+curl -s -X POST "https://api.vercel.com/v10/projects/<project-name>/domains" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"example.com\"}"
+```
+
+### Verify Project Domain
+
+```bash
+curl -s -X POST "https://api.vercel.com/v9/projects/<project-name>/domains/<domain>/verify" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Update Project Domain
+
+```bash
+curl -s -X PATCH "https://api.vercel.com/v9/projects/<project-name>/domains/<domain>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"redirect\": \"www.example.com\", \"redirectStatusCode\": 301}"
+```
+
+### Remove Domain from Project
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v9/projects/<project-name>/domains/<domain>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 10. Redeploy a Deployment
+## DNS Records
 
-Trigger a redeployment of a previous deployment:
-
-> **Note:** Replace `my-project` with your project name and `dpl_xxx` with the deployment ID to redeploy.
+### List DNS Records
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v13/deployments" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"name":"my-project","deploymentId":"dpl_xxx","target":"production"}' | jq '{id, url, readyState, target}'
+curl -s "https://api.vercel.com/v5/domains/<domain>/records" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
-Add `"withLatestCommit": true` to force using the latest commit instead of the original deployment's commit.
-
----
-
-### 11. Promote Deployment to Production
-
-Point all production domains to a specific deployment (rollback):
-
-> **Note:** Replace `prj_xxx` with your project ID and `dpl_xxx` with the deployment ID to promote.
+### Create DNS Record
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v1/projects/prj_xxx/rollback/dpl_xxx" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
+curl -s -X POST "https://api.vercel.com/v2/domains/<domain>/records" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"www\", \"type\": \"CNAME\", \"value\": \"cname.vercel-dns.com\"}"
 ```
 
-Returns `201 Created` on success.
-
----
-
-### 12. Cancel Deployment
-
-Cancel a deployment that is currently `BUILDING` or `QUEUED`. Deployments already in `READY` state cannot be canceled.
-
-> **Note:** Replace `dpl_xxx` with an actual deployment ID of a building/queued deployment.
+### Delete DNS Record
 
 ```bash
-curl -s -X PATCH "https://api.vercel.com/v12/deployments/dpl_xxx/cancel" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, readyState}'
+curl -s -X DELETE "https://api.vercel.com/v2/domains/<domain>/records/<record-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 13. List Domains
+## Environment Variables
 
-Get all domains:
+### List Project Env Vars
 
 ```bash
-curl -s "https://api.vercel.com/v5/domains" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.domains[] | {name, verified, createdAt}'
+curl -s "https://api.vercel.com/v10/projects/<project-name>/env" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Get Env Var
+
+```bash
+curl -s "https://api.vercel.com/v1/projects/<project-name>/env/<env-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Create Env Var
+
+```bash
+curl -s -X POST "https://api.vercel.com/v10/projects/<project-name>/env" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"key\": \"MY_VAR\", \"value\": \"my-value\", \"type\": \"encrypted\", \"target\": [\"production\", \"preview\", \"development\"]}"
+```
+
+`type`: `plain`, `encrypted`, `secret`, `sensitive`. `target`: `production`, `preview`, `development`.
+
+### Update Env Var
+
+```bash
+curl -s -X PATCH "https://api.vercel.com/v9/projects/<project-name>/env/<env-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"value\": \"new-value\", \"target\": [\"production\"]}"
+```
+
+### Delete Env Var
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v9/projects/<project-name>/env/<env-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 14. List Project Domains
+## Edge Config
 
-Get domains configured for a specific project:
-
-> **Note:** Replace `my-project` with your actual project name or ID.
+### List Edge Configs
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects/my-project/domains" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.domains[] | {name, redirect, gitBranch}'
+curl -s "https://api.vercel.com/v1/edge-config" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Get Edge Config
+
+```bash
+curl -s "https://api.vercel.com/v1/edge-config/<edge-config-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Create Edge Config
+
+```bash
+curl -s -X POST "https://api.vercel.com/v1/edge-config" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"slug\": \"my-edge-config\"}"
+```
+
+### Update Edge Config Items
+
+```bash
+curl -s -X PATCH "https://api.vercel.com/v1/edge-config/<edge-config-id>/items" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"items\": [{\"operation\": \"upsert\", \"key\": \"greeting\", \"value\": \"hello\"}]}"
+```
+
+Operations: `upsert`, `delete`.
+
+### Get Edge Config Items
+
+```bash
+curl -s "https://api.vercel.com/v1/edge-config/<edge-config-id>/items" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Get Single Item
+
+```bash
+curl -s "https://api.vercel.com/v1/edge-config/<edge-config-id>/item/<key>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Delete Edge Config
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v1/edge-config/<edge-config-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 15. Add Domain to Project
+## Teams
 
-Add a domain to a project:
-
-> **Note:** Replace `my-project` with your project name or ID and `example.com` with the domain to add.
+### List Teams
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v10/projects/my-project/domains" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"name":"example.com"}' | jq '{name, verified, verification}'
+curl -s "https://api.vercel.com/v2/teams" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
-If `verified` is `false`, complete the DNS verification challenge shown in the `verification` array.
-
----
-
-### 16. Remove Domain from Project
-
-Remove a domain from a project:
-
-> **Note:** Replace `my-project` with your project name or ID and `example.com` with the domain.
+### Get Team
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project/domains/example.com" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
+curl -s "https://api.vercel.com/v2/teams/<team-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
-### 17. List Environment Variables
-
-Get environment variables for a project:
-
-> **Note:** Replace `my-project` with your actual project name or ID.
+### Create Team
 
 ```bash
-curl -s "https://api.vercel.com/v9/projects/my-project/env" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.envs[] | {id, key, target, type}'
+curl -s -X POST "https://api.vercel.com/v1/teams" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"slug\": \"my-team\", \"name\": \"My Team\"}"
 ```
 
----
-
-### 18. Create Environment Variable
-
-Add an environment variable to a project:
-
-> **Note:** Replace `my-project` with your actual project name or ID.
+### Update Team
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v10/projects/my-project/env" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"key":"MY_VAR","value":"my-value","type":"encrypted","target":["production","preview","development"]}' | jq '.created | {key, target, type}'
+curl -s -X PATCH "https://api.vercel.com/v2/teams/<team-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Updated Team Name\"}"
 ```
 
----
-
-### 19. Delete Environment Variable
-
-Delete an environment variable from a project:
-
-> **Note:** Replace `my-project` with the project name or ID. Get the env var `id` from "List Environment Variables" output.
+### List Team Members
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v9/projects/my-project/env/xxx" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '{id, key}'
+curl -s "https://api.vercel.com/v3/teams/<team-id>/members" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
-### 20. List Webhooks
-
-Get all webhooks:
+### Invite Team Member
 
 ```bash
-curl -s "https://api.vercel.com/v1/webhooks" -H "Authorization: Bearer $VERCEL_TOKEN" | jq '.[] | {id, url, events, projectIds}'
+curl -s -X POST "https://api.vercel.com/v2/teams/<team-id>/members" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"email\": \"user@example.com\", \"role\": \"MEMBER\"}"
+```
+
+Roles: `OWNER`, `MEMBER`, `VIEWER`, `DEVELOPER`, `BILLING`.
+
+### Remove Team Member
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v1/teams/<team-id>/members/<uid>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
 ---
 
-### 21. Create Webhook
+## Webhooks
 
-Create a webhook for deployment events:
-
-> **Note:** Replace the `url` with your webhook endpoint. Optionally scope to specific projects with `projectIds`.
+### List Webhooks
 
 ```bash
-curl -s -X POST "https://api.vercel.com/v1/webhooks" -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" -d '{"url":"https://example.com/webhook","events":["deployment.created","deployment.succeeded","deployment.error"]}' | jq '{id, url, events, secret}'
+curl -s "https://api.vercel.com/v1/webhooks" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
-The `secret` is only returned at creation time. Save it to verify webhook payloads via the `x-vercel-signature` header.
+### Get Webhook
+
+```bash
+curl -s "https://api.vercel.com/v1/webhooks/<webhook-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Create Webhook
+
+```bash
+curl -s -X POST "https://api.vercel.com/v1/webhooks" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"url\": \"https://example.com/webhook\", \"events\": [\"deployment.created\", \"deployment.succeeded\", \"deployment.error\"]}"
+```
 
 Common events: `deployment.created`, `deployment.succeeded`, `deployment.error`, `deployment.canceled`, `deployment.ready`, `project.created`, `project.removed`.
 
----
+The `secret` is only returned at creation time — save it to verify webhook payloads.
 
-### 22. Delete Webhook
-
-Delete a webhook:
-
-> **Note:** Replace `hook_xxx` with the webhook ID from "List Webhooks" output.
+### Delete Webhook
 
 ```bash
-curl -s -X DELETE "https://api.vercel.com/v1/webhooks/hook_xxx" -H "Authorization: Bearer $VERCEL_TOKEN" -w "\nHTTP Status: %{http_code}\n"
+curl -s -X DELETE "https://api.vercel.com/v1/webhooks/<webhook-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
-Returns `204 No Content` on success.
+---
+
+## Log Drains
+
+### List Log Drains
+
+```bash
+curl -s "https://api.vercel.com/v1/log-drains" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Create Log Drain
+
+```bash
+curl -s -X POST "https://api.vercel.com/v1/log-drains" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"My Drain\", \"type\": \"json\", \"url\": \"https://example.com/logs\", \"sources\": [\"static\", \"lambda\", \"edge\", \"build\"]}"
+```
+
+`type`: `json`, `ndjson`, `syslog`. `sources`: `static`, `lambda`, `edge`, `build`, `external`.
+
+### Delete Log Drain
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v1/log-drains/<id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+---
+
+## Aliases
+
+### List Aliases
+
+```bash
+curl -s "https://api.vercel.com/v4/aliases" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Get Alias
+
+```bash
+curl -s "https://api.vercel.com/v4/aliases/<alias-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Assign Alias to Deployment
+
+```bash
+curl -s -X POST "https://api.vercel.com/v2/deployments/<deployment-id>/aliases" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"alias\": \"my-alias.vercel.app\"}"
+```
+
+### Delete Alias
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v2/aliases/<alias-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+---
+
+## Certificates
+
+### Get Certificate
+
+```bash
+curl -s "https://api.vercel.com/v8/certs/<cert-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
+
+### Issue Certificate
+
+```bash
+curl -s -X POST "https://api.vercel.com/v8/certs" \
+  --header "Authorization: Bearer $VERCEL_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"domains\": [\"example.com\"]}"
+```
+
+### Delete Certificate
+
+```bash
+curl -s -X DELETE "https://api.vercel.com/v8/certs/<cert-id>" \
+  --header "Authorization: Bearer $VERCEL_TOKEN"
+```
 
 ---
 
@@ -318,16 +614,30 @@ Returns `204 No Content` on success.
 
 | State | Description |
 |-------|-------------|
+| `QUEUED` | Waiting to build |
 | `BUILDING` | Build in progress |
 | `READY` | Deployment is live |
 | `ERROR` | Build or deployment failed |
 | `CANCELED` | Deployment was canceled |
-| `QUEUED` | Waiting to build |
 
 ---
 
 ## Guidelines
 
-1. **Pagination**: Use `?limit=N&until=<timestamp>` for paginated results
-2. **Rate limits**: Vercel has rate limits; implement backoff for 429 responses
-3. **Project references**: You can use either project ID or project name in most endpoints
+1. **Pagination**: Use `?limit=N&until=<timestamp>` for paginated results. The `until` value comes from the last item's timestamp.
+2. **Project references**: Most endpoints accept project name or project ID as `{idOrName}`.
+3. **API versioning**: Vercel uses per-endpoint versioning (e.g., `/v10/projects`, `/v13/deployments`). Always use the version shown in this document.
+4. **Rate limits**: Back off on 429 responses. Use `Retry-After` header.
+5. **Team scope**: For team resources, add `?teamId=<team-id>` query param or use team tokens.
+6. **Environment targets**: Env vars can target `production`, `preview`, `development`, or any combination.
+7. **Edge Config**: Use Edge Config for feature flags and runtime configuration that needs to be read at the edge with zero latency.
+
+---
+
+## How to Look Up More API Details
+
+- **REST API Reference**: https://vercel.com/docs/rest-api
+- **Endpoints**: https://vercel.com/docs/rest-api/endpoints
+- **Authentication**: https://vercel.com/docs/rest-api/authentication
+- **Edge Config**: https://vercel.com/docs/edge-config
+- **Webhooks**: https://vercel.com/docs/webhooks
