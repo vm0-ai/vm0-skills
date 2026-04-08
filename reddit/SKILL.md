@@ -17,7 +17,59 @@ Access Reddit discussions, posts, and content through the Reddit API.
 
 ## Authentication
 
-This connector uses OAuth to authenticate with your Reddit account. The following scopes are requested:
+The `REDDIT_TOKEN` environment variable is automatically injected by the connector via OAuth.
 
-- `identity` — Access your Reddit identity
-- `read` — Read content from Reddit
+> **Important:** When using `$(printenv REDDIT_TOKEN)` in commands that contain a pipe (`|`), always use `$(printenv ...)` syntax — a known Claude Code issue silently clears `$VAR` references in pipelines.
+
+## Core APIs
+
+### Get Current User
+
+```bash
+curl -s "https://oauth.reddit.com/api/v1/me" -H "Authorization: Bearer $(printenv REDDIT_TOKEN)" -H "User-Agent: vm0:skill:v1" | jq '{name, total_karma, created_utc}'
+```
+
+### Search Posts
+
+Search Reddit for posts matching a query:
+
+```bash
+curl -s "https://oauth.reddit.com/search?q=<query>&sort=relevance&limit=10" -H "Authorization: Bearer $(printenv REDDIT_TOKEN)" -H "User-Agent: vm0:skill:v1" | jq '.data.children[] | {title: .data.title, subreddit: .data.subreddit, score: .data.score, url: .data.url}'
+```
+
+Replace `<query>` with your search term (URL-encoded).
+
+### Get Subreddit Posts
+
+Get hot/new/top posts from a subreddit:
+
+```bash
+curl -s "https://oauth.reddit.com/r/<subreddit>/hot?limit=10" -H "Authorization: Bearer $(printenv REDDIT_TOKEN)" -H "User-Agent: vm0:skill:v1" | jq '.data.children[] | {title: .data.title, score: .data.score, num_comments: .data.num_comments, url: .data.url}'
+```
+
+Replace `<subreddit>` with the subreddit name (e.g., `programming`). Change `hot` to `new`, `top`, or `rising` for different sorts.
+
+### Get Post Comments
+
+```bash
+curl -s "https://oauth.reddit.com/r/<subreddit>/comments/<post-id>?limit=10" -H "Authorization: Bearer $(printenv REDDIT_TOKEN)" -H "User-Agent: vm0:skill:v1" | jq '.[1].data.children[] | {author: .data.author, body: .data.body, score: .data.score}'
+```
+
+Replace `<subreddit>` and `<post-id>` with the actual values.
+
+### Get Subreddit Info
+
+```bash
+curl -s "https://oauth.reddit.com/r/<subreddit>/about" -H "Authorization: Bearer $(printenv REDDIT_TOKEN)" -H "User-Agent: vm0:skill:v1" | jq '{name: .data.display_name, title: .data.title, subscribers: .data.subscribers, description: .data.public_description}'
+```
+
+## Guidelines
+
+1. **User-Agent required**: Reddit API requires a `User-Agent` header on all requests
+2. **Rate limits**: OAuth clients get 60 requests per minute. Check `X-Ratelimit-Remaining` header
+3. **Listing pagination**: Use `after` parameter with the `name` field of the last item (e.g., `after=t3_abc123`)
+4. **OAuth scopes**: This connector has `identity` (read user info) and `read` (read content) scopes
+
+## API Reference
+
+- Docs: https://www.reddit.com/dev/api/
