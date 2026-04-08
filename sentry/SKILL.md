@@ -180,15 +180,6 @@ curl -s -X DELETE "https://sentry.io/api/0/organizations/<org-slug>/issues/<issu
 
 ## Events
 
-### Get Latest Event for Issue
-
-> **Note:** This endpoint is documented by Sentry but may not be in the OpenAPI spec. If it returns a firewall error, use List Issue Events with `limit=1` instead.
-
-```bash
-curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/events/latest/" \
-  --header "Authorization: Bearer $SENTRY_TOKEN"
-```
-
 ### List Issue Events
 
 ```bash
