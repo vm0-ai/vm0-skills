@@ -2,7 +2,6 @@
 name: pushinator
 description: Pushinator API for push notifications. Use when user mentions "Pushinator",
   "push notification", "web push", or notifications.
-
 ---
 
 # Pushinator API

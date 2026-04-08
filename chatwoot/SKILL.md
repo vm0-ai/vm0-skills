@@ -2,7 +2,6 @@
 name: chatwoot
 description: Chatwoot API for customer support. Use when user mentions "Chatwoot",
   "conversations", "support chat", or customer messaging.
-
 ---
 
 # Chatwoot

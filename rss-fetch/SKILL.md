@@ -8,7 +8,6 @@ description: RSS feed API for fetching news and articles. Use when user mentions
 Use `curl` to **fetch and parse RSS/Atom feeds** from any source.
 
 > RSS feeds return XML that can be parsed with `xmllint` or converted to JSON.
-
 ---
 
 ## When to Use

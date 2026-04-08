@@ -4,7 +4,6 @@ description: VM0 migration helper for Claude Code workflows. Use when user says 
 ---
 
 # Local Claude Code Workflow to VM0 Migration
-
 ---
 
 ## When to Use This Skill

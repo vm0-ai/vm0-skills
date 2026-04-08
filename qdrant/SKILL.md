@@ -2,7 +2,6 @@
 name: qdrant
 description: Qdrant API for vector search. Use when user mentions "Qdrant", "vector
   database", "semantic search", or embeddings storage.
-
 ---
 
 # Qdrant API

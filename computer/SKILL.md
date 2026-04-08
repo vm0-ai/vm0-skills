@@ -3,7 +3,6 @@ name: computer
 description: Computer connector for exposing local services to remote sandboxes via
   authenticated ngrok tunnels. Use when user mentions "computer use", "tunnel",
   "ngrok", "expose local", or needs to bridge local services to a sandbox.
-
 ---
 
 # Computer Connector

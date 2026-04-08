@@ -14,7 +14,6 @@ AgentPhone is an API-first telephony platform for AI agents. Give your agents ph
 **Docs:** [docs.agentphone.to](https://docs.agentphone.to)
 
 **Console:** [agentphone.to](https://agentphone.to)
-
 ---
 
 ## How It Works

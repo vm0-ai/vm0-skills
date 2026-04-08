@@ -2,7 +2,6 @@
 name: explorium
 description: Explorium API for external data enrichment. Use when user mentions "Explorium",
   "data enrichment", "business data", or external datasets.
-
 ---
 
 # Explorium API

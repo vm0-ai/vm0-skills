@@ -2,7 +2,6 @@
 name: shortio
 description: Short.io API for link shortening. Use when user mentions "Short.io",
   "link shortener", "short URL", or URL management.
-
 ---
 
 # Short.io

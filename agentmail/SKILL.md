@@ -2,7 +2,6 @@
 name: agentmail
 description: AgentMail API for email inboxes. Use when user says "create email inbox",
   "send email", "check messages", or mentions "agentmail" or email for agents.
-
 ---
 
 # AgentMail API

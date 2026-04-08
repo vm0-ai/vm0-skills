@@ -66,7 +66,6 @@ arr_col @> ARRAY['val']
 - Prefer `EXISTS` over `IN` for correlated lookups
 - Consider partial indexes for frequently used filter predicates
 - Deploy connection pooling when handling concurrent workloads
-
 ---
 
 ### Snowflake

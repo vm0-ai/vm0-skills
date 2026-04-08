@@ -2,7 +2,6 @@
 name: brave-search
 description: Brave Search API for web search. Use when user says "search web", "Brave
   search", or asks to "find on web" without specifying Google.
-
 ---
 
 # Brave Search API

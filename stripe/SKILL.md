@@ -2,7 +2,6 @@
 name: stripe
 description: Stripe API for payments. Use when user mentions "Stripe", "payment",
   "subscription", "billing", "invoice", or asks about payment processing.
-
 ---
 
 # Stripe API

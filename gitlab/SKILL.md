@@ -2,7 +2,6 @@
 name: gitlab
 description: GitLab API for repos and CI/CD. Use when user mentions "GitLab", "gitlab.com",
   shares a GitLab link, "GitLab repo", or asks about GitLab projects.
-
 ---
 
 # GitLab API

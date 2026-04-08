@@ -2,7 +2,6 @@
 name: mercury
 description: Mercury API for banking. Use when user mentions "Mercury", "business
   banking", "bank account", or fintech operations.
-
 ---
 
 # Mercury Banking API

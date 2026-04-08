@@ -2,7 +2,6 @@
 name: mailchimp
 description: Mailchimp API for email marketing. Use when user mentions "Mailchimp",
   "email campaign", "newsletter", or marketing automation.
-
 ---
 
 # Mailchimp Marketing API

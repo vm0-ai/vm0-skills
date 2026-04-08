@@ -3,7 +3,6 @@ name: google-sheets
 description: Google Sheets API for spreadsheets. Use when user mentions "Google Sheets",
   "sheets.google.com", shares a spreadsheet link, "update sheet", or asks about Excel/Sheets
   data.
-
 ---
 
 # Google Sheets API

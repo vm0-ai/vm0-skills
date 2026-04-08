@@ -2,7 +2,6 @@
 name: pdfco
 description: PDF.co API for PDF processing. Use when user mentions "PDF.co", "extract
   PDF", "parse PDF", or PDF automation.
-
 ---
 
 # PDF.co

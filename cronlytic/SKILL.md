@@ -2,7 +2,6 @@
 name: cronlytic
 description: Cronlytic API for cron job monitoring. Use when user mentions "cron job",
   "scheduled task monitoring", or "Cronlytic".
-
 ---
 
 # Cronlytic

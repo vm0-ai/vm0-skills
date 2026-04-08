@@ -2,7 +2,6 @@
 name: sentry
 description: Sentry API for error tracking. Use when user mentions "Sentry", "error
   tracking", "crash report", "exceptions", or asks about monitoring errors.
-
 ---
 
 # Sentry API

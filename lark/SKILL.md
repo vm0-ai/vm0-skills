@@ -2,7 +2,6 @@
 name: lark
 description: Lark/Feishu API for collaboration. Use when user mentions "Lark", "Feishu",
   "Lark docs", or asks about ByteDance workspace tools.
-
 ---
 
 # Lark (Feishu) API

@@ -2,7 +2,6 @@
 name: htmlcsstoimage
 description: HTML/CSS to Image API for rendering. Use when user mentions "HTML to
   image", "render HTML", "screenshot", or "convert to image".
-
 ---
 
 # HTMLCSStoImage API

@@ -2,7 +2,6 @@
 name: wrike
 description: Wrike API for project management. Use when user mentions "Wrike", "wrike.com",
   shares a Wrike link, "Wrike task", or asks about Wrike workspace.
-
 ---
 
 # Wrike API

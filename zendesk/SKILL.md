@@ -2,7 +2,6 @@
 name: zendesk
 description: Zendesk API for customer support. Use when user mentions "Zendesk", "support
   ticket", "customer service", or help desk.
-
 ---
 
 # Zendesk API

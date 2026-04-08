@@ -2,7 +2,6 @@
 name: fal
 description: Fal.ai API for AI image and video generation. Use when user mentions
   "Fal.ai", "AI image generation", "video generation", or "fal" models.
-
 ---
 
 # fal.ai Image Generator

@@ -2,7 +2,6 @@
 name: axiom
 description: Axiom observability API for logs and analytics. Use when user mentions
   "logs", "query logs", "Axiom", or asks about event analytics.
-
 ---
 
 # Axiom
