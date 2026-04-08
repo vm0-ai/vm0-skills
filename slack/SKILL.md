@@ -705,9 +705,30 @@ Returns workspace, user, and bot info for the token. Useful for verifying connec
 
 ---
 
+## Admin API (Enterprise Grid Only)
+
+The `admin.*` methods (100+ endpoints) are only available on Slack Enterprise Grid plans. They cover:
+
+- **admin.conversations** — manage channels across an Enterprise org (create, archive, set teams, bulk move)
+- **admin.users** — manage users across workspaces (assign, invite, remove, set admin/owner roles)
+- **admin.teams** — manage workspaces (create, list, get settings)
+- **admin.apps** — approve/restrict apps across the org
+- **admin.invites** — manage workspace invite requests
+- **admin.roles** — assign and list role-based access
+- **admin.usergroups** — manage user groups across workspaces
+- **admin.barriers** — manage information barriers
+- **admin.workflows** — manage workflow builder workflows
+- **admin.analytics** — access workspace analytics data
+- **admin.audit** — access audit logs
+
+> **Note:** These methods require Enterprise Grid admin tokens with `admin.*` scopes. They will return `missing_scope` or `not_allowed` errors on non-Enterprise workspaces. See docs for details.
+
+---
+
 ## How to Look Up More API Details
 
 - **All Methods**: https://docs.slack.dev/reference/methods
+- **Admin Methods**: https://docs.slack.dev/reference/methods?filter=admin
 - **Scopes**: https://docs.slack.dev/reference/scopes
 - **Block Kit Reference**: https://docs.slack.dev/reference/block-kit
 - **Rate Limits**: https://docs.slack.dev/apis/web-api/rate-limits
