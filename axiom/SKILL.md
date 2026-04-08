@@ -6,9 +6,9 @@ description: Axiom observability API for logs and analytics. Use when user menti
 
 # Axiom
 
-Axiom is a cloud-native observability platform for storing, querying, and analyzing log and event data at scale. Use the REST API to ingest data, run queries using APL (Axiom Processing Language), and manage datasets programmatically.
+Axiom is a cloud-native observability platform for storing, querying, and analyzing log and event data at scale. Use the REST API to ingest data, run queries using APL (Axiom Processing Language), and manage datasets, monitors, dashboards, annotations, and notifiers.
 
-> Official docs: `https://axiom.co/docs/restapi/introduction`
+> Official docs: https://axiom.co/docs/restapi/introduction
 
 ---
 
@@ -18,193 +18,540 @@ Use this skill when you need to:
 
 - Send logs, metrics, or event data to Axiom
 - Query and analyze data using APL (Axiom Processing Language)
-- Manage datasets, monitors, and annotations
-- Build observability pipelines and dashboards
+- Manage datasets, fields, and virtual fields
+- Create and manage monitors and notifiers (alerts)
+- Manage dashboards and saved queries
+- Create annotations (deployment markers, incidents, etc.)
+- Manage organization users and RBAC
 
 ---
 
 ## Prerequisites
 
-1. Create an Axiom account at https://app.axiom.co/register
-2. Create an API token with appropriate permissions (Settings > API Tokens)
-3. Create a dataset to store your data
-
-### Token Types
-
-Axiom supports two token types:
-
-| Type | Prefix | Use Case |
-|------|--------|----------|
-| **API Token** | `xaat-` | Most operations (datasets, ingest, queries, monitors) |
-| **Personal Access Token (PAT)** | `xapt-` | Full account access (required for `/v2/user` endpoint) |
-
-Set environment variables:
-
-```bash
-# Required: API Token for most operations
-export AXIOM_TOKEN="xaat-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-```
-
----
-
-## How to Use
+Connect Axiom via the vm0 connector. The access token is provided as `$AXIOM_TOKEN`.
 
 ### Base URLs
 
+- **API**: `https://api.axiom.co`
 - **Ingest (US East)**: `https://us-east-1.aws.edge.axiom.co`
 - **Ingest (EU Central)**: `https://eu-central-1.aws.edge.axiom.co`
-- **API**: `https://api.axiom.co`
 
-### 1. List Datasets
+> **Important:** Always use edge URLs for data ingestion, not `api.axiom.co`.
 
-```bash
-curl -s "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer $AXIOM_TOKEN"
-```
+---
 
-### 2. Get Dataset Info
+## Datasets
 
-```bash
-curl -s "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer $AXIOM_TOKEN"
-```
-
-### 3. Create Dataset
-
-Write to `/tmp/axiom_request.json`:
-
-```json
-{
-  "name": "my-logs",
-  "description": "Application logs"
-}
-```
-
-Then run:
+### List Datasets
 
 ```bash
-curl -s -X POST "https://api.axiom.co/v2/datasets" -H "Authorization: Bearer $AXIOM_TOKEN" -H "Content-Type: application/json" -d @/tmp/axiom_request.json
+curl -s "https://api.axiom.co/v2/datasets" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
-### 4. Ingest Data (JSON)
-
-Write to `/tmp/axiom_request.json`:
-
-```json
-[
-  {"message": "User logged in", "user_id": "123", "level": "info"}
-]
-```
-
-Then run:
+### Get Dataset
 
 ```bash
-curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer $AXIOM_TOKEN" -H "Content-Type: application/json" -d @/tmp/axiom_request.json
+curl -s "https://api.axiom.co/v2/datasets/<dataset-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
-### 5. Ingest Data (NDJSON)
-
-Write to `/tmp/axiom_ndjson.ndjson`:
-
-```
-{"message": "Event 1", "level": "info"}
-{"message": "Event 2", "level": "warn"}
-```
-
-Then run:
+### Create Dataset
 
 ```bash
-curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/ingest/my-logs" -H "Authorization: Bearer $AXIOM_TOKEN" -H "Content-Type: application/x-ndjson" -d @/tmp/axiom_ndjson.ndjson
+curl -s -X POST "https://api.axiom.co/v2/datasets" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"my-logs\", \"description\": \"Application logs\"}"
 ```
 
-### 6. Query Data with APL
-
-Write to `/tmp/axiom_request.json`:
-
-```json
-{
-  "apl": "[\"my-logs\"] | where level == \"error\" | limit 10",
-  "startTime": "2024-01-01T00:00:00Z",
-  "endTime": "2025-12-31T23:59:59Z"
-}
-```
-
-Then run:
+### Update Dataset
 
 ```bash
-curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer $AXIOM_TOKEN" -H "Content-Type: application/json" -d @/tmp/axiom_request.json
+curl -s -X PUT "https://api.axiom.co/v2/datasets/<dataset-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"description\": \"Updated description\"}"
 ```
 
-### 7. Query with Aggregation
-
-Write to `/tmp/axiom_request.json`:
-
-```json
-{
-  "apl": "[\"my-logs\"] | summarize count() by level",
-  "startTime": "2024-01-01T00:00:00Z",
-  "endTime": "2025-12-31T23:59:59Z"
-}
-```
-
-Then run:
+### Delete Dataset
 
 ```bash
-curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" -H "Authorization: Bearer $AXIOM_TOKEN" -H "Content-Type: application/json" -d @/tmp/axiom_request.json
+curl -s -X DELETE "https://api.axiom.co/v2/datasets/<dataset-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
-### 8. Create Annotation
+### Trim Dataset
 
-Write to `/tmp/axiom_request.json`:
-
-```json
-{
-  "datasets": ["my-logs"],
-  "type": "deployment",
-  "title": "v1.2.0 deployed",
-  "time": "2024-12-24T10:00:00Z"
-}
-```
-
-Then run:
+Remove data older than a specified duration.
 
 ```bash
-curl -s -X POST "https://api.axiom.co/v2/annotations" -H "Authorization: Bearer $AXIOM_TOKEN" -H "Content-Type: application/json" -d @/tmp/axiom_request.json
+curl -s -X POST "https://api.axiom.co/v2/datasets/<dataset-id>/trim" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"maxDuration\": \"30d\"}"
 ```
 
-### 9. List Monitors
+### Get Dataset Fields
 
 ```bash
-curl -s "https://api.axiom.co/v2/monitors" -H "Authorization: Bearer $AXIOM_TOKEN"
+curl -s "https://api.axiom.co/v2/datasets/<dataset-id>/fields" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
-### 10. Delete Dataset
+### Get Field Info
 
 ```bash
-curl -s -X DELETE "https://api.axiom.co/v2/datasets/my-logs" -H "Authorization: Bearer $AXIOM_TOKEN"
+curl -s "https://api.axiom.co/v2/datasets/<dataset-id>/fields/<field-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Update Field
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/datasets/<dataset-id>/fields/<field-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"description\": \"Response time in ms\", \"unit\": \"ms\"}"
 ```
 
 ---
 
-## APL Query Examples
+## Ingest
 
-APL (Axiom Processing Language) is similar to Kusto Query Language (KQL). Use `["dataset-name"]` syntax for dataset names with special characters.
+### Ingest JSON
+
+```bash
+curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/datasets/<dataset-name>/ingest" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "[{\"message\": \"User logged in\", \"user_id\": \"123\", \"level\": \"info\"}]"
+```
+
+### Ingest NDJSON
+
+```bash
+curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/datasets/<dataset-name>/ingest" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/x-ndjson" \
+  --data-binary @events.ndjson
+```
+
+> **Tip:** Batch multiple events in a single request for better performance. Events without `_time` field will use server receive time.
+
+---
+
+## Queries (APL)
+
+APL (Axiom Processing Language) is similar to Kusto Query Language (KQL).
+
+### Run APL Query
+
+```bash
+curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"apl\": \"['my-logs'] | where level == 'error' | limit 10\", \"startTime\": \"2026-01-01T00:00:00Z\", \"endTime\": \"2026-12-31T23:59:59Z\"}"
+```
+
+### Query with Aggregation
+
+```bash
+curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"apl\": \"['my-logs'] | summarize count() by level\", \"startTime\": \"2026-01-01T00:00:00Z\", \"endTime\": \"2026-12-31T23:59:59Z\"}"
+```
+
+### APL Examples
 
 | Query | Description |
 |-------|-------------|
-| `["dataset"] \| limit 10` | Get first 10 events |
-| `["dataset"] \| where level == "error"` | Filter by field value |
-| `["dataset"] \| where message contains "timeout"` | Search in text |
-| `["dataset"] \| summarize count() by level` | Count by group |
-| `["dataset"] \| summarize avg(duration_ms) by bin(_time, 1h)` | Hourly average |
-| `["dataset"] \| sort by _time desc \| limit 100` | Latest 100 events |
-| `["dataset"] \| where _time > ago(1h)` | Events in last hour |
+| `['dataset'] \| limit 10` | Get first 10 events |
+| `['dataset'] \| where level == "error"` | Filter by field value |
+| `['dataset'] \| where message contains "timeout"` | Search in text |
+| `['dataset'] \| summarize count() by level` | Count by group |
+| `['dataset'] \| summarize avg(duration_ms) by bin(_time, 1h)` | Hourly average |
+| `['dataset'] \| sort by _time desc \| limit 100` | Latest 100 events |
+| `['dataset'] \| where _time > ago(1h)` | Events in last hour |
+
+---
+
+## Monitors
+
+### List Monitors
+
+```bash
+curl -s "https://api.axiom.co/v2/monitors" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Get Monitor
+
+```bash
+curl -s "https://api.axiom.co/v2/monitors/<monitor-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Get Monitor History
+
+```bash
+curl -s "https://api.axiom.co/v2/monitors/<monitor-id>/history" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create Monitor
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/monitors" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"High Error Rate\", \"aplQuery\": \"['my-logs'] | where level == 'error' | summarize count()\", \"threshold\": 100, \"comparison\": \"Above\", \"frequency\": \"5m\", \"range\": \"5m\", \"notifierIds\": [\"<notifier-id>\"]}"
+```
+
+### Update Monitor
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/monitors/<monitor-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"High Error Rate v2\", \"threshold\": 50}"
+```
+
+### Delete Monitor
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/monitors/<monitor-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## Notifiers
+
+### List Notifiers
+
+```bash
+curl -s "https://api.axiom.co/v2/notifiers" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Get Notifier
+
+```bash
+curl -s "https://api.axiom.co/v2/notifiers/<notifier-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create Notifier
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/notifiers" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Slack Alerts\", \"type\": \"slack\", \"properties\": {\"slackUrl\": \"https://hooks.slack.com/services/xxx\"}}"
+```
+
+Types: `slack`, `email`, `pagerduty`, `webhook`, `opsgenie`, `discord`, `msteams`.
+
+### Update Notifier
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/notifiers/<notifier-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Slack Alerts v2\"}"
+```
+
+### Delete Notifier
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/notifiers/<notifier-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## Annotations
+
+### List Annotations
+
+```bash
+curl -s "https://api.axiom.co/v2/annotations" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Get Annotation
+
+```bash
+curl -s "https://api.axiom.co/v2/annotations/<annotation-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create Annotation
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/annotations" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"datasets\": [\"my-logs\"], \"type\": \"deployment\", \"title\": \"v1.2.0 deployed\", \"time\": \"2026-04-08T10:00:00Z\"}"
+```
+
+### Update Annotation
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/annotations/<annotation-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"title\": \"v1.2.0 deployed (hotfix)\"}"
+```
+
+### Delete Annotation
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/annotations/<annotation-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## Dashboards
+
+### List Dashboards
+
+```bash
+curl -s "https://api.axiom.co/v2/dashboards" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Get Dashboard
+
+```bash
+curl -s "https://api.axiom.co/v2/dashboards/uid/<dashboard-uid>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create Dashboard
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/dashboards" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"API Overview\", \"description\": \"Key API metrics\"}"
+```
+
+### Update Dashboard
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/dashboards/uid/<dashboard-uid>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"API Overview v2\"}"
+```
+
+### Delete Dashboard
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/dashboards/uid/<dashboard-uid>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## Starred Queries
+
+### List Starred Queries
+
+```bash
+curl -s "https://api.axiom.co/v2/apl-starred-queries" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create Starred Query
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/apl-starred-queries" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Error count by service\", \"query\": \"['my-logs'] | where level == 'error' | summarize count() by service\"}"
+```
+
+### Update Starred Query
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/apl-starred-queries/<id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Error count by service (updated)\"}"
+```
+
+### Delete Starred Query
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/apl-starred-queries/<id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## Virtual Fields
+
+### List Virtual Fields
+
+```bash
+curl -s "https://api.axiom.co/v2/vfields" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create Virtual Field
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/vfields" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"is_slow\", \"dataset\": \"my-logs\", \"expression\": \"duration_ms > 1000\"}"
+```
+
+### Update Virtual Field
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/vfields/<id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"expression\": \"duration_ms > 2000\"}"
+```
+
+### Delete Virtual Field
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/vfields/<id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## Views (Saved Views)
+
+### List Views
+
+```bash
+curl -s "https://api.axiom.co/v2/views" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create View
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/views" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Error Logs\", \"dataset\": \"my-logs\", \"query\": \"['my-logs'] | where level == 'error'\"}"
+```
+
+### Update View
+
+```bash
+curl -s -X PUT "https://api.axiom.co/v2/views/<id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Critical Errors\"}"
+```
+
+### Delete View
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/views/<id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## Organization & Users
+
+### Get Organization
+
+```bash
+curl -s "https://api.axiom.co/v2/orgs" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Get Current User
+
+```bash
+curl -s "https://api.axiom.co/v2/user" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### List Users
+
+```bash
+curl -s "https://api.axiom.co/v2/users" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Get User
+
+```bash
+curl -s "https://api.axiom.co/v2/users/<user-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+---
+
+## API Tokens
+
+### List Tokens
+
+```bash
+curl -s "https://api.axiom.co/v2/tokens" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Create Token
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/tokens" \
+  --header "Authorization: Bearer $AXIOM_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"CI Pipeline\", \"description\": \"Token for CI/CD\"}"
+```
+
+### Regenerate Token
+
+```bash
+curl -s -X POST "https://api.axiom.co/v2/tokens/<token-id>/regenerate" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
+
+### Delete Token
+
+```bash
+curl -s -X DELETE "https://api.axiom.co/v2/tokens/<token-id>" \
+  --header "Authorization: Bearer $AXIOM_TOKEN"
+```
 
 ---
 
 ## Guidelines
 
-1. **Use Edge URLs for Ingest**: Always use the edge endpoint (`us-east-1.aws.edge.axiom.co` or `eu-central-1.aws.edge.axiom.co`) for data ingestion, not `api.axiom.co`
-2. **Batch Events**: Send multiple events in a single request for better performance
-3. **Include Timestamps**: Events without timestamps will use server receive time
-4. **Rate Limits**: Check `X-RateLimit-Remaining` header to avoid hitting limits
-5. **APL Time Range**: Always specify `startTime` and `endTime` for queries to improve performance
-6. **Data Formats**: JSON array is recommended; NDJSON and CSV are also supported
+1. **Use Edge URLs for Ingest**: Always use the edge endpoint (`us-east-1.aws.edge.axiom.co` or `eu-central-1.aws.edge.axiom.co`) for data ingestion, not `api.axiom.co`.
+2. **Batch Events**: Send multiple events in a single request for better performance.
+3. **Include Timestamps**: Events without `_time` field will use server receive time.
+4. **Rate Limits**: Check `X-RateLimit-Remaining` header to avoid hitting limits.
+5. **APL Time Range**: Always specify `startTime` and `endTime` for queries to improve performance.
+6. **Data Formats**: JSON array is recommended for ingest; NDJSON and CSV are also supported.
+7. **Dataset Names**: In APL queries, use `['dataset-name']` syntax (square brackets + quotes) for dataset names.
+8. **Monitors + Notifiers**: Monitors define alert conditions (APL query + threshold); notifiers define delivery channels (Slack, email, PagerDuty, etc.). Link them via `notifierIds`.
+
+---
+
+## How to Look Up More API Details
+
+- **REST API Intro**: https://axiom.co/docs/restapi/introduction
+- **Datasets**: https://axiom.co/docs/restapi/datasets
+- **Ingest**: https://axiom.co/docs/restapi/ingest
+- **Query (APL)**: https://axiom.co/docs/restapi/query
+- **APL Reference**: https://axiom.co/docs/apl/introduction
+- **Monitors**: https://axiom.co/docs/restapi/monitors
+- **Annotations**: https://axiom.co/docs/restapi/annotations
+- **Dashboards**: https://axiom.co/docs/restapi/dashboards
