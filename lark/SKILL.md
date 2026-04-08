@@ -23,7 +23,7 @@ Set the following environment variables:
 
 ```bash
 export LARK_APP_ID=cli_xxxxx
-export LARK_APP_SECRET=xxxxx
+export LARK_TOKEN=xxxxx
 ```
 
 Get your credentials from: https://open.larkoffice.com/
@@ -58,7 +58,7 @@ get_lark_token() {
   # Get new token
   local response=$(curl -s -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
     -H "Content-Type: application/json" \
-    -d "{\"app_id\": \"${LARK_APP_ID}\", \"app_secret\": \"${LARK_APP_SECRET}\"}")
+    -d "{\"app_id\": \"${LARK_APP_ID}\", \"app_secret\": \"${LARK_TOKEN}\"}")
 
   local code=$(echo "$response" | jq -r '.code // -1')
   if [ "$code" != "0" ]; then
@@ -81,7 +81,7 @@ Or get token directly without caching:
 ```bash
 TOKEN=$(curl -s -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
   -H "Content-Type: application/json" \
-  -d "{\"app_id\": \"$LARK_APP_ID\", \"app_secret\": \"$LARK_APP_SECRET\"}" | jq -r '.tenant_access_token')
+  -d "{\"app_id\": \"$LARK_APP_ID\", \"app_secret\": \"$LARK_TOKEN\"}" | jq -r '.tenant_access_token')
 ```
 
 ## Examples
@@ -94,7 +94,7 @@ Write to `/tmp/lark_request.json`:
 ```json
 {
   "app_id": "${LARK_APP_ID}",
-  "app_secret": "${LARK_APP_SECRET}"
+  "app_secret": "${LARK_TOKEN}"
 }
 ```
 
