@@ -19,8 +19,6 @@ Infisical is an open-source secrets manager. This skill enables fetching individ
 
 Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Infisical**. vm0 will automatically inject `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET` environment variables.
 
-> **Important:** When using `$(printenv VAR)` in commands that contain a pipe (`|`), always use `$(printenv ...)` syntax — a known Claude Code issue silently clears `$VAR` references in pipelines.
-
 ## Core APIs
 
 ### 1. Obtain an Access Token
