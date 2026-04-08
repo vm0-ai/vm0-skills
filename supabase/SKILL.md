@@ -3,7 +3,6 @@ name: supabase
 description: Supabase API for Postgres and auth. Use when user mentions "Supabase",
   "supabase.co", shares a Supabase link, "Supabase database", or asks about Supabase
   project.
-
 ---
 
 # Supabase REST API

@@ -2,7 +2,6 @@
 name: twenty
 description: Twenty CRM API for customer management. Use when user mentions "Twenty",
   "Twenty CRM", "open source CRM", or asks about Twenty.
-
 ---
 
 # Twenty CRM

@@ -2,7 +2,6 @@
 name: xero
 description: Xero API for accounting. Use when user mentions "Xero", "accounting",
   "invoices", "bookkeeping", or asks about financial management.
-
 ---
 
 # Xero Accounting API

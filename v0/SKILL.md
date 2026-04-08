@@ -1,7 +1,6 @@
 ---
 name: v0
 description: v0 by Vercel AI app builder API. Use when user mentions "v0", "v0.dev", wants to generate UI components or full-stack apps with AI, or manage v0 projects, chats, and deployments programmatically.
-
 ---
 
 # v0 by Vercel API

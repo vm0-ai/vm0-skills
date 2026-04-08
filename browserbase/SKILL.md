@@ -2,7 +2,6 @@
 name: browserbase
 description: Browserbase API for headless browser automation. Use when user mentions
   "headless browser", "browser automation", or "Browserbase".
-
 ---
 
 # Browserbase

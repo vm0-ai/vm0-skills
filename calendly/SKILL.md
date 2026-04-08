@@ -1,7 +1,6 @@
 ---
 name: calendly
 description: Calendly scheduling API. Use when user mentions "Calendly", "calendly.com", "schedule a meeting", "booking link", "event types", or asks about interview scheduling.
-
 ---
 
 # Calendly API

@@ -2,7 +2,6 @@
 name: prisma-postgres
 description: Prisma Postgres API for database. Use when user mentions "Prisma Postgres",
   "Prisma database", or asks about Prisma acceleration.
-
 ---
 
 # Prisma Postgres Management API

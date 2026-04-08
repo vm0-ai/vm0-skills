@@ -2,7 +2,6 @@
 name: serpapi
 description: SerpApi for search engine results. Use when user mentions "SERP", "search
   results", "Google scrape", or search API.
-
 ---
 
 # SerpApi

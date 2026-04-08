@@ -2,7 +2,6 @@
 name: discord-webhook
 description: Discord Webhook API for sending messages. Use when user says "send Discord
   message", "Discord webhook", or "post to Discord".
-
 ---
 
 # Discord Webhook

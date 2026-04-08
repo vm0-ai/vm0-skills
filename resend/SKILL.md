@@ -2,7 +2,6 @@
 name: resend
 description: Resend API for email delivery. Use when user mentions "Resend", "send
   email", "email API", or transactional email.
-
 ---
 
 # Resend Email API

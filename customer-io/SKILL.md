@@ -1,7 +1,6 @@
 ---
 name: customer-io
 description: Customer.io behavioral email and messaging platform. Use when user mentions "Customer.io", "behavioral emails", "lifecycle emails", "triggered messages", or asks about event-based email automation.
-
 ---
 
 # Customer.io API

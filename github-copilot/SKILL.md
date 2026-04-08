@@ -2,7 +2,6 @@
 name: github-copilot
 description: GitHub Copilot API for AI coding assistance. Use when user mentions "Copilot",
   "GitHub Copilot", "AI coding", or asks about Copilot features.
-
 ---
 
 # GitHub Copilot API

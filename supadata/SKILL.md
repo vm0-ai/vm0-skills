@@ -2,7 +2,6 @@
 name: supadata
 description: Supadata API for YouTube/web data. Use when user mentions "Supadata",
   "YouTube data", "channel stats", or web scraping data.
-
 ---
 
 # Supadata API

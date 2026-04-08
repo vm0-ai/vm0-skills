@@ -2,7 +2,6 @@
 name: asana
 description: Asana API for tasks and projects. Use when user mentions "Asana", "asana.com",
   shares an Asana link, "Asana task", or asks about Asana workspace.
-
 ---
 
 # Asana API

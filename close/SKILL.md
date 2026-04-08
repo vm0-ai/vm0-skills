@@ -2,7 +2,6 @@
 name: close
 description: Close CRM API for sales management. Use when user mentions "Close CRM",
   "Close.io", "sales leads", or asks about sales pipeline.
-
 ---
 
 # Close CRM API

@@ -2,7 +2,6 @@
 name: hume
 description: Hume AI API for emotion analysis. Use when user mentions "Hume", "emotion
   AI", "sentiment analysis", or voice emotion detection.
-
 ---
 
 # Hume AI API

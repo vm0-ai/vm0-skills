@@ -1,7 +1,6 @@
 ---
 name: doppler
 description: Doppler Secrets Manager API for retrieving and listing secrets. Use when user mentions "Doppler", "doppler secrets", "dp.st token", or asks about secrets management with Doppler.
-
 ---
 
 # Doppler Secrets Manager API

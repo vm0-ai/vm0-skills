@@ -2,7 +2,6 @@
 name: granola
 description: Granola API for meeting notes. Use when user mentions "Granola", "meeting
   notes", or AI note-taking.
-
 ---
 
 # Granola
