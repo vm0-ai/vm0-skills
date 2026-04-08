@@ -6,9 +6,9 @@ description: Sentry API for error tracking. Use when user mentions "Sentry", "er
 
 # Sentry API
 
-Use the Sentry API via direct `curl` calls to manage **error tracking, issues, projects, and releases**.
+Manage error tracking, issues, releases, monitors, and projects via the Sentry REST API.
 
-> Official docs: `https://docs.sentry.io/api/`
+> Official docs: https://docs.sentry.io/api/
 
 ---
 
@@ -16,217 +16,363 @@ Use the Sentry API via direct `curl` calls to manage **error tracking, issues, p
 
 Use this skill when you need to:
 
-- **List and search issues** - find errors and exceptions
-- **Resolve or ignore issues** - manage issue status
-- **View issue details** - get stack traces and event data
-- **Manage projects** - list and configure projects
-- **Track releases** - create and monitor releases
-- **View events** - get detailed error events
+- List, search, resolve, or ignore issues
+- View error events, stack traces, and event details
+- Manage releases and deployments
+- Configure monitors (cron monitoring)
+- Manage alert rules
+- View and manage projects and teams
 
 ---
 
 ## Prerequisites
 
-
-Verify authentication:
-
-```bash
-curl -s "https://sentry.io/api/0/organizations/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[0] | {slug, name}'
-```
-
-### Discovering Your Organization Slug
-
-Most endpoints require your organization slug. Get it from the organizations endpoint above — the `slug` field is what you need.
-
----
-
-## How to Use
-
-All examples below assume `SENTRY_TOKEN` is set. Replace `my-org` with your actual organization slug from the prerequisites step.
+Connect Sentry via the vm0 connector. The access token is provided as `$SENTRY_TOKEN`.
 
 Base URL: `https://sentry.io/api/0`
 
+> **Important:** Most endpoints require an organization slug. Call the organizations endpoint first to discover it.
+
 ---
 
-### 1. List Organizations
+## Organizations
 
-Get all organizations you have access to:
+### List Organizations
 
 ```bash
-curl -s "https://sentry.io/api/0/organizations/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[] | {slug, name, dateCreated}'
+curl -s "https://sentry.io/api/0/organizations/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Organization
+
+```bash
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 2. List Your Projects
+## Projects
 
-Get all projects you have access to:
+### List Organization Projects
 
 ```bash
-curl -s "https://sentry.io/api/0/projects/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[] | {slug, name, platform, dateCreated}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/projects/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Project
+
+```bash
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Update Project
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Updated Project Name\", \"slug\": \"updated-slug\"}"
+```
+
+### Delete Project
+
+```bash
+curl -s -X DELETE "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 3. Get Project Details
+## Issues
 
-Get details for a specific project:
-
-> **Note:** Replace `my-org` with your organization slug and `my-project` with your actual project slug from the "List Your Projects" output.
+### List Organization Issues
 
 ```bash
-curl -s "https://sentry.io/api/0/projects/my-org/my-project/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '{slug, name, platform, status, dateCreated}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+Params: `query` (Sentry search syntax), `sort` (`date`/`new`/`freq`/`priority`), `cursor`, `limit`.
+
+### Search Issues
+
+Use `query` param with Sentry search syntax and `-G` with `--data-urlencode`:
+
+```bash
+curl -s -G "https://sentry.io/api/0/organizations/<org-slug>/issues/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --data-urlencode "query=is:unresolved level:error"
+```
+
+Common queries: `is:unresolved`, `is:resolved`, `level:error`, `error.type:TypeError`, `assigned:me`, `first-release:1.0.0`.
+
+### List Project Issues
+
+```bash
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/issues/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Issue
+
+```bash
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Resolve Issue
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"status\": \"resolved\"}"
+```
+
+### Ignore Issue
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"status\": \"ignored\"}"
+```
+
+### Unresolve Issue
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"status\": \"unresolved\"}"
+```
+
+### Assign Issue
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"assignedTo\": \"user@example.com\"}"
+```
+
+### Bulk Update Issues
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/issues/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"status\": \"resolved\", \"id\": [\"<issue-id-1>\", \"<issue-id-2>\"]}"
+```
+
+### Delete Issue
+
+```bash
+curl -s -X DELETE "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 4. List Organization Issues
+## Events
 
-Get all issues across the organization:
-
-> **Note:** Replace `my-org` with your organization slug.
+### List Issue Events
 
 ```bash
-curl -s "https://sentry.io/api/0/organizations/my-org/issues/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[] | {id, shortId, title, culprit, status, count, userCount, firstSeen, lastSeen}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/issues/<issue-id>/events/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
-Query parameters:
-- `query=is:unresolved` - Filter by status
-- `query=error.type:TypeError` - Filter by error type
-- `sort=date` - Sort by last seen (default)
-- `sort=new` - Sort by first seen
-- `sort=freq` - Sort by event count
-
----
-
-### 5. List Project Issues
-
-Get issues for a specific project:
-
-> **Note:** Replace `my-org` and `my-project` with your actual values.
+### List Project Events
 
 ```bash
-curl -s "https://sentry.io/api/0/projects/my-org/my-project/issues/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[] | {id, shortId, title, status, count, lastSeen}'
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/events/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Event by ID
+
+```bash
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/events/<event-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 6. Search Issues
+## Releases
 
-Search issues with query:
-
-> **Note:** Replace `my-org` with your organization slug.
+### List Releases
 
 ```bash
-curl -s -G "https://sentry.io/api/0/organizations/my-org/issues/" -H "Authorization: Bearer $SENTRY_TOKEN" --data-urlencode "query=is:unresolved level:error" | jq '.[] | {shortId, title, level, count}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/releases/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Release
+
+```bash
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/releases/<version>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Create Release
+
+```bash
+curl -s -X POST "https://sentry.io/api/0/organizations/<org-slug>/releases/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"version\": \"2.0.0\", \"projects\": [\"<project-slug>\"]}"
+```
+
+### Update Release
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/organizations/<org-slug>/releases/<version>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"dateReleased\": \"2026-04-08T12:00:00Z\"}"
+```
+
+### Delete Release
+
+```bash
+curl -s -X DELETE "https://sentry.io/api/0/organizations/<org-slug>/releases/<version>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### List Release Commits
+
+```bash
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/releases/<version>/commits/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 7. Get Issue Details
+## Monitors (Cron)
 
-Get details for a specific issue:
-
-> **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID from the "List Issues" output (use the `id` field, not `shortId`).
+### List Monitors
 
 ```bash
-curl -s "https://sentry.io/api/0/organizations/my-org/issues/123456789/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '{id, shortId, title, culprit, status, level, count, userCount, firstSeen, lastSeen, assignedTo}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/monitors/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Monitor
+
+```bash
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/monitors/<monitor-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Monitor Check-Ins
+
+```bash
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/monitors/<monitor-slug>/checkins/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Update Monitor
+
+```bash
+curl -s -X PUT "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/monitors/<monitor-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d "{\"name\": \"Updated Monitor\", \"schedule\": {\"type\": \"crontab\", \"value\": \"0 * * * *\"}}"
+```
+
+### Delete Monitor
+
+```bash
+curl -s -X DELETE "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/monitors/<monitor-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 8. Get Latest Event for Issue
+## Alert Rules
 
-Get the most recent event for an issue:
-
-> **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
+### List Alert Rules
 
 ```bash
-curl -s "https://sentry.io/api/0/organizations/my-org/issues/123456789/events/latest/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '{eventID, message, platform, dateCreated, tags, contexts}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/alert-rules/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Alert Rule
+
+```bash
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/alert-rules/<rule-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 9. List Issue Events
+## Project Rules (Issue Alerts)
 
-Get all events for an issue:
-
-> **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
+### List Project Rules
 
 ```bash
-curl -s "https://sentry.io/api/0/organizations/my-org/issues/123456789/events/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[] | {eventID, message, dateCreated}'
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/rules/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Rule
+
+```bash
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/rules/<rule-id>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 10. Resolve Issue
+## Teams
 
-Mark an issue as resolved:
-
-> **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
+### List Organization Teams
 
 ```bash
-curl -s -X PUT "https://sentry.io/api/0/organizations/my-org/issues/123456789/" -H "Authorization: Bearer $SENTRY_TOKEN" -H "Content-Type: application/json" -d '{"status":"resolved"}' | jq '{id, shortId, status}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/teams/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### Get Team
+
+```bash
+curl -s "https://sentry.io/api/0/teams/<org-slug>/<team-slug>/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
+```
+
+### List Team's Projects
+
+```bash
+curl -s "https://sentry.io/api/0/teams/<org-slug>/<team-slug>/projects/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 11. Ignore Issue
+## Members
 
-Ignore an issue:
-
-> **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
+### List Organization Members
 
 ```bash
-curl -s -X PUT "https://sentry.io/api/0/organizations/my-org/issues/123456789/" -H "Authorization: Bearer $SENTRY_TOKEN" -H "Content-Type: application/json" -d '{"status":"ignored"}' | jq '{id, shortId, status}'
+curl -s "https://sentry.io/api/0/organizations/<org-slug>/members/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
 
-### 12. Unresolve Issue
+## Environments
 
-Reopen a resolved issue:
-
-> **Note:** Replace `my-org` with your organization slug and `123456789` with an actual issue ID.
+### List Project Environments
 
 ```bash
-curl -s -X PUT "https://sentry.io/api/0/organizations/my-org/issues/123456789/" -H "Authorization: Bearer $SENTRY_TOKEN" -H "Content-Type: application/json" -d '{"status":"unresolved"}' | jq '{id, shortId, status}'
-```
-
----
-
-### 13. List Releases
-
-Get all releases for the organization:
-
-> **Note:** Replace `my-org` with your organization slug.
-
-```bash
-curl -s "https://sentry.io/api/0/organizations/my-org/releases/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[] | {version, dateCreated, newGroups, projects: [.projects[].slug]}'
-```
-
----
-
-### 14. Get Release Details
-
-Get details for a specific release:
-
-> **Note:** Replace `my-org` with your organization slug and `1.0.0` with an actual release version.
-
-```bash
-curl -s "https://sentry.io/api/0/organizations/my-org/releases/1.0.0/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '{version, dateCreated, dateReleased, newGroups, lastEvent, projects}'
-```
-
----
-
-### 15. List Project Error Events
-
-Get recent error events for a project:
-
-> **Note:** Replace `my-org` and `my-project` with your actual values.
-
-```bash
-curl -s "https://sentry.io/api/0/projects/my-org/my-project/events/" -H "Authorization: Bearer $SENTRY_TOKEN" | jq '.[] | {eventID, title, message, dateCreated}'
+curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/environments/" \
+  --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
 ---
@@ -244,8 +390,21 @@ curl -s "https://sentry.io/api/0/projects/my-org/my-project/events/" -H "Authori
 
 ## Guidelines
 
-1. **Discover org slug first**: Call the organizations endpoint to get your org slug before using other endpoints
-2. **Pagination**: Use `cursor` parameter for paginated results
-3. **Query syntax**: Use Sentry's query language for powerful filtering
-4. **Rate limits**: Sentry has rate limits; implement backoff for 429 responses
-5. **Scopes matter**: Ensure your token has required scopes for each operation
+1. **Discover org slug first**: Call `GET /organizations/` to get your org slug before using other endpoints.
+2. **Use organization endpoints**: List projects via `GET /organizations/{org}/projects/`, not `GET /projects/` (which is not in the API spec).
+3. **Pagination**: Use `cursor` parameter. Response includes `Link` header with next/prev cursors.
+4. **Search syntax**: Issues support Sentry's query language: `is:unresolved`, `level:error`, `assigned:me`, `first-release:`, `error.type:`, etc.
+5. **Rate limits**: Back off on 429 responses.
+6. **Scopes**: Ensure token has required scopes (`project:read`, `event:read`, `org:read`, etc.).
+
+---
+
+## How to Look Up More API Details
+
+- **API Reference**: https://docs.sentry.io/api/
+- **Issues**: https://docs.sentry.io/api/events/
+- **Projects**: https://docs.sentry.io/api/projects/
+- **Releases**: https://docs.sentry.io/api/releases/
+- **Monitors**: https://docs.sentry.io/api/crons/
+- **Teams**: https://docs.sentry.io/api/teams/
+- **Scopes**: https://docs.sentry.io/api/permissions/
