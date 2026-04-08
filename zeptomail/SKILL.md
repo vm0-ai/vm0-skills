@@ -40,7 +40,7 @@ Use this skill when you need to:
 4. Copy the **Send Mail Token**
 
 ```bash
-export ZEPTOMAIL_API_KEY="your-send-mail-token"
+export ZEPTOMAIL_TOKEN="your-send-mail-token"
 ```
 
 ### Pricing
@@ -82,7 +82,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
@@ -113,7 +113,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
@@ -149,7 +149,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
@@ -202,7 +202,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
@@ -245,7 +245,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
@@ -289,7 +289,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
@@ -326,7 +326,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email/template" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 Template example (in ZeptoMail dashboard):
@@ -379,7 +379,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
@@ -423,7 +423,7 @@ Write to `/tmp/zeptomail_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_API_KEY" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
+curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
 ---
