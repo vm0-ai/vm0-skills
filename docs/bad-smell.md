@@ -289,6 +289,32 @@ https://example.com/path?param=value&other=123
 
 ---
 
+## 6. `printenv` and `bash -c` Wrappers
+
+**Problem:** Using `$(printenv VAR)` instead of `$VAR`, or wrapping curl in `bash -c '...'`, was a workaround for an old Claude Code bug that silently cleared environment variables in pipelines. That bug is fixed — these patterns are now unnecessary noise.
+
+### ❌ Bad Case
+
+```bash
+curl -s "https://api.example.com/data" \
+  -H "Authorization: Bearer $(printenv API_TOKEN)" | jq '.data'
+```
+
+```bash
+bash -c 'curl -s "https://api.example.com/data" -H "Authorization: Bearer $API_TOKEN" | jq ".data"'
+```
+
+### ✅ Good Case
+
+```bash
+curl -s "https://api.example.com/data" \
+  -H "Authorization: Bearer $API_TOKEN" | jq '.data'
+```
+
+**Pattern Rule:** Always use `$VAR` directly. Never use `$(printenv VAR)` or wrap commands in `bash -c '...'`.
+
+---
+
 ## Quick Checklist
 
 When writing SKILL.md, verify:
@@ -298,3 +324,4 @@ When writing SKILL.md, verify:
 - [ ] Use placeholder text (`<your-context-id>`) instead of shell variables (`$CONTEXT_ID`) in URLs
 - [ ] Always use `-d @/tmp/filename.json` for JSON data, never `-d '{"key": "value"}'`
 - [ ] Always use `--data-urlencode "key@/tmp/file.txt"` for parameters with special characters
+- [ ] Use `$VAR` directly, never `$(printenv VAR)` or `bash -c '...'` wrappers
