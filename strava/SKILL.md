@@ -160,12 +160,6 @@ curl -s "https://www.strava.com/api/v3/activities/<activity-id>/kudos" --header 
 curl -s "https://www.strava.com/api/v3/activities/<activity-id>/laps" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, name, elapsed_time, distance, average_speed, average_heartrate}'
 ```
 
-### Get Activity Photos
-
-```bash
-curl -s "https://www.strava.com/api/v3/activities/<activity-id>/photos?photo_sources=true&size=600" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {unique_id, urls, caption, source, location}'
-```
-
 ### Get Activity Streams (GPS/HR/Power Data)
 
 ```bash
@@ -189,14 +183,6 @@ curl -s "https://www.strava.com/api/v3/segments/starred" --header "Authorization
 ```bash
 curl -s "https://www.strava.com/api/v3/segments/<segment-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, name, activity_type, distance, average_grade, maximum_grade, elevation_high, elevation_low, city, country, effort_count, athlete_count}'
 ```
-
-### Get Segment Leaderboard
-
-```bash
-curl -s "https://www.strava.com/api/v3/segments/<segment-id>/leaderboard?per_page=10" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{entry_count, entries: [.entries[] | {rank, athlete_name, elapsed_time, moving_time, start_date_local}]}'
-```
-
-Parameters: `gender` (M/F), `age_group`, `weight_class`, `following` (true/false), `per_page`.
 
 ---
 
