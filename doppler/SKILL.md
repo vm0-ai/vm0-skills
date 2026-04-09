@@ -21,15 +21,13 @@ Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Dop
 
 Your `DOPPLER_TOKEN` must be a **Service Token** (format: `dp.st.*`). Service tokens are scoped to a specific project and config.
 
-> **Important:** When using `$(printenv DOPPLER_TOKEN)` in commands that contain a pipe (`|`), always use `$(printenv ...)` syntax — a known Claude Code issue silently clears `$VAR` references in pipelines.
-
 ## Core APIs
 
 ### Fetch a Single Secret by Name
 
 ```bash
 curl -s "https://api.doppler.com/v3/configs/config/secret" \
-  -H "Authorization: Bearer $(printenv DOPPLER_TOKEN)" \
+  -H "Authorization: Bearer $DOPPLER_TOKEN" \
   -G \
   --data-urlencode "project=<project-slug>" \
   --data-urlencode "config=<config-name>" \
@@ -44,7 +42,7 @@ Replace `<project-slug>` with your Doppler project slug, `<config-name>` with th
 
 ```bash
 curl -s "https://api.doppler.com/v3/configs/config/secrets" \
-  -H "Authorization: Bearer $(printenv DOPPLER_TOKEN)" \
+  -H "Authorization: Bearer $DOPPLER_TOKEN" \
   -G \
   --data-urlencode "project=<project-slug>" \
   --data-urlencode "config=<config-name>" | jq '.secrets | to_entries[] | {name: .key, raw: .value.raw, computed: .value.computed}'
@@ -56,7 +54,7 @@ curl -s "https://api.doppler.com/v3/configs/config/secrets" \
 
 ```bash
 curl -s "https://api.doppler.com/v3/configs/config/secrets/download" \
-  -H "Authorization: Bearer $(printenv DOPPLER_TOKEN)" \
+  -H "Authorization: Bearer $DOPPLER_TOKEN" \
   -G \
   --data-urlencode "project=<project-slug>" \
   --data-urlencode "config=<config-name>" \
@@ -71,7 +69,7 @@ Returns a flat key/value JSON object of all secrets.
 
 ```bash
 curl -s "https://api.doppler.com/v3/projects" \
-  -H "Authorization: Bearer $(printenv DOPPLER_TOKEN)" | jq '.projects[] | {id, name, slug}'
+  -H "Authorization: Bearer $DOPPLER_TOKEN" | jq '.projects[] | {id, name, slug}'
 ```
 
 ---
@@ -80,7 +78,7 @@ curl -s "https://api.doppler.com/v3/projects" \
 
 ```bash
 curl -s "https://api.doppler.com/v3/configs" \
-  -H "Authorization: Bearer $(printenv DOPPLER_TOKEN)" \
+  -H "Authorization: Bearer $DOPPLER_TOKEN" \
   -G \
   --data-urlencode "project=<project-slug>" | jq '.configs[] | {name, environment, locked}'
 ```
