@@ -29,13 +29,13 @@ Use this skill when you need to:
 2. Ensure your account has Managed Agents access (currently in beta)
 
 ```bash
-export ANTHROPIC_TOKEN="sk-ant-..."
+export ANTHROPIC_MANAGED_AGENTS_TOKEN="sk-ant-..."
 ```
 
 ### Common headers (include in every request)
 
 ```bash
--H "x-api-key: $ANTHROPIC_TOKEN"
+-H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN"
 -H "anthropic-version: 2023-06-01"
 -H "anthropic-beta: managed-agents-2026-04-01"
 -H "Content-Type: application/json"
@@ -49,7 +49,7 @@ Sessions are billed as standard Claude API usage (input/output tokens). See [pri
 
 ## How to Use
 
-All examples assume `ANTHROPIC_TOKEN` is set. The base URL is `https://api.anthropic.com`.
+All examples assume `ANTHROPIC_MANAGED_AGENTS_TOKEN` is set. The base URL is `https://api.anthropic.com`.
 
 ---
 
@@ -77,7 +77,7 @@ Then run:
 
 ```bash
 curl -s -X POST "https://api.anthropic.com/v1/agents" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Content-Type: application/json" \
@@ -96,7 +96,7 @@ Save the returned `id` (e.g., `agent_011CZk...`) for use in sessions.
 
 ```bash
 curl -s "https://api.anthropic.com/v1/agents" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '.data[] | {id: .id, name: .name, model: .model}'
 ```
@@ -107,7 +107,7 @@ curl -s "https://api.anthropic.com/v1/agents" \
 
 ```bash
 curl -s "https://api.anthropic.com/v1/agents/<AGENT_ID>" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '.'
 ```
@@ -118,7 +118,7 @@ curl -s "https://api.anthropic.com/v1/agents/<AGENT_ID>" \
 
 ```bash
 curl -s -X DELETE "https://api.anthropic.com/v1/agents/<AGENT_ID>" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01"
 ```
@@ -152,7 +152,7 @@ Then run:
 
 ```bash
 curl -s -X POST "https://api.anthropic.com/v1/environments" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Content-Type: application/json" \
@@ -196,7 +196,7 @@ Then run:
 
 ```bash
 curl -s -X POST "https://api.anthropic.com/v1/sessions" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Content-Type: application/json" \
@@ -229,7 +229,7 @@ Stream real-time SSE events from a running session. The stream stays open until 
 
 ```bash
 curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>/events/stream" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Accept: text/event-stream"
@@ -247,7 +247,7 @@ Parse agent message text output only:
 
 ```bash
 curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>/events/stream" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Accept: text/event-stream" | grep '^data:' | python3 -c "
@@ -273,7 +273,7 @@ While a session is idle (waiting), send follow-up messages or tool results:
 
 ```bash
 curl -s -X POST "https://api.anthropic.com/v1/sessions/<SESSION_ID>/events" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Content-Type: application/json" \
@@ -293,7 +293,7 @@ Replay all events from a completed or running session:
 
 ```bash
 curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>/events" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '.data[] | {type: .type, id: .id}'
 ```
@@ -304,7 +304,7 @@ curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>/events" \
 
 ```bash
 curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '{id: .id, status: .status, title: .title}'
 ```
@@ -318,7 +318,7 @@ curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>" \
 ```bash
 # List all sessions for an agent
 curl -s "https://api.anthropic.com/v1/sessions?agent_id=<AGENT_ID>&limit=10" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '.data[] | {id: .id, status: .status, title: .title}'
 ```
@@ -332,7 +332,7 @@ Supports filters: `agent_id`, `agent_version`, `created_at[gt/gte/lt/lte]`, `inc
 ```bash
 # Step 1: Create agent (one-time setup)
 AGENT_ID=$(curl -s -X POST "https://api.anthropic.com/v1/agents" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Content-Type: application/json" \
@@ -346,7 +346,7 @@ echo "Agent: $AGENT_ID"
 
 # Step 2: Create environment (one-time setup)
 ENV_ID=$(curl -s -X POST "https://api.anthropic.com/v1/environments" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Content-Type: application/json" \
@@ -355,7 +355,7 @@ echo "Environment: $ENV_ID"
 
 # Step 3: Start a session for this PR review task
 SESSION_ID=$(curl -s -X POST "https://api.anthropic.com/v1/sessions" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Content-Type: application/json" \
@@ -374,7 +374,7 @@ echo "Session: $SESSION_ID"
 
 # Step 4: Stream the output until complete
 curl -s "https://api.anthropic.com/v1/sessions/$SESSION_ID/events/stream" \
-  -H "x-api-key: $ANTHROPIC_TOKEN" \
+  -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" \
   -H "Accept: text/event-stream" | grep '^data:' | python3 -c "
