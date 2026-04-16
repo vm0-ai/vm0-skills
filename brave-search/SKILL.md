@@ -44,6 +44,8 @@ export BRAVE_API_KEY="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRAVE_API_KEY` or `zero doctor check-connector --url https://api.search.brave.com/res/v1/web/search?q=artificial+intelligence --method GET`
+
 ## How to Use
 
 All examples below assume you have `BRAVE_API_KEY` set.

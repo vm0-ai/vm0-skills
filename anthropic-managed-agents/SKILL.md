@@ -47,6 +47,8 @@ Sessions are billed as standard Claude API usage (input/output tokens). See [pri
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ANTHROPIC_MANAGED_AGENTS_TOKEN` or `zero doctor check-connector --url https://api.anthropic.com/v1/agents --method POST`
+
 ## How to Use
 
 All examples assume `ANTHROPIC_MANAGED_AGENTS_TOKEN` is set. The base URL is `https://api.anthropic.com`.

@@ -28,6 +28,8 @@ export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XX
 4. Select channel → **Allow**
 5. Copy Webhook URL
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SLACK_WEBHOOK_URL`
+
 ## Usage
 
 ### Simple Message

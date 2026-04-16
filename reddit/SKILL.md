@@ -9,6 +9,10 @@ description: Reddit API for accessing discussions and content. Use when user men
 
 Access Reddit discussions, posts, and content through the Reddit API.
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REDDIT_TOKEN` or `zero doctor check-connector --url https://oauth.reddit.com/api/v1/me --method GET`
+
 ## When to Use
 
 - Search and read Reddit posts and comments

@@ -44,6 +44,8 @@ Jira Cloud has rate limits that vary by endpoint. For most REST API calls, expec
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JIRA_API_TOKEN`
+
 ## How to Use
 
 All examples below assume `JIRA_DOMAIN`, `JIRA_EMAIL`, and `JIRA_API_TOKEN` are set.

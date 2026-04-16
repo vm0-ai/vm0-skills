@@ -36,6 +36,8 @@ Enable these API scopes in your Lark app:
 - `contact:user.base:readonly` - Read contacts
 - `calendar:calendar` - Manage calendars
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LARK_TOKEN` or `zero doctor check-connector --url https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal --method POST`
+
 ## Token Management
 
 Lark uses tenant access tokens that expire after 2 hours. Use this helper to get or refresh the token:

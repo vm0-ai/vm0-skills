@@ -10,6 +10,10 @@ Manage tasks, projects, sections, labels, and comments with the Todoist REST API
 
 > Official docs: `https://developer.todoist.com/rest/v2`
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TODOIST_TOKEN` or `zero doctor check-connector --url https://api.todoist.com/rest/v2/projects --method GET`
+
 ## When to Use
 
 - Create, update, complete, and delete tasks

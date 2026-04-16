@@ -39,6 +39,8 @@ export HUME_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUME_TOKEN` or `zero doctor check-connector --url https://api.hume.ai/v0/batch/jobs --method POST`
+
 ## Expression Measurement (Batch)
 
 ### Start Inference Job from URLs

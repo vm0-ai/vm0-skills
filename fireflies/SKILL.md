@@ -35,6 +35,8 @@ export FIREFLIES_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FIREFLIES_TOKEN` or `zero doctor check-connector --url https://api.fireflies.ai/graphql --method POST`
+
 ## How to Use
 
 All examples below assume you have `FIREFLIES_TOKEN` set.

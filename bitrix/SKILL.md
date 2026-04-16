@@ -50,6 +50,8 @@ https://[domain]/rest/[user-id]/[secret-code]/[method].json
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BITRIX_WEBHOOK_URL`
+
 ## How to Use
 
 All examples assume `BITRIX_WEBHOOK_URL` is set to your webhook base URL.

@@ -39,6 +39,8 @@ export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/1234567890/abcdefg.
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DISCORD_WEBHOOK_URL`
+
 ## How to Use
 
 All examples below assume you have `DISCORD_WEBHOOK_URL` set.

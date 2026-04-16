@@ -31,6 +31,8 @@ The `PODCHASER_TOKEN` environment variable is automatically injected by the conn
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PODCHASER_TOKEN` or `zero doctor check-connector --url https://api.podchaser.com/graphql --method POST`
+
 ## How to Use
 
 ### 1. Search Podcasts

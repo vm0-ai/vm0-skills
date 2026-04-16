@@ -34,6 +34,8 @@ Linear's API is rate-limited to ensure fair usage. Limits may vary based on your
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LINEAR_TOKEN` or `zero doctor check-connector --url https://api.linear.app/graphql --method POST`
+
 ## How to Use
 
 All examples below assume you have `LINEAR_TOKEN` set.

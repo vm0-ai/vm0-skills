@@ -10,6 +10,10 @@ Access SEO data including backlink profiles, domain ratings, organic keywords, a
 
 > Official docs: `https://docs.ahrefs.com`
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AHREFS_TOKEN` or `zero doctor check-connector --url https://api.ahrefs.com/v3/site-explorer/domain-rating?target= --method GET`
+
 ## When to Use
 
 - Check domain or URL rating

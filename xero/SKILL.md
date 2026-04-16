@@ -38,6 +38,8 @@ Connect Xero via the vm0 connector. The access token is provided as `$XERO_TOKEN
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name XERO_TOKEN` or `zero doctor check-connector --url https://api.xero.com/Connections --method GET`
+
 ## Step 1: Get Tenant ID (Required First)
 
 Every Xero API call needs a `xero-tenant-id` header. Get it from the connections endpoint:

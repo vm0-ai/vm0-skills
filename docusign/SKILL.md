@@ -33,6 +33,8 @@ Use this skill when you need to:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DOCUSIGN_TOKEN` or `zero doctor check-connector --url https://account.docusign.com/oauth/userinfo --method GET`
+
 ## User Info
 
 ### Get User Info

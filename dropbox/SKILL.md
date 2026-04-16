@@ -37,6 +37,8 @@ Connect Dropbox via the vm0 connector. The access token is provided as `$DROPBOX
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DROPBOX_TOKEN` or `zero doctor check-connector --url https://api.dropboxapi.com/2/users/get_current_account --method POST`
+
 ## User
 
 ### Get Current Account

@@ -33,6 +33,8 @@ export FAL_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FAL_TOKEN` or `zero doctor check-connector --url https://fal.run/fal-ai/nano-banana-pro --method POST`
+
 ## How to Use
 
 ### 1. Generate Image (nano-banana-pro - fast)

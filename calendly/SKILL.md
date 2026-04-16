@@ -29,6 +29,8 @@ export CALENDLY_TOKEN=your_personal_access_token
 > **Note:** Calendly's API is primarily read-only — you can retrieve scheduling data but **cannot directly create bookings** via API. Share Calendly scheduling links to let users self-book.
 >
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALENDLY_TOKEN` or `zero doctor check-connector --url https://api.calendly.com/users/me --method GET`
+
 ## Core APIs
 
 ### Get Current User

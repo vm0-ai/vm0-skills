@@ -32,6 +32,8 @@ Base URL: `https://hacker-news.firebaseio.com/v0`
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --url https://hacker-news.firebaseio.com/v0/topstories.json --method GET`
+
 ## How to Use
 
 ### 1. Get Top Stories

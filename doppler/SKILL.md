@@ -21,6 +21,8 @@ Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Dop
 
 Your `DOPPLER_TOKEN` must be a **Service Token** (format: `dp.st.*`). Service tokens are scoped to a specific project and config.
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DOPPLER_TOKEN` or `zero doctor check-connector --url https://api.doppler.com/v3/configs/config/secret --method GET`
+
 ## Core APIs
 
 ### Fetch a Single Secret by Name

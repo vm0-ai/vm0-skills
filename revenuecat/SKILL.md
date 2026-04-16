@@ -14,6 +14,10 @@ Manage in-app subscriptions, customers, entitlements, offerings, and products in
 
 ---
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REVENUECAT_TOKEN` or `zero doctor check-connector --url https://api.revenuecat.com/v1/subscribers/APP_USER_ID --method GET`
+
 ## When to Use
 
 Use this skill when you need to:

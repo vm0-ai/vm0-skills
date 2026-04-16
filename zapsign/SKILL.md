@@ -48,6 +48,8 @@ export ZAPSIGN_TOKEN="your-api-token"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPSIGN_TOKEN` or `zero doctor check-connector --url https://sandbox.api.zapsign.com.br/api/v1/docs --method POST`
+
 ## How to Use
 
 All examples use the **sandbox** environment. For production, replace `sandbox.api.zapsign.com.br` with `api.zapsign.com.br`.

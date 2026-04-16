@@ -38,6 +38,8 @@ export STREAK_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STREAK_TOKEN` or `zero doctor check-connector --url https://api.streak.com/api/v1/users/me --method GET`
+
 ## How to Use
 
 ### Authentication

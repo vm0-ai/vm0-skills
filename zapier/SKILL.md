@@ -36,6 +36,8 @@ export ZAPIER_TOKEN="your-zapier-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPIER_TOKEN` or `zero doctor check-connector --url https://actions.zapier.com/api/v2/check --method GET`
+
 ## How to Use
 
 All examples below assume you have `ZAPIER_TOKEN` set. Authentication uses the `x-api-key` header.

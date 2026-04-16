@@ -40,6 +40,8 @@ export V0_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name V0_TOKEN` or `zero doctor check-connector --url https://api.v0.dev/v1/chats --method POST`
+
 ## How to Use
 
 Base URL: `https://api.v0.dev/v1`

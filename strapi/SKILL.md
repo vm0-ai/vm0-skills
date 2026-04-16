@@ -41,6 +41,8 @@ export STRAPI_BASE_URL="https://your-strapi.example.com"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAPI_TOKEN`
+
 ## IMPORTANT: Discovery Workflow
 
 **Before performing any content operations, always discover the user's content types first.** Every Strapi instance has different content types, fields, and relationships. Never assume what types exist.

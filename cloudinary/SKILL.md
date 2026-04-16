@@ -29,6 +29,8 @@ export CLOUDINARY_API_SECRET=your_api_secret
 
 Get credentials from: https://console.cloudinary.com/settings/api-keys
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDINARY_TOKEN` or `zero doctor check-connector --url https://api.cloudinary.com/v1_1 --method POST`
+
 ## How to Use
 
 ### Method 1: Unsigned Upload (Simpler)

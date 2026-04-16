@@ -38,6 +38,8 @@ export TWENTY_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TWENTY_TOKEN` or `zero doctor check-connector --url https://api.twenty.com/rest/companies --method GET`
+
 ## How to Use
 
 ### 1. List Companies

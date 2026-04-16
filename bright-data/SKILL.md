@@ -41,6 +41,8 @@ https://api.brightdata.com
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRIGHTDATA_TOKEN` or `zero doctor check-connector --url https://api.brightdata.com/datasets/v3/trigger?dataset_id= --method POST`
+
 ## Social Media Scraping
 
 Bright Data supports scraping these social media platforms:

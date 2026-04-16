@@ -12,6 +12,10 @@ Read, send, and manage emails via Google's Gmail REST API.
 
 ---
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GMAIL_TOKEN` or `zero doctor check-connector --url https://gmail.googleapis.com/gmail/v1/users/me/profile --method GET`
+
 ## When to Use
 
 Use this skill when you need to:

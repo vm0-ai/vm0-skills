@@ -52,6 +52,8 @@ export QDRANT_TOKEN="" # Optional for local
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name QDRANT_TOKEN`
+
 ## How to Use
 
 All examples below assume you have `QDRANT_BASE_URL` and `QDRANT_TOKEN` set.

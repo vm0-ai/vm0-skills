@@ -38,6 +38,8 @@ export GRANOLA_TOKEN="your-granola-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GRANOLA_TOKEN` or `zero doctor check-connector --url https://public-api.granola.ai/v1/notes?page_size=10 --method GET`
+
 ## How to Use
 
 ### Base URL

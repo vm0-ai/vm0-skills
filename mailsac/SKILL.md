@@ -35,6 +35,8 @@ export MAILSAC_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAILSAC_TOKEN` or `zero doctor check-connector --url https://mailsac.com/api/addresses/test@mailsac.com/messages --method GET`
+
 ## How to Use
 
 All examples below assume you have `MAILSAC_TOKEN` set.

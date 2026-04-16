@@ -16,6 +16,8 @@ Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Pik
 
 To get a Developer Key: visit [pika.me/dev](https://www.pika.me/dev/) and create a key (format: `dk_...`).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PIKA_TOKEN` or `zero doctor check-connector --url https://srkibaanghvsriahb.pika.art/developer/balance --method GET`
+
 ## Base URL
 
 ```

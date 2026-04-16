@@ -41,6 +41,8 @@ GitLab.com has rate limits of ~2000 requests per minute for authenticated users.
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITLAB_TOKEN`
+
 ## How to Use
 
 All examples below assume `GITLAB_HOST` and `GITLAB_TOKEN` are set.

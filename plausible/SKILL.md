@@ -33,6 +33,8 @@ export PLAUSIBLE_TOKEN=your-api-key
   - **Sites API** - For managing sites programmatically
 6. Save the key (shown only once)
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAUSIBLE_TOKEN` or `zero doctor check-connector --url https://plausible.io/api/v2/query --method POST`
+
 ## Stats API (v2)
 
 ### Basic Query - Total Visitors

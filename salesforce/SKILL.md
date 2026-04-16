@@ -20,6 +20,8 @@ Manage Contacts, Leads, Accounts, and Opportunities via the Salesforce REST API.
 
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SALESFORCE_TOKEN`
+
 ## Core APIs
 
 ### Query Contacts (SOQL)

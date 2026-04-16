@@ -35,6 +35,8 @@ export DEVTO_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEVTO_TOKEN` or `zero doctor check-connector --url https://dev.to/api/articles --method POST`
+
 ## How to Use
 
 All examples below assume you have `DEVTO_TOKEN` set.

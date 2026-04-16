@@ -31,6 +31,8 @@ Get your access token from: https://qiita.com/settings/tokens/new
 - `read_qiita` - Read articles, comments, users
 - `write_qiita` - Post articles, comments
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name QIITA_TOKEN`
+
 ## How to Use
 
 ### Commands

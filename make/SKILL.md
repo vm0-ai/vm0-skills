@@ -50,6 +50,8 @@ All examples below use `https://eu1.make.com/api/v2`. Replace with your zone URL
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAKE_TOKEN` or `zero doctor check-connector --url https://eu1.make.com/api/v2/users/me --method GET`
+
 ## How to Use
 
 All examples below assume you have `MAKE_TOKEN` set. Authentication uses `Token` scheme in the Authorization header.

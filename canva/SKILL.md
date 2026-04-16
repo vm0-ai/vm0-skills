@@ -35,6 +35,8 @@ Canva API has per-user rate limits that vary by endpoint. Most read endpoints al
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CANVA_TOKEN` or `zero doctor check-connector --url https://api.canva.com/rest/v1/users/me/profile --method GET`
+
 ## How to Use
 
 All examples below assume you have `CANVA_TOKEN` set.

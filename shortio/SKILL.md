@@ -44,6 +44,8 @@ export SHORTIO_DOMAIN_ID="123456" # Optional, needed for list/stats operations
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SHORTIO_TOKEN` or `zero doctor check-connector --url https://api.short.io/links --method POST`
+
 ## How to Use
 
 All examples below assume you have `SHORTIO_TOKEN` and `SHORTIO_DOMAIN` set.

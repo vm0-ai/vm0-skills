@@ -40,6 +40,8 @@ Ensure your Access Application allows service token authentication:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CF_ACCESS_CLIENT_ID`
+
 ## Usage
 
 ### Basic curl Request

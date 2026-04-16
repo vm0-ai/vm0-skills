@@ -78,6 +78,8 @@ curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/users.json" -u "$ZENDESK_
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZENDESK_API_TOKEN`
+
 ## How to Use
 
 All examples assume environment variables are set.

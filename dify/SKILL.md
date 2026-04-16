@@ -40,6 +40,8 @@ export DIFY_TOKEN="app-xxxxxxxxxxxxxxxxxx"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DIFY_TOKEN` or `zero doctor check-connector --url https://api.dify.ai/v1/chat-messages --method POST`
+
 ## Chat Messages
 
 ### Send Chat Message (Blocking)

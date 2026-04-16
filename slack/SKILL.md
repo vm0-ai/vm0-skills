@@ -37,6 +37,8 @@ Connect Slack via the vm0 connector. The access token is provided as `$SLACK_TOK
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SLACK_TOKEN` or `zero doctor check-connector --url https://slack.com/api/chat.postMessage --method POST`
+
 ## Messages
 
 ### Send Message

@@ -32,6 +32,8 @@ Optional tools for parsing:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --url https://hnrss.org/frontpage --method GET`
+
 ## How to Use
 
 ### 1. Fetch Raw RSS Feed

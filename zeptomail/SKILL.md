@@ -50,6 +50,8 @@ export ZEPTOMAIL_TOKEN="your-send-mail-token"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZEPTOMAIL_TOKEN` or `zero doctor check-connector --url https://api.zeptomail.com/v1.1/email --method GET`
+
 ## How to Use
 
 Base URL: `https://api.zeptomail.com/v1.1`

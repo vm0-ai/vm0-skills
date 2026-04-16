@@ -68,6 +68,8 @@ mc alias set myminio https://${MINIO_ENDPOINT} ${MINIO_ACCESS_KEY} ${MINIO_SECRE
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MINIO_ACCESS_KEY` or `zero doctor check-connector --url https://dl.min.io/client/mc/release/linux-amd64/mc --method GET`
+
 ## How to Use
 
 ### 1. List Buckets

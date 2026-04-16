@@ -39,6 +39,8 @@ export PDFCO_TOKEN="your-email@example.com_your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDFCO_TOKEN` or `zero doctor check-connector --url https://api.pdf.co/v1/pdf/convert/to/text --method GET`
+
 ## How to Use
 
 ### 1. PDF to Text

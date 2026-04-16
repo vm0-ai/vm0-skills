@@ -43,6 +43,8 @@ export RUNWAY_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name RUNWAY_TOKEN` or `zero doctor check-connector --url https://api.dev.runwayml.com/v1/organization --method GET`
+
 ## How to Use
 
 All examples below assume you have `RUNWAY_TOKEN` set.

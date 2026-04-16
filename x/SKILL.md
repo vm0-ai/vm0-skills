@@ -49,6 +49,8 @@ The connector grants read-only access:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name X_TOKEN`
+
 ## How to Use
 
 ### 1. Get Authenticated User Profile

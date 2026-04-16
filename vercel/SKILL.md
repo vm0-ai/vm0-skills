@@ -34,6 +34,8 @@ Base URL: `https://api.vercel.com`
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name VERCEL_TOKEN` or `zero doctor check-connector --url https://api.vercel.com/v2/user --method GET`
+
 ## User
 
 ### Get Current User

@@ -37,6 +37,8 @@ export APIFY_TOKEN="apify_api_xxxxxxxxxxxxxxxxxxxxxxxx"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name APIFY_TOKEN` or `zero doctor check-connector --url https://api.apify.com/v2/acts/apify~web-scraper/runs --method POST`
+
 ## How to Use
 
 ### 1. Run an Actor (Async)

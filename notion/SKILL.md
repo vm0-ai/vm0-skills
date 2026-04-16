@@ -36,6 +36,8 @@ Page ID: 2b70e96f0134807d8450c8793839c659 (remove hyphens if present)
 PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
 ```
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN` or `zero doctor check-connector --url https://api.notion.com/v1/pages --method GET`
+
 ## Core APIs
 
 ### Read Page with Content

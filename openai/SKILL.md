@@ -51,6 +51,8 @@ Rate limits vary by tier (based on usage history). Check your limits at [Platfor
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name OPENAI_TOKEN` or `zero doctor check-connector --url https://api.openai.com/v1/chat/completions --method GET`
+
 ## How to Use
 
 All examples below assume you have `OPENAI_TOKEN` set.

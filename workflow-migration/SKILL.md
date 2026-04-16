@@ -7,6 +7,10 @@ description: VM0 migration helper for Claude Code workflows. Use when user says 
 
 ---
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NOTION_API_KEY`
+
 ## When to Use This Skill
 
 Use when the user wants to:

@@ -48,6 +48,8 @@ Base URLs:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ATLASSIAN_TOKEN`
+
 ## Jira — User
 
 ### Get Current User

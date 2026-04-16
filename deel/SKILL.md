@@ -34,6 +34,8 @@ Connect Deel via the vm0 connector. The access token is provided as `$DEEL_TOKEN
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEL_TOKEN` or `zero doctor check-connector --url https://api.letsdeel.com/rest/v2/contracts?limit=20 --method GET`
+
 ## Contracts
 
 ### List Contracts

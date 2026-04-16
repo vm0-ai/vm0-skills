@@ -66,6 +66,8 @@ Right-click any channel/user/server → Copy ID
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DISCORD_BOT_TOKEN` or `zero doctor check-connector --url https://discord.com/api/v10/users/@me --method GET`
+
 ## How to Use
 
 Base URL: `https://discord.com/api/v10`

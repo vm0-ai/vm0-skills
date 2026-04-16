@@ -40,6 +40,8 @@ export METABASE_BASE_URL="https://mycompany.metabaseapp.com"  # or your self-hos
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name METABASE_TOKEN`
+
 ## How to Use
 
 All examples below assume you have `METABASE_TOKEN` set. Authentication uses the `x-api-key` header.

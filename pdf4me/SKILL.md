@@ -42,6 +42,8 @@ export PDF4ME_TOKEN="your-api-key-here"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDF4ME_TOKEN` or `zero doctor check-connector --url https://api.pdf4me.com/api/v2/ConvertToPdf --method POST`
+
 ## How to Use
 
 ### 1. Convert to PDF

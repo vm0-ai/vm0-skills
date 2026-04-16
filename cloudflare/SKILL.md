@@ -52,6 +52,8 @@ export CLOUDFLARE_ACCOUNT_ID="your-account-id"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDFLARE_TOKEN` or `zero doctor check-connector --url https://api.cloudflare.com/client/v4/user/tokens/verify --method GET`
+
 ## How to Use
 
 ### Base URL

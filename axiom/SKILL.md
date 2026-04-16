@@ -40,6 +40,8 @@ Connect Axiom via the vm0 connector. The access token is provided as `$AXIOM_TOK
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AXIOM_TOKEN` or `zero doctor check-connector --url https://api.axiom.co/v2/datasets --method GET`
+
 ## Datasets
 
 ### List Datasets

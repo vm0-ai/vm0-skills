@@ -47,6 +47,8 @@ curl -s "https://us.posthog.com/api/users/@me/" --header "Authorization: Bearer 
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name POSTHOG_TOKEN` or `zero doctor check-connector --url https://us.posthog.com/api/projects --method GET`
+
 ## How to Use
 
 All examples below assume `POSTHOG_TOKEN` is set. Replace `<project-id>` with your actual project ID from the prerequisites step.

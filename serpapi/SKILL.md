@@ -41,6 +41,8 @@ export SERPAPI_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SERPAPI_TOKEN` or `zero doctor check-connector --url https://serpapi.com/search?engine=google --method GET`
+
 ## How to Use
 
 All examples below assume you have `SERPAPI_TOKEN` set.

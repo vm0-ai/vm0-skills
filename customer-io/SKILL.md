@@ -33,6 +33,8 @@ export CUSTOMERIO_APP_TOKEN=your_app_api_key
 Find credentials at **Workspace Settings > API & webhook credentials**.
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CUSTOMERIO_TRACK_TOKEN` or `zero doctor check-connector --url https://cdp.customer.io/v1/identify --method POST`
+
 ## Core APIs
 
 ### Identify a Person (Pipelines API)

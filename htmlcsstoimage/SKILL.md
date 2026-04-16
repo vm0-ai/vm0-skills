@@ -48,6 +48,8 @@ The API uses HTTP Basic Authentication:
 ---
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HCTI_API_KEY` or `zero doctor check-connector --url https://hcti.io/v1/image --method GET`
+
 ## How to Use
 
 All examples below assume you have `HCTI_USER_ID` and `HCTI_API_KEY` set.

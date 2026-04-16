@@ -47,6 +47,8 @@ DeepSeek does **not** enforce strict rate limits. They will try to serve every r
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEPSEEK_TOKEN` or `zero doctor check-connector --url https://api.deepseek.com/chat/completions --method GET`
+
 ## How to Use
 
 All examples below assume you have `DEEPSEEK_TOKEN` set.

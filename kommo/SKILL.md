@@ -42,6 +42,8 @@ export KOMMO_API_KEY="your-long-lived-token"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name KOMMO_API_KEY`
+
 ## How to Use
 
 All examples below assume you have environment variables set.

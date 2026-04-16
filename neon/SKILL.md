@@ -10,6 +10,10 @@ Manage serverless Postgres projects, branches, databases, roles, and compute end
 
 > Official docs: `https://api-docs.neon.tech/reference/getting-started`
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NEON_TOKEN` or `zero doctor check-connector --url https://console.neon.tech/api/v2/projects --method GET`
+
 ## When to Use
 
 - Create and manage Neon projects

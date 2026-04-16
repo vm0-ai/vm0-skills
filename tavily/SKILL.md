@@ -36,6 +36,8 @@ export TAVILY_TOKEN="tvly-xxxxxxxxxxxxxxxx"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TAVILY_TOKEN` or `zero doctor check-connector --url https://api.tavily.com/search --method POST`
+
 ## How to Use
 
 All examples below assume you have `TAVILY_TOKEN` set in your environment.

@@ -36,6 +36,8 @@ Connect HubSpot via the vm0 connector. The access token is provided as `$HUBSPOT
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUBSPOT_TOKEN` or `zero doctor check-connector --url https://api.hubapi.com/crm/v3/objects/contacts?limit=10 --method GET`
+
 ## CRM Objects (Unified Pattern)
 
 All CRM objects follow the same CRUD pattern at `/crm/v3/objects/{objectType}`. The `{objectType}` can be: `contacts`, `companies`, `deals`, `tickets`, `products`, `line_items`, `quotes`, `tasks`, `notes`, `emails`, `meetings`, `calls`.

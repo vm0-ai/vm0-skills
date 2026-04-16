@@ -38,6 +38,8 @@ export BROWSERLESS_TOKEN="your-api-token-here"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BROWSERLESS_TOKEN` or `zero doctor check-connector --url https://production-sfo.browserless.io/scrape?token= --method POST`
+
 ## How to Use
 
 ### 1. Scrape Data (CSS Selectors)

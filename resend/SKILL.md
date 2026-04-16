@@ -30,6 +30,8 @@ Use this skill when you need to:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name RESEND_TOKEN` or `zero doctor check-connector --url https://api.resend.com/emails --method POST`
+
 ## Emails
 
 ### Send Email

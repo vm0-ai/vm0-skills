@@ -12,6 +12,10 @@ Manage Facebook and Instagram advertising campaigns, ad sets, ads, and performan
 
 ---
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name META_ADS_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v22.0/me/adaccounts?fields=id,name,account_status,currency,timezone_name,amount_spent --method GET`
+
 ## When to Use
 
 Use this skill when you need to:

@@ -46,6 +46,8 @@ export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
 ---
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITHUB_TOKEN` or `zero doctor check-connector --url https://api.github.com/orgs/your-org-name/copilot/billing --method GET`
+
 ## How to Use
 
 All examples below assume you have `GITHUB_TOKEN` set.

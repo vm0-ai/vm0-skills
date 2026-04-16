@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GAMMA_TOKEN` or `zero doctor check-connector --url https://public-api.gamma.app/v1.0/generations --method POST`
+
 ## Core APIs
 
 ### 1. Create Generation (from text)

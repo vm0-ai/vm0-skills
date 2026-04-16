@@ -42,6 +42,8 @@ export HEYGEN_TOKEN="your-heygen-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HEYGEN_TOKEN` or `zero doctor check-connector --url https://api.heygen.com/v2/avatars --method GET`
+
 ## How to Use
 
 All examples below assume you have `HEYGEN_TOKEN` set.

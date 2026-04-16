@@ -27,6 +27,8 @@ export BREVO_TOKEN=your_api_key_here
 ```
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BREVO_TOKEN` or `zero doctor check-connector --url https://api.brevo.com/v3/account --method GET`
+
 ## Core APIs
 
 ### Get Account Info

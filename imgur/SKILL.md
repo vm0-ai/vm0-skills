@@ -29,6 +29,8 @@ When registering:
 - Authorization type: "OAuth 2 authorization without a callback URL"
 - You only need the Client ID for anonymous uploads
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name IMGUR_CLIENT_ID` or `zero doctor check-connector --url https://api.imgur.com/3/image --method POST`
+
 ## How to Use
 
 ### Upload Local Image

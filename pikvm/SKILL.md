@@ -29,6 +29,8 @@ export PIKVM_AUTH=admin:admin
 1. Access your PiKVM web interface
 2. Default credentials: `admin:admin`
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PIKVM_AUTH`
+
 ## Coordinate System
 
 **Mouse coordinates use screen center as origin (0,0)**:

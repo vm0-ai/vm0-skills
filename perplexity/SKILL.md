@@ -38,6 +38,8 @@ export PERPLEXITY_TOKEN="pplx-your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PERPLEXITY_TOKEN` or `zero doctor check-connector --url https://api.perplexity.ai/chat/completions --method POST`
+
 ## How to Use
 
 ### 1. Chat Completions (Recommended)

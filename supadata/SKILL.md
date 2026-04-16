@@ -42,6 +42,8 @@ export SUPADATA_TOKEN="your-api-key"
 ---
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPADATA_TOKEN` or `zero doctor check-connector --url https://api.supadata.ai/v1/transcript --method GET`
+
 ## How to Use
 
 All examples below assume you have `SUPADATA_TOKEN` set.

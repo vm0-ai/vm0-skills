@@ -39,6 +39,8 @@ export PDFORGE_API_KEY="pdfnoodle_api_your-key-here"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDFORGE_API_KEY` or `zero doctor check-connector --url https://api.pdfnoodle.com/v1/pdf/sync --method POST`
+
 ## How to Use
 
 All examples below assume you have `PDFORGE_API_KEY` set.

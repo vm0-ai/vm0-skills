@@ -51,6 +51,8 @@ The file key is the alphanumeric string between `/design/` (or `/file/`) and the
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FIGMA_TOKEN` or `zero doctor check-connector --url https://api.figma.com/v1/me --method GET`
+
 ## How to Use
 
 All examples assume `FIGMA_TOKEN` is set.

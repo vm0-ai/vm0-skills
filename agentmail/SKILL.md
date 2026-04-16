@@ -130,6 +130,8 @@ export AGENTMAIL_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AGENTMAIL_TOKEN` or `zero doctor check-connector --url https://api.agentmail.to/v0/inboxes --method POST`
+
 ## Inboxes
 
 ### Create Inbox

@@ -49,6 +49,8 @@ export PLAIN_TOKEN="plainApiKey__your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAIN_TOKEN` or `zero doctor check-connector --url https://core-api.uk.plain.com/graphql/v1 --method POST`
+
 ## Threads
 
 ### List Threads

@@ -42,6 +42,8 @@ https://app.reportei.com/api/v1
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REPORTEI_TOKEN` or `zero doctor check-connector --url https://app.reportei.com/api/v1/me --method GET`
+
 ## How to Use
 
 ---

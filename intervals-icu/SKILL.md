@@ -39,6 +39,8 @@ curl -s "https://intervals.icu/api/v1/athlete/0/activities?oldest=2025-01-01&new
 
 > **Placeholders:** Values in `<angle-brackets>` like `<athlete-id>` are placeholders. Replace them with actual values when executing.
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INTERVALS_ICU_TOKEN` or `zero doctor check-connector --url https://intervals.icu/api/v1/athlete/0/activities?oldest=2025-01-01 --method GET`
+
 ## How to Use
 
 All examples below assume `INTERVALS_ICU_TOKEN` is set.

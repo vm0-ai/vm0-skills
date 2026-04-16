@@ -26,6 +26,8 @@ export CALCOM_TOKEN=cal_live_your_key_here
 ```
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALCOM_TOKEN` or `zero doctor check-connector --url https://api.cal.com/v2/me --method GET`
+
 ## Core APIs
 
 ### Get Current User

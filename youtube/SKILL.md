@@ -53,6 +53,8 @@ For production use, restrict the key:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name YOUTUBE_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/youtube/v3/search?part=snippet --method GET`
+
 ## How to Use
 
 Base URL: `https://www.googleapis.com/youtube/v3`

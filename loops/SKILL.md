@@ -26,6 +26,8 @@ export LOOPS_TOKEN=your_api_key_here
 ```
 
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LOOPS_TOKEN` or `zero doctor check-connector --url https://app.loops.so/api/v1/api-key --method GET`
+
 ## Core APIs
 
 ### Test API Key

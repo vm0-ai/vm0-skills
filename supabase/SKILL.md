@@ -52,6 +52,8 @@ export SUPABASE_TOKEN="sb_secret_..."
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPABASE_TOKEN`
+
 ## How to Use
 
 Base URL: `${SUPABASE_URL}/rest/v1`

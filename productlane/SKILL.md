@@ -39,6 +39,8 @@ export PRODUCTLANE_TOKEN="your-api-key"
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PRODUCTLANE_TOKEN` or `zero doctor check-connector --url https://productlane.com/api/v1/workspaces --method GET`
+
 ## Workspaces
 
 ### Get Workspace

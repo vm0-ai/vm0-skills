@@ -13,6 +13,10 @@ Use the Google Docs API via direct `curl` calls to **create, read, update, and f
 
 ---
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_DOCS_TOKEN` or `zero doctor check-connector --url https://docs.googleapis.com/v1/documents --method POST`
+
 ## When to Use
 
 Use this skill when you need to:

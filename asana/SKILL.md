@@ -12,6 +12,10 @@ Manage tasks, projects, sections, tags, portfolios, and goals in Asana workspace
 
 ---
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ASANA_TOKEN` or `zero doctor check-connector --url https://app.asana.com/api/1.0/users/me --method GET`
+
 ## When to Use
 
 Use this skill when you need to:

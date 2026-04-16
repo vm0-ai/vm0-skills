@@ -52,6 +52,8 @@ Depending on which endpoints you use, make sure your app has requested and been 
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTAGRAM_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v21.0 --method GET`
+
 ## How to Use
 
 All examples below assume you have already set:

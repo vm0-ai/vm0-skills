@@ -10,6 +10,10 @@ Manage payments, customers, subscriptions, and billing with the Stripe API.
 
 > Official docs: `https://docs.stripe.com/api`
 
+## Prerequisites
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRIPE_TOKEN` or `zero doctor check-connector --url https://api.stripe.com/v1/account --method GET`
+
 ## When to Use
 
 - Manage customers (create, update, list, delete)

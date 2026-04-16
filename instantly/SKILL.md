@@ -44,6 +44,8 @@ Create API keys with specific permissions:
 
 ---
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTANTLY_API_KEY` or `zero doctor check-connector --url https://api.instantly.ai/api/v2/campaigns --method GET`
+
 ## How to Use
 
 All examples below assume you have `INSTANTLY_API_KEY` set.

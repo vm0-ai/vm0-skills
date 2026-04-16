@@ -28,6 +28,8 @@ Mailchimp API URLs are datacenter-specific: `https://<dc>.api.mailchimp.com/3.0`
 MC_DC=$(curl -s "https://login.mailchimp.com/oauth2/metadata" -H "Authorization: OAuth $MAILCHIMP_TOKEN" | jq -r '.dc')
 ```
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAILCHIMP_TOKEN` or `zero doctor check-connector --url https://login.mailchimp.com/oauth2/metadata --method GET`
+
 ## Core APIs
 
 ### Get Account Info (Ping)

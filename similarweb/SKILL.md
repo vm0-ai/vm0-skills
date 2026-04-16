@@ -23,6 +23,8 @@ Analyze website traffic, engagement metrics, traffic sources, keywords, and comp
 
 > **Note:** SimilarWeb REST API passes the API key as a query parameter (`api_key`). The Batch API uses the `api-key` header instead.
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SIMILARWEB_TOKEN` or `zero doctor check-connector --url https://api.similarweb.com/capabilities?api_key= --method GET`
+
 ## Core APIs
 
 ### Check API Capabilities
