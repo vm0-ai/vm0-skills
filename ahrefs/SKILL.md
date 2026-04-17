@@ -12,7 +12,7 @@ Access SEO data including backlink profiles, domain ratings, organic keywords, a
 
 ## Prerequisites
 
-Connect the **Ahrefs API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Ahrefs** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
