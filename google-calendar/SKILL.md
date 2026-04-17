@@ -17,6 +17,8 @@ Manage calendars and events via Google's Calendar REST API.
 
 Connect the **Google Calendar** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_CALENDAR_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/calendar/v3/users/me/calendarList --method GET`
+
 ## When to Use
 
 Use this skill when you need to:
