@@ -15,7 +15,7 @@ Use the Google Sheets API via direct `curl` calls to **read, write, and manage s
 
 ## Prerequisites
 
-Connect the **Google Sheets API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Google Sheets** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
