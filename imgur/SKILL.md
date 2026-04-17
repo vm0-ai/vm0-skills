@@ -17,19 +17,7 @@ Imgur is a free image hosting service. Upload images and get URLs for sharing, e
 
 ## Prerequisites
 
-Set the following environment variable:
-
-```bash
-export IMGUR_CLIENT_ID=your_client_id
-```
-
-Get your Client ID from: https://api.imgur.com/oauth2/addclient
-
-When registering:
-- Authorization type: "OAuth 2 authorization without a callback URL"
-- You only need the Client ID for anonymous uploads
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name IMGUR_CLIENT_ID` or `zero doctor check-connector --url https://api.imgur.com/3/image --method POST`
+Connect the **Imgur Image Hosting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
