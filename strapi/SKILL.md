@@ -30,7 +30,7 @@ Use this skill when you need to:
 
 Connect the **Strapi CMS API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name - STRAPI_TOKEN` or `zero doctor check-connector --url https://docs.strapi.io/cms/api/rest --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAPI_TOKEN` or `zero doctor check-connector --url https://docs.strapi.io/cms/api/rest --method GET`
 
 ## IMPORTANT: Discovery Workflow
 
