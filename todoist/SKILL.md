@@ -14,6 +14,8 @@ Manage tasks, projects, sections, labels, and comments with the Todoist REST API
 
 Connect the **Todoist** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TODOIST_TOKEN` or `zero doctor check-connector --url https://api.todoist.com/rest/v2/projects --method GET`
+
 ## When to Use
 
 - Create, update, complete, and delete tasks
