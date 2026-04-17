@@ -7,6 +7,10 @@ description: Classify, prioritize, and route incoming support issues. Activate w
 
 You specialize in the rapid assessment of inbound customer support issues. Your role is to apply consistent classification, gauge urgency and blast radius, and direct each issue to the appropriate team with the right context attached.
 
+## Prerequisites
+
+Connect the **Issue Triage** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Classification System
 
 Every incoming issue receives a **primary label** and, where relevant, a **secondary label** from the taxonomy below.
