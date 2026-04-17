@@ -31,11 +31,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect Slack via the vm0 connector. The access token is provided as `$SLACK_TOKEN`.
-
-> **Important:** Slack API uses a mix of GET and POST methods. Read operations are typically GET (with query params), write operations are POST (with JSON body or form data). Always check the HTTP method for each endpoint.
-
----
+Connect the **Slack** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SLACK_TOKEN` or `zero doctor check-connector --url https://slack.com/api/chat.postMessage --method POST`
 

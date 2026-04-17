@@ -26,16 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect Dropbox via the vm0 connector. The access token is provided as `$DROPBOX_TOKEN`.
-
-### Base URLs
-
-- **API** (metadata operations): `https://api.dropboxapi.com`
-- **Content** (upload/download): `https://content.dropboxapi.com`
-
-> **Important:** Dropbox API uses POST for nearly all operations, including reads. Parameters are sent as JSON body, not query params.
-
----
+Connect the **Dropbox** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DROPBOX_TOKEN` or `zero doctor check-connector --url https://api.dropboxapi.com/2/users/get_current_account --method POST`
 

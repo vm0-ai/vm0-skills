@@ -30,29 +30,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create a Supabase project at https://supabase.com
-2. Go to **Project Settings → API Keys**
-3. Click **Create new API Keys** if needed
-4. Copy the **Project URL** and keys
+Connect the **Supabase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export SUPABASE_URL="https://your-project-ref.supabase.co"
-export SUPABASE_PUBLISHABLE_KEY="sb_publishable_..."
-export SUPABASE_TOKEN="sb_secret_..."
-```
-
-**API Keys:**
-
-| Key Type | Format | Use Case |
-|----------|--------|----------|
-| Publishable | `sb_publishable_...` | Client-side, respects Row Level Security (RLS) |
-| Secret | `sb_secret_...` | Server-side only, bypasses RLS |
-
-> **Note:** Legacy `anon` and `service_role` JWT keys still work but are deprecated. Use the new `sb_publishable_` and `sb_secret_` keys instead.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPABASE_TOKEN`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPABASE_PUBLISHABLE_KEY` or `zero doctor check-connector --url https://your-project.supabase.co/rest/v1/ --method GET`
 
 ## How to Use
 

@@ -117,18 +117,7 @@ An AI agent triages inbound emails and routes them appropriately.
 
 ## Prerequisites
 
-1. Sign up at https://console.agentmail.to
-2. Go to API Keys section and create a new key
-
-Set environment variable:
-
-```bash
-export AGENTMAIL_TOKEN="your-api-key"
-```
-
-> **Placeholders:** Values in `{curly-braces}` like `{inbox-id}` are placeholders. Replace them with actual values when executing.
-
----
+Connect the **AgentMail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AGENTMAIL_TOKEN` or `zero doctor check-connector --url https://api.agentmail.to/v0/inboxes --method POST`
 

@@ -18,13 +18,7 @@ Manage bookings, event types, and availability via the Cal.com REST API v2.
 
 ## Prerequisites
 
-
-Alternatively, generate an API key from your Cal.com account under **Settings > Security > API Keys** (key is prefixed with `cal_live_`), then export it:
-
-```bash
-export CALCOM_TOKEN=cal_live_your_key_here
-```
-
+Connect the **Cal.com** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALCOM_TOKEN` or `zero doctor check-connector --url https://api.cal.com/v2/me --method GET`
 

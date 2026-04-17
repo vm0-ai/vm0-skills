@@ -25,29 +25,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [DeepSeek Platform](https://platform.deepseek.com/) and create an account
-2. Go to [API Keys](https://platform.deepseek.com/api_keys) and generate a new API key
-3. Top up your balance (no free tier, but very affordable pricing)
+Connect the **DeepSeek** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export DEEPSEEK_TOKEN="your-api-key"
-```
-
-### Pricing (per 1M tokens)
-
-| Type | Price |
-|------|-------|
-| Input (cache hit) | $0.028 |
-| Input (cache miss) | $0.28 |
-| Output | $0.42 |
-
-### Rate Limits
-
-DeepSeek does **not** enforce strict rate limits. They will try to serve every request. During high traffic, connections are maintained with keep-alive signals.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEPSEEK_TOKEN` or `zero doctor check-connector --url https://api.deepseek.com/chat/completions --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEPSEEK_TOKEN` or `zero doctor check-connector --url https://api.deepseek.com/chat/completions --method POST`
 
 ## How to Use
 

@@ -25,18 +25,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up or log in at [Zapier](https://zapier.com)
-2. Go to [AI Actions](https://actions.zapier.com/) and configure the actions you want to expose
-3. Click **Manage Actions** to create and enable actions (e.g., "Gmail: Send Email", "Slack: Send Message")
-4. Get your API key from the [credentials page](https://actions.zapier.com/credentials/)
+Connect the **Zapier** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export ZAPIER_TOKEN="your-zapier-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPIER_TOKEN` or `zero doctor check-connector --url https://actions.zapier.com/api/v2/check --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPIER_TOKEN` or `zero doctor check-connector --url https://actions.zapier.com/api/v2/check/ --method GET`
 
 ## How to Use
 

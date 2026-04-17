@@ -24,14 +24,7 @@ Manage Prisma Postgres projects, databases, connections, backups, and usage metr
 
 ## Prerequisites
 
-
-To obtain a token manually:
-
-1. Go to [Prisma Console](https://console.prisma.io/)
-2. Navigate to your workspace **Settings > Service Tokens**
-3. Click **New Service Token** and store the generated token securely
-
----
+Connect the **Prisma Postgres** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PRISMA_POSTGRES_TOKEN` or `zero doctor check-connector --url https://api.prisma.io/v1/projects --method GET`
 

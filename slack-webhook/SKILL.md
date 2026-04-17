@@ -16,19 +16,7 @@ Send messages to a Slack channel using Incoming Webhooks. No OAuth or bot setup 
 
 ## Prerequisites
 
-```bash
-export SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXX
-```
-
-### Get Webhook URL
-
-1. Create app: https://api.slack.com/apps → **Create New App** → **From scratch**
-2. Select **Incoming Webhooks** → Toggle **On**
-3. Click **Add New Webhook to Workspace**
-4. Select channel → **Allow**
-5. Copy Webhook URL
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SLACK_WEBHOOK_URL`
+Connect the **Slack Incoming Webhook** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Usage
 

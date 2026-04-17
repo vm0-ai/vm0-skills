@@ -25,24 +25,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [MiniMax Platform](https://platform.minimax.io/)
-2. Go to Account Management > API Keys to create an API key
-3. Note: Global users should use `api.minimaxi.chat` (with extra "i")
+Connect the **MiniMax** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export MINIMAX_TOKEN="your-api-key"
-```
-
-### API Hosts
-
-| Region | Base URL |
-|--------|----------|
-| China | `https://api.minimax.io` |
-| Global | `https://api.minimaxi.chat` |
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MINIMAX_TOKEN` or `zero doctor check-connector --url https://api.minimax.io/v1/text/chatcompletion_v2 --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MINIMAX_TOKEN` or `zero doctor check-connector --url https://api.minimax.io/v1/text/chatcompletion_v2 --method POST`
 
 ## How to Use
 

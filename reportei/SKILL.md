@@ -26,21 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Reportei](https://www.reportei.com/)
-2. Go to Dashboard → Generate API Token
-3. Copy your API token
-
-```bash
-export REPORTEI_TOKEN="your-api-token"
-```
-
-### Base URL
-
-```
-https://app.reportei.com/api/v1
-```
-
----
+Connect the **Reportei** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REPORTEI_TOKEN` or `zero doctor check-connector --url https://app.reportei.com/api/v1/me --method GET`
 

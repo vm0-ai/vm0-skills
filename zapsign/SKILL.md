@@ -26,29 +26,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [ZapSign](https://app.zapsign.com.br/) (Production) or [Sandbox](https://sandbox.app.zapsign.com.br/)
-2. Go to Settings > Integrations > ZAPSIGN API
-3. Copy your API token
+Connect the **ZapSign** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export ZAPSIGN_TOKEN="your-api-token"
-```
-
-### Environments
-
-| Environment | API Endpoint | Legal Validity |
-|-------------|--------------|----------------|
-| Sandbox | `https://sandbox.api.zapsign.com.br` | No |
-| Production | `https://api.zapsign.com.br` | Yes |
-
-### Pricing
-
-- Sandbox: Free for testing (no legal validity)
-- Production: Requires API plan, pay per document
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPSIGN_TOKEN` or `zero doctor check-connector --url https://sandbox.api.zapsign.com.br/api/v1/docs --method POST`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPSIGN_TOKEN` or `zero doctor check-connector --url https://sandbox.api.zapsign.com.br/api/v1/docs/ --method GET`
 
 ## How to Use
 

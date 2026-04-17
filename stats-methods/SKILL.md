@@ -7,6 +7,10 @@ description: Apply statistical techniques to data — descriptive statistics, di
 
 A practitioner's guide to applying statistics in data analysis, from summarizing distributions through testing hypotheses and spotting analytical traps.
 
+## Prerequisites
+
+Connect the **Statistical Methods** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Summarizing Numeric Data
 
 ### Choosing a Center Metric

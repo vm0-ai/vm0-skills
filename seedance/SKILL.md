@@ -1,11 +1,11 @@
 ---
 name: seedance
-description: Seedance 2.0 video generation API by ByteDance. Use when user mentions "Seedance", "ByteDance video AI", "text-to-video", "image-to-video", or wants to generate AI videos using Seedance models.
+description: Seedance video generation API by ByteDance. Use when user mentions "Seedance", "ByteDance video AI", "text-to-video", "image-to-video", or wants to generate AI videos using Seedance models.
 ---
 
-# Seedance 2.0
+# Seedance
 
-Generate AI videos from text prompts or images using ByteDance's Seedance 2.0 model via the BytePlus ModelArk API. Supports text-to-video, image-to-video, and reference-to-video generation at up to 1080p.
+Generate AI videos from text prompts or images using ByteDance's Seedance model via the BytePlus ModelArk API. Supports text-to-video, image-to-video, and reference-to-video generation at up to 1080p.
 
 > Official docs: `https://docs.byteplus.com/en/docs/ModelArk/2291680`
 
@@ -23,14 +23,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [BytePlus ModelArk Console](https://console.byteplus.com/ark)
-2. Complete real-name verification in the console
-3. Purchase a prepaid resource pack (20 free Fast invocations/month included for new accounts)
-4. Navigate to **API Keys** and create a new key
+Connect the **Seedance** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SEEDANCE_TOKEN` or `zero doctor check-connector --url https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks --method POST`
-
----
 
 ## How to Use
 
@@ -185,5 +180,5 @@ curl -sL "<video-url>" -o /tmp/seedance_output.mp4
 2. **Async flow** — always poll GET after POST; do not re-submit the same task
 3. **Rate limits** — 3 concurrent tasks and 180 RPM for individual accounts
 4. **Image input** — supports public URLs or Base64 (`data:image/jpeg;base64,...`); video input is URL only
-5. **No flex tier** — Seedance 2.0 only supports `service_tier: "default"`
+5. **No flex tier** — Seedance only supports `service_tier: "default"`
 6. **Task records expire** — task IDs are deleted after 7 days

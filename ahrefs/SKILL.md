@@ -12,7 +12,9 @@ Access SEO data including backlink profiles, domain ratings, organic keywords, a
 
 ## Prerequisites
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AHREFS_TOKEN` or `zero doctor check-connector --url https://api.ahrefs.com/v3/site-explorer/domain-rating?target= --method GET`
+Connect the **Ahrefs** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AHREFS_TOKEN` or `zero doctor check-connector --url https://api.ahrefs.com/v3/site-explorer/domain-rating --method GET`
 
 ## When to Use
 

@@ -27,19 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Hugging Face](https://huggingface.co/join)
-2. Go to [Settings > Access Tokens](https://huggingface.co/settings/tokens) and create a new token
-3. Select appropriate permissions (read access for browsing, write for repo management)
-
-```bash
-export HUGGING_FACE_TOKEN="hf_..."
-```
-
-### Rate Limits
-
-All API calls are subject to Hugging Face rate limits. Authenticated requests have higher limits than anonymous ones. Upgrade to a Pro or Enterprise account for elevated access.
-
----
+Connect the **Hugging Face** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUGGING_FACE_TOKEN` or `zero doctor check-connector --url https://huggingface.co/api/whoami-v2 --method GET`
 

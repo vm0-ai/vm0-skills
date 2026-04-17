@@ -7,6 +7,10 @@ description: Write and edit marketing copy for any channel — blogs, emails, so
 
 Principles, structures, and techniques for producing high-performing marketing copy across every major channel.
 
+## Prerequisites
+
+Connect the **Copywriting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Channel Formats and Anatomy
 
 ### Blog Articles

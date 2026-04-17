@@ -25,24 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Instantly.ai](https://instantly.ai/) (Growth plan or above required for API)
-2. Go to Settings > Integrations > API to create an API key
-3. Select appropriate scopes for your use case
-
-```bash
-export INSTANTLY_API_KEY="your-api-key"
-```
-
-### API Scopes
-
-Create API keys with specific permissions:
-- `campaigns:read`, `campaigns:create`, `campaigns:update`
-- `leads:read`, `leads:create`, `leads:update`, `leads:delete`
-- `lead_lists:read`, `lead_lists:create`
-- `analytics:read`
-- `all:all` (full access)
-
----
+Connect the **Instantly** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTANTLY_API_KEY` or `zero doctor check-connector --url https://api.instantly.ai/api/v2/campaigns --method GET`
 

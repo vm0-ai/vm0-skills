@@ -62,15 +62,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. <How to register / obtain access>
-2. <What API keys or tokens are needed>
+Connect the **<Service Name>** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-Set environment variables:
-
-\`\`\`bash
-export ENV_VAR_1="your-value"
-export ENV_VAR_2="your-value"
-\`\`\`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ENV_VAR_1` or `zero doctor check-connector --url https://api.example.com/endpoint --method GET`
 
 ---
 
@@ -105,43 +99,36 @@ curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: appli
 - Use `--header` instead of `-H` (better compatibility)
 - All examples should be copy-paste executable
 - Include the API documentation URL so agents can look up additional endpoints
-- Pass sensitive information (tokens, keys) via environment variables
+- Reference tokens via environment variables (e.g. `$SERVICE_TOKEN`) — users connect the service at app.vm0.ai/connectors, never via manual `export`
 
 ---
 
 ## 3. Document How to Obtain API Tokens
 
-In the Prerequisites section of SKILL.md, clearly explain:
+In the Prerequisites section of SKILL.md, instruct users to connect the service at **app.vm0.ai/connectors**. Do NOT ask users to manually export environment variables.
 
-1. How to register an account
-2. How to create an API key / token
-3. What permissions or scopes are required
+The Prerequisites section must follow this exact format:
 
-Users can store their tokens in `$HOME/.env.local`:
+```markdown
+## Prerequisites
 
-```bash
-# $HOME/.env.local
-export EXAMPLE_API_KEY="your-api-key"
-export EXAMPLE_ACCOUNT_ID="your-account-id"
+Connect the **{Service Name}** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name {SERVICE}_TOKEN` or `zero doctor check-connector --url <base-url>/<representative-endpoint> --method GET`
 ```
 
-Source the file before use:
-
-```bash
-source $HOME/.env.local
-```
+Rules:
+- One connector entry per token variable
+- Always include the `zero doctor` troubleshooting line with a representative endpoint from the skill
+- Do NOT write step-by-step account registration or API key creation steps — those belong in the vm0 Connector UI, not in SKILL.md
 
 ---
 
 ## 4. Test Every Example
 
-After writing, test each curl example in SKILL.md:
+After writing, test each curl example in SKILL.md. Environment variables are injected by vm0 at runtime from the configured connector — no manual sourcing needed:
 
 ```bash
-# Set environment variables
-source $HOME/.env.local
-
-# Execute example commands and verify results
 curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY" | jq .
 ```
 

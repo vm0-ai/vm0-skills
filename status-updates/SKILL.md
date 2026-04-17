@@ -7,6 +7,10 @@ description: Draft clear status updates, progress reports, and stakeholder commu
 
 Expert guidance for crafting project updates, managing stakeholder communications, documenting decisions, surfacing risks, and running productive meetings across product and engineering teams.
 
+## Prerequisites
+
+Connect the **Status Updates** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Audience-Specific Update Formats
 
 ### Leadership / Executive Updates

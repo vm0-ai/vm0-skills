@@ -7,6 +7,10 @@ description: Measure, report on, and optimize marketing performance across chann
 
 Frameworks for tracking, interpreting, and acting on marketing data across channels, campaigns, and the full customer funnel.
 
+## Prerequisites
+
+Connect the **Marketing Analytics** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Channel Metric Reference
 
 ### Email

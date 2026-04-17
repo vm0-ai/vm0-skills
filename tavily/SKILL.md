@@ -25,16 +25,7 @@ Use this skill when you need:
 
 ## Prerequisites
 
-1. Sign up for Tavily and create an API key
-2. Store your Tavily API key in the environment variable `TAVILY_TOKEN`
-
-Set it in your local shell or runtime environment, for example:
-
-```bash
-export TAVILY_TOKEN="tvly-xxxxxxxxxxxxxxxx"
-```
-
----
+Connect the **Tavily** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TAVILY_TOKEN` or `zero doctor check-connector --url https://api.tavily.com/search --method POST`
 

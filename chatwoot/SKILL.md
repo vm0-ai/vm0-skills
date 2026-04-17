@@ -26,26 +26,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Set up Chatwoot (Cloud or Self-hosted)
-2. Log in and go to **Profile Settings** to get your API access token
-3. Note your Account ID from the URL (e.g., `/app/accounts/1/...`)
+Connect the **Chatwoot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export CHATWOOT_TOKEN="your-api-access-token"
-export CHATWOOT_ACCOUNT_ID="1"
-```
-
-### API Types
-
-| API Type | Auth | Use Case |
-|----------|------|----------|
-| Application API | User access_token | Agent/admin automation |
-| Client API | inbox_identifier | Custom chat interfaces |
-| Platform API | Platform App token | Multi-tenant management (self-hosted only) |
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CHATWOOT_TOKEN` or `zero doctor check-connector --url https://app.chatwoot.com/api/v1/accounts --method POST`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CHATWOOT_TOKEN` or `zero doctor check-connector --url https://app.chatwoot.com/api/v1/profile --method GET`
 
 ## How to Use
 

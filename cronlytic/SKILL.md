@@ -26,22 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Cronlytic](https://www.cronlytic.com/signup)
-2. Go to Dashboard → API Keys → Generate New API Key
-3. Copy your API Key and User ID
-
-```bash
-export CRONLYTIC_API_KEY="your-api-key"
-export CRONLYTIC_USER_ID="your-user-id"
-```
-
-### Base URL
-
-```
-https://api.cronlytic.com/prog/
-```
-
----
+Connect the **Cronlytic** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CRONLYTIC_API_KEY` or `zero doctor check-connector --url https://api.cronlytic.com/prog/ping --method GET`
 

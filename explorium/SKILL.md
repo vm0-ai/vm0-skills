@@ -26,21 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Explorium](https://www.explorium.ai/) and purchase a subscription package
-2. Log in to the [Explorium Admin Portal](https://admin.explorium.ai) and navigate to **Access & Authentication > Getting Your API Key**
-3. Store your API key in the environment variable `EXPLORIUM_TOKEN`
-
-```bash
-export EXPLORIUM_TOKEN="your-api-key"
-```
-
-### API Limits
-
-- Rate limit: up to 200 queries per minute
-- Bulk endpoints: up to 50 records per request
-- Pagination: up to 100 records per page
-
----
+Connect the **Explorium** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name EXPLORIUM_TOKEN` or `zero doctor check-connector --url https://api.explorium.ai/v1/businesses/stats --method POST`
 

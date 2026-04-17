@@ -7,6 +7,10 @@ description: Construct and review journal entries with correct debit/credit stru
 
 Guidance on structuring, documenting, reviewing, and posting journal entries across all major accounting cycles.
 
+## Prerequisites
+
+Connect the **Journal Entry Construction** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Core Entry Patterns by Accounting Cycle
 
 ### Vendor & Expense Accruals

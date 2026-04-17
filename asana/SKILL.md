@@ -14,6 +14,8 @@ Manage tasks, projects, sections, tags, portfolios, and goals in Asana workspace
 
 ## Prerequisites
 
+Connect the **Asana** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ASANA_TOKEN` or `zero doctor check-connector --url https://app.asana.com/api/1.0/users/me --method GET`
 
 ## When to Use

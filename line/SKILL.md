@@ -26,16 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to the [LINE Developers Console](https://developers.line.biz/console)
-2. Select your provider and channel (or create a new Messaging API channel)
-3. Go to the **Messaging API** tab
-4. Issue or copy the **Channel access token (long-lived)**
-
-```bash
-export LINE_TOKEN="your-channel-access-token"
-```
-
----
+Connect the **LINE** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LINE_TOKEN` or `zero doctor check-connector --url https://api.line.me/v2/bot/info --method GET`
 

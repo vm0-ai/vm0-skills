@@ -7,6 +7,10 @@ description: Profile and explore unfamiliar datasets — assess schema structure
 
 Systematic approach to understanding a dataset's structure, quality, and analytical potential before diving into analysis.
 
+## Prerequisites
+
+Connect the **Data Profiling** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Structural Reconnaissance
 
 ### Table-Level Inventory

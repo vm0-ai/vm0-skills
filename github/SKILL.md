@@ -130,9 +130,5 @@ gh pr view <number> --repo <owner>/<repo> --json title,state,reviews,checks
 
 ## Prerequisites
 
-This Skill requires the GitHub CLI (`gh`) to be installed.
+Connect the **GitHub** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-When piping output to other commands like `jq`, use `$VAR` for environment variables:
-```bash
-gh pr view <number> --repo <owner>/<repo> --json title,state | jq '.title'
-```

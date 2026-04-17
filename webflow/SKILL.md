@@ -27,17 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect your Webflow account via the vm0 platform (OAuth connector). The `WEBFLOW_TOKEN` environment variable is automatically configured.
-
-Verify authentication:
-
-```bash
-curl -s "https://api.webflow.com/v2/token/authorized_by" --header "Authorization: Bearer $WEBFLOW_TOKEN" | jq '{id, email, firstName, lastName}'
-```
-
-Expected response: Your user information (id, email, name).
-
----
+Connect the **Webflow** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WEBFLOW_TOKEN` or `zero doctor check-connector --url https://api.webflow.com/v2/token/authorized_by --method GET`
 

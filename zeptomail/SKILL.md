@@ -28,29 +28,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Zoho ZeptoMail](https://www.zoho.com/zeptomail/)
-2. Add and verify your domain
-3. Create a Mail Agent and get your Send Mail Token
+Connect the **Zoho ZeptoMail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-### Get API Token
-
-1. Go to **Mail Agents** in ZeptoMail dashboard
-2. Click on your Mail Agent
-3. Go to **SMTP & API** tab
-4. Copy the **Send Mail Token**
-
-```bash
-export ZEPTOMAIL_TOKEN="your-send-mail-token"
-```
-
-### Pricing
-
-- **Free tier**: 10,000 emails
-- **Paid**: $2.50 per 10,000 emails
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZEPTOMAIL_TOKEN` or `zero doctor check-connector --url https://api.zeptomail.com/v1.1/email --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZEPTOMAIL_TOKEN` or `zero doctor check-connector --url https://api.zeptomail.com/v1.1/email --method POST`
 
 ## How to Use
 

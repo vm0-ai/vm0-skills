@@ -25,21 +25,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at https://app.hume.ai
-2. Navigate to the [API Keys page](https://app.hume.ai/keys)
-3. Copy your API key
+Connect the **Hume** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-Set environment variable:
-
-```bash
-export HUME_TOKEN="your-api-key"
-```
-
-> **Placeholders:** Values in `{curly-braces}` like `{job-id}` are placeholders. Replace them with actual values when executing.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUME_TOKEN` or `zero doctor check-connector --url https://api.hume.ai/v0/batch/jobs --method POST`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUME_TOKEN` or `zero doctor check-connector --url https://api.hume.ai/v0/batch/jobs --method GET`
 
 ## Expression Measurement (Batch)
 

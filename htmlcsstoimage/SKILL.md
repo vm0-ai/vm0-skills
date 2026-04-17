@@ -25,30 +25,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [HTMLCSStoImage](https://htmlcsstoimage.com/) and create an account
-2. Go to your [Dashboard](https://htmlcsstoimage.com/dashboard) to get your User ID and API Key
-3. Store credentials in environment variables
+Connect the **HTMLCSStoImage** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export HCTI_USER_ID="your-user-id"
-export HCTI_API_KEY="your-api-key"
-```
-
-### Authentication
-
-The API uses HTTP Basic Authentication:
-- Username: Your User ID
-- Password: Your API Key
-
-### Pricing
-
-- Free tier: 50 images/month
-- Paid plans available for higher volume
-
----
-
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HCTI_API_KEY` or `zero doctor check-connector --url https://hcti.io/v1/image --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HCTI_API_KEY` or `zero doctor check-connector --url https://hcti.io/v1/image --method POST`
 
 ## How to Use
 

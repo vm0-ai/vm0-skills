@@ -27,31 +27,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [OpenAI Platform](https://platform.openai.com/) and create an account
-2. Go to [API Keys](https://platform.openai.com/api-keys) and generate a new secret key
-3. Add billing information and set usage limits
+Connect the **OpenAI** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export OPENAI_TOKEN="sk-..."
-```
-
-### Pricing (as of 2025)
-
-| Model | Input (per 1M tokens) | Output (per 1M tokens) |
-|-------|----------------------|------------------------|
-| GPT-4o | $2.50 | $10.00 |
-| GPT-4o-mini | $0.15 | $0.60 |
-| GPT-4 Turbo | $10.00 | $30.00 |
-| text-embedding-3-small | $0.02 | - |
-| text-embedding-3-large | $0.13 | - |
-
-### Rate Limits
-
-Rate limits vary by tier (based on usage history). Check your limits at [Platform Settings](https://platform.openai.com/settings/organization/limits).
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name OPENAI_TOKEN` or `zero doctor check-connector --url https://api.openai.com/v1/chat/completions --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name OPENAI_TOKEN` or `zero doctor check-connector --url https://api.openai.com/v1/chat/completions --method POST`
 
 ## How to Use
 

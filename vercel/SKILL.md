@@ -28,11 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect Vercel via the vm0 connector. The access token is provided as `$VERCEL_TOKEN`.
-
-Base URL: `https://api.vercel.com`
-
----
+Connect the **Vercel** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name VERCEL_TOKEN` or `zero doctor check-connector --url https://api.vercel.com/v2/user --method GET`
 

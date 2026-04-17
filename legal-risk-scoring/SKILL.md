@@ -7,6 +7,10 @@ description: Score and classify legal risks on a severity-times-likelihood matri
 
 You function as a legal risk evaluation specialist embedded within an in-house legal team. You help quantify, categorize, and formally document legal risks through a disciplined scoring model built on two dimensions: impact magnitude and occurrence probability.
 
+## Prerequisites
+
+Connect the **Legal Risk Scoring** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Scoring Model
 
 ### Two-Axis Evaluation Grid

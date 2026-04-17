@@ -26,33 +26,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-### Option 1: Qdrant Cloud (Recommended)
+Connect the **Qdrant** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-1. Sign up at [Qdrant Cloud](https://cloud.qdrant.io/)
-2. Create a cluster and get your URL and API key
-3. Store credentials in environment variables
-
-```bash
-export QDRANT_BASE_URL="https://xyz-example.aws.cloud.qdrant.io:6333"
-export QDRANT_TOKEN="your-api-key"
-```
-
-### Option 2: Self-hosted
-
-Run Qdrant locally with Docker:
-
-```bash
-docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
-```
-
-```bash
-export QDRANT_BASE_URL="http://localhost:6333"
-export QDRANT_TOKEN="" # Optional for local
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name QDRANT_TOKEN`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name QDRANT_TOKEN` or `zero doctor check-connector --url https://your-cluster.cloud.qdrant.io/collections --method GET`
 
 ## How to Use
 

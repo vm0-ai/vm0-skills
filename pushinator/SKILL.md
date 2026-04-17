@@ -25,23 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Pushinator](https://pushinator.com/)
-2. Download the Pushinator app on your mobile device
-3. Create a channel in the [Console](https://console.pushinator.com/)
-4. Generate an API token at [Tokens](https://console.pushinator.com/tokens)
-5. Store credentials in environment variables
-
-```bash
-export PUSHINATOR_TOKEN="your-api-token"
-```
-
-### Pricing
-
-- **Free**: 3 devices, 200 notifications/month
-- **Pro** ($9.99/mo): 20 devices, 2,000 notifications/month
-- **Scale** ($29.99/mo): 50 devices, 20,000 notifications/month
-
----
+Connect the **Pushinator** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PUSHINATOR_TOKEN` or `zero doctor check-connector --url https://api.pushinator.com/api/v2/notifications/send --method POST`
 

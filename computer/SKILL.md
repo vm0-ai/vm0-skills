@@ -15,6 +15,10 @@ Expose local services to remote sandboxes via authenticated ngrok tunnels.
 - Expose local ports through a secure tunnel
 - Connect sandbox environments to on-premise services
 
+
+## Prerequisites
+
+Connect the **Computer Connector** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 ## Environment Variables
 
 - `COMPUTER_CONNECTOR_BRIDGE_TOKEN` — Authentication token for the ngrok bridge

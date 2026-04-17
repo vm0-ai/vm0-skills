@@ -28,20 +28,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to your Strapi admin panel
-2. Go to **Settings → API Tokens**
-3. Click **Create new API Token**
-4. Enter a name, select a token duration, and choose a token type (Full Access or Custom)
-5. Click **Save** and copy the generated token
+Connect the **Strapi** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-```bash
-export STRAPI_TOKEN="your-api-token"
-export STRAPI_BASE_URL="https://your-strapi.example.com"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAPI_TOKEN`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAPI_TOKEN` or `zero doctor check-connector --url https://docs.strapi.io/cms/api/rest --method GET`
 
 ## IMPORTANT: Discovery Workflow
 

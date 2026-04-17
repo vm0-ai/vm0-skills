@@ -28,17 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect Axiom via the vm0 connector. The access token is provided as `$AXIOM_TOKEN`.
-
-### Base URLs
-
-- **API**: `https://api.axiom.co`
-- **Ingest (US East)**: `https://us-east-1.aws.edge.axiom.co`
-- **Ingest (EU Central)**: `https://eu-central-1.aws.edge.axiom.co`
-
-> **Important:** Always use edge URLs for data ingestion, not `api.axiom.co`.
-
----
+Connect the **Axiom** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AXIOM_TOKEN` or `zero doctor check-connector --url https://api.axiom.co/v2/datasets --method GET`
 

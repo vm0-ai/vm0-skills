@@ -25,20 +25,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. You must be on the Granola Enterprise plan
-2. Sign in to your Granola account as a workspace administrator
-3. Go to **Settings > Workspaces > API** tab
-4. Click **Generate API Key** and copy the key
+Connect the **Granola** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-Set environment variables:
-
-```bash
-export GRANOLA_TOKEN="your-granola-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GRANOLA_TOKEN` or `zero doctor check-connector --url https://public-api.granola.ai/v1/notes?page_size=10 --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GRANOLA_TOKEN` or `zero doctor check-connector --url https://public-api.granola.ai/v1/notes --method GET`
 
 ## How to Use
 

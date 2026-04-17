@@ -19,22 +19,7 @@ Complete Lark/Feishu integration for enterprise collaboration, including messagi
 
 ## Prerequisites
 
-Set the following environment variables:
-
-```bash
-export LARK_APP_ID=cli_xxxxx
-export LARK_TOKEN=xxxxx
-```
-
-Get your credentials from: https://open.larkoffice.com/
-
-### Required Permissions
-
-Enable these API scopes in your Lark app:
-- `im:message` - Send and read messages
-- `im:chat` - Manage group chats
-- `contact:user.base:readonly` - Read contacts
-- `calendar:calendar` - Manage calendars
+Connect the **Lark (Feishu)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LARK_TOKEN` or `zero doctor check-connector --url https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal --method POST`
 

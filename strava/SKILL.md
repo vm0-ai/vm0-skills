@@ -14,6 +14,8 @@ Use the Strava API v3 via `curl` to access **athlete activities, segments, clubs
 
 ## Prerequisites
 
+Connect the **Strava** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAVA_TOKEN` or `zero doctor check-connector --url https://www.strava.com/api/v3/athlete --method GET`
 
 ## When to Use

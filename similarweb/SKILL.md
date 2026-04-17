@@ -20,10 +20,9 @@ Analyze website traffic, engagement metrics, traffic sources, keywords, and comp
 
 ## Prerequisites
 
+Connect the **SimilarWeb** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Note:** SimilarWeb REST API passes the API key as a query parameter (`api_key`). The Batch API uses the `api-key` header instead.
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SIMILARWEB_TOKEN` or `zero doctor check-connector --url https://api.similarweb.com/capabilities?api_key= --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SIMILARWEB_TOKEN` or `zero doctor check-connector --url https://api.similarweb.com/capabilities --method GET`
 
 ## Core APIs
 

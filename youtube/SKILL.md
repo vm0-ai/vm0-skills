@@ -28,32 +28,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-### 1. Create Google Cloud Project
+Connect the **YouTube** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing one
-3. Go to "APIs & Services" > "Library"
-4. Search for "YouTube Data API v3" and enable it
-
-### 2. Get API Key
-
-1. Go to "APIs & Services" > "Credentials"
-2. Click "Create Credentials" > "API Key"
-3. Copy the API key
-
-```bash
-export YOUTUBE_TOKEN="AIzaSy..."
-```
-
-### 3. (Optional) Restrict API Key
-
-For production use, restrict the key:
-- Application restrictions: HTTP referrers, IP addresses
-- API restrictions: YouTube Data API v3 only
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name YOUTUBE_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/youtube/v3/search?part=snippet --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name YOUTUBE_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/youtube/v3/search --method GET`
 
 ## How to Use
 

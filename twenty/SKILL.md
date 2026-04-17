@@ -27,16 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create an account at https://app.twenty.com/
-2. Go to **Settings → APIs & Webhooks** to generate an API key
-
-Set environment variables:
-
-```bash
-export TWENTY_TOKEN="your-api-key"
-```
-
----
+Connect the **Twenty CRM** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TWENTY_TOKEN` or `zero doctor check-connector --url https://api.twenty.com/rest/companies --method GET`
 

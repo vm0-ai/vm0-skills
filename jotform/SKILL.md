@@ -26,26 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to your [Jotform account](https://www.jotform.com/myaccount/api)
-2. Navigate to **Settings** > **API**
-3. Click **Create New Key**
-4. Copy your **API Key**
-
-```bash
-export JOTFORM_TOKEN="your-api-key"
-```
-
-### API Base URLs
-
-| Region | URL |
-|--------|-----|
-| Standard | `https://api.jotform.com` |
-| EU | `https://eu-api.jotform.com` |
-| HIPAA | `https://hipaa-api.jotform.com` |
-
-All examples below use `https://api.jotform.com`. Replace with the appropriate regional URL if needed.
-
----
+Connect the **Jotform** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JOTFORM_TOKEN` or `zero doctor check-connector --url https://api.jotform.com/user --method GET`
 

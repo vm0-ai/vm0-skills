@@ -7,6 +7,10 @@ description: Prepare GAAP-compliant financial statements including P&L, balance 
 
 Authoritative guidance, structural templates, required disclosures, and analytical procedures for producing compliant financial statements under US GAAP (with IFRS references where relevant).
 
+## Prerequisites
+
+Connect the **GAAP Financial Reporting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Profit and Loss Statement
 
 ### Recommended Line-Item Structure (Functional Expense Method)

@@ -30,38 +30,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-### Getting Your Access Token
-
-1. Log in to your [Intercom workspace](https://app.intercom.com/)
-2. Navigate to **Settings** → **Developers** → **Developer Hub**
-3. Create a new app or select an existing one
-4. Go to **Configure** → **Authentication**
-5. Copy your **Access Token**
-
-```bash
-export INTERCOM_TOKEN="your_access_token"
-```
-
-### Verify Token
-
-Test your token:
-
-```bash
-curl -s "https://api.intercom.io/admins" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Accept: application/json" -H "Intercom-Version: 2.14" | jq '.admins[] | {id, name, email}'
-```
-
-Expected response: List of admins in your workspace
-
-**✅ This skill has been tested and verified** with a live Intercom workspace. All core endpoints work correctly.
-
-### Regional Endpoints
-
-- **US (Default)**: `https://api.intercom.io/`
-- **Europe**: `https://api.eu.intercom.io/`
-- **Australia**: `https://api.au.intercom.io/`
-
----
-
+Connect the **Intercom** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INTERCOM_TOKEN` or `zero doctor check-connector --url https://api.intercom.io/admins --method GET`
 

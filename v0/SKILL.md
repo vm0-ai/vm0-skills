@@ -25,22 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [v0.dev](https://v0.dev) — requires a **Premium** ($20/mo) or **Team** ($30/user/mo) plan
-2. Enable usage-based billing on your Vercel account
-3. Go to [v0.dev/chat/settings/keys](https://v0.dev/chat/settings/keys) and create an API key
-
-Set the environment variable:
-
-```bash
-export V0_TOKEN="your-api-key"
-```
-
-**Daily limits:** 10,000 API requests · 1,000 chat messages · 100 deployments
-
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name V0_TOKEN` or `zero doctor check-connector --url https://api.v0.dev/v1/chats --method POST`
+Connect the **v0 by Vercel** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 

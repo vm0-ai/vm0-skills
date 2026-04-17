@@ -29,20 +29,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Jam](https://jam.dev/) and install the browser extension
-2. Go to **Settings > Integrations > AI Agents** in your Jam workspace
-3. Click **Create token**, specify a name, choose an expiration window (7 days to 1 year), and select scopes:
-   - **mcp:read** - View Jam details, logs, events, and network activity
-   - **mcp:write** - Move Jams between folders and add comments
-4. Copy the token immediately (it is only shown once)
-
-Token format: `jam_pat_<random-characters>`
-
-```bash
-export JAM_TOKEN="jam_pat_your-token-here"
-```
-
----
+Connect the **Jam** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JAM_TOKEN` or `zero doctor check-connector --url https://mcp.jam.dev/mcp --method POST`
 

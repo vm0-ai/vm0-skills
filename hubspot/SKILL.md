@@ -32,11 +32,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect HubSpot via the vm0 connector. The access token is provided as `$HUBSPOT_TOKEN`.
+Connect the **HubSpot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUBSPOT_TOKEN` or `zero doctor check-connector --url https://api.hubapi.com/crm/v3/objects/contacts?limit=10 --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUBSPOT_TOKEN` or `zero doctor check-connector --url https://api.hubapi.com/crm/v3/objects/contacts --method GET`
 
 ## CRM Objects (Unified Pattern)
 

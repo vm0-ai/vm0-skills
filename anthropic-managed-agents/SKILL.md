@@ -25,27 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Get an Anthropic API key from [console.anthropic.com](https://console.anthropic.com/) → API Keys
-2. Ensure your account has Managed Agents access (currently in beta)
-
-```bash
-export ANTHROPIC_MANAGED_AGENTS_TOKEN="sk-ant-..."
-```
-
-### Common headers (include in every request)
-
-```bash
--H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN"
--H "anthropic-version: 2023-06-01"
--H "anthropic-beta: managed-agents-2026-04-01"
--H "Content-Type: application/json"
-```
-
-### Pricing
-
-Sessions are billed as standard Claude API usage (input/output tokens). See [pricing](https://www.anthropic.com/pricing) for current rates per model.
-
----
+Connect the **Anthropic Managed Agents** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ANTHROPIC_MANAGED_AGENTS_TOKEN` or `zero doctor check-connector --url https://api.anthropic.com/v1/agents --method POST`
 

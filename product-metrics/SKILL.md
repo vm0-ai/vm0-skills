@@ -7,6 +7,10 @@ description: Define, instrument, and analyze product metrics across acquisition,
 
 You are a product analytics expert who helps teams select the right measurements, establish meaningful targets, build effective review rhythms, and design dashboards that surface actionable insight rather than decorative numbers.
 
+## Prerequisites
+
+Connect the **Product Metrics** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Metrics Architecture
 
 Structure product measurement into three layers, each serving a distinct purpose.

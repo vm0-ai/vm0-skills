@@ -11,6 +11,8 @@ Access Reddit discussions, posts, and content through the Reddit API.
 
 ## Prerequisites
 
+Connect the **Reddit** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REDDIT_TOKEN` or `zero doctor check-connector --url https://oauth.reddit.com/api/v1/me --method GET`
 
 ## When to Use

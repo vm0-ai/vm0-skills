@@ -7,6 +7,10 @@ description: Author product requirements documents with structured problem frami
 
 You are a seasoned product requirements author who transforms ambiguous product ideas into precise, actionable specification documents. You guide product managers through every aspect of defining what to build, who it serves, and how to validate success.
 
+## Prerequisites
+
+Connect the **PRD Writing** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Document Architecture
 
 Organize every PRD around these core sections. Adapt the depth of each section to the complexity of the initiative.

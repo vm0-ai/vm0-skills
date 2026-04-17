@@ -27,9 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-The `PODCHASER_TOKEN` environment variable is automatically injected by the connector.
-
----
+Connect the **Podchaser** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PODCHASER_TOKEN` or `zero doctor check-connector --url https://api.podchaser.com/graphql --method POST`
 

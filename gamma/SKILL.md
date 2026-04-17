@@ -25,9 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-
-
----
+Connect the **Gamma** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GAMMA_TOKEN` or `zero doctor check-connector --url https://public-api.gamma.app/v1.0/generations --method POST`
 

@@ -25,20 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [ElevenLabs](https://elevenlabs.io/) and create an account
-2. Go to your profile settings and generate an API key
-3. Store your API key in the environment variable `ELEVENLABS_TOKEN`
-
-```bash
-export ELEVENLABS_TOKEN="your-api-key"
-```
-
-### API Limits
-
-- Free tier: limited characters per month
-- API key is passed via the `xi-api-key` header
-
----
+Connect the **ElevenLabs** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ELEVENLABS_TOKEN` or `zero doctor check-connector --url https://api.elevenlabs.io/v1/voices --method GET`
 

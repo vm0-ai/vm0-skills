@@ -9,6 +9,8 @@ description: VM0 migration helper for Claude Code workflows. Use when user says 
 
 ## Prerequisites
 
+Connect the **Local Claude Code Workflow to VM0 Migration** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NOTION_API_KEY`
 
 ## When to Use This Skill

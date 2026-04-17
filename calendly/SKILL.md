@@ -19,15 +19,7 @@ Read scheduling data, list event types, retrieve scheduled meetings, and access 
 
 ## Prerequisites
 
-
-Alternatively, generate a Personal Access Token from your Calendly account under **Integrations > API & Webhooks**, then export it:
-
-```bash
-export CALENDLY_TOKEN=your_personal_access_token
-```
-
-> **Note:** Calendly's API is primarily read-only — you can retrieve scheduling data but **cannot directly create bookings** via API. Share Calendly scheduling links to let users self-book.
->
+Connect the **Calendly** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALENDLY_TOKEN` or `zero doctor check-connector --url https://api.calendly.com/users/me --method GET`
 

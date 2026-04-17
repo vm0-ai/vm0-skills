@@ -25,15 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at https://app.fireflies.ai/
-2. Navigate to **Settings > Developer Settings > API** to generate your API key
-3. Copy the API key
-
-```bash
-export FIREFLIES_TOKEN="your-api-key"
-```
-
----
+Connect the **Fireflies** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FIREFLIES_TOKEN` or `zero doctor check-connector --url https://api.fireflies.ai/graphql --method POST`
 

@@ -26,29 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to your [Make account](https://www.make.com/en/login)
-2. Go to your profile icon > **Profile** > **API Access**
-3. Click **Add token**, enter a name, and select the required scopes
-4. Copy the generated API token
-
-```bash
-export MAKE_TOKEN="your-api-token"
-```
-
-### API Base URLs
-
-Your base URL depends on your Make zone. Check your Make dashboard URL to determine your zone.
-
-| Zone | Base URL |
-|------|----------|
-| EU1 | `https://eu1.make.com/api/v2` |
-| EU2 | `https://eu2.make.com/api/v2` |
-| US1 | `https://us1.make.com/api/v2` |
-| US2 | `https://us2.make.com/api/v2` |
-
-All examples below use `https://eu1.make.com/api/v2`. Replace with your zone URL as needed.
-
----
+Connect the **Make** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAKE_TOKEN` or `zero doctor check-connector --url https://eu1.make.com/api/v2/users/me --method GET`
 

@@ -27,17 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up for a Mercury business bank account at https://mercury.com
-2. Go to Settings > Developers > API Tokens
-3. Create a new API token with appropriate permissions
-
-Set environment variable:
-
-```bash
-export MERCURY_TOKEN="your-api-token"
-```
-
----
+Connect the **Mercury** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MERCURY_TOKEN` or `zero doctor check-connector --url https://api.mercury.com/api/v1/accounts --method GET`
 

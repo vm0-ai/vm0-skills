@@ -15,6 +15,8 @@ Manage Google Meet spaces, conference records, participants, recordings, and tra
 
 ## Prerequisites
 
+Connect the **Google Meet** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_MEET_TOKEN` or `zero doctor check-connector --url https://meet.googleapis.com/v2/spaces --method POST`
 
 ## When to Use

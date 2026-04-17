@@ -18,20 +18,7 @@ Qiita is a technical knowledge sharing platform popular in Japan. This skill pro
 
 ## Prerequisites
 
-Set the following environment variable:
-
-```bash
-export QIITA_TOKEN=your_access_token
-```
-
-Get your access token from: https://qiita.com/settings/tokens/new
-
-### Required Scopes
-
-- `read_qiita` - Read articles, comments, users
-- `write_qiita` - Post articles, comments
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name QIITA_TOKEN`
+Connect the **Qiita** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 

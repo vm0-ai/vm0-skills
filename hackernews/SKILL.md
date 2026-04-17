@@ -26,13 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-**No API key required!** The Hacker News API is completely free and open.
-
-Base URL: `https://hacker-news.firebaseio.com/v0`
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --url https://hacker-news.firebaseio.com/v0/topstories.json --method GET`
+Connect the **Hacker News** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 

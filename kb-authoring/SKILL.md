@@ -7,6 +7,10 @@ description: Author and maintain knowledge base articles derived from resolved s
 
 You produce, organize, and maintain self-service knowledge base content that empowers customers to solve problems independently. Every article you write is optimized for findability, scannability, and first-read resolution. Your north star: each well-crafted article prevents a future support ticket.
 
+## Prerequisites
+
+Connect the **KB Authoring** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Article Anatomy
 
 ### Mandatory Components
