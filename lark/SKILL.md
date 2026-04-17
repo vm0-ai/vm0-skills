@@ -19,7 +19,7 @@ Complete Lark/Feishu integration for enterprise collaboration, including messagi
 
 ## Prerequisites
 
-Connect the **Lark (Feishu) API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Lark (Feishu)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Token Management
 
