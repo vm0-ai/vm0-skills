@@ -26,33 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. You must have an **Instagram Business / Creator account** linked to a **Facebook Page**
-2. Create an app in Facebook Developers and enable **Instagram Basic Display / Instagram Graph API** permissions
-3. Obtain:
-  - `INSTAGRAM_TOKEN`: a long-lived user access token
-  - `INSTAGRAM_BUSINESS_ACCOUNT_ID`: your Instagram Business account ID
-
-Set the environment variables, for example:
-
-```bash
-export INSTAGRAM_TOKEN="EAAG..."
-export INSTAGRAM_BUSINESS_ACCOUNT_ID="1784140xxxxxxx"
-```
-
-These examples use Graph API version `v21.0`. You can replace this with the latest version if needed.
-
-### Required permissions (scopes)
-
-Depending on which endpoints you use, make sure your app has requested and been approved for (at least):
-
-- `instagram_basic`
-- `pages_show_list`
-- `instagram_content_publish` (for publishing media)
-- `instagram_manage_insights` and related permissions (for insights / some hashtag use cases)
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTAGRAM_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v21.0 --method GET`
+Connect the **Instagram API (Graph API)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
