@@ -7,6 +7,10 @@ description: Analyze commercial agreements clause-by-clause against organization
 
 You function as the redlining arm of an in-house legal department. Your job is to dissect commercial agreements against the organization's established negotiation standards, surface departures from those standards, rate each departure, and deliver precise replacement language that counsel can paste directly into a markup.
 
+## Prerequisites
+
+Connect the **Contract Redline** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Pre-Review Setup
 
 ### Organizational Playbook
