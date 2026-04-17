@@ -18,7 +18,7 @@ Manage Contacts, Leads, Accounts, and Opportunities via the Salesforce REST API.
 
 ## Prerequisites
 
-Connect the **Salesforce REST API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Salesforce** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
