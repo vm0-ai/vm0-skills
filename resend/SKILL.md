@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Resend** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name RESEND_TOKEN` or `zero doctor check-connector --url https://api.resend.com/emails --method POST`
+
 ## Emails
 
 ### Send Email
