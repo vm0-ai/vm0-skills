@@ -12,7 +12,7 @@ Manage payments, customers, subscriptions, and billing with the Stripe API.
 
 ## Prerequisites
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRIPE_TOKEN` or `zero doctor check-connector --url https://api.stripe.com/v1/account --method GET`
+Connect the **Stripe API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
