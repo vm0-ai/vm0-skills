@@ -20,15 +20,7 @@ Manage audiences (lists), campaigns, templates, and subscribers with the Mailchi
 
 ## Prerequisites
 
-### Datacenter
-
-Mailchimp API URLs are datacenter-specific: `https://<dc>.api.mailchimp.com/3.0`. Before making any API calls, determine the datacenter via the metadata endpoint:
-
-```bash
-MC_DC=$(curl -s "https://login.mailchimp.com/oauth2/metadata" -H "Authorization: OAuth $MAILCHIMP_TOKEN" | jq -r '.dc')
-```
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAILCHIMP_TOKEN` or `zero doctor check-connector --url https://login.mailchimp.com/oauth2/metadata --method GET`
+Connect the **Mailchimp Marketing API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
