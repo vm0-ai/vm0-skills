@@ -30,6 +30,8 @@ Use this skill when you need to:
 
 Connect the **ScrapeNinja** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SCRAPENINJA_TOKEN` or `zero doctor check-connector --url https://scrapeninja.p.rapidapi.com/scrape --method POST`
+
 ## How to Use
 
 ### 1. Basic Scrape (Non-JS, Fast)
