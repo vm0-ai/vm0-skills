@@ -26,22 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [SerpApi](https://serpapi.com/)
-2. Go to Dashboard and copy your API key
-3. Store it in the environment variable `SERPAPI_TOKEN`
-
-```bash
-export SERPAPI_TOKEN="your-api-key"
-```
-
-### Pricing
-
-- Free tier: 100 searches/month
-- API key is passed as a query parameter `api_key`
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SERPAPI_TOKEN` or `zero doctor check-connector --url https://serpapi.com/search?engine=google --method GET`
+Connect the **SerpApi** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
