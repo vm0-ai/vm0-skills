@@ -26,25 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Brave Search API](https://brave.com/search/api/)
-2. Subscribe to a plan (Free tier available, credit card required for anti-fraud)
-3. Get your API key from the [Dashboard](https://api-dashboard.search.brave.com/)
-
-```bash
-export BRAVE_API_KEY="your-api-key"
-```
-
-### Pricing
-
-| Plan | Price | Rate Limit | Monthly Cap |
-|------|-------|------------|-------------|
-| Free | $0 | 1 query/sec | 2,000 queries |
-| Base | $5/1000 | 20 query/sec | 20M queries |
-| Pro | $9/1000 | 50 query/sec | Unlimited |
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRAVE_API_KEY` or `zero doctor check-connector --url https://api.search.brave.com/res/v1/web/search?q=artificial+intelligence --method GET`
+Connect the **Brave Search API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
