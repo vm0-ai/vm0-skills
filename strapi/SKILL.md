@@ -28,7 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **Strapi CMS API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Strapi** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAPI_TOKEN` or `zero doctor check-connector --url https://docs.strapi.io/cms/api/rest --method GET`
 
