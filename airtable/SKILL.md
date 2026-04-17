@@ -15,6 +15,8 @@ Manage bases, tables, records, and comments in Airtable.
 
 Connect the **Airtable** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AIRTABLE_TOKEN` or `zero doctor check-connector --url https://api.airtable.com/v0/meta/whoami --method GET`
+
 ## When to Use
 
 - List and inspect Airtable bases and tables
