@@ -27,14 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-
-### Rate Limits
-
-Linear's API is rate-limited to ensure fair usage. Limits may vary based on your plan.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LINEAR_TOKEN` or `zero doctor check-connector --url https://api.linear.app/graphql --method POST`
+Connect the **Linear API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
