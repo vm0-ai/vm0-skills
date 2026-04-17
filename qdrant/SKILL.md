@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Qdrant** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name QDRANT_TOKEN` or `zero doctor check-connector --url https://your-cluster.cloud.qdrant.io/collections --method GET`
+
 ## How to Use
 
 All examples below assume you have `QDRANT_BASE_URL` and `QDRANT_TOKEN` set.
