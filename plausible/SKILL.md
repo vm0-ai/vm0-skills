@@ -18,7 +18,7 @@ Query website analytics and manage sites with Plausible's privacy-friendly analy
 
 ## Prerequisites
 
-Connect the **Plausible Analytics API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Plausible** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Stats API (v2)
 
