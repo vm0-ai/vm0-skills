@@ -26,22 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Go to GitLab → User Settings → Access Tokens
-2. Create a personal access token with `api` scope
-3. Copy the generated token
-
-```bash
-export GITLAB_HOST="gitlab.com" # Or your self-hosted GitLab domain
-export GITLAB_TOKEN="glpat-xxxxxxxxxxxx" # Personal access token with api scope
-```
-
-### Rate Limits
-
-GitLab.com has rate limits of ~2000 requests per minute for authenticated users. Self-hosted instances may vary.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITLAB_TOKEN`
+Connect the **GitLab API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
