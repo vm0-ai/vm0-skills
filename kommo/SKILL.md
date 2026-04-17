@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Kommo** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name KOMMO_API_KEY` or `zero doctor check-connector --url https://your-subdomain.kommo.com/api/v4/leads --method GET`
+
 ## How to Use
 
 All examples below assume you have environment variables set.
