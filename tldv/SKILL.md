@@ -16,6 +16,8 @@ Access meeting recordings, transcripts, highlights, and AI-generated notes from 
 
 Connect the **tl;dv** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TLDV_TOKEN` or `zero doctor check-connector --url https://pasta.tldv.io/v1alpha1/health --method GET`
+
 ## When to Use
 
 Use this skill when you need to:
