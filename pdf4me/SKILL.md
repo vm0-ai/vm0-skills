@@ -33,6 +33,8 @@ Use this skill when you need to:
 
 Connect the **PDF4ME** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDF4ME_TOKEN` or `zero doctor check-connector --url https://api.pdf4me.com/api/v2/ConvertToPdf --method POST`
+
 ## How to Use
 
 ### 1. Convert to PDF
