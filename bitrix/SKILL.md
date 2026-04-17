@@ -27,30 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to your [Bitrix24](https://www.bitrix24.com/) workspace
-2. Go to Applications → Developer Resources → Ready-made scenarios → Other → Incoming webhook
-3. Create a new webhook and select the required permissions (CRM, Tasks, Users)
-4. Copy the webhook URL
-5. Store it in the environment variable
-
-```bash
-export BITRIX_WEBHOOK_URL="https://your-domain.bitrix24.com/rest/1/your-secret-code"
-```
-
-### Webhook URL Format
-
-```
-https://[domain]/rest/[user-id]/[secret-code]/[method].json
-```
-
-- `domain`: Your Bitrix24 address
-- `user-id`: Webhook creator's ID
-- `secret-code`: Authentication token (keep secure)
-- `method`: API method name
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BITRIX_WEBHOOK_URL`
+Connect the **Bitrix24 API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
