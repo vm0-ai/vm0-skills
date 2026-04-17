@@ -1,8 +1,6 @@
 ---
 name: plain
 description: Plain.com GraphQL API for customer support. Use when user mentions "Plain", "Plain.com", "support threads", or managing customers in Plain.
-vm0_env:
-  - PLAIN_TOKEN
 ---
 
 ## Troubleshooting
