@@ -14,7 +14,7 @@ Manage tasks, projects, sections, tags, portfolios, and goals in Asana workspace
 
 ## Prerequisites
 
-Connect the **Asana API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Asana** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
