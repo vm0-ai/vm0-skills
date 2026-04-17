@@ -20,7 +20,7 @@ Manage contacts, blog posts, store products, and orders on a connected Wix site.
 
 ## Prerequisites
 
-Connect the **Wix API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Wix** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
