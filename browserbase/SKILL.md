@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Browserbase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BROWSERBASE_TOKEN` or `zero doctor check-connector --url https://api.browserbase.com/v1/sessions --method POST`
+
 ## How to Use
 
 ### 1. Create a Session
