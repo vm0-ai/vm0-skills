@@ -7,6 +7,10 @@ description: Define, document, and enforce brand voice, tone, messaging pillars,
 
 Methods for establishing, maintaining, and applying a cohesive brand identity across all written communications.
 
+## Prerequisites
+
+Connect the **Brand Guidelines** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Building a Brand Voice Document
 
 A thorough voice reference covers the following areas. Use this structure to help teams articulate their voice from scratch or to interpret an existing voice configuration.
