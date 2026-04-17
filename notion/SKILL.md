@@ -21,6 +21,8 @@ Manage pages, databases, and content blocks in Notion workspaces.
 
 Connect the **Notion** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN` or `zero doctor check-connector --url https://api.notion.com/v1/pages --method GET`
+
 ## Core APIs
 
 ### Read Page with Content
