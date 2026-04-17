@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **Pushinator** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PUSHINATOR_TOKEN` or `zero doctor check-connector --url https://api.pushinator.com/api/v2/notifications/send --method POST`
+
 ## How to Use
 
 Base URL: `https://api.pushinator.com`
