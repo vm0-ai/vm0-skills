@@ -29,26 +29,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect Atlassian via the vm0 connector. Authentication uses `$ATLASSIAN_EMAIL` and `$ATLASSIAN_TOKEN` (API token).
-
-```bash
-export ATLASSIAN_DOMAIN="mycompany"          # without .atlassian.net
-export ATLASSIAN_EMAIL="you@example.com"
-export ATLASSIAN_TOKEN="your-api-token"
-```
-
-All endpoints use Basic auth: `-u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"`
-
-Base URLs:
-- Jira: `https://${ATLASSIAN_DOMAIN}.atlassian.net/rest/api/3`
-- Confluence v2: `https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/api/v2`
-- Confluence search (v1): `https://${ATLASSIAN_DOMAIN}.atlassian.net/wiki/rest/api`
-
-> **Important:** This skill uses Confluence v2 API (`/wiki/api/v2`) for pages, spaces, and comments. The v1 search endpoint (`/wiki/rest/api/search`) is used for CQL because v2 does not have a search equivalent.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ATLASSIAN_TOKEN`
+Connect the **Atlassian API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Jira — User
 
