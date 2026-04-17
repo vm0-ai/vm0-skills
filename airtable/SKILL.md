@@ -13,7 +13,7 @@ Manage bases, tables, records, and comments in Airtable.
 
 ## Prerequisites
 
-Connect the **Airtable API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Airtable** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
