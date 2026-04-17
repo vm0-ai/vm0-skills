@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **HTMLCSStoImage** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HCTI_API_KEY` or `zero doctor check-connector --url https://hcti.io/v1/image --method POST`
+
 ## How to Use
 
 All examples below assume you have `HCTI_USER_ID` and `HCTI_API_KEY` set.
