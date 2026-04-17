@@ -7,6 +7,10 @@ description: Decompose financial variances into underlying drivers and produce n
 
 Methods for breaking apart financial movements into causal components, setting investigation thresholds, writing clear variance narratives, constructing bridge visualizations, and measuring forecast precision.
 
+## Prerequisites
+
+Connect the **Flux & Variance Analysis** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Decomposition Techniques
 
 ### Price x Volume Separation
