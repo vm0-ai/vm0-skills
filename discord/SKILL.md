@@ -30,7 +30,7 @@ For simple message posting, use `discord-webhook` skill instead.
 
 ## Prerequisites
 
-Connect the **Discord Bot API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Discord** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
