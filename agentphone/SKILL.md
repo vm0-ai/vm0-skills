@@ -21,6 +21,8 @@ AgentPhone is an API-first telephony platform for AI agents. Give your agents ph
 
 Connect the **AgentPhone** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AGENTPHONE_TOKEN` or `zero doctor check-connector --url https://api.agentphone.to/v1/agents --method POST`
+
 ## How It Works
 
 AgentPhone lets you create AI agents that can make and receive phone calls and SMS messages. Here's the full lifecycle:
