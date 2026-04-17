@@ -28,30 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect your Figma account via the vm0 platform (OAuth connector). The `FIGMA_TOKEN` environment variable is automatically configured.
-
-Verify authentication:
-
-```bash
-curl -s "https://api.figma.com/v1/me" --header "Authorization: Bearer $FIGMA_TOKEN" | jq '{id, email, handle}'
-```
-
-Expected response: Your user information (id, email, handle).
-
-### Finding File Keys
-
-Figma file URLs contain the file key:
-
-```
-URL: https://www.figma.com/design/abc123XYZ/My-Design-File
-File Key: abc123XYZ
-```
-
-The file key is the alphanumeric string between `/design/` (or `/file/`) and the next `/`.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FIGMA_TOKEN` or `zero doctor check-connector --url https://api.figma.com/v1/me --method GET`
+Connect the **Figma API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
