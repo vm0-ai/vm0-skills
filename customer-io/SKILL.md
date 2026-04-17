@@ -18,7 +18,7 @@ Send behavioral emails, SMS, and push notifications triggered by user events. Tw
 
 ## Prerequisites
 
-Connect the **Customer.io API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Customer.io** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
