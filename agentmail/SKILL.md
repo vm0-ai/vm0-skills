@@ -119,6 +119,8 @@ An AI agent triages inbound emails and routes them appropriately.
 
 Connect the **AgentMail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AGENTMAIL_TOKEN` or `zero doctor check-connector --url https://api.agentmail.to/v0/inboxes --method POST`
+
 ## Inboxes
 
 ### Create Inbox
