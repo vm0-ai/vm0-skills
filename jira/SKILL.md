@@ -30,6 +30,8 @@ Use this skill when you need to:
 
 Connect the **Jira** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JIRA_API_TOKEN` or `zero doctor check-connector --url https://your-domain.atlassian.net/rest/api/3/myself --method GET`
+
 ## How to Use
 
 All examples below assume `JIRA_DOMAIN`, `JIRA_EMAIL`, and `JIRA_API_TOKEN` are set.
