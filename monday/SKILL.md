@@ -26,25 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to [Monday.com](https://monday.com/)
-2. Go to your avatar → Developers → My Access Tokens
-3. Generate a new API token
-4. Store it in the environment variable `MONDAY_TOKEN`
-
-```bash
-export MONDAY_TOKEN="your-api-token"
-```
-
-### API Info
-
-- GraphQL endpoint: `https://api.monday.com/v2`
-- All requests are POST
-- Requires `Authorization` header with API token
-- Requires `API-Version` header (use `2024-10`)
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MONDAY_TOKEN` or `zero doctor check-connector --url https://api.monday.com/v2 --method POST`
+Connect the **Monday.com API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
