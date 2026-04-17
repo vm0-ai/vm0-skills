@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **LINE** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LINE_TOKEN` or `zero doctor check-connector --url https://api.line.me/v2/bot/info --method GET`
+
 ## How to Use
 
 All examples below assume you have `LINE_TOKEN` set. Authentication uses Bearer token in the Authorization header.
