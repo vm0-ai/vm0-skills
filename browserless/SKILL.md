@@ -27,18 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create an account at https://www.browserless.io/
-2. Get your API token from https://account.browserless.io/
-
-Set environment variable:
-
-```bash
-export BROWSERLESS_TOKEN="your-api-token-here"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BROWSERLESS_TOKEN` or `zero doctor check-connector --url https://production-sfo.browserless.io/scrape?token= --method POST`
+Connect the **Browserless** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
