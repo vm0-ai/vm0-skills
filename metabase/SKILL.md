@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Metabase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name METABASE_TOKEN` or `zero doctor check-connector --url https://your-metabase.example.com/api/user/current --method GET`
+
 ## How to Use
 
 All examples below assume you have `METABASE_TOKEN` set. Authentication uses the `x-api-key` header.
