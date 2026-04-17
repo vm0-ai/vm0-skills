@@ -16,6 +16,8 @@ Read, send, and manage emails via Google's Gmail REST API.
 
 Connect the **Gmail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GMAIL_TOKEN` or `zero doctor check-connector --url https://gmail.googleapis.com/gmail/v1/users/me/profile --method GET`
+
 ## When to Use
 
 Use this skill when you need to:
