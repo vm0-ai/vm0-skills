@@ -7,6 +7,10 @@ description: Orchestrate the month-end and quarter-end accounting close with tas
 
 Task sequences, dependency logic, progress measurement, and continuous improvement practices for executing a controlled and timely accounting close.
 
+## Prerequisites
+
+Connect the **Period Close Orchestration** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Close Activity Checklist
 
 ### Pre-Close Window (Final 2-3 Business Days of the Period)
