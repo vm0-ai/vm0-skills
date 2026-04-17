@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **Supadata** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPADATA_TOKEN` or `zero doctor check-connector --url https://api.supadata.ai/v1/transcript --method POST`
+
 ## How to Use
 
 All examples below assume you have `SUPADATA_TOKEN` set.
