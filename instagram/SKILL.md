@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Instagram API (Graph API)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTAGRAM_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v21.0/me --method GET`
+
 ## How to Use
 
 All examples below assume you have already set:
