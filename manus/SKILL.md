@@ -27,13 +27,6 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign in to [Manus](https://manus.im)
-2. Navigate to **Settings → Integration → Build with Manus API**
-3. Click **Create New**, give it a name, and confirm
-4. Copy the generated API key
-
-In vm0, go to **Settings → Connectors → Manus** and paste your API key.
-
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MANUS_TOKEN` or `zero doctor check-connector --url https://api.manus.ai/v2/project.list --method GET`
 
 ---
