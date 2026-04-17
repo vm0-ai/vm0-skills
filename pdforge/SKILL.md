@@ -28,18 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [PDF Noodle](https://pdfnoodle.com/) (formerly PDForge)
-2. Go to the API Keys menu in the dashboard
-3. Copy your API key (format: `pdfnoodle_api_xxxxx`)
-4. Store it in the environment variable `PDFORGE_API_KEY`
-
-```bash
-export PDFORGE_API_KEY="pdfnoodle_api_your-key-here"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDFORGE_API_KEY` or `zero doctor check-connector --url https://api.pdfnoodle.com/v1/pdf/sync --method POST`
+Connect the **PDForge API (PDF Noodle)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
