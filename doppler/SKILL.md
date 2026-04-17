@@ -19,6 +19,8 @@ Doppler is a secrets manager that lets you fetch, list, and manage secrets acros
 
 Connect the **Doppler** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DOPPLER_TOKEN` or `zero doctor check-connector --url https://api.doppler.com/v3/configs/config/secret --method GET`
+
 ## Core APIs
 
 ### Fetch a Single Secret by Name
