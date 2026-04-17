@@ -14,7 +14,7 @@ Access meeting recordings, transcripts, highlights, and AI-generated notes from 
 
 ## Prerequisites
 
-Connect the **tl;dv API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **tl;dv** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
