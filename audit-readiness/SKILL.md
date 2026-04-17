@@ -7,6 +7,10 @@ description: Prepare for internal and external audits with SOX 404 control testi
 
 SOX 404 compliance methodology, sampling strategies, evidence and workpaper standards, deficiency severity evaluation, and control taxonomy for maintaining audit-ready internal controls over financial reporting (ICFR).
 
+## Prerequisites
+
+Connect the **Audit Readiness** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## SOX 404 Testing Lifecycle
 
 ### End-to-End Phases
