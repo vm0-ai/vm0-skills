@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Dropbox** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DROPBOX_TOKEN` or `zero doctor check-connector --url https://api.dropboxapi.com/2/users/get_current_account --method POST`
+
 ## User
 
 ### Get Current Account
