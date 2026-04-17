@@ -30,7 +30,7 @@ Use this skill when you need to:
 
 Connect the **Plain** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name - PLAIN_TOKEN` or `zero doctor check-connector --url https://core-api.uk.plain.com/graphql/v1 --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAIN_TOKEN` or `zero doctor check-connector --url https://core-api.uk.plain.com/graphql/v1 --method POST`
 
 ## Threads
 
