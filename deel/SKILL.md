@@ -30,11 +30,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect Deel via the vm0 connector. The access token is provided as `$DEEL_TOKEN`.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEL_TOKEN` or `zero doctor check-connector --url https://api.letsdeel.com/rest/v2/contracts?limit=20 --method GET`
+Connect the **Deel API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Contracts
 
