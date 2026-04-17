@@ -7,6 +7,10 @@ description: Perform account reconciliations comparing general ledger balances a
 
 Frameworks, procedures, and governance standards for reconciling ledger accounts to supporting detail, external statements, and counterparty records.
 
+## Prerequisites
+
+Connect the **Account Reconciliation** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Reconciliation Categories
 
 ### General Ledger vs. Subledger
