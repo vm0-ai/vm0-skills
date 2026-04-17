@@ -33,6 +33,8 @@ Use this skill when you need to:
 
 Connect the **Slack** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SLACK_TOKEN` or `zero doctor check-connector --url https://slack.com/api/chat.postMessage --method POST`
+
 ## Messages
 
 ### Send Message
