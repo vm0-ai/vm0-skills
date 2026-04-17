@@ -15,7 +15,7 @@ Manage Google Meet spaces, conference records, participants, recordings, and tra
 
 ## Prerequisites
 
-Connect the **Google Meet API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Google Meet** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
