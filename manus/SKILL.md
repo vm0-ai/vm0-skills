@@ -1,8 +1,6 @@
 ---
 name: manus
 description: Manus API for AI agent task execution. Use when user mentions "Manus", "run an agent task", "AI agent", or needs to automate multi-step research, analysis, or content tasks via Manus.
-vm0_env:
-  - MANUS_TOKEN
 ---
 
 ## Troubleshooting
