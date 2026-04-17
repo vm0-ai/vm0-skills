@@ -19,7 +19,7 @@ Manage pages, databases, and content blocks in Notion workspaces.
 
 ## Prerequisites
 
-Connect the **Notion API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Notion** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
