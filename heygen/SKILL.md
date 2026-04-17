@@ -26,23 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [HeyGen](https://www.heygen.com/) and create an account
-2. Go to your account settings and generate an API key
-3. Store your API key in the environment variable `HEYGEN_TOKEN`
-
-```bash
-export HEYGEN_TOKEN="your-heygen-api-key"
-```
-
-### API Limits
-
-- API key is passed via the `x-api-key` header
-- Video generation consumes API credits based on duration
-- Generated video URLs expire after 7 days
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HEYGEN_TOKEN` or `zero doctor check-connector --url https://api.heygen.com/v2/avatars --method GET`
+Connect the **HeyGen API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
