@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **MiniMax** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MINIMAX_TOKEN` or `zero doctor check-connector --url https://api.minimax.io/v1/text/chatcompletion_v2 --method POST`
+
 ## How to Use
 
 All examples below assume you have `MINIMAX_TOKEN` set.
