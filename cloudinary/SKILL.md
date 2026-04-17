@@ -19,17 +19,7 @@ Cloudinary provides image and video hosting with CDN delivery, automatic optimiz
 
 ## Prerequisites
 
-Set the following environment variables:
-
-```bash
-export CLOUDINARY_CLOUD_NAME=your_cloud_name
-export CLOUDINARY_TOKEN=your_api_key
-export CLOUDINARY_API_SECRET=your_api_secret
-```
-
-Get credentials from: https://console.cloudinary.com/settings/api-keys
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDINARY_TOKEN` or `zero doctor check-connector --url https://api.cloudinary.com/v1_1 --method POST`
+Connect the **Cloudinary Media Hosting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
