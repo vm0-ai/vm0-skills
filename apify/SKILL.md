@@ -26,18 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create an account at https://apify.com/
-2. Get your API token from https://console.apify.com/account#/integrations
-
-Set environment variable:
-
-```bash
-export APIFY_TOKEN="apify_api_xxxxxxxxxxxxxxxxxxxxxxxx"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name APIFY_TOKEN` or `zero doctor check-connector --url https://api.apify.com/v2/acts/apify~web-scraper/runs --method POST`
+Connect the **Apify** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
