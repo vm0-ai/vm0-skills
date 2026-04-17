@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **GitLab** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITLAB_TOKEN` or `zero doctor check-connector --url https://gitlab.com/api/v4/user --method GET`
+
 ## How to Use
 
 All examples below assume `GITLAB_HOST` and `GITLAB_TOKEN` are set.
