@@ -17,7 +17,7 @@ Infisical is an open-source secrets manager. This skill enables fetching individ
 
 ## Prerequisites
 
-Connect the **Infisical Cloud Secrets Manager API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Infisical** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
