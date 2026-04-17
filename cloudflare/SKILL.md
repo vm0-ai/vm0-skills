@@ -27,32 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create a Cloudflare account at https://dash.cloudflare.com/sign-up
-2. Go to **My Profile** > **API Tokens** and click **Create Token**
-3. Choose a template (e.g., "Edit zone DNS") or create a custom token with required permissions
-4. Copy the generated token immediately (it is only shown once)
-
-Set environment variables:
-
-```bash
-export CLOUDFLARE_TOKEN="your-api-token"
-```
-
-For zone-specific operations, you also need your Zone ID (found on the zone overview page in the dashboard):
-
-```bash
-export CLOUDFLARE_ZONE_ID="your-zone-id"
-```
-
-For account-level operations (Workers, R2), you need your Account ID (found on the dashboard overview):
-
-```bash
-export CLOUDFLARE_ACCOUNT_ID="your-account-id"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDFLARE_TOKEN` or `zero doctor check-connector --url https://api.cloudflare.com/client/v4/user/tokens/verify --method GET`
+Connect the **Cloudflare** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
