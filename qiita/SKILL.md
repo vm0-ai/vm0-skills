@@ -18,7 +18,7 @@ Qiita is a technical knowledge sharing platform popular in Japan. This skill pro
 
 ## Prerequisites
 
-Connect the **Qiita API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Qiita** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
