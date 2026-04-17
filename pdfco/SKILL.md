@@ -30,6 +30,8 @@ Use this skill when you need to:
 
 Connect the **PDF.co** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDFCO_TOKEN` or `zero doctor check-connector --url https://api.pdf.co/v1/pdf/convert/to/text --method POST`
+
 ## How to Use
 
 ### 1. PDF to Text
