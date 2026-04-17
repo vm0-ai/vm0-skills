@@ -25,24 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Supadata Dashboard](https://dash.supadata.ai/)
-2. API key is automatically generated on signup (no credit card required)
-3. Store your API key in environment variable
-
-```bash
-export SUPADATA_TOKEN="your-api-key"
-```
-
-### Pricing
-
-- Transcript fetch (existing): 1 credit
-- Transcript generation (AI): 2 credits/minute
-- Free tier available
-
----
-
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPADATA_TOKEN` or `zero doctor check-connector --url https://api.supadata.ai/v1/transcript --method GET`
+Connect the **Supadata API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
