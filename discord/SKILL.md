@@ -30,43 +30,7 @@ For simple message posting, use `discord-webhook` skill instead.
 
 ## Prerequisites
 
-### 1. Create Application
-
-1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
-2. Click "New Application" and give it a name
-3. Go to "Bot" section and click "Add Bot"
-
-### 2. Get Bot Token
-
-1. In Bot section, click "Reset Token"
-2. Copy the token (shown only once)
-
-```bash
-export DISCORD_BOT_TOKEN="MTIzNDU2Nzg5MDEyMzQ1Njc4OQ.ABcDeF.xxxxx..."
-```
-
-### 3. Enable Intents (if needed)
-
-In Bot section, enable:
-- Presence Intent (for user status)
-- Server Members Intent (for member list)
-- Message Content Intent (for reading messages)
-
-### 4. Invite Bot to Server
-
-1. Go to OAuth2 → URL Generator
-2. Select scopes: `bot`, `applications.commands`
-3. Select permissions needed (e.g., Send Messages, Read Messages)
-4. Copy URL and open in browser to invite
-
-### 5. Get IDs
-
-Enable Developer Mode: User Settings → Advanced → Developer Mode
-Right-click any channel/user/server → Copy ID
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DISCORD_BOT_TOKEN` or `zero doctor check-connector --url https://discord.com/api/v10/users/@me --method GET`
+Connect the **Discord Bot API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
