@@ -18,9 +18,7 @@ Manage Contacts, Leads, Accounts, and Opportunities via the Salesforce REST API.
 
 ## Prerequisites
 
-
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SALESFORCE_TOKEN`
+Connect the **Salesforce REST API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
