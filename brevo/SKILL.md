@@ -19,15 +19,7 @@ Send transactional emails, SMS, and marketing campaigns. Manage contacts and lis
 
 ## Prerequisites
 
-
-Alternatively, generate an API key from your Brevo account under **Settings > SMTP & API > API Keys**, then export it:
-
-```bash
-export BREVO_TOKEN=your_api_key_here
-```
-
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BREVO_TOKEN` or `zero doctor check-connector --url https://api.brevo.com/v3/account --method GET`
+Connect the **Brevo API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
