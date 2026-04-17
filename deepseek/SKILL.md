@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **DeepSeek** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEPSEEK_TOKEN` or `zero doctor check-connector --url https://api.deepseek.com/chat/completions --method POST`
+
 ## How to Use
 
 All examples below assume you have `DEEPSEEK_TOKEN` set.
