@@ -32,7 +32,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **HubSpot CRM API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **HubSpot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## CRM Objects (Unified Pattern)
 
