@@ -20,6 +20,8 @@ Send onboarding, marketing, and transactional emails to SaaS users via Loops.
 
 Connect the **Loops** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LOOPS_TOKEN` or `zero doctor check-connector --url https://app.loops.so/api/v1/api-key --method GET`
+
 ## Core APIs
 
 ### Test API Key
