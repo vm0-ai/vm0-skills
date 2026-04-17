@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **Granola** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GRANOLA_TOKEN` or `zero doctor check-connector --url https://public-api.granola.ai/v1/notes --method GET`
+
 ## How to Use
 
 ### Base URL
