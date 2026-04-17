@@ -24,15 +24,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-No API key required. RSS feeds are public.
-
-Optional tools for parsing:
-- `xmllint` (for XML parsing)
-- `jq` (for JSON output)
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --url https://hnrss.org/frontpage --method GET`
+Connect the **RSS Feed Fetcher** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
