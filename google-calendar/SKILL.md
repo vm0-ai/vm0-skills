@@ -15,7 +15,7 @@ Manage calendars and events via Google's Calendar REST API.
 
 ## Prerequisites
 
-Connect the **Google Calendar API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Google Calendar** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
