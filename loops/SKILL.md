@@ -18,7 +18,7 @@ Send onboarding, marketing, and transactional emails to SaaS users via Loops.
 
 ## Prerequisites
 
-Connect the **Loops API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Loops** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
