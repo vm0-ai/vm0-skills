@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **Bright Data** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRIGHTDATA_TOKEN` or `zero doctor check-connector --url https://api.brightdata.com/datasets/v3/trigger --method POST`
+
 ## Social Media Scraping
 
 Bright Data supports scraping these social media platforms:
