@@ -18,7 +18,7 @@ Manage bookings, event types, and availability via the Cal.com REST API v2.
 
 ## Prerequisites
 
-Connect the **Cal.com API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Cal.com** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
