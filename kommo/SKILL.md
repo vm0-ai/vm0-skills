@@ -26,23 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Kommo](https://www.kommo.com/)
-2. Create a private integration:
-  - Go to Settings > Integrations > Create Integration
-  - Select "Private integration"
-  - Go to "Keys and scopes" tab
-  - Click "Generate long-lived token"
-  - Copy the token (it cannot be retrieved again)
-3. Note your subdomain from your Kommo URL: `https://{subdomain}.kommo.com`
-
-```bash
-export KOMMO_SUBDOMAIN="your-subdomain" # e.g., "mycompany" (not "mycompany.kommo.com")
-export KOMMO_API_KEY="your-long-lived-token"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name KOMMO_API_KEY`
+Connect the **Kommo API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
