@@ -19,7 +19,7 @@ AgentPhone is an API-first telephony platform for AI agents. Give your agents ph
 
 ## Prerequisites
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AGENTPHONE_TOKEN` or `zero doctor check-connector --url https://api.agentphone.to/v1/agents --method POST`
+Connect the **AgentPhone** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How It Works
 
