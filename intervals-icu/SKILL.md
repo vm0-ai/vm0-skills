@@ -26,20 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-
-Verify authentication and get your athlete ID:
-
-```bash
-curl -s "https://intervals.icu/api/v1/athlete/0/activities?oldest=2025-01-01&newest=2025-12-31" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[0] | {icu_athlete_id}'
-```
-
-> Save the `icu_athlete_id` value (e.g., `i230851`) for use in other endpoints that require an athlete ID.
-
----
-
-> **Placeholders:** Values in `<angle-brackets>` like `<athlete-id>` are placeholders. Replace them with actual values when executing.
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INTERVALS_ICU_TOKEN` or `zero doctor check-connector --url https://intervals.icu/api/v1/athlete/0/activities?oldest=2025-01-01 --method GET`
+Connect the **Intervals.icu API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
