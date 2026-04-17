@@ -34,6 +34,8 @@ Use this skill when you need to:
 
 Connect the **Xero** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name XERO_TOKEN` or `zero doctor check-connector --url https://api.xero.com/Connections --method GET`
+
 ## Step 1: Get Tenant ID (Required First)
 
 Every Xero API call needs a `xero-tenant-id` header. Get it from the connections endpoint:
