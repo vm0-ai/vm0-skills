@@ -68,11 +68,13 @@ curl -s "https://api.anthropic.com/v1/agents/<AGENT_ID>" \
 
 ### 4. Delete an Agent
 
+DELETE is served by an older beta API and requires a different `anthropic-beta` header than the other endpoints. Use `agent-api-2026-03-01` **alone** — combining it with `managed-agents-2026-04-01` is rejected as incompatible.
+
 ```bash
 curl -s -X DELETE "https://api.anthropic.com/v1/agents/<AGENT_ID>" \
   -H "x-api-key: $ANTHROPIC_MANAGED_AGENTS_TOKEN" \
   -H "anthropic-version: 2023-06-01" \
-  -H "anthropic-beta: managed-agents-2026-04-01"
+  -H "anthropic-beta: agent-api-2026-03-01"
 ```
 
 ### 5. Create an Environment
@@ -343,5 +345,5 @@ for line in sys.stdin:
 5. **GitHub auth**: Pass a GitHub PAT with `repo` scope as `authorization_token` in repository resources. The token is used only for that session.
 6. **Vaults for secrets**: Store long-lived credentials (API keys, tokens) in a Vault and pass `vault_ids` instead of embedding secrets in session payloads.
 7. **Model selection**: Use `claude-sonnet-4-6` for most coding tasks (speed + quality balance). Use `claude-opus-4-6` for complex multi-file refactors.
-8. **Beta header required**: All Managed Agents endpoints require `anthropic-beta: managed-agents-2026-04-01`. Requests without it will fail.
+8. **Beta header required**: Most Managed Agents endpoints require `anthropic-beta: managed-agents-2026-04-01`. The sole exception is `DELETE /v1/agents/{id}`, which requires `agent-api-2026-03-01` instead — the two beta values are mutually exclusive and cannot be combined in one request.
 9. **Billing**: Sessions consume Claude API credits (tokens), not claude.ai subscription quota. Monitor usage in [Claude Console](https://console.anthropic.com/).
