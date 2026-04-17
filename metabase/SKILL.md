@@ -27,20 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to your Metabase instance as an admin
-2. Go to **Admin** > **Settings** > **Authentication** > **API Keys**
-3. Click **Create API Key**
-4. Enter a name and select a group for the key
-5. Copy the generated API key
-
-```bash
-export METABASE_TOKEN="your-api-key"
-export METABASE_BASE_URL="https://mycompany.metabaseapp.com"  # or your self-hosted URL
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name METABASE_TOKEN`
+Connect the **Metabase API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
