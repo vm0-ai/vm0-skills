@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Chatwoot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CHATWOOT_TOKEN` or `zero doctor check-connector --url https://app.chatwoot.com/api/v1/profile --method GET`
+
 ## How to Use
 
 All examples use the **Application API** with user access token.
