@@ -24,7 +24,7 @@ Manage Prisma Postgres projects, databases, connections, backups, and usage metr
 
 ## Prerequisites
 
-Connect the **Prisma Postgres Management API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Prisma Postgres** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
