@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **Hume** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUME_TOKEN` or `zero doctor check-connector --url https://api.hume.ai/v0/batch/jobs --method GET`
+
 ## Expression Measurement (Batch)
 
 ### Start Inference Job from URLs
