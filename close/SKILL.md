@@ -12,7 +12,7 @@ Manage leads, contacts, opportunities, tasks, and activities in Close CRM.
 
 ## Prerequisites
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOSE_TOKEN` or `zero doctor check-connector --url https://api.close.com/api/v1/me --method GET`
+Connect the **Close CRM API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
