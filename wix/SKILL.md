@@ -20,10 +20,7 @@ Manage contacts, blog posts, store products, and orders on a connected Wix site.
 
 ## Prerequisites
 
-
-> **Note:** The CRM Contacts, Blog, Store, and Orders APIs are only available if the corresponding features are enabled on the Wix site. A blank site will return 404 for these endpoints.
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WIX_TOKEN` or `zero doctor check-connector --url https://www.wixapis.com/apps/v1/instance --method GET`
+Connect the **Wix API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
