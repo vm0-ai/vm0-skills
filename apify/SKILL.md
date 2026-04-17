@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Apify** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name APIFY_TOKEN` or `zero doctor check-connector --url https://api.apify.com/v2/acts/apify~web-scraper/runs --method POST`
+
 ## How to Use
 
 ### 1. Run an Actor (Async)
