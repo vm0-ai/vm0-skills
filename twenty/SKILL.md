@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Twenty CRM** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TWENTY_TOKEN` or `zero doctor check-connector --url https://api.twenty.com/rest/companies --method GET`
+
 ## How to Use
 
 ### 1. List Companies
