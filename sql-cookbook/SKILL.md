@@ -7,6 +7,10 @@ description: Craft and optimize SQL for any warehouse dialect — Snowflake, Big
 
 Practical reference for building analytical SQL across every major data warehouse platform.
 
+## Prerequisites
+
+Connect the **SQL Cookbook** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Platform-Specific Syntax Guide
 
 ### PostgreSQL (Aurora, RDS, Supabase, Neon)
