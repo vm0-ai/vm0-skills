@@ -26,25 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Short.io](https://short.io/)
-2. Add and configure your custom domain (or use the default short.io domain)
-3. Go to [Integrations & API](https://app.short.io/settings/integrations/api-key) and create a **Secret API Key**
-4. Get your domain ID from Domain Settings (visible in browser URL bar)
-
-```bash
-export SHORTIO_TOKEN="your-secret-api-key"
-export SHORTIO_DOMAIN="your-domain.com"
-export SHORTIO_DOMAIN_ID="123456" # Optional, needed for list/stats operations
-```
-
-### Pricing
-
-- Free tier: 1,000 links, 50,000 tracked clicks/month
-- API key is passed in the `Authorization` header
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SHORTIO_TOKEN` or `zero doctor check-connector --url https://api.short.io/links --method POST`
+Connect the **Short.io** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
