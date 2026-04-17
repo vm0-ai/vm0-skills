@@ -2,9 +2,6 @@
 name: strapi
 description: Strapi CMS REST API for headless content management. Use when user mentions
   "Strapi", "CMS", "content types", "entries", or managing headless CMS content.
-vm0_env:
-  - STRAPI_TOKEN
-  - STRAPI_BASE_URL
 ---
 
 ## Troubleshooting
