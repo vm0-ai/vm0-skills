@@ -26,19 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Install the Streak extension in Gmail
-2. Navigate to Gmail > Streak icon > Integrations > Streak API > Create New Key
-3. Copy your API key
-
-Set environment variable:
-
-```bash
-export STREAK_TOKEN="your-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STREAK_TOKEN` or `zero doctor check-connector --url https://api.streak.com/api/v1/users/me --method GET`
+Connect the **Streak CRM** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
