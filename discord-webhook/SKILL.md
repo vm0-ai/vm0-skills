@@ -26,20 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. In Discord, go to Server Settings → Integrations → Webhooks
-2. Click "New Webhook"
-3. Choose a name and target channel
-4. Click "Copy Webhook URL"
-
-```bash
-export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/1234567890/abcdefg..."
-```
-
-**Security:** Never expose webhook URLs publicly - they require no authentication.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DISCORD_WEBHOOK_URL`
+Connect the **Discord Webhook** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
