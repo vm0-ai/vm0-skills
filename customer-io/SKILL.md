@@ -18,22 +18,7 @@ Send behavioral emails, SMS, and push notifications triggered by user events. Tw
 
 ## Prerequisites
 
-
-Alternatively, set these manually:
-
-```bash
-# For tracking people and events (Pipelines API)
-export CUSTOMERIO_SITE_ID=your_site_id
-export CUSTOMERIO_TRACK_TOKEN=your_track_api_key
-
-# For sending transactional messages (App API)
-export CUSTOMERIO_APP_TOKEN=your_app_api_key
-```
-
-Find credentials at **Workspace Settings > API & webhook credentials**.
-
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CUSTOMERIO_TRACK_TOKEN` or `zero doctor check-connector --url https://cdp.customer.io/v1/identify --method POST`
+Connect the **Customer.io API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
