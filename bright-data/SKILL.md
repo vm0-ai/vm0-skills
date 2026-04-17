@@ -25,23 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Bright Data](https://brightdata.com/)
-2. Get your API key from [Settings > Users](https://brightdata.com/cp/setting/users)
-3. Create a Web Scraper dataset in the [Control Panel](https://brightdata.com/cp/datasets) to get your `dataset_id`
-
-```bash
-export BRIGHTDATA_TOKEN="your-api-key"
-```
-
-### Base URL
-
-```
-https://api.brightdata.com
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRIGHTDATA_TOKEN` or `zero doctor check-connector --url https://api.brightdata.com/datasets/v3/trigger?dataset_id= --method POST`
+Connect the **Bright Data Web Scraper API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Social Media Scraping
 
