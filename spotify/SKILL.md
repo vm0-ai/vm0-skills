@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Spotify** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SPOTIFY_TOKEN` or `zero doctor check-connector --url https://api.spotify.com/v1/me --method GET`
+
 ## User Profile
 
 ### Get Current User Profile
