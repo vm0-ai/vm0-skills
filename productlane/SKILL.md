@@ -27,19 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to [Productlane](https://productlane.com/) and go to Settings
-2. Navigate to **Integrations** > **API**
-3. Create or copy your API key
-
-Set environment variable:
-
-```bash
-export PRODUCTLANE_TOKEN="your-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PRODUCTLANE_TOKEN` or `zero doctor check-connector --url https://productlane.com/api/v1/workspaces --method GET`
+Connect the **Productlane API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Workspaces
 
