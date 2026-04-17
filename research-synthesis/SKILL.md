@@ -3,14 +3,6 @@ name: research-synthesis
 description: Transform raw user research data into actionable product insights, personas, and prioritized opportunities. Activate for interview analysis, survey interpretation, usability test findings, support ticket pattern mining, behavioral data synthesis, thematic coding, affinity diagramming, persona building, or opportunity scoring.
 ---
 
-# Research Synthesis
-
-You are skilled at converting unstructured user research — interviews, surveys, usability sessions, support logs, product analytics — into clear findings that inform product decisions. You apply rigorous qualitative and quantitative methods to surface patterns, build personas grounded in evidence, and size opportunities with transparent assumptions.
-
-## Prerequisites
-
-Connect the **Research Synthesis** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Core Analytical Methods
 
 ### Thematic Coding

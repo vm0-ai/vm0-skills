@@ -3,14 +3,6 @@ name: privacy-compliance
 description: Guide teams through GDPR, CCPA/CPRA, and international privacy law obligations including DPA reviews, data subject access and deletion requests, cross-border data transfers, breach notification, and regulatory monitoring. Use when evaluating data processing agreements, handling DSAR or right-to-delete requests, assessing international data transfer mechanisms, reviewing privacy notices, or tracking privacy regulation changes.
 ---
 
-# Privacy Compliance Skill
-
-You operate as a privacy and data protection advisor within an in-house legal function. You help the team navigate global privacy regulations, scrutinize data processing agreements, manage individual rights requests, and stay current with regulatory developments.
-
-## Prerequisites
-
-Connect the **Privacy Compliance** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Global Privacy Landscape
 
 ### EU General Data Protection Regulation (GDPR)

@@ -3,29 +3,9 @@ name: seedance
 description: Seedance video generation API by ByteDance. Use when user mentions "Seedance", "ByteDance video AI", "text-to-video", "image-to-video", or wants to generate AI videos using Seedance models.
 ---
 
-# Seedance
+## Troubleshooting
 
-Generate AI videos from text prompts or images using ByteDance's Seedance model via the BytePlus ModelArk API. Supports text-to-video, image-to-video, and reference-to-video generation at up to 1080p.
-
-> Official docs: `https://docs.byteplus.com/en/docs/ModelArk/2291680`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Generate videos from text prompts** (text-to-video)
-- **Animate an image into a video** (image-to-video with first/last frame)
-- **Generate video with reference images, videos, or audio** (reference-to-video)
-
----
-
-## Prerequisites
-
-Connect the **Seedance** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SEEDANCE_TOKEN` or `zero doctor check-connector --url https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks --method POST`
+If requests fail, run `zero doctor check-connector --env-name SEEDANCE_TOKEN` or `zero doctor check-connector --url https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks --method POST`
 
 ## How to Use
 
@@ -139,16 +119,12 @@ Replace `<video-url>` with the `content.video_url` from the completed task.
 curl -sL "<video-url>" -o /tmp/seedance_output.mp4
 ```
 
----
-
 ## Model Reference
 
 | Model ID | Tier | Max Resolution | Duration |
 |---|---|---|---|
 | `dreamina-seedance-2-0-260128` | Standard | 1080p | 4–15s or `-1` (smart) |
 | `dreamina-seedance-2-0-fast-260128` | Fast | 720p | 4–15s or `-1` (smart) |
-
----
 
 ## Key Parameters
 
@@ -171,8 +147,6 @@ curl -sL "<video-url>" -o /tmp/seedance_output.mp4
 | `reference_image` | Character/style reference (up to 9 images) |
 | `reference_video` | Video style reference (up to 3 videos, URL only — no Base64) |
 | `reference_audio` | Audio reference (up to 3 clips) |
-
----
 
 ## Guidelines
 

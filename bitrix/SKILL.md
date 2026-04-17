@@ -4,36 +4,9 @@ description: Bitrix24 CRM API. Use when user mentions "Bitrix", "CRM", "Bitrix24
   or asks about CRM management.
 ---
 
-# Bitrix24 API
-
-Use the Bitrix24 REST API via direct `curl` calls to **manage CRM, tasks, and users** in your Bitrix24 workspace.
-
-> Official docs: `https://apidocs.bitrix24.com/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage CRM leads** (create, update, list, delete)
-- **Manage CRM deals** and sales funnels
-- **Manage CRM contacts** and companies
-- **Create and manage tasks**
-- **Get user information**
-- **Automate business workflows**
-
----
-
-## Prerequisites
-
-Connect the **Bitrix24** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 All examples assume `BITRIX_WEBHOOK_URL` is set to your webhook base URL.
-
----
 
 ### 1. Get Current User
 
@@ -55,8 +28,6 @@ curl -s -X GET "$BITRIX_WEBHOOK_URL/user.current.json"
 }
 ```
 
----
-
 ### 2. List Users
 
 Get a list of users in the workspace:
@@ -64,8 +35,6 @@ Get a list of users in the workspace:
 ```bash
 curl -s -X GET "$BITRIX_WEBHOOK_URL/user.get.json" | jq '.result[] | {ID, NAME, LAST_NAME, EMAIL}'
 ```
-
----
 
 ## CRM - Leads
 
@@ -98,8 +67,6 @@ curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.lead.add.json" --header "Content-Type: 
 }
 ```
 
----
-
 ### 4. Get a Lead
 
 Replace `<your-lead-id>` with the actual lead ID:
@@ -107,8 +74,6 @@ Replace `<your-lead-id>` with the actual lead ID:
 ```bash
 curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.lead.get.json?id=<your-lead-id>"
 ```
-
----
 
 ### 5. List Leads
 
@@ -133,8 +98,6 @@ Then run:
 curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.lead.list.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
----
-
 ### 6. Update a Lead
 
 Write to `/tmp/bitrix_request.json`:
@@ -155,8 +118,6 @@ Then run:
 curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.lead.update.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
----
-
 ### 7. Delete a Lead
 
 Replace `<your-lead-id>` with the actual lead ID:
@@ -164,8 +125,6 @@ Replace `<your-lead-id>` with the actual lead ID:
 ```bash
 curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.lead.delete.json?id=<your-lead-id>"
 ```
-
----
 
 ## CRM - Contacts
 
@@ -190,15 +149,11 @@ Then run:
 curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.contact.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
----
-
 ### 9. List Contacts
 
 ```bash
 curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.contact.list.json" | jq '.result[] | {ID, NAME, LAST_NAME}'
 ```
-
----
 
 ## CRM - Deals
 
@@ -223,15 +178,11 @@ Then run:
 curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.deal.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
----
-
 ### 11. List Deals
 
 ```bash
 curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.deal.list.json" | jq '.result[] | {ID, TITLE, STAGE_ID, OPPORTUNITY}'
 ```
-
----
 
 ### 12. Update Deal Stage
 
@@ -251,8 +202,6 @@ Then run:
 ```bash
 curl -s -X POST "$BITRIX_WEBHOOK_URL/crm.deal.update.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
-
----
 
 ## Tasks
 
@@ -277,15 +226,11 @@ Then run:
 curl -s -X POST "$BITRIX_WEBHOOK_URL/tasks.task.add.json" --header "Content-Type: application/json" -d @/tmp/bitrix_request.json
 ```
 
----
-
 ### 14. List Tasks
 
 ```bash
 curl -s -X GET "$BITRIX_WEBHOOK_URL/tasks.task.list.json" | jq '.result.tasks[] | {id, title, status}'
 ```
-
----
 
 ### 15. Complete a Task
 
@@ -294,8 +239,6 @@ Replace `<your-task-id>` with the actual task ID:
 ```bash
 curl -s -X GET "$BITRIX_WEBHOOK_URL/tasks.task.complete.json?taskId=<your-task-id>"
 ```
-
----
 
 ## Get Field Definitions
 
@@ -312,8 +255,6 @@ curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.contact.fields.json"
 curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.deal.fields.json"
 ```
 
----
-
 ## Common Parameters
 
 | Parameter | Description |
@@ -322,8 +263,6 @@ curl -s -X GET "$BITRIX_WEBHOOK_URL/crm.deal.fields.json"
 | `select` | Fields to return (e.g., `["ID", "TITLE"]`) |
 | `order` | Sort order (e.g., `{"ID": "DESC"}`) |
 | `start` | Pagination offset |
-
----
 
 ## Guidelines
 

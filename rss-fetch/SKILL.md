@@ -3,29 +3,6 @@ name: rss-fetch
 description: RSS feed API for fetching news and articles. Use when user mentions "RSS", "feed", "RSS reader", "fetch feed", or asks to get news from RSS sources.
 ---
 
-# RSS Feed Fetcher
-
-Use `curl` to **fetch and parse RSS/Atom feeds** from any source.
-
-> RSS feeds return XML that can be parsed with `xmllint` or converted to JSON.
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Fetch news articles** from RSS feeds
-- **Monitor blog updates** or content sources
-- **Aggregate content** from multiple feeds
-- **Track topics** via RSS subscriptions
-
----
-
-## Prerequisites
-
-Connect the **RSS Feed Fetcher** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 ### 1. Fetch Raw RSS Feed
@@ -62,8 +39,6 @@ Atom feeds use `<entry>` instead of `<item>`:
 curl -s "https://github.com/blog.atom" | xmllint --xpath '//entry/title/text()' - 2>/dev/null
 ```
 
----
-
 ## Popular RSS Feeds
 
 | Source | URL |
@@ -75,8 +50,6 @@ curl -s "https://github.com/blog.atom" | xmllint --xpath '//entry/title/text()' 
 | The Verge | `https://www.theverge.com/rss/index.xml` |
 | Reddit (any sub) | `https://www.reddit.com/r/programming/.rss` |
 | GitHub Blog | `https://github.blog/feed/` |
-
----
 
 ## Examples
 
@@ -126,8 +99,6 @@ curl -s "https://hnrss.org/frontpage" -o /tmp/hn-feed.xml
 xmllint --xpath '//item/title/text()' /tmp/hn-feed.xml
 ```
 
----
-
 ## HN RSS Options
 
 Hacker News RSS (`hnrss.org`) supports parameters:
@@ -147,8 +118,6 @@ curl -s "https://hnrss.org/frontpage?points=100&count=10"
 curl -s "https://hnrss.org/frontpage?q=AI&count=10"
 ```
 
----
-
 ## RSS vs Atom Format
 
 | Element | RSS | Atom |
@@ -158,8 +127,6 @@ curl -s "https://hnrss.org/frontpage?q=AI&count=10"
 | Link | `<link>` | `<link href="...">` |
 | Summary | `<description>` | `<summary>` |
 | Date | `<pubDate>` | `<published>` |
-
----
 
 ## Guidelines
 

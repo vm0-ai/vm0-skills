@@ -5,46 +5,12 @@ description: Google Docs API for document editing. Use when user mentions "Googl
   creation.
 ---
 
-# Google Docs API
-
-Use the Google Docs API via direct `curl` calls to **create, read, update, and format Google Docs documents**.
-
-> Official docs: `https://developers.google.com/docs/api`
-
----
-
-## Prerequisites
-
-Connect the **Google Docs** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Create new documents** from scratch
-- **Read document content** and metadata
-- **Insert or replace text** in documents
-- **Format text** (bold, italic, font size, color)
-- **Manage paragraphs** (alignment, spacing, bullets)
-- **Insert tables, images, and page breaks**
-- **Get document structure** and element information
-
----
-
----
-
-> **Placeholders:** Values in `{curly-braces}` like `{document-id}` are placeholders. Replace them with actual values when executing.
-
----
-
 ## How to Use
 
 Base URL: `https://docs.googleapis.com/v1`
 
 **Finding your Document ID:**
 The document ID is in the URL: `https://docs.google.com/document/d/{DOCUMENT_ID}/edit`
-
----
 
 ### 1. Create New Document
 
@@ -64,8 +30,6 @@ Then run:
 curl -s -X POST "https://docs.googleapis.com/v1/documents" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '{documentId, title, documentUrl: ("https://docs.google.com/document/d/" + .documentId + "/edit")}'
 ```
 
----
-
 ### 2. Get Document Content
 
 Read the entire document structure and content:
@@ -74,8 +38,6 @@ Read the entire document structure and content:
 curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" | jq '{title: .title, body: .body.content}'
 ```
 
----
-
 ### 3. Get Document Metadata Only
 
 Get just the title and basic properties:
@@ -83,8 +45,6 @@ Get just the title and basic properties:
 ```bash
 curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" | jq '{documentId, title, revisionId, suggestionsViewMode}'
 ```
-
----
 
 ### 4. Insert Text at Beginning
 
@@ -113,8 +73,6 @@ Then run:
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
----
-
 ### 5. Insert Text at Specific Location
 
 Insert text at a specific index (get indexes from document content):
@@ -141,8 +99,6 @@ Then run:
 ```bash
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
-
----
 
 ### 6. Delete Content Range
 
@@ -171,8 +127,6 @@ Then run:
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
----
-
 ### 7. Find and Replace Text
 
 Replace all occurrences of text throughout the document:
@@ -200,8 +154,6 @@ Then run:
 ```bash
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies[0].replaceAllText'
 ```
-
----
 
 ### 8. Format Text as Bold
 
@@ -233,8 +185,6 @@ Then run:
 ```bash
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
-
----
 
 ### 9. Format Text with Multiple Styles
 
@@ -281,8 +231,6 @@ Then run:
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
----
-
 ### 10. Set Paragraph Alignment
 
 Change paragraph alignment (LEFT, CENTER, RIGHT, JUSTIFIED):
@@ -313,8 +261,6 @@ Then run:
 ```bash
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
-
----
 
 ### 11. Create Bulleted List
 
@@ -351,8 +297,6 @@ curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpd
 - `NUMBERED_DECIMAL_ALPHA_ROMAN`
 - `NUMBERED_DECIMAL_NESTED`
 
----
-
 ### 12. Insert Table
 
 Insert a table with specified rows and columns:
@@ -381,8 +325,6 @@ Then run:
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
 
----
-
 ### 13. Insert Page Break
 
 Insert a page break at a specific location:
@@ -408,8 +350,6 @@ Then run:
 ```bash
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
-
----
 
 ### 14. Insert Inline Image
 
@@ -447,8 +387,6 @@ Then run:
 ```bash
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // .replies // "done"'
 ```
-
----
 
 ### 15. Batch Operations (Multiple Updates)
 
@@ -501,8 +439,6 @@ Then run:
 curl -s -X POST "https://docs.googleapis.com/v1/documents/{document-id}:batchUpdate" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" --header "Content-Type: application/json" -d @/tmp/gdocs_request.json | jq '.error // (.replies | length)'
 ```
 
----
-
 ### 16. Extract Plain Text
 
 Get just the text content from a document:
@@ -511,8 +447,6 @@ Get just the text content from a document:
 curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" | jq -r '.body.content[]?.paragraph?.elements[]?.textRun?.content' | tr -d '\0'
 ```
 
----
-
 ### 17. Get Document Structure
 
 View document structure with element types and indexes:
@@ -520,8 +454,6 @@ View document structure with element types and indexes:
 ```bash
 curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Authorization: Bearer $GOOGLE_DOCS_TOKEN" | jq '.body.content[] | {startIndex, endIndex, paragraph: .paragraph.elements[0].textRun.content}'
 ```
-
----
 
 ## Common Scopes
 
@@ -535,8 +467,6 @@ curl -s "https://docs.googleapis.com/v1/documents/{document-id}" --header "Autho
 
 Use full URL: `https://www.googleapis.com/auth/documents`
 
----
-
 ## Index Reference
 
 Understanding indexes is critical for the Google Docs API:
@@ -545,8 +475,6 @@ Understanding indexes is critical for the Google Docs API:
 - **Index N**: Each character, newline, and structural element increments the index
 - **End index**: Use `"endIndex": startIndex + textLength` for ranges
 - **Tip**: Get document content first to see current indexes
-
----
 
 ## Text Style Fields
 
@@ -567,8 +495,6 @@ When using `updateTextStyle`, specify which fields to update in the `fields` par
 
 Use comma-separated for multiple: `"fields": "bold,italic,fontSize"`
 
----
-
 ## Paragraph Style Fields
 
 When using `updateParagraphStyle`:
@@ -585,8 +511,6 @@ When using `updateParagraphStyle`:
 | `indentEnd` | Right indentation |
 | `namedStyleType` | HEADING_1, HEADING_2, NORMAL_TEXT, etc. |
 
----
-
 ## Guidelines
 
 1. **Batch operations**: Combine multiple requests in a single batchUpdate call to improve performance
@@ -596,8 +520,6 @@ When using `updateParagraphStyle`:
 5. **RGB colors**: Color values range from 0.0 to 1.0 (not 0-255)
 6. **Share permissions**: Ensure the authenticated user has edit access to the document
 7. **batchUpdate responses**: Some operations (updateParagraphStyle, insertTable, insertPageBreak, insertInlineImage) return empty or absent `.replies`; output of `"done"` means success with no reply data. An `.error` key indicates failure.
-
----
 
 ## API Reference
 

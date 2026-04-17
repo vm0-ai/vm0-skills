@@ -4,34 +4,9 @@ description: Zendesk API for customer support. Use when user mentions "Zendesk",
   ticket", "customer service", or help desk.
 ---
 
-# Zendesk API
+## Troubleshooting
 
-Manage customer support tickets, users, organizations, and support operations via the Zendesk Support REST API.
-
-> Official docs: `https://developer.zendesk.com/api-reference/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage tickets** - Create, update, search, and close support tickets
-- **Handle users** - Create end-users, agents, and manage user profiles
-- **Organize accounts** - Manage organizations and their members
-- **Support groups** - Create and manage agent groups for ticket routing
-- **Search data** - Find tickets, users, and organizations with powerful search
-- **Bulk operations** - Create or update multiple resources at once
-- **Automate support** - Build integrations and automate workflows
-- **Track metrics** - Access ticket data for reporting and analytics
-
----
-
-## Prerequisites
-
-Connect the **Zendesk** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZENDESK_API_TOKEN` or `zero doctor check-connector --url https://your-subdomain.zendesk.com/api/v2/tickets.json --method GET`
+If requests fail, run `zero doctor check-connector --env-name ZENDESK_API_TOKEN` or `zero doctor check-connector --url https://your-subdomain.zendesk.com/api/v2/tickets.json --method GET`
 
 ## How to Use
 
@@ -45,8 +20,6 @@ All examples assume environment variables are set.
 ```
 
 **Note**: The `-u` flag automatically handles Base64 encoding for you.
-
----
 
 ## Core APIs
 
@@ -64,8 +37,6 @@ With pagination:
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets.json?page=1&per_page=50" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN"
 ```
 
----
-
 ### 2. Get Ticket
 
 Retrieve a specific ticket:
@@ -75,8 +46,6 @@ TICKET_ID="123"
 
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN"
 ```
-
----
 
 ### 3. Create Ticket
 
@@ -126,8 +95,6 @@ Then run:
 ```bash
 curl -s -X POST "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
-
----
 
 ### 4. Update Ticket
 
@@ -183,8 +150,6 @@ sed -i '' "s/ASSIGNEE_ID_PLACEHOLDER/${ASSIGNEE_ID}/" /tmp/zendesk_request.json
 curl -s -X PUT "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
 
----
-
 ### 5. Delete Ticket
 
 Permanently delete a ticket:
@@ -194,8 +159,6 @@ TICKET_ID="123"
 
 curl -s -X DELETE "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN"
 ```
-
----
 
 ### 6. Create Multiple Tickets
 
@@ -228,8 +191,6 @@ Then run:
 curl -s -X POST "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/create_many.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
 
----
-
 ### 7. List Users
 
 Get all users:
@@ -238,8 +199,6 @@ Get all users:
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/users.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" | jq '.users[] | {id, name, email, role}
 ```
 
----
-
 ### 8. Get Current User
 
 Get authenticated user details:
@@ -247,8 +206,6 @@ Get authenticated user details:
 ```bash
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/users/me.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN"
 ```
-
----
 
 ### 9. Create User
 
@@ -292,8 +249,6 @@ Then run:
 curl -s -X POST "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/users.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
 
----
-
 ### 10. Update User
 
 Update user information:
@@ -319,8 +274,6 @@ Then run:
 curl -s -X PUT "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/users/${USER_ID}.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
 
----
-
 ### 11. Search Users
 
 Search for users by query:
@@ -329,8 +282,6 @@ Search for users by query:
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/users/search.json?query=john" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" | jq '.users[] | {id, name, email}
 ```
 
----
-
 ### 12. List Organizations
 
 Get all organizations:
@@ -338,8 +289,6 @@ Get all organizations:
 ```bash
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/organizations.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" | jq '.organizations[] | {id, name, domain_names}
 ```
-
----
 
 ### 13. Create Organization
 
@@ -362,8 +311,6 @@ Then run:
 ```bash
 curl -s -X POST "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/organizations.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
-
----
 
 ### 14. Update Organization
 
@@ -390,8 +337,6 @@ Then run:
 curl -s -X PUT "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/organizations/${ORG_ID}.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
 
----
-
 ### 15. List Groups
 
 Get all agent groups:
@@ -399,8 +344,6 @@ Get all agent groups:
 ```bash
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/groups.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" | jq '.groups[] | {id, name}
 ```
-
----
 
 ### 16. Create Group
 
@@ -421,8 +364,6 @@ Then run:
 ```bash
 curl -s -X POST "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/groups.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
-
----
 
 ### 17. Search API
 
@@ -456,8 +397,6 @@ Search users by email domain:
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/search.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -G --data-urlencode "query@/tmp/zendesk_query.txt" | jq '.results[]
 ```
 
----
-
 ### 18. Get Ticket Comments
 
 List all comments on a ticket:
@@ -467,8 +406,6 @@ TICKET_ID="123"
 
 curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/${TICKET_ID}/comments.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" | jq '.comments[] | {id, body, author_id, public}
 ```
-
----
 
 ### 19. Assign Ticket to Group
 
@@ -497,8 +434,6 @@ sed -i '' "s/GROUP_ID_PLACEHOLDER/${GROUP_ID}/" /tmp/zendesk_request.json
 curl -s -X PUT "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/${TICKET_ID}.json" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
 
----
-
 ### 20. Bulk Update Tickets
 
 Update multiple tickets at once:
@@ -518,8 +453,6 @@ Then run:
 ```bash
 curl -s -X PUT "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/update_many.json?ids=123,124,125" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
-
----
 
 ## Common Workflows
 
@@ -593,8 +526,6 @@ Then run:
 curl -s -X PUT "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets/update_many.json?ids=${OLD_TICKETS}" -H "Content-Type: application/json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" -d @/tmp/zendesk_request.json
 ```
 
----
-
 ## Search Query Syntax
 
 ### Ticket Search Operators
@@ -622,8 +553,6 @@ Use spaces for AND logic:
 ```bash
 query=type:ticket status:open priority:high
 ```
-
----
 
 ## Rate Limits
 
@@ -656,8 +585,6 @@ curl "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets.json" \
   --retry 3 --retry-delay 5
 ```
 
----
-
 ## Guidelines
 
 1. **Enable API token access first**: In Admin Center, ensure Token Access is enabled before using tokens
@@ -675,8 +602,6 @@ curl "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets.json" \
 13. **Ticket types**: problem, incident, question, task
 14. **Authentication format**: email/token:api_token (curl -u handles encoding)
 15. **New workspaces**: Fresh Zendesk accounts come with sample tickets for testing
-
----
 
 ## API Reference
 

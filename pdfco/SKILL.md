@@ -4,33 +4,9 @@ description: PDF.co API for PDF processing. Use when user mentions "PDF.co", "ex
   PDF", "parse PDF", or PDF automation.
 ---
 
-# PDF.co
+## Troubleshooting
 
-All-in-one PDF processing API. Convert, extract, merge, split, compress PDFs and more. Supports OCR for scanned documents.
-
-> Official docs: https://docs.pdf.co/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Extract text from PDF files (with OCR support)
-- Convert PDF to CSV, JSON, or other formats
-- Merge multiple PDFs into one
-- Split PDF into multiple files
-- Compress PDF to reduce file size
-- Convert HTML/URL to PDF
-- Parse invoices and documents with AI
-
----
-
-## Prerequisites
-
-Connect the **PDF.co** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDFCO_TOKEN` or `zero doctor check-connector --url https://api.pdf.co/v1/pdf/convert/to/text --method POST`
+If requests fail, run `zero doctor check-connector --env-name PDFCO_TOKEN` or `zero doctor check-connector --url https://api.pdf.co/v1/pdf/convert/to/text --method POST`
 
 ## How to Use
 
@@ -258,8 +234,6 @@ Write to `/tmp/request.json`:
 curl --location --request POST "https://api.pdf.co/v1/job/check" --header "x-api-key: $PDFCO_TOKEN" --header "Content-Type: application/json" -d @/tmp/request.json
 ```
 
----
-
 ## Common Parameters
 
 | Parameter | Type | Description |
@@ -271,8 +245,6 @@ curl --location --request POST "https://api.pdf.co/v1/job/check" --header "x-api
 | `name` | string | Output filename |
 | `password` | string | PDF password if protected |
 | `expiration` | integer | Output link expiration in minutes (default: 60) |
-
----
 
 ## Response Format
 
@@ -290,8 +262,6 @@ curl --location --request POST "https://api.pdf.co/v1/job/check" --header "x-api
 
 With `inline: true`, the response includes `body` field with extracted content.
 
----
-
 ## API Endpoints
 
 | Endpoint | Description |
@@ -308,8 +278,6 @@ With `inline: true`, the response includes `body` field with extracted content.
 | `/document-parser` | Template-based document parsing |
 | `/file/upload/get-presigned-url` | Get upload URL |
 | `/job/check` | Check async job status |
-
----
 
 ## Guidelines
 

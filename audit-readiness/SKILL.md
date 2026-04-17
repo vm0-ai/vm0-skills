@@ -3,14 +3,6 @@ name: audit-readiness
 description: Prepare for internal and external audits with SOX 404 control testing, sample selection, workpaper documentation, and deficiency evaluation. Use for SOX compliance, control testing methodology, audit sample selection, audit workpaper preparation, control deficiency classification, material weakness evaluation, ITGC testing, remediation tracking, or audit evidence standards.
 ---
 
-# Audit Readiness
-
-SOX 404 compliance methodology, sampling strategies, evidence and workpaper standards, deficiency severity evaluation, and control taxonomy for maintaining audit-ready internal controls over financial reporting (ICFR).
-
-## Prerequisites
-
-Connect the **Audit Readiness** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## SOX 404 Testing Lifecycle
 
 ### End-to-End Phases

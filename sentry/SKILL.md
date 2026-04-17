@@ -4,32 +4,9 @@ description: Sentry API for error tracking. Use when user mentions "Sentry", "er
   tracking", "crash report", "exceptions", or asks about monitoring errors.
 ---
 
-# Sentry API
+## Troubleshooting
 
-Manage error tracking, issues, releases, monitors, and projects via the Sentry REST API.
-
-> Official docs: https://docs.sentry.io/api/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- List, search, resolve, or ignore issues
-- View error events, stack traces, and event details
-- Manage releases and deployments
-- Configure monitors (cron monitoring)
-- Manage alert rules
-- View and manage projects and teams
-
----
-
-## Prerequisites
-
-Connect the **Sentry** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SENTRY_TOKEN` or `zero doctor check-connector --url https://sentry.io/api/0/organizations/ --method GET`
+If requests fail, run `zero doctor check-connector --env-name SENTRY_TOKEN` or `zero doctor check-connector --url https://sentry.io/api/0/organizations/ --method GET`
 
 ## Organizations
 
@@ -46,8 +23,6 @@ curl -s "https://sentry.io/api/0/organizations/" \
 curl -s "https://sentry.io/api/0/organizations/<org-slug>/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
-
----
 
 ## Projects
 
@@ -80,8 +55,6 @@ curl -s -X PUT "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/" \
 curl -s -X DELETE "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
-
----
 
 ## Issues
 
@@ -172,8 +145,6 @@ curl -s -X DELETE "https://sentry.io/api/0/organizations/<org-slug>/issues/<issu
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
----
-
 ## Events
 
 ### List Issue Events
@@ -196,8 +167,6 @@ curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/events/" \
 curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/events/<event-id>/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
-
----
 
 ## Releases
 
@@ -247,8 +216,6 @@ curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/releases/<ve
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
----
-
 ## Monitors (Cron)
 
 ### List Monitors
@@ -288,8 +255,6 @@ curl -s -X DELETE "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/mo
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
----
-
 ## Alert Rules
 
 ### List Alert Rules
@@ -306,8 +271,6 @@ curl -s "https://sentry.io/api/0/organizations/<org-slug>/alert-rules/<rule-id>/
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
----
-
 ## Project Rules (Issue Alerts)
 
 ### List Project Rules
@@ -323,8 +286,6 @@ curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/rules/" \
 curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/rules/<rule-id>/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
-
----
 
 ## Teams
 
@@ -349,8 +310,6 @@ curl -s "https://sentry.io/api/0/teams/<org-slug>/<team-slug>/projects/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
----
-
 ## Members
 
 ### List Organization Members
@@ -359,8 +318,6 @@ curl -s "https://sentry.io/api/0/teams/<org-slug>/<team-slug>/projects/" \
 curl -s "https://sentry.io/api/0/organizations/<org-slug>/members/" \
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
-
----
 
 ## Environments
 
@@ -371,8 +328,6 @@ curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/environments
   --header "Authorization: Bearer $SENTRY_TOKEN"
 ```
 
----
-
 ## Issue Status Values
 
 | Status | Description |
@@ -382,8 +337,6 @@ curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/environments
 | `resolvedInNextRelease` | Auto-resolve on next release |
 | `ignored` | Ignored (won't alert) |
 
----
-
 ## Guidelines
 
 1. **Discover org slug first**: Call `GET /organizations/` to get your org slug before using other endpoints.
@@ -392,8 +345,6 @@ curl -s "https://sentry.io/api/0/projects/<org-slug>/<project-slug>/environments
 4. **Search syntax**: Issues support Sentry's query language: `is:unresolved`, `level:error`, `assigned:me`, `first-release:`, `error.type:`, etc.
 5. **Rate limits**: Back off on 429 responses.
 6. **Scopes**: Ensure token has required scopes (`project:read`, `event:read`, `org:read`, etc.).
-
----
 
 ## How to Look Up More API Details
 

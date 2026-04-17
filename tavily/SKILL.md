@@ -4,30 +4,9 @@ description: Tavily API for AI search. Use when user mentions "Tavily", "AI sear
   "research", or asks for cited search results.
 ---
 
-# Tavily Search API
+## Troubleshooting
 
-Use Tavily's search API via direct `curl` calls to perform **live web search**, ideal for powering retrieval-augmented generation (RAG) for LLMs and agents.
-
-> Official documentation: `https://docs.tavily.com/`
-
----
-
-## When to Use
-
-Use this skill when you need:
-
-- **Fresh, up-to-date information** (news, trends, ongoing events)
-- **Search results with sources/links** to ground LLM or agent answers
-- **Research / desk research** inside automation workflows
-- A **reliable retrieval layer** for RAG, combined with skills like Notion or Firecrawl
-
----
-
-## Prerequisites
-
-Connect the **Tavily** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TAVILY_TOKEN` or `zero doctor check-connector --url https://api.tavily.com/search --method POST`
+If requests fail, run `zero doctor check-connector --env-name TAVILY_TOKEN` or `zero doctor check-connector --url https://api.tavily.com/search --method POST`
 
 ## How to Use
 
@@ -37,8 +16,6 @@ The base endpoint for the Tavily search API is a `POST` request to:
 - `https://api.tavily.com/search`
 
 with a JSON body.
-
----
 
 ### 1. Basic Search
 
@@ -65,8 +42,6 @@ curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: applicat
   - `"basic"` – faster, good for most use cases
   - `"advanced"` – deeper search and higher recall
 - `max_results`: Maximum number of results to return (e.g. 3 / 5 / 10)
-
----
 
 ### 2. Advanced Search
 
@@ -97,8 +72,6 @@ curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: applicat
 - `exclude_domains`: Blacklist of domains to exclude
 - `include_raw_content`: Whether to include raw page content (HTML / raw text). Default is `false`.
 
----
-
 ### 3. Typical Response Structure (Example)
 
 Tavily returns a JSON object similar to:
@@ -122,8 +95,6 @@ In agents or automation flows you typically:
 - Use `answer` as a concise, ready-to-use summary
 - Iterate over `results` to extract `title` + `url` as references / citations
 
----
-
 ### 4. Using Tavily in n8n (HTTP Request Node)
 
 To integrate Tavily in n8n with the HTTP Request node:
@@ -144,8 +115,6 @@ To integrate Tavily in n8n with the HTTP Request node:
 ```
 
 This lets you pipe Tavily search results into downstream nodes such as LLMs, Notion, Slack notifications, etc.
-
----
 
 ## Guidelines
 

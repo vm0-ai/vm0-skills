@@ -4,31 +4,9 @@ description: Perplexity API for AI search. Use when user mentions "Perplexity", 
   search", or asks to search with citations.
 ---
 
-# Perplexity AI
+## Troubleshooting
 
-AI search engine that provides real-time web-grounded answers with source citations. Unlike traditional search, Perplexity synthesizes information from multiple sources into coherent responses.
-
-> Official docs: https://docs.perplexity.ai/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Get real-time information with source citations
-- Research topics that require up-to-date web data
-- Answer complex questions that need multi-source synthesis
-- Perform academic or SEC filings research
-- Get AI-generated summaries grounded in current web content
-
----
-
-## Prerequisites
-
-Connect the **Perplexity AI** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PERPLEXITY_TOKEN` or `zero doctor check-connector --url https://api.perplexity.ai/chat/completions --method POST`
+If requests fail, run `zero doctor check-connector --env-name PERPLEXITY_TOKEN` or `zero doctor check-connector --url https://api.perplexity.ai/chat/completions --method POST`
 
 ## How to Use
 
@@ -287,8 +265,6 @@ Then run:
 curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authorization: Bearer $PERPLEXITY_TOKEN" --header "Content-Type: application/json" -d @/tmp/perplexity_request.json
 ```
 
----
-
 ## Models
 
 | Model | Description | Best For |
@@ -297,8 +273,6 @@ curl -s -X POST "https://api.perplexity.ai/chat/completions" --header "Authoriza
 | `sonar-pro` | Advanced search, deeper understanding | Complex queries, detailed research |
 | `sonar-reasoning-pro` | Multi-step reasoning with search | Problem-solving, analysis |
 | `sonar-deep-research` | Exhaustive research, reports | Academic research, market analysis |
-
----
 
 ## Response Format
 
@@ -331,8 +305,6 @@ Chat completions return:
   }
 }
 ```
-
----
 
 ## Guidelines
 

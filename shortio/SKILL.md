@@ -4,39 +4,15 @@ description: Short.io API for link shortening. Use when user mentions "Short.io"
   "link shortener", "short URL", or URL management.
 ---
 
-# Short.io
+## Troubleshooting
 
-Use Short.io via direct `curl` calls to **create and manage short links** on your branded domain.
-
-> Official docs: `https://developers.short.io/docs`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Create short links** from long URLs
-- **Customize link slugs** (paths) for branded URLs
-- **Track link clicks** and analytics
-- **Manage multiple links** (list, update, delete)
-- **Set link expiration** using TTL (time-to-live)
-
----
-
-## Prerequisites
-
-Connect the **Short.io** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SHORTIO_TOKEN` or `zero doctor check-connector --url https://api.short.io/links --method GET`
+If requests fail, run `zero doctor check-connector --env-name SHORTIO_TOKEN` or `zero doctor check-connector --url https://api.short.io/links --method GET`
 
 ## How to Use
 
 All examples below assume you have `SHORTIO_TOKEN` and `SHORTIO_DOMAIN` set.
 
 Base URL: `https://api.short.io`
-
----
 
 ### 1. Create a Short Link
 
@@ -56,8 +32,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.short.io/links" --header "Authorization: $SHORTIO_TOKEN" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
-
----
 
 ### 2. Create with Custom Slug
 
@@ -79,8 +53,6 @@ Then run:
 curl -s -X POST "https://api.short.io/links" --header "Authorization: $SHORTIO_TOKEN" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
 
----
-
 ### 3. Create with TTL (Expiration)
 
 Create a link that expires after a specified time (in ISO 8601 format):
@@ -101,8 +73,6 @@ Then run:
 curl -s -X POST "https://api.short.io/links" --header "Authorization: $SHORTIO_TOKEN" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, ttl}'
 ```
 
----
-
 ### 4. Get Link Info by Path
 
 Get details of a short link using domain and path:
@@ -110,8 +80,6 @@ Get details of a short link using domain and path:
 ```bash
 curl -s -X GET "https://api.short.io/links/expand?domain=$SHORTIO_DOMAIN&path=my-custom-slug" --header "Authorization: $SHORTIO_TOKEN" --header "Accept: application/json" | jq '{originalURL, shortURL, path, idString, createdAt, cloaking}'
 ```
-
----
 
 ### 5. Get Link Info by ID
 
@@ -123,8 +91,6 @@ LINK_ID="lnk_abc123xyz"
 curl -s -X GET "https://api.short.io/links/${LINK_ID}" --header "Authorization: $SHORTIO_TOKEN" --header "Accept: application/json" | jq '{originalURL, shortURL, path, idString, createdAt}'
 ```
 
----
-
 ### 6. List All Links
 
 Get a list of links for a domain (max 150 per request):
@@ -132,8 +98,6 @@ Get a list of links for a domain (max 150 per request):
 ```bash
 curl -s -X GET "https://api.short.io/api/links?domain_id=$SHORTIO_DOMAIN_ID&limit=20" --header "Authorization: $SHORTIO_TOKEN" --header "Accept: application/json" | jq '{count, links: [.links[] | {shortURL, originalURL, path, idString}]}'
 ```
-
----
 
 ### 7. Update a Link
 
@@ -158,8 +122,6 @@ Then run:
 curl -s -X POST "https://api.short.io/links/${LINK_ID}" --header "Authorization: $SHORTIO_TOKEN" --header "Content-Type: application/json" --header "Accept: application/json" -d @/tmp/shortio_request.json | jq '{shortURL, originalURL, path, idString}'
 ```
 
----
-
 ### 8. Delete a Link
 
 Delete a short link by ID:
@@ -170,8 +132,6 @@ LINK_ID="lnk_abc123xyz"
 curl -s -X DELETE "https://api.short.io/links/${LINK_ID}" --header "Authorization: $SHORTIO_TOKEN" --header "Accept: application/json" | jq '{success, idString}'
 ```
 
----
-
 ### 9. List Domains
 
 Get all domains associated with your account:
@@ -180,8 +140,6 @@ Get all domains associated with your account:
 curl -s -X GET "https://api.short.io/api/domains" --header "Authorization: $SHORTIO_TOKEN" --header "Accept: application/json" | jq '.[] | {id, hostname, state, linkType}'
 ```
 
----
-
 ### 10. Get Link Click Statistics
 
 Get click counts for specific links:
@@ -189,8 +147,6 @@ Get click counts for specific links:
 ```bash
 curl -s -X GET "https://api.short.io/domains/$SHORTIO_DOMAIN_ID/link_clicks?link_ids=${LINK_ID}" --header "Authorization: $SHORTIO_TOKEN" --header "Accept: application/json" | jq '{linkId: .linkId, clicks}'
 ```
-
----
 
 ## Create Link Parameters
 
@@ -207,8 +163,6 @@ curl -s -X GET "https://api.short.io/domains/$SHORTIO_DOMAIN_ID/link_clicks?link
 | `expiresAt` | string | No | Redirect URL when link expires |
 | `tags` | array | No | Tags for categorization |
 
----
-
 ## Response Fields
 
 | Field | Description |
@@ -222,8 +176,6 @@ curl -s -X GET "https://api.short.io/domains/$SHORTIO_DOMAIN_ID/link_clicks?link
 | `createdAt` | Creation timestamp |
 | `cloaking` | Whether cloaking is enabled |
 | `hasPassword` | Whether link is password protected |
-
----
 
 ## Guidelines
 

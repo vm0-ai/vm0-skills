@@ -3,18 +3,9 @@ name: pikastream
 description: Pika Developer API for joining video meetings (Google Meet, Zoom) as a real-time AI avatar with voice cloning. Use when user mentions "Pika", "PikaStream", "pikastream", "join a meeting as AI", "AI avatar meeting", or "video meeting bot".
 ---
 
-# Pika Developer API (PikaStream)
+## Troubleshooting
 
-PikaStream lets an AI agent join Google Meet or Zoom calls as a real-time avatar with voice cloning. Billed at **$0.275/min**.
-
-> GitHub: `https://github.com/Pika-Labs/Pika-Skills`
-> Dev portal: `https://www.pika.me/dev/`
-
-## Prerequisites
-
-Connect the **Pika Developer API (PikaStream)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PIKA_TOKEN` or `zero doctor check-connector --url https://srkibaanghvsriahb.pika.art/developer/balance --method GET`
+If requests fail, run `zero doctor check-connector --env-name PIKA_TOKEN` or `zero doctor check-connector --url https://srkibaanghvsriahb.pika.art/developer/balance --method GET`
 
 ## Base URL
 
@@ -30,8 +21,6 @@ All requests use a `DevKey` header:
 Authorization: DevKey $PIKA_TOKEN
 ```
 
----
-
 ## Core APIs
 
 ### Check Balance
@@ -42,8 +31,6 @@ curl -s "https://srkibaanghvsriahb.pika.art/developer/balance" \
 ```
 
 Returns `{ "balance": <int> }`. Minimum 100 credits required before joining a meeting.
-
----
 
 ### Join a Meeting
 
@@ -71,8 +58,6 @@ curl -s -X POST "https://srkibaanghvsriahb.pika.art/proxy/realtime/meeting-sessi
 
 Returns: `{ "session_id": "...", "platform": "...", "status": "created" }`
 
----
-
 ### Poll Session Status
 
 ```bash
@@ -89,8 +74,6 @@ curl -s "https://srkibaanghvsriahb.pika.art/proxy/realtime/session/<session_id>"
 
 Poll every 2 seconds. The bot is ready when `status == "ready"` or both `video_worker_connected` and `meeting_bot_connected` are `true`. Default timeout: 90s.
 
----
-
 ### Leave a Meeting
 
 ```bash
@@ -102,16 +85,12 @@ Returns: `{ "session_id": "...", "closed": true }`
 
 Billing stops when this call completes.
 
----
-
 ### List Topup Products
 
 ```bash
 curl -s "https://srkibaanghvsriahb.pika.art/developer/topup/products" \
   -H "Authorization: DevKey $PIKA_TOKEN" | jq '.data // . | .products[]? | {name, numCredits, productId}'
 ```
-
----
 
 ### Create Topup Checkout
 
@@ -131,8 +110,6 @@ curl -s -X POST "https://srkibaanghvsriahb.pika.art/developer/topup" \
 ```
 
 Returns a `checkout_url`. Share with the user to complete payment, then poll `/developer/balance` until balance ≥ 100.
-
----
 
 ## Guidelines
 

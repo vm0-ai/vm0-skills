@@ -5,45 +5,13 @@ description: Google Meet API for managing meeting spaces, conference records, pa
   record", "meeting recording", "meeting transcript", or "Google Meet link".
 ---
 
-# Google Meet API
+## Troubleshooting
 
-Manage Google Meet spaces, conference records, participants, recordings, and transcripts via the Google Meet REST API.
-
-> Official docs: https://developers.google.com/workspace/meet/api/reference/rest/v2
-
----
-
-## Prerequisites
-
-Connect the **Google Meet** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_MEET_TOKEN` or `zero doctor check-connector --url https://meet.googleapis.com/v2/spaces --method POST`
-
-## When to Use
-
-Use this skill when you need to:
-
-- Create and manage Google Meet meeting spaces
-- Get or update meeting space configuration
-- End an active conference in a meeting space
-- List and retrieve conference records (past meetings)
-- List participants in a conference
-- List and retrieve meeting recordings
-- List and retrieve meeting transcripts and transcript entries
-
----
-
----
-
-> **Placeholders:** Values in `{curly-braces}` like `{space-name}` are placeholders. Replace them with actual values when executing.
-
----
+If requests fail, run `zero doctor check-connector --env-name GOOGLE_MEET_TOKEN` or `zero doctor check-connector --url https://meet.googleapis.com/v2/spaces --method POST`
 
 ## How to Use
 
 Base URL: `https://meet.googleapis.com/v2`
-
----
 
 ## Spaces
 
@@ -134,8 +102,6 @@ curl -s -X POST "https://meet.googleapis.com/v2/spaces/{space-name}:endActiveCon
   -d '{}'
 ```
 
----
-
 ## Conference Records
 
 A ConferenceRecord represents a single instance of a meeting held in a space.
@@ -171,8 +137,6 @@ Get details for a specific conference record:
 curl -s "https://meet.googleapis.com/v2/conferenceRecords/{conference-record-id}" \
   --header "Authorization: Bearer $GOOGLE_MEET_TOKEN" | jq '{name, startTime, endTime, expireTime, space}'
 ```
-
----
 
 ## Participants
 
@@ -210,8 +174,6 @@ curl -s "https://meet.googleapis.com/v2/conferenceRecords/{conference-record-id}
   --header "Authorization: Bearer $GOOGLE_MEET_TOKEN" | jq '.participantSessions[]? | {name, startTime, endTime}'
 ```
 
----
-
 ## Recordings
 
 ### List Recordings
@@ -233,8 +195,6 @@ curl -s "https://meet.googleapis.com/v2/conferenceRecords/{conference-record-id}
 ```
 
 The `driveDestination` field contains the Google Drive file ID and export URI for downloading the recording.
-
----
 
 ## Transcripts
 
@@ -267,8 +227,6 @@ curl -s "https://meet.googleapis.com/v2/conferenceRecords/{conference-record-id}
   --header "Authorization: Bearer $GOOGLE_MEET_TOKEN" | jq '.entries[]? | {name, participant, text, startTime, endTime}'
 ```
 
----
-
 ## Common Patterns
 
 ### Get the Latest Meeting Record for a Space
@@ -287,8 +245,6 @@ curl -s "https://meet.googleapis.com/v2/spaces/{space-name}" \
 
 Returns `null` if no active conference, or the conference record details if one is ongoing.
 
----
-
 ## Guidelines
 
 1. **Space naming**: Spaces use the format `spaces/{space}` where `{space}` is a server-generated ID (e.g. `jQCFfuBOdN5z`). You can also use the friendly meeting code (e.g. `abc-mnop-xyz`) as an alias.
@@ -298,8 +254,6 @@ Returns `null` if no active conference, or the conference record details if one 
 5. **Recordings and transcripts**: These are generated asynchronously. Check the `state` field — `ACTIVE` means generating, `ENDED` means complete.
 6. **Drive and Docs integration**: Recordings link to Google Drive files; transcripts link to Google Docs. Use the Drive or Docs skill to access these artifacts.
 7. **updateMask**: When PATCHing a space, specify `updateMask` as a comma-separated list of dot-notation field paths to avoid overwriting unintended fields.
-
----
 
 ## API Reference
 

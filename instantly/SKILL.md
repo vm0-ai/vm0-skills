@@ -4,30 +4,9 @@ description: Instantly.ai API for cold email campaigns. Use when user mentions "
   "cold email", "email campaign", or outreach automation.
 ---
 
-# Instantly API
+## Troubleshooting
 
-Use the Instantly API via direct `curl` calls to automate **cold email outreach**, manage campaigns, leads, and sending accounts.
-
-> Official docs: `https://developer.instantly.ai/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage email campaigns** - create, launch, pause campaigns
-- **Handle leads** - add, update, list leads in campaigns
-- **Manage sending accounts** - list and configure email accounts
-- **Automate outreach** - schedule sends and manage lead lists
-
----
-
-## Prerequisites
-
-Connect the **Instantly** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTANTLY_API_KEY` or `zero doctor check-connector --url https://api.instantly.ai/api/v2/campaigns --method GET`
+If requests fail, run `zero doctor check-connector --env-name INSTANTLY_API_KEY` or `zero doctor check-connector --url https://api.instantly.ai/api/v2/campaigns --method GET`
 
 ## How to Use
 
@@ -38,8 +17,6 @@ The base URL for API V2 is:
 - `https://api.instantly.ai/api/v2`
 
 Authentication uses Bearer token in the `Authorization` header.
-
----
 
 ### 1. List Campaigns
 
@@ -57,8 +34,6 @@ curl -s "https://api.instantly.ai/api/v2/campaigns?status=ACTIVE&limit=10" -H "A
 
 **Status values:** `ACTIVE`, `PAUSED`, `COMPLETED`, `DRAFTED`
 
----
-
 ### 2. Get Single Campaign
 
 Get campaign details by ID. Replace `<your-campaign-id>` with the actual campaign ID:
@@ -66,8 +41,6 @@ Get campaign details by ID. Replace `<your-campaign-id>` with the actual campaig
 ```bash
 curl -s "https://api.instantly.ai/api/v2/campaigns/<your-campaign-id>" -H "Authorization: Bearer $INSTANTLY_API_KEY" | jq '{id, name, status, daily_limit}'
 ```
-
----
 
 ### 3. Create Campaign
 
@@ -109,8 +82,6 @@ Then run:
 curl -s "https://api.instantly.ai/api/v2/campaigns" -X POST -H "Authorization: Bearer $INSTANTLY_API_KEY" -H "Content-Type: application/json" -d @/tmp/instantly_request.json
 ```
 
----
-
 ### 4. Pause/Activate Campaign
 
 Control campaign status. Replace `<your-campaign-id>` with the actual campaign ID:
@@ -122,8 +93,6 @@ curl -s "https://api.instantly.ai/api/v2/campaigns/<your-campaign-id>/pause" -X 
 # Activate campaign
 curl -s "https://api.instantly.ai/api/v2/campaigns/<your-campaign-id>/activate" -X POST -H "Authorization: Bearer $INSTANTLY_API_KEY"
 ```
-
----
 
 ### 5. List Leads
 
@@ -159,8 +128,6 @@ Then run:
 ```bash
 curl -s "https://api.instantly.ai/api/v2/leads/list" -X POST -H "Authorization: Bearer $INSTANTLY_API_KEY" -H "Content-Type: application/json" -d @/tmp/instantly_request.json | jq '.items[] | {email, status}'
 ```
-
----
 
 ### 6. Create Lead
 
@@ -206,8 +173,6 @@ Then run:
 curl -s "https://api.instantly.ai/api/v2/leads" -X POST -H "Authorization: Bearer $INSTANTLY_API_KEY" -H "Content-Type: application/json" -d @/tmp/instantly_request.json
 ```
 
----
-
 ### 7. Get Single Lead
 
 Get lead by ID. Replace `<your-lead-id>` with the actual lead ID:
@@ -215,8 +180,6 @@ Get lead by ID. Replace `<your-lead-id>` with the actual lead ID:
 ```bash
 curl -s "https://api.instantly.ai/api/v2/leads/<your-lead-id>" -H "Authorization: Bearer $INSTANTLY_API_KEY"
 ```
-
----
 
 ### 8. Update Lead
 
@@ -239,8 +202,6 @@ Then run. Replace `<your-lead-id>` with the actual lead ID:
 curl -s "https://api.instantly.ai/api/v2/leads/<your-lead-id>" -X PATCH -H "Authorization: Bearer $INSTANTLY_API_KEY" -H "Content-Type: application/json" -d @/tmp/instantly_request.json
 ```
 
----
-
 ### 9. List Lead Lists
 
 Get all lead lists:
@@ -248,8 +209,6 @@ Get all lead lists:
 ```bash
 curl -s "https://api.instantly.ai/api/v2/lead-lists" -H "Authorization: Bearer $INSTANTLY_API_KEY" | jq '.items[] | {id, name}'
 ```
-
----
 
 ### 10. Create Lead List
 
@@ -269,8 +228,6 @@ Then run:
 curl -s "https://api.instantly.ai/api/v2/lead-lists" -X POST -H "Authorization: Bearer $INSTANTLY_API_KEY" -H "Content-Type: application/json" -d @/tmp/instantly_request.json
 ```
 
----
-
 ### 11. List Email Accounts
 
 Get connected sending accounts:
@@ -279,8 +236,6 @@ Get connected sending accounts:
 curl -s "https://api.instantly.ai/api/v2/accounts" -H "Authorization: Bearer $INSTANTLY_API_KEY" | jq '.items[] | {email, status, warmup_status}'
 ```
 
----
-
 ### 12. Test API Key
 
 Verify your API key is valid:
@@ -288,8 +243,6 @@ Verify your API key is valid:
 ```bash
 curl -s "https://api.instantly.ai/api/v2/api-keys" -H "Authorization: Bearer $INSTANTLY_API_KEY" | jq '.items[0] | {name, scopes}'
 ```
-
----
 
 ## Pagination
 
@@ -302,8 +255,6 @@ curl -s "https://api.instantly.ai/api/v2/campaigns?limit=10" -H "Authorization: 
 # Next page (replace <your-cursor> with the next_starting_after value from the previous response)
 curl -s "https://api.instantly.ai/api/v2/campaigns?limit=10&starting_after=<your-cursor>" -H "Authorization: Bearer $INSTANTLY_API_KEY" | jq '.items[] | {id, name}'
 ```
-
----
 
 ## Guidelines
 

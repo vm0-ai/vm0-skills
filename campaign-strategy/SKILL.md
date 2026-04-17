@@ -3,14 +3,6 @@ name: campaign-strategy
 description: Plan and structure marketing campaigns — set objectives, segment audiences, choose channels, build content calendars, allocate budgets, and define KPIs. Trigger on requests for campaign planning, product launch strategy, go-to-market plans, content scheduling, media mix decisions, campaign briefs, or marketing budget allocation.
 ---
 
-# Campaign Strategy
-
-Structured approaches for designing, organizing, and executing marketing campaigns from initial goals through measurement.
-
-## Prerequisites
-
-Connect the **Campaign Strategy** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Five-Part Campaign Architecture
 
 Every campaign rests on five pillars: Goal, Audience, Narrative, Distribution, and Measurement.

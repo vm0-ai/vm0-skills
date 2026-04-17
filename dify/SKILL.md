@@ -4,31 +4,9 @@ description: Dify API for LLM app building. Use when user mentions "Dify", "LLM 
   "AI workflow", or asks about Dify platform.
 ---
 
-# Dify API
+## Troubleshooting
 
-Build and interact with AI-powered workflows, chatbots, and text generation apps via Dify's REST API.
-
-> Official docs: `https://docs.dify.ai/en/use-dify/publish/developing-with-apis`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Run AI workflows** with custom inputs and retrieve results
-- **Chat with AI apps** in multi-turn conversations
-- **Generate text completions** from configured prompts
-- **Manage knowledge bases** (create, list, add documents, query)
-- **Upload files** for use in AI app conversations or workflows
-
----
-
-## Prerequisites
-
-Connect the **Dify** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DIFY_TOKEN` or `zero doctor check-connector --url https://api.dify.ai/v1/chat-messages --method POST`
+If requests fail, run `zero doctor check-connector --env-name DIFY_TOKEN` or `zero doctor check-connector --url https://api.dify.ai/v1/chat-messages --method POST`
 
 ## Chat Messages
 
@@ -100,8 +78,6 @@ curl -s -X POST "https://api.dify.ai/v1/chat-messages" --header "Authorization: 
 curl -s -X POST "https://api.dify.ai/v1/chat-messages/{task_id}/stop" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d '{"user": "user-123"}' | jq .
 ```
 
----
-
 ## Text Completion
 
 ### Create Completion Message
@@ -125,8 +101,6 @@ curl -s -X POST "https://api.dify.ai/v1/completion-messages" --header "Authoriza
 ```
 
 The `inputs` object keys depend on the variables configured in your Dify app's prompt template.
-
----
 
 ## Workflow Execution
 
@@ -178,8 +152,6 @@ curl -s -X POST "https://api.dify.ai/v1/workflows/run" --header "Authorization: 
 curl -s -X GET "https://api.dify.ai/v1/workflows/run/{workflow_run_id}" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
 
----
-
 ## Conversations
 
 ### List Conversations
@@ -206,8 +178,6 @@ curl -s -X DELETE "https://api.dify.ai/v1/conversations/{conversation_id}" --hea
 curl -s -X POST "https://api.dify.ai/v1/conversations/{conversation_id}/name" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d '{"name": "My Chat Session", "user": "user-123"}' | jq .
 ```
 
----
-
 ## Message Feedback
 
 ```bash
@@ -216,8 +186,6 @@ curl -s -X POST "https://api.dify.ai/v1/messages/{message_id}/feedbacks" --heade
 
 Rating values: `like`, `dislike`, or `null` (to remove feedback).
 
----
-
 ## Suggested Questions
 
 Get follow-up question suggestions after a message:
@@ -225,8 +193,6 @@ Get follow-up question suggestions after a message:
 ```bash
 curl -s -X GET "https://api.dify.ai/v1/messages/{message_id}/suggested?user=user-123" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
-
----
 
 ## File Upload
 
@@ -237,8 +203,6 @@ curl -s -X POST "https://api.dify.ai/v1/files/upload" --header "Authorization: B
 ```
 
 Use the returned `id` in chat messages by adding it to the `files` array in the request body.
-
----
 
 ## Application Info
 
@@ -253,8 +217,6 @@ curl -s -X GET "https://api.dify.ai/v1/parameters?user=user-123" --header "Autho
 ```bash
 curl -s -X GET "https://api.dify.ai/v1/meta?user=user-123" --header "Authorization: Bearer $DIFY_TOKEN" | jq .
 ```
-
----
 
 ## Knowledge Base Management
 
@@ -331,8 +293,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.dify.ai/v1/datasets/{dataset_id}/retrieve" --header "Authorization: Bearer $DIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/dify_request.json | jq .
 ```
-
----
 
 ## Guidelines
 

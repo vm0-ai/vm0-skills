@@ -3,37 +3,13 @@ name: anthropic-managed-agents
 description: Anthropic Managed Agents API for programmatically creating, running, and streaming AI agents on Anthropic's cloud infrastructure. Use when the user mentions "Managed Agents", "Anthropic agent sessions", or needs to create/run/stream an Anthropic agent with tool use (bash, git, web), attach GitHub repositories, or inject secrets via Vault. Do NOT use for standard Claude Messages API — use the Claude API skill instead.
 ---
 
-# Anthropic Managed Agents API
+## Troubleshooting
 
-Use the Anthropic Managed Agents API via direct `curl` calls to **create agent definitions, provision cloud environments, run agent sessions, stream output in real time, and manage vault credentials**.
-
-> Official API reference: `https://docs.anthropic.com/en/api/beta`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Create an agent** — define a model, system prompt, and toolset once; reuse across many sessions
-- **Run agent sessions** — launch a session against a cloud environment with a GitHub repo or uploaded file mounted
-- **Stream session output** — read tool calls, text output, and status changes as they happen
-- **Manage environments** — configure container networking and pre-installed packages
-- **Inject secrets** — store credentials in a Vault and reference them in sessions without exposing plaintext
-
----
-
-## Prerequisites
-
-Connect the **Anthropic Managed Agents** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ANTHROPIC_MANAGED_AGENTS_TOKEN` or `zero doctor check-connector --url https://api.anthropic.com/v1/agents --method POST`
+If requests fail, run `zero doctor check-connector --env-name ANTHROPIC_MANAGED_AGENTS_TOKEN` or `zero doctor check-connector --url https://api.anthropic.com/v1/agents --method POST`
 
 ## How to Use
 
 All examples assume `ANTHROPIC_MANAGED_AGENTS_TOKEN` is set. The base URL is `https://api.anthropic.com`.
-
----
 
 ### 1. Create an Agent
 
@@ -72,8 +48,6 @@ Save the returned `id` (e.g., `agent_011CZk...`) for use in sessions.
 
 **Available models:** `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-haiku-4-5`
 
----
-
 ### 2. List Agents
 
 ```bash
@@ -82,8 +56,6 @@ curl -s "https://api.anthropic.com/v1/agents" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '.data[] | {id: .id, name: .name, model: .model}'
 ```
-
----
 
 ### 3. Get an Agent
 
@@ -94,8 +66,6 @@ curl -s "https://api.anthropic.com/v1/agents/<AGENT_ID>" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '.'
 ```
 
----
-
 ### 4. Delete an Agent
 
 ```bash
@@ -104,8 +74,6 @@ curl -s -X DELETE "https://api.anthropic.com/v1/agents/<AGENT_ID>" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: managed-agents-2026-04-01"
 ```
-
----
 
 ### 5. Create an Environment
 
@@ -146,8 +114,6 @@ Save the returned `id` (e.g., `env_011...`) for session creation.
 **Network options:**
 - `{"type": "unrestricted"}` — full internet access
 - `{"type": "limited", "allow_package_managers": true, "allow_mcp_servers": true, "allowed_hosts": ["api.github.com"]}` — restricted outbound
-
----
 
 ### 6. Create a Session (Start a Task)
 
@@ -202,8 +168,6 @@ curl -s -X POST "https://api.anthropic.com/v1/sessions" \
   "vault_ids": ["vault_abc..."]
 }
 ```
-
----
 
 ### 7. Stream Session Events
 
@@ -280,8 +244,6 @@ curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>/events" \
   -H "anthropic-beta: managed-agents-2026-04-01" | jq '.data[] | {type: .type, id: .id}'
 ```
 
----
-
 ### 8. Get Session Status
 
 ```bash
@@ -292,8 +254,6 @@ curl -s "https://api.anthropic.com/v1/sessions/<SESSION_ID>" \
 ```
 
 **Session statuses:** `running`, `idle`, `terminated`
-
----
 
 ### 9. List Sessions
 
@@ -306,8 +266,6 @@ curl -s "https://api.anthropic.com/v1/sessions?agent_id=<AGENT_ID>&limit=10" \
 ```
 
 Supports filters: `agent_id`, `agent_version`, `created_at[gt/gte/lt/lte]`, `include_archived`, `order` (`asc`/`desc`), `limit`, `page`.
-
----
 
 ### 10. Full End-to-End Example: Code Review Workflow
 
@@ -375,8 +333,6 @@ for line in sys.stdin:
             pass
 "
 ```
-
----
 
 ## Guidelines
 

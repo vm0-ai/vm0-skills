@@ -3,14 +3,6 @@ name: brand-guidelines
 description: Define, document, and enforce brand voice, tone, messaging pillars, style rules, and terminology standards. Trigger on requests about brand consistency, voice documentation, tone of voice guides, style guide creation, messaging frameworks, terminology governance, inclusive language, or reviewing content for brand compliance.
 ---
 
-# Brand Guidelines
-
-Methods for establishing, maintaining, and applying a cohesive brand identity across all written communications.
-
-## Prerequisites
-
-Connect the **Brand Guidelines** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Building a Brand Voice Document
 
 A thorough voice reference covers the following areas. Use this structure to help teams articulate their voice from scratch or to interpret an existing voice configuration.

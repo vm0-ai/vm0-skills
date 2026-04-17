@@ -6,18 +6,6 @@ description: Structured research and solution design workflow. Use when user men
   research", "方案选型", "调研", or asks to explore options before implementing.
 ---
 
-# Deep Dive
-
-A two-phase workflow for technical research and solution design. Phase 1 gathers facts without suggesting solutions. Phase 2 explores multiple approaches based on those facts.
-
-All artifacts are written to `deep-dive/{task-name}/`.
-
----
-
-## Prerequisites
-
-Connect the **Deep Dive** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Operation: deep research
 
 **Usage:** `deep research [task description]`
@@ -52,6 +40,7 @@ Information gathering phase. Analyze the codebase without suggesting solutions.
 # Research: {task-name}
 
 ## Scope
+
 What was investigated and why.
 
 ## Findings
@@ -69,10 +58,9 @@ What was investigated and why.
 - How data moves through the relevant components
 
 ## Open Questions
+
 - Unresolved items that need clarification
 ```
-
----
 
 ## Operation: deep innovate
 
@@ -115,6 +103,7 @@ For each approach, document:
 # Innovation: {task-name}
 
 ## Research Summary
+
 Key findings from the research phase.
 
 ## Approach A: {name}
@@ -135,9 +124,11 @@ How it fits with existing architecture.
 Long-term considerations.
 
 ## Approach B: {name}
+
 (same structure)
 
 ## Approach C: {name}
+
 (same structure)
 
 ## Comparison Matrix
@@ -150,5 +141,6 @@ Long-term considerations.
 | Maintainability  |            |            |            |
 
 ## Next Steps
+
 Awaiting user decision before proceeding.
 ```

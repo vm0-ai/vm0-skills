@@ -4,33 +4,9 @@ description: ClickUp API for tasks and spaces. Use when user mentions "ClickUp",
   shares a ClickUp link, "ClickUp task", or asks about ClickUp workspace.
 ---
 
-# ClickUp API
+## Troubleshooting
 
-Manage tasks, lists, folders, spaces, and workspaces in ClickUp via the REST API.
-
-> Official docs: `https://developer.clickup.com/reference`
-
----
-
-## Prerequisites
-
-Connect the **ClickUp** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLICKUP_TOKEN` or `zero doctor check-connector --url https://api.clickup.com/api/v2/user --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- List workspaces, spaces, folders, and lists
-- Create, update, delete, and search tasks
-- Manage comments on tasks
-- Track time entries for tasks
-- Organize work with tags and custom fields
-
----
-
----
+If requests fail, run `zero doctor check-connector --env-name CLICKUP_TOKEN` or `zero doctor check-connector --url https://api.clickup.com/api/v2/user --method GET`
 
 ## How to Use
 
@@ -39,8 +15,6 @@ All examples below assume you have `CLICKUP_TOKEN` set.
 Base URL: `https://api.clickup.com/api/v2`
 
 ClickUp uses numeric IDs for all resources. The hierarchy is: Workspace (team) > Space > Folder > List > Task.
-
----
 
 ## User & Workspaces
 
@@ -55,8 +29,6 @@ curl -s "https://api.clickup.com/api/v2/user" --header "Authorization: Bearer $C
 ```bash
 curl -s "https://api.clickup.com/api/v2/team" --header "Authorization: Bearer $CLICKUP_TOKEN" | jq '.teams[] | {id, name}'
 ```
-
----
 
 ## Spaces
 
@@ -96,8 +68,6 @@ curl -s -X POST "https://api.clickup.com/api/v2/team/<team_id>/space" --header "
 ```bash
 curl -s -X DELETE "https://api.clickup.com/api/v2/space/<space_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"
 ```
-
----
 
 ## Folders
 
@@ -140,8 +110,6 @@ curl -s -X PUT "https://api.clickup.com/api/v2/folder/<folder_id>" --header "Aut
 ```bash
 curl -s -X DELETE "https://api.clickup.com/api/v2/folder/<folder_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"
 ```
-
----
 
 ## Lists
 
@@ -192,8 +160,6 @@ curl -s -X PUT "https://api.clickup.com/api/v2/list/<list_id>" --header "Authori
 ```bash
 curl -s -X DELETE "https://api.clickup.com/api/v2/list/<list_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"
 ```
-
----
 
 ## Tasks
 
@@ -275,8 +241,6 @@ curl -s -X DELETE "https://api.clickup.com/api/v2/task/<task_id>" --header "Auth
 curl -s "https://api.clickup.com/api/v2/team/<team_id>/task?statuses[]=to%20do&statuses[]=in%20progress&assignees[]=<user_id>&page=0" --header "Authorization: Bearer $CLICKUP_TOKEN" | jq '.tasks[] | {id, name, status: .status.status}'
 ```
 
----
-
 ## Comments
 
 ### List Task Comments
@@ -319,8 +283,6 @@ curl -s -X PUT "https://api.clickup.com/api/v2/comment/<comment_id>" --header "A
 curl -s -X DELETE "https://api.clickup.com/api/v2/comment/<comment_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"
 ```
 
----
-
 ## Time Tracking
 
 ### List Time Entries
@@ -352,8 +314,6 @@ curl -s -X POST "https://api.clickup.com/api/v2/team/<team_id>/time_entries" --h
 curl -s -X DELETE "https://api.clickup.com/api/v2/team/<team_id>/time_entries/<timer_id>" --header "Authorization: Bearer $CLICKUP_TOKEN"
 ```
 
----
-
 ## Tags
 
 ### List Space Tags
@@ -373,8 +333,6 @@ curl -s -X POST "https://api.clickup.com/api/v2/task/<task_id>/tag/<tag_name>" -
 ```bash
 curl -s -X DELETE "https://api.clickup.com/api/v2/task/<task_id>/tag/<tag_name>" --header "Authorization: Bearer $CLICKUP_TOKEN"
 ```
-
----
 
 ## Guidelines
 

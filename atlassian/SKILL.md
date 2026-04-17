@@ -4,34 +4,9 @@ description: Atlassian API for Confluence and Jira. Use when user mentions "Conf
   page", "Atlassian", or asks about wiki/documentation management.
 ---
 
-# Atlassian API
+## Troubleshooting
 
-Use the Atlassian Cloud REST APIs to manage Jira issues and Confluence pages.
-
-> Official docs:
-> - Jira: https://developer.atlassian.com/cloud/jira/platform/rest/v3/
-> - Confluence v2: https://developer.atlassian.com/cloud/confluence/rest/v2/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Create, update, and search Jira issues using JQL
-- Transition Jira issues through workflow states
-- Manage Jira comments, labels, worklogs, and attachments
-- Create and update Confluence pages and blog posts
-- Search Confluence content using CQL
-- Manage Confluence spaces, labels, and comments
-
----
-
-## Prerequisites
-
-Connect the **Atlassian** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ATLASSIAN_TOKEN` or `zero doctor check-connector --url https://your-domain.atlassian.net/rest/api/3/myself --method GET`
+If requests fail, run `zero doctor check-connector --env-name ATLASSIAN_TOKEN` or `zero doctor check-connector --url https://your-domain.atlassian.net/rest/api/3/myself --method GET`
 
 ## Jira — User
 
@@ -52,8 +27,6 @@ curl -s -G "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/user/search" \
   --data-urlencode "query=john"
 ```
 
----
-
 ## Jira — Projects
 
 ### List Projects
@@ -71,8 +44,6 @@ curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/project/<project-key
   -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
   --header "Accept: application/json"
 ```
-
----
 
 ## Jira — Issues
 
@@ -203,8 +174,6 @@ curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/rest/api/3/issue/<issue
   -d "{\"timeSpentSeconds\": 3600, \"comment\": {\"type\": \"doc\", \"version\": 1, \"content\": [{\"type\": \"paragraph\", \"content\": [{\"type\": \"text\", \"text\": \"Investigated and fixed the issue.\"}]}]}}"
 ```
 
----
-
 ## Confluence — Spaces (v2)
 
 ### List Spaces
@@ -246,8 +215,6 @@ curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/spaces/<space-id>/p
   -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
   --header "Accept: application/json"
 ```
-
----
 
 ## Confluence — Pages (v2)
 
@@ -347,8 +314,6 @@ curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/pages/<page-id>/anc
   --header "Accept: application/json"
 ```
 
----
-
 ## Confluence — Comments (v2)
 
 ### List Footer Comments
@@ -383,8 +348,6 @@ curl -s -X PUT "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/footer-comme
 curl -s -X DELETE "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/footer-comments/<comment-id>" \
   -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"
 ```
-
----
 
 ## Confluence — Blog Posts (v2)
 
@@ -429,8 +392,6 @@ curl -s -X DELETE "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/blogposts
   -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN"
 ```
 
----
-
 ## Confluence — Labels (v2)
 
 ### List Labels
@@ -449,8 +410,6 @@ curl -s "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/api/v2/labels/<label-id>/p
   --header "Accept: application/json"
 ```
 
----
-
 ## Confluence — Search (v1)
 
 > **Note:** CQL search is only available via the v1 API. There is no v2 equivalent.
@@ -467,8 +426,6 @@ curl -s -G "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/rest/api/search" \
 
 Common CQL: `type=page AND space=DEV`, `text~"search term"`, `creator=currentUser()`, `lastModified >= "2026-01-01"`, `label="meeting-notes"`, `ancestor=12345`.
 
----
-
 ## Confluence — Attachments (v1)
 
 ### Upload Attachment
@@ -479,8 +436,6 @@ curl -s -X POST "https://$ATLASSIAN_DOMAIN.atlassian.net/wiki/rest/api/content/<
   --header "X-Atlassian-Token: nocheck" \
   -F "file=@document.pdf"
 ```
-
----
 
 ## Atlassian Document Format (ADF)
 
@@ -507,8 +462,6 @@ Jira API v3 uses ADF for rich text fields (`description`, `comment.body`):
 
 Confluence uses XHTML for page bodies: `<p>`, `<h1>`-`<h6>`, `<strong>`, `<em>`, `<ul>/<ol>`, `<table>`, `<ac:structured-macro>`.
 
----
-
 ## Guidelines
 
 1. **JQL for Jira searches**: Powerful filtering by any field combination.
@@ -521,8 +474,6 @@ Confluence uses XHTML for page bodies: `<p>`, `<h1>`-`<h6>`, `<strong>`, `<em>`,
 8. **Pagination**: Jira uses `startAt` + `maxResults`. Confluence v2 uses cursor-based pagination with `cursor` and `limit`.
 9. **Rate limits**: Back off on 429 responses.
 10. **Confluence v2 API**: This skill uses `/wiki/api/v2` for pages, spaces, comments, blog posts. CQL search and attachments still use v1 (`/wiki/rest/api`).
-
----
 
 ## How to Look Up More API Details
 

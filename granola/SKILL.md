@@ -4,30 +4,9 @@ description: Granola API for meeting notes. Use when user mentions "Granola", "m
   notes", or AI note-taking.
 ---
 
-# Granola
+## Troubleshooting
 
-Granola is an AI-powered meeting notes platform that automatically captures meeting transcripts, generates summaries, and organizes notes. Use the Enterprise API to programmatically access meeting notes, transcripts, summaries, attendees, and calendar event details.
-
-> Official docs: `https://docs.granola.ai/introduction`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Retrieve meeting notes with summaries and transcripts
-- List and filter meeting notes by date or update time
-- Access calendar event details and attendee information for meetings
-- Build integrations for CRM sync, knowledge bases, or custom workflows
-
----
-
-## Prerequisites
-
-Connect the **Granola** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GRANOLA_TOKEN` or `zero doctor check-connector --url https://public-api.granola.ai/v1/notes --method GET`
+If requests fail, run `zero doctor check-connector --env-name GRANOLA_TOKEN` or `zero doctor check-connector --url https://public-api.granola.ai/v1/notes --method GET`
 
 ## How to Use
 
@@ -102,8 +81,6 @@ while true; do
 done
 ```
 
----
-
 ## Response Structure
 
 ### List Notes Response
@@ -132,8 +109,6 @@ done
 | `attendees` | array | List of meeting attendees |
 | `summaries` | object | AI-generated summaries in text and markdown format |
 | `transcript` | array | Transcript entries with speaker, text, and timestamps (only when `include=transcript`) |
-
----
 
 ## Guidelines
 

@@ -4,24 +4,9 @@ description: Cloudinary API for image/video management. Use when user mentions "
   "upload image", "transform image", or media assets.
 ---
 
-# Cloudinary Media Hosting
+## Troubleshooting
 
-Cloudinary provides image and video hosting with CDN delivery, automatic optimization, and on-the-fly transformations.
-
-## When to Use
-
-- Upload images with automatic optimization
-- Upload videos with CDN delivery
-- Get CDN-delivered media URLs
-- Apply transformations (resize, crop, format conversion)
-- Concatenate/splice multiple videos
-- Host media for production applications
-
-## Prerequisites
-
-Connect the **Cloudinary Media Hosting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDINARY_TOKEN` or `zero doctor check-connector --url https://api.cloudinary.com/v1_1/your-cloud-name/image/upload --method POST`
+If requests fail, run `zero doctor check-connector --env-name CLOUDINARY_TOKEN` or `zero doctor check-connector --url https://api.cloudinary.com/v1_1/your-cloud-name/image/upload --method POST`
 
 ## How to Use
 

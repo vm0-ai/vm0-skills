@@ -4,36 +4,9 @@ description: PDF4me API for PDF operations. Use when user mentions "PDF4me", "co
   PDF", "PDF tools", or document conversion.
 ---
 
-# PDF4ME
+## Troubleshooting
 
-Comprehensive PDF processing API with 60+ operations: convert, merge, split, compress, OCR, watermark, form filling, digital signatures, and more.
-
-> Official docs: https://dev.pdf4me.com/apiv2/documentation/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Convert documents to/from PDF (Word, Excel, PowerPoint, HTML, images)
-- Merge multiple PDFs into one
-- Split PDF into multiple files
-- Compress PDF to reduce file size
-- Add watermarks, stamps, page numbers
-- Extract text, tables, or images from PDF
-- Fill PDF forms programmatically
-- OCR scanned documents
-- Protect/unlock PDF with password
-- Create barcodes and QR codes
-
----
-
-## Prerequisites
-
-Connect the **PDF4ME** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDF4ME_TOKEN` or `zero doctor check-connector --url https://api.pdf4me.com/api/v2/ConvertToPdf --method POST`
+If requests fail, run `zero doctor check-connector --env-name PDF4ME_TOKEN` or `zero doctor check-connector --url https://api.pdf4me.com/api/v2/ConvertToPdf --method POST`
 
 ## How to Use
 
@@ -323,8 +296,6 @@ Then run:
 curl -s -X POST "https://api.pdf4me.com/api/v2/ExtractPages" --header "Authorization: $PDF4ME_TOKEN" --header "Content-Type: application/json" -d @/tmp/pdf4me_request.json | jq -r '.docContent' | base64 -d > extracted.pdf
 ```
 
----
-
 ## API Endpoints
 
 | Category | Endpoint | Description |
@@ -357,8 +328,6 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/ExtractPages" --header "Authoriza
 | | `/api/v2/AddBarcodeToPdf` | Add barcode to PDF |
 | | `/api/v2/ReadBarcodeFromPdf` | Read barcode from PDF |
 
----
-
 ## Request Format
 
 All endpoints use POST with JSON body:
@@ -389,8 +358,6 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/{endpoint}" --header "Authorizati
 }
 ```
 
----
-
 ## Guidelines
 
 1. **File Size**: Max 20MB per file (varies by plan)
@@ -400,8 +367,6 @@ curl -s -X POST "https://api.pdf4me.com/api/v2/{endpoint}" --header "Authorizati
 5. **Rate Limits**: Check your plan at https://dev.pdf4me.com/pricing/
 6. **Free Tier**: 50 API calls/month
 7. **Postman**: Import from https://dev.pdf4me.com/apiv2/documentation/postman/
-
----
 
 ## Resources
 

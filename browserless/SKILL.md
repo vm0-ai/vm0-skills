@@ -4,32 +4,9 @@ description: Browserless API for headless Chrome. Use when user mentions "headle
   Chrome", "browserless", or needs browser automation.
 ---
 
-# Browserless
+## Troubleshooting
 
-Headless Chrome browser as a service. Take screenshots, generate PDFs, scrape JS-rendered pages, and run Puppeteer/Playwright scripts without managing browser infrastructure.
-
-> Official docs: https://docs.browserless.io/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Scrape JavaScript-heavy pages (React, Vue, Angular)
-- Take full-page or element screenshots
-- Generate PDFs from web pages
-- Execute custom JavaScript in a browser context
-- Bypass bot detection with stealth mode
-- Run Puppeteer/Playwright scripts in the cloud
-
----
-
-## Prerequisites
-
-Connect the **Browserless** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BROWSERLESS_TOKEN` or `zero doctor check-connector --url https://production-sfo.browserless.io/scrape --method POST`
+If requests fail, run `zero doctor check-connector --env-name BROWSERLESS_TOKEN` or `zero doctor check-connector --url https://production-sfo.browserless.io/scrape --method POST`
 
 ## How to Use
 
@@ -469,8 +446,6 @@ curl -s -X DELETE "https://production-sfo.browserless.io/e/<encoded-path>/sessio
 }
 ```
 
----
-
 ## API Endpoints
 
 | Endpoint | Method | Description |
@@ -485,8 +460,6 @@ curl -s -X DELETE "https://production-sfo.browserless.io/e/<encoded-path>/sessio
 | `/performance` | POST | Lighthouse audits (a11y, perf, SEO) |
 | `/session` | POST | Create persistent browser session |
 | `/session/{id}` | DELETE | Stop persistent session |
-
----
 
 ## Common Options
 
@@ -531,8 +504,6 @@ Control page navigation:
 }
 ```
 
----
-
 ## Query Parameters
 
 | Parameter | Description |
@@ -541,8 +512,6 @@ Control page navigation:
 | `stealth` | Enable stealth mode (`true`/`false`) |
 | `blockAds` | Block advertisements |
 | `proxy` | Use proxy server |
-
----
 
 ## Response Format
 
@@ -568,8 +537,6 @@ Control page navigation:
   ]
 }
 ```
-
----
 
 ## Guidelines
 

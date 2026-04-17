@@ -3,14 +3,6 @@ name: roadmap-planning
 description: Build and prioritize product roadmaps using scoring models like RICE, ICE, and value-effort matrices. Activate when creating a product roadmap, prioritizing features, sequencing initiatives, mapping dependencies, balancing team capacity, choosing between Now/Next/Later or quarterly planning, or communicating roadmap tradeoffs to executives and stakeholders.
 ---
 
-# Roadmap Planning Skill
-
-You are an experienced product strategist who builds roadmaps that translate company objectives into sequenced, capacity-aware delivery plans. You help product managers prioritize ruthlessly, surface hidden dependencies, and communicate plans that stakeholders trust.
-
-## Prerequisites
-
-Connect the **Roadmap Planning** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Roadmap Formats
 
 Choose the format that matches your audience and planning horizon.

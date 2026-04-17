@@ -5,42 +5,15 @@ description: Supabase API for Postgres and auth. Use when user mentions "Supabas
   project.
 ---
 
-# Supabase REST API
+## Troubleshooting
 
-Use the Supabase REST API via direct `curl` calls to **perform database CRUD operations**.
-
-Supabase auto-generates a RESTful API from your PostgreSQL database schema using [PostgREST](https://postgrest.org/).
-
-> Official docs: `https://supabase.com/docs/guides/api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Read data** from Supabase tables with filtering and pagination
-- **Insert rows** into tables (single or bulk)
-- **Update rows** based on conditions
-- **Delete rows** from tables
-- **Upsert data** (insert or update)
-- **Query with complex filters** using PostgREST operators
-
----
-
-## Prerequisites
-
-Connect the **Supabase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPABASE_PUBLISHABLE_KEY` or `zero doctor check-connector --url https://your-project.supabase.co/rest/v1/ --method GET`
+If requests fail, run `zero doctor check-connector --env-name SUPABASE_PUBLISHABLE_KEY` or `zero doctor check-connector --url https://your-project.supabase.co/rest/v1/ --method GET`
 
 ## How to Use
 
 Base URL: `${SUPABASE_URL}/rest/v1`
 
 All requests require the `apikey` header with your API key.
-
----
 
 ### 1. Read All Rows
 
@@ -50,8 +23,6 @@ Get all rows from a table:
 curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
----
-
 ### 2. Select Specific Columns
 
 Get only specific columns:
@@ -59,8 +30,6 @@ Get only specific columns:
 ```bash
 curl -s "$SUPABASE_URL/rest/v1/users?select=id,name,email" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
-
----
 
 ### 3. Filter with Operators
 
@@ -99,8 +68,6 @@ curl -s "$SUPABASE_URL/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: $S
 | `in` | In list | `?id=in.(1,2,3)` |
 | `is` | Is null/true/false | `?deleted_at=is.null` |
 
----
-
 ### 4. OR Conditions
 
 Use `or` for OR logic:
@@ -108,8 +75,6 @@ Use `or` for OR logic:
 ```bash
 curl -s "$SUPABASE_URL/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
-
----
 
 ### 5. Ordering
 
@@ -133,8 +98,6 @@ curl -s "$SUPABASE_URL/rest/v1/users?order=created_at.desc" -H "apikey: $SUPABAS
 curl -s "$SUPABASE_URL/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
----
-
 ### 6. Pagination
 
 Use `limit` and `offset`.
@@ -151,8 +114,6 @@ curl -s "$SUPABASE_URL/rest/v1/users?limit=10" -H "apikey: $SUPABASE_PUBLISHABLE
 curl -s "$SUPABASE_URL/rest/v1/users?limit=10&offset=10" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
----
-
 ### 7. Get Row Count
 
 Use `Prefer: count=exact` header:
@@ -160,8 +121,6 @@ Use `Prefer: count=exact` header:
 ```bash
 curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Prefer: count=exact" -I | grep -i "content-range"
 ```
-
----
 
 ### 8. Insert Single Row
 
@@ -180,8 +139,6 @@ Then run:
 curl -s -X POST "$SUPABASE_URL/rest/v1/users" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
 ```
 
----
-
 ### 9. Insert Multiple Rows
 
 Write to `/tmp/supabase_request.json`:
@@ -198,8 +155,6 @@ Then run:
 ```bash
 curl -s -X POST "$SUPABASE_URL/rest/v1/users" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
 ```
-
----
 
 ### 10. Update Rows
 
@@ -218,8 +173,6 @@ Then run:
 ```bash
 curl -s -X PATCH "$SUPABASE_URL/rest/v1/users?id=eq.1" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: return=representation" -d @/tmp/supabase_request.json
 ```
-
----
 
 ### 11. Upsert (Insert or Update)
 
@@ -241,8 +194,6 @@ Then run:
 curl -s -X POST "$SUPABASE_URL/rest/v1/users" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -H "Prefer: resolution=merge-duplicates,return=representation" -d @/tmp/supabase_request.json
 ```
 
----
-
 ### 12. Delete Rows
 
 Delete rows matching a filter:
@@ -250,8 +201,6 @@ Delete rows matching a filter:
 ```bash
 curl -s -X DELETE "$SUPABASE_URL/rest/v1/users?id=eq.1" -H "apikey: $SUPABASE_TOKEN" -H "Prefer: return=representation"
 ```
-
----
 
 ### 13. Query Related Tables
 
@@ -269,8 +218,6 @@ curl -s "$SUPABASE_URL/rest/v1/posts?select=*,author:users(*)" -H "apikey: $SUPA
 curl -s "$SUPABASE_URL/rest/v1/users?select=*,posts(*)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
 
----
-
 ### 14. Full-Text Search
 
 Search text columns:
@@ -278,8 +225,6 @@ Search text columns:
 ```bash
 curl -s "$SUPABASE_URL/rest/v1/posts?title=fts.hello" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
 ```
-
----
 
 ### 15. Call RPC Functions
 
@@ -299,16 +244,12 @@ Then run:
 curl -s -X POST "$SUPABASE_URL/rest/v1/rpc/my_function" -H "apikey: $SUPABASE_TOKEN" -H "Content-Type: application/json" -d @/tmp/supabase_request.json
 ```
 
----
-
 ## Response Headers
 
 | Header | Description |
 |--------|-------------|
 | `Content-Range` | Row range and total count (e.g., `0-9/100`) |
 | `Preference-Applied` | Confirms applied preferences |
-
----
 
 ## Guidelines
 
@@ -319,8 +260,6 @@ curl -s -X POST "$SUPABASE_URL/rest/v1/rpc/my_function" -H "apikey: $SUPABASE_TO
 5. **Add indexes** on frequently filtered columns
 6. **Use `Prefer: return=representation`** to get inserted/updated rows back
 7. **Avoid full-table operations** without filters to prevent accidental data loss
-
----
 
 ## API Reference
 

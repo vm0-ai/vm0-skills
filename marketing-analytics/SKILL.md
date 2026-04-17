@@ -3,14 +3,6 @@ name: marketing-analytics
 description: Measure, report on, and optimize marketing performance across channels and campaigns. Trigger on requests for performance dashboards, campaign result analysis, channel metrics review (email, social, paid ads, SEO, content), trend analysis, forecasting, attribution modeling, A/B testing guidance, or actionable optimization recommendations.
 ---
 
-# Marketing Analytics
-
-Frameworks for tracking, interpreting, and acting on marketing data across channels, campaigns, and the full customer funnel.
-
-## Prerequisites
-
-Connect the **Marketing Analytics** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Channel Metric Reference
 
 ### Email

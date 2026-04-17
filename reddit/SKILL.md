@@ -5,21 +5,9 @@ description: Reddit API for accessing discussions and content. Use when user men
   discussions.
 ---
 
-# Reddit
+## Troubleshooting
 
-Access Reddit discussions, posts, and content through the Reddit API.
-
-## Prerequisites
-
-Connect the **Reddit** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REDDIT_TOKEN` or `zero doctor check-connector --url https://oauth.reddit.com/api/v1/me --method GET`
-
-## When to Use
-
-- Search and read Reddit posts and comments
-- Browse subreddit content
-- Access Reddit discussions for research or monitoring
+If requests fail, run `zero doctor check-connector --env-name REDDIT_TOKEN` or `zero doctor check-connector --url https://oauth.reddit.com/api/v1/me --method GET`
 
 ## Authentication
 

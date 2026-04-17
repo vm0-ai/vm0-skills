@@ -5,23 +5,9 @@ homepage: https://agentphone.to
 docs: https://docs.agentphone.to
 ---
 
-# AgentPhone
+## Troubleshooting
 
-AgentPhone is an API-first telephony platform for AI agents. Give your agents phone numbers, voice calls, and SMS — all managed through a simple API.
-
-**Base URL:** `https://api.agentphone.to/v1`
-
-**Docs:** [docs.agentphone.to](https://docs.agentphone.to)
-
-**Console:** [agentphone.to](https://agentphone.to)
-
----
-
-## Prerequisites
-
-Connect the **AgentPhone** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AGENTPHONE_TOKEN` or `zero doctor check-connector --url https://api.agentphone.to/v1/agents --method POST`
+If requests fail, run `zero doctor check-connector --env-name AGENTPHONE_TOKEN` or `zero doctor check-connector --url https://api.agentphone.to/v1/agents --method POST`
 
 ## How It Works
 
@@ -51,8 +37,6 @@ Agents operate in one of two modes:
 
 - **`hosted`** — The built-in LLM handles the conversation autonomously using the agent's `system_prompt`. No server required. This is the easiest way to get started — just set a prompt and make a call.
 - **`webhook`** (default) — Inbound call/SMS events are forwarded to your webhook URL for custom handling. Use this when you need full control over the conversation logic.
-
----
 
 ## Quick Start
 
@@ -179,7 +163,6 @@ curl https://api.agentphone.to/v1/calls/call_def456/transcript \
 }
 ```
 
-
 ## Rules
 
 These rules are important. Read them carefully.
@@ -209,7 +192,6 @@ Always use **E.164 format** for phone numbers: `+` followed by country code and 
 - If no agents exist, guide the user to create one before attempting calls
 - Agent setup order: **Create agent → Buy number → Set webhook (if needed) → Make calls**
 
-
 ## Authentication
 
 All API requests require your API key in the `Authorization` header:
@@ -219,7 +201,6 @@ Authorization: Bearer $AGENTPHONE_TOKEN
 ```
 
 Get your API key at [agentphone.to](https://agentphone.to).
-
 
 ## API Reference
 
@@ -247,7 +228,6 @@ curl https://api.agentphone.to/v1/usage \
   }
 }
 ```
-
 
 ### Agents
 
@@ -414,7 +394,6 @@ curl https://api.agentphone.to/v1/agents/voices \
 }
 ```
 
-
 ### Phone Numbers
 
 #### Buy a Phone Number
@@ -485,7 +464,6 @@ curl "https://api.agentphone.to/v1/numbers?limit=20" \
 curl -X DELETE https://api.agentphone.to/v1/numbers/NUMBER_ID \
   -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
-
 
 ### Voice Calls
 
@@ -678,7 +656,6 @@ TOOL_HANDLERS = {
     "search_orders": lambda args: search_order_db(args["query"]),
 }
 
-
 def run_tool_call(user_message: str, history: list) -> str:
     """Run Claude with tools and return the final text response."""
     messages = [{"role": "user", "content": user_message}]
@@ -709,7 +686,6 @@ def run_tool_call(user_message: str, history: list) -> str:
             return " ".join(b.text for b in response.content if hasattr(b, "text"))
 
     return "Sorry, I'm having trouble processing that."
-
 
 @app.post("/webhook")
 def webhook():
@@ -826,7 +802,6 @@ app.listen(3000);
 
 > **Tip: Why interim chunks matter for tool calls** — Without the interim chunk, the caller hears dead silence while your LLM decides which tool to call, the external API responds, and the LLM summarises the result. With streaming, they hear "Let me check on that" within milliseconds — just like a human assistant would.
 
-
 #### Troubleshooting voice calls
 
 ##### Caller hears silence after speaking
@@ -864,7 +839,6 @@ Common causes:
 
 **Fix:** Check the `channel` field in the webhook payload. For `"voice"`, always return `{"text": "..."}`. For `"sms"`, a `200 OK` is sufficient.
 
-
 #### Call recording
 
 Call recording is an optional add-on that saves audio recordings of your voice calls. When enabled, completed calls include a `recordingUrl` field with a link to the audio file.
@@ -877,7 +851,6 @@ Call recording is an optional add-on that saves audio recordings of your voice c
 Enable recording from the **Billing** page in the dashboard. See [Usage & Billing](https://docs.agentphone.to/documentation/guides/usage#call-recording-add-on) for pricing.
 
 > **Note:** Recordings are captured automatically for all calls while the add-on is active. If you disable the add-on, existing recordings are preserved but `recordingUrl` will be null until you re-enable it.
-
 
 #### List All Calls
 
@@ -1028,7 +1001,6 @@ curl https://api.agentphone.to/v1/calls/CALL_ID/transcript \
   -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
-
 ### Messages & Conversations
 
 #### Get Messages for a Number
@@ -1105,7 +1077,6 @@ curl "https://api.agentphone.to/v1/conversations/CONVERSATION_ID?messageLimit=50
 |-----------|------|----------|---------|-------------|
 | `messageLimit` | `number` | No | 50 | Max messages to return (1-100) |
 
-
 ### Webhooks (Project-Level)
 
 The project-level webhook receives events for **all agents** unless overridden by an agent-specific webhook.
@@ -1180,7 +1151,6 @@ curl -X POST https://api.agentphone.to/v1/webhooks/test \
   -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
-
 ### Webhooks (Per-Agent)
 
 Route a specific agent's events to a different URL. When set, the agent's events go here instead of the project-level webhook.
@@ -1220,7 +1190,6 @@ curl -X POST https://api.agentphone.to/v1/agents/AGENT_ID/webhook/test \
   -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
 
-
 ### Usage & Limits
 
 ```bash
@@ -1255,7 +1224,6 @@ curl "https://api.agentphone.to/v1/usage/daily?days=7" \
 curl "https://api.agentphone.to/v1/usage/monthly?months=3" \
   -H "Authorization: Bearer $AGENTPHONE_TOKEN"
 ```
-
 
 ## Webhook Events
 
@@ -1293,7 +1261,6 @@ Voice webhooks have a **30-second default timeout** (configurable from 5–120 s
 ### Verifying signatures
 
 Each webhook request includes a signature header. Use the `secret` from your webhook setup to verify the payload hasn't been tampered with.
-
 
 ## Response Format
 
@@ -1336,7 +1303,6 @@ Each webhook request includes a signature header. Use the `secret` from your web
 | `429` | Rate limited |
 | `500` | Server error |
 
-
 ## Ideas: What You Can Build
 
 Now that your agent has a phone number, here are things you can do:
@@ -1352,7 +1318,6 @@ Now that your agent has a phone number, here are things you can do:
 - **Personal assistant** — Give your AI a phone number so it can handle calls and texts on your behalf — scheduling, reminders, and follow-ups.
 
 These are starting points. Having your own phone number means your agent can do anything a human can do over the phone, autonomously.
-
 
 ## Additional Resources
 

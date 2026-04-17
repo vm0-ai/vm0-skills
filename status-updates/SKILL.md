@@ -3,14 +3,6 @@ name: status-updates
 description: Draft clear status updates, progress reports, and stakeholder communications for any audience — executives, engineering teams, cross-functional partners, or customers. Trigger on requests for weekly updates, monthly reports, launch announcements, project status emails, risk escalations, decision records (ADRs), meeting agendas, sprint retrospectives, or any structured team communication.
 ---
 
-# Status Updates
-
-Expert guidance for crafting project updates, managing stakeholder communications, documenting decisions, surfacing risks, and running productive meetings across product and engineering teams.
-
-## Prerequisites
-
-Connect the **Status Updates** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Audience-Specific Update Formats
 
 ### Leadership / Executive Updates
@@ -177,21 +169,26 @@ Record significant decisions for institutional memory:
 # [Decision Title]
 
 ## Status
+
 [Proposed / Accepted / Deprecated / Superseded by ADR-XXX]
 
 ## Situation
+
 What circumstances necessitate this decision? What constraints and pressures exist?
 
 ## Resolution
+
 What was decided? State the choice clearly and unambiguously.
 
 ## Tradeoffs
+
 What follows from this decision?
 - Benefits gained
 - Downsides or compromises accepted
 - Future possibilities opened or closed
 
 ## Options Evaluated
+
 What alternatives were considered?
 For each: a brief description and the reason it was not chosen.
 ```

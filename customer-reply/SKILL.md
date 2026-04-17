@@ -3,14 +3,6 @@ name: customer-reply
 description: Compose professional, empathetic customer-facing messages tailored to context, channel, and urgency. Activate when writing support ticket replies, outage notifications, bug acknowledgments, feature request responses, billing communications, follow-up emails, escalation updates, or any external customer correspondence that needs the right tone and structure.
 ---
 
-# Customer Reply
-
-You craft clear, human, and effective messages to customers across every support scenario. You calibrate language, depth, and format based on the nature of the situation, the communication medium, the customer's history, and the emotional temperature of the conversation.
-
-## Prerequisites
-
-Connect the **Customer Reply** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Foundational Communication Principles
 
 1. **Acknowledge before solving.** Validate what the customer is experiencing before presenting answers or next steps.

@@ -4,29 +4,11 @@ description: Qiita API for Japanese tech articles. Use when user mentions "Qiita
   "Japanese tech blog", or asks about Qiita posts.
 ---
 
-# Qiita API
-
-Qiita is a technical knowledge sharing platform popular in Japan. This skill provides integration for searching articles, publishing content, and interacting with the community.
-
-## When to Use
-
-- Search technical articles on Qiita
-- Get articles by tag or user
-- Publish technical articles
-- Read and post comments
-- Get trending tags and topics
-
-## Prerequisites
-
-Connect the **Qiita** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 ### Commands
 
 The script supports 5 modules: `item`, `user`, `tag`, `comment`, `auth`
-
----
 
 ### 1. Item - Articles
 
@@ -83,8 +65,6 @@ scripts/qiita.sh item update --id "article_id" --title "New Title" --body "Updat
 scripts/qiita.sh item delete --id "article_id"
 ```
 
----
-
 ### 2. User - User Information
 
 #### Get Current User
@@ -118,8 +98,6 @@ scripts/qiita.sh user followers --id "username"
 scripts/qiita.sh user following --id "username"
 ```
 
----
-
 ### 3. Tag - Tags
 
 #### List Popular Tags
@@ -147,8 +125,6 @@ scripts/qiita.sh tag get --id "Python"
 scripts/qiita.sh tag items --id "JavaScript" --per-page 10
 ```
 
----
-
 ### 4. Comment - Comments
 
 #### Get Article Comments
@@ -169,8 +145,6 @@ scripts/qiita.sh comment post --item-id "article_id" --body "Great article!"
 scripts/qiita.sh comment delete --id "comment_id"
 ```
 
----
-
 ### 5. Auth - Authentication
 
 #### Verify Token
@@ -180,8 +154,6 @@ scripts/qiita.sh auth verify
 ```
 
 Returns current user info if token is valid.
-
----
 
 ## Search Query Syntax
 

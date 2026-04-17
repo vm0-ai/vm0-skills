@@ -4,30 +4,9 @@ description: HTML/CSS to Image API for rendering. Use when user mentions "HTML t
   image", "render HTML", "screenshot", or "convert to image".
 ---
 
-# HTMLCSStoImage API
+## Troubleshooting
 
-Use the HTMLCSStoImage API via direct `curl` calls to **generate images from HTML/CSS** or **capture screenshots of web pages**.
-
-> Official docs: `https://docs.htmlcsstoimage.com/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Generate images from HTML/CSS** for social cards, thumbnails, certificates
-- **Screenshot web pages** or specific elements on a page
-- **Create dynamic images** with custom fonts and styling
-- **Generate OG images** for social media sharing
-
----
-
-## Prerequisites
-
-Connect the **HTMLCSStoImage** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HCTI_API_KEY` or `zero doctor check-connector --url https://hcti.io/v1/image --method POST`
+If requests fail, run `zero doctor check-connector --env-name HCTI_API_KEY` or `zero doctor check-connector --url https://hcti.io/v1/image --method POST`
 
 ## How to Use
 
@@ -36,8 +15,6 @@ All examples below assume you have `HCTI_USER_ID` and `HCTI_API_KEY` set.
 The base URL for the API is:
 
 - `https://hcti.io/v1/image`
-
----
 
 ### 1. Simple HTML to Image
 
@@ -64,8 +41,6 @@ Response:
 
 The returned URL is permanent and served via Cloudflare CDN.
 
----
-
 ### 2. HTML with CSS Styling
 
 Generate a styled card image.
@@ -87,8 +62,6 @@ Then run:
 ```bash
 curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --data-urlencode "html@/tmp/hcti_html.txt" --data-urlencode "css@/tmp/hcti_css.txt"
 ```
-
----
 
 ### 3. Use Google Fonts
 
@@ -114,8 +87,6 @@ curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --da
 
 Multiple fonts: `google_fonts=Playfair Display|Roboto|Open Sans`
 
----
-
 ### 4. Screenshot a Web Page (URL to Image)
 
 Capture a screenshot of any public URL:
@@ -129,8 +100,6 @@ https://example.com
 ```bash
 curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --data-urlencode "url@/tmp/hcti_url.txt"
 ```
-
----
 
 ### 5. Screenshot with Delay (for JavaScript)
 
@@ -148,8 +117,6 @@ curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --da
 
 `ms_delay` waits specified milliseconds before taking the screenshot.
 
----
-
 ### 6. Capture Specific Element (Selector)
 
 Screenshot only a specific element on the page:
@@ -159,8 +126,6 @@ curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --da
 ```
 
 Use any CSS selector: `#id`, `.class`, `div > p`, etc.
-
----
 
 ### 7. High Resolution (Retina)
 
@@ -180,8 +145,6 @@ curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --da
 
 `device_scale` accepts values 1-3 (default: 1).
 
----
-
 ### 8. Custom Viewport Size
 
 Set specific viewport dimensions:
@@ -192,8 +155,6 @@ curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --da
 
 Perfect for generating OG images (1200x630).
 
----
-
 ### 9. Full Page Screenshot
 
 Capture the entire page height:
@@ -202,8 +163,6 @@ Capture the entire page height:
 curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --data-urlencode "url@/tmp/hcti_url.txt" -d "full_screen=true"
 ```
 
----
-
 ### 10. Block Cookie Banners
 
 Automatically hide consent/cookie popups:
@@ -211,8 +170,6 @@ Automatically hide consent/cookie popups:
 ```bash
 curl -s "https://hcti.io/v1/image" -X POST -u "$HCTI_USER_ID:$HCTI_API_KEY" --data-urlencode "url@/tmp/hcti_url.txt" -d "block_consent_banners=true"
 ```
-
----
 
 ### 11. Download Image Directly
 
@@ -235,8 +192,6 @@ This will output the image URL. Copy the URL and download with:
 ```bash
 curl -s "https://hcti.io/v1/image/<your-image-id>?dl=1" --output image.png
 ```
-
----
 
 ### 12. Resize on the Fly
 
@@ -261,8 +216,6 @@ Original: https://hcti.io/v1/image/<your-image-id>
 Thumbnail: https://hcti.io/v1/image/<your-image-id>?width=200&height=200
 ```
 
----
-
 ## Response Format
 
 **Success (200):**
@@ -280,8 +233,6 @@ Thumbnail: https://hcti.io/v1/image/<your-image-id>?width=200&height=200
   "message": "HTML is Required"
 }
 ```
-
----
 
 ## Guidelines
 

@@ -4,37 +4,13 @@ description: Qdrant API for vector search. Use when user mentions "Qdrant", "vec
   database", "semantic search", or embeddings storage.
 ---
 
-# Qdrant API
+## Troubleshooting
 
-Use the Qdrant REST API via direct `curl` calls to **store and search vector embeddings** for RAG, semantic search, and recommendations.
-
-> Official docs: `https://qdrant.tech/documentation/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Store vector embeddings** for semantic search
-- **Search for similar vectors** using cosine, dot product, or euclidean distance
-- **Build RAG applications** with retrieval from vector store
-- **Implement recommendations** based on similarity
-- **Filter search results** by metadata/payload
-
----
-
-## Prerequisites
-
-Connect the **Qdrant** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name QDRANT_TOKEN` or `zero doctor check-connector --url https://your-cluster.cloud.qdrant.io/collections --method GET`
+If requests fail, run `zero doctor check-connector --env-name QDRANT_TOKEN` or `zero doctor check-connector --url https://your-cluster.cloud.qdrant.io/collections --method GET`
 
 ## How to Use
 
 All examples below assume you have `QDRANT_BASE_URL` and `QDRANT_TOKEN` set.
-
----
 
 ### 1. Check Server Status
 
@@ -44,8 +20,6 @@ Verify connection to Qdrant:
 curl -s -X GET "$QDRANT_BASE_URL" --header "api-key: $QDRANT_TOKEN"
 ```
 
----
-
 ### 2. List Collections
 
 Get all collections:
@@ -53,8 +27,6 @@ Get all collections:
 ```bash
 curl -s -X GET "$QDRANT_BASE_URL/collections" --header "api-key: $QDRANT_TOKEN"
 ```
-
----
 
 ### 3. Create a Collection
 
@@ -88,8 +60,6 @@ curl -s -X PUT "$QDRANT_BASE_URL/collections/my_collection" --header "api-key: $
 - OpenAI `text-embedding-3-large`: 3072
 - Cohere: 1024
 
----
-
 ### 4. Get Collection Info
 
 Get details about a collection:
@@ -97,8 +67,6 @@ Get details about a collection:
 ```bash
 curl -s -X GET "$QDRANT_BASE_URL/collections/my_collection" --header "api-key: $QDRANT_TOKEN"
 ```
-
----
 
 ### 5. Upsert Points (Insert/Update Vectors)
 
@@ -128,8 +96,6 @@ Then run:
 ```bash
 curl -s -X PUT "$QDRANT_BASE_URL/collections/my_collection/points" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
-
----
 
 ### 6. Search Similar Vectors
 
@@ -162,8 +128,6 @@ curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/query" --head
 }
 ```
 
----
-
 ### 7. Search with Filters
 
 Filter results by payload fields:
@@ -194,8 +158,6 @@ curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/query" --head
 - `should` - At least one must match (OR)
 - `must_not` - None should match (NOT)
 
----
-
 ### 8. Get Points by ID
 
 Retrieve specific points:
@@ -215,8 +177,6 @@ Then run:
 ```bash
 curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
-
----
 
 ### 9. Delete Points
 
@@ -256,8 +216,6 @@ Then run:
 curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/delete" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
 
----
-
 ### 10. Delete Collection
 
 Remove a collection entirely:
@@ -265,8 +223,6 @@ Remove a collection entirely:
 ```bash
 curl -s -X DELETE "$QDRANT_BASE_URL/collections/my_collection" --header "api-key: $QDRANT_TOKEN"
 ```
-
----
 
 ### 11. Count Points
 
@@ -285,8 +241,6 @@ Then run:
 ```bash
 curl -s -X POST "$QDRANT_BASE_URL/collections/my_collection/points/count" --header "api-key: $QDRANT_TOKEN" --header "Content-Type: application/json" -d @/tmp/qdrant_request.json
 ```
-
----
 
 ## Filter Syntax
 
@@ -309,8 +263,6 @@ Common filter conditions:
 - `match.any` - Match any in list
 - `match.except` - Match none in list
 - `range` - Numeric range (gt, gte, lt, lte)
-
----
 
 ## Guidelines
 

@@ -4,33 +4,9 @@ description: Vercel API for deployments. Use when user mentions "Vercel", "verce
   "vercel.com", shares a Vercel link, "deploy", or asks about hosting.
 ---
 
-# Vercel API
+## Troubleshooting
 
-Manage projects, deployments, domains, environment variables, edge config, teams, and webhooks via the Vercel REST API.
-
-> Official docs: https://vercel.com/docs/rest-api
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- List and manage projects
-- Monitor, redeploy, promote, and cancel deployments
-- Manage domains and DNS records
-- Handle environment variables
-- Manage Edge Config stores
-- Configure teams and members
-- Manage webhooks and log drains
-
----
-
-## Prerequisites
-
-Connect the **Vercel** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name VERCEL_TOKEN` or `zero doctor check-connector --url https://api.vercel.com/v2/user --method GET`
+If requests fail, run `zero doctor check-connector --env-name VERCEL_TOKEN` or `zero doctor check-connector --url https://api.vercel.com/v2/user --method GET`
 
 ## User
 
@@ -47,8 +23,6 @@ curl -s "https://api.vercel.com/v2/user" \
 curl -s "https://api.vercel.com/v6/user/tokens" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
-
----
 
 ## Projects
 
@@ -110,8 +84,6 @@ curl -s -X POST "https://api.vercel.com/v1/projects/<project-id>/pause" \
 curl -s -X POST "https://api.vercel.com/v1/projects/<project-id>/unpause" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
-
----
 
 ## Deployments
 
@@ -193,8 +165,6 @@ curl -s "https://api.vercel.com/v2/deployments/<deployment-id>/aliases" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
 ## Domains
 
 ### List Domains
@@ -243,8 +213,6 @@ curl -s -X DELETE "https://api.vercel.com/v6/domains/<domain>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
 ## Project Domains
 
 ### List Project Domains
@@ -286,8 +254,6 @@ curl -s -X DELETE "https://api.vercel.com/v9/projects/<project-name>/domains/<do
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
 ## DNS Records
 
 ### List DNS Records
@@ -312,8 +278,6 @@ curl -s -X POST "https://api.vercel.com/v2/domains/<domain>/records" \
 curl -s -X DELETE "https://api.vercel.com/v2/domains/<domain>/records/<record-id>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
-
----
 
 ## Environment Variables
 
@@ -357,8 +321,6 @@ curl -s -X PATCH "https://api.vercel.com/v9/projects/<project-name>/env/<env-id>
 curl -s -X DELETE "https://api.vercel.com/v9/projects/<project-name>/env/<env-id>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
-
----
 
 ## Edge Config
 
@@ -416,8 +378,6 @@ curl -s "https://api.vercel.com/v1/edge-config/<edge-config-id>/item/<key>" \
 curl -s -X DELETE "https://api.vercel.com/v1/edge-config/<edge-config-id>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
-
----
 
 ## Teams
 
@@ -478,8 +438,6 @@ curl -s -X DELETE "https://api.vercel.com/v1/teams/<team-id>/members/<uid>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
 ## Webhooks
 
 ### List Webhooks
@@ -516,8 +474,6 @@ curl -s -X DELETE "https://api.vercel.com/v1/webhooks/<webhook-id>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
 ## Log Drains
 
 ### List Log Drains
@@ -544,8 +500,6 @@ curl -s -X POST "https://api.vercel.com/v1/log-drains" \
 curl -s -X DELETE "https://api.vercel.com/v1/log-drains/<id>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
-
----
 
 ## Aliases
 
@@ -579,8 +533,6 @@ curl -s -X DELETE "https://api.vercel.com/v2/aliases/<alias-id>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
 ## Certificates
 
 ### Get Certificate
@@ -606,8 +558,6 @@ curl -s -X DELETE "https://api.vercel.com/v8/certs/<cert-id>" \
   --header "Authorization: Bearer $VERCEL_TOKEN"
 ```
 
----
-
 ## Deployment States
 
 | State | Description |
@@ -618,8 +568,6 @@ curl -s -X DELETE "https://api.vercel.com/v8/certs/<cert-id>" \
 | `ERROR` | Build or deployment failed |
 | `CANCELED` | Deployment was canceled |
 
----
-
 ## Guidelines
 
 1. **Pagination**: Use `?limit=N&until=<timestamp>` for paginated results. The `until` value comes from the last item's timestamp.
@@ -629,8 +577,6 @@ curl -s -X DELETE "https://api.vercel.com/v8/certs/<cert-id>" \
 5. **Team scope**: For team resources, add `?teamId=<team-id>` query param or use team tokens.
 6. **Environment targets**: Env vars can target `production`, `preview`, `development`, or any combination.
 7. **Edge Config**: Use Edge Config for feature flags and runtime configuration that needs to be read at the edge with zero latency.
-
----
 
 ## How to Look Up More API Details
 

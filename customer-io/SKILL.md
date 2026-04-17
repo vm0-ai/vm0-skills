@@ -3,24 +3,9 @@ name: customer-io
 description: Customer.io behavioral email and messaging platform. Use when user mentions "Customer.io", "behavioral emails", "lifecycle emails", "triggered messages", or asks about event-based email automation.
 ---
 
-# Customer.io API
+## Troubleshooting
 
-Send behavioral emails, SMS, and push notifications triggered by user events. Two separate APIs — the **Pipelines API** for identifying people and tracking events, and the **App API** for sending transactional messages.
-
-> Official docs: `https://docs.customer.io/integrations/api/customerio-apis/`
-
-## When to Use
-
-- Sync users from Clerk or another auth provider as Customer.io people
-- Track behavioral events (signed up, upgraded, churned) to trigger automated campaigns
-- Send transactional emails (password reset, receipt, notification)
-- Query or manage people profiles and segments
-
-## Prerequisites
-
-Connect the **Customer.io** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CUSTOMERIO_TRACK_TOKEN` or `zero doctor check-connector --url https://cdp.customer.io/v1/identify --method POST`
+If requests fail, run `zero doctor check-connector --env-name CUSTOMERIO_TRACK_TOKEN` or `zero doctor check-connector --url https://cdp.customer.io/v1/identify --method POST`
 
 ## Core APIs
 
@@ -49,8 +34,6 @@ curl -s -X POST "https://cdp.customer.io/v1/identify" --header "Authorization: B
 
 Docs: https://docs.customer.io/integrations/data-in/connections/http-api/
 
----
-
 ### Track an Event (Pipelines API)
 
 Send a behavioral event to trigger automated campaigns or journeys.
@@ -72,8 +55,6 @@ Write to `/tmp/cio_request.json`:
 ```bash
 curl -s -X POST "https://cdp.customer.io/v1/track" --header "Authorization: Basic $(printf "%s:%s" "$CUSTOMERIO_SITE_ID" "$CUSTOMERIO_TRACK_TOKEN" | base64 -w 0)" --header "Content-Type: application/json" -d @/tmp/cio_request.json
 ```
-
----
 
 ### Send Transactional Email (App API)
 
@@ -101,8 +82,6 @@ curl -s -X POST "https://api.customer.io/v1/send/email" --header "Authorization:
 
 Docs: https://docs.customer.io/journeys/transactional-api-examples/
 
----
-
 ### Delete a Person (App API)
 
 Delete a person by their Customer.io ID. Replace `<person-id>` with the actual ID:
@@ -110,8 +89,6 @@ Delete a person by their Customer.io ID. Replace `<person-id>` with the actual I
 ```bash
 curl -s -X DELETE "https://api.customer.io/v1/customers/<person-id>" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN"
 ```
-
----
 
 ### Search People (App API)
 
@@ -137,15 +114,11 @@ Write to `/tmp/cio_request.json`:
 curl -s -X POST "https://api.customer.io/v1/customers" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" --header "Content-Type: application/json" -d @/tmp/cio_request.json | jq '{results: [.results[] | {id, email: .attributes.email}]}'
 ```
 
----
-
 ### List Segments (App API)
 
 ```bash
 curl -s "https://api.customer.io/v1/segments" --header "Authorization: Bearer $CUSTOMERIO_APP_TOKEN" | jq '[.segments[] | {id, name, type}]'
 ```
-
----
 
 ## Guidelines
 

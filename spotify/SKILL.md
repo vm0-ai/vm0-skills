@@ -3,32 +3,9 @@ name: spotify
 description: Spotify Web API for music streaming. Use when user mentions "Spotify", "play music", "Spotify playlist", "top tracks", "now playing", "Spotify artist", or asks about music playback or library.
 ---
 
-# Spotify Web API
+## Troubleshooting
 
-Access Spotify's music catalog, manage playlists, control playback, and retrieve personalized listening data via the Spotify Web API.
-
-> Official docs: `https://developer.spotify.com/documentation/web-api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Search for tracks, albums, artists, or playlists
-- Get current user profile and listening stats
-- Retrieve the user's top tracks and artists
-- List and manage playlists
-- Control music playback (requires Spotify Premium)
-- Get currently playing track or recent listening history
-
----
-
-## Prerequisites
-
-Connect the **Spotify** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SPOTIFY_TOKEN` or `zero doctor check-connector --url https://api.spotify.com/v1/me --method GET`
+If requests fail, run `zero doctor check-connector --env-name SPOTIFY_TOKEN` or `zero doctor check-connector --url https://api.spotify.com/v1/me --method GET`
 
 ## User Profile
 
@@ -37,8 +14,6 @@ Connect the **Spotify** connector at [app.vm0.ai/connectors](https://app.vm0.ai/
 ```bash
 curl -s "https://api.spotify.com/v1/me" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '{id, display_name, email, product, followers: .followers.total}'
 ```
-
----
 
 ## Search
 
@@ -58,8 +33,6 @@ To search for playlists only:
 ```bash
 curl -s -G "https://api.spotify.com/v1/search" --header "Authorization: Bearer $SPOTIFY_TOKEN" --data-urlencode "q@/tmp/spotify_query.txt" --data-urlencode "type=playlist" -d "limit=5" | jq '[.playlists.items[]? | {id, name, owner: .owner.display_name, tracks: .tracks.total, uri}]'
 ```
-
----
 
 ## Personalized Data
 
@@ -88,8 +61,6 @@ Requires scope: `user-read-recently-played`.
 ```bash
 curl -s "https://api.spotify.com/v1/me/player/recently-played?limit=20" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.items[] | {played_at, track: .track.name, artists: [.track.artists[].name], uri: .track.uri}]'
 ```
-
----
 
 ## Playlists
 
@@ -153,8 +124,6 @@ Replace `<playlist-id>` with the target playlist ID:
 ```bash
 curl -s -X POST "https://api.spotify.com/v1/playlists/<playlist-id>/tracks" --header "Authorization: Bearer $SPOTIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/spotify_add_tracks.json | jq '{snapshot_id}'
 ```
-
----
 
 ## Playback Control
 
@@ -233,8 +202,6 @@ Requires scope: `user-modify-playback-state`. Replace `<volume>` with a value be
 curl -s -X PUT "https://api.spotify.com/v1/me/player/volume?volume_percent=<volume>" --header "Authorization: Bearer $SPOTIFY_TOKEN"
 ```
 
----
-
 ## Albums & Artists
 
 ### Get Album
@@ -260,8 +227,6 @@ Replace `<artist-id>` with the Spotify artist ID:
 ```bash
 curl -s "https://api.spotify.com/v1/artists/<artist-id>/top-tracks" --header "Authorization: Bearer $SPOTIFY_TOKEN" | jq '[.tracks[] | {name, album: .album.name, popularity, uri}]'
 ```
-
----
 
 ## Guidelines
 

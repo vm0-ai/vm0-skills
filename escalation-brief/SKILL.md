@@ -3,14 +3,6 @@ name: escalation-brief
 description: Prepare structured escalation packages for engineering, product, security, or leadership with reproduction steps, business impact, and full context. Activate when a support issue needs to go beyond the support team, when writing an escalation document, when evaluating whether a problem warrants escalation, or when tracking follow-through after handing off an issue.
 ---
 
-# Escalation Brief
-
-You are skilled at judging when a support issue must be elevated and at assembling escalation packages that give receiving teams everything they need to act without delay. You maintain ownership of the customer relationship even after the technical problem moves to another team.
-
-## Prerequisites
-
-Connect the **Escalation Brief** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Deciding: Escalate or Resolve In-House?
 
 ### Keep It in Support When:

@@ -4,30 +4,9 @@ description: Bright Data proxy and web scraping API. Use when user mentions "Bri
   Data", "proxy", "web scraping at scale", or data collection.
 ---
 
-# Bright Data Web Scraper API
+## Troubleshooting
 
-Use the Bright Data API via direct `curl` calls for **social media scraping**, **web data extraction**, and **account management**.
-
-> Official docs: `https://docs.brightdata.com/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Scrape social media** - Twitter/X, Reddit, YouTube, Instagram, TikTok, LinkedIn
-- **Extract web data** - Posts, profiles, comments, engagement metrics
-- **Monitor usage** - Track bandwidth and request usage
-- **Manage account** - Check status and zones
-
----
-
-## Prerequisites
-
-Connect the **Bright Data** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRIGHTDATA_TOKEN` or `zero doctor check-connector --url https://api.brightdata.com/datasets/v3/trigger --method POST`
+If requests fail, run `zero doctor check-connector --env-name BRIGHTDATA_TOKEN` or `zero doctor check-connector --url https://api.brightdata.com/datasets/v3/trigger --method POST`
 
 ## Social Media Scraping
 
@@ -41,8 +20,6 @@ Bright Data supports scraping these social media platforms:
 | Instagram | ✅ | ✅ | ✅ | ✅ |
 | TikTok | ✅ | ✅ | ✅ | - |
 | LinkedIn | ✅ | ✅ | - | - |
-
----
 
 ## How to Use
 
@@ -75,8 +52,6 @@ curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=<data
 }
 ```
 
----
-
 ### 2. Trigger Scraping (Synchronous)
 
 Get results immediately in the response (for small requests).
@@ -98,8 +73,6 @@ curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=<datas
   -d @/tmp/brightdata_request.json
 ```
 
----
-
 ### 3. Monitor Progress
 
 Check the status of a scraping job (replace `<snapshot-id>` with your actual snapshot ID):
@@ -120,8 +93,6 @@ curl -s "https://api.brightdata.com/datasets/v3/progress/<snapshot-id>" \
 
 Status values: `running`, `ready`, `failed`
 
----
-
 ### 4. Download Results
 
 Once status is `ready`, download the collected data (replace `<snapshot-id>` with your actual snapshot ID):
@@ -130,8 +101,6 @@ Once status is `ready`, download the collected data (replace `<snapshot-id>` wit
 curl -s "https://api.brightdata.com/datasets/v3/snapshot/<snapshot-id>?format=json" \
   -H "Authorization: Bearer $BRIGHTDATA_TOKEN"
 ```
-
----
 
 ### 5. List Snapshots
 
@@ -142,8 +111,6 @@ curl -s "https://api.brightdata.com/datasets/v3/snapshots" \
   -H "Authorization: Bearer $BRIGHTDATA_TOKEN" | jq '.[] | {snapshot_id, dataset_id, status}'
 ```
 
----
-
 ### 6. Cancel Snapshot
 
 Cancel a running job (replace `<snapshot-id>` with your actual snapshot ID):
@@ -152,8 +119,6 @@ Cancel a running job (replace `<snapshot-id>` with your actual snapshot ID):
 curl -s -X POST "https://api.brightdata.com/datasets/v3/cancel?snapshot_id=<snapshot-id>" \
   -H "Authorization: Bearer $BRIGHTDATA_TOKEN"
 ```
-
----
 
 ## Platform-Specific Examples
 
@@ -199,8 +164,6 @@ curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=<datas
 
 **Returns:** `post_id`, `text`, `replies`, `likes`, `retweets`, `views`, `hashtags`, `media`
 
----
-
 ### Reddit - Scrape Subreddit Posts
 
 Write to `/tmp/brightdata_request.json`:
@@ -244,8 +207,6 @@ curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=<datas
 ```
 
 **Returns:** `comment_id`, `user_posted`, `comment_text`, `upvotes`, `replies`
-
----
 
 ### YouTube - Scrape Video Info
 
@@ -308,8 +269,6 @@ curl -s -X POST "https://api.brightdata.com/datasets/v3/scrape?dataset_id=<datas
 
 **Returns:** `comment_text`, `likes`, `replies`, `username`, `date`
 
----
-
 ### Instagram - Scrape Profile
 
 Write to `/tmp/brightdata_request.json`:
@@ -355,8 +314,6 @@ curl -s -X POST "https://api.brightdata.com/datasets/v3/trigger?dataset_id=<data
   -d @/tmp/brightdata_request.json
 ```
 
----
-
 ## Account Management
 
 ### Check Account Status
@@ -390,8 +347,6 @@ curl -s "https://api.brightdata.com/customer/bw" \
   -H "Authorization: Bearer $BRIGHTDATA_TOKEN"
 ```
 
----
-
 ## Getting Dataset IDs
 
 To use the scraping features, you need a `dataset_id`:
@@ -402,8 +357,6 @@ To use the scraping features, you need a `dataset_id`:
 4. Copy the `dataset_id` from the dataset settings
 
 Dataset IDs can also be found in the bandwidth usage API response under the `data` field keys (e.g., `v__ds_api_gd_xxxxx` where `gd_xxxxx` is your dataset ID).
-
----
 
 ## Common Parameters
 
@@ -417,15 +370,11 @@ Dataset IDs can also be found in the bandwidth usage API response under the `dat
 | `sort_by` | Sort order (Reddit) | `new`, `top`, `hot` |
 | `format` | Response format | `json`, `csv` |
 
----
-
 ## Rate Limits
 
 - Batch mode: up to 100 concurrent requests
 - Maximum input size: 1GB per batch
 - Exceeding limits returns `429` error
-
----
 
 ## Guidelines
 

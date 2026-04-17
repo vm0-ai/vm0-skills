@@ -4,33 +4,9 @@ description: Jira API for issue tracking. Use when user mentions "Jira", "create
   "Jira issue", "sprint", or asks about Atlassian project management.
 ---
 
-# Jira API
+## Troubleshooting
 
-Use the Jira Cloud REST API via direct `curl` calls to manage **issues, projects, and workflows**.
-
-> Official docs: `https://developer.atlassian.com/cloud/jira/platform/rest/v3/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Create issues** in Jira projects
-- **Search issues** using JQL (Jira Query Language)
-- **Update issues** (status, assignee, priority, etc.)
-- **Get issue details** and comments
-- **List projects** and their metadata
-- **Transition issues** through workflow states
-- **Add comments** to issues
-
----
-
-## Prerequisites
-
-Connect the **Jira** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JIRA_API_TOKEN` or `zero doctor check-connector --url https://your-domain.atlassian.net/rest/api/3/myself --method GET`
+If requests fail, run `zero doctor check-connector --env-name JIRA_API_TOKEN` or `zero doctor check-connector --url https://your-domain.atlassian.net/rest/api/3/myself --method GET`
 
 ## How to Use
 
@@ -39,8 +15,6 @@ All examples below assume `JIRA_DOMAIN`, `JIRA_EMAIL`, and `JIRA_API_TOKEN` are 
 Base URL: `https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3`
 
 > Note: `${JIRA_DOMAIN%.atlassian.net}` strips the suffix if present, so both `mycompany` and `mycompany.atlassian.net` work.
-
----
 
 ### 1. Get Current User
 
@@ -52,8 +26,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 curl -s -X GET "${JIRA_BASE}/myself" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
----
-
 ### 2. List Projects
 
 Get all projects you have access to:
@@ -63,8 +35,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 
 curl -s -X GET "${JIRA_BASE}/project" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
-
----
 
 ### 3. Get Project Details
 
@@ -77,8 +47,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 curl -s -X GET "${JIRA_BASE}/project/${PROJECT_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
 
----
-
 ### 4. Get Issue Types for Project
 
 List available issue types (Task, Bug, Story, etc.):
@@ -89,8 +57,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 
 curl -s -X GET "${JIRA_BASE}/project/${PROJECT_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
-
----
 
 ### 5. Search Issues with JQL
 
@@ -123,8 +89,6 @@ Common JQL examples:
 - `labels = bug` - By label
 - `priority = High` - By priority
 
----
-
 ### 6. Get Issue Details
 
 Get full details of an issue:
@@ -135,8 +99,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 
 curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
-
----
 
 ### 7. Create Issue
 
@@ -173,8 +135,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 
 curl -s -X POST "${JIRA_BASE}/issue" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
-
----
 
 ### 8. Create Issue with Priority and Labels
 
@@ -214,8 +174,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 curl -s -X POST "${JIRA_BASE}/issue" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
----
-
 ### 9. Update Issue
 
 Update an existing issue:
@@ -246,8 +204,6 @@ curl -s -X PUT "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TOKEN
 
 Returns 204 No Content on success.
 
----
-
 ### 10. Get Available Transitions
 
 Get possible status transitions for an issue:
@@ -258,8 +214,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 
 curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}/transitions" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
-
----
 
 ### 11. Transition Issue (Change Status)
 
@@ -289,8 +243,6 @@ curl -s -X POST "${JIRA_BASE}/issue/${ISSUE_KEY}/transitions" -u "$JIRA_EMAIL:$J
 ```
 
 Returns 204 No Content on success.
-
----
 
 ### 12. Add Comment
 
@@ -327,8 +279,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 curl -s -X POST "${JIRA_BASE}/issue/${ISSUE_KEY}/comment" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
----
-
 ### 13. Get Issue Comments
 
 List all comments on an issue:
@@ -339,8 +289,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 
 curl -s -X GET "${JIRA_BASE}/issue/${ISSUE_KEY}/comment" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json"
 ```
-
----
 
 ### 14. Assign Issue
 
@@ -367,8 +315,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 curl -s -X PUT "${JIRA_BASE}/issue/${ISSUE_KEY}/assignee" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --header "Content-Type: application/json" -d @/tmp/jira_request.json
 ```
 
----
-
 ### 15. Search Users
 
 Find users by email or name:
@@ -385,8 +331,6 @@ JIRA_BASE="https://${JIRA_DOMAIN%.atlassian.net}.atlassian.net/rest/api/3"
 curl -s -G "${JIRA_BASE}/user/search" -u "$JIRA_EMAIL:$JIRA_API_TOKEN" --header "Accept: application/json" --data-urlencode "query@/tmp/jira_search.txt"
 ```
 
----
-
 ### 16. Delete Issue
 
 Delete an issue (use with caution):
@@ -399,8 +343,6 @@ curl -s -X DELETE "${JIRA_BASE}/issue/${ISSUE_KEY}" -u "$JIRA_EMAIL:$JIRA_API_TO
 ```
 
 Returns 204 No Content on success.
-
----
 
 ## Atlassian Document Format (ADF)
 
@@ -434,8 +376,6 @@ Jira API v3 uses ADF for rich text fields like `description` and `comment.body`.
   ]
 }
 ```
-
----
 
 ## Guidelines
 

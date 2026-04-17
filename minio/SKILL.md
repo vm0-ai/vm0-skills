@@ -4,30 +4,6 @@ description: MinIO API for S3-compatible storage. Use when user mentions "MinIO"
   "S3 storage", "object storage", or self-hosted S3.
 ---
 
-# MinIO Object Storage
-
-Use the MinIO API via `mc` (MinIO Client) or `curl` to manage **S3-compatible object storage** for file uploads, downloads, and bucket operations.
-
-> Official docs: `https://min.io/docs/minio/linux/reference/minio-mc.html`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Upload/download files** to S3-compatible storage
-- **Manage buckets** (create, list, delete)
-- **Generate pre-signed URLs** for temporary file access
-- **List and search objects** in storage
-- **Mirror/sync directories** between local and remote
-
----
-
-## Prerequisites
-
-Connect the **MinIO Object Storage** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 ### 1. List Buckets
@@ -139,8 +115,6 @@ mc find myminio/my-bucket --larger 10MB
 mc find myminio/my-bucket --newer-than 7d
 ```
 
----
-
 ## Using curl with Pre-signed URLs
 
 For environments without `mc`, use pre-signed URLs with curl:
@@ -164,8 +138,6 @@ DOWNLOAD_URL=$(mc share download --json myminio/my-bucket/file.txt | jq -r '.sha
 # Download with curl
 curl -o /local/path/file.txt "$DOWNLOAD_URL"
 ```
-
----
 
 ## Using curl with AWS Signature V2
 
@@ -197,8 +169,6 @@ chmod +x minio-upload.sh
 ./minio-upload.sh my-bucket myfile.txt
 ```
 
----
-
 ## Using AWS CLI
 
 MinIO is fully compatible with AWS CLI:
@@ -221,8 +191,6 @@ aws --endpoint-url "https://${MINIO_ENDPOINT}" s3 cp s3://my-bucket/file.txt ./
 # List objects
 aws --endpoint-url "https://${MINIO_ENDPOINT}" s3 ls s3://my-bucket/
 ```
-
----
 
 ## Bucket Policies
 
@@ -258,8 +226,6 @@ EOF
 
 mc anonymous set-json /tmp/policy.json myminio/my-bucket
 ```
-
----
 
 ## Guidelines
 

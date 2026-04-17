@@ -3,14 +3,6 @@ name: analysis-qa
 description: Quality-check a data analysis before sharing — verify joins, aggregations, denominators, time ranges, and metric definitions. Detect pitfalls like survivorship bias, average-of-averages, join explosion, timezone mismatches, incomplete periods, and selection bias. Includes documentation templates for reproducible analyses.
 ---
 
-# Analysis QA
-
-Pre-delivery review process for catching errors, validating results, and ensuring analyses are reproducible and trustworthy.
-
-## Prerequisites
-
-Connect the **Analysis QA** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Review Checklist
 
 Work through every section below before presenting findings to stakeholders.
@@ -167,6 +159,7 @@ JOIN line_items li ON o.id = li.order_id;  -- 3,500 (unexpected inflation)
 Every substantial analysis should ship with this documentation:
 
 ```markdown
+
 ## Analysis: [Title]
 
 ### Business Question

@@ -4,35 +4,9 @@ description: Discord Webhook API for sending messages. Use when user says "send 
   message", "Discord webhook", or "post to Discord".
 ---
 
-# Discord Webhook
-
-Use Discord Webhooks via direct `curl` calls to **send messages to Discord channels** without setting up a bot.
-
-> Official docs: `https://discord.com/developers/docs/resources/webhook`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Send notifications** to Discord channels
-- **Post alerts** from CI/CD pipelines
-- **Share updates** with rich embeds
-- **Upload files** to channels
-- **Simple integrations** without bot complexity
-
----
-
-## Prerequisites
-
-Connect the **Discord Webhook** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 All examples below assume you have `DISCORD_WEBHOOK_URL` set.
-
----
 
 ### 1. Send Simple Message
 
@@ -49,8 +23,6 @@ Then run:
 ```bash
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
-
----
 
 ### 2. Send with Custom Username and Avatar
 
@@ -69,8 +41,6 @@ Then run:
 ```bash
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
-
----
 
 ### 3. Send Rich Embed
 
@@ -114,8 +84,6 @@ curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/
 - Yellow: `16776960`
 - Orange: `16744192`
 
----
-
 ### 4. Send Error Alert
 
 Write to `/tmp/discord_webhook_request.json`:
@@ -151,8 +119,6 @@ Then run:
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
----
-
 ### 5. Send File Attachment
 
 Write to `/tmp/discord_webhook_payload.json`:
@@ -169,8 +135,6 @@ Then run:
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -F "file1=@screenshot.png" -F 'payload_json=@/tmp/discord_webhook_payload.json'
 ```
 
----
-
 ### 6. Send Multiple Files
 
 Write to `/tmp/discord_webhook_payload.json`:
@@ -186,8 +150,6 @@ Then run:
 ```bash
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -F "file1=@error.log" -F "file2=@debug.log" -F 'payload_json=@/tmp/discord_webhook_payload.json'
 ```
-
----
 
 ### 7. Send Multiple Embeds
 
@@ -218,8 +180,6 @@ Then run:
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
----
-
 ### 8. Send with Mention
 
 Write to `/tmp/discord_webhook_request.json`:
@@ -241,8 +201,6 @@ curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/
 
 Replace `<your-user-id>` with the actual Discord user ID.
 
----
-
 ### 9. Send Silent Message (No Notification)
 
 Write to `/tmp/discord_webhook_request.json`:
@@ -259,8 +217,6 @@ Then run:
 ```bash
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
-
----
 
 ### 10. CI/CD Pipeline Notification
 
@@ -306,8 +262,6 @@ Then run:
 curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/tmp/discord_webhook_request.json
 ```
 
----
-
 ## Embed Structure
 
 ```json
@@ -326,8 +280,6 @@ curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d @/
   "timestamp": "2025-01-01T12:00:00.000Z"
 }
 ```
-
----
 
 ## Guidelines
 

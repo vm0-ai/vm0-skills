@@ -4,36 +4,9 @@ description: DocuSign API for electronic signatures. Use when user mentions "Doc
   "e-signature", "sign document", or "send for signature".
 ---
 
-# DocuSign eSignature API
+## Troubleshooting
 
-Create, send, and manage electronic signature envelopes via the DocuSign eSignature REST API v2.1.
-
-> Official docs: `https://developers.docusign.com/docs/esign-rest-api/reference/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Send documents for electronic signature
-- Create and manage envelopes
-- List and use templates
-- Check envelope and recipient status
-- Download signed documents
-
----
-
-## Prerequisites
-
-
-> **Important:** DocuSign API requires a `base_uri` and `account_id` obtained from the userinfo endpoint. Always call "Get User Info" first to determine the correct base URI and account ID before making API calls.
-
-> **Placeholders:** Values in `<angle-brackets>` like `<envelope-id>` are placeholders. Replace them with actual values when executing.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DOCUSIGN_TOKEN` or `zero doctor check-connector --url https://account.docusign.com/oauth/userinfo --method GET`
+If requests fail, run `zero doctor check-connector --env-name DOCUSIGN_TOKEN` or `zero doctor check-connector --url https://account.docusign.com/oauth/userinfo --method GET`
 
 ## User Info
 
@@ -46,8 +19,6 @@ curl -s "https://account.docusign.com/oauth/userinfo" --header "Authorization: B
 ```
 
 Use the `base_uri` and `account_id` from the default account (where `is_default` is `true`) for all subsequent API calls. The API base path is `{base_uri}/restapi/v2.1/accounts/{account_id}`.
-
----
 
 ## Envelopes
 
@@ -128,8 +99,6 @@ Write to `/tmp/docusign_void.json`:
 curl -s -X PUT "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Content-Type: application/json" -d @/tmp/docusign_void.json | jq '{envelopeId, status}'
 ```
 
----
-
 ## Recipients
 
 ### List Envelope Recipients
@@ -137,8 +106,6 @@ curl -s -X PUT "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelop
 ```bash
 curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/recipients" --header "Authorization: Bearer $DOCUSIGN_TOKEN" | jq '.signers[] | {recipientId, name, email, status, signedDateTime}'
 ```
-
----
 
 ## Documents
 
@@ -163,8 +130,6 @@ Download all documents in the envelope as a single PDF:
 ```bash
 curl -s "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes/<envelope-id>/documents/combined" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Accept: application/pdf" --output /tmp/combined_documents.pdf
 ```
-
----
 
 ## Templates
 
@@ -201,8 +166,6 @@ Write to `/tmp/docusign_template_envelope.json`:
 ```bash
 curl -s -X POST "<base-uri>/restapi/v2.1/accounts/<account-id>/envelopes" --header "Authorization: Bearer $DOCUSIGN_TOKEN" --header "Content-Type: application/json" -d @/tmp/docusign_template_envelope.json | jq '{envelopeId, status, statusDateTime, uri}'
 ```
-
----
 
 ## Guidelines
 

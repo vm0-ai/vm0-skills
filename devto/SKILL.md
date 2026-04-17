@@ -4,30 +4,9 @@ description: Dev.to API for articles and posts. Use when user mentions "Dev.to",
   article", "dev community", or asks about blog posts.
 ---
 
-# Dev.to Publisher
+## Troubleshooting
 
-Use the Dev.to API via direct `curl` calls to **publish and manage articles**.
-
-> Official docs: `https://developers.forem.com/api/v1`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Publish articles** to Dev.to
-- **Update existing articles**
-- **Manage drafts**
-- **Fetch your published articles**
-
----
-
-## Prerequisites
-
-Connect the **Dev.to Publisher** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEVTO_TOKEN` or `zero doctor check-connector --url https://dev.to/api/articles --method GET`
+If requests fail, run `zero doctor check-connector --env-name DEVTO_TOKEN` or `zero doctor check-connector --url https://dev.to/api/articles --method GET`
 
 ## How to Use
 
@@ -136,8 +115,6 @@ Then run:
 curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_TOKEN" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
 ```
 
----
-
 ## Managing Articles
 
 ### 5. Get Your Articles
@@ -207,8 +184,6 @@ Then run:
 curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: $DEVTO_TOKEN" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{id, url, published}'
 ```
 
----
-
 ## Article Parameters
 
 | Parameter | Type | Description |
@@ -220,8 +195,6 @@ curl -s -X PUT "https://dev.to/api/articles/<your-article-id>" -H "api-key: $DEV
 | `main_image` | string | Cover image URL |
 | `canonical_url` | string | Original article URL (for cross-posts) |
 | `series` | string | Series name to group articles |
-
----
 
 ## Examples
 
@@ -289,8 +262,6 @@ Then run:
 ```bash
 curl -s -X POST "https://dev.to/api/articles" -H "api-key: $DEVTO_TOKEN" -H "Content-Type: application/json" -d @/tmp/devto_request.json | jq '{url}'
 ```
-
----
 
 ## Guidelines
 

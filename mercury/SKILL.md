@@ -4,32 +4,9 @@ description: Mercury API for banking. Use when user mentions "Mercury", "busines
   banking", "bank account", or fintech operations.
 ---
 
-# Mercury Banking API
+## Troubleshooting
 
-Manage business bank accounts, transactions, transfers, and financial operations via Mercury's REST API.
-
-> Official docs: https://docs.mercury.com/reference/getaccount
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- View account balances and details
-- List and search transactions
-- Create internal transfers between accounts
-- Manage recipients for external transfers
-- Download account statements
-- Access treasury account information
-
----
-
-## Prerequisites
-
-Connect the **Mercury** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MERCURY_TOKEN` or `zero doctor check-connector --url https://api.mercury.com/api/v1/accounts --method GET`
+If requests fail, run `zero doctor check-connector --env-name MERCURY_TOKEN` or `zero doctor check-connector --url https://api.mercury.com/api/v1/accounts --method GET`
 
 ## Accounts
 
@@ -54,8 +31,6 @@ Replace `<your-account-id>` with the actual account ID:
 ```bash
 curl -s "https://api.mercury.com/api/v1/account/<your-account-id>/cards" --header "Authorization: Bearer $MERCURY_TOKEN"
 ```
-
----
 
 ## Transactions
 
@@ -82,8 +57,6 @@ Replace `<your-account-id>` and `<your-transaction-id>` with the actual IDs:
 ```bash
 curl -s "https://api.mercury.com/api/v1/account/<your-account-id>/transaction/<your-transaction-id>" --header "Authorization: Bearer $MERCURY_TOKEN"
 ```
-
----
 
 ## Transfers
 
@@ -136,8 +109,6 @@ Replace `<your-request-id>` with the actual request ID:
 curl -s "https://api.mercury.com/api/v1/request-send-money/<your-request-id>" --header "Authorization: Bearer $MERCURY_TOKEN"
 ```
 
----
-
 ## Recipients
 
 ### List All Recipients
@@ -178,8 +149,6 @@ Then run:
 curl -s -X POST "https://api.mercury.com/api/v1/recipients" --header "Authorization: Bearer $MERCURY_TOKEN" --header "Content-Type: application/json" -d @/tmp/mercury_request.json
 ```
 
----
-
 ## Statements
 
 ### List Account Statements
@@ -198,8 +167,6 @@ Replace `<your-account-id>` and `<your-statement-id>` with the actual IDs:
 curl -s "https://api.mercury.com/api/v1/account/<your-account-id>/statement/<your-statement-id>/pdf" --header "Authorization: Bearer $MERCURY_TOKEN" > statement.pdf
 ```
 
----
-
 ## Organization
 
 ### Get Organization Info
@@ -207,8 +174,6 @@ curl -s "https://api.mercury.com/api/v1/account/<your-account-id>/statement/<you
 ```bash
 curl -s "https://api.mercury.com/api/v1/organization" --header "Authorization: Bearer $MERCURY_TOKEN"
 ```
-
----
 
 ## Treasury
 
@@ -234,8 +199,6 @@ Replace `<your-treasury-id>` with the actual treasury ID:
 curl -s "https://api.mercury.com/api/v1/treasury/<your-treasury-id>/transactions" --header "Authorization: Bearer $MERCURY_TOKEN"
 ```
 
----
-
 ## Users
 
 ### List Users
@@ -244,8 +207,6 @@ curl -s "https://api.mercury.com/api/v1/treasury/<your-treasury-id>/transactions
 curl -s "https://api.mercury.com/api/v1/users" --header "Authorization: Bearer $MERCURY_TOKEN"
 ```
 
----
-
 ## Credit
 
 ### List Credit Accounts
@@ -253,8 +214,6 @@ curl -s "https://api.mercury.com/api/v1/users" --header "Authorization: Bearer $
 ```bash
 curl -s "https://api.mercury.com/api/v1/credit" --header "Authorization: Bearer $MERCURY_TOKEN"
 ```
-
----
 
 ## Accounts Receivable
 
@@ -313,8 +272,6 @@ Replace `<your-invoice-id>` with the actual invoice ID:
 curl -s "https://api.mercury.com/api/v1/accounts-receivable/invoice/<your-invoice-id>/pdf" --header "Authorization: Bearer $MERCURY_TOKEN" > invoice.pdf
 ```
 
----
-
 ## Guidelines
 
 1. **Rate Limits**: Mercury may enforce rate limits; implement appropriate backoff strategies for high-volume operations
@@ -322,8 +279,6 @@ curl -s "https://api.mercury.com/api/v1/accounts-receivable/invoice/<your-invoic
 3. **Security**: Never expose API tokens in logs or client-side code
 4. **Amounts**: All monetary amounts are typically in USD and represented as decimal numbers
 5. **Pagination**: For large result sets, use `limit` and `offset` parameters where supported
-
----
 
 ## API Reference
 

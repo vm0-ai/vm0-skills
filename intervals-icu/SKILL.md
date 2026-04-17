@@ -4,39 +4,15 @@ description: Intervals.icu API for fitness data. Use when user mentions "Interva
   "cycling data", "fitness tracking", or workout analytics.
 ---
 
-# Intervals.icu API
+## Troubleshooting
 
-Use the Intervals.icu API via direct `curl` calls to access **activities, wellness, workouts, calendar events, and athlete profiles**.
-
-> Official docs: `https://intervals.icu/api/v1/docs`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **View athlete profile** - get athlete info and settings
-- **List and manage activities** - view rides, runs, and other activities with streams data
-- **Track wellness** - access daily wellness records (sleep, fatigue, soreness, etc.)
-- **Manage workouts** - list, create, and modify workout library entries
-- **Calendar events** - view and create planned workouts and events
-
----
-
-## Prerequisites
-
-Connect the **Intervals.icu** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INTERVALS_ICU_TOKEN` or `zero doctor check-connector --url https://intervals.icu/api/v1/athlete/0 --method GET`
+If requests fail, run `zero doctor check-connector --env-name INTERVALS_ICU_TOKEN` or `zero doctor check-connector --url https://intervals.icu/api/v1/athlete/0 --method GET`
 
 ## How to Use
 
 All examples below assume `INTERVALS_ICU_TOKEN` is set.
 
 Base URL: `https://intervals.icu`
-
----
 
 ### 1. Get Athlete Profile
 
@@ -45,8 +21,6 @@ Get the authenticated athlete's profile and settings:
 ```bash
 curl -s "https://intervals.icu/api/v1/athlete/0" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '{id, name, firstname, lastname, email, locale, weight, icu_weight, icu_resting_hr, sex, country, city, timezone}'
 ```
-
----
 
 ### 2. List Activities
 
@@ -58,8 +32,6 @@ Get activities for a date range:
 curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/activities?oldest=2025-01-01&newest=2025-01-31" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[] | {id, name, type, start_date_local, moving_time, distance, total_elevation_gain, icu_training_load}'
 ```
 
----
-
 ### 3. Get Activity Details
 
 Get details for a specific activity:
@@ -69,8 +41,6 @@ Get details for a specific activity:
 ```bash
 curl -s "https://intervals.icu/api/v1/activity/<activity-id>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '{id, name, type, start_date_local, moving_time, distance, average_speed, average_watts, average_heartrate, icu_training_load}'
 ```
-
----
 
 ### 4. Get Activity Streams
 
@@ -82,8 +52,6 @@ Get detailed data streams (GPS, heart rate, power, etc.) for an activity:
 curl -s "https://intervals.icu/api/v1/activity/<activity-id>/streams?types=watts,heartrate,cadence" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq 'keys'
 ```
 
----
-
 ### 5. Get Activity Power Curve
 
 Get the power curve for an activity:
@@ -94,8 +62,6 @@ Get the power curve for an activity:
 curl -s "https://intervals.icu/api/v1/activity/<activity-id>/power-curve" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[0:10]'
 ```
 
----
-
 ### 6. Get Wellness Data
 
 Get wellness record for a specific date:
@@ -105,8 +71,6 @@ Get wellness record for a specific date:
 ```bash
 curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/wellness/<date>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '{id, ctl, atl, rampRate, sleepTime, sleepScore, fatigue, soreness, stress, mood, motivation, weight, restingHR, hrv}'
 ```
-
----
 
 ### 7. Update Wellness Data
 
@@ -127,8 +91,6 @@ Write to `/tmp/intervals_wellness.json`:
 curl -s -X PUT "https://intervals.icu/api/v1/athlete/<athlete-id>/wellness/<date>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" --header "Content-Type: application/json" -d @/tmp/intervals_wellness.json | jq '{id, weight, restingHR}'
 ```
 
----
-
 ### 8. List Calendar Events
 
 Get planned workouts and events for a date range:
@@ -138,8 +100,6 @@ Get planned workouts and events for a date range:
 ```bash
 curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/events?oldest=2025-01-01&newest=2025-12-31" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[] | {id, start_date_local, name, category, type, description}'
 ```
-
----
 
 ### 9. Create Calendar Event
 
@@ -163,8 +123,6 @@ Write to `/tmp/intervals_event.json`:
 curl -s -X POST "https://intervals.icu/api/v1/athlete/<athlete-id>/events" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" --header "Content-Type: application/json" -d @/tmp/intervals_event.json | jq '{id, name, start_date_local, category, type}'
 ```
 
----
-
 ### 10. List Workouts
 
 Get workouts from the workout library:
@@ -174,8 +132,6 @@ Get workouts from the workout library:
 ```bash
 curl -s "https://intervals.icu/api/v1/athlete/<athlete-id>/workouts" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" | jq '.[] | {id, name, type, description}' | head -40
 ```
-
----
 
 ### 11. Create Manual Activity
 
@@ -200,8 +156,6 @@ Write to `/tmp/intervals_activity.json`:
 curl -s -X POST "https://intervals.icu/api/v1/athlete/<athlete-id>/activities/manual" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" --header "Content-Type: application/json" -d @/tmp/intervals_activity.json | jq '{id, name, type, start_date_local, moving_time, distance}'
 ```
 
----
-
 ### 12. Delete Activity
 
 Delete an activity:
@@ -211,8 +165,6 @@ Delete an activity:
 ```bash
 curl -s -X DELETE "https://intervals.icu/api/v1/activity/<activity-id>" --header "Authorization: Bearer $INTERVALS_ICU_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
-
----
 
 ## Guidelines
 

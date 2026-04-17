@@ -4,36 +4,13 @@ description: Zapier API for workflow automation. Use when user mentions "Zapier"
   "zap", "automation", or asks about connecting apps.
 ---
 
-# Zapier AI Actions API
+## Troubleshooting
 
-Use the Zapier AI Actions API via direct `curl` calls to **execute pre-configured actions across 6000+ apps** using natural language instructions. AI Actions removes the complexity of building integrations by providing a single universal API that handles authentication, API calls, and edge cases for supported apps.
-
-> Official docs: `https://actions.zapier.com/docs/using-the-api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Execute automated actions** across apps like Gmail, Slack, Google Sheets, Salesforce, and thousands more
-- **Trigger workflows** using natural language instructions without building direct integrations
-- **Preview action results** before executing them
-- **List and manage configured AI actions** available to your account
-
----
-
-## Prerequisites
-
-Connect the **Zapier** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPIER_TOKEN` or `zero doctor check-connector --url https://actions.zapier.com/api/v2/check/ --method GET`
+If requests fail, run `zero doctor check-connector --env-name ZAPIER_TOKEN` or `zero doctor check-connector --url https://actions.zapier.com/api/v2/check/ --method GET`
 
 ## How to Use
 
 All examples below assume you have `ZAPIER_TOKEN` set. Authentication uses the `x-api-key` header.
-
----
 
 ### 1. Check API Key
 
@@ -43,8 +20,6 @@ Verify that your API key is valid.
 curl -s "https://actions.zapier.com/api/v2/check/" --header "x-api-key: $ZAPIER_TOKEN" | jq .
 ```
 
----
-
 ### 2. List Exposed Actions
 
 Retrieve all actions you have configured and exposed in your Zapier AI Actions dashboard.
@@ -53,8 +28,6 @@ Retrieve all actions you have configured and exposed in your Zapier AI Actions d
 curl -s "https://actions.zapier.com/api/v1/exposed/" --header "x-api-key: $ZAPIER_TOKEN" | jq '.results[] | {id, description, params}'
 ```
 
----
-
 ### 3. Execute an AI Action
 
 Execute a configured action using natural language instructions. Replace `ACTION_ID` with the action ID from the list above.
@@ -62,8 +35,6 @@ Execute a configured action using natural language instructions. Replace `ACTION
 ```bash
 curl -s -X POST "https://actions.zapier.com/api/v2/ai-actions/ACTION_ID/execute/" --header "Content-Type: application/json" --header "x-api-key: $ZAPIER_TOKEN" -d '{"instructions": "Send a message saying hello to the #general channel"}' | jq .
 ```
-
----
 
 ### 4. Execute with Parameter Hints
 
@@ -93,8 +64,6 @@ Then run:
 curl -s -X POST "https://actions.zapier.com/api/v2/ai-actions/ACTION_ID/execute/" --header "Content-Type: application/json" --header "x-api-key: $ZAPIER_TOKEN" -d @/tmp/zapier_request.json | jq .
 ```
 
----
-
 ### 5. Preview an Action (Dry Run)
 
 Preview what the action would do without actually executing it. Add `preview_only=true` as a query parameter.
@@ -103,8 +72,6 @@ Preview what the action would do without actually executing it. Add `preview_onl
 curl -s -X POST "https://actions.zapier.com/api/v2/ai-actions/ACTION_ID/execute/?preview_only=true" --header "Content-Type: application/json" --header "x-api-key: $ZAPIER_TOKEN" -d '{"instructions": "Create a new row in the Sales spreadsheet with name John and amount 500"}' | jq .
 ```
 
----
-
 ### 6. Execute a V1 Exposed Action
 
 Execute an action using the V1 endpoint. Replace `ACTION_ID` with the exposed action ID.
@@ -112,8 +79,6 @@ Execute an action using the V1 endpoint. Replace `ACTION_ID` with the exposed ac
 ```bash
 curl -s -X POST "https://actions.zapier.com/api/v1/dynamic/exposed/ACTION_ID/execute/" --header "Content-Type: application/json" --header "x-api-key: $ZAPIER_TOKEN" -d '{"instructions": "Send a Slack message to #dev saying deployment complete"}' | jq .
 ```
-
----
 
 ## Guidelines
 

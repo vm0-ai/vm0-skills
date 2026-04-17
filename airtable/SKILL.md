@@ -5,25 +5,9 @@ description: Airtable API for bases and records. Use when user mentions "Airtabl
   base.
 ---
 
-# Airtable API
+## Troubleshooting
 
-Manage bases, tables, records, and comments in Airtable.
-
-> Official docs: `https://airtable.com/developers/web/api/introduction`
-
-## Prerequisites
-
-Connect the **Airtable** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AIRTABLE_TOKEN` or `zero doctor check-connector --url https://api.airtable.com/v0/meta/whoami --method GET`
-
-## When to Use
-
-- List and inspect Airtable bases and tables
-- Read, create, update, and delete records
-- Manage table schemas (fields, views)
-- Read and write record comments
-- Get current user info
+If requests fail, run `zero doctor check-connector --env-name AIRTABLE_TOKEN` or `zero doctor check-connector --url https://api.airtable.com/v0/meta/whoami --method GET`
 
 ## Core APIs
 

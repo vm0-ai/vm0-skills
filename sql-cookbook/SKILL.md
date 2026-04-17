@@ -3,14 +3,6 @@ name: sql-cookbook
 description: Craft and optimize SQL for any warehouse dialect — Snowflake, BigQuery, Databricks, Redshift, PostgreSQL. Covers window functions, CTEs, aggregations, joins, funnel queries, cohort retention, deduplication, dialect translation, slow query tuning, and cross-platform syntax differences.
 ---
 
-# SQL Cookbook
-
-Practical reference for building analytical SQL across every major data warehouse platform.
-
-## Prerequisites
-
-Connect the **SQL Cookbook** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Platform-Specific Syntax Guide
 
 ### PostgreSQL (Aurora, RDS, Supabase, Neon)
@@ -71,8 +63,6 @@ arr_col @> ARRAY['val']
 - Consider partial indexes for frequently used filter predicates
 - Deploy connection pooling when handling concurrent workloads
 
----
-
 ### Snowflake
 
 **Date and time functions:**
@@ -132,8 +122,6 @@ LATERAL FLATTEN(input => t.payload:items) elem
 - Reuse results via `RESULT_SCAN(LAST_QUERY_ID())` to skip re-execution
 - Use transient tables for ephemeral staging data
 
----
-
 ### BigQuery
 
 **Date and time functions:**
@@ -192,8 +180,6 @@ struct_col.field_name
 - Use `DECLARE` / `SET` for parameterized script logic
 - Run a dry-run estimate before executing expensive queries
 
----
-
 ### Redshift
 
 **Date and time functions:**
@@ -231,8 +217,6 @@ LISTAGG(col, ', ') WITHIN GROUP (ORDER BY col)
 - Watch for DS_BCAST and DS_DIST in plans (signs of costly cross-node shuffles)
 - Run `ANALYZE` and `VACUUM` on a regular cadence
 - Use late-binding views for flexibility when schemas evolve
-
----
 
 ### Databricks SQL
 
@@ -276,8 +260,6 @@ WHEN NOT MATCHED THEN INSERT *
 - Enable the Photon engine for compute-heavy workloads
 - Apply `CACHE TABLE` on datasets that are read repeatedly
 - Partition by low-cardinality date columns for efficient pruning
-
----
 
 ## Reusable Analytical Patterns
 

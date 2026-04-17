@@ -4,37 +4,9 @@ description: Xero API for accounting. Use when user mentions "Xero", "accounting
   "invoices", "bookkeeping", or asks about financial management.
 ---
 
-# Xero Accounting API
+## Troubleshooting
 
-Manage accounting data including invoices, contacts, bank transactions, payments, accounts, financial reports, fixed assets, projects, and files via Xero's REST API.
-
-> Official docs: https://developer.xero.com/documentation/api/accounting/overview
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Manage invoices, quotes, credit notes, and purchase orders
-- Manage contacts and contact groups
-- View and create bank transactions and transfers
-- Manage payments and batch payments
-- View chart of accounts and organisation settings
-- View financial reports (P&L, balance sheet, trial balance, aged reports, etc.)
-- View and manage budgets
-- Manage inventory items
-- View and create fixed assets (read + create only, no update/delete)
-- Manage projects, tasks, and time entries
-- Upload and organise files
-
----
-
-## Prerequisites
-
-Connect the **Xero** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name XERO_TOKEN` or `zero doctor check-connector --url https://api.xero.com/Connections --method GET`
+If requests fail, run `zero doctor check-connector --env-name XERO_TOKEN` or `zero doctor check-connector --url https://api.xero.com/Connections --method GET`
 
 ## Step 1: Get Tenant ID (Required First)
 
@@ -61,8 +33,6 @@ Response returns an array of connected orgs. Use the `tenantId` from the first (
 
 Store the `tenantId` and use it as the `xero-tenant-id` header in all subsequent requests.
 
----
-
 ## Organisation
 
 ### Get Organisation Info
@@ -84,8 +54,6 @@ curl -s "https://api.xero.com/api.xro/2.0/Organisation/Actions" \
 ```
 
 Returns array of `{Name, Status}` where Status is "ALLOWED" or "NOT-ALLOWED". Useful to check what operations are available.
-
----
 
 ## Contacts
 
@@ -159,8 +127,6 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Contacts/<contact-id>" \
 
 Contacts cannot be deleted — only archived. Use `includeArchived=true` in list requests to see archived contacts.
 
----
-
 ## Contact Groups
 
 ### List Contact Groups
@@ -208,8 +174,6 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/ContactGroups/<group-id>" \
   --header "Content-Type: application/json" \
   -d "{\"Status\": \"DELETED\"}"
 ```
-
----
 
 ## Invoices
 
@@ -347,8 +311,6 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Email" \
   -d "{}"
 ```
 
----
-
 ## Credit Notes
 
 ### List Credit Notes
@@ -382,8 +344,6 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/CreditNotes/<credit-note-id>/Al
   --header "Content-Type: application/json" \
   -d "{\"Allocations\": [{\"Amount\": 100.00, \"Invoice\": {\"InvoiceID\": \"<invoice-id>\"}}]}"
 ```
-
----
 
 ## Quotes
 
@@ -419,8 +379,6 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Quotes/<quote-id>" \
   -d "{\"QuoteID\": \"<quote-id>\", \"Contact\": {\"ContactID\": \"<contact-id>\"}, \"Date\": \"2026-03-05\", \"Status\": \"SENT\"}"
 ```
 
----
-
 ## Purchase Orders
 
 ### List Purchase Orders
@@ -454,8 +412,6 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/PurchaseOrders/<po-id>" \
   --header "Content-Type: application/json" \
   -d "{\"PurchaseOrderID\": \"<po-id>\", \"Status\": \"AUTHORISED\"}"
 ```
-
----
 
 ## Payments
 
@@ -503,8 +459,6 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/Payments/<payment-id>" \
   -d "{\"PaymentID\": \"<payment-id>\", \"Status\": \"DELETED\"}"
 ```
 
----
-
 ## Batch Payments
 
 ### List Batch Payments
@@ -514,8 +468,6 @@ curl -s "https://api.xero.com/api.xro/2.0/BatchPayments" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
-
----
 
 ## Bank Transactions
 
@@ -567,8 +519,6 @@ curl -s -X POST "https://api.xero.com/api.xro/2.0/BankTransactions/<transaction-
   -d "{\"BankTransactionID\": \"<transaction-id>\", \"Status\": \"DELETED\"}"
 ```
 
----
-
 ## Bank Transfers
 
 ### List Bank Transfers
@@ -588,8 +538,6 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/BankTransfers" \
   --header "Content-Type: application/json" \
   -d "{\"BankTransfers\": [{\"FromBankAccount\": {\"Code\": \"090\"}, \"ToBankAccount\": {\"Code\": \"091\"}, \"Amount\": 500.00}]}"
 ```
-
----
 
 ## Accounts (Chart of Accounts)
 
@@ -649,8 +597,6 @@ curl -s -X DELETE "https://api.xero.com/api.xro/2.0/Accounts/<account-id>" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
----
-
 ## Manual Journals
 
 ### List Manual Journals
@@ -672,8 +618,6 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/ManualJournals" \
   --header "Content-Type: application/json" \
   -d "{\"Narration\": \"Year-end adjustment\", \"Date\": \"2026-03-05\", \"JournalLines\": [{\"LineAmount\": 100.00, \"AccountCode\": \"200\", \"Description\": \"Revenue adjustment\"}, {\"LineAmount\": -100.00, \"AccountCode\": \"400\", \"Description\": \"Expense adjustment\"}]}"
 ```
-
----
 
 ## Items
 
@@ -714,8 +658,6 @@ curl -s -X DELETE "https://api.xero.com/api.xro/2.0/Items/<item-id>" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
-
----
 
 ## Reports
 
@@ -809,8 +751,6 @@ curl -s "https://api.xero.com/api.xro/2.0/Reports/BudgetSummary?date=2026-03-05"
   --header "xero-tenant-id: <tenant-id>"
 ```
 
----
-
 ## Budgets
 
 ### List Budgets
@@ -829,8 +769,6 @@ curl -s "https://api.xero.com/api.xro/2.0/Budgets/<budget-id>?DateFrom=2026-01-0
   --header "xero-tenant-id: <tenant-id>"
 ```
 
----
-
 ## Currencies
 
 ### List Currencies
@@ -843,8 +781,6 @@ curl -s "https://api.xero.com/api.xro/2.0/Currencies" \
 
 Adding currencies requires a plan that supports multi-currency. See docs: `https://r.jina.ai/https://developer.xero.com/documentation/api/accounting/currencies`
 
----
-
 ## Tax Rates
 
 ### List Tax Rates
@@ -854,8 +790,6 @@ curl -s "https://api.xero.com/api.xro/2.0/TaxRates" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
-
----
 
 ## Tracking Categories
 
@@ -887,8 +821,6 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/TrackingCategories/<category-id
   -d "{\"Name\": \"North\"}"
 ```
 
----
-
 ## Branding Themes
 
 ### List Branding Themes
@@ -899,8 +831,6 @@ curl -s "https://api.xero.com/api.xro/2.0/BrandingThemes" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
----
-
 ## Users
 
 ### List Users
@@ -910,8 +840,6 @@ curl -s "https://api.xero.com/api.xro/2.0/Users" \
   --header "Authorization: Bearer $XERO_TOKEN" \
   --header "xero-tenant-id: <tenant-id>"
 ```
-
----
 
 ## Attachments
 
@@ -930,8 +858,6 @@ curl -s -X PUT "https://api.xero.com/api.xro/2.0/Invoices/<invoice-id>/Attachmen
 Use PUT to create a new attachment (fails if filename exists), POST to overwrite an existing one.
 
 Attachments work on: Invoices, CreditNotes, BankTransactions, Contacts, Accounts, ManualJournals, PurchaseOrders, Receipts, RepeatingInvoices. Replace the entity path accordingly.
-
----
 
 ## Fixed Assets (Assets API)
 
@@ -1002,8 +928,6 @@ curl -s "https://api.xero.com/assets.xro/1.0/Settings" \
 ```
 
 Returns: `assetNumberPrefix`, `assetNumberSequence`, `assetStartDate`, `optInForTax`.
-
----
 
 ## Projects API
 
@@ -1153,8 +1077,6 @@ curl -s -X DELETE "https://api.xero.com/projects.xro/2.0/Projects/<project-id>/T
 
 INVOICED entries cannot be deleted.
 
----
-
 ## Files API
 
 Base URL: `https://api.xero.com/files.xro/1.0` (different from accounting API).
@@ -1252,8 +1174,6 @@ curl -s "https://api.xero.com/files.xro/1.0/Inbox" \
   --header "xero-tenant-id: <tenant-id>"
 ```
 
----
-
 ## Guidelines
 
 1. **Tenant ID Required**: Always call `/Connections` first to get the `tenantId`, then include it as `xero-tenant-id` header in every API call.
@@ -1273,8 +1193,6 @@ curl -s "https://api.xero.com/files.xro/1.0/Inbox" \
 15. **LineItemID on Updates**: Always include `LineItemID` when updating line items, or they get deleted and recreated.
 16. **100k Record Limit**: GET requests returning >100,000 records return a 400 error. Use filters and pagination.
 17. **Different Base URLs**: Accounting API uses `api.xro/2.0`, Assets API uses `assets.xro/1.0`, Projects API uses `projects.xro/2.0`, Files API uses `files.xro/1.0`.
-
----
 
 ## How to Look Up More API Details
 

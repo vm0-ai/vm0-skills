@@ -4,37 +4,9 @@ description: HubSpot CRM API for marketing and sales. Use when user mentions "Hu
   "CRM", "HubSpot contacts", or asks about marketing automation.
 ---
 
-# HubSpot CRM API
+## Troubleshooting
 
-Manage contacts, companies, deals, tickets, and other CRM objects, plus files, marketing emails, forms, lists, and conversations via HubSpot's REST API v3/v4.
-
-> Official docs: https://developers.hubspot.com/docs/api/overview
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Create, update, search, and delete CRM objects (contacts, companies, deals, tickets, products, line items, quotes, tasks, notes, emails, meetings, calls)
-- Create associations between CRM objects
-- Search and filter CRM records with complex queries
-- Manage deal and ticket pipelines and stages
-- Manage CRM properties (custom fields)
-- Manage contact lists and memberships
-- Upload and manage files
-- Send marketing and transactional emails
-- Manage forms and form submissions
-- View conversations and threads
-- Manage users and account settings
-
----
-
-## Prerequisites
-
-Connect the **HubSpot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUBSPOT_TOKEN` or `zero doctor check-connector --url https://api.hubapi.com/crm/v3/objects/contacts --method GET`
+If requests fail, run `zero doctor check-connector --env-name HUBSPOT_TOKEN` or `zero doctor check-connector --url https://api.hubapi.com/crm/v3/objects/contacts --method GET`
 
 ## CRM Objects (Unified Pattern)
 
@@ -138,8 +110,6 @@ curl -s -X POST "https://api.hubapi.com/crm/v3/objects/contacts/merge" \
   -d "{\"primaryObjectId\": \"<primary-id>\", \"objectIdToMerge\": \"<duplicate-id>\"}"
 ```
 
----
-
 ## Common CRM Object Examples
 
 The pattern above works for all object types. Here are property examples for the most common ones:
@@ -189,8 +159,6 @@ curl -s -X POST "https://api.hubapi.com/crm/v3/objects/notes" \
   -d "{\"properties\": {\"hs_note_body\": \"Had a productive call. Client interested in annual plan.\", \"hs_timestamp\": \"2026-04-08T14:00:00.000Z\"}}"
 ```
 
----
-
 ## Associations (v4)
 
 Associations link CRM objects together (e.g., contact → company, deal → contact).
@@ -235,8 +203,6 @@ curl -s -X POST "https://api.hubapi.com/crm/v4/associations/contacts/companies/b
   --header "Content-Type: application/json" \
   -d "{\"inputs\": [{\"id\": \"<contact-id-1>\"}, {\"id\": \"<contact-id-2>\"}]}"
 ```
-
----
 
 ## Pipelines
 
@@ -285,8 +251,6 @@ curl -s -X POST "https://api.hubapi.com/crm/v3/pipelines/deals/<pipeline-id>/sta
   -d "{\"label\": \"Negotiation\", \"displayOrder\": 2, \"metadata\": {\"probability\": \"0.8\"}}"
 ```
 
----
-
 ## Properties
 
 Properties are the fields/columns on CRM objects. Each object type has its own set.
@@ -324,8 +288,6 @@ curl -s -X PATCH "https://api.hubapi.com/crm/v3/properties/contacts/<property-na
   --header "Content-Type: application/json" \
   -d "{\"label\": \"Preferred Color\"}"
 ```
-
----
 
 ## Lists
 
@@ -390,8 +352,6 @@ curl -s -X POST "https://api.hubapi.com/crm/lists/v3/search" \
   -d "{\"query\": \"VIP\", \"count\": 10}"
 ```
 
----
-
 ## Files
 
 ### Search Files
@@ -452,8 +412,6 @@ curl -s -X POST "https://api.hubapi.com/files/v3/folders" \
   -d "{\"name\": \"Receipts\", \"parentFolderId\": \"<parent-folder-id>\"}"
 ```
 
----
-
 ## Marketing Emails
 
 ### List Emails
@@ -488,8 +446,6 @@ curl -s -X POST "https://api.hubapi.com/marketing/v3/transactional/single-email/
   -d "{\"emailId\": \"<template-id>\", \"message\": {\"to\": \"recipient@example.com\", \"from\": \"sender@example.com\", \"sendId\": \"unique-send-id\"}, \"contactProperties\": {\"firstname\": \"Jane\"}}"
 ```
 
----
-
 ## Forms
 
 ### List Forms
@@ -505,8 +461,6 @@ curl -s "https://api.hubapi.com/marketing/v3/forms" \
 curl -s "https://api.hubapi.com/marketing/v3/forms/<form-id>" \
   --header "Authorization: Bearer $HUBSPOT_TOKEN"
 ```
-
----
 
 ## Conversations
 
@@ -547,8 +501,6 @@ curl -s "https://api.hubapi.com/conversations/v3/conversations/inboxes" \
   --header "Authorization: Bearer $HUBSPOT_TOKEN"
 ```
 
----
-
 ## Settings & Users
 
 ### Get Account Info
@@ -579,8 +531,6 @@ curl -s "https://api.hubapi.com/settings/v3/users/teams" \
   --header "Authorization: Bearer $HUBSPOT_TOKEN"
 ```
 
----
-
 ## Owners
 
 Owners are users who can be assigned to CRM records.
@@ -599,8 +549,6 @@ curl -s "https://api.hubapi.com/crm/v3/owners/<owner-id>" \
   --header "Authorization: Bearer $HUBSPOT_TOKEN"
 ```
 
----
-
 ## Guidelines
 
 1. **Unified CRM pattern**: All CRM objects use the same endpoints at `/crm/v3/objects/{objectType}`. Learn it once, use it for contacts, companies, deals, tickets, products, line_items, quotes, tasks, notes, emails, meetings, calls.
@@ -614,8 +562,6 @@ curl -s "https://api.hubapi.com/crm/v3/owners/<owner-id>" \
 9. **Account codes and IDs**: Pipeline IDs, stage IDs, owner IDs, and property names are all account-specific. Always discover them via API first.
 10. **Deleting**: DELETE moves objects to recycling bin (90-day retention). No permanent delete via API.
 11. **Date format**: Use ISO-8601 with timezone: `2026-03-05T09:00:00.000Z`. Date properties use midnight UTC.
-
----
 
 ## How to Look Up More API Details
 

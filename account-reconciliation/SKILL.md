@@ -3,14 +3,6 @@ name: account-reconciliation
 description: Perform account reconciliations comparing general ledger balances against subledgers, bank statements, or external records. Use for bank reconciliation, GL-to-subledger reconciliation, intercompany reconciliation, balance sheet reconciliation, reconciling item analysis, outstanding item aging, or clearing open items.
 ---
 
-# Account Reconciliation
-
-Frameworks, procedures, and governance standards for reconciling ledger accounts to supporting detail, external statements, and counterparty records.
-
-## Prerequisites
-
-Connect the **Account Reconciliation** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Reconciliation Categories
 
 ### General Ledger vs. Subledger

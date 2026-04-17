@@ -4,30 +4,9 @@ description: Supadata API for YouTube/web data. Use when user mentions "Supadata
   "YouTube data", "channel stats", or web scraping data.
 ---
 
-# Supadata API
+## Troubleshooting
 
-Use the Supadata API via direct `curl` calls to **extract video transcripts** and **scrape web content** for AI applications.
-
-> Official docs: `https://docs.supadata.ai/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Extract transcripts** from YouTube, TikTok, Instagram, X (Twitter), Facebook videos
-- **Scrape web pages** to markdown format for AI processing
-- **Get video/channel metadata** from social platforms
-- **Crawl websites** to extract content from multiple pages
-
----
-
-## Prerequisites
-
-Connect the **Supadata** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPADATA_TOKEN` or `zero doctor check-connector --url https://api.supadata.ai/v1/transcript --method POST`
+If requests fail, run `zero doctor check-connector --env-name SUPADATA_TOKEN` or `zero doctor check-connector --url https://api.supadata.ai/v1/transcript --method POST`
 
 ## How to Use
 
@@ -38,8 +17,6 @@ The base URL for the API is:
 - `https://api.supadata.ai/v1`
 
 Authentication uses the `x-api-key` header.
-
----
 
 ### 1. Get YouTube Video Transcript
 
@@ -62,8 +39,6 @@ curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: $SUPADATA_TOKEN" 
 - `lang`: Preferred language (ISO 639-1 code, e.g., `en`, `zh`)
 - `mode`: `native` (existing only), `generate` (AI), `auto` (default)
 
----
-
 ### 2. Get Transcript with Timestamps
 
 Get transcript with timing information:
@@ -83,8 +58,6 @@ Response format:
 }
 ```
 
----
-
 ### 3. Get TikTok/Instagram/X Transcript
 
 Extract transcript from other platforms:
@@ -99,8 +72,6 @@ curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: $SUPADATA_TOKEN" 
 
 Supported platforms: YouTube, TikTok, Instagram, X (Twitter), Facebook
 
----
-
 ### 4. Native Transcript Only (Save Credits)
 
 Fetch only existing transcripts without AI generation:
@@ -110,8 +81,6 @@ curl -s "https://api.supadata.ai/v1/transcript" -H "x-api-key: $SUPADATA_TOKEN" 
 ```
 
 Use `mode=native` to avoid AI generation costs (1 credit vs 2 credits/min).
-
----
 
 ### 5. Get YouTube Channel Metadata
 
@@ -123,8 +92,6 @@ curl -s "https://api.supadata.ai/v1/youtube/channel" -H "x-api-key: $SUPADATA_TO
 
 Accepts channel URL, channel ID, or handle (e.g., `@mkbhd`).
 
----
-
 ### 6. Get YouTube Video Metadata
 
 Get video information:
@@ -132,8 +99,6 @@ Get video information:
 ```bash
 curl -s "https://api.supadata.ai/v1/youtube/video" -H "x-api-key: $SUPADATA_TOKEN" -G --data-urlencode "url@/tmp/supadata_url.txt" | jq '{title, viewCount, likeCount, duration}
 ```
-
----
 
 ### 7. Get Social Media Metadata
 
@@ -145,8 +110,6 @@ curl -s "https://api.supadata.ai/v1/metadata" -H "x-api-key: $SUPADATA_TOKEN" -G
 
 Works with YouTube, TikTok, Instagram, X, Facebook posts.
 
----
-
 ### 8. Scrape Web Page to Markdown
 
 Extract web page content:
@@ -157,8 +120,6 @@ curl -s "https://api.supadata.ai/v1/web/scrape" -H "x-api-key: $SUPADATA_TOKEN" 
 
 Returns page content in Markdown format, ideal for AI processing.
 
----
-
 ### 9. Map Website Links
 
 Get all links from a website:
@@ -166,8 +127,6 @@ Get all links from a website:
 ```bash
 curl -s "https://api.supadata.ai/v1/web/map" -H "x-api-key: $SUPADATA_TOKEN" -G --data-urlencode "url@/tmp/supadata_url.txt" | jq '.urls[:10]'
 ```
-
----
 
 ### 10. Crawl Website (Async)
 
@@ -196,8 +155,6 @@ curl -s "https://api.supadata.ai/v1/web/crawl/<your-job-id>" -H "x-api-key: $SUP
 
 Status values: `queued`, `active`, `completed`, `failed`
 
----
-
 ### 11. Translate Transcript
 
 Translate a YouTube transcript to another language:
@@ -205,8 +162,6 @@ Translate a YouTube transcript to another language:
 ```bash
 curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key: $SUPADATA_TOKEN" -G --data-urlencode "url@/tmp/supadata_url.txt" -d "lang=zh" -d "text=true"
 ```
-
----
 
 ## Response Handling
 
@@ -218,8 +173,6 @@ curl -s "https://api.supadata.ai/v1/youtube/transcript/translate" -H "x-api-key:
 ```
 
 Poll the job endpoint until status is `completed`.
-
----
 
 ## Guidelines
 

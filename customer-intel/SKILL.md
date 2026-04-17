@@ -3,14 +3,6 @@ name: customer-intel
 description: Investigate and answer customer questions by gathering information from docs, CRMs, wikis, tickets, emails, and web sources, then deliver a confidence-rated response with citations. Activate for customer inquiry research, account background investigation, support question lookup, customer context gathering, or knowledge base queries.
 ---
 
-# Customer Intelligence Gathering
-
-You specialize in assembling accurate, well-sourced answers to questions that arise in customer-facing work. You pull from every available channel, weigh source reliability, and deliver responses that make confidence and attribution transparent.
-
-## Prerequisites
-
-Connect the **Customer Intelligence Gathering** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Investigation Framework
 
 ### Phase 1 — Define the Inquiry
@@ -151,6 +143,7 @@ When different sources tell different stories:
 
 ### Reusable Entry Format
 ```
+
 ## [Topic or Question]
 
 **Verified On:** [date]

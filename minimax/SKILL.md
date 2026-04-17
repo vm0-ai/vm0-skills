@@ -4,38 +4,15 @@ description: MiniMax API for AI models. Use when user mentions "MiniMax", "Chine
   AI", or asks about MiniMax language models.
 ---
 
-# MiniMax API
+## Troubleshooting
 
-Use the MiniMax API via direct `curl` calls for **AI chat completion**, **text-to-speech**, and **video generation**.
-
-> Official docs: `https://platform.minimax.io/docs`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Chat completion** with Chinese-optimized LLM (MiniMax-M1/M2)
-- **Text-to-speech** with natural voices and emotion control
-- **Video generation** from text prompts (T2V)
-- **Image-to-video** conversion (I2V)
-
----
-
-## Prerequisites
-
-Connect the **MiniMax** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MINIMAX_TOKEN` or `zero doctor check-connector --url https://api.minimax.io/v1/text/chatcompletion_v2 --method POST`
+If requests fail, run `zero doctor check-connector --env-name MINIMAX_TOKEN` or `zero doctor check-connector --url https://api.minimax.io/v1/text/chatcompletion_v2 --method POST`
 
 ## How to Use
 
 All examples below assume you have `MINIMAX_TOKEN` set.
 
 Authentication uses Bearer token in the `Authorization` header.
-
----
 
 ### 1. Basic Chat Completion
 
@@ -64,8 +41,6 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
 - `MiniMax-M2`: Reasoning model (best quality)
 - `MiniMax-M1`: Reasoning model (balanced)
 - `MiniMax-Text-01`: Standard model (fastest)
-
----
 
 ### 2. Chat with Temperature Control
 
@@ -96,8 +71,6 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
 - `top_p` (0-1, default 0.95): Sampling diversity
 - `max_tokens`: Maximum output tokens
 
----
-
 ### 3. Streaming Response
 
 Get real-time output:
@@ -121,8 +94,6 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
 ```
 
 Streaming is recommended for reasoning models (M1/M2).
-
----
 
 ### 4. Reasoning Model (M1/M2)
 
@@ -148,8 +119,6 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
 
 Response includes `reasoning_content` field with thought process.
 
----
-
 ### 5. Text-to-Speech (Basic)
 
 Convert text to speech:
@@ -171,8 +140,6 @@ Then run:
 ```bash
 curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer $MINIMAX_TOKEN" -H "Content-Type: application/json" -d @/tmp/minimax_request.json --output speech.mp3
 ```
-
----
 
 ### 6. TTS with Emotion
 
@@ -198,8 +165,6 @@ curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer $MI
 ```
 
 **Emotion options:** `happy`, `sad`, `angry`, `fearful`, `disgusted`, `surprised`, `neutral`
-
----
 
 ### 7. TTS with Audio Settings
 
@@ -234,8 +199,6 @@ curl -s "https://api.minimax.io/v1/t2a_v2" -X POST -H "Authorization: Bearer $MI
 - `speech-01-hd`: Previous gen HD
 - `speech-01-turbo`: Previous gen fast
 
----
-
 ### 8. Text-to-Video (T2V)
 
 Generate video from text prompt:
@@ -258,8 +221,6 @@ curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: 
 ```
 
 Video generation is async - returns a task ID to poll for completion.
-
----
 
 ### 9. T2V with Camera Control
 
@@ -291,8 +252,6 @@ curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: 
 
 Combine with `[Pan left, Pedestal up]` (max 3 simultaneous).
 
----
-
 ### 10. Image-to-Video (I2V)
 
 Generate video from an image:
@@ -318,8 +277,6 @@ curl -s "https://api.minimax.io/v1/video_generation" -X POST -H "Authorization: 
 ```
 
 Provide `first_frame_image` as URL or base64-encoded image.
-
----
 
 ### 11. Function Calling (Tools)
 
@@ -359,8 +316,6 @@ Then run:
 curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authorization: Bearer $MINIMAX_TOKEN" -H "Content-Type: application/json" -d @/tmp/minimax_request.json | jq '.choices[0]'
 ```
 
----
-
 ## Response Format
 
 ### Chat Completion
@@ -383,8 +338,6 @@ curl -s "https://api.minimax.io/v1/text/chatcompletion_v2" -X POST -H "Authoriza
   }
 }
 ```
-
----
 
 ## Guidelines
 

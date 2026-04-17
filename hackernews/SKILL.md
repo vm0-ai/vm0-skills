@@ -4,30 +4,6 @@ description: Hacker News API for stories and comments. Use when user mentions "H
   News", "HN", "Y Combinator", or asks about tech news.
 ---
 
-# Hacker News API
-
-Use the official Hacker News API via direct `curl` calls to **fetch stories, comments, and user data**.
-
-> Official docs: `https://github.com/HackerNews/API`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Fetch top/best/new stories** from Hacker News
-- **Get story details** including title, URL, score, comments
-- **Retrieve comments** and discussion threads
-- **Look up user profiles** and their submissions
-- **Monitor trending tech topics** and discussions
-
----
-
-## Prerequisites
-
-Connect the **Hacker News** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 ### 1. Get Top Stories
@@ -78,8 +54,6 @@ Fetch job postings:
 curl -s "https://hacker-news.firebaseio.com/v0/jobstories.json" | jq '.[:10]'
 ```
 
----
-
 ## Item Details
 
 ### 7. Get Story/Comment/Job Details
@@ -129,8 +103,6 @@ Then for each comment ID in the `kids` array, replace `<comment-id>` with the ac
 curl -s "https://hacker-news.firebaseio.com/v0/item/<comment-id>.json" | jq '{by, text, score}'
 ```
 
----
-
 ## User Data
 
 ### 10. Get User Profile
@@ -159,8 +131,6 @@ Fetch a user's recent submissions. Replace `<username>` with the actual username
 curl -s "https://hacker-news.firebaseio.com/v0/user/<username>.json" | jq '.submitted[:5]'
 ```
 
----
-
 ## Real-time Updates
 
 ### 12. Get Max Item ID
@@ -178,8 +148,6 @@ Get recently changed items and profiles (for real-time updates):
 ```bash
 curl -s "https://hacker-news.firebaseio.com/v0/updates.json"
 ```
-
----
 
 ## Practical Examples
 
@@ -207,8 +175,6 @@ curl -s "https://hacker-news.firebaseio.com/v0/topstories.json" | jq '.[:50][]' 
 done
 ```
 
----
-
 ## API Endpoints Summary
 
 | Endpoint | Description |
@@ -223,8 +189,6 @@ done
 | `/v0/user/{id}.json` | User profile |
 | `/v0/maxitem.json` | Current max item ID |
 | `/v0/updates.json` | Changed items/profiles |
-
----
 
 ## Guidelines
 

@@ -4,30 +4,9 @@ description: Pushinator API for push notifications. Use when user mentions "Push
   "push notification", "web push", or notifications.
 ---
 
-# Pushinator API
+## Troubleshooting
 
-Use the Pushinator API via direct `curl` calls to **send push notifications** to mobile devices.
-
-> Official docs: `https://pushinator.com/api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Send push notifications** to mobile devices
-- **Alert users** about events, deployments, or updates
-- **Integrate notifications** into CI/CD pipelines
-- **Notify yourself** when long-running tasks complete
-
----
-
-## Prerequisites
-
-Connect the **Pushinator** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PUSHINATOR_TOKEN` or `zero doctor check-connector --url https://api.pushinator.com/api/v2/notifications/send --method POST`
+If requests fail, run `zero doctor check-connector --env-name PUSHINATOR_TOKEN` or `zero doctor check-connector --url https://api.pushinator.com/api/v2/notifications/send --method POST`
 
 ## How to Use
 
@@ -36,8 +15,6 @@ Base URL: `https://api.pushinator.com`
 **Required headers:**
 - `Authorization: Bearer $PUSHINATOR_TOKEN`
 - `Content-Type: application/json`
-
----
 
 ### 1. Send a Push Notification
 
@@ -69,8 +46,6 @@ curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
 }
 ```
 
----
-
 ### 2. Send Deployment Notification
 
 Notify when a deployment completes.
@@ -92,8 +67,6 @@ curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
   --header "Content-Type: application/json" \
   -d @/tmp/pushinator_request.json
 ```
-
----
 
 ### 3. Send Alert with Emoji
 
@@ -117,16 +90,12 @@ curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
   -d @/tmp/pushinator_request.json
 ```
 
----
-
 ## Request Parameters
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `channel_id` | string | Yes | UUID of the notification channel |
 | `content` | string | Yes | Notification message text |
-
----
 
 ## HTTP Status Codes
 
@@ -135,8 +104,6 @@ curl -s -X POST "https://api.pushinator.com/api/v2/notifications/send" \
 | 2xx | Success - notification sent |
 | 4xx | Invalid request or missing parameters |
 | 5xx | Server error - retry recommended |
-
----
 
 ## Guidelines
 

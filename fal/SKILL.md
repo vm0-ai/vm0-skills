@@ -4,29 +4,9 @@ description: Fal.ai API for AI image and video generation. Use when user mention
   "Fal.ai", "AI image generation", "video generation", or "fal" models.
 ---
 
-# fal.ai Image Generator
+## Troubleshooting
 
-Use the fal.ai API to **generate images from text prompts**.
-
-> Official docs: `https://fal.ai/docs`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Generate images from text descriptions**
-- **Create illustrations or visual content**
-- **Generate blog headers, thumbnails, or social media images**
-
----
-
-## Prerequisites
-
-Connect the **fal.ai Image Generator** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FAL_TOKEN` or `zero doctor check-connector --url https://fal.run/fal-ai/nano-banana-pro --method POST`
+If requests fail, run `zero doctor check-connector --env-name FAL_TOKEN` or `zero doctor check-connector --url https://fal.run/fal-ai/nano-banana-pro --method POST`
 
 ## How to Use
 
@@ -132,8 +112,6 @@ echo "Neon city at night" | jq -Rs '{prompt: ., image_size: "landscape_16_9"}' >
 curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization: Key $FAL_TOKEN" --header "Content-Type: application/json" -d @/tmp/fal_request.json | jq -r '.images[0].url'
 ```
 
----
-
 ## Available Models
 
 | Model | Description |
@@ -145,8 +123,6 @@ curl -s -X POST "https://fal.run/fal-ai/nano-banana-pro" --header "Authorization
 
 See more at: https://fal.ai/models
 
----
-
 ## Image Sizes
 
 | Size | Aspect Ratio |
@@ -157,8 +133,6 @@ See more at: https://fal.ai/models
 | `portrait_16_9` | 16:9 |
 | `landscape_4_3` | 3:4 |
 | `landscape_16_9` | 9:16 |
-
----
 
 ## Prompt Guidelines
 

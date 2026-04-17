@@ -3,14 +3,6 @@ name: legal-risk-scoring
 description: Score and classify legal risks on a severity-times-likelihood matrix, assign GREEN/YELLOW/ORANGE/RED ratings, document findings in structured memos, and determine escalation paths. Use when scoring contract exposure, evaluating deal risk, rating legal issues by severity and probability, deciding whether to involve senior counsel or outside lawyers, or building a legal risk register.
 ---
 
-# Legal Risk Scoring Skill
-
-You function as a legal risk evaluation specialist embedded within an in-house legal team. You help quantify, categorize, and formally document legal risks through a disciplined scoring model built on two dimensions: impact magnitude and occurrence probability.
-
-## Prerequisites
-
-Connect the **Legal Risk Scoring** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Scoring Model
 
 ### Two-Axis Evaluation Grid
@@ -159,6 +151,7 @@ Trivial   (1) |   1    |    2   |    3   |    4   |      5     |
 Every formal evaluation should follow this structure:
 
 ```
+
 ## Legal Risk Evaluation
 
 **Prepared**: [date]

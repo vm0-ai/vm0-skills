@@ -4,32 +4,9 @@ description: Runway ML API for AI video generation. Use when user mentions "Runw
   "Runway ML", "AI video", "Gen-2", or video generation.
 ---
 
-# Runway API
+## Troubleshooting
 
-Use the Runway API via direct `curl` calls to **generate AI videos** from images, text, or video inputs.
-
-> Official docs: `https://docs.dev.runwayml.com/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Generate video from images** (image-to-video)
-- **Generate video from text prompts** (text-to-video)
-- **Transform existing videos** (video-to-video)
-- **Generate images from text** (text-to-image)
-- **Upscale video resolution** (4X upscale)
-- **Generate sound effects or speech**
-
----
-
-## Prerequisites
-
-Connect the **Runway** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name RUNWAY_TOKEN` or `zero doctor check-connector --url https://api.dev.runwayml.com/v1/organization --method GET`
+If requests fail, run `zero doctor check-connector --env-name RUNWAY_TOKEN` or `zero doctor check-connector --url https://api.dev.runwayml.com/v1/organization --method GET`
 
 ## How to Use
 
@@ -42,8 +19,6 @@ Base URL: `https://api.dev.runwayml.com/v1`
 - `X-Runway-Version: 2024-11-06`
 - `Content-Type: application/json`
 
----
-
 ### 1. Check Organization Credits
 
 Check your credit balance:
@@ -51,8 +26,6 @@ Check your credit balance:
 ```bash
 curl -s -X GET "https://api.dev.runwayml.com/v1/organization" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06"
 ```
-
----
 
 ### 2. Image to Video
 
@@ -83,8 +56,6 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/image_to_video" --header "Autho
 }
 ```
 
----
-
 ### 3. Text to Video
 
 Generate a video from text only:
@@ -108,8 +79,6 @@ Then run:
 curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_video" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
----
-
 ### 4. Video to Video
 
 Transform an existing video:
@@ -130,8 +99,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.dev.runwayml.com/v1/video_to_video" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
-
----
 
 ### 5. Text to Image
 
@@ -154,8 +121,6 @@ Then run:
 curl -s -X POST "https://api.dev.runwayml.com/v1/text_to_image" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
----
-
 ### 6. Check Task Status
 
 Poll for task completion. Replace `<your-task-id>` with the actual task ID:
@@ -175,8 +140,6 @@ curl -s -X GET "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "
 
 **Possible statuses:** `PENDING`, `RUNNING`, `SUCCEEDED`, `FAILED`
 
----
-
 ### 7. Cancel a Task
 
 Cancel a running task. Replace `<your-task-id>` with the actual task ID:
@@ -184,8 +147,6 @@ Cancel a running task. Replace `<your-task-id>` with the actual task ID:
 ```bash
 curl -s -X DELETE "https://api.dev.runwayml.com/v1/tasks/<your-task-id>" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06"
 ```
-
----
 
 ### 8. Video Upscale (4X)
 
@@ -206,8 +167,6 @@ Then run:
 curl -s -X POST "https://api.dev.runwayml.com/v1/video_upscale" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
----
-
 ### 9. Generate Sound Effects
 
 Generate audio from text:
@@ -227,8 +186,6 @@ Then run:
 curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authorization: Bearer $RUNWAY_TOKEN" --header "X-Runway-Version: 2024-11-06" --header "Content-Type: application/json" -d @/tmp/runway_request.json
 ```
 
----
-
 ## Available Models
 
 | Endpoint | Models |
@@ -239,16 +196,12 @@ curl -s -X POST "https://api.dev.runwayml.com/v1/sound_effect" --header "Authori
 | Text to Image | `gen4_image_turbo`, `gen4_image` |
 | Video Upscale | `upscale_v1` |
 
----
-
 ## Aspect Ratios
 
 Common ratios for video generation:
 - `1280:720` (16:9 landscape)
 - `720:1280` (9:16 portrait)
 - `1024:1024` (1:1 square)
-
----
 
 ## Guidelines
 

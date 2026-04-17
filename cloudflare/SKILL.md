@@ -4,32 +4,9 @@ description: Cloudflare API for DNS and zone management. Use when user mentions 
   "DNS record", "zone", or "CDN settings".
 ---
 
-# Cloudflare
+## Troubleshooting
 
-Cloudflare provides a comprehensive platform for DNS management, CDN, security, serverless computing (Workers), object storage (R2), and more. Use the REST API to manage zones, DNS records, Workers scripts, KV namespaces, R2 buckets, and firewall rules programmatically.
-
-> Official docs: `https://developers.cloudflare.com/api/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Manage DNS records (create, update, delete A, AAAA, CNAME, MX, TXT records)
-- List and configure zones and zone settings
-- Deploy and manage Workers scripts
-- Manage R2 object storage buckets
-- Configure firewall rules and security settings
-- Query analytics and logs
-
----
-
-## Prerequisites
-
-Connect the **Cloudflare** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDFLARE_TOKEN` or `zero doctor check-connector --url https://api.cloudflare.com/client/v4/user/tokens/verify --method GET`
+If requests fail, run `zero doctor check-connector --env-name CLOUDFLARE_TOKEN` or `zero doctor check-connector --url https://api.cloudflare.com/client/v4/user/tokens/verify --method GET`
 
 ## How to Use
 
@@ -153,8 +130,6 @@ curl -s "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/firewall
 curl -s "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/analytics/dashboard?since=-1440&continuous=true" --header "Authorization: Bearer $CLOUDFLARE_TOKEN" | jq .
 ```
 
----
-
 ## Common DNS Record Types
 
 | Type | Purpose | Example Content |
@@ -166,8 +141,6 @@ curl -s "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/analytic
 | **TXT** | Text record (SPF, DKIM, etc.) | `v=spf1 include:_spf.google.com ~all` |
 | **NS** | Name server | `ns1.example.com` |
 | **SRV** | Service locator | Service-specific format |
-
----
 
 ## Guidelines
 

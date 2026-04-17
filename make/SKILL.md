@@ -4,37 +4,13 @@ description: Make (Integromat) API for automation. Use when user mentions "Make"
   "Integromat", "automation", or workflow building.
 ---
 
-# Make API
+## Troubleshooting
 
-Use the Make API via direct `curl` calls to **manage scenarios, organizations, teams, connections, data stores, and webhooks** on the Make automation platform.
-
-> Official docs: `https://developers.make.com/api-documentation`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **List, create, run, and manage automation scenarios**
-- **Control scenario execution** (start, stop, run on demand, replay)
-- **Manage organizations and teams** including users and roles
-- **Configure connections and webhooks** for integrations
-- **Work with data stores** for persistent data across scenarios
-
----
-
-## Prerequisites
-
-Connect the **Make** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAKE_TOKEN` or `zero doctor check-connector --url https://eu1.make.com/api/v2/users/me --method GET`
+If requests fail, run `zero doctor check-connector --env-name MAKE_TOKEN` or `zero doctor check-connector --url https://eu1.make.com/api/v2/users/me --method GET`
 
 ## How to Use
 
 All examples below assume you have `MAKE_TOKEN` set. Authentication uses `Token` scheme in the Authorization header.
-
----
 
 ### 1. Get Current User Info
 
@@ -44,8 +20,6 @@ Retrieve information about the authenticated user.
 curl -s "https://eu1.make.com/api/v2/users/me" --header "Authorization: Token $MAKE_TOKEN" | jq .
 ```
 
----
-
 ### 2. List Organizations
 
 Retrieve all organizations the user belongs to.
@@ -54,8 +28,6 @@ Retrieve all organizations the user belongs to.
 curl -s "https://eu1.make.com/api/v2/organizations" --header "Authorization: Token $MAKE_TOKEN" | jq '.organizations'
 ```
 
----
-
 ### 3. List Teams
 
 Get all teams in an organization. Replace `ORG_ID` with the organization ID.
@@ -63,8 +35,6 @@ Get all teams in an organization. Replace `ORG_ID` with the organization ID.
 ```bash
 curl -s "https://eu1.make.com/api/v2/organizations/ORG_ID/teams" --header "Authorization: Token $MAKE_TOKEN" | jq '.teams'
 ```
-
----
 
 ### 4. List Scenarios
 
@@ -80,8 +50,6 @@ Paginate with `pg[offset]` and `pg[limit]`:
 curl -s "https://eu1.make.com/api/v2/scenarios?teamId=TEAM_ID&pg%5Boffset%5D=0&pg%5Blimit%5D=20" --header "Authorization: Token $MAKE_TOKEN" | jq '.scenarios[] | {id, name}'
 ```
 
----
-
 ### 5. Get Scenario Details
 
 Retrieve details of a specific scenario. Replace `SCENARIO_ID` with the scenario ID.
@@ -89,8 +57,6 @@ Retrieve details of a specific scenario. Replace `SCENARIO_ID` with the scenario
 ```bash
 curl -s "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID" --header "Authorization: Token $MAKE_TOKEN" | jq '.scenario'
 ```
-
----
 
 ### 6. Create a Scenario
 
@@ -112,8 +78,6 @@ Then run:
 curl -s -X POST "https://eu1.make.com/api/v2/scenarios" --header "Content-Type: application/json" --header "Authorization: Token $MAKE_TOKEN" -d @/tmp/make_request.json | jq .
 ```
 
----
-
 ### 7. Update a Scenario
 
 Update scenario properties (name, scheduling, etc.).
@@ -132,8 +96,6 @@ Then run:
 curl -s -X PATCH "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID" --header "Content-Type: application/json" --header "Authorization: Token $MAKE_TOKEN" -d @/tmp/make_request.json | jq .
 ```
 
----
-
 ### 8. Start a Scenario
 
 Activate a scenario so it runs on its schedule.
@@ -142,8 +104,6 @@ Activate a scenario so it runs on its schedule.
 curl -s -X POST "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID/start" --header "Authorization: Token $MAKE_TOKEN" | jq .
 ```
 
----
-
 ### 9. Stop a Scenario
 
 Deactivate a running scenario.
@@ -151,8 +111,6 @@ Deactivate a running scenario.
 ```bash
 curl -s -X POST "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID/stop" --header "Authorization: Token $MAKE_TOKEN" | jq .
 ```
-
----
 
 ### 10. Run a Scenario On Demand
 
@@ -181,8 +139,6 @@ Then run:
 curl -s -X POST "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID/run" --header "Content-Type: application/json" --header "Authorization: Token $MAKE_TOKEN" -d @/tmp/make_request.json | jq .
 ```
 
----
-
 ### 11. Clone a Scenario
 
 Duplicate an existing scenario.
@@ -202,8 +158,6 @@ Then run:
 curl -s -X POST "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID/clone" --header "Content-Type: application/json" --header "Authorization: Token $MAKE_TOKEN" -d @/tmp/make_request.json | jq .
 ```
 
----
-
 ### 12. Delete a Scenario
 
 Remove a scenario permanently.
@@ -211,8 +165,6 @@ Remove a scenario permanently.
 ```bash
 curl -s -X DELETE "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID" --header "Authorization: Token $MAKE_TOKEN" | jq .
 ```
-
----
 
 ### 13. Get Scenario Usage
 
@@ -222,8 +174,6 @@ Retrieve 30-day usage analytics (operations, data transfer, centicredits).
 curl -s "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID/usage" --header "Authorization: Token $MAKE_TOKEN" | jq .
 ```
 
----
-
 ### 14. Get Scenario Logs
 
 Retrieve execution logs for a scenario.
@@ -231,8 +181,6 @@ Retrieve execution logs for a scenario.
 ```bash
 curl -s "https://eu1.make.com/api/v2/scenarios/SCENARIO_ID/logs" --header "Authorization: Token $MAKE_TOKEN" | jq '.scenarioLogs[] | {id, status, duration, operations}'
 ```
-
----
 
 ### 15. List Connections
 
@@ -242,8 +190,6 @@ Retrieve all connections for a team.
 curl -s "https://eu1.make.com/api/v2/connections?teamId=TEAM_ID" --header "Authorization: Token $MAKE_TOKEN" | jq '.connections[] | {id, name, accountName, accountType}'
 ```
 
----
-
 ### 16. List Webhooks (Hooks)
 
 Get all webhooks for a team.
@@ -251,8 +197,6 @@ Get all webhooks for a team.
 ```bash
 curl -s "https://eu1.make.com/api/v2/hooks?teamId=TEAM_ID" --header "Authorization: Token $MAKE_TOKEN" | jq '.hooks[] | {id, name, url, enabled}'
 ```
-
----
 
 ### 17. List Data Stores
 
@@ -262,8 +206,6 @@ Get all data stores for a team.
 curl -s "https://eu1.make.com/api/v2/data-stores?teamId=TEAM_ID" --header "Authorization: Token $MAKE_TOKEN" | jq '.dataStores[] | {id, name, records, size}'
 ```
 
----
-
 ### 18. Get Data Store Records
 
 Retrieve records from a data store.
@@ -271,8 +213,6 @@ Retrieve records from a data store.
 ```bash
 curl -s "https://eu1.make.com/api/v2/data-stores/DATASTORE_ID/data" --header "Authorization: Token $MAKE_TOKEN" | jq '.records'
 ```
-
----
 
 ### 19. Create Data Store Record
 
@@ -296,8 +236,6 @@ Then run:
 curl -s -X POST "https://eu1.make.com/api/v2/data-stores/DATASTORE_ID/data" --header "Content-Type: application/json" --header "Authorization: Token $MAKE_TOKEN" -d @/tmp/make_request.json | jq .
 ```
 
----
-
 ### 20. List Scenario Folders
 
 Get all scenario folders for a team.
@@ -305,8 +243,6 @@ Get all scenario folders for a team.
 ```bash
 curl -s "https://eu1.make.com/api/v2/scenarios-folders?teamId=TEAM_ID" --header "Authorization: Token $MAKE_TOKEN" | jq '.scenariosFolders[] | {id, name}'
 ```
-
----
 
 ## Guidelines
 

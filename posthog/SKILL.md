@@ -4,43 +4,15 @@ description: PostHog API for product analytics. Use when user mentions "PostHog"
   "product analytics", "event tracking", or user analytics.
 ---
 
-# PostHog API
+## Troubleshooting
 
-Use the PostHog API via direct `curl` calls to manage **product analytics, feature flags, experiments, insights, dashboards, cohorts, annotations, and surveys**.
-
-> Official docs: `https://posthog.com/docs/api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage feature flags** - create, update, list, and toggle feature flags
-- **Run experiments** - create and monitor A/B tests
-- **Query analytics** - run HogQL queries for custom analytics
-- **Manage insights** - create and retrieve saved insights (trends, funnels, retention)
-- **Manage dashboards** - create and organize dashboards
-- **Track persons and events** - query user data and event streams
-- **Manage cohorts** - create and query user segments
-- **Create annotations** - add timeline markers for deployments or incidents
-- **Manage surveys** - create and monitor in-app surveys
-
----
-
-## Prerequisites
-
-Connect the **PostHog** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name POSTHOG_TOKEN` or `zero doctor check-connector --url https://us.posthog.com/api/organizations/ --method GET`
+If requests fail, run `zero doctor check-connector --env-name POSTHOG_TOKEN` or `zero doctor check-connector --url https://us.posthog.com/api/organizations/ --method GET`
 
 ## How to Use
 
 All examples below assume `POSTHOG_TOKEN` is set. Replace `<project-id>` with your actual project ID from the prerequisites step.
 
 Base URL: `https://us.posthog.com/api`
-
----
 
 ## Organizations
 
@@ -58,8 +30,6 @@ Replace `<org-id>` with your organization ID:
 curl -s "https://us.posthog.com/api/organizations/<org-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, name, slug, created_at, membership_level}'
 ```
 
----
-
 ## Projects
 
 ### List Projects
@@ -75,8 +45,6 @@ Replace `<project-id>` with your project ID:
 ```bash
 curl -s "https://us.posthog.com/api/projects/<project-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, name, timezone, completed_snippet_onboarding, ingested_event}'
 ```
-
----
 
 ## Feature Flags
 
@@ -142,8 +110,6 @@ Replace `<flag-id>` with the feature flag ID:
 curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/feature_flags/<flag-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
 
----
-
 ## Experiments
 
 ### List Experiments
@@ -184,8 +150,6 @@ Write to `/tmp/posthog_request.json`:
 ```bash
 curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/experiments/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name, feature_flag_key}'
 ```
-
----
 
 ## Insights
 
@@ -253,8 +217,6 @@ Replace `<insight-id>` with the insight ID:
 curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/insights/<insight-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
 
----
-
 ## Dashboards
 
 ### List Dashboards
@@ -293,8 +255,6 @@ Replace `<dashboard-id>` with the dashboard ID:
 ```bash
 curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/dashboards/<dashboard-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
-
----
 
 ## HogQL Queries
 
@@ -351,8 +311,6 @@ Write to `/tmp/posthog_request.json`:
 curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/query/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{columns, results}'
 ```
 
----
-
 ## Events
 
 ### List Recent Events
@@ -368,8 +326,6 @@ Replace `$pageview` with the event name you want to filter:
 ```bash
 curl -s "https://us.posthog.com/api/projects/<project-id>/events/?event=%24pageview&limit=10" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, event, distinct_id, timestamp, properties}'
 ```
-
----
 
 ## Persons
 
@@ -392,8 +348,6 @@ Replace `<person-id>` with the person ID:
 ```bash
 curl -s "https://us.posthog.com/api/projects/<project-id>/persons/<person-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{id, distinct_ids, properties, created_at}'
 ```
-
----
 
 ## Cohorts
 
@@ -432,8 +386,6 @@ Write to `/tmp/posthog_request.json`:
 curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/cohorts/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
 ```
 
----
-
 ## Annotations
 
 ### List Annotations
@@ -466,8 +418,6 @@ Replace `<annotation-id>` with the annotation ID:
 curl -s -X DELETE "https://us.posthog.com/api/projects/<project-id>/annotations/<annotation-id>/" --header "Authorization: Bearer $POSTHOG_TOKEN"
 ```
 
----
-
 ## Actions
 
 ### List Actions
@@ -497,8 +447,6 @@ Write to `/tmp/posthog_request.json`:
 ```bash
 curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/actions/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name}'
 ```
-
----
 
 ## Surveys
 
@@ -533,8 +481,6 @@ Write to `/tmp/posthog_request.json`:
 curl -s -X POST "https://us.posthog.com/api/projects/<project-id>/surveys/" --header "Authorization: Bearer $POSTHOG_TOKEN" --header "Content-Type: application/json" -d @/tmp/posthog_request.json | jq '{id, name, type}'
 ```
 
----
-
 ## Event Definitions
 
 ### List Event Definitions
@@ -545,8 +491,6 @@ Discover what events are tracked in your project:
 curl -s "https://us.posthog.com/api/projects/<project-id>/event_definitions/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {name, volume_30_day, query_usage_30_day}'
 ```
 
----
-
 ## Property Definitions
 
 ### List Property Definitions
@@ -556,8 +500,6 @@ Discover what properties are available:
 ```bash
 curl -s "https://us.posthog.com/api/projects/<project-id>/property_definitions/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {name, property_type, is_numerical}'
 ```
-
----
 
 ## Guidelines
 

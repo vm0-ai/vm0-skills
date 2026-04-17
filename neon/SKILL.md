@@ -4,25 +4,9 @@ description: Neon API for serverless Postgres. Use when user mentions "Neon", "N
   database", "serverless Postgres", or asks about Neon projects.
 ---
 
-# Neon API
+## Troubleshooting
 
-Manage serverless Postgres projects, branches, databases, roles, and compute endpoints with the Neon API v2.
-
-> Official docs: `https://api-docs.neon.tech/reference/getting-started`
-
-## Prerequisites
-
-Connect the **Neon** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NEON_TOKEN` or `zero doctor check-connector --url https://console.neon.tech/api/v2/projects --method GET`
-
-## When to Use
-
-- Create and manage Neon projects
-- Create and manage branches (for dev/preview environments)
-- Manage databases and roles within projects
-- Start/stop and configure compute endpoints
-- Get connection URIs for databases
+If requests fail, run `zero doctor check-connector --env-name NEON_TOKEN` or `zero doctor check-connector --url https://console.neon.tech/api/v2/projects --method GET`
 
 ## Core APIs
 
@@ -34,8 +18,6 @@ curl -s "https://console.neon.tech/api/v2/projects" --header "Authorization: Bea
 
 Docs: https://api-docs.neon.tech/reference/listprojects
 
----
-
 ### Get Project Details
 
 Replace `<project-id>` with the actual project ID:
@@ -43,8 +25,6 @@ Replace `<project-id>` with the actual project ID:
 ```bash
 curl -s "https://console.neon.tech/api/v2/projects/<project-id>" --header "Authorization: Bearer $NEON_TOKEN" | jq '.project | {id, name, region_id, pg_version, created_at, store_passwords}'
 ```
-
----
 
 ### Create Project
 
@@ -68,8 +48,6 @@ Docs: https://api-docs.neon.tech/reference/createproject
 
 Available regions: `aws-us-east-2`, `aws-us-west-2`, `aws-eu-central-1`, `aws-ap-southeast-1`
 
----
-
 ### Delete Project
 
 Replace `<project-id>` with the actual project ID:
@@ -77,8 +55,6 @@ Replace `<project-id>` with the actual project ID:
 ```bash
 curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>" --header "Authorization: Bearer $NEON_TOKEN" | jq '.project | {id, name}'
 ```
-
----
 
 ### List Branches
 
@@ -89,8 +65,6 @@ curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches" --head
 ```
 
 Docs: https://api-docs.neon.tech/reference/listprojectbranches
-
----
 
 ### Create Branch
 
@@ -115,8 +89,6 @@ Write to `/tmp/neon_request.json`:
 curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches" --header "Authorization: Bearer $NEON_TOKEN" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '{branch: {id: .branch.id, name: .branch.name}, endpoints: [.endpoints[] | {host: .host, id: .id}]}'
 ```
 
----
-
 ### Delete Branch
 
 Replace `<project-id>` and `<branch-id>`:
@@ -125,8 +97,6 @@ Replace `<project-id>` and `<branch-id>`:
 curl -s -X DELETE "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>" --header "Authorization: Bearer $NEON_TOKEN" | jq '.branch | {id, name}'
 ```
 
----
-
 ### List Databases
 
 Replace `<project-id>` and `<branch-id>`:
@@ -134,8 +104,6 @@ Replace `<project-id>` and `<branch-id>`:
 ```bash
 curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/databases" --header "Authorization: Bearer $NEON_TOKEN" | jq '.databases[] | {id, name, owner_name}'
 ```
-
----
 
 ### Create Database
 
@@ -156,8 +124,6 @@ Write to `/tmp/neon_request.json`:
 curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/databases" --header "Authorization: Bearer $NEON_TOKEN" --header "Content-Type: application/json" -d @/tmp/neon_request.json | jq '.database | {id, name, owner_name}'
 ```
 
----
-
 ### List Roles
 
 Replace `<project-id>` and `<branch-id>`:
@@ -166,8 +132,6 @@ Replace `<project-id>` and `<branch-id>`:
 curl -s "https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id>/roles" --header "Authorization: Bearer $NEON_TOKEN" | jq '.roles[] | {name, protected}'
 ```
 
----
-
 ### List Endpoints (Compute)
 
 Replace `<project-id>`:
@@ -175,8 +139,6 @@ Replace `<project-id>`:
 ```bash
 curl -s "https://console.neon.tech/api/v2/projects/<project-id>/endpoints" --header "Authorization: Bearer $NEON_TOKEN" | jq '.endpoints[] | {id, host, branch_id, type, current_state, autoscaling_limit_min_cu, autoscaling_limit_max_cu}'
 ```
-
----
 
 ### Get Connection URI
 
@@ -188,8 +150,6 @@ curl -s "https://console.neon.tech/api/v2/projects/<project-id>/connection_uri?d
 
 Docs: https://api-docs.neon.tech/reference/getconnectionuri
 
----
-
 ### Start Endpoint
 
 Replace `<project-id>` and `<endpoint-id>`:
@@ -198,8 +158,6 @@ Replace `<project-id>` and `<endpoint-id>`:
 curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/endpoints/<endpoint-id>/start" --header "Authorization: Bearer $NEON_TOKEN" | jq '.endpoint | {id, host, current_state}'
 ```
 
----
-
 ### Suspend Endpoint
 
 Replace `<project-id>` and `<endpoint-id>`:
@@ -207,8 +165,6 @@ Replace `<project-id>` and `<endpoint-id>`:
 ```bash
 curl -s -X POST "https://console.neon.tech/api/v2/projects/<project-id>/endpoints/<endpoint-id>/suspend" --header "Authorization: Bearer $NEON_TOKEN" | jq '.endpoint | {id, host, current_state}'
 ```
-
----
 
 ## Guidelines
 

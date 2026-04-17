@@ -4,33 +4,9 @@ description: Axiom observability API for logs and analytics. Use when user menti
   "logs", "query logs", "Axiom", or asks about event analytics.
 ---
 
-# Axiom
+## Troubleshooting
 
-Axiom is a cloud-native observability platform for storing, querying, and analyzing log and event data at scale. Use the REST API to ingest data, run queries using APL (Axiom Processing Language), and manage datasets, monitors, dashboards, annotations, and notifiers.
-
-> Official docs: https://axiom.co/docs/restapi/introduction
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Send logs, metrics, or event data to Axiom
-- Query and analyze data using APL (Axiom Processing Language)
-- Manage datasets, fields, and virtual fields
-- Create and manage monitors and notifiers (alerts)
-- Manage dashboards and saved queries
-- Create annotations (deployment markers, incidents, etc.)
-- Manage organization users and RBAC
-
----
-
-## Prerequisites
-
-Connect the **Axiom** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AXIOM_TOKEN` or `zero doctor check-connector --url https://api.axiom.co/v2/datasets --method GET`
+If requests fail, run `zero doctor check-connector --env-name AXIOM_TOKEN` or `zero doctor check-connector --url https://api.axiom.co/v2/datasets --method GET`
 
 ## Datasets
 
@@ -107,8 +83,6 @@ curl -s -X PUT "https://api.axiom.co/v2/datasets/<dataset-id>/fields/<field-id>"
   -d "{\"description\": \"Response time in ms\", \"unit\": \"ms\"}"
 ```
 
----
-
 ## Ingest
 
 ### Ingest JSON
@@ -130,8 +104,6 @@ curl -s -X POST "https://us-east-1.aws.edge.axiom.co/v1/datasets/<dataset-name>/
 ```
 
 > **Tip:** Batch multiple events in a single request for better performance. Events without `_time` field will use server receive time.
-
----
 
 ## Queries (APL)
 
@@ -166,8 +138,6 @@ curl -s -X POST "https://api.axiom.co/v1/datasets/_apl?format=tabular" \
 | `['dataset'] \| summarize avg(duration_ms) by bin(_time, 1h)` | Hourly average |
 | `['dataset'] \| sort by _time desc \| limit 100` | Latest 100 events |
 | `['dataset'] \| where _time > ago(1h)` | Events in last hour |
-
----
 
 ## Monitors
 
@@ -217,8 +187,6 @@ curl -s -X DELETE "https://api.axiom.co/v2/monitors/<monitor-id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
----
-
 ## Notifiers
 
 ### List Notifiers
@@ -262,8 +230,6 @@ curl -s -X DELETE "https://api.axiom.co/v2/notifiers/<notifier-id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
----
-
 ## Annotations
 
 ### List Annotations
@@ -304,8 +270,6 @@ curl -s -X PUT "https://api.axiom.co/v2/annotations/<annotation-id>" \
 curl -s -X DELETE "https://api.axiom.co/v2/annotations/<annotation-id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
-
----
 
 ## Dashboards
 
@@ -348,8 +312,6 @@ curl -s -X DELETE "https://api.axiom.co/v2/dashboards/uid/<dashboard-uid>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
----
-
 ## Starred Queries
 
 ### List Starred Queries
@@ -383,8 +345,6 @@ curl -s -X PUT "https://api.axiom.co/v2/apl-starred-queries/<id>" \
 curl -s -X DELETE "https://api.axiom.co/v2/apl-starred-queries/<id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
-
----
 
 ## Virtual Fields
 
@@ -420,8 +380,6 @@ curl -s -X DELETE "https://api.axiom.co/v2/vfields/<id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
----
-
 ## Views (Saved Views)
 
 ### List Views
@@ -456,8 +414,6 @@ curl -s -X DELETE "https://api.axiom.co/v2/views/<id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
----
-
 ## Organization & Users
 
 ### Get Organization
@@ -487,8 +443,6 @@ curl -s "https://api.axiom.co/v2/users" \
 curl -s "https://api.axiom.co/v2/users/<user-id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
-
----
 
 ## API Tokens
 
@@ -522,8 +476,6 @@ curl -s -X DELETE "https://api.axiom.co/v2/tokens/<token-id>" \
   --header "Authorization: Bearer $AXIOM_TOKEN"
 ```
 
----
-
 ## Guidelines
 
 1. **Use Edge URLs for Ingest**: Always use the edge endpoint (`us-east-1.aws.edge.axiom.co` or `eu-central-1.aws.edge.axiom.co`) for data ingestion, not `api.axiom.co`.
@@ -534,8 +486,6 @@ curl -s -X DELETE "https://api.axiom.co/v2/tokens/<token-id>" \
 6. **Data Formats**: JSON array is recommended for ingest; NDJSON and CSV are also supported.
 7. **Dataset Names**: In APL queries, use `['dataset-name']` syntax (square brackets + quotes) for dataset names.
 8. **Monitors + Notifiers**: Monitors define alert conditions (APL query + threshold); notifiers define delivery channels (Slack, email, PagerDuty, etc.). Link them via `notifierIds`.
-
----
 
 ## How to Look Up More API Details
 

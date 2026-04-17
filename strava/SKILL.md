@@ -4,36 +4,9 @@ description: Strava API for fitness activities. Use when user mentions "Strava",
   "cycling", "activity", or asks about fitness tracking.
 ---
 
-# Strava API
+## Troubleshooting
 
-Use the Strava API v3 via `curl` to access **athlete activities, segments, clubs, gear, and routes**. Create, update, and upload activities.
-
-> Official docs: https://developers.strava.com/docs/reference/
-
----
-
-## Prerequisites
-
-Connect the **Strava** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAVA_TOKEN` or `zero doctor check-connector --url https://www.strava.com/api/v3/athlete --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- Get athlete profile and statistics
-- List, search, and filter activities
-- Create manual activities or upload activity files (GPX/FIT/TCX)
-- Update activity name, description, sport type, and other metadata
-- Access activity streams (GPS, heart rate, power data)
-- View segments, clubs, gear, and routes
-
----
-
-> **Placeholders:** Values in `<angle-brackets>` like `<activity-id>` are placeholders. Replace them with actual values when executing.
-
----
+If requests fail, run `zero doctor check-connector --env-name STRAVA_TOKEN` or `zero doctor check-connector --url https://www.strava.com/api/v3/athlete --method GET`
 
 ## Athlete
 
@@ -50,8 +23,6 @@ Replace `<athlete-id>` with the `id` from the athlete profile above:
 ```bash
 curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/stats" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{recent_run_totals, recent_ride_totals, ytd_run_totals, ytd_ride_totals, all_run_totals, all_ride_totals}'
 ```
-
----
 
 ## Activities
 
@@ -122,8 +93,6 @@ curl -s -X PUT "https://www.strava.com/api/v3/activities/<activity-id>" --header
 
 Updatable fields: `name`, `sport_type`, `description`, `gear_id` (set to `"none"` to remove), `trainer`, `commute`, `hide_from_home`.
 
----
-
 ## Uploads
 
 ### Upload Activity File (GPX/FIT/TCX)
@@ -143,8 +112,6 @@ curl -s "https://www.strava.com/api/v3/uploads/<upload-id>" --header "Authorizat
 ```
 
 When `activity_id` is populated, the upload is complete.
-
----
 
 ## Activity Details
 
@@ -174,8 +141,6 @@ curl -s "https://www.strava.com/api/v3/activities/<activity-id>/streams?keys=tim
 
 Available stream keys: `time`, `distance`, `latlng`, `altitude`, `velocity_smooth`, `heartrate`, `cadence`, `watts`, `temp`, `moving`, `grade_smooth`.
 
----
-
 ## Segments
 
 ### List Starred Segments
@@ -189,8 +154,6 @@ curl -s "https://www.strava.com/api/v3/segments/starred" --header "Authorization
 ```bash
 curl -s "https://www.strava.com/api/v3/segments/<segment-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, name, activity_type, distance, average_grade, maximum_grade, elevation_high, elevation_low, city, country, effort_count, athlete_count}'
 ```
-
----
 
 ## Gear
 
@@ -207,8 +170,6 @@ Bike IDs start with `b`, shoe IDs start with `g`:
 ```bash
 curl -s "https://www.strava.com/api/v3/gear/<gear-id>" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '{id, name, brand_name, model_name, distance, converted_distance}'
 ```
-
----
 
 ## Clubs
 
@@ -230,8 +191,6 @@ curl -s "https://www.strava.com/api/v3/clubs/<club-id>" --header "Authorization:
 curl -s "https://www.strava.com/api/v3/clubs/<club-id>/activities?per_page=20" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {name, sport_type, distance, moving_time, athlete: (.athlete.firstname + " " + .athlete.lastname)}'
 ```
 
----
-
 ## Routes
 
 ### Get Athlete Routes
@@ -239,8 +198,6 @@ curl -s "https://www.strava.com/api/v3/clubs/<club-id>/activities?per_page=20" -
 ```bash
 curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/routes?per_page=20" --header "Authorization: Bearer $STRAVA_TOKEN" | jq '.[] | {id, name, type, distance, elevation_gain, estimated_moving_time}'
 ```
-
----
 
 ## Guidelines
 
@@ -252,8 +209,6 @@ curl -s "https://www.strava.com/api/v3/athletes/<athlete-id>/routes?per_page=20"
 6. **Distance units**: All distances are in **meters**, speeds in **meters/second**
 7. **Time units**: All durations are in **seconds**
 8. **Sport type vs type**: Prefer `sport_type` over deprecated `type` field
-
----
 
 ## API Reference
 

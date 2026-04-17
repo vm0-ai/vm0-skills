@@ -4,37 +4,13 @@ description: Chatwoot API for customer support. Use when user mentions "Chatwoot
   "conversations", "support chat", or customer messaging.
 ---
 
-# Chatwoot
+## Troubleshooting
 
-Use Chatwoot via direct `curl` calls to **manage customer support** across multiple channels (website, email, WhatsApp, etc.).
-
-> Official docs: `https://developers.chatwoot.com/api-reference/introduction`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage contacts** - create, search, and update customer profiles
-- **Handle conversations** - create, assign, and track support conversations
-- **Send messages** - reply to customers or add internal notes
-- **List agents** - get support team information
-- **Automate workflows** - integrate with CRM, ticketing, or notification systems
-
----
-
-## Prerequisites
-
-Connect the **Chatwoot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CHATWOOT_TOKEN` or `zero doctor check-connector --url https://app.chatwoot.com/api/v1/profile --method GET`
+If requests fail, run `zero doctor check-connector --env-name CHATWOOT_TOKEN` or `zero doctor check-connector --url https://app.chatwoot.com/api/v1/profile --method GET`
 
 ## How to Use
 
 All examples use the **Application API** with user access token.
-
----
 
 ### 1. Create a Contact
 
@@ -62,8 +38,6 @@ Then run:
 curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/contacts" -H "api_access_token: $CHATWOOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
----
-
 ### 2. Search Contacts
 
 Search contacts by email, phone, or name:
@@ -72,8 +46,6 @@ Search contacts by email, phone, or name:
 curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/contacts/search?q=john@example.com" -H "api_access_token: $CHATWOOT_TOKEN" | jq '.payload[] | {id, name, email}'
 ```
 
----
-
 ### 3. Get Contact Details
 
 Get a specific contact by ID. Replace `<contact-id>` with the actual contact ID from the "Search Contacts" or "Create a Contact" response:
@@ -81,8 +53,6 @@ Get a specific contact by ID. Replace `<contact-id>` with the actual contact ID 
 ```bash
 curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/contacts/<contact-id>" -H "api_access_token: $CHATWOOT_TOKEN"
 ```
-
----
 
 ### 4. Create a Conversation
 
@@ -108,8 +78,6 @@ Then run:
 curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations" -H "api_access_token: $CHATWOOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
----
-
 ### 5. List Conversations
 
 Get all conversations with optional filters:
@@ -119,8 +87,6 @@ Get all conversations with optional filters:
 curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations?status=open" -H "api_access_token: $CHATWOOT_TOKEN" | jq '.data.payload[] | {id, status, contact: .meta.sender.name}'
 ```
 
----
-
 ### 6. Get Conversation Details
 
 Get details of a specific conversation. Replace `<conversation-id>` with the actual conversation ID from the "List Conversations" or "Create a Conversation" response:
@@ -128,8 +94,6 @@ Get details of a specific conversation. Replace `<conversation-id>` with the act
 ```bash
 curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations/<conversation-id>" -H "api_access_token: $CHATWOOT_TOKEN"
 ```
-
----
 
 ### 7. Send a Message
 
@@ -151,8 +115,6 @@ Then run:
 curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations/<conversation-id>/messages" -H "api_access_token: $CHATWOOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
----
-
 ### 8. Add Private Note
 
 Add an internal note (not visible to customer). Replace `<conversation-id>` with the actual conversation ID from the "List Conversations" response:
@@ -173,8 +135,6 @@ Then run:
 curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations/<conversation-id>/messages" -H "api_access_token: $CHATWOOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
----
-
 ### 9. Assign Conversation
 
 Assign a conversation to an agent. Replace `<conversation-id>` with the actual conversation ID and `<agent-id>` with the agent ID from the "List Agents" response:
@@ -192,8 +152,6 @@ Then run:
 ```bash
 curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations/<conversation-id>/assignments" -H "api_access_token: $CHATWOOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
-
----
 
 ### 10. Update Conversation Status
 
@@ -213,8 +171,6 @@ Then run:
 curl -s -X POST "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations/<conversation-id>/toggle_status" -H "api_access_token: $CHATWOOT_TOKEN" -H "Content-Type: application/json" -d @/tmp/chatwoot_request.json
 ```
 
----
-
 ### 11. List Agents
 
 Get all agents in the account:
@@ -222,8 +178,6 @@ Get all agents in the account:
 ```bash
 curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/agents" -H "api_access_token: $CHATWOOT_TOKEN" | jq '.[] | {id, name, email, role, availability_status}'
 ```
-
----
 
 ### 12. List Inboxes
 
@@ -233,8 +187,6 @@ Get all inboxes (channels) in the account:
 curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/inboxes" -H "api_access_token: $CHATWOOT_TOKEN" | jq '.payload[] | {id, name, channel_type}'
 ```
 
----
-
 ### 13. Get Conversation Counts
 
 Get counts by status for dashboard:
@@ -242,8 +194,6 @@ Get counts by status for dashboard:
 ```bash
 curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/conversations/meta" -H "api_access_token: $CHATWOOT_TOKEN" | jq '.meta.all_count, .meta.mine_count'
 ```
-
----
 
 ## Conversation Status
 
@@ -254,8 +204,6 @@ curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/co
 | `pending` | Waiting for response |
 | `snoozed` | Temporarily paused |
 
----
-
 ## Message Types
 
 | Type | Value | Description |
@@ -263,8 +211,6 @@ curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/co
 | Outgoing | `outgoing` | Agent to customer |
 | Incoming | `incoming` | Customer to agent |
 | Private | `private: true` | Internal note (not visible to customer) |
-
----
 
 ## Response Fields
 
@@ -295,8 +241,6 @@ curl -s -X GET "https://app.chatwoot.com/api/v1/accounts/$CHATWOOT_ACCOUNT_ID/co
 | `message_type` | incoming/outgoing |
 | `private` | Is internal note |
 | `status` | sent/delivered/read/failed |
-
----
 
 ## Guidelines
 

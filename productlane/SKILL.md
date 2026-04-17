@@ -4,32 +4,9 @@ description: Productlane API for feedback management. Use when user mentions "Pr
   "feedback", "feature request", or product insights.
 ---
 
-# Productlane API
+## Troubleshooting
 
-Manage your public roadmap, helpdesk, feedback threads, companies, contacts, changelogs, and documentation via Productlane's REST API.
-
-> Official docs: `https://productlane.mintlify.dev/docs/api-reference`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage feedback threads** — create, list, update, and send messages
-- **Manage companies and contacts** — create, update, delete, and query customer data
-- **Publish changelogs** — create and update changelog entries with markdown content
-- **View roadmap** — list projects and issues from the public portal
-- **Manage documentation** — create and organize help articles
-- **Manage users** — invite members and update roles
-
----
-
-## Prerequisites
-
-Connect the **Productlane** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PRODUCTLANE_TOKEN` or `zero doctor check-connector --url https://productlane.com/api/v1/workspaces --method GET`
+If requests fail, run `zero doctor check-connector --env-name PRODUCTLANE_TOKEN` or `zero doctor check-connector --url https://productlane.com/api/v1/workspaces --method GET`
 
 ## Workspaces
 
@@ -40,8 +17,6 @@ Retrieve workspace information. Replace `<workspace-id>` with the actual workspa
 ```bash
 curl -s "https://productlane.com/api/v1/workspaces/<workspace-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"
 ```
-
----
 
 ## Companies
 
@@ -119,8 +94,6 @@ Get available Linear customer statuses and tiers. Requires Linear integration wi
 curl -s "https://productlane.com/api/v1/companies/linear-options" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"
 ```
 
----
-
 ## Contacts
 
 ### List Contacts
@@ -180,8 +153,6 @@ Replace `<contact-id>` with the actual contact ID:
 ```bash
 curl -s -X DELETE "https://productlane.com/api/v1/contacts/<contact-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"
 ```
-
----
 
 ## Threads (Feedback)
 
@@ -265,8 +236,6 @@ Then run:
 curl -s -X POST "https://productlane.com/api/v1/threads/<thread-id>/messages" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json
 ```
 
----
-
 ## Changelogs
 
 ### List Changelogs
@@ -326,8 +295,6 @@ Replace `<changelog-id>` with the actual changelog ID:
 ```bash
 curl -s -X DELETE "https://productlane.com/api/v1/changelogs/<changelog-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"
 ```
-
----
 
 ## Portal / Roadmap
 
@@ -393,8 +360,6 @@ Replace `<upvote-id>` with the actual upvote ID:
 ```bash
 curl -s -X DELETE "https://productlane.com/api/v1/portal/upvotes/<upvote-id>" --header "Authorization: Bearer $PRODUCTLANE_TOKEN"
 ```
-
----
 
 ## Documentation
 
@@ -492,8 +457,6 @@ Then run:
 curl -s -X POST "https://productlane.com/api/v1/docs/groups/move-articles" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json
 ```
 
----
-
 ## Users
 
 ### List Members
@@ -537,8 +500,6 @@ Then run:
 curl -s -X PATCH "https://productlane.com/api/v1/users/role" --header "Authorization: Bearer $PRODUCTLANE_TOKEN" --header "Content-Type: application/json" -d @/tmp/productlane_request.json
 ```
 
----
-
 ## Guidelines
 
 1. **Base URL**: All endpoints use `https://productlane.com/api/v1/`
@@ -550,8 +511,6 @@ curl -s -X PATCH "https://productlane.com/api/v1/users/role" --header "Authoriza
 7. **Company linking**: When creating contacts, use exactly one of `companyId` (recommended), `companyName`, or `companyExternalId`
 8. **Public endpoints**: Workspace, portal issues/projects, and published changelogs/articles can be accessed without authentication
 9. **Security**: Never expose API keys in logs or client-side code
-
----
 
 ## API Reference
 

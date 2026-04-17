@@ -3,14 +3,6 @@ name: period-close
 description: Orchestrate the month-end and quarter-end accounting close with task sequencing, dependency management, and progress tracking. Use for close calendar planning, close checklist management, close task tracking, close timeline optimization, close day activities, hard close procedures, accelerated close planning, or close process improvement.
 ---
 
-# Period Close Orchestration
-
-Task sequences, dependency logic, progress measurement, and continuous improvement practices for executing a controlled and timely accounting close.
-
-## Prerequisites
-
-Connect the **Period Close Orchestration** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Close Activity Checklist
 
 ### Pre-Close Window (Final 2-3 Business Days of the Period)

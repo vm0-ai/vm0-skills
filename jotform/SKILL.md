@@ -4,37 +4,13 @@ description: JotForm API for form management. Use when user mentions "JotForm", 
   "submissions", or asks about form data.
 ---
 
-# Jotform API
+## Troubleshooting
 
-Use the Jotform API via direct `curl` calls to **manage forms, submissions, questions, webhooks, and account data**.
-
-> Official docs: `https://api.jotform.com/docs/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **List and retrieve forms** from a Jotform account
-- **Manage form submissions** (list, create, update, delete)
-- **Read and modify form questions** and properties
-- **Set up webhooks** for form submission notifications
-- **Access user account info** including usage, settings, and folders
-
----
-
-## Prerequisites
-
-Connect the **Jotform** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JOTFORM_TOKEN` or `zero doctor check-connector --url https://api.jotform.com/user --method GET`
+If requests fail, run `zero doctor check-connector --env-name JOTFORM_TOKEN` or `zero doctor check-connector --url https://api.jotform.com/user --method GET`
 
 ## How to Use
 
 All examples below assume you have `JOTFORM_TOKEN` set. Authentication uses the `APIKEY` header.
-
----
 
 ### 1. Get User Account Info
 
@@ -44,8 +20,6 @@ Retrieve information about the authenticated user.
 curl -s "https://api.jotform.com/user" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
----
-
 ### 2. Get Account Usage
 
 Check API usage limits and current consumption.
@@ -53,8 +27,6 @@ Check API usage limits and current consumption.
 ```bash
 curl -s "https://api.jotform.com/user/usage" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
-
----
 
 ### 3. List All Forms
 
@@ -70,8 +42,6 @@ Filter forms by status:
 curl -s "https://api.jotform.com/user/forms?limit=20&filter=%7B%22status%3Ane%22%3A%22DELETED%22%7D" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content[] | {id, title, status}'
 ```
 
----
-
 ### 4. Get Form Details
 
 Retrieve details for a specific form. Replace `FORM_ID` with the actual form ID.
@@ -79,8 +49,6 @@ Retrieve details for a specific form. Replace `FORM_ID` with the actual form ID.
 ```bash
 curl -s "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
-
----
 
 ### 5. Get Form Questions
 
@@ -96,8 +64,6 @@ Get a specific question by ID:
 curl -s "https://api.jotform.com/form/FORM_ID/question/QUESTION_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
----
-
 ### 6. List Form Submissions
 
 Get submissions for a specific form. Supports `limit`, `offset`, `orderby`, and `filter`.
@@ -105,8 +71,6 @@ Get submissions for a specific form. Supports `limit`, `offset`, `orderby`, and 
 ```bash
 curl -s "https://api.jotform.com/form/FORM_ID/submissions?limit=20&offset=0&orderby=created_at" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content[] | {id, created_at, status}'
 ```
-
----
 
 ### 7. Get a Single Submission
 
@@ -116,8 +80,6 @@ Retrieve details for a specific submission.
 curl -s "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
----
-
 ### 8. Create a Submission
 
 Submit new data to a form. Field keys follow the format `submission[QUESTION_ID]`.
@@ -125,8 +87,6 @@ Submit new data to a form. Field keys follow the format `submission[QUESTION_ID]
 ```bash
 curl -s -X POST "https://api.jotform.com/form/FORM_ID/submissions" --header "APIKEY: $JOTFORM_TOKEN" -d "submission[1]=John" -d "submission[2]=Doe" -d "submission[3]=john@example.com" | jq .
 ```
-
----
 
 ### 9. Update a Submission
 
@@ -136,8 +96,6 @@ Edit an existing submission.
 curl -s -X POST "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $JOTFORM_TOKEN" -d "submission[1]=Jane" -d "submission[2]=Smith" | jq .
 ```
 
----
-
 ### 10. Delete a Submission
 
 Delete a submission by ID.
@@ -145,8 +103,6 @@ Delete a submission by ID.
 ```bash
 curl -s -X DELETE "https://api.jotform.com/submission/SUBMISSION_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
-
----
 
 ### 11. Get Form Properties
 
@@ -162,8 +118,6 @@ Get a specific property:
 curl -s "https://api.jotform.com/form/FORM_ID/properties/PROPERTY_KEY" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
----
-
 ### 12. List Form Webhooks
 
 Get all webhooks configured for a form.
@@ -171,8 +125,6 @@ Get all webhooks configured for a form.
 ```bash
 curl -s "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
-
----
 
 ### 13. Create a Webhook
 
@@ -182,8 +134,6 @@ Add a webhook URL to receive form submission notifications.
 curl -s -X POST "https://api.jotform.com/form/FORM_ID/webhooks" --header "APIKEY: $JOTFORM_TOKEN" -d "webhookURL=https://example.com/webhook" | jq .
 ```
 
----
-
 ### 14. Delete a Webhook
 
 Remove a webhook from a form.
@@ -191,8 +141,6 @@ Remove a webhook from a form.
 ```bash
 curl -s -X DELETE "https://api.jotform.com/form/FORM_ID/webhooks/WEBHOOK_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
-
----
 
 ### 15. List Form Files
 
@@ -202,8 +150,6 @@ Get all files uploaded through a form.
 curl -s "https://api.jotform.com/form/FORM_ID/files" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
 
----
-
 ### 16. Clone a Form
 
 Create a copy of an existing form.
@@ -211,8 +157,6 @@ Create a copy of an existing form.
 ```bash
 curl -s -X POST "https://api.jotform.com/form/FORM_ID/clone" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
-
----
 
 ### 17. Delete a Form
 
@@ -222,8 +166,6 @@ Delete a form by ID.
 curl -s -X DELETE "https://api.jotform.com/form/FORM_ID" --header "APIKEY: $JOTFORM_TOKEN" | jq .
 ```
 
----
-
 ### 18. List User Folders
 
 Get all folders in the account.
@@ -231,8 +173,6 @@ Get all folders in the account.
 ```bash
 curl -s "https://api.jotform.com/user/folders" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
-
----
 
 ### 19. Get All User Submissions
 
@@ -242,8 +182,6 @@ Retrieve all submissions across all forms.
 curl -s "https://api.jotform.com/user/submissions?limit=20&offset=0" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content[] | {id, form_id, created_at, status}'
 ```
 
----
-
 ### 20. Get Form Reports
 
 List all reports for a form.
@@ -251,8 +189,6 @@ List all reports for a form.
 ```bash
 curl -s "https://api.jotform.com/form/FORM_ID/reports" --header "APIKEY: $JOTFORM_TOKEN" | jq '.content'
 ```
-
----
 
 ## Guidelines
 

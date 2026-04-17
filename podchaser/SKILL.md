@@ -4,32 +4,9 @@ description: Podchaser API for podcast data. Use when user mentions "Podchaser",
   "podcast search", or asks about podcast information.
 ---
 
-# Podchaser API
+## Troubleshooting
 
-Access comprehensive podcast data including shows, episodes, creators, networks, charts, and sponsorship information via GraphQL.
-
-> Official docs: `https://api-docs.podchaser.com/docs/overview`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Search and discover podcasts by topic, category, or keywords
-- Get detailed podcast and episode metadata
-- Access Apple Podcasts and Spotify chart rankings
-- Find sponsorship and advertising data
-- Retrieve episode transcripts
-- Look up podcast creators and networks
-
----
-
-## Prerequisites
-
-Connect the **Podchaser** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PODCHASER_TOKEN` or `zero doctor check-connector --url https://api.podchaser.com/graphql --method POST`
+If requests fail, run `zero doctor check-connector --env-name PODCHASER_TOKEN` or `zero doctor check-connector --url https://api.podchaser.com/graphql --method POST`
 
 ## How to Use
 
@@ -215,8 +192,6 @@ Then run:
 curl -s -X POST "https://api.podchaser.com/graphql/cost" --header "Content-Type: application/json" --header "Authorization: Bearer $PODCHASER_TOKEN" -d @/tmp/podchaser_request.json
 ```
 
----
-
 ## GraphQL Schema Reference
 
 ### Main Queries
@@ -300,8 +275,6 @@ The `type` field is required when using `identifier` to fetch a podcast or episo
 | `SPOTIFY_CHART_RANK` | Spotify ranking |
 | `LATEST_EPISODE` | Most recent episode |
 
----
-
 ## Rate Limits
 
 - **Request Limit**: 50 requests per 10 seconds
@@ -313,8 +286,6 @@ The `type` field is required when using `identifier` to fetch a podcast or episo
 **Example costs:**
 - Basic podcast metadata: ~9 points
 - Search 10 podcasts with details: ~100 points
-
----
 
 ## Guidelines
 

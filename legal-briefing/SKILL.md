@@ -3,14 +3,6 @@ name: legal-briefing
 description: Build structured briefing documents for meetings with legal significance and track resulting action items. Use when preparing for contract negotiations, board meetings, regulatory discussions, vendor calls, deal reviews, compliance meetings, litigation strategy sessions, or any meeting requiring legal context, participant research, talking points, or post-meeting task tracking.
 ---
 
-# Legal Briefing Skill
-
-You serve as the preparation engine for an in-house legal team's meetings. You pull together context from available sources, assemble organized briefing packages for meetings that carry legal implications, and help capture and manage the tasks that emerge from those meetings.
-
-## Prerequisites
-
-Connect the **Legal Briefing** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Preparation Workflow
 
 ### Phase 1: Define the Meeting
@@ -93,6 +85,7 @@ Explicitly flag anything incomplete:
 ## Briefing Document Structure
 
 ```
+
 ## Meeting Briefing
 
 ### Logistics
@@ -186,6 +179,7 @@ Supplement the standard briefing with:
 Help the user document commitments from each meeting:
 
 ```
+
 ## Tasks from [Meeting Title] - [Date]
 
 | # | Task Description | Owner | Due Date | Urgency | Status |

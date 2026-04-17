@@ -4,31 +4,9 @@ description: GitLab API for repos and CI/CD. Use when user mentions "GitLab", "g
   shares a GitLab link, "GitLab repo", or asks about GitLab projects.
 ---
 
-# GitLab API
+## Troubleshooting
 
-Use the GitLab REST API via direct `curl` calls to manage **projects, issues, merge requests, and pipelines**.
-
-> Official docs: `https://docs.gitlab.com/ee/api/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage projects** - list, create, get project details
-- **Handle issues** - create, update, close, list issues
-- **Work with merge requests** - create, list, merge MRs
-- **Check pipelines** - list jobs, view pipeline status
-- **Manage users** - search users, get user info
-
----
-
-## Prerequisites
-
-Connect the **GitLab** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITLAB_TOKEN` or `zero doctor check-connector --url https://gitlab.com/api/v4/user --method GET`
+If requests fail, run `zero doctor check-connector --env-name GITLAB_TOKEN` or `zero doctor check-connector --url https://gitlab.com/api/v4/user --method GET`
 
 ## How to Use
 
@@ -38,8 +16,6 @@ Base URL: `https://${GITLAB_HOST}/api/v4`
 
 > Note: Project IDs can be numeric (e.g., `123`) or URL-encoded paths (e.g., `mygroup%2Fmyproject`).
 
----
-
 ### 1. Get Current User
 
 Verify your authentication:
@@ -47,8 +23,6 @@ Verify your authentication:
 ```bash
 curl -s "https://$GITLAB_HOST/api/v4/user" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" | jq '{id, username, name, email, state}'
 ```
-
----
 
 ### 2. List Projects
 
@@ -64,8 +38,6 @@ Filter options:
 - `search=keyword` - Search by name
 - `visibility=public|internal|private` - Filter by visibility
 
----
-
 ### 3. Get Project Details
 
 Get details for a specific project. Replace `<project-id>` with the numeric project ID or URL-encoded path (e.g., `mygroup%2Fmyproject`):
@@ -73,8 +45,6 @@ Get details for a specific project. Replace `<project-id>` with the numeric proj
 ```bash
 curl -s "https://$GITLAB_HOST/api/v4/projects/<project-id>" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" | jq '{id, name, path_with_namespace, default_branch, visibility, web_url}
 ```
-
----
 
 ### 4. List Project Issues
 
@@ -90,8 +60,6 @@ Filter options:
 - `assignee_id=123` - Filter by assignee
 - `search=keyword` - Search in title/description
 
----
-
 ### 5. Get Issue Details
 
 Get a specific issue. Replace `<project-id>` and `<issue-iid>` with actual values:
@@ -99,8 +67,6 @@ Get a specific issue. Replace `<project-id>` and `<issue-iid>` with actual value
 ```bash
 curl -s "https://$GITLAB_HOST/api/v4/projects/<project-id>/issues/<issue-iid>" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" | jq '{iid, title, description, state, author: .author.username, assignees: [.assignees[].username], labels, created_at, web_url}'
 ```
-
----
 
 ### 6. Create Issue
 
@@ -121,8 +87,6 @@ Then run:
 ```bash
 curl -s -X POST "https://$GITLAB_HOST/api/v4/projects/<project-id>/issues" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json | jq '{iid, title, web_url}'
 ```
-
----
 
 ### 7. Create Issue with Assignee and Milestone
 
@@ -146,8 +110,6 @@ Then run:
 curl -s -X POST "https://$GITLAB_HOST/api/v4/projects/<project-id>/issues" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json | jq '{iid, title, web_url}'
 ```
 
----
-
 ### 8. Update Issue
 
 Update an existing issue. Replace `<project-id>` and `<issue-iid>` with actual values:
@@ -166,8 +128,6 @@ Then run:
 ```bash
 curl -s -X PUT "https://$GITLAB_HOST/api/v4/projects/<project-id>/issues/<issue-iid>" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json | jq '{iid, title, labels, updated_at}'
 ```
-
----
 
 ### 9. Close Issue
 
@@ -189,8 +149,6 @@ curl -s -X PUT "https://$GITLAB_HOST/api/v4/projects/<project-id>/issues/<issue-
 
 Use `"state_event": "reopen"` to reopen a closed issue.
 
----
-
 ### 10. Add Comment to Issue
 
 Add a note/comment to an issue. Replace `<project-id>` and `<issue-iid>` with actual values:
@@ -209,8 +167,6 @@ Then run:
 curl -s -X POST "https://$GITLAB_HOST/api/v4/projects/<project-id>/issues/<issue-iid>/notes" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json | jq '{id, body, author: .author.username, created_at}'
 ```
 
----
-
 ### 11. List Merge Requests
 
 Get merge requests for a project. Replace `<project-id>` with the actual project ID:
@@ -224,8 +180,6 @@ Filter options:
 - `scope=created_by_me|assigned_to_me|all` - Filter by involvement
 - `labels=review-needed` - Filter by labels
 
----
-
 ### 12. Get Merge Request Details
 
 Get a specific merge request. Replace `<project-id>` and `<mr-iid>` with actual values:
@@ -233,8 +187,6 @@ Get a specific merge request. Replace `<project-id>` and `<mr-iid>` with actual 
 ```bash
 curl -s "https://$GITLAB_HOST/api/v4/projects/<project-id>/merge_requests/<mr-iid>" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" | jq '{iid, title, state, source_branch, target_branch, author: .author.username, merge_status, has_conflicts, web_url}'
 ```
-
----
 
 ### 13. Create Merge Request
 
@@ -256,8 +208,6 @@ Then run:
 ```bash
 curl -s -X POST "https://$GITLAB_HOST/api/v4/projects/<project-id>/merge_requests" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json | jq '{iid, title, web_url}'
 ```
-
----
 
 ### 14. Merge a Merge Request
 
@@ -282,8 +232,6 @@ Options:
 - `squash=true` - Squash commits before merging
 - `should_remove_source_branch=true` - Delete source branch after merge
 
----
-
 ### 15. List Pipelines
 
 Get pipelines for a project. Replace `<project-id>` with the actual project ID:
@@ -291,8 +239,6 @@ Get pipelines for a project. Replace `<project-id>` with the actual project ID:
 ```bash
 curl -s "https://$GITLAB_HOST/api/v4/projects/<project-id>/pipelines?per_page=10" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" | jq '.[] | {id, status, ref, sha: .sha[0:8], created_at, web_url}'
 ```
-
----
 
 ### 16. Get Pipeline Details
 
@@ -302,8 +248,6 @@ Get details of a specific pipeline. Replace `<project-id>` and `<pipeline-id>` w
 curl -s "https://$GITLAB_HOST/api/v4/projects/<project-id>/pipelines/<pipeline-id>" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" | jq '{id, status, ref, duration, finished_at, web_url}'
 ```
 
----
-
 ### 17. List Pipeline Jobs
 
 Get jobs in a pipeline. Replace `<project-id>` and `<pipeline-id>` with actual values:
@@ -311,8 +255,6 @@ Get jobs in a pipeline. Replace `<project-id>` and `<pipeline-id>` with actual v
 ```bash
 curl -s "https://$GITLAB_HOST/api/v4/projects/<project-id>/pipelines/<pipeline-id>/jobs" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" | jq '.[] | {id, name, stage, status, duration}'
 ```
-
----
 
 ### 18. Search Users
 
@@ -327,8 +269,6 @@ john
 ```bash
 curl -s -G "https://$GITLAB_HOST/api/v4/users" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --data-urlencode "search@/tmp/gitlab_search.txt" | jq '.[] | {id, username, name, state}'
 ```
-
----
 
 ### 19. Create Project
 
@@ -350,8 +290,6 @@ Then run:
 curl -s -X POST "https://$GITLAB_HOST/api/v4/projects" --header "PRIVATE-TOKEN: $GITLAB_TOKEN" --header "Content-Type: application/json" -d @/tmp/gitlab_request.json | jq '{id, path_with_namespace, web_url}'
 ```
 
----
-
 ### 20. Delete Issue
 
 Delete an issue (requires admin or owner permissions). Replace `<project-id>` and `<issue-iid>` with actual values:
@@ -361,8 +299,6 @@ curl -s -X DELETE "https://$GITLAB_HOST/api/v4/projects/<project-id>/issues/<iss
 ```
 
 Returns 204 No Content on success.
-
----
 
 ## Project ID Encoding
 
@@ -378,8 +314,6 @@ PROJECT_ID="123"
 # Using encoded path
 PROJECT_ID="mygroup%2Fmyproject"
 ```
-
----
 
 ## Guidelines
 

@@ -5,10 +5,6 @@ description: GitHub API for repos, issues, and PRs. Use when user mentions "GitH
   about code hosting.
 ---
 
-# GitHub Automation
-
-This Skill helps you manage GitHub operations using the `gh` CLI, including repositories, issues, pull requests, releases, and GitHub Actions workflows.
-
 ## Capabilities
 
 - **Repositories**: Create, clone, fork, view, and manage repos
@@ -20,7 +16,6 @@ This Skill helps you manage GitHub operations using the `gh` CLI, including repo
 - **Search**: Search repos, issues, PRs, code, and users
 
 ## Authentication
-
 
 Verify with:
 ```bash
@@ -127,8 +122,3 @@ gh pr list --repo <owner>/<repo> --state open --search "review:required"
 ```bash
 gh pr view <number> --repo <owner>/<repo> --json title,state,reviews,checks
 ```
-
-## Prerequisites
-
-Connect the **GitHub** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-

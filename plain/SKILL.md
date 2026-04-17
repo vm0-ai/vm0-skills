@@ -5,32 +5,9 @@ vm0_env:
   - PLAIN_TOKEN
 ---
 
-# Plain
+## Troubleshooting
 
-Manage customer support threads, customers, and labels via Plain's GraphQL API.
-
-> Official docs: `https://www.plain.com/docs/graphql/introduction`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- List and search support threads by status or customer
-- Get thread details and conversation history
-- Reply to customer threads
-- Create or update customer records
-- Add labels to threads for categorization
-- Create customer events for lifecycle tracking
-
----
-
-## Prerequisites
-
-Connect the **Plain** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAIN_TOKEN` or `zero doctor check-connector --url https://core-api.uk.plain.com/graphql/v1 --method POST`
+If requests fail, run `zero doctor check-connector --env-name PLAIN_TOKEN` or `zero doctor check-connector --url https://core-api.uk.plain.com/graphql/v1 --method POST`
 
 ## Threads
 
@@ -101,8 +78,6 @@ Then run:
 curl -s -X POST "https://core-api.uk.plain.com/graphql/v1" --header "Authorization: Bearer $PLAIN_TOKEN" --header "Content-Type: application/json" -d @/tmp/plain_request.json
 ```
 
----
-
 ## Customers
 
 ### Upsert Customer
@@ -160,8 +135,6 @@ Then run:
 curl -s -X POST "https://core-api.uk.plain.com/graphql/v1" --header "Authorization: Bearer $PLAIN_TOKEN" --header "Content-Type: application/json" -d @/tmp/plain_request.json
 ```
 
----
-
 ## Labels
 
 ### List Label Types
@@ -204,8 +177,6 @@ Then run:
 curl -s -X POST "https://core-api.uk.plain.com/graphql/v1" --header "Authorization: Bearer $PLAIN_TOKEN" --header "Content-Type: application/json" -d @/tmp/plain_request.json
 ```
 
----
-
 ## Error Handling
 
 All mutations return an `error` field. Always check it — a `200` HTTP response can still contain an error:
@@ -225,8 +196,6 @@ All mutations return an `error` field. Always check it — a `200` HTTP response
 }
 ```
 
----
-
 ## Guidelines
 
 1. **GraphQL only**: All requests go to `POST https://core-api.uk.plain.com/graphql/v1`
@@ -235,8 +204,6 @@ All mutations return an `error` field. Always check it — a `200` HTTP response
 4. **Machine User permissions**: Grant the minimum permissions needed (e.g., `threads:read`, `customers:write`)
 5. **Thread statuses**: `TODO` (needs action), `SNOOZED` (waiting), `DONE` (resolved)
 6. **Full schema**: Available at `https://core-api.uk.plain.com/graphql/v1/schema.graphql`
-
----
 
 ## API Reference
 

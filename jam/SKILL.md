@@ -4,34 +4,9 @@ description: Jam.dev API for bug reporting. Use when user mentions "Jam", "bug r
   "screen recording", or asks about issue capture.
 ---
 
-# Jam
+## Troubleshooting
 
-Use the Jam API to access **bug reports, debugging telemetry, console logs, network requests, and user events** captured by the Jam browser extension.
-
-> Official docs: `https://jam.dev/docs/debug-a-jam/mcp`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Retrieve bug report details** including metadata, reporters, and context
-- **Access console logs** with error messages and stack traces from recorded sessions
-- **Inspect network requests** to debug API failures, slow responses, or HTTP errors
-- **Review user events** such as clicks, inputs, and page navigations
-- **Get screenshots** from recorded bug reports for visual inspection
-- **Analyze video recordings** to extract insights and detect issues
-- **List and search Jams** across your workspace by text, type, folder, author, URL, or date
-- **Add comments** to Jam recordings for collaboration
-
----
-
-## Prerequisites
-
-Connect the **Jam** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JAM_TOKEN` or `zero doctor check-connector --url https://mcp.jam.dev/mcp --method POST`
+If requests fail, run `zero doctor check-connector --env-name JAM_TOKEN` or `zero doctor check-connector --url https://mcp.jam.dev/mcp --method POST`
 
 ## How to Use
 
@@ -40,8 +15,6 @@ Jam exposes its API through an MCP (Model Context Protocol) server at `https://m
 ### Base URL
 
 - **MCP endpoint**: `https://mcp.jam.dev/mcp`
-
----
 
 ### 1. Initialize MCP Session
 
@@ -58,8 +31,6 @@ SESSION_URL=$(grep -i "location:" /tmp/jam_headers.txt | tr -d '\r' | awk '{prin
 ```
 
 If no redirect location is returned, use the same endpoint with the session ID from the response headers.
-
----
 
 ### 2. List Available Tools
 
@@ -81,8 +52,6 @@ Then run:
 ```bash
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq '.result.tools[] | {name, description}'
 ```
-
----
 
 ### 3. List Jams
 
@@ -133,8 +102,6 @@ Then run:
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
 
----
-
 ### 4. Get Jam Details
 
 Get a quick snapshot of a Jam including who made it, what happened, and which tools to try next. Replace `JAM_ID` with the actual Jam identifier (the URL slug or ID from listJams).
@@ -160,8 +127,6 @@ Then run:
 ```bash
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
-
----
 
 ### 5. Get Console Logs
 
@@ -193,8 +158,6 @@ curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/js
 
 Available `logLevel` values: `error`, `warn`, `info`, `log`, `debug`.
 
----
-
 ### 6. Get Network Requests
 
 List all HTTP requests captured during the Jam recording, with optional filters.
@@ -225,8 +188,6 @@ curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/js
 
 Filter parameters: `statusCode` (HTTP status code), `contentType` (e.g., `application/json`), `host` (e.g., `api.example.com`), `limit` (max results).
 
----
-
 ### 7. Get User Events
 
 Read user interactions including clicks, inputs, and page navigations in plain language.
@@ -252,8 +213,6 @@ Then run:
 ```bash
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
-
----
 
 ### 8. Get Screenshots
 
@@ -281,8 +240,6 @@ Then run:
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
 
----
-
 ### 9. Get Video Transcript
 
 Retrieve spoken captions from video Jams in WebVTT format with timestamps.
@@ -308,8 +265,6 @@ Then run:
 ```bash
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
-
----
 
 ### 10. Analyze Video
 
@@ -337,8 +292,6 @@ Then run:
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
 
----
-
 ### 11. Get Custom Metadata
 
 Access custom key-value metadata set via the `jam.metadata()` SDK in your application.
@@ -365,8 +318,6 @@ Then run:
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
 
----
-
 ### 12. List Folders
 
 Browse available folders in your Jam workspace.
@@ -391,8 +342,6 @@ Then run:
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
 
----
-
 ### 13. List Team Members
 
 Browse team members in your Jam workspace.
@@ -416,8 +365,6 @@ Then run:
 ```bash
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
-
----
 
 ### 14. Add a Comment
 
@@ -446,8 +393,6 @@ Then run:
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
 
----
-
 ### 15. Move a Jam to a Folder
 
 Move a Jam to a different folder (requires `mcp:write` scope).
@@ -474,8 +419,6 @@ Then run:
 ```bash
 curl -s -X POST "https://mcp.jam.dev/mcp" --header "Content-Type: application/json" --header "Authorization: Bearer $JAM_TOKEN" -d @/tmp/jam_request.json | jq .
 ```
-
----
 
 ## Guidelines
 

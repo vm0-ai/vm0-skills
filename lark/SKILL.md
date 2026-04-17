@@ -4,24 +4,9 @@ description: Lark/Feishu API for collaboration. Use when user mentions "Lark", "
   "Lark docs", or asks about ByteDance workspace tools.
 ---
 
-# Lark (Feishu) API
+## Troubleshooting
 
-Complete Lark/Feishu integration for enterprise collaboration, including messaging, group management, contacts, and calendar.
-
-## When to Use
-
-- Send automated notifications to users or groups
-- Build interactive bot workflows
-- Manage group chats and members
-- Query contacts and organization structure
-- Sync calendar events and schedules
-- Integrate Lark with other systems
-
-## Prerequisites
-
-Connect the **Lark (Feishu)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LARK_TOKEN` or `zero doctor check-connector --url https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal --method POST`
+If requests fail, run `zero doctor check-connector --env-name LARK_TOKEN` or `zero doctor check-connector --url https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal --method POST`
 
 ## Token Management
 
