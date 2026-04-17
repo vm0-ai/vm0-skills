@@ -30,6 +30,8 @@ Use this skill when you need to:
 
 Connect the **GitHub Copilot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITHUB_TOKEN` or `zero doctor check-connector --url https://api.github.com/orgs/your-org/copilot/billing --method GET`
+
 ## How to Use
 
 All examples below assume you have `GITHUB_TOKEN` set.
