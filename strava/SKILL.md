@@ -14,7 +14,7 @@ Use the Strava API v3 via `curl` to access **athlete activities, segments, clubs
 
 ## Prerequisites
 
-Connect the **Strava API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Strava** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
