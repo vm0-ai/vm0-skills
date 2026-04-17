@@ -18,22 +18,7 @@ Query website analytics and manage sites with Plausible's privacy-friendly analy
 
 ## Prerequisites
 
-```bash
-export PLAUSIBLE_TOKEN=your-api-key
-```
-
-### Get API Key
-
-1. Log in to Plausible: https://plausible.io/login
-2. Go to Account Settings (top-right menu)
-3. Navigate to "API Keys" in sidebar
-4. Click "New API Key"
-5. Choose key type:
-  - **Stats API** - For querying analytics data
-  - **Sites API** - For managing sites programmatically
-6. Save the key (shown only once)
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAUSIBLE_TOKEN` or `zero doctor check-connector --url https://plausible.io/api/v2/query --method POST`
+Connect the **Plausible Analytics API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Stats API (v2)
 
