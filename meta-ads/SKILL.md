@@ -14,7 +14,7 @@ Manage Facebook and Instagram advertising campaigns, ad sets, ads, and performan
 
 ## Prerequisites
 
-Connect the **Meta Marketing API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Meta** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
