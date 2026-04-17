@@ -12,7 +12,7 @@ Manage serverless Postgres projects, branches, databases, roles, and compute end
 
 ## Prerequisites
 
-Connect the **Neon API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Neon** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
