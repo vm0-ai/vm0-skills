@@ -14,6 +14,10 @@ All artifacts are written to `deep-dive/{task-name}/`.
 
 ---
 
+## Prerequisites
+
+Connect the **Deep Dive** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Operation: deep research
 
 **Usage:** `deep research [task description]`
