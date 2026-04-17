@@ -37,9 +37,6 @@ Create `<skill-name>/SKILL.md` in the project root with the following structure:
 ---
 name: <skill-name>
 description: <One-line description of what this skill does>
-vm0_env:
-  - ENV_VAR_1
-  - ENV_VAR_2
 ---
 
 # <Skill Name>
