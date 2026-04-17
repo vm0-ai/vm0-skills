@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Mercury** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MERCURY_TOKEN` or `zero doctor check-connector --url https://api.mercury.com/api/v1/accounts --method GET`
+
 ## Accounts
 
 ### List All Accounts
