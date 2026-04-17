@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Streak CRM** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STREAK_TOKEN` or `zero doctor check-connector --url https://api.streak.com/api/v1/users/me --method GET`
+
 ## How to Use
 
 ### Authentication
