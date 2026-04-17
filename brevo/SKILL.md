@@ -19,7 +19,7 @@ Send transactional emails, SMS, and marketing campaigns. Manage contacts and lis
 
 ## Prerequisites
 
-Connect the **Brevo API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Brevo** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
