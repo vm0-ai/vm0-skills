@@ -26,16 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at https://www.firecrawl.dev/
-2. Get your API key from the dashboard
-
-```bash
-export FIRECRAWL_TOKEN="fc-your-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FIRECRAWL_TOKEN` or `zero doctor check-connector --url https://api.firecrawl.dev/v1/scrape --method POST`
+Connect the **Firecrawl** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
