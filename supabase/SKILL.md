@@ -32,6 +32,8 @@ Use this skill when you need to:
 
 Connect the **Supabase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SUPABASE_PUBLISHABLE_KEY` or `zero doctor check-connector --url https://your-project.supabase.co/rest/v1/ --method GET`
+
 ## How to Use
 
 Base URL: `${SUPABASE_URL}/rest/v1`
