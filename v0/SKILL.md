@@ -25,7 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **v0 by Vercel API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **v0 by Vercel** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
