@@ -21,6 +21,8 @@ Send transactional emails, SMS, and marketing campaigns. Manage contacts and lis
 
 Connect the **Brevo** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BREVO_TOKEN` or `zero doctor check-connector --url https://api.brevo.com/v3/account --method GET`
+
 ## Core APIs
 
 ### Get Account Info
