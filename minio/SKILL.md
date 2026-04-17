@@ -26,49 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Deploy MinIO server or use MinIO Play (public test server)
-2. Get access credentials (Access Key and Secret Key)
-3. Install MinIO Client (`mc`)
-
-### Install MinIO Client
-
-```bash
-# macOS
-brew install minio/stable/mc
-
-# Linux (amd64)
-curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
-chmod +x mc && sudo mv mc /usr/local/bin/
-
-# Verify installation
-mc --version
-```
-
-### Set Environment Variables
-
-```bash
-export MINIO_ENDPOINT="play.min.io"
-export MINIO_ACCESS_KEY="your-access-key"
-export MINIO_SECRET_KEY="your-secret-key"
-```
-
-For testing, use MinIO Play (public sandbox):
-
-```bash
-export MINIO_ENDPOINT="play.min.io"
-export MINIO_ACCESS_KEY="Q3AM3UQ867SPQQA43P2F"
-export MINIO_SECRET_KEY="zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
-```
-
-### Configure mc Alias
-
-```bash
-mc alias set myminio https://${MINIO_ENDPOINT} ${MINIO_ACCESS_KEY} ${MINIO_SECRET_KEY}
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MINIO_ACCESS_KEY` or `zero doctor check-connector --url https://dl.min.io/client/mc/release/linux-amd64/mc --method GET`
+Connect the **MinIO Object Storage** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
