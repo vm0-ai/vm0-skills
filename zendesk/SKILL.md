@@ -31,6 +31,8 @@ Use this skill when you need to:
 
 Connect the **Zendesk** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZENDESK_API_TOKEN` or `zero doctor check-connector --url https://your-subdomain.zendesk.com/api/v2/tickets.json --method GET`
+
 ## How to Use
 
 All examples assume environment variables are set.
