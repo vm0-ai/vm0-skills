@@ -7,6 +7,10 @@ description: Quality-check a data analysis before sharing — verify joins, aggr
 
 Pre-delivery review process for catching errors, validating results, and ensuring analyses are reproducible and trustworthy.
 
+## Prerequisites
+
+Connect the **Analysis QA** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+
 ## Review Checklist
 
 Work through every section below before presenting findings to stakeholders.
