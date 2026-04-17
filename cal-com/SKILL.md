@@ -20,6 +20,8 @@ Manage bookings, event types, and availability via the Cal.com REST API v2.
 
 Connect the **Cal.com** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALCOM_TOKEN` or `zero doctor check-connector --url https://api.cal.com/v2/me --method GET`
+
 ## Core APIs
 
 ### Get Current User
