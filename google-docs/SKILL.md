@@ -15,7 +15,7 @@ Use the Google Docs API via direct `curl` calls to **create, read, update, and f
 
 ## Prerequisites
 
-Connect the **Google Docs API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Google Docs** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
