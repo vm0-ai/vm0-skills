@@ -17,9 +17,7 @@ Infisical is an open-source secrets manager. This skill enables fetching individ
 
 ## Prerequisites
 
-Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Infisical**. vm0 will automatically inject `INFISICAL_CLIENT_ID` and `INFISICAL_CLIENT_SECRET` environment variables.
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --url https://app.infisical.com/api/v1/auth/universal-auth/login --method POST`
+Connect the **Infisical Cloud Secrets Manager API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
