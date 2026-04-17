@@ -27,6 +27,8 @@ Use this skill when you need:
 
 Connect the **Tavily** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TAVILY_TOKEN` or `zero doctor check-connector --url https://api.tavily.com/search --method POST`
+
 ## How to Use
 
 All examples below assume you have `TAVILY_TOKEN` set in your environment.
