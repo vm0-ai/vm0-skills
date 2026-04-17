@@ -30,6 +30,8 @@ Use this skill when you need to:
 
 Connect the **YouTube** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name YOUTUBE_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/youtube/v3/search --method GET`
+
 ## How to Use
 
 Base URL: `https://www.googleapis.com/youtube/v3`
