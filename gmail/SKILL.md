@@ -14,7 +14,7 @@ Read, send, and manage emails via Google's Gmail REST API.
 
 ## Prerequisites
 
-Connect the **Gmail API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Gmail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
