@@ -27,6 +27,8 @@ Use this skill when you need to:
 
 Connect the **Instantly** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTANTLY_API_KEY` or `zero doctor check-connector --url https://api.instantly.ai/api/v2/campaigns --method GET`
+
 ## How to Use
 
 All examples below assume you have `INSTANTLY_API_KEY` set.
