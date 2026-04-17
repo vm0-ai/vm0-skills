@@ -28,28 +28,9 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Log in to [Plain](https://app.plain.com)
-2. Go to **Settings → Machine Users**
-3. Click **New machine user** and generate an API key
-4. Copy the API key (format: `plainApiKey__xxx...`)
+Connect the **Plain** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-All requests are POST to a single GraphQL endpoint:
-
-```
-POST https://core-api.uk.plain.com/graphql/v1
-Authorization: Bearer $PLAIN_TOKEN
-Content-Type: application/json
-```
-
-Set environment variable:
-
-```bash
-export PLAIN_TOKEN="plainApiKey__your-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAIN_TOKEN` or `zero doctor check-connector --url https://core-api.uk.plain.com/graphql/v1 --method POST`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name - PLAIN_TOKEN` or `zero doctor check-connector --url https://core-api.uk.plain.com/graphql/v1 --method GET`
 
 ## Threads
 
