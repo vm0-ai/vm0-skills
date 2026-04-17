@@ -32,6 +32,8 @@ Use this skill when you need to:
 
 Connect the **Deel** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEL_TOKEN` or `zero doctor check-connector --url https://api.letsdeel.com/rest/v2/contracts --method GET`
+
 ## Contracts
 
 ### List Contracts
