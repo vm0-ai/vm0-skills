@@ -21,6 +21,8 @@ Read scheduling data, list event types, retrieve scheduled meetings, and access 
 
 Connect the **Calendly** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALENDLY_TOKEN` or `zero doctor check-connector --url https://api.calendly.com/users/me --method GET`
+
 ## Core APIs
 
 ### Get Current User
