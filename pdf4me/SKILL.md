@@ -31,18 +31,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create an account at https://dev.pdf4me.com/
-2. Get your API key from https://dev.pdf4me.com/dashboard/#/api-keys/
-
-Set environment variable:
-
-```bash
-export PDF4ME_TOKEN="your-api-key-here"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDF4ME_TOKEN` or `zero doctor check-connector --url https://api.pdf4me.com/api/v2/ConvertToPdf --method POST`
+Connect the **PDF4ME** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
