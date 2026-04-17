@@ -31,6 +31,8 @@ Use this skill when you need to:
 
 Connect the **Jam** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JAM_TOKEN` or `zero doctor check-connector --url https://mcp.jam.dev/mcp --method POST`
+
 ## How to Use
 
 Jam exposes its API through an MCP (Model Context Protocol) server at `https://mcp.jam.dev/mcp`. All interactions use JSON-RPC 2.0 over HTTP with Bearer token authentication. You need to initialize the MCP session first, then call tools.
