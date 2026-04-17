@@ -16,7 +16,7 @@ Manage in-app subscriptions, customers, entitlements, offerings, and products in
 
 ## Prerequisites
 
-Connect the **RevenueCat API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **RevenueCat** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
