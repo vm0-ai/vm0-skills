@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Jotform** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JOTFORM_TOKEN` or `zero doctor check-connector --url https://api.jotform.com/user --method GET`
+
 ## How to Use
 
 All examples below assume you have `JOTFORM_TOKEN` set. Authentication uses the `APIKEY` header.
