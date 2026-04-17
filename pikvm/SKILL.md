@@ -19,17 +19,7 @@ Control remote computers via PiKVM REST API with mouse, keyboard, and power mana
 
 ## Prerequisites
 
-```bash
-export PIKVM_URL=https://pikvm.example.com
-export PIKVM_AUTH=admin:admin
-```
-
-### Get Credentials
-
-1. Access your PiKVM web interface
-2. Default credentials: `admin:admin`
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PIKVM_AUTH`
+Connect the **PiKVM Remote Control** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Coordinate System
 
