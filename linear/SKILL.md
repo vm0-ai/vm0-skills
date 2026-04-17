@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Linear** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LINEAR_TOKEN` or `zero doctor check-connector --url https://api.linear.app/graphql --method POST`
+
 ## How to Use
 
 All examples below assume you have `LINEAR_TOKEN` set.
