@@ -117,7 +117,7 @@ An AI agent triages inbound emails and routes them appropriately.
 
 ## Prerequisites
 
-Connect the **AgentMail API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **AgentMail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Inboxes
 
