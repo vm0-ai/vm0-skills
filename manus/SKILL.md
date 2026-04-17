@@ -29,7 +29,7 @@ Use this skill when you need to:
 
 Connect the **Manus** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name - MANUS_TOKEN` or `zero doctor check-connector --url https://api.manus.ai/v2/task.detail?task_id= --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MANUS_TOKEN` or `zero doctor check-connector --url https://api.manus.ai/v2/task.detail?task_id= --method GET`
 
 ## Tasks
 
