@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Perplexity AI** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PERPLEXITY_TOKEN` or `zero doctor check-connector --url https://api.perplexity.ai/chat/completions --method POST`
+
 ## How to Use
 
 ### 1. Chat Completions (Recommended)
