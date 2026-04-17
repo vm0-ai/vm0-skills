@@ -28,23 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Get an API key from RapidAPI or APIRoad:
-  - RapidAPI: https://rapidapi.com/restyler/api/scrapeninja
-  - APIRoad: https://apiroad.net/marketplace/apis/scrapeninja
-
-Set environment variable:
-
-```bash
-# For RapidAPI
-export SCRAPENINJA_TOKEN="your-rapidapi-key"
-
-# For APIRoad (use X-Apiroad-Key header instead)
-export SCRAPENINJA_TOKEN="your-apiroad-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SCRAPENINJA_TOKEN` or `zero doctor check-connector --url https://scrapeninja.p.rapidapi.com/scrape --method POST`
+Connect the **ScrapeNinja** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
