@@ -17,7 +17,7 @@ Doppler is a secrets manager that lets you fetch, list, and manage secrets acros
 
 ## Prerequisites
 
-Connect the **Doppler Secrets Manager API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Doppler** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
