@@ -26,16 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at https://mailsac.com/
-2. Get your API key from the dashboard (Account > API Key)
-
-```bash
-export MAILSAC_TOKEN="your-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAILSAC_TOKEN` or `zero doctor check-connector --url https://mailsac.com/api/addresses/test@mailsac.com/messages --method GET`
+Connect the **Mailsac** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
