@@ -32,7 +32,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **Xero Accounting API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Xero** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Step 1: Get Tenant ID (Required First)
 
