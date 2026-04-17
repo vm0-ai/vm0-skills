@@ -14,7 +14,7 @@ Manage tasks, folders, projects, spaces, comments, timelogs, and workflows in Wr
 
 ## Prerequisites
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WRIKE_TOKEN` or `zero doctor check-connector --url https://www.wrike.com/api/v4/spaces --method GET`
+Connect the **Wrike API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
