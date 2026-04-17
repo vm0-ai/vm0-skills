@@ -27,22 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create an account at https://www.browserbase.com/
-2. Get your API Key from the dashboard Settings page
-3. Get your Project ID from the dashboard Settings page
-
-Set environment variables:
-
-```bash
-export BROWSERBASE_TOKEN="your-api-key-here"
-export BROWSERBASE_PROJECT_ID="your-project-id-here"
-```
-
-> **Note:** Free plans have a concurrent session limit of 1. You'll receive a 429 error if you exceed this limit. Check your plan details in the Browserbase dashboard.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BROWSERBASE_TOKEN` or `zero doctor check-connector --url https://api.browserbase.com/v1/sessions --method POST`
+Connect the **Browserbase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
