@@ -12,11 +12,7 @@ PikaStream lets an AI agent join Google Meet or Zoom calls as a real-time avatar
 
 ## Prerequisites
 
-Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Pika** with your Developer Key. vm0 will automatically inject the `PIKA_TOKEN` environment variable.
-
-To get a Developer Key: visit [pika.me/dev](https://www.pika.me/dev/) and create a key (format: `dk_...`).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PIKA_TOKEN` or `zero doctor check-connector --url https://srkibaanghvsriahb.pika.art/developer/balance --method GET`
+Connect the **Pika Developer API (PikaStream)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Base URL
 
