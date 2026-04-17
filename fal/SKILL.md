@@ -24,16 +24,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [fal.ai](https://fal.ai/)
-2. Get your API key from the dashboard
-
-```bash
-export FAL_TOKEN="your-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FAL_TOKEN` or `zero doctor check-connector --url https://fal.run/fal-ai/nano-banana-pro --method POST`
+Connect the **fal.ai Image Generator** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
