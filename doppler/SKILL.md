@@ -17,11 +17,7 @@ Doppler is a secrets manager that lets you fetch, list, and manage secrets acros
 
 ## Prerequisites
 
-Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Doppler**. vm0 will automatically inject the required `DOPPLER_TOKEN` environment variable.
-
-Your `DOPPLER_TOKEN` must be a **Service Token** (format: `dp.st.*`). Service tokens are scoped to a specific project and config.
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DOPPLER_TOKEN` or `zero doctor check-connector --url https://api.doppler.com/v3/configs/config/secret --method GET`
+Connect the **Doppler Secrets Manager API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
