@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Cronlytic** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CRONLYTIC_API_KEY` or `zero doctor check-connector --url https://api.cronlytic.com/prog/ping --method GET`
+
 ## How to Use
 
 ---
