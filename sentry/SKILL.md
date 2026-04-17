@@ -27,15 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect Sentry via the vm0 connector. The access token is provided as `$SENTRY_TOKEN`.
-
-Base URL: `https://sentry.io/api/0`
-
-> **Important:** Most endpoints require an organization slug. Call the organizations endpoint first to discover it.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SENTRY_TOKEN` or `zero doctor check-connector --url https://sentry.io/api/0/organizations --method GET`
+Connect the **Sentry API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Organizations
 
