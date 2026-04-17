@@ -26,15 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Go to [vm0.ai](https://app.vm0.ai) **Settings → Connectors** and connect **Spotify**. vm0 will automatically inject the required `SPOTIFY_TOKEN` environment variable.
-
-> **Important:** The Spotify access token expires after 1 hour. If you receive a 401 error, the token needs to be refreshed via the Connector settings.
-
-> **Note:** Playback control endpoints (play, pause, skip) require a **Spotify Premium** account.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SPOTIFY_TOKEN` or `zero doctor check-connector --url https://api.spotify.com/v1/me --method GET`
+Connect the **Spotify Web API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## User Profile
 
