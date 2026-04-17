@@ -19,7 +19,7 @@ Read scheduling data, list event types, retrieve scheduled meetings, and access 
 
 ## Prerequisites
 
-Connect the **Calendly API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Calendly** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
