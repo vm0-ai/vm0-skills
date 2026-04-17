@@ -19,24 +19,7 @@ Manage pages, databases, and content blocks in Notion workspaces.
 
 ## Prerequisites
 
-
-**Important**: Share pages/databases with the integration via "Add connections" in Notion.
-
-### Page ID Format
-
-Notion URLs contain page IDs. Extract and normalize them:
-
-```
-URL: https://www.notion.so/My-Page-2b70e96f0134807d8450c8793839c659
-Page ID: 2b70e96f0134807d8450c8793839c659 (remove hyphens if present)
-```
-
-```bash
-# Normalize page ID (remove hyphens)
-PAGE_ID=$(echo "2b70e96f-0134-807d-8450-c8793839c659" | tr -d '-')
-```
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN` or `zero doctor check-connector --url https://api.notion.com/v1/pages --method GET`
+Connect the **Notion API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
