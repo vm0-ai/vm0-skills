@@ -20,6 +20,8 @@ Send behavioral emails, SMS, and push notifications triggered by user events. Tw
 
 Connect the **Customer.io** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CUSTOMERIO_TRACK_TOKEN` or `zero doctor check-connector --url https://cdp.customer.io/v1/identify --method POST`
+
 ## Core APIs
 
 ### Identify a Person (Pipelines API)
