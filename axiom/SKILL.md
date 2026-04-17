@@ -30,6 +30,8 @@ Use this skill when you need to:
 
 Connect the **Axiom** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AXIOM_TOKEN` or `zero doctor check-connector --url https://api.axiom.co/v2/datasets --method GET`
+
 ## Datasets
 
 ### List Datasets
