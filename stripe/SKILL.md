@@ -12,7 +12,7 @@ Manage payments, customers, subscriptions, and billing with the Stripe API.
 
 ## Prerequisites
 
-Connect the **Stripe API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Stripe** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
