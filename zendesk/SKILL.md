@@ -29,56 +29,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-### Getting Your API Token
-
-**⚠️ Important**: You must enable Token Access before creating tokens.
-
-1. Log in to **Zendesk Admin Center** (admin access required)
-2. Navigate to **Apps and integrations** → **APIs** → **Zendesk API**
-3. Click the **Settings** tab
-4. Under **Token Access**, toggle **Enabled** (this is required!)
-5. Click **Add API token**
-6. Enter a description (e.g., "VM0 Integration")
-7. Click **Save** and **copy the token immediately** (shown only once)
-
-```bash
-export ZENDESK_EMAIL="your-email@company.com"
-export ZENDESK_API_TOKEN="your_api_token"
-export ZENDESK_SUBDOMAIN="yourcompany"
-```
-
-### Find Your Subdomain
-
-Your subdomain is in your Zendesk URL:
-```
-https://yourcompany.zendesk.com
-         ^^^^^^^^^^^
-         subdomain
-```
-
-### Verify Token
-
-Test your credentials:
-
-```bash
-curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/tickets.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" | jq '{count: .count, tickets: .tickets | length}
-```
-
-Expected response: Ticket count and list
-
-Alternative verification (list users):
-
-```bash
-curl -s "https://$ZENDESK_SUBDOMAIN.zendesk.com/api/v2/users.json" -u "$ZENDESK_EMAIL/token:$ZENDESK_API_TOKEN" | jq '.users[] | {id, name, email, role}
-```
-
-**Note**: The `/users/me.json` endpoint may return anonymous user for API token authentication. Use `/tickets.json` or `/users.json` to verify token validity.
-
-**✅ This skill has been tested and verified** with a live Zendesk workspace. All core endpoints work correctly.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZENDESK_API_TOKEN`
+Connect the **Zendesk API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
