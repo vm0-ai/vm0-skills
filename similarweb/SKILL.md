@@ -20,7 +20,7 @@ Analyze website traffic, engagement metrics, traffic sources, keywords, and comp
 
 ## Prerequisites
 
-Connect the **SimilarWeb API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **SimilarWeb** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
