@@ -26,7 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **Resend Email** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Resend** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Emails
 
