@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Webflow** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WEBFLOW_TOKEN` or `zero doctor check-connector --url https://api.webflow.com/v2/token/authorized_by --method GET`
+
 ## How to Use
 
 All examples assume `WEBFLOW_TOKEN` is set.
