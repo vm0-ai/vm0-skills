@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Sentry** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SENTRY_TOKEN` or `zero doctor check-connector --url https://sentry.io/api/0/organizations/ --method GET`
+
 ## Organizations
 
 ### List Organizations
