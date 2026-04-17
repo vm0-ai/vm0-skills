@@ -25,7 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **ElevenLabs API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **ElevenLabs** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
