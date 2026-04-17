@@ -18,15 +18,7 @@ Send onboarding, marketing, and transactional emails to SaaS users via Loops.
 
 ## Prerequisites
 
-
-Alternatively, generate an API key from your Loops dashboard under **Settings > API**, then export it:
-
-```bash
-export LOOPS_TOKEN=your_api_key_here
-```
-
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LOOPS_TOKEN` or `zero doctor check-connector --url https://app.loops.so/api/v1/api-key --method GET`
+Connect the **Loops API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
