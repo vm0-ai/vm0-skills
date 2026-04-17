@@ -28,7 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **YouTube Data API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **YouTube** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
