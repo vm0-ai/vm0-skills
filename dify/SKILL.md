@@ -26,21 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Dify Cloud](https://cloud.dify.ai) or deploy a self-hosted instance
-2. Create an application (Chatbot, Text Generator, or Workflow)
-3. Go to the app's **API Access** page and generate an API key
-
-```bash
-export DIFY_TOKEN="app-xxxxxxxxxxxxxxxxxx"
-```
-
-> **Important:** Each Dify application has its own API key. The key starts with `app-`. If you work with multiple apps, use different environment variable names or switch tokens between calls.
-
-> **Placeholders:** Values in `{curly-braces}` like `{conversation_id}` are placeholders. Replace them with actual values when executing.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DIFY_TOKEN` or `zero doctor check-connector --url https://api.dify.ai/v1/chat-messages --method POST`
+Connect the **Dify API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Chat Messages
 
