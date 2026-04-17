@@ -4,38 +4,9 @@ description: Gmail API for email management. Use when user says "check email", "
   email", "search Gmail", "my inbox", or mentions Gmail messages.
 ---
 
-# Gmail API
+## Troubleshooting
 
-Read, send, and manage emails via Google's Gmail REST API.
-
-> Official docs: https://developers.google.com/workspace/gmail/api/reference/rest
-
----
-
-## Prerequisites
-
-Connect the **Gmail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GMAIL_TOKEN` or `zero doctor check-connector --url https://gmail.googleapis.com/gmail/v1/users/me/profile --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- Read and search emails
-- Send emails or reply to threads
-- Manage drafts
-- Create and manage labels
-- List and modify threads
-- Get user profile information
-
----
-
----
-
-> **Placeholders:** Values in `{curly-braces}` like `{message-id}` are placeholders. Replace them with actual values when executing.
-
----
+If requests fail, run `zero doctor check-connector --env-name GMAIL_TOKEN` or `zero doctor check-connector --url https://gmail.googleapis.com/gmail/v1/users/me/profile --method GET`
 
 ## User Profile
 
@@ -44,8 +15,6 @@ Use this skill when you need to:
 ```bash
 curl -s "https://gmail.googleapis.com/gmail/v1/users/me/profile" --header "Authorization: Bearer $GMAIL_TOKEN"
 ```
-
----
 
 ## Messages
 
@@ -161,8 +130,6 @@ curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/{messag
 curl -s -X DELETE "https://gmail.googleapis.com/gmail/v1/users/me/messages/{message-id}" --header "Authorization: Bearer $GMAIL_TOKEN"
 ```
 
----
-
 ## Threads
 
 ### List Threads
@@ -182,8 +149,6 @@ curl -s "https://gmail.googleapis.com/gmail/v1/users/me/threads/{thread-id}" --h
 ```bash
 curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/threads/{thread-id}/trash" --header "Authorization: Bearer $GMAIL_TOKEN"
 ```
-
----
 
 ## Labels
 
@@ -216,8 +181,6 @@ curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/labels" --header
 ```bash
 curl -s -X DELETE "https://gmail.googleapis.com/gmail/v1/users/me/labels/{label-id}" --header "Authorization: Bearer $GMAIL_TOKEN"
 ```
-
----
 
 ## Drafts
 
@@ -274,8 +237,6 @@ curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/drafts/send" --h
 curl -s -X DELETE "https://gmail.googleapis.com/gmail/v1/users/me/drafts/{draft-id}" --header "Authorization: Bearer $GMAIL_TOKEN"
 ```
 
----
-
 ## Attachments
 
 ### Get Attachment
@@ -283,8 +244,6 @@ curl -s -X DELETE "https://gmail.googleapis.com/gmail/v1/users/me/drafts/{draft-
 ```bash
 curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages/{message-id}/attachments/{attachment-id}" --header "Authorization: Bearer $GMAIL_TOKEN" | jq -r '.data' | base64 -d > attachment.bin
 ```
-
----
 
 ## Settings
 
@@ -342,8 +301,6 @@ Then run:
 curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/settings/filters" --header "Authorization: Bearer $GMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/gmail_request.json
 ```
 
----
-
 ## Common Scopes
 
 | Scope | Permission |
@@ -358,8 +315,6 @@ curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/settings/filters
 
 Use full URL: `https://www.googleapis.com/auth/gmail.modify`
 
----
-
 ## Decode Message Body
 
 Gmail returns message body as base64url encoded. To decode:
@@ -368,15 +323,11 @@ Gmail returns message body as base64url encoded. To decode:
 curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages/{message-id}" --header "Authorization: Bearer $GMAIL_TOKEN" | jq -r '.payload.body.data // .payload.parts[0].body.data' | tr '_-' '/+' | base64 -d
 ```
 
----
-
 ## Guidelines
 
 1. **Rate Limits**: Gmail API has quota limits; implement exponential backoff
 2. **Batch Requests**: Use batch endpoints for multiple operations
 3. **Message Format**: Messages must be RFC 2822 compliant and base64url encoded
-
----
 
 ## API Reference
 

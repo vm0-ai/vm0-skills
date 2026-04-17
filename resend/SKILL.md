@@ -4,31 +4,9 @@ description: Resend API for email delivery. Use when user mentions "Resend", "se
   email", "email API", or transactional email.
 ---
 
-# Resend Email API
+## Troubleshooting
 
-Send transactional emails, manage contacts, and domains via Resend's REST API.
-
-> Official docs: https://resend.com/docs/api-reference/introduction
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Send transactional emails (welcome, password reset, notifications)
-- Send batch emails to multiple recipients
-- Manage email contacts and audiences
-- Verify and manage sending domains
-- Track email delivery status
-
----
-
-## Prerequisites
-
-Connect the **Resend** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name RESEND_TOKEN` or `zero doctor check-connector --url https://api.resend.com/emails --method POST`
+If requests fail, run `zero doctor check-connector --env-name RESEND_TOKEN` or `zero doctor check-connector --url https://api.resend.com/emails --method POST`
 
 ## Emails
 
@@ -180,8 +158,6 @@ curl -s "https://api.resend.com/emails" --header "Authorization: Bearer $RESEND_
 curl -s -X POST "https://api.resend.com/emails/<your-email-id>/cancel" --header "Authorization: Bearer $RESEND_TOKEN"
 ```
 
----
-
 ## Contacts
 
 ### Create Contact
@@ -266,8 +242,6 @@ curl -s -X PATCH "https://api.resend.com/contacts/<your-contact-id>" --header "A
 curl -s -X DELETE "https://api.resend.com/contacts/<your-contact-id>" --header "Authorization: Bearer $RESEND_TOKEN"
 ```
 
----
-
 ## Domains
 
 ### List Domains
@@ -309,8 +283,6 @@ curl -s -X POST "https://api.resend.com/domains/<your-domain-id>/verify" --heade
 ```bash
 curl -s -X DELETE "https://api.resend.com/domains/<your-domain-id>" --header "Authorization: Bearer $RESEND_TOKEN"
 ```
-
----
 
 ## API Keys
 
@@ -359,8 +331,6 @@ curl -s -X POST "https://api.resend.com/api-keys" --header "Authorization: Beare
 curl -s -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>" --header "Authorization: Bearer $RESEND_TOKEN"
 ```
 
----
-
 ## Email Parameters Reference
 
 | Parameter | Type | Description |
@@ -377,8 +347,6 @@ curl -s -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>" --header "
 | `tags` | array | Custom tags for tracking |
 | `attachments` | array | File attachments (max 40MB total) |
 
----
-
 ## Response Codes
 
 | Status | Description |
@@ -391,8 +359,6 @@ curl -s -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>" --header "
 | `429` | Rate limit exceeded (2 req/sec) |
 | `5xx` | Server error |
 
----
-
 ## Guidelines
 
 1. **Rate Limits**: Default is 2 requests per second; implement backoff for 429 errors
@@ -400,8 +366,6 @@ curl -s -X DELETE "https://api.resend.com/api-keys/<your-api-key-id>" --header "
 3. **Batch Emails**: Use `/emails/batch` for sending to multiple recipients efficiently
 4. **Idempotency**: Use `Idempotency-Key` header to prevent duplicate sends
 5. **Scheduling**: Use natural language (`in 1 hour`) or ISO 8601 format for `scheduled_at`
-
----
 
 ## API Reference
 

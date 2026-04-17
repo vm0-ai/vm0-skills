@@ -3,14 +3,6 @@ name: journal-entries
 description: Construct and review journal entries with correct debit/credit structure, supporting calculations, and approval workflows. Use for month-end accruals, prepaid amortization, depreciation entries, payroll booking, revenue recognition journal entries, manual adjustments, recurring entries, reversing entries, or intercompany journal entries.
 ---
 
-# Journal Entry Construction
-
-Guidance on structuring, documenting, reviewing, and posting journal entries across all major accounting cycles.
-
-## Prerequisites
-
-Connect the **Journal Entry Construction** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Core Entry Patterns by Accounting Cycle
 
 ### Vendor & Expense Accruals

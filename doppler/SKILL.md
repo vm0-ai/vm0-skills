@@ -3,23 +3,9 @@ name: doppler
 description: Doppler Secrets Manager API for retrieving and listing secrets. Use when user mentions "Doppler", "doppler secrets", "dp.st token", or asks about secrets management with Doppler.
 ---
 
-# Doppler Secrets Manager API
+## Troubleshooting
 
-Doppler is a secrets manager that lets you fetch, list, and manage secrets across projects and environments. This skill enables retrieving individual secrets or listing all secrets from a Doppler project config using a service token.
-
-> Official docs: `https://docs.doppler.com/reference/api`
-
-## When to Use
-
-- Fetch the value of a specific secret from a Doppler config
-- List all secrets in a Doppler project/config
-- Inspect raw vs. computed secret values (with variable interpolation)
-
-## Prerequisites
-
-Connect the **Doppler** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DOPPLER_TOKEN` or `zero doctor check-connector --url https://api.doppler.com/v3/configs/config/secret --method GET`
+If requests fail, run `zero doctor check-connector --env-name DOPPLER_TOKEN` or `zero doctor check-connector --url https://api.doppler.com/v3/configs/config/secret --method GET`
 
 ## Core APIs
 
@@ -36,8 +22,6 @@ curl -s "https://api.doppler.com/v3/configs/config/secret" \
 
 Replace `<project-slug>` with your Doppler project slug, `<config-name>` with the config (e.g., `dev`, `prd`), and `<SECRET_NAME>` with the exact secret key.
 
----
-
 ### List All Secrets in a Config
 
 ```bash
@@ -47,8 +31,6 @@ curl -s "https://api.doppler.com/v3/configs/config/secrets" \
   --data-urlencode "project=<project-slug>" \
   --data-urlencode "config=<config-name>" | jq '.secrets | to_entries[] | {name: .key, raw: .value.raw, computed: .value.computed}'
 ```
-
----
 
 ### Download All Secrets as JSON
 
@@ -63,16 +45,12 @@ curl -s "https://api.doppler.com/v3/configs/config/secrets/download" \
 
 Returns a flat key/value JSON object of all secrets.
 
----
-
 ### List Projects
 
 ```bash
 curl -s "https://api.doppler.com/v3/projects" \
   -H "Authorization: Bearer $DOPPLER_TOKEN" | jq '.projects[] | {id, name, slug}'
 ```
-
----
 
 ### List Configs in a Project
 
@@ -82,8 +60,6 @@ curl -s "https://api.doppler.com/v3/configs" \
   -G \
   --data-urlencode "project=<project-slug>" | jq '.configs[] | {name, environment, locked}'
 ```
-
----
 
 ## Guidelines
 

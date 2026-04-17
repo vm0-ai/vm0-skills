@@ -4,39 +4,15 @@ description: Firecrawl API for web scraping and crawling. Use when user mentions
   "crawl website", "scrape site", or web extraction.
 ---
 
-# Firecrawl
+## Troubleshooting
 
-Use the Firecrawl API via direct `curl` calls to **scrape websites and extract data for AI**.
-
-> Official docs: `https://docs.firecrawl.dev/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Scrape a webpage** and convert to markdown/HTML
-- **Crawl an entire website** and extract all pages
-- **Discover all URLs** on a website
-- **Search the web** and get full page content
-- **Extract structured data** using AI
-
----
-
-## Prerequisites
-
-Connect the **Firecrawl** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FIRECRAWL_TOKEN` or `zero doctor check-connector --url https://api.firecrawl.dev/v1/scrape --method POST`
+If requests fail, run `zero doctor check-connector --env-name FIRECRAWL_TOKEN` or `zero doctor check-connector --url https://api.firecrawl.dev/v1/scrape --method POST`
 
 ## How to Use
 
 All examples below assume you have `FIRECRAWL_TOKEN` set.
 
 Base URL: `https://api.firecrawl.dev/v1`
-
----
 
 ## 1. Scrape - Single Page
 
@@ -121,8 +97,6 @@ curl -s -X POST "https://api.firecrawl.dev/v1/scrape" -H "Authorization: Bearer 
 | `onlyMainContent` | boolean | Skip headers/footers |
 | `timeout` | number | Timeout in milliseconds |
 
----
-
 ## 2. Crawl - Entire Website
 
 Crawl all pages of a website (async operation).
@@ -200,8 +174,6 @@ curl -s -X POST "https://api.firecrawl.dev/v1/crawl" -H "Authorization: Bearer $
 | `includePaths` | array | Paths to include (e.g., `/blog/*`) |
 | `excludePaths` | array | Paths to exclude |
 
----
-
 ## 3. Map - URL Discovery
 
 Get all URLs from a website quickly.
@@ -247,8 +219,6 @@ curl -s -X POST "https://api.firecrawl.dev/v1/map" -H "Authorization: Bearer $FI
 | `url` | string | Website URL (required) |
 | `search` | string | Filter URLs containing keyword |
 | `limit` | number | Max URLs to return (default: 1000) |
-
----
 
 ## 4. Search - Web Search
 
@@ -298,8 +268,6 @@ curl -s -X POST "https://api.firecrawl.dev/v1/search" -H "Authorization: Bearer 
 | `query` | string | Search query (required) |
 | `limit` | number | Number of results (default: 10) |
 | `scrapeOptions` | object | Options for scraping results |
-
----
 
 ## 5. Extract - AI Data Extraction
 
@@ -375,8 +343,6 @@ curl -s -X POST "https://api.firecrawl.dev/v1/extract" -H "Authorization: Bearer
 | `urls` | array | URLs to extract from (required) |
 | `prompt` | string | Description of data to extract (required) |
 | `schema` | object | JSON schema for structured output |
-
----
 
 ## Practical Examples
 
@@ -463,8 +429,6 @@ while true; do
 done
 ```
 
----
-
 ## Response Format
 
 ### Scrape Response
@@ -494,8 +458,6 @@ done
   "data": [...]
 }
 ```
-
----
 
 ## Guidelines
 

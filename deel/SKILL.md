@@ -4,35 +4,9 @@ description: Deel API for global payroll and contractors. Use when user mentions
   "contractors", "global payroll", or "EOR".
 ---
 
-# Deel API
+## Troubleshooting
 
-Manage contracts, people, time off, invoices, payments, teams, and organization data with the Deel REST API v2.
-
-> Official docs: https://developer.deel.com/docs
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- List and manage contracts (contractor, EOR, global payroll)
-- View employee and contractor profiles
-- Manage time off requests and entitlements
-- View and create invoice adjustments
-- Access invoices, payments, and payslips
-- Manage teams, departments, and organization structure
-- Track onboarding and offboarding
-- View milestones and timesheets
-- Manage webhooks
-
----
-
-## Prerequisites
-
-Connect the **Deel** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEL_TOKEN` or `zero doctor check-connector --url https://api.letsdeel.com/rest/v2/contracts --method GET`
+If requests fail, run `zero doctor check-connector --env-name DEEL_TOKEN` or `zero doctor check-connector --url https://api.letsdeel.com/rest/v2/contracts --method GET`
 
 ## Contracts
 
@@ -111,8 +85,6 @@ curl -s "https://api.letsdeel.com/rest/v2/contracts/<contract-id>/preview" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
 
----
-
 ## EOR Contracts
 
 ### Create EOR Contract
@@ -144,8 +116,6 @@ curl -s "https://api.letsdeel.com/rest/v2/eor/start-date" \
 curl -s "https://api.letsdeel.com/rest/v2/eor/validations/<country-code>" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
-
----
 
 ## People
 
@@ -194,8 +164,6 @@ curl -s -X PATCH "https://api.letsdeel.com/rest/v2/people/<worker-id>/personal" 
   --header "Content-Type: application/json" \
   -d "{\"first_name\": \"Jane\", \"last_name\": \"Doe\"}"
 ```
-
----
 
 ## Time Off
 
@@ -263,8 +231,6 @@ curl -s -X DELETE "https://api.letsdeel.com/rest/v2/time_offs/<time-off-id>" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
 
----
-
 ## Invoice Adjustments
 
 ### List Invoice Adjustments
@@ -313,8 +279,6 @@ curl -s -X DELETE "https://api.letsdeel.com/rest/v2/invoice-adjustments/<id>" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
 
----
-
 ## Adjustments (Generic)
 
 ### List Adjustment Categories
@@ -332,8 +296,6 @@ curl -s -X POST "https://api.letsdeel.com/rest/v2/adjustments" \
   --header "Content-Type: application/json" \
   -d "{\"contract_id\": \"<contract-id>\", \"category_id\": \"<category-id>\", \"amount\": 200, \"description\": \"Expense reimbursement\"}"
 ```
-
----
 
 ## Accounting
 
@@ -380,8 +342,6 @@ curl -s "https://api.letsdeel.com/rest/v2/payments/<payment-id>/breakdown" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
 
----
-
 ## Payslips
 
 ### List EOR Payslips
@@ -405,8 +365,6 @@ curl -s "https://api.letsdeel.com/rest/v2/eor/workers/<worker-id>/payslips/<pays
 curl -s "https://api.letsdeel.com/rest/v2/gp/workers/<worker-id>/payslips" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
-
----
 
 ## Milestones
 
@@ -432,8 +390,6 @@ curl -s -X POST "https://api.letsdeel.com/rest/v2/contracts/<contract-id>/milest
 curl -s -X DELETE "https://api.letsdeel.com/rest/v2/contracts/<contract-id>/milestones/<milestone-id>" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
-
----
 
 ## Timesheets
 
@@ -484,8 +440,6 @@ curl -s -X POST "https://api.letsdeel.com/rest/v2/timesheets/<id>/reviews" \
 curl -s -X DELETE "https://api.letsdeel.com/rest/v2/timesheets/<id>" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
-
----
 
 ## Organization
 
@@ -538,8 +492,6 @@ curl -s "https://api.letsdeel.com/rest/v2/working-locations" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
 
----
-
 ## Onboarding & Offboarding Tracker
 
 ### List Onboarding Tracker
@@ -562,8 +514,6 @@ curl -s "https://api.letsdeel.com/rest/v2/onboarding/tracker/hris_profile/<hris-
 curl -s "https://api.letsdeel.com/rest/v2/offboarding/tracker" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
-
----
 
 ## Lookups
 
@@ -601,8 +551,6 @@ curl -s "https://api.letsdeel.com/rest/v2/lookups/seniorities" \
 curl -s "https://api.letsdeel.com/rest/v2/lookups/time-off-types" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
-
----
 
 ## Webhooks
 
@@ -645,8 +593,6 @@ curl -s -X DELETE "https://api.letsdeel.com/rest/v2/webhooks/<id>" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
 
----
-
 ## Groups
 
 ### List Groups
@@ -681,8 +627,6 @@ curl -s -X DELETE "https://api.letsdeel.com/rest/v2/groups/<id>" \
   --header "Authorization: Bearer $DEEL_TOKEN"
 ```
 
----
-
 ## Guidelines
 
 1. **API versioning**: All endpoints use `/rest/v2/`.
@@ -694,8 +638,6 @@ curl -s -X DELETE "https://api.letsdeel.com/rest/v2/groups/<id>" \
 7. **Invoice adjustments**: Available for contractor contracts. Use the generic `adjustments` endpoints for broader adjustment types.
 8. **EOR vs Contractor**: EOR contracts have separate endpoints under `/eor/` for country-specific compliance, amendments, and offboarding.
 9. **HRIS Profile ID**: Many people/time-off endpoints use the HRIS profile ID, not the contract ID. Get it from the people endpoint.
-
----
 
 ## How to Look Up More API Details
 

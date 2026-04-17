@@ -3,14 +3,6 @@ name: copywriting
 description: Write and edit marketing copy for any channel — blogs, emails, social posts, landing pages, press releases, case studies, ads, and web pages. Trigger on requests for drafting content, writing headlines, crafting CTAs, SEO copywriting, email subject lines, social captions, or any persuasive marketing text.
 ---
 
-# Copywriting
-
-Principles, structures, and techniques for producing high-performing marketing copy across every major channel.
-
-## Prerequisites
-
-Connect the **Copywriting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Channel Formats and Anatomy
 
 ### Blog Articles

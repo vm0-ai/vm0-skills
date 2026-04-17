@@ -4,31 +4,9 @@ description: LINE API for messaging. Use when user mentions "LINE", "LINE messag
   "LINE bot", or asks about LINE platform.
 ---
 
-# LINE Messaging API
+## Troubleshooting
 
-Use the LINE Messaging API via direct `curl` calls to **send messages, manage users, configure rich menus, set up webhooks, and access analytics** for LINE Official Accounts and bots.
-
-> Official docs: `https://developers.line.biz/en/reference/messaging-api/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Send messages** to users via push, reply, multicast, or broadcast
-- **Retrieve user profiles** and follower information
-- **Manage rich menus** for interactive bot interfaces
-- **Configure webhooks** for receiving events from LINE
-- **Access analytics** including message delivery stats and follower demographics
-
----
-
-## Prerequisites
-
-Connect the **LINE** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LINE_TOKEN` or `zero doctor check-connector --url https://api.line.me/v2/bot/info --method GET`
+If requests fail, run `zero doctor check-connector --env-name LINE_TOKEN` or `zero doctor check-connector --url https://api.line.me/v2/bot/info --method GET`
 
 ## How to Use
 
@@ -38,8 +16,6 @@ All examples below assume you have `LINE_TOKEN` set. Authentication uses Bearer 
 
 - `https://api.line.me`
 
----
-
 ### 1. Get Bot Info
 
 Retrieve information about the bot associated with the channel access token.
@@ -48,8 +24,6 @@ Retrieve information about the bot associated with the channel access token.
 curl -s "https://api.line.me/v2/bot/info" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
 
----
-
 ### 2. Get User Profile
 
 Retrieve a user's display name, profile image, and status message. Replace `USER_ID` with the actual user ID.
@@ -57,8 +31,6 @@ Retrieve a user's display name, profile image, and status message. Replace `USER
 ```bash
 curl -s "https://api.line.me/v2/bot/profile/USER_ID" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
-
----
 
 ### 3. Get Follower IDs
 
@@ -73,8 +45,6 @@ For pagination, use the `next` token from the response:
 ```bash
 curl -s "https://api.line.me/v2/bot/followers/ids?limit=100&start=CONTINUATION_TOKEN" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
-
----
 
 ### 4. Send Push Message
 
@@ -100,8 +70,6 @@ Then run:
 curl -s -X POST "https://api.line.me/v2/bot/message/push" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d @/tmp/line_request.json | jq .
 ```
 
----
-
 ### 5. Send Reply Message
 
 Reply to a user event using a reply token received from a webhook event. Reply tokens expire after a short time.
@@ -125,8 +93,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.line.me/v2/bot/message/reply" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d @/tmp/line_request.json | jq .
 ```
-
----
 
 ### 6. Send Multicast Message
 
@@ -152,8 +118,6 @@ Then run:
 curl -s -X POST "https://api.line.me/v2/bot/message/multicast" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d @/tmp/line_request.json | jq .
 ```
 
----
-
 ### 7. Send Broadcast Message
 
 Send a message to all users who have added the bot as a friend.
@@ -177,8 +141,6 @@ Then run:
 curl -s -X POST "https://api.line.me/v2/bot/message/broadcast" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d @/tmp/line_request.json | jq .
 ```
 
----
-
 ### 8. Check Message Quota
 
 Get the monthly message quota for the LINE Official Account.
@@ -192,8 +154,6 @@ Check how many messages have been sent this month:
 ```bash
 curl -s "https://api.line.me/v2/bot/message/quota/consumption" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
-
----
 
 ### 9. Send Image Message
 
@@ -219,8 +179,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.line.me/v2/bot/message/push" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d @/tmp/line_request.json | jq .
 ```
-
----
 
 ### 10. Send Template Message (Buttons)
 
@@ -263,8 +221,6 @@ Then run:
 curl -s -X POST "https://api.line.me/v2/bot/message/push" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d @/tmp/line_request.json | jq .
 ```
 
----
-
 ### 11. Get Webhook Endpoint
 
 Retrieve the current webhook URL configuration.
@@ -272,8 +228,6 @@ Retrieve the current webhook URL configuration.
 ```bash
 curl -s "https://api.line.me/v2/bot/channel/webhook/endpoint" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
-
----
 
 ### 12. Set Webhook Endpoint
 
@@ -283,8 +237,6 @@ Configure the webhook URL where LINE sends events.
 curl -s -X PUT "https://api.line.me/v2/bot/channel/webhook/endpoint" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d '{"endpoint":"https://example.com/webhook"}' | jq .
 ```
 
----
-
 ### 13. Test Webhook
 
 Test the webhook endpoint connectivity.
@@ -293,8 +245,6 @@ Test the webhook endpoint connectivity.
 curl -s -X POST "https://api.line.me/v2/bot/channel/webhook/test" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d '{"endpoint":"https://example.com/webhook"}' | jq .
 ```
 
----
-
 ### 14. List Rich Menus
 
 Get all rich menus created for the bot.
@@ -302,8 +252,6 @@ Get all rich menus created for the bot.
 ```bash
 curl -s "https://api.line.me/v2/bot/richmenu/list" --header "Authorization: Bearer $LINE_TOKEN" | jq '.richmenus[] | {richMenuId, name, size}'
 ```
-
----
 
 ### 15. Create Rich Menu
 
@@ -355,8 +303,6 @@ Then run:
 curl -s -X POST "https://api.line.me/v2/bot/richmenu" --header "Content-Type: application/json" --header "Authorization: Bearer $LINE_TOKEN" -d @/tmp/line_request.json | jq .
 ```
 
----
-
 ### 16. Delete Rich Menu
 
 Delete a rich menu by ID.
@@ -364,8 +310,6 @@ Delete a rich menu by ID.
 ```bash
 curl -s -X DELETE "https://api.line.me/v2/bot/richmenu/RICH_MENU_ID" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
-
----
 
 ### 17. Get Message Delivery Statistics
 
@@ -375,8 +319,6 @@ Get the number of messages delivered on a specific date (format: `yyyyMMdd`).
 curl -s "https://api.line.me/v2/bot/insight/message/delivery?date=20260301" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
 
----
-
 ### 18. Get Follower Demographics
 
 Retrieve demographic data about followers (gender, age, area distribution).
@@ -384,8 +326,6 @@ Retrieve demographic data about followers (gender, age, area distribution).
 ```bash
 curl -s "https://api.line.me/v2/bot/insight/demographic" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
-
----
 
 ### 19. Get Group Summary
 
@@ -395,8 +335,6 @@ Retrieve information about a group chat the bot is a member of.
 curl -s "https://api.line.me/v2/bot/group/GROUP_ID/summary" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
 
----
-
 ### 20. Get Group Member Profile
 
 Retrieve the profile of a specific member in a group chat.
@@ -404,8 +342,6 @@ Retrieve the profile of a specific member in a group chat.
 ```bash
 curl -s "https://api.line.me/v2/bot/group/GROUP_ID/member/USER_ID" --header "Authorization: Bearer $LINE_TOKEN" | jq .
 ```
-
----
 
 ## Message Types
 
@@ -421,8 +357,6 @@ LINE supports multiple message types in the `messages` array:
 | `sticker` | LINE sticker with package and sticker IDs |
 | `template` | Interactive template (buttons, confirm, carousel) |
 | `flex` | Flexible layout message using Flex Message JSON |
-
----
 
 ## Guidelines
 

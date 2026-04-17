@@ -4,23 +4,6 @@ description: PiKVM API for remote KVM. Use when user mentions "PiKVM", "KVM over
   "remote server", or hardware management.
 ---
 
-# PiKVM Remote Control
-
-Control remote computers via PiKVM REST API with mouse, keyboard, and power management.
-
-## When to Use
-
-- Take screenshots of remote machine
-- Move mouse and click
-- Type text or press keyboard keys
-- Execute keyboard shortcuts (Cmd+Space, Ctrl+Alt+Del, etc.)
-- Power control (on/off/reset)
-- Automate remote desktop operations
-
-## Prerequisites
-
-Connect the **PiKVM Remote Control** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Coordinate System
 
 **Mouse coordinates use screen center as origin (0,0)**:
@@ -31,8 +14,6 @@ For 1920x1080 screen:
 - Top-left: `(-960, -540)`
 - Center: `(0, 0)`
 - Bottom-right: `(960, 540)`
-
----
 
 ## Usage
 
@@ -141,8 +122,6 @@ curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/atx/power?action=off"
 # Hard reset
 curl -k -s -X POST -u "$PIKVM_AUTH" "$PIKVM_URL/api/atx/power?action=reset_hard"
 ```
-
----
 
 ## Common Key Names
 

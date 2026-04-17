@@ -4,31 +4,9 @@ description: Dropbox API for file storage. Use when user mentions "Dropbox", "dr
   shares a Dropbox link, "upload to Dropbox", or asks about cloud storage.
 ---
 
-# Dropbox API
+## Troubleshooting
 
-Manage files, folders, sharing, and file requests in Dropbox using the HTTP API v2.
-
-> Official docs: https://www.dropbox.com/developers/documentation/http/documentation
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- List, search, upload, download, move, copy, or delete files and folders
-- Get file metadata, revisions, and previews
-- Create and manage shared links and folder sharing
-- Manage file requests
-- Check storage usage
-
----
-
-## Prerequisites
-
-Connect the **Dropbox** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DROPBOX_TOKEN` or `zero doctor check-connector --url https://api.dropboxapi.com/2/users/get_current_account --method POST`
+If requests fail, run `zero doctor check-connector --env-name DROPBOX_TOKEN` or `zero doctor check-connector --url https://api.dropboxapi.com/2/users/get_current_account --method POST`
 
 ## User
 
@@ -45,8 +23,6 @@ curl -s -X POST "https://api.dropboxapi.com/2/users/get_current_account" \
 curl -s -X POST "https://api.dropboxapi.com/2/users/get_space_usage" \
   --header "Authorization: Bearer $DROPBOX_TOKEN"
 ```
-
----
 
 ## Files & Folders
 
@@ -213,8 +189,6 @@ curl -s -X POST "https://api.dropboxapi.com/2/files/tags/remove" \
   -d "{\"path\": \"/Documents/report.pdf\", \"tag_text\": \"important\"}"
 ```
 
----
-
 ## Upload & Download
 
 ### Upload File (up to 150 MB)
@@ -257,8 +231,6 @@ curl -s -X POST "https://content.dropboxapi.com/2/files/get_thumbnail:2" \
   --header "Dropbox-API-Arg: {\"resource\": {\".tag\": \"path\", \"path\": \"/Photos/image.jpg\"}, \"format\": \"jpeg\", \"size\": \"w256h256\"}" \
   -o thumbnail.jpg
 ```
-
----
 
 ## Sharing
 
@@ -345,8 +317,6 @@ curl -s -X POST "https://api.dropboxapi.com/2/sharing/list_folders" \
   -d "{\"limit\": 100}"
 ```
 
----
-
 ## File Requests
 
 ### List File Requests
@@ -399,8 +369,6 @@ curl -s -X POST "https://api.dropboxapi.com/2/file_requests/count" \
   --header "Authorization: Bearer $DROPBOX_TOKEN"
 ```
 
----
-
 ## Guidelines
 
 1. **All POST**: Dropbox API uses POST for nearly everything, including reads. Don't use GET.
@@ -411,8 +379,6 @@ curl -s -X POST "https://api.dropboxapi.com/2/file_requests/count" \
 6. **Rate limits**: Back off on 429 responses. Use `Retry-After` header.
 7. **Shared links**: Use `create_shared_link_with_settings` (not deprecated `create_shared_link`).
 8. **Batch operations**: `copy_batch`, `move_batch`, `delete_batch` are available for bulk operations.
-
----
 
 ## How to Look Up More API Details
 

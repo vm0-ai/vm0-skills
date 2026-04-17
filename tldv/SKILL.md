@@ -4,33 +4,9 @@ description: tl;dv API for meeting recordings. Use when user mentions "tl;dv", "
   recording", "meeting summary", or asks about call analysis.
 ---
 
-# tl;dv API
+## Troubleshooting
 
-Access meeting recordings, transcripts, highlights, and AI-generated notes from tl;dv via the REST API.
-
-> Official docs: `https://doc.tldv.io/index.html`
-
----
-
-## Prerequisites
-
-Connect the **tl;dv** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TLDV_TOKEN` or `zero doctor check-connector --url https://pasta.tldv.io/v1alpha1/health --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- List and retrieve meeting recordings from Zoom, Google Meet, or Microsoft Teams
-- Get structured transcripts with speaker identification and timestamps
-- Access AI-generated meeting highlights, topics, and summaries
-- Download meeting recordings
-- Import external meeting recordings into tl;dv
-
----
-
----
+If requests fail, run `zero doctor check-connector --env-name TLDV_TOKEN` or `zero doctor check-connector --url https://pasta.tldv.io/v1alpha1/health --method GET`
 
 ## How to Use
 
@@ -42,8 +18,6 @@ API version: `v1alpha1` (alpha — endpoints may change before stable v1 release
 
 Authentication uses the `x-api-key` header (not Bearer).
 
----
-
 ## Health Check
 
 ### Verify API Connectivity
@@ -51,8 +25,6 @@ Authentication uses the `x-api-key` header (not Bearer).
 ```bash
 curl -s "https://pasta.tldv.io/v1alpha1/health" --header "x-api-key: $TLDV_TOKEN" | jq .
 ```
-
----
 
 ## Meetings
 
@@ -102,8 +74,6 @@ Write to `/tmp/tldv_request.json`:
 curl -s -X POST "https://pasta.tldv.io/v1alpha1/meetings/import" --header "x-api-key: $TLDV_TOKEN" --header "Content-Type: application/json" -d @/tmp/tldv_request.json | jq .
 ```
 
----
-
 ## Transcripts
 
 ### Get Meeting Transcript
@@ -118,8 +88,6 @@ curl -s "https://pasta.tldv.io/v1alpha1/meetings/<meeting_id>/transcript" --head
 curl -s "https://pasta.tldv.io/v1alpha1/meetings/<meeting_id>/transcript" --header "x-api-key: $TLDV_TOKEN" | jq -r '.data[] | "\(.speaker): \(.text)"'
 ```
 
----
-
 ## Highlights / Notes
 
 ### Get Meeting Highlights
@@ -133,8 +101,6 @@ curl -s "https://pasta.tldv.io/v1alpha1/meetings/<meeting_id>/highlights" --head
 ```bash
 curl -s "https://pasta.tldv.io/v1alpha1/meetings/<meeting_id>/highlights" --header "x-api-key: $TLDV_TOKEN" | jq '[.data[] | .topic | select(. != null)] | unique_by(.title) | .[] | {title, summary}'
 ```
-
----
 
 ## Guidelines
 

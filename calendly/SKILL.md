@@ -3,25 +3,9 @@ name: calendly
 description: Calendly scheduling API. Use when user mentions "Calendly", "calendly.com", "schedule a meeting", "booking link", "event types", or asks about interview scheduling.
 ---
 
-# Calendly API
+## Troubleshooting
 
-Read scheduling data, list event types, retrieve scheduled meetings, and access invitee information via the Calendly API v2.
-
-> Official docs: `https://developer.calendly.com/api-docs/`
-
-## When to Use
-
-- List available event types (e.g., 30-min intro call, 60-min interview)
-- Retrieve scheduled meetings for a user or organization
-- Get invitee details for a specific event
-- Set up webhook subscriptions to receive real-time booking notifications
-- Look up user and organization details
-
-## Prerequisites
-
-Connect the **Calendly** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALENDLY_TOKEN` or `zero doctor check-connector --url https://api.calendly.com/users/me --method GET`
+If requests fail, run `zero doctor check-connector --env-name CALENDLY_TOKEN` or `zero doctor check-connector --url https://api.calendly.com/users/me --method GET`
 
 ## Core APIs
 
@@ -33,8 +17,6 @@ Returns the authenticated user's URI and organization URI — needed for subsequ
 curl -s "https://api.calendly.com/users/me" --header "Authorization: Bearer $CALENDLY_TOKEN" | jq '{uri, name, email, organization: .current_organization}'
 ```
 
----
-
 ### List Event Types
 
 List all event types for the current user. First get your user URI from the step above.
@@ -45,8 +27,6 @@ Replace `<user-uri>` with the full URI from `GET /users/me` (e.g., `https://api.
 curl -s "https://api.calendly.com/event_types?user=<user-uri>" --header "Authorization: Bearer $CALENDLY_TOKEN" | jq '[.collection[] | {uri, name, duration, active, scheduling_url}]'
 ```
 
----
-
 ### List Scheduled Events
 
 List upcoming scheduled events for a user. Replace `<user-uri>` with your user URI:
@@ -54,8 +34,6 @@ List upcoming scheduled events for a user. Replace `<user-uri>` with your user U
 ```bash
 curl -s "https://api.calendly.com/scheduled_events?user=<user-uri>&status=active&count=20" --header "Authorization: Bearer $CALENDLY_TOKEN" | jq '[.collection[] | {uri, name, status, start_time, end_time, location: .location.type}]'
 ```
-
----
 
 ### List Past Scheduled Events
 
@@ -65,8 +43,6 @@ Replace `<user-uri>` with your user URI:
 curl -s "https://api.calendly.com/scheduled_events?user=<user-uri>&status=canceled&count=20" --header "Authorization: Bearer $CALENDLY_TOKEN" | jq '[.collection[] | {uri, name, status, start_time}]'
 ```
 
----
-
 ### Get a Scheduled Event
 
 Replace `<event-uuid>` with the UUID portion from a scheduled event URI:
@@ -75,8 +51,6 @@ Replace `<event-uuid>` with the UUID portion from a scheduled event URI:
 curl -s "https://api.calendly.com/scheduled_events/<event-uuid>" --header "Authorization: Bearer $CALENDLY_TOKEN" | jq '{uri, name, status, start_time, end_time, invitees_counter}'
 ```
 
----
-
 ### List Invitees for an Event
 
 Get all invitees (attendees) for a specific scheduled event. Replace `<event-uuid>`:
@@ -84,8 +58,6 @@ Get all invitees (attendees) for a specific scheduled event. Replace `<event-uui
 ```bash
 curl -s "https://api.calendly.com/scheduled_events/<event-uuid>/invitees" --header "Authorization: Bearer $CALENDLY_TOKEN" | jq '[.collection[] | {uri, name, email, status, created_at}]'
 ```
-
----
 
 ### Create Webhook Subscription
 
@@ -106,15 +78,11 @@ Write to `/tmp/calendly_request.json`:
 curl -s -X POST "https://api.calendly.com/webhook_subscriptions" --header "Authorization: Bearer $CALENDLY_TOKEN" --header "Content-Type: application/json" -d @/tmp/calendly_request.json | jq '{uri, callback_url: .resource.callback_url, events: .resource.events}'
 ```
 
----
-
 ### List Webhook Subscriptions
 
 ```bash
 curl -s "https://api.calendly.com/webhook_subscriptions?organization=<organization-uri>&scope=organization" --header "Authorization: Bearer $CALENDLY_TOKEN" | jq '[.collection[] | {uri, callback_url, events, state}]'
 ```
-
----
 
 ### Delete Webhook Subscription
 
@@ -123,8 +91,6 @@ Replace `<webhook-uuid>` with the UUID from the webhook URI:
 ```bash
 curl -s -X DELETE "https://api.calendly.com/webhook_subscriptions/<webhook-uuid>" --header "Authorization: Bearer $CALENDLY_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
-
----
 
 ## Guidelines
 

@@ -3,15 +3,9 @@ name: workflow-migration
 description: VM0 migration helper for Claude Code workflows. Use when user says "migrate to VM0", "move to VM0", "convert skill to VM0", or asks about migrating local Claude Code workflows.
 ---
 
-# Local Claude Code Workflow to VM0 Migration
+## Troubleshooting
 
----
-
-## Prerequisites
-
-Connect the **Local Claude Code Workflow to VM0 Migration** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NOTION_API_KEY`
+If requests fail, run `zero doctor check-connector --env-name NOTION_API_KEY`
 
 ## When to Use This Skill
 
@@ -21,8 +15,6 @@ Use when the user wants to:
 - "Run my local automation on VM0"
 - "Move my Claude Code setup to VM0 cloud"
 - "Deploy my local skill to VM0"
-
----
 
 ## How It Works
 
@@ -283,8 +275,6 @@ __pycache__
 reports/
 ```
 
----
-
 ## Complete Real Example: world-news-summary
 
 This is a real migration case showing exactly how to convert a local Claude Code skill to VM0.
@@ -486,8 +476,6 @@ vm0 logs
 - Completed in ~5 minutes
 - Cost: $1.51
 
----
-
 ## Migration Process
 
 When user asks to migrate their local workflow, follow these steps:
@@ -628,8 +616,6 @@ Next steps:
 - Monitor agent performance
 ```
 
----
-
 ## Tips for Good Migrations
 
 ### 1. Understand the Workflow First
@@ -670,8 +656,6 @@ Instead of raw API calls, use VM0 skills when available:
 - Include deployment instructions
 - Note any differences from local behavior
 
----
-
 ## Common Migration Patterns
 
 ### Pattern 1: Daily Data Sync
@@ -690,8 +674,6 @@ Instead of raw API calls, use VM0 skills when available:
 ### Pattern 4: Multi-service Integration
 **Local**: Skill that orchestrates multiple services (GitHub + Slack + Notion)
 **VM0**: Agent that uses multiple VM0 skills for each service
-
----
 
 ## Troubleshooting
 
@@ -721,8 +703,6 @@ Instead of raw API calls, use VM0 skills when available:
 ### Issue: "Agent behavior differs from local skill"
 **Solution**: Review AGENTS.md instructions - may need to preserve more details from original SKILL.md
 
----
-
 ## Key Differences: Local Skills vs VM0 Agents
 
 | Aspect | Local Claude Code Skills | VM0 Agents |
@@ -734,8 +714,6 @@ Instead of raw API calls, use VM0 skills when available:
 | **Secrets** | Local env vars or `.env` | VM0 secrets or `.env` (testing) |
 | **APIs** | Direct API calls | Can use VM0 skills |
 | **Execution** | `claude` CLI or IDE | `vm0 run` or `vm0 cook` |
-
----
 
 ## References
 

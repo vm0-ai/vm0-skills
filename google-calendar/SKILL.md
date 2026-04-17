@@ -5,46 +5,13 @@ description: Google Calendar API for scheduling. Use when user mentions "calenda
   or "when am I free".
 ---
 
-# Google Calendar API
+## Troubleshooting
 
-Manage calendars and events via Google's Calendar REST API.
-
-> Official docs: https://developers.google.com/workspace/calendar/api/v3/reference
-
----
-
-## Prerequisites
-
-Connect the **Google Calendar** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_CALENDAR_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/calendar/v3/users/me/calendarList --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- List and manage calendars
-- Create, update, and delete calendar events
-- Search and filter events by time range
-- Manage event attendees and send invitations
-- Set up event reminders
-- Check free/busy availability
-- Handle recurring events
-- Quick-add events using natural language
-
----
-
----
-
-> **Placeholders:** Values in `{curly-braces}` like `{event-id}` are placeholders. Replace them with actual values when executing.
-
----
+If requests fail, run `zero doctor check-connector --env-name GOOGLE_CALENDAR_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/calendar/v3/users/me/calendarList --method GET`
 
 ## How to Use
 
 Base URL: `https://www.googleapis.com/calendar/v3`
-
----
 
 ## Calendar List
 
@@ -69,8 +36,6 @@ For primary calendar, use `primary` as the calendar ID:
 ```bash
 curl -s "https://www.googleapis.com/calendar/v3/calendars/primary" --header "Authorization: Bearer $GOOGLE_CALENDAR_TOKEN" | jq '{id, summary, description, timeZone}'
 ```
-
----
 
 ## Events
 
@@ -235,8 +200,6 @@ Send deletion notifications to attendees:
 curl -s -X DELETE "https://www.googleapis.com/calendar/v3/calendars/primary/events/{event-id}?sendUpdates=all" --header "Authorization: Bearer $GOOGLE_CALENDAR_TOKEN"
 ```
 
----
-
 ## Attendees
 
 ### Set Attendees on Event
@@ -286,8 +249,6 @@ Then run:
 curl -s -X PATCH "https://www.googleapis.com/calendar/v3/calendars/primary/events/{event-id}?sendUpdates=all" --header "Authorization: Bearer $GOOGLE_CALENDAR_TOKEN" --header "Content-Type: application/json" -d @/tmp/calendar_request.json | jq '.error // {id, summary, attendees}'
 ```
 
----
-
 ## Reminders
 
 ### Set Custom Reminders
@@ -336,8 +297,6 @@ Then run:
 curl -s -X PATCH "https://www.googleapis.com/calendar/v3/calendars/primary/events/{event-id}" --header "Authorization: Bearer $GOOGLE_CALENDAR_TOKEN" --header "Content-Type: application/json" -d @/tmp/calendar_request.json | jq '.error // {id, summary, reminders}'
 ```
 
----
-
 ## Recurring Events
 
 ### Create Recurring Event
@@ -382,8 +341,6 @@ Get all instances of a recurring event:
 curl -s "https://www.googleapis.com/calendar/v3/calendars/primary/events/{recurring-event-id}/instances?timeMin=2024-01-01T00:00:00Z&timeMax=2024-12-31T23:59:59Z" --header "Authorization: Bearer $GOOGLE_CALENDAR_TOKEN" | jq '.items[]? | {id, summary, start, end, recurringEventId}'
 ```
 
----
-
 ## Free/Busy Information
 
 ### Query Free/Busy
@@ -410,8 +367,6 @@ Then run:
 ```bash
 curl -s -X POST "https://www.googleapis.com/calendar/v3/freeBusy" --header "Authorization: Bearer $GOOGLE_CALENDAR_TOKEN" --header "Content-Type: application/json" -d @/tmp/calendar_request.json | jq '.error // .calendars'
 ```
-
----
 
 ## Secondary Calendars
 
@@ -456,8 +411,6 @@ curl -s -X PATCH "https://www.googleapis.com/calendar/v3/calendars/{calendar-id}
 curl -s -X DELETE "https://www.googleapis.com/calendar/v3/calendars/{calendar-id}" --header "Authorization: Bearer $GOOGLE_CALENDAR_TOKEN"
 ```
 
----
-
 ## Event Colors
 
 ### Set Event Color
@@ -489,8 +442,6 @@ Available color IDs:
 - 10: Basil
 - 11: Tomato
 
----
-
 ## Common Query Parameters
 
 | Parameter | Type | Purpose |
@@ -503,8 +454,6 @@ Available color IDs:
 | `q` | string | Free text search query |
 | `sendUpdates` | string | Send notifications: `all`, `externalOnly`, `none` |
 
----
-
 ## Guidelines
 
 1. **Primary Calendar**: Use `primary` as the calendar ID for the user's primary calendar
@@ -514,8 +463,6 @@ Available color IDs:
 5. **Patch vs Update**: Use PATCH for partial updates (more efficient), PUT for full replacement. Note: PATCH on `attendees` replaces the entire array — always include all intended attendees
 6. **Time Zones**: Always specify time zones explicitly to avoid ambiguity
 7. **Recurring Events**: To modify all instances, update the recurring event master; to modify single instance, update the specific instance ID
-
----
 
 ## API Reference
 

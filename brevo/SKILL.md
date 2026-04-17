@@ -3,25 +3,9 @@ name: brevo
 description: Brevo email and SMS marketing platform. Use when user mentions "Brevo", "Sendinblue", "email campaigns", "SMS marketing", "contact lists", or asks about multi-channel marketing.
 ---
 
-# Brevo API
+## Troubleshooting
 
-Send transactional emails, SMS, and marketing campaigns. Manage contacts and lists via Brevo (formerly Sendinblue).
-
-> Official docs: `https://developers.brevo.com/docs/getting-started`
-
-## When to Use
-
-- Import contacts from Clerk or another auth provider
-- Send transactional emails (receipts, password resets, alerts)
-- Create and send email marketing campaigns
-- Manage contact lists and attributes
-- Send SMS messages
-
-## Prerequisites
-
-Connect the **Brevo** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BREVO_TOKEN` or `zero doctor check-connector --url https://api.brevo.com/v3/account --method GET`
+If requests fail, run `zero doctor check-connector --env-name BREVO_TOKEN` or `zero doctor check-connector --url https://api.brevo.com/v3/account --method GET`
 
 ## Core APIs
 
@@ -32,8 +16,6 @@ Verify your API key and view account details:
 ```bash
 curl -s "https://api.brevo.com/v3/account" --header "api-key: $BREVO_TOKEN" --header "accept: application/json" | jq '{companyName, email, plan: .plan[0].type}'
 ```
-
----
 
 ### Create Contact
 
@@ -57,8 +39,6 @@ curl -s -X POST "https://api.brevo.com/v3/contacts" --header "api-key: $BREVO_TO
 
 Docs: https://developers.brevo.com/reference/create-contact
 
----
-
 ### Get Contact
 
 Replace `<email-or-id>` with the contact's email address or numeric ID:
@@ -66,8 +46,6 @@ Replace `<email-or-id>` with the contact's email address or numeric ID:
 ```bash
 curl -s "https://api.brevo.com/v3/contacts/<email-or-id>" --header "api-key: $BREVO_TOKEN" --header "accept: application/json" | jq '{id, email, attributes}'
 ```
-
----
 
 ### Update Contact
 
@@ -89,8 +67,6 @@ Write to `/tmp/brevo_request.json`:
 curl -s -X PUT "https://api.brevo.com/v3/contacts/<email-or-id>" --header "api-key: $BREVO_TOKEN" --header "Content-Type: application/json" -d @/tmp/brevo_request.json -w "\nHTTP Status: %{http_code}\n"
 ```
 
----
-
 ### Delete Contact
 
 Replace `<email-or-id>` with the contact's email or ID:
@@ -99,15 +75,11 @@ Replace `<email-or-id>` with the contact's email or ID:
 curl -s -X DELETE "https://api.brevo.com/v3/contacts/<email-or-id>" --header "api-key: $BREVO_TOKEN" -w "\nHTTP Status: %{http_code}\n"
 ```
 
----
-
 ### List Contacts
 
 ```bash
 curl -s "https://api.brevo.com/v3/contacts?limit=20&offset=0" --header "api-key: $BREVO_TOKEN" --header "accept: application/json" | jq '{count, contacts: [.contacts[] | {id, email}]}'
 ```
-
----
 
 ### Send Transactional Email
 
@@ -131,8 +103,6 @@ curl -s -X POST "https://api.brevo.com/v3/smtp/email" --header "api-key: $BREVO_
 
 Docs: https://developers.brevo.com/reference/send-transac-email
 
----
-
 ### Send Transactional Email via Template
 
 Replace `<template-id>` with the ID from your Brevo dashboard.
@@ -155,15 +125,11 @@ Write to `/tmp/brevo_request.json`:
 curl -s -X POST "https://api.brevo.com/v3/smtp/email" --header "api-key: $BREVO_TOKEN" --header "Content-Type: application/json" --header "accept: application/json" -d @/tmp/brevo_request.json | jq '{messageId}'
 ```
 
----
-
 ### List Contact Lists
 
 ```bash
 curl -s "https://api.brevo.com/v3/contacts/lists?limit=20" --header "api-key: $BREVO_TOKEN" --header "accept: application/json" | jq '[.lists[] | {id, name, totalBlacklisted, totalSubscribers}]'
 ```
-
----
 
 ### Import Contacts (Bulk)
 
@@ -189,8 +155,6 @@ Import multiple contacts at once. Write to `/tmp/brevo_request.json`:
 ```bash
 curl -s -X POST "https://api.brevo.com/v3/contacts/import" --header "api-key: $BREVO_TOKEN" --header "Content-Type: application/json" --header "accept: application/json" -d @/tmp/brevo_request.json | jq '{createdLists, processId}'
 ```
-
----
 
 ## Guidelines
 

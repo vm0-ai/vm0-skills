@@ -4,39 +4,15 @@ description: SerpApi for search engine results. Use when user mentions "SERP", "
   results", "Google scrape", or search API.
 ---
 
-# SerpApi
+## Troubleshooting
 
-Use SerpApi via direct `curl` calls to **scrape search engine results** from Google, Bing, YouTube, and more.
-
-> Official docs: `https://serpapi.com/search-api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Scrape Google search results** (organic, ads, knowledge graph)
-- **Search Google Images, News, Videos, Shopping**
-- **Get local business results** from Google Maps
-- **Scrape other search engines** (Bing, YouTube, DuckDuckGo, etc.)
-- **Monitor SERP rankings** for SEO analysis
-
----
-
-## Prerequisites
-
-Connect the **SerpApi** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SERPAPI_TOKEN` or `zero doctor check-connector --url https://serpapi.com/search --method GET`
+If requests fail, run `zero doctor check-connector --env-name SERPAPI_TOKEN` or `zero doctor check-connector --url https://serpapi.com/search --method GET`
 
 ## How to Use
 
 All examples below assume you have `SERPAPI_TOKEN` set.
 
 Base URL: `https://serpapi.com/search`
-
----
 
 ### 1. Basic Google Search
 
@@ -45,8 +21,6 @@ Search Google and get structured JSON results:
 ```bash
 curl -s "https://serpapi.com/search?engine=google&q=artificial+intelligence&api_key=$SERPAPI_TOKEN" | jq '.organic_results[:3] | .[] | {title, link, snippet}'
 ```
-
----
 
 ### 2. Search with Location
 
@@ -61,8 +35,6 @@ curl -s "https://serpapi.com/search?engine=google&q=best+coffee+shops&location=S
 - `gl`: Country code (us, uk, de, etc.)
 - `hl`: Language code (en, de, fr, etc.)
 
----
-
 ### 3. Google Image Search
 
 Search for images:
@@ -70,8 +42,6 @@ Search for images:
 ```bash
 curl -s "https://serpapi.com/search?engine=google_images&q=sunset+beach&api_key=$SERPAPI_TOKEN" | jq '.images_results[:3] | .[] | {title, original, thumbnail}'
 ```
-
----
 
 ### 4. Google News Search
 
@@ -81,8 +51,6 @@ Search news articles:
 curl -s "https://serpapi.com/search?engine=google_news&q=technology&api_key=$SERPAPI_TOKEN" | jq '.news_results[:3] | .[] | {title, link, source, date}'
 ```
 
----
-
 ### 5. Google Shopping Search
 
 Search products:
@@ -91,8 +59,6 @@ Search products:
 curl -s "https://serpapi.com/search?engine=google_shopping&q=wireless+headphones&api_key=$SERPAPI_TOKEN" | jq '.shopping_results[:3] | .[] | {title, price, source}'
 ```
 
----
-
 ### 6. YouTube Search
 
 Search YouTube videos:
@@ -100,8 +66,6 @@ Search YouTube videos:
 ```bash
 curl -s "https://serpapi.com/search?engine=youtube&search_query=python+tutorial&api_key=$SERPAPI_TOKEN" | jq '.video_results[:3] | .[] | {title, link, channel, views}'
 ```
-
----
 
 ### 7. Google Maps / Local Results
 
@@ -127,8 +91,6 @@ curl -s "https://serpapi.com/search?engine=google_maps&q=3PL&ll=@32.7767,-96.797
 **Parameters:**
 - `ll`: Latitude, longitude, and zoom level (e.g., `@40.7128,-74.0060,15z`)
 
----
-
 ### 8. Pagination
 
 Get more results using the `start` parameter:
@@ -141,8 +103,6 @@ curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=0&api
 curl -s "https://serpapi.com/search?engine=google&q=machine+learning&start=10&api_key=$SERPAPI_TOKEN" | jq '.organic_results | length'
 ```
 
----
-
 ### 9. Check Account Info
 
 Check your API usage and credits:
@@ -150,8 +110,6 @@ Check your API usage and credits:
 ```bash
 curl -s "https://serpapi.com/account?api_key=$SERPAPI_TOKEN" | jq '{plan_name, searches_per_month, this_month_usage}'
 ```
-
----
 
 ## Supported Engines
 
@@ -166,8 +124,6 @@ curl -s "https://serpapi.com/account?api_key=$SERPAPI_TOKEN" | jq '{plan_name, s
 | Bing | `engine=bing` | Bing web search |
 | DuckDuckGo | `engine=duckduckgo` | Privacy-focused search |
 
----
-
 ## Common Parameters
 
 | Parameter | Description |
@@ -181,8 +137,6 @@ curl -s "https://serpapi.com/account?api_key=$SERPAPI_TOKEN" | jq '{plan_name, s
 | `num` | Number of results (max 100) |
 | `safe` | Safe search (`active` or `off`) |
 | `device` | Device type (`desktop`, `mobile`, `tablet`) |
-
----
 
 ## Guidelines
 

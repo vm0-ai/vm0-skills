@@ -4,41 +4,15 @@ description: PDForge API for PDF generation. Use when user mentions "PDForge", "
   PDF", "PDF template", or document generation.
 ---
 
-# PDForge API (PDF Noodle)
+## Troubleshooting
 
-Use the PDForge API via direct `curl` calls to **generate PDFs** from templates or raw HTML.
-
-> Official docs: `https://docs.pdforge.com/`
-
-Note: PDForge has been rebranded to PDF Noodle. Both `api.pdforge.com` and `api.pdfnoodle.com` work.
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Generate PDFs from reusable templates** with dynamic data
-- **Convert HTML to PDF** directly
-- **Create invoices, reports, or documents** programmatically
-- **Export PNG images** instead of PDFs
-- **Batch generate documents** using async endpoints with webhooks
-
----
-
-## Prerequisites
-
-Connect the **PDForge API (PDF Noodle)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDFORGE_API_KEY` or `zero doctor check-connector --url https://api.pdfnoodle.com/v1/pdf/sync --method POST`
+If requests fail, run `zero doctor check-connector --env-name PDFORGE_API_KEY` or `zero doctor check-connector --url https://api.pdfnoodle.com/v1/pdf/sync --method POST`
 
 ## How to Use
 
 All examples below assume you have `PDFORGE_API_KEY` set.
 
 Base URL: `https://api.pdfnoodle.com/v1`
-
----
 
 ### 1. Generate PDF from Template (Sync)
 
@@ -77,8 +51,6 @@ curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/sync" --header "Authorization:
 
 The `signedUrl` is a temporary URL (expires in 1 hour) to download the generated PDF.
 
----
-
 ### 2. Generate PDF from Template (Async)
 
 For batch processing, use the async endpoint with a webhook.
@@ -112,8 +84,6 @@ curl -s -X POST "https://api.pdfnoodle.com/v1/pdf/async" --header "Authorization
 
 The webhook will receive the `signedUrl` when generation is complete.
 
----
-
 ### 3. Convert HTML to PDF (Sync)
 
 Convert raw HTML directly to PDF without a template.
@@ -132,8 +102,6 @@ Then run:
 curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
 
----
-
 ### 4. Convert HTML to PDF with Styling
 
 Include CSS for styled PDFs.
@@ -151,8 +119,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
-
----
 
 ### 5. Generate PNG Instead of PDF
 
@@ -173,8 +139,6 @@ Then run:
 curl -s -X POST "https://api.pdfnoodle.com/v1/html-to-pdf/sync" --header "Authorization: Bearer $PDFORGE_API_KEY" --header "Content-Type: application/json" -d @/tmp/pdforge_request.json
 ```
 
----
-
 ### 6. Download Generated PDF
 
 After getting the `signedUrl`, download the PDF:
@@ -184,8 +148,6 @@ Replace `<your-signed-url>` with the actual signed URL from the previous respons
 ```bash
 curl -s -o output.pdf "https://storage.googleapis.com/<your-signed-url>"
 ```
-
----
 
 ## Request Parameters
 
@@ -222,8 +184,6 @@ curl -s -o output.pdf "https://storage.googleapis.com/<your-signed-url>"
   }
 }
 ```
-
----
 
 ## Guidelines
 

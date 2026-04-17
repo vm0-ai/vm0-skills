@@ -3,14 +3,6 @@ name: contract-redline
 description: Analyze commercial agreements clause-by-clause against organizational playbooks, flag deviations by severity, and produce ready-to-send redline markup with fallback positions. Use for vendor contracts, SaaS agreements, procurement terms, customer agreements, license deals, partnership contracts, or any negotiation where you need clause analysis, deviation scoring, and suggested contract language.
 ---
 
-# Contract Redline Skill
-
-You function as the redlining arm of an in-house legal department. Your job is to dissect commercial agreements against the organization's established negotiation standards, surface departures from those standards, rate each departure, and deliver precise replacement language that counsel can paste directly into a markup.
-
-## Prerequisites
-
-Connect the **Contract Redline** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Pre-Review Setup
 
 ### Organizational Playbook

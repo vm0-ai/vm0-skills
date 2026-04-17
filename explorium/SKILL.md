@@ -4,31 +4,9 @@ description: Explorium API for external data enrichment. Use when user mentions 
   "data enrichment", "business data", or external datasets.
 ---
 
-# Explorium API
+## Troubleshooting
 
-Use the Explorium API via direct `curl` calls to **enrich business and prospect data**, discover leads, and track real-time business events.
-
-> Official docs: `https://developers.explorium.ai/reference/introduction`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Enrich business data** with firmographic, technographic, and financial information
-- **Discover and enrich prospects** with contact details, social profiles, and professional history
-- **Search and match businesses** by name, domain, or other identifiers
-- **Track business events** such as funding rounds, job changes, and company updates
-- **Bulk process** up to 50 business or prospect records in a single request
-
----
-
-## Prerequisites
-
-Connect the **Explorium** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name EXPLORIUM_TOKEN` or `zero doctor check-connector --url https://api.explorium.ai/v1/businesses/stats --method POST`
+If requests fail, run `zero doctor check-connector --env-name EXPLORIUM_TOKEN` or `zero doctor check-connector --url https://api.explorium.ai/v1/businesses/stats --method POST`
 
 ## How to Use
 
@@ -39,8 +17,6 @@ The base URL for the Explorium API is:
 - `https://api.explorium.ai`
 
 The API key is passed via the `api_key` header in all requests.
-
----
 
 ### 1. Get Business Statistics
 
@@ -67,8 +43,6 @@ Then run:
 curl -s -X POST "https://api.explorium.ai/v1/businesses/stats" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
----
-
 ### 2. Match a Business
 
 Find a business by name or domain and get its unique `business_id`:
@@ -87,8 +61,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.explorium.ai/v1/businesses/match" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
-
----
 
 ### 3. Fetch Businesses
 
@@ -118,8 +90,6 @@ Then run:
 curl -s -X POST "https://api.explorium.ai/v1/businesses" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
----
-
 ### 4. Enrich a Business
 
 Enrich a business with specific data categories. Replace `<enrichment_name>` with the enrichment type (e.g., `firmographics`, `technographics`, `financial_metrics`):
@@ -144,8 +114,6 @@ Common enrichment types:
 - `financial_metrics` - Revenue, funding, financial indicators
 - `social_media` - Social media presence and metrics
 
----
-
 ### 5. Bulk Enrich Businesses
 
 Enrich multiple businesses at once (up to 50 per request):
@@ -166,8 +134,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.explorium.ai/v1/businesses/<enrichment_name>/bulk_enrich" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
-
----
 
 ### 6. Fetch Prospects
 
@@ -200,8 +166,6 @@ Then run:
 curl -s -X POST "https://api.explorium.ai/v1/prospects" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
----
-
 ### 7. Match a Prospect
 
 Find a specific prospect by name and company:
@@ -222,8 +186,6 @@ Then run:
 curl -s -X POST "https://api.explorium.ai/v1/prospects/match" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
----
-
 ### 8. Enrich Prospect Contact Information
 
 Get contact details for a specific prospect:
@@ -241,8 +203,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.explorium.ai/v1/prospects/contacts_information/enrich" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
-
----
 
 ### 9. Get Prospect Statistics
 
@@ -269,8 +229,6 @@ Then run:
 curl -s -X POST "https://api.explorium.ai/v1/prospects/stats" --header "Content-Type: application/json" --header "api_key: $EXPLORIUM_TOKEN" -d @/tmp/explorium_request.json | jq .
 ```
 
----
-
 ### 10. Autocomplete Businesses
 
 Search for businesses by partial name for quick lookups:
@@ -278,8 +236,6 @@ Search for businesses by partial name for quick lookups:
 ```bash
 curl -s -X GET "https://api.explorium.ai/v1/businesses/autocomplete?query=explor" --header "api_key: $EXPLORIUM_TOKEN" | jq .
 ```
-
----
 
 ## Guidelines
 

@@ -4,32 +4,9 @@ description: Linear API for issue tracking. Use when user mentions "Linear", "li
   shares a Linear link, "~ENG-123", "create issue", or asks about Linear tasks.
 ---
 
-# Linear API
+## Troubleshooting
 
-Use the Linear API via direct `curl` calls to manage **issues, projects, and teams** with GraphQL queries and mutations.
-
-> Official docs: `https://linear.app/developers`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Query issues** from Linear workspaces
-- **Create new issues** with title, description, and assignments
-- **Update issue status** and properties
-- **List teams and projects** in an organization
-- **Add comments** to issues
-- **Search issues** with filters
-
----
-
-## Prerequisites
-
-Connect the **Linear** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LINEAR_TOKEN` or `zero doctor check-connector --url https://api.linear.app/graphql --method POST`
+If requests fail, run `zero doctor check-connector --env-name LINEAR_TOKEN` or `zero doctor check-connector --url https://api.linear.app/graphql --method POST`
 
 ## How to Use
 
@@ -38,8 +15,6 @@ All examples below assume you have `LINEAR_TOKEN` set.
 Base URL: `https://api.linear.app/graphql`
 
 Linear uses **GraphQL** for all API operations. Queries retrieve data, mutations modify data.
-
----
 
 ### 1. List Teams
 
@@ -61,8 +36,6 @@ curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/j
 
 Save a team ID for subsequent queries.
 
----
-
 ### 2. List Issues for a Team
 
 Get issues from a specific team. Replace `<your-team-id>` with the actual team ID:
@@ -80,8 +53,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.team.issues.nodes'
 ```
-
----
 
 ### 3. Get Issue by Identifier
 
@@ -101,8 +72,6 @@ Then run:
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.issue'
 ```
 
----
-
 ### 4. Search Issues
 
 Search issues with filters:
@@ -121,8 +90,6 @@ Then run:
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.issues.nodes'
 ```
 
----
-
 ### 5. Create Issue
 
 Create a new issue in a team. Replace `<your-team-id>` with the actual team ID:
@@ -140,8 +107,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.issueCreate'
 ```
-
----
 
 ### 6. Create Issue with Priority and Labels
 
@@ -163,8 +128,6 @@ curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/j
 
 **Priority values:** 0 (No priority), 1 (Urgent), 2 (High), 3 (Medium), 4 (Low)
 
----
-
 ### 7. Update Issue
 
 Update an existing issue. Replace `<your-issue-id>` with the actual issue ID:
@@ -182,8 +145,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.issueUpdate'
 ```
-
----
 
 ### 8. Change Issue State
 
@@ -203,8 +164,6 @@ Then run:
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.issueUpdate'
 ```
 
----
-
 ### 9. List Workflow States
 
 Get available states for a team. Replace `<your-team-id>` with the actual team ID:
@@ -222,8 +181,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.team.states.nodes'
 ```
-
----
 
 ### 10. Add Comment to Issue
 
@@ -243,8 +200,6 @@ Then run:
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.commentCreate'
 ```
 
----
-
 ### 11. List Projects
 
 Get all projects in the workspace:
@@ -262,8 +217,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.projects.nodes'
 ```
-
----
 
 ### 12. Get Current User
 
@@ -283,8 +236,6 @@ Then run:
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.viewer'
 ```
 
----
-
 ### 13. List Labels
 
 Get available labels for a team. Replace `<your-team-id>` with the actual team ID:
@@ -303,8 +254,6 @@ Then run:
 curl -s -X POST "https://api.linear.app/graphql" -H "Content-Type: application/json" -H "Authorization: $LINEAR_TOKEN" -d @/tmp/linear_request.json | jq '.data.team.labels.nodes'
 ```
 
----
-
 ## Finding IDs
 
 To find IDs for teams, issues, projects, etc.:
@@ -315,8 +264,6 @@ To find IDs for teams, issues, projects, etc.:
 4. Select the entity to copy its ID
 
 Or use the queries above to list entities and extract their IDs.
-
----
 
 ## Guidelines
 

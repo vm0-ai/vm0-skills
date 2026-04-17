@@ -4,33 +4,9 @@ description: ScrapeNinja API for web scraping. Use when user mentions "ScrapeNin
   "scrape", "web scraping", or data extraction.
 ---
 
-# ScrapeNinja
+## Troubleshooting
 
-High-performance web scraping API with Chrome TLS fingerprint, rotating proxies, smart retries, and optional JavaScript rendering.
-
-> Official docs: https://scrapeninja.net/docs/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Scrape websites with anti-bot protection (Cloudflare, Datadome)
-- Extract data without running a full browser (fast `/scrape` endpoint)
-- Render JavaScript-heavy pages (`/scrape-js` endpoint)
-- Use rotating proxies with geo selection (US, EU, Brazil, etc.)
-- Extract structured data with Cheerio extractors
-- Intercept AJAX requests
-- Take screenshots of pages
-
----
-
-## Prerequisites
-
-Connect the **ScrapeNinja** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SCRAPENINJA_TOKEN` or `zero doctor check-connector --url https://scrapeninja.p.rapidapi.com/scrape --method POST`
+If requests fail, run `zero doctor check-connector --env-name SCRAPENINJA_TOKEN` or `zero doctor check-connector --url https://scrapeninja.p.rapidapi.com/scrape --method POST`
 
 ## How to Use
 
@@ -209,8 +185,6 @@ Then run:
 curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content-Type: application/json" --header "X-RapidAPI-Key: $SCRAPENINJA_TOKEN" -d @/tmp/scrapeninja_request.json
 ```
 
----
-
 ## API Endpoints
 
 | Endpoint | Description |
@@ -218,8 +192,6 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content
 | `/scrape` | Fast non-JS scraping with Chrome TLS fingerprint |
 | `/scrape-js` | Full Chrome browser with JS rendering |
 | `/v2/scrape-js` | Enhanced JS rendering for protected sites (APIRoad only) |
-
----
 
 ## Request Parameters
 
@@ -249,8 +221,6 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content
 | `catchAjaxHeadersUrlMask` | string | - | URL pattern to intercept AJAX |
 | `viewport` | object | 1920x1080 | Custom viewport size |
 
----
-
 ## Response Format
 
 ```json
@@ -272,8 +242,6 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content
 }
 ```
 
----
-
 ## Guidelines
 
 1. **Start with `/scrape`**: Use the fast non-JS endpoint first, only switch to `/scrape-js` if needed
@@ -283,8 +251,6 @@ curl -s -X POST "https://scrapeninja.p.rapidapi.com/scrape-js" --header "Content
 5. **Blocked Sites**: For Cloudflare/Datadome protected sites, use `/v2/scrape-js` via APIRoad
 6. **Screenshots**: Set `screenshot: false` to speed up JS rendering
 7. **Rate Limits**: Check your plan limits on RapidAPI/APIRoad dashboard
-
----
 
 ## Tools
 

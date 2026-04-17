@@ -3,15 +3,9 @@ name: apollo
 description: Apollo.io API for B2B prospecting and cold outreach automation. Use when user mentions "Apollo", "Apollo.io", "prospect", "cold email", "people search", "contact enrichment", "email sequence", or "outreach automation".
 ---
 
-# Apollo Skill
+## Troubleshooting
 
-Apollo.io is a B2B sales intelligence platform. Use this skill to search for contacts and companies, enrich contact data (including emails), and add contacts to outreach sequences.
-
-## Prerequisites
-
-Connect the **Apollo** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name APOLLO_TOKEN` or `zero doctor check-connector --url https://api.apollo.io/api/v1/mixed_people/api_search --method POST`
+If requests fail, run `zero doctor check-connector --env-name APOLLO_TOKEN` or `zero doctor check-connector --url https://api.apollo.io/api/v1/mixed_people/api_search --method POST`
 
 ## Authentication
 

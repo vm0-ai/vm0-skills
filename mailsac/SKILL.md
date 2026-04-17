@@ -4,39 +4,15 @@ description: MailSac API for disposable email testing. Use when user mentions "M
   "test email", "disposable email", or email testing.
 ---
 
-# Mailsac
+## Troubleshooting
 
-Use the Mailsac API via direct `curl` calls to **manage disposable email addresses for testing and QA automation**.
-
-> Official docs: `https://docs.mailsac.com/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Receive test emails** in disposable inboxes
-- **Validate email addresses** (check format and disposable status)
-- **Automate email verification flows** in E2E tests
-- **Configure webhooks** for real-time email notifications
-- **Manage private email addresses** for testing
-
----
-
-## Prerequisites
-
-Connect the **Mailsac** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAILSAC_TOKEN` or `zero doctor check-connector --url https://mailsac.com/api/addresses/test@mailsac.com/messages --method GET`
+If requests fail, run `zero doctor check-connector --env-name MAILSAC_TOKEN` or `zero doctor check-connector --url https://mailsac.com/api/addresses/test@mailsac.com/messages --method GET`
 
 ## How to Use
 
 All examples below assume you have `MAILSAC_TOKEN` set.
 
 Base URL: `https://mailsac.com`
-
----
 
 ## 1. Messages - Read Emails
 
@@ -84,8 +60,6 @@ curl -s "https://mailsac.com/api/headers/test@mailsac.com/<message-id>" --header
 | `/api/raw/{email}/{messageId}` | Complete SMTP message |
 | `/api/headers/{email}/{messageId}` | JSON headers |
 
----
-
 ## 2. Messages - Delete
 
 Delete single messages or purge entire inboxes.
@@ -109,8 +83,6 @@ Note: Starred messages will NOT be purged. Unstar them first if you want to dele
 ```bash
 curl -s -X PUT "https://mailsac.com/api/domains/yourdomain.com/delete-all-domain-mail" --header "Mailsac-Key: $MAILSAC_TOKEN"
 ```
-
----
 
 ## 3. Private Addresses - Reserve and Release
 
@@ -154,8 +126,6 @@ curl -s -X DELETE "https://mailsac.com/api/addresses/mytest@mailsac.com" --heade
 ```bash
 curl -s -X DELETE "https://mailsac.com/api/addresses/mytest@mailsac.com?deleteAddressMessages=true" --header "Mailsac-Key: $MAILSAC_TOKEN"
 ```
-
----
 
 ## 4. Webhook Forwarding
 
@@ -209,8 +179,6 @@ curl -s -X PUT "https://mailsac.com/api/private-address-forwarding/mytest@mailsa
 }
 ```
 
----
-
 ## 5. Email Validation
 
 Validate email addresses and detect disposable email services.
@@ -252,8 +220,6 @@ curl -s "https://mailsac.com/api/validations/addresses/test@mailsac.com" --heade
 | `domain` | Domain part of email |
 | `local` | Local part of email |
 
----
-
 ## 6. Send Email (Outgoing)
 
 Send emails via API (requires outgoing message credits).
@@ -277,8 +243,6 @@ curl -s -X POST "https://mailsac.com/api/outgoing-messages" --header "Mailsac-Ke
 
 Note: Sending requires purchased credits unless sending within your custom domain.
 
----
-
 ## 7. Attachments
 
 Download attachments from received emails.
@@ -297,8 +261,6 @@ curl -s "https://mailsac.com/api/raw/test@mailsac.com/<message-id>" --header "Ma
 
 Note: For public addresses, attachments must be downloaded via API; they are not viewable on the website.
 
----
-
 ## 8. Star/Save Messages
 
 Prevent messages from being auto-deleted by starring them.
@@ -308,8 +270,6 @@ Prevent messages from being auto-deleted by starring them.
 ```bash
 curl -s -X PUT "https://mailsac.com/api/addresses/test@mailsac.com/messages/<message-id>/star" --header "Mailsac-Key: $MAILSAC_TOKEN" | jq .
 ```
-
----
 
 ## Practical Examples
 
@@ -353,8 +313,6 @@ echo "Inbox purged"
 curl -s "https://mailsac.com/api/validations/addresses/user@tempmail.com" --header "Mailsac-Key: $MAILSAC_TOKEN" | jq 'if .isDisposable then "DISPOSABLE" else "LEGITIMATE" end'
 ```
 
----
-
 ## Response Format
 
 ### Message List Response
@@ -387,8 +345,6 @@ curl -s "https://mailsac.com/api/validations/addresses/user@tempmail.com" --head
 }
 ```
 
----
-
 ## Limits and Quotas
 
 | Type | Limit |
@@ -397,8 +353,6 @@ curl -s "https://mailsac.com/api/validations/addresses/user@tempmail.com" --head
 | Public inbox max messages | 6 |
 | Max message size | 2.5 MB |
 | Operations quota reset | 1st of each month (UTC) |
-
----
 
 ## Guidelines
 

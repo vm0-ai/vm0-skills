@@ -5,30 +5,9 @@ description: Instagram API for posts and media. Use when user mentions "Instagra
   content.
 ---
 
-# Instagram API (Graph API)
+## Troubleshooting
 
-Use the Instagram Graph API by directly executing `curl` commands to **read and publish Instagram content**.
-
-> Official docs: `https://developers.facebook.com/docs/instagram-api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Fetch recent media (photos / videos / Reels)** from an account
-- **Get detailed information** about a specific media item (caption, type, link, time, etc.)
-- **Search recent media by hashtag**
-- **Publish image posts via API** (with caption)
-
----
-
-## Prerequisites
-
-Connect the **Instagram API (Graph API)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INSTAGRAM_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v21.0/me --method GET`
+If requests fail, run `zero doctor check-connector --env-name INSTAGRAM_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v21.0/me --method GET`
 
 ## How to Use
 
@@ -58,8 +37,6 @@ curl -s -X GET "https://graph.facebook.com/v21.0/$INSTAGRAM_BUSINESS_ACCOUNT_ID/
   - `permalink`: Instagram permalink
   - `timestamp`: creation time
 
----
-
 ### 2. Get details for a single media
 
 If you already have a media `id`, you can fetch more complete information. Replace `<your-media-id>` with the `id` field from the "Get User Media" response (section 1 above):
@@ -67,8 +44,6 @@ If you already have a media `id`, you can fetch more complete information. Repla
 ```bash
 curl -s -X GET "https://graph.facebook.com/v21.0/<your-media-id>?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp,username" --header "Authorization: Bearer $INSTAGRAM_TOKEN"
 ```
-
----
 
 ### 3. Search media by hashtag
 
@@ -93,8 +68,6 @@ Replace `<hashtag-id>` with the `id` field from the "Search Hashtag" response (s
 ```bash
 curl -s -X GET "https://graph.facebook.com/v21.0/<hashtag-id>/recent_media?user_id=$INSTAGRAM_BUSINESS_ACCOUNT_ID&fields=id,caption,media_type,media_url,permalink,timestamp" --header "Authorization: Bearer $INSTAGRAM_TOKEN"
 ```
-
----
 
 ### 4. Publish an image post
 
@@ -156,8 +129,6 @@ If successful, the response will contain the final media `id`:
 
 You can then use the "Get details for a single media" command to fetch its `permalink`.
 
----
-
 ### 5. Common errors and troubleshooting
 
 1. **Permissions / OAuth errors**
@@ -175,8 +146,6 @@ You can then use the "Get details for a single media" command to fetch its `perm
 
 3. **Rate limits**
   - Too many requests in a short period may hit rate limits; add delays for bulk operations
-
----
 
 ## Guidelines
 

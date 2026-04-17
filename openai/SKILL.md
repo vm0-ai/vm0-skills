@@ -4,40 +4,15 @@ description: OpenAI API for GPT models. Use when user mentions "OpenAI", "GPT", 
   API", or asks about OpenAI models (do NOT use for Anthropic/Claude).
 ---
 
-# OpenAI API
+## Troubleshooting
 
-Use the OpenAI API via direct `curl` calls to access **GPT models, DALL-E image generation, Whisper transcription, embeddings, and text-to-speech**.
-
-> Official docs: `https://platform.openai.com/docs/api-reference`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Chat completions** with GPT-4o, GPT-4, or GPT-3.5 models
-- **Image generation** with DALL-E 3
-- **Audio transcription** with Whisper
-- **Text-to-speech** audio generation
-- **Text embeddings** for semantic search and RAG
-- **Vision tasks** (analyze images with GPT-4o)
-
----
-
-## Prerequisites
-
-Connect the **OpenAI** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name OPENAI_TOKEN` or `zero doctor check-connector --url https://api.openai.com/v1/chat/completions --method POST`
+If requests fail, run `zero doctor check-connector --env-name OPENAI_TOKEN` or `zero doctor check-connector --url https://api.openai.com/v1/chat/completions --method POST`
 
 ## How to Use
 
 All examples below assume you have `OPENAI_TOKEN` set.
 
 Base URL: `https://api.openai.com/v1`
-
----
 
 ### 1. Basic Chat Completion
 
@@ -67,8 +42,6 @@ curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: applicati
 - `o1`: Reasoning model for complex tasks
 - `o1-mini`: Smaller reasoning model
 
----
-
 ### 2. Chat with System Prompt
 
 Use a system message to set behavior:
@@ -90,8 +63,6 @@ Then run:
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_TOKEN" -d @/tmp/openai_request.json | jq '.choices[0].message.content'
 ```
-
----
 
 ### 3. Streaming Response
 
@@ -115,8 +86,6 @@ curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: applicati
 
 Streaming returns Server-Sent Events (SSE) with delta chunks.
 
----
-
 ### 4. JSON Mode
 
 Force the model to return valid JSON:
@@ -139,8 +108,6 @@ Then run:
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_TOKEN" -d @/tmp/openai_request.json | jq '.choices[0].message.content'
 ```
-
----
 
 ### 5. Vision (Image Analysis)
 
@@ -169,8 +136,6 @@ Then run:
 ```bash
 curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_TOKEN" -d @/tmp/openai_request.json | jq '.choices[0].message.content'
 ```
-
----
 
 ### 6. Function Calling (Tools)
 
@@ -207,8 +172,6 @@ Then run:
 curl -s "https://api.openai.com/v1/chat/completions" -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_TOKEN" -d @/tmp/openai_request.json | jq '.choices[0].message.tool_calls'
 ```
 
----
-
 ### 7. Generate Embeddings
 
 Create vector embeddings for text:
@@ -234,8 +197,6 @@ This extracts the first 5 dimensions of the embedding vector.
 
 - `text-embedding-3-small`: 1536 dimensions, fastest
 - `text-embedding-3-large`: 3072 dimensions, most capable
-
----
 
 ### 8. Generate Image (DALL-E 3)
 
@@ -264,8 +225,6 @@ curl -s "https://api.openai.com/v1/images/generations" -H "Content-Type: applica
 - `quality`: `standard` or `hd`
 - `style`: `vivid` or `natural`
 
----
-
 ### 9. Audio Transcription (Whisper)
 
 Transcribe audio to text:
@@ -275,8 +234,6 @@ curl -s "https://api.openai.com/v1/audio/transcriptions" -H "Authorization: Bear
 ```
 
 Supports: mp3, mp4, mpeg, mpga, m4a, wav, webm (max 25MB).
-
----
 
 ### 10. Text-to-Speech
 
@@ -302,8 +259,6 @@ curl -s "https://api.openai.com/v1/audio/speech" -H "Content-Type: application/j
 
 **Models:** `tts-1` (fast), `tts-1-hd` (high quality)
 
----
-
 ### 11. List Available Models
 
 Get all available models:
@@ -311,8 +266,6 @@ Get all available models:
 ```bash
 curl -s "https://api.openai.com/v1/models" -H "Authorization: Bearer $OPENAI_TOKEN" | jq -r '.data[].id' | sort | head -20
 ```
-
----
 
 ### 12. Check Token Usage
 
@@ -340,8 +293,6 @@ Response includes:
 - `prompt_tokens`: Input token count
 - `completion_tokens`: Output token count
 - `total_tokens`: Sum of both
-
----
 
 ## Guidelines
 

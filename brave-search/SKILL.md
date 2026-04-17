@@ -4,31 +4,9 @@ description: Brave Search API for web search. Use when user says "search web", "
   search", or asks to "find on web" without specifying Google.
 ---
 
-# Brave Search API
+## Troubleshooting
 
-Use the Brave Search API via direct `curl` calls to perform **privacy-focused web searches** with no user tracking.
-
-> Official docs: `https://api.search.brave.com/app/documentation`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Web search** with privacy-focused results
-- **Image search** for finding images
-- **Video search** for video content
-- **News search** for current events
-- **AI-powered summaries** of search results
-
----
-
-## Prerequisites
-
-Connect the **Brave Search** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRAVE_API_KEY` or `zero doctor check-connector --url https://api.search.brave.com/res/v1/web/search --method GET`
+If requests fail, run `zero doctor check-connector --env-name BRAVE_API_KEY` or `zero doctor check-connector --url https://api.search.brave.com/res/v1/web/search --method GET`
 
 ## How to Use
 
@@ -40,8 +18,6 @@ The base URL for the API is:
 
 Authentication uses the `X-Subscription-Token` header.
 
----
-
 ### 1. Basic Web Search
 
 Search the web with a query:
@@ -49,8 +25,6 @@ Search the web with a query:
 ```bash
 curl -s "https://api.search.brave.com/res/v1/web/search?q=artificial+intelligence" -H "Accept: application/json" -H "X-Subscription-Token: $BRAVE_API_KEY" | jq '.web.results[:3] | .[] | {title, url, description}
 ```
-
----
 
 ### 2. Web Search with Parameters
 
@@ -74,8 +48,6 @@ curl -s "https://api.search.brave.com/res/v1/web/search" -H "Accept: application
 - `count`: Results per page (1-20, default: 10)
 - `offset`: Pagination offset (0-9, default: 0)
 
----
-
 ### 3. Safe Search Filter
 
 Control explicit content filtering:
@@ -91,8 +63,6 @@ curl -s "https://api.search.brave.com/res/v1/web/search" -H "Accept: application
 ```
 
 **Options:** `off`, `strict` (Note: Image/Video search only supports `off` and `strict`)
-
----
 
 ### 4. Freshness Filter
 
@@ -116,8 +86,6 @@ curl -s "https://api.search.brave.com/res/v1/web/search" -H "Accept: application
 - `py`: Past year
 - `YYYY-MM-DDtoYYYY-MM-DD`: Custom date range
 
----
-
 ### 5. Image Search
 
 Search for images:
@@ -133,8 +101,6 @@ curl -s "https://api.search.brave.com/res/v1/images/search" -H "Accept: applicat
 ```
 
 Image search supports up to 200 results per request.
-
----
 
 ### 6. Video Search
 
@@ -152,8 +118,6 @@ curl -s "https://api.search.brave.com/res/v1/videos/search" -H "Accept: applicat
 
 Video search supports up to 50 results per request.
 
----
-
 ### 7. News Search
 
 Search for recent news articles:
@@ -169,8 +133,6 @@ curl -s "https://api.search.brave.com/res/v1/news/search" -H "Accept: applicatio
 ```
 
 News search defaults to past day (`pd`) freshness.
-
----
 
 ### 8. Pagination
 
@@ -188,8 +150,6 @@ curl -s "https://api.search.brave.com/res/v1/web/search" -H "Accept: application
 
 `offset=1` skips the first page of results.
 
----
-
 ### 9. Get Raw JSON Response
 
 View the full response structure:
@@ -199,8 +159,6 @@ curl -s "https://api.search.brave.com/res/v1/web/search?q=test" -H "Accept: appl
 ```
 
 Response includes: `query`, `mixed`, `type`, `web`, `videos`, `news`, etc.
-
----
 
 ## Response Structure
 
@@ -235,8 +193,6 @@ Response includes: `query`, `mixed`, `type`, `web`, `videos`, `news`, etc.
   ]
 }
 ```
-
----
 
 ## Guidelines
 

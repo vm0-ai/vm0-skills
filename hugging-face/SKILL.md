@@ -4,32 +4,9 @@ description: Hugging Face API for ML models. Use when user mentions "Hugging Fac
   "HF", "transformers", or asks about ML model inference.
 ---
 
-# Hugging Face API
+## Troubleshooting
 
-Use the Hugging Face API via direct `curl` calls to **search models and datasets**, **run serverless inference**, and **manage Hub repositories**.
-
-> Official docs: `https://huggingface.co/docs/hub/en/api`
-> OpenAPI spec: `https://huggingface.co/.well-known/openapi.json`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Search and discover** models, datasets, and spaces on the Hugging Face Hub
-- **Run serverless inference** (text generation, image generation, embeddings, etc.)
-- **Get model or dataset metadata** (tags, downloads, likes, card info)
-- **Manage repositories** (create, delete, list files)
-- **Verify account access** with whoami
-
----
-
-## Prerequisites
-
-Connect the **Hugging Face** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUGGING_FACE_TOKEN` or `zero doctor check-connector --url https://huggingface.co/api/whoami-v2 --method GET`
+If requests fail, run `zero doctor check-connector --env-name HUGGING_FACE_TOKEN` or `zero doctor check-connector --url https://huggingface.co/api/whoami-v2 --method GET`
 
 ## How to Use
 
@@ -40,8 +17,6 @@ The base URLs are:
 - Hub API: `https://huggingface.co/api`
 - Inference API: `https://router.huggingface.co`
 
----
-
 ### 1. Verify Account (whoami)
 
 Check your token and account information:
@@ -49,8 +24,6 @@ Check your token and account information:
 ```bash
 curl -s "https://huggingface.co/api/whoami-v2" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '{name: .name, email: .email, type: .type}'
 ```
-
----
 
 ### 2. Search Models
 
@@ -76,8 +49,6 @@ curl -s "https://huggingface.co/api/models?pipeline_tag=text-generation&sort=tre
 - `author` - Filter by author/organization (e.g. `meta-llama`)
 - `filter` - Filter by tags (e.g. `pytorch`, `en`)
 
----
-
 ### 3. Get Model Details
 
 Get detailed information about a specific model:
@@ -85,8 +56,6 @@ Get detailed information about a specific model:
 ```bash
 curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '{id, downloads, likes, pipeline_tag, tags: .tags[:5]}'
 ```
-
----
 
 ### 4. Search Datasets
 
@@ -96,8 +65,6 @@ Search for datasets:
 curl -s "https://huggingface.co/api/datasets?search=squad&sort=downloads&direction=-1&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
----
-
 ### 5. Get Dataset Details
 
 Get detailed information about a specific dataset:
@@ -106,8 +73,6 @@ Get detailed information about a specific dataset:
 curl -s "https://huggingface.co/api/datasets/squad" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '{id, downloads, likes, tags: .tags[:5]}'
 ```
 
----
-
 ### 6. Search Spaces
 
 Search for Spaces:
@@ -115,8 +80,6 @@ Search for Spaces:
 ```bash
 curl -s "https://huggingface.co/api/spaces?search=chatbot&sort=likes&direction=-1&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
-
----
 
 ### 7. List Repository Files
 
@@ -131,8 +94,6 @@ For datasets, replace `models` with `datasets`:
 ```bash
 curl -s "https://huggingface.co/api/datasets/squad/tree/main" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[] | {path: .rfilename, size}'
 ```
-
----
 
 ### 8. Run Serverless Inference (Text Generation)
 
@@ -159,8 +120,6 @@ Then run:
 curl -s "https://router.huggingface.co/hf-inference/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" -d @/tmp/hugging_face_request.json | jq -r '.choices[0].message.content'
 ```
 
----
-
 ### 9. Run Serverless Inference (Text-to-Image)
 
 Generate an image from text:
@@ -170,8 +129,6 @@ curl -s "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLU
 ```
 
 The response is the raw image binary saved to the output file.
-
----
 
 ### 10. Run Serverless Inference (Embeddings)
 
@@ -191,8 +148,6 @@ Then run:
 curl -s "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq '.[0][:5]'
 ```
 
----
-
 ### 11. Run Serverless Inference (Text Classification)
 
 Classify text using sentiment analysis or other classification models:
@@ -211,8 +166,6 @@ Then run:
 curl -s "https://router.huggingface.co/hf-inference/models/distilbert-base-uncased-finetuned-sst-2-english" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
 ```
 
----
-
 ### 12. List Models with Inference Provider Support
 
 Find models available for serverless inference:
@@ -227,8 +180,6 @@ Filter by a specific provider:
 curl -s "https://huggingface.co/api/models?inference_provider=hf-inference&pipeline_tag=text-to-image&limit=5" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.[].id'
 ```
 
----
-
 ### 13. Get Model Inference Providers
 
 Check which inference providers serve a specific model:
@@ -236,8 +187,6 @@ Check which inference providers serve a specific model:
 ```bash
 curl -s "https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct?expand[]=inferenceProviderMapping" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" | jq '.inferenceProviderMapping'
 ```
-
----
 
 ### 14. Create a Repository
 
@@ -261,8 +210,6 @@ curl -s -X POST "https://huggingface.co/api/repos/create" --header "Authorizatio
 
 **Repository types:** `model`, `dataset`, `space`
 
----
-
 ### 15. Delete a Repository
 
 Delete a repository (requires write token):
@@ -281,8 +228,6 @@ Then run:
 ```bash
 curl -s -X DELETE "https://huggingface.co/api/repos/delete" --header "Authorization: Bearer $HUGGING_FACE_TOKEN" --header "Content-Type: application/json" -d @/tmp/hugging_face_request.json | jq .
 ```
-
----
 
 ## Guidelines
 

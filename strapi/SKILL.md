@@ -7,30 +7,9 @@ vm0_env:
   - STRAPI_BASE_URL
 ---
 
-# Strapi CMS API
+## Troubleshooting
 
-Use the Strapi REST API via direct `curl` calls to **manage content types, entries, and media** on your Strapi instance.
-
-> Official docs: `https://docs.strapi.io/cms/api/rest`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage content entries** — create, read, update, delete entries in any content type
-- **Query and filter content** — search, sort, paginate, and filter entries
-- **Upload media** — upload files and images to the Strapi media library
-- **Discover schema** — find out what content types exist and their fields
-
----
-
-## Prerequisites
-
-Connect the **Strapi** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRAPI_TOKEN` or `zero doctor check-connector --url https://docs.strapi.io/cms/api/rest --method GET`
+If requests fail, run `zero doctor check-connector --env-name STRAPI_TOKEN` or `zero doctor check-connector --url https://docs.strapi.io/cms/api/rest --method GET`
 
 ## IMPORTANT: Discovery Workflow
 
@@ -61,8 +40,6 @@ If unsure, check the content type info from Step 1 — the `uid` follows the pat
 ### Step 3: Proceed with Operations
 
 Once you know the content types and their fields, proceed with the appropriate CRUD operations below.
-
----
 
 ## Collection Types (Multiple Entries)
 
@@ -156,8 +133,6 @@ curl -s -X DELETE "$STRAPI_BASE_URL/api/PLURAL_API_ID/DOCUMENT_ID" \
   --header "Authorization: Bearer $STRAPI_TOKEN" | jq .
 ```
 
----
-
 ## Single Types (One Entry)
 
 ### Get Single Type
@@ -192,8 +167,6 @@ curl -s -X PUT "$STRAPI_BASE_URL/api/SINGULAR_API_ID" \
   -d @/tmp/strapi_request.json | jq .
 ```
 
----
-
 ## Media Upload
 
 ### Upload a File
@@ -214,8 +187,6 @@ curl -s -X POST "$STRAPI_BASE_URL/api/upload" \
   -F "refId=DOCUMENT_ID" \
   -F "field=cover" | jq .
 ```
-
----
 
 ## Filtering Reference
 
@@ -248,8 +219,6 @@ curl -s "$STRAPI_BASE_URL/api/articles?filters[\$or][0][status][\$eq]=published&
   --header "Authorization: Bearer $STRAPI_TOKEN" | jq .
 ```
 
----
-
 ## Pagination
 
 ```bash
@@ -277,8 +246,6 @@ Response includes pagination metadata:
 }
 ```
 
----
-
 ## Guidelines
 
 1. **Always discover first**: Run the content type discovery endpoint before performing operations — never guess content type names or field names
@@ -289,8 +256,6 @@ Response includes pagination metadata:
 6. **API token scope**: The operations available depend on the token type (Full Access, Read-Only, or Custom permissions per content type)
 7. **Document IDs**: Strapi v5 uses document IDs (not numeric IDs) for CRUD operations
 8. **Sort syntax**: Use `sort=field:asc` or `sort=field:desc`. Multiple sorts: `sort[0]=field1:asc&sort[1]=field2:desc`
-
----
 
 ## API Reference
 

@@ -4,33 +4,9 @@ description: Wrike API for project management. Use when user mentions "Wrike", "
   shares a Wrike link, "Wrike task", or asks about Wrike workspace.
 ---
 
-# Wrike API
+## Troubleshooting
 
-Manage tasks, folders, projects, spaces, comments, timelogs, and workflows in Wrike via the REST API v4.
-
-> Official docs: `https://developers.wrike.com/overview/`
-
----
-
-## Prerequisites
-
-Connect the **Wrike** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WRIKE_TOKEN` or `zero doctor check-connector --url https://www.wrike.com/api/v4/spaces --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- List and manage spaces, folders, and projects
-- Create, update, delete, and search tasks
-- Add and manage comments on tasks and folders
-- Track time with timelogs
-- Query contacts and workflows
-
----
-
----
+If requests fail, run `zero doctor check-connector --env-name WRIKE_TOKEN` or `zero doctor check-connector --url https://www.wrike.com/api/v4/spaces --method GET`
 
 ## How to Use
 
@@ -39,8 +15,6 @@ All examples below assume you have `WRIKE_TOKEN` set.
 Base URL: `https://www.wrike.com/api/v4`
 
 Wrike uses alphanumeric IDs for all resources. The hierarchy is: Space > Folder/Project > Task. Projects are folders with additional properties (owners, start/end dates, status). All responses follow the format `{"kind": "...", "data": [...]}`.
-
----
 
 ## Spaces
 
@@ -75,8 +49,6 @@ curl -s -X POST "https://www.wrike.com/api/v4/spaces" --header "Authorization: B
 ```bash
 curl -s -X DELETE "https://www.wrike.com/api/v4/spaces/<space_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
-
----
 
 ## Folders & Projects
 
@@ -157,8 +129,6 @@ curl -s -X PUT "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Auth
 curl -s -X DELETE "https://www.wrike.com/api/v4/folders/<folder_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
----
-
 ## Tasks
 
 ### List Tasks in a Folder
@@ -223,8 +193,6 @@ curl -s -X PUT "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authoriz
 curl -s -X DELETE "https://www.wrike.com/api/v4/tasks/<task_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
----
-
 ## Comments
 
 ### List Comments on a Task
@@ -273,8 +241,6 @@ curl -s -X PUT "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Au
 curl -s -X DELETE "https://www.wrike.com/api/v4/comments/<comment_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
----
-
 ## Contacts
 
 ### List All Contacts
@@ -288,8 +254,6 @@ curl -s "https://www.wrike.com/api/v4/contacts" --header "Authorization: Bearer 
 ```bash
 curl -s "https://www.wrike.com/api/v4/contacts/<contact_id>" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[0]'
 ```
-
----
 
 ## Timelogs
 
@@ -321,8 +285,6 @@ curl -s -X POST "https://www.wrike.com/api/v4/tasks/<task_id>/timelogs" --header
 curl -s -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>" --header "Authorization: Bearer $WRIKE_TOKEN"
 ```
 
----
-
 ## Workflows
 
 ### List Workflows
@@ -330,8 +292,6 @@ curl -s -X DELETE "https://www.wrike.com/api/v4/timelogs/<timelog_id>" --header 
 ```bash
 curl -s "https://www.wrike.com/api/v4/workflows" --header "Authorization: Bearer $WRIKE_TOKEN" | jq '.data[] | {id, name, customStatuses}'
 ```
-
----
 
 ## Guidelines
 

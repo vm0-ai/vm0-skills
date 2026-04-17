@@ -4,35 +4,11 @@ description: Cronlytic API for cron job monitoring. Use when user mentions "cron
   "scheduled task monitoring", or "Cronlytic".
 ---
 
-# Cronlytic
+## Troubleshooting
 
-Use Cronlytic via direct `curl` calls to **schedule and manage cron jobs** that trigger HTTP requests/webhooks.
-
-> Official docs: `https://www.cronlytic.com/api-documentation`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Schedule recurring HTTP requests** (webhooks, API calls)
-- **Automate background tasks** without managing servers
-- **Create cron jobs** with standard 5-field expressions
-- **Pause/resume jobs** dynamically
-- **Monitor job execution** via logs
-
----
-
-## Prerequisites
-
-Connect the **Cronlytic** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CRONLYTIC_API_KEY` or `zero doctor check-connector --url https://api.cronlytic.com/prog/ping --method GET`
+If requests fail, run `zero doctor check-connector --env-name CRONLYTIC_API_KEY` or `zero doctor check-connector --url https://api.cronlytic.com/prog/ping --method GET`
 
 ## How to Use
-
----
 
 ### 1. Health Check (Ping)
 
@@ -43,8 +19,6 @@ curl -s -X GET "https://api.cronlytic.com/prog/ping"
 ```
 
 Response: `{"message": "pong"}`
-
----
 
 ### 2. Create a Cron Job
 
@@ -69,8 +43,6 @@ Then run:
 curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{job_id, name, status, next_run_at}'
 ```
 
----
-
 ### 3. Create GET Request Job
 
 Simple health check every 5 minutes.
@@ -94,8 +66,6 @@ Then run:
 curl -s -X POST "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{name, status}'
 ```
 
----
-
 ### 4. List All Jobs
 
 Get all your scheduled jobs:
@@ -103,8 +73,6 @@ Get all your scheduled jobs:
 ```bash
 curl -s -X GET "https://api.cronlytic.com/prog/jobs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" | jq '.[] | {job_id, name, status, cron_expression, next_run_at}'
 ```
-
----
 
 ### 5. Update a Job
 
@@ -129,8 +97,6 @@ Then run:
 curl -s -X PUT "https://api.cronlytic.com/prog/jobs/<your-job-id>" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" -H "Content-Type: application/json" -d @/tmp/cronlytic_request.json | jq '{job_id, name, status, next_run_at}'
 ```
 
----
-
 ### 6. Pause a Job
 
 Stop a job from executing. Replace `<your-job-id>` with the actual job ID:
@@ -138,8 +104,6 @@ Stop a job from executing. Replace `<your-job-id>` with the actual job ID:
 ```bash
 curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/pause" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID"
 ```
-
----
 
 ### 7. Resume a Job
 
@@ -149,8 +113,6 @@ Resume a paused job. Replace `<your-job-id>` with the actual job ID:
 curl -s -X POST "https://api.cronlytic.com/prog/jobs/<your-job-id>/resume" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID"
 ```
 
----
-
 ### 8. Get Job Logs
 
 View execution history (last 50 entries). Replace `<your-job-id>` with the actual job ID:
@@ -159,8 +121,6 @@ View execution history (last 50 entries). Replace `<your-job-id>` with the actua
 curl -s -X GET "https://api.cronlytic.com/prog/jobs/<your-job-id>/logs" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID" | jq '.logs[] | {timestamp, status, response_code, response_time}'
 ```
 
----
-
 ### 9. Delete a Job
 
 Permanently delete a job and its logs. Replace `<your-job-id>` with the actual job ID:
@@ -168,8 +128,6 @@ Permanently delete a job and its logs. Replace `<your-job-id>` with the actual j
 ```bash
 curl -s -X DELETE "https://api.cronlytic.com/prog/jobs/<your-job-id>" -H "X-API-Key: $CRONLYTIC_API_KEY" -H "X-User-ID: $CRONLYTIC_USER_ID"
 ```
-
----
 
 ## Cron Expression Format
 
@@ -197,8 +155,6 @@ Standard 5-field cron: `minute hour day month day-of-week`
 | `30 14 * * 0` | Sunday at 2:30 PM |
 | `0 */6 * * *` | Every 6 hours |
 
----
-
 ## Job Status Values
 
 | Status | Description |
@@ -208,8 +164,6 @@ Standard 5-field cron: `minute hour day month day-of-week`
 | `success` | Last execution succeeded |
 | `failed` | Last execution failed |
 | `quota_reached` | Skipped due to plan quota |
-
----
 
 ## Create Job Parameters
 
@@ -231,8 +185,6 @@ Standard 5-field cron: `minute hour day month day-of-week`
 **Valid:** `my-job`, `test_job_1`, `API-Health-Check`
 **Invalid:** `my job` (space), `test@job` (@), `api.health` (.)
 
----
-
 ## Response Fields
 
 | Field | Description |
@@ -245,8 +197,6 @@ Standard 5-field cron: `minute hour day month day-of-week`
 | `cron_expression` | Schedule expression |
 | `next_run_at` | Next scheduled execution (ISO timestamp) |
 | `created_at` | Creation timestamp |
-
----
 
 ## Guidelines
 

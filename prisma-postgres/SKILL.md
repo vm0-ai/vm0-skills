@@ -4,29 +4,9 @@ description: Prisma Postgres API for database. Use when user mentions "Prisma Po
   "Prisma database", or asks about Prisma acceleration.
 ---
 
-# Prisma Postgres Management API
+## Troubleshooting
 
-Manage Prisma Postgres projects, databases, connections, backups, and usage metrics via the Management API.
-
-> Official docs: `https://www.prisma.io/docs/postgres/introduction/management-api`
-
----
-
-## When to Use
-
-- Create and manage Prisma Postgres projects and databases
-- Create and manage database connections (pooled, direct, accelerate)
-- List available regions for deploying databases
-- View database usage metrics (operations and storage)
-- Manage database backups and restore from backups
-
----
-
-## Prerequisites
-
-Connect the **Prisma Postgres** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PRISMA_POSTGRES_TOKEN` or `zero doctor check-connector --url https://api.prisma.io/v1/projects --method GET`
+If requests fail, run `zero doctor check-connector --env-name PRISMA_POSTGRES_TOKEN` or `zero doctor check-connector --url https://api.prisma.io/v1/projects --method GET`
 
 ## Core APIs
 
@@ -38,8 +18,6 @@ curl -s "https://api.prisma.io/v1/projects" --header "Authorization: Bearer $PRI
 
 Docs: https://www.prisma.io/docs/postgres/introduction/management-api
 
----
-
 ### Get Project Details
 
 Replace `<project-id>` with the actual project ID:
@@ -47,8 +25,6 @@ Replace `<project-id>` with the actual project ID:
 ```bash
 curl -s "https://api.prisma.io/v1/projects/<project-id>" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" | jq '{id, name, createdAt}'
 ```
-
----
 
 ### Create Project
 
@@ -68,8 +44,6 @@ curl -s -X POST "https://api.prisma.io/v1/projects" --header "Authorization: Bea
 
 Available regions can be listed with the regions endpoint below.
 
----
-
 ### Update Project
 
 Replace `<project-id>` with the actual project ID.
@@ -86,8 +60,6 @@ Write to `/tmp/prisma_request.json`:
 curl -s -X PATCH "https://api.prisma.io/v1/projects/<project-id>" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" --header "Content-Type: application/json" -d @/tmp/prisma_request.json | jq '{id, name}'
 ```
 
----
-
 ### Delete Project
 
 Replace `<project-id>` with the actual project ID:
@@ -98,8 +70,6 @@ curl -s -X DELETE "https://api.prisma.io/v1/projects/<project-id>" --header "Aut
 
 Returns HTTP 204 on success.
 
----
-
 ### List Databases
 
 List all databases, optionally filtered by project:
@@ -108,8 +78,6 @@ List all databases, optionally filtered by project:
 curl -s "https://api.prisma.io/v1/databases?projectId=<project-id>" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" | jq '.[] | {id, name, region, createdAt}'
 ```
 
----
-
 ### Get Database Details
 
 Replace `<database-id>` with the actual database ID:
@@ -117,8 +85,6 @@ Replace `<database-id>` with the actual database ID:
 ```bash
 curl -s "https://api.prisma.io/v1/databases/<database-id>" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" | jq '{id, name, region, connections}'
 ```
-
----
 
 ### Create Database
 
@@ -137,8 +103,6 @@ Write to `/tmp/prisma_request.json`:
 curl -s -X POST "https://api.prisma.io/v1/projects/<project-id>/databases" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" --header "Content-Type: application/json" -d @/tmp/prisma_request.json | jq '{id, name, region, connections}'
 ```
 
----
-
 ### Update Database
 
 Replace `<database-id>` with the actual database ID.
@@ -155,8 +119,6 @@ Write to `/tmp/prisma_request.json`:
 curl -s -X PATCH "https://api.prisma.io/v1/databases/<database-id>" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" --header "Content-Type: application/json" -d @/tmp/prisma_request.json | jq '{id, name}'
 ```
 
----
-
 ### Delete Database
 
 Replace `<database-id>` with the actual database ID (cannot delete default databases):
@@ -167,8 +129,6 @@ curl -s -X DELETE "https://api.prisma.io/v1/databases/<database-id>" --header "A
 
 Returns HTTP 204 on success.
 
----
-
 ### List Connections
 
 List all connections for a specific database. Replace `<database-id>`:
@@ -176,8 +136,6 @@ List all connections for a specific database. Replace `<database-id>`:
 ```bash
 curl -s "https://api.prisma.io/v1/databases/<database-id>/connections" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" | jq '.[] | {id, name, endpoints}'
 ```
-
----
 
 ### Create Connection
 
@@ -189,8 +147,6 @@ curl -s -X POST "https://api.prisma.io/v1/databases/<database-id>/connections" -
 
 The response includes connection strings for direct, pooled, and accelerate endpoints.
 
----
-
 ### Delete Connection
 
 Replace `<connection-id>` with the actual connection ID:
@@ -201,8 +157,6 @@ curl -s -X DELETE "https://api.prisma.io/v1/connections/<connection-id>" --heade
 
 Returns HTTP 204 on success.
 
----
-
 ### List Database Backups
 
 Replace `<database-id>` with the actual database ID:
@@ -210,8 +164,6 @@ Replace `<database-id>` with the actual database ID:
 ```bash
 curl -s "https://api.prisma.io/v1/databases/<database-id>/backups?limit=10" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" | jq '.[] | {id, createdAt}'
 ```
-
----
 
 ### Restore Database from Backup
 
@@ -235,8 +187,6 @@ curl -s -X POST "https://api.prisma.io/v1/databases/<target-database-id>/restore
 
 Cannot restore to default databases.
 
----
-
 ### Get Database Usage Metrics
 
 Replace `<database-id>` with the actual database ID:
@@ -247,23 +197,17 @@ curl -s "https://api.prisma.io/v1/databases/<database-id>/usage?startDate=2025-0
 
 Returns operations (ops) and storage (GiB) metrics for the specified period.
 
----
-
 ### List Available Regions
 
 ```bash
 curl -s "https://api.prisma.io/v1/regions/postgres" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" | jq '.[] | {id, displayName, status}'
 ```
 
----
-
 ### List Workspaces
 
 ```bash
 curl -s "https://api.prisma.io/v1/workspaces" --header "Authorization: Bearer $PRISMA_POSTGRES_TOKEN" | jq '.[] | {id, name}'
 ```
-
----
 
 ## Guidelines
 

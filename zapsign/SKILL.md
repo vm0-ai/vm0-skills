@@ -4,37 +4,13 @@ description: ZapSign API for e-signatures. Use when user mentions "ZapSign", "e-
   "sign document", or Brazilian e-signature.
 ---
 
-# ZapSign
+## Troubleshooting
 
-Use ZapSign via direct `curl` calls to **create and manage electronic signatures** with legal validity.
-
-> Official docs: `https://docs.zapsign.com.br/english`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Create documents** for electronic signature (PDF, DOCX, or Markdown)
-- **Add signers** to documents with various authentication methods
-- **Track signing status** and get signed documents
-- **Send automatic notifications** via email or WhatsApp
-- **Collect biometric verification** (selfie, document photo, facial recognition)
-
----
-
-## Prerequisites
-
-Connect the **ZapSign** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPSIGN_TOKEN` or `zero doctor check-connector --url https://sandbox.api.zapsign.com.br/api/v1/docs/ --method GET`
+If requests fail, run `zero doctor check-connector --env-name ZAPSIGN_TOKEN` or `zero doctor check-connector --url https://sandbox.api.zapsign.com.br/api/v1/docs/ --method GET`
 
 ## How to Use
 
 All examples use the **sandbox** environment. For production, replace `sandbox.api.zapsign.com.br` with `api.zapsign.com.br`.
-
----
 
 ### 1. Create Document from PDF URL
 
@@ -63,8 +39,6 @@ Then run:
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, status, sign_url: .signers[0].sign_url}'
 ```
-
----
 
 ### 2. Create Document from Base64
 
@@ -96,8 +70,6 @@ Then run:
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, status, signers}'
 ```
 
----
-
 ### 3. Create Document from Markdown
 
 Create a document directly from Markdown text (great for AI integrations):
@@ -122,8 +94,6 @@ Then run:
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, status, original_file}'
 ```
-
----
 
 ### 4. Create Document with Multiple Signers
 
@@ -159,8 +129,6 @@ Then run:
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, status, signature_order_active}'
 ```
 
----
-
 ### 5. Create Document with Expiration
 
 Create a document with a deadline for signing:
@@ -187,8 +155,6 @@ Then run:
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, status, date_limit_to_sign}'
 ```
 
----
-
 ### 6. Get Document Details
 
 Retrieve document status and signer information. Replace `<your-document-token>` with the actual document token:
@@ -196,8 +162,6 @@ Retrieve document status and signer information. Replace `<your-document-token>`
 ```bash
 curl -s -X GET "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document-token>/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" | jq '{name, status, original_file, signed_file, signers: [.signers[] | {name, status, signed_at}]}'
 ```
-
----
 
 ### 7. Add Signer to Existing Document
 
@@ -219,8 +183,6 @@ Then run:
 ```bash
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document-token>/add-signer/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, sign_url, status}'
 ```
-
----
 
 ### 8. Create Document with WhatsApp Notification
 
@@ -250,8 +212,6 @@ Then run:
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, status, signers}'
 ```
 
----
-
 ### 9. Create Document with Biometric Verification
 
 Require facial recognition during signing:
@@ -279,8 +239,6 @@ Then run:
 curl -s -X POST "https://sandbox.api.zapsign.com.br/api/v1/docs/" -H "Authorization: Bearer $ZAPSIGN_TOKEN" -H "Content-Type: application/json" -d @/tmp/zapsign_request.json | jq '{token, status, signers: [.signers[] | {name, selfie_validation_type}]}'
 ```
 
----
-
 ### 10. Delete a Document
 
 Delete a document. Replace `<your-document-token>` with the actual document token:
@@ -288,8 +246,6 @@ Delete a document. Replace `<your-document-token>` with the actual document toke
 ```bash
 curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document-token>/" -H "Authorization: Bearer $ZAPSIGN_TOKEN"
 ```
-
----
 
 ## Authentication Modes
 
@@ -303,8 +259,6 @@ curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document
 | `tokenWhatsapp` | WhatsApp verification token | $0.10 |
 | `assinaturaTela-tokenWhatsapp` | Signature + WhatsApp token | $0.10 |
 
----
-
 ## Biometric Validation Types
 
 | Type | Description | Cost |
@@ -312,8 +266,6 @@ curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document
 | `liveness-document-match` | Face + document match | $0.50 |
 | `identity-verification` | Full identity verification (CO, MX, CL, PE) | $1.00 |
 | `identity-verification-global` | Global identity verification | $0.90 |
-
----
 
 ## Document Status
 
@@ -330,8 +282,6 @@ curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document
 | `link-opened` | Signer opened the link |
 | `signed` | Signer completed signing |
 
----
-
 ## Response Fields
 
 | Field | Description |
@@ -343,8 +293,6 @@ curl -s -X DELETE "https://sandbox.api.zapsign.com.br/api/v1/docs/<your-document
 | `signers[].token` | Signer unique identifier |
 | `signers[].sign_url` | Direct signing link for signer |
 | `signers[].signed_at` | Timestamp when signer signed |
-
----
 
 ## Guidelines
 

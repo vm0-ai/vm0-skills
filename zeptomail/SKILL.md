@@ -4,39 +4,13 @@ description: ZeptoMail API for transactional email. Use when user mentions "Zept
   "transactional email", "send email", or Zoho email.
 ---
 
-# Zoho ZeptoMail
+## Troubleshooting
 
-Use the ZeptoMail API via `curl` to send **transactional emails** like password resets, OTPs, welcome emails, and order confirmations.
-
-> Official docs: `https://www.zoho.com/zeptomail/help/api-home.html`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Send transactional emails** (password resets, OTPs, confirmations)
-- **Send templated emails** with dynamic merge fields
-- **Batch send** to multiple recipients (up to 500)
-- **Track email opens and clicks**
-- **Send emails with attachments** or inline images
-
-**Note:** ZeptoMail is for transactional emails only. For marketing/bulk emails, use Zoho Campaigns instead.
-
----
-
-## Prerequisites
-
-Connect the **Zoho ZeptoMail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZEPTOMAIL_TOKEN` or `zero doctor check-connector --url https://api.zeptomail.com/v1.1/email --method POST`
+If requests fail, run `zero doctor check-connector --env-name ZEPTOMAIL_TOKEN` or `zero doctor check-connector --url https://api.zeptomail.com/v1.1/email --method POST`
 
 ## How to Use
 
 Base URL: `https://api.zeptomail.com/v1.1`
-
----
 
 ### 1. Send Basic Email
 
@@ -67,8 +41,6 @@ Then run:
 curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
----
-
 ### 2. Send Plain Text Email
 
 Write to `/tmp/zeptomail_request.json`:
@@ -97,8 +69,6 @@ Then run:
 ```bash
 curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
-
----
 
 ### 3. Send Email with Tracking
 
@@ -133,8 +103,6 @@ Then run:
 ```bash
 curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
-
----
 
 ### 4. Send to Multiple Recipients (CC/BCC)
 
@@ -187,8 +155,6 @@ Then run:
 curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
----
-
 ### 5. Send Email with Attachment (Base64)
 
 ```bash
@@ -229,8 +195,6 @@ Then run:
 ```bash
 curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
-
----
 
 ### 6. Send Email with Inline Image
 
@@ -274,8 +238,6 @@ Then run:
 curl -s "https://api.zeptomail.com/v1.1/email" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
----
-
 ### 7. Send Templated Email
 
 Use pre-defined templates with merge fields:
@@ -316,8 +278,6 @@ Template example (in ZeptoMail dashboard):
 <p>Hi {{user_name}},</p>
 <p>Your order #{{order_id}} totaling {{total}} has been shipped!</p>
 ```
-
----
 
 ### 8. Batch Send (Multiple Recipients)
 
@@ -364,8 +324,6 @@ Then run:
 curl -s "https://api.zeptomail.com/v1.1/email/batch" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
----
-
 ### 9. Batch Send with Template
 
 Write to `/tmp/zeptomail_request.json`:
@@ -408,8 +366,6 @@ Then run:
 curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "Authorization: Zoho-enczapikey $ZEPTOMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/zeptomail_request.json
 ```
 
----
-
 ## Response Format
 
 ### Success Response
@@ -447,8 +403,6 @@ curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "
 }
 ```
 
----
-
 ## Common Error Codes
 
 | Code | Description |
@@ -458,8 +412,6 @@ curl -s "https://api.zeptomail.com/v1.1/email/template/batch" -X POST --header "
 | TM_103 | Domain not verified |
 | TM_104 | Rate limit exceeded |
 | EM_104 | Success |
-
----
 
 ## Guidelines
 

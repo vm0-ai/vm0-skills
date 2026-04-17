@@ -4,32 +4,9 @@ description: Twenty CRM API for customer management. Use when user mentions "Twe
   "Twenty CRM", "open source CRM", or asks about Twenty.
 ---
 
-# Twenty CRM
+## Troubleshooting
 
-Open-source modern CRM platform. Manage people, companies, opportunities, notes, and tasks via REST or GraphQL API.
-
-> Official docs: https://docs.twenty.com/developers/api-and-webhooks/api
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Manage contacts (people) and companies
-- Track opportunities and deals
-- Create notes and tasks
-- Sync CRM data with other systems
-- Query CRM metadata and custom fields
-- Set up webhooks for CRM events
-
----
-
-## Prerequisites
-
-Connect the **Twenty CRM** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TWENTY_TOKEN` or `zero doctor check-connector --url https://api.twenty.com/rest/companies --method GET`
+If requests fail, run `zero doctor check-connector --env-name TWENTY_TOKEN` or `zero doctor check-connector --url https://api.twenty.com/rest/companies --method GET`
 
 ## How to Use
 
@@ -206,8 +183,6 @@ Then run:
 curl -s -X POST "https://api.twenty.com/graphql" --header "Authorization: Bearer $TWENTY_TOKEN" --header "Content-Type: application/json" -d @/tmp/twenty_request.json | jq '.data.companies.edges'
 ```
 
----
-
 ## API Endpoints
 
 | Category | Endpoint | Description |
@@ -223,8 +198,6 @@ curl -s -X POST "https://api.twenty.com/graphql" --header "Authorization: Bearer
 | | `/rest/metadata/picklists` | Get dropdown field options |
 | **GraphQL** | `/graphql` | GraphQL endpoint |
 
----
-
 ## Query Parameters
 
 | Parameter | Description |
@@ -239,8 +212,6 @@ curl -s -X POST "https://api.twenty.com/graphql" --header "Authorization: Bearer
 ```bash
 curl -s -X GET "https://api.twenty.com/rest/companies?filter={\"name\":{\"like\":\"%Acme%\"}}" --header "Authorization: Bearer $TWENTY_TOKEN" | jq '.data.companies'
 ```
-
----
 
 ## Response Format
 
@@ -264,8 +235,6 @@ curl -s -X GET "https://api.twenty.com/rest/companies?filter={\"name\":{\"like\"
 }
 ```
 
----
-
 ## Guidelines
 
 1. **API Playground**: Test API calls at Settings → APIs & Webhooks in the Twenty app
@@ -274,8 +243,6 @@ curl -s -X GET "https://api.twenty.com/rest/companies?filter={\"name\":{\"like\"
 4. **REST**: Use REST for simple CRUD operations
 5. **Custom Objects**: Twenty supports custom objects; use metadata API to discover schema
 6. **Webhooks**: Set up webhooks at Settings → APIs & Webhooks for real-time events
-
----
 
 ## Resources
 

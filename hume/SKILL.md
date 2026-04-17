@@ -4,30 +4,9 @@ description: Hume AI API for emotion analysis. Use when user mentions "Hume", "e
   AI", "sentiment analysis", or voice emotion detection.
 ---
 
-# Hume AI API
+## Troubleshooting
 
-Analyze emotions in text, audio, and video, generate expressive text-to-speech, and build speech-to-speech conversational agents via Hume's REST API.
-
-> Official docs: https://dev.hume.ai/reference
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Analyze emotions and expressions in text, audio, images, or video (batch processing)
-- Generate expressive text-to-speech audio with emotional control
-- Manage EVI (Empathic Voice Interface) configurations, prompts, and tools
-- Retrieve chat transcripts and events from EVI conversations
-
----
-
-## Prerequisites
-
-Connect the **Hume** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HUME_TOKEN` or `zero doctor check-connector --url https://api.hume.ai/v0/batch/jobs --method GET`
+If requests fail, run `zero doctor check-connector --env-name HUME_TOKEN` or `zero doctor check-connector --url https://api.hume.ai/v0/batch/jobs --method GET`
 
 ## Expression Measurement (Batch)
 
@@ -101,8 +80,6 @@ curl -s "https://api.hume.ai/v0/batch/jobs/{job-id}/predictions" --header "X-Hum
 ```bash
 curl -s "https://api.hume.ai/v0/batch/jobs/{job-id}/artifacts" --header "X-Hume-Api-Key: $HUME_TOKEN" --output /tmp/hume_artifacts.zip
 ```
-
----
 
 ## Text-to-Speech
 
@@ -211,8 +188,6 @@ Then run:
 curl -s -X POST "https://api.hume.ai/v0/tts" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json | jq .
 ```
 
----
-
 ## EVI Configs
 
 ### List Configs
@@ -236,8 +211,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.hume.ai/v0/evi/configs" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json | jq .
 ```
-
----
 
 ## EVI Prompts
 
@@ -264,8 +237,6 @@ Then run:
 curl -s -X POST "https://api.hume.ai/v0/evi/prompts" --header "Content-Type: application/json" --header "X-Hume-Api-Key: $HUME_TOKEN" -d @/tmp/hume_request.json | jq .
 ```
 
----
-
 ## EVI Chats
 
 ### List Chat Events
@@ -273,8 +244,6 @@ curl -s -X POST "https://api.hume.ai/v0/evi/prompts" --header "Content-Type: app
 ```bash
 curl -s "https://api.hume.ai/v0/evi/chats/{chat-id}?page_size=50&ascending_order=true" --header "X-Hume-Api-Key: $HUME_TOKEN" | jq .
 ```
-
----
 
 ## Available Models for Expression Measurement
 
@@ -287,8 +256,6 @@ curl -s "https://api.hume.ai/v0/evi/chats/{chat-id}?page_size=50&ascending_order
 | `burst` | Non-speech vocal sounds (laughter, sighs) |
 | `facemesh` | Detailed facial landmark detection |
 
----
-
 ## TTS Utterance Parameters
 
 | Parameter | Type | Description |
@@ -297,8 +264,6 @@ curl -s "https://api.hume.ai/v0/evi/chats/{chat-id}?page_size=50&ascending_order
 | `description` | string | Acting directions or voice style prompt |
 | `speed` | number | Speech rate multiplier (default: 1.0) |
 | `trailing_silence` | number | Silence after utterance in seconds (default: 0) |
-
----
 
 ## Response Codes
 
@@ -312,8 +277,6 @@ curl -s "https://api.hume.ai/v0/evi/chats/{chat-id}?page_size=50&ascending_order
 | `429` | Rate limit exceeded |
 | `5xx` | Server error |
 
----
-
 ## Guidelines
 
 1. **Authentication**: Use `X-Hume-Api-Key` header (not Bearer token) for all requests
@@ -322,8 +285,6 @@ curl -s "https://api.hume.ai/v0/evi/chats/{chat-id}?page_size=50&ascending_order
 4. **TTS Description**: Use the `description` field to control emotional tone and style of generated speech
 5. **Pagination**: EVI endpoints use zero-based page numbering with configurable page size (1-100)
 6. **API Key Types**: Organization API Key for TTS and EVI; Personal API Key for Expression Measurement
-
----
 
 ## API Reference
 

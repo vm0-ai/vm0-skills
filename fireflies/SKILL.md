@@ -4,30 +4,9 @@ description: Fireflies.ai API for meeting transcription. Use when user mentions 
   "meeting notes", "transcription", or "meeting summary".
 ---
 
-# Fireflies
+## Troubleshooting
 
-Use the Fireflies.ai GraphQL API via direct `curl` calls to **transcribe and analyze meetings**.
-
-> Official docs: `https://docs.fireflies.ai/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **List and search meeting transcripts** by keyword, date, or participants
-- **Fetch a single transcript** with full details, sentences, analytics, and summaries
-- **Upload audio files** for transcription
-- **Get user information** for the API key owner or team members
-
----
-
-## Prerequisites
-
-Connect the **Fireflies** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name FIREFLIES_TOKEN` or `zero doctor check-connector --url https://api.fireflies.ai/graphql --method POST`
+If requests fail, run `zero doctor check-connector --env-name FIREFLIES_TOKEN` or `zero doctor check-connector --url https://api.fireflies.ai/graphql --method POST`
 
 ## How to Use
 
@@ -36,8 +15,6 @@ All examples below assume you have `FIREFLIES_TOKEN` set.
 Endpoint: `https://api.fireflies.ai/graphql`
 
 The Fireflies API is **GraphQL-based**. All requests are `POST` to a single endpoint. Write the GraphQL query to `/tmp/fireflies_request.json`, then execute with curl.
-
----
 
 ## 1. Get Current User
 
@@ -56,8 +33,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.user'
 ```
-
----
 
 ## 2. List Transcripts
 
@@ -141,8 +116,6 @@ curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: appli
 | `limit` | Int | Max results (default 50) |
 | `skip` | Int | Pagination offset |
 
----
-
 ## 3. Get Single Transcript
 
 Fetch full details for a specific transcript.
@@ -215,8 +188,6 @@ Then run:
 curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.transcript.analytics'
 ```
 
----
-
 ## 4. Upload Audio for Transcription
 
 Upload an audio file URL for Fireflies to transcribe. The file must be publicly accessible via HTTPS. Supported formats: mp3, mp4, wav, m4a, ogg.
@@ -279,8 +250,6 @@ curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: appli
 | `save_video` | Boolean | Retain video file |
 | `client_reference_id` | String | Custom identifier for the upload |
 
----
-
 ## 5. List Team Users
 
 Fetch all users in the team.
@@ -298,8 +267,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.fireflies.ai/graphql" --header "Content-Type: application/json" --header "Authorization: Bearer $FIREFLIES_TOKEN" -d @/tmp/fireflies_request.json | jq '.data.users'
 ```
-
----
 
 ## Guidelines
 

@@ -4,34 +4,9 @@ description: Asana API for tasks and projects. Use when user mentions "Asana", "
   shares an Asana link, "Asana task", or asks about Asana workspace.
 ---
 
-# Asana API
+## Troubleshooting
 
-Manage tasks, projects, sections, tags, portfolios, and goals in Asana workspaces via the REST API.
-
-> Official docs: `https://developers.asana.com/reference/rest-api-reference`
-
----
-
-## Prerequisites
-
-Connect the **Asana** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ASANA_TOKEN` or `zero doctor check-connector --url https://app.asana.com/api/1.0/users/me --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- List workspaces and get current user info
-- Create, update, delete, and search tasks
-- Manage projects and sections within projects
-- Add tags to tasks and manage tags
-- List portfolios and goals
-- Add followers or assignees to tasks
-
----
-
----
+If requests fail, run `zero doctor check-connector --env-name ASANA_TOKEN` or `zero doctor check-connector --url https://app.asana.com/api/1.0/users/me --method GET`
 
 ## How to Use
 
@@ -40,8 +15,6 @@ All examples below assume you have `ASANA_TOKEN` set.
 Base URL: `https://app.asana.com/api/1.0`
 
 Asana wraps all responses in a `data` field. Use `jq '.data'` to extract the actual content.
-
----
 
 ## User & Workspaces
 
@@ -56,8 +29,6 @@ curl -s "https://app.asana.com/api/1.0/users/me" --header "Authorization: Bearer
 ```bash
 curl -s "https://app.asana.com/api/1.0/workspaces" --header "Authorization: Bearer $ASANA_TOKEN" | jq '.data[] | {gid, name}'
 ```
-
----
 
 ## Projects
 
@@ -114,8 +85,6 @@ curl -s -X PUT "https://app.asana.com/api/1.0/projects/<project-gid>" --header "
 ```bash
 curl -s -X DELETE "https://app.asana.com/api/1.0/projects/<project-gid>" --header "Authorization: Bearer $ASANA_TOKEN"
 ```
-
----
 
 ## Tasks
 
@@ -216,8 +185,6 @@ curl -s -X DELETE "https://app.asana.com/api/1.0/tasks/<task-gid>" --header "Aut
 curl -s "https://app.asana.com/api/1.0/workspaces/<workspace-gid>/tasks/search?text=<search-text>&opt_fields=name,completed,assignee.name,due_on" --header "Authorization: Bearer $ASANA_TOKEN" | jq '.data[] | {gid, name, completed}'
 ```
 
----
-
 ## Sections
 
 ### List Sections in a Project
@@ -257,8 +224,6 @@ Write to `/tmp/asana_request.json`:
 ```bash
 curl -s -X POST "https://app.asana.com/api/1.0/sections/<section-gid>/addTask" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json
 ```
-
----
 
 ## Tags
 
@@ -317,8 +282,6 @@ Write to `/tmp/asana_request.json`:
 curl -s -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/removeTag" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json
 ```
 
----
-
 ## Portfolios
 
 ### List Portfolios
@@ -333,8 +296,6 @@ curl -s "https://app.asana.com/api/1.0/portfolios?workspace=<workspace-gid>&owne
 curl -s "https://app.asana.com/api/1.0/portfolios/<portfolio-gid>/items?opt_fields=name,created_at" --header "Authorization: Bearer $ASANA_TOKEN" | jq '.data[] | {gid, name}'
 ```
 
----
-
 ## Goals
 
 ### List Goals
@@ -342,8 +303,6 @@ curl -s "https://app.asana.com/api/1.0/portfolios/<portfolio-gid>/items?opt_fiel
 ```bash
 curl -s "https://app.asana.com/api/1.0/goals?workspace=<workspace-gid>&opt_fields=name,status,due_on,owner.name" --header "Authorization: Bearer $ASANA_TOKEN" | jq '.data[] | {gid, name, status, due_on}'
 ```
-
----
 
 ## Subtasks
 
@@ -369,8 +328,6 @@ Write to `/tmp/asana_request.json`:
 ```bash
 curl -s -X POST "https://app.asana.com/api/1.0/tasks/<task-gid>/subtasks" --header "Authorization: Bearer $ASANA_TOKEN" --header "Content-Type: application/json" -d @/tmp/asana_request.json | jq '.data | {gid, name}'
 ```
-
----
 
 ## Guidelines
 

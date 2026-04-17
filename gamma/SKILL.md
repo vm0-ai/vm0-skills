@@ -3,31 +3,9 @@ name: gamma
 description: Gamma API for creating presentations, documents, and websites from text. Use when user mentions "Gamma", "create presentation", "generate slides", "make a deck", "create a document with Gamma", or "generate a webpage".
 ---
 
-# Gamma API
+## Troubleshooting
 
-Generate polished presentations, documents, websites, and social posts from text using Gamma's AI-powered API. Supports custom themes, export formats (PDF, PPTX, PNG), and asynchronous generation with status polling.
-
-> Official docs: `https://developers.gamma.app`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Generate a presentation or slide deck from an outline or topic description
-- Create a document or webpage using AI from text input
-- Generate branded content using a specific Gamma theme
-- Export presentations to PDF or PPTX
-- Batch-produce content variations from a fixed template
-
----
-
-## Prerequisites
-
-Connect the **Gamma** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GAMMA_TOKEN` or `zero doctor check-connector --url https://public-api.gamma.app/v1.0/generations --method POST`
+If requests fail, run `zero doctor check-connector --env-name GAMMA_TOKEN` or `zero doctor check-connector --url https://public-api.gamma.app/v1.0/generations --method POST`
 
 ## Core APIs
 
@@ -68,8 +46,6 @@ Response includes `generationId`. Use it to poll for status (see below).
 
 **`exportAs` options (optional):** `pdf`, `pptx`, `png`
 
----
-
 ### 2. Poll Generation Status
 
 Poll every 5 seconds until `status` is `completed` or `failed`.
@@ -97,8 +73,6 @@ curl -s "https://public-api.gamma.app/v1.0/generations/<your-generation-id>" --h
 
 `gammaUrl` is the shareable link. `exportUrl` (when `exportAs` was set) is a signed download URL valid for ~1 week.
 
----
-
 ### 3. Create Generation from Template
 
 Generate content using an existing Gamma template. The template must be a single-page document.
@@ -121,8 +95,6 @@ curl -s -X POST "https://public-api.gamma.app/v1.0/generations/from-template" --
 
 Response includes `generationId` — poll with the same status endpoint.
 
----
-
 ### 4. List Themes
 
 Retrieve available workspace themes to use as `themeId` in generation requests.
@@ -139,8 +111,6 @@ curl -s "https://public-api.gamma.app/v1.0/themes?query=dark&limit=10" --header 
 
 Use the `id` field value as `themeId` in generation requests.
 
----
-
 ### 5. List Folders
 
 Retrieve workspace folders to use as `folderIds` in generation requests.
@@ -150,8 +120,6 @@ curl -s "https://public-api.gamma.app/v1.0/folders" --header "X-API-KEY: $GAMMA_
 ```
 
 Use the `id` field value in the `folderIds` array in generation requests.
-
----
 
 ## Advanced Generation Options
 
@@ -181,8 +149,6 @@ curl -s -X POST "https://public-api.gamma.app/v1.0/generations" --header "X-API-
 ```
 
 Use `\n---\n` in `inputText` to manually split slides/cards.
-
----
 
 ## Guidelines
 

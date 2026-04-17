@@ -4,31 +4,9 @@ description: Apify web scraping platform. Use when user mentions "scrape website
   "web crawler", "scraping", or asks to "extract data from" a site.
 ---
 
-# Apify
+## Troubleshooting
 
-Web scraping and automation platform. Run pre-built Actors (scrapers) or create your own. Access thousands of ready-to-use scrapers for popular websites.
-
-> Official docs: https://docs.apify.com/api/v2
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Scrape data from websites (Amazon, Google, LinkedIn, Twitter, etc.)
-- Run pre-built web scrapers without coding
-- Extract structured data from any website
-- Automate web tasks at scale
-- Store and retrieve scraped data
-
----
-
-## Prerequisites
-
-Connect the **Apify** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name APIFY_TOKEN` or `zero doctor check-connector --url https://api.apify.com/v2/acts/apify~web-scraper/runs --method POST`
+If requests fail, run `zero doctor check-connector --env-name APIFY_TOKEN` or `zero doctor check-connector --url https://api.apify.com/v2/acts/apify~web-scraper/runs --method POST`
 
 ## How to Use
 
@@ -282,8 +260,6 @@ Browse public Actors:
 curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "Authorization: Bearer $APIFY_TOKEN" | jq '.data.items[] | {name, username, title}'
 ```
 
----
-
 ## Popular Actors Reference
 
 | Actor ID | Description |
@@ -300,8 +276,6 @@ curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "A
 
 Find more at: https://apify.com/store
 
----
-
 ## Run Options
 
 | Parameter | Type | Description |
@@ -311,8 +285,6 @@ Find more at: https://apify.com/store
 | `maxItems` | number | Max items to return (for sync endpoints) |
 | `build` | string | Actor build tag (default: "latest") |
 | `waitForFinish` | number | Wait time in seconds (for async runs) |
-
----
 
 ## Response Format
 
@@ -331,8 +303,6 @@ Find more at: https://apify.com/store
   }
 }
 ```
-
----
 
 ## Guidelines
 

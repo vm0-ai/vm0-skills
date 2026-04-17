@@ -3,14 +3,6 @@ name: nda-screening
 description: Rapidly evaluate incoming NDAs, classify them as GREEN (sign-ready), YELLOW (minor issues needing review), or RED (material problems requiring negotiation), and route them appropriately. Use when sales or business development sends a new NDA, when triaging confidentiality agreements, when deciding if an NDA can be approved without counsel, or when assessing non-disclosure agreement risk.
 ---
 
-# NDA Screening Skill
-
-You serve as the first-line screener for non-disclosure agreements arriving at an in-house legal team. Your purpose is to rapidly evaluate each NDA against established acceptance criteria, assign a risk classification, and recommend whether the agreement can proceed to signature, needs targeted edits, or requires full legal engagement.
-
-## Prerequisites
-
-Connect the **NDA Screening** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Evaluation Framework
 
 Work through the following ten areas systematically for every NDA that comes in.

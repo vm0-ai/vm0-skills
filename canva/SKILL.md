@@ -4,41 +4,15 @@ description: Canva API for design creation. Use when user mentions "Canva", "cre
   design", "Canva template", or asks about design graphics.
 ---
 
-# Canva API
+## Troubleshooting
 
-Use the Canva Connect API via direct `curl` calls to manage **designs, folders, assets, and comments**.
-
-> Official docs: `https://www.canva.dev/docs/connect/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **List and search designs** in a Canva account
-- **Create new designs** (documents, presentations, whiteboards, or custom sizes)
-- **Export designs** as PDF, PNG, JPG, or other formats
-- **Upload assets** (images, videos) to Canva
-- **Manage folders** and organize designs
-- **Add comments** to designs for collaboration
-- **Get user profile** information
-
----
-
-## Prerequisites
-
-Connect the **Canva** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CANVA_TOKEN` or `zero doctor check-connector --url https://api.canva.com/rest/v1/users/me/profile --method GET`
+If requests fail, run `zero doctor check-connector --env-name CANVA_TOKEN` or `zero doctor check-connector --url https://api.canva.com/rest/v1/users/me/profile --method GET`
 
 ## How to Use
 
 All examples below assume you have `CANVA_TOKEN` set.
 
 Base URL: `https://api.canva.com/rest/v1`
-
----
 
 ### 1. Get Current User Profile
 
@@ -47,8 +21,6 @@ Get your user profile information:
 ```bash
 curl -s "https://api.canva.com/rest/v1/users/me/profile" --header "Authorization: Bearer $CANVA_TOKEN" | jq '.profile'
 ```
-
----
 
 ### 2. List Designs
 
@@ -66,8 +38,6 @@ curl -s "https://api.canva.com/rest/v1/designs?query=marketing&limit=10" --heade
 
 Save a design ID from the results for use in subsequent commands.
 
----
-
 ### 3. Get Design Details
 
 Get metadata for a specific design. Replace `<design-id>` with an actual design ID:
@@ -75,8 +45,6 @@ Get metadata for a specific design. Replace `<design-id>` with an actual design 
 ```bash
 curl -s "https://api.canva.com/rest/v1/designs/<design-id>" --header "Authorization: Bearer $CANVA_TOKEN" | jq '.design | {id, title, owner, urls, created_at, updated_at, page_count}'
 ```
-
----
 
 ### 4. Create a New Design
 
@@ -123,8 +91,6 @@ Then run:
 curl -s -X POST "https://api.canva.com/rest/v1/designs" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json | jq '.design | {id, title, urls}'
 ```
 
----
-
 ### 5. Export Design as PDF
 
 Export a design as PDF. Replace `<design-id>` with an actual design ID:
@@ -155,8 +121,6 @@ curl -s "https://api.canva.com/rest/v1/exports/<export-id>" --header "Authorizat
 
 When status is `success`, download URLs are valid for 24 hours.
 
----
-
 ### 6. Export Design as PNG
 
 Export a design as PNG. Replace `<design-id>` with an actual design ID:
@@ -182,8 +146,6 @@ curl -s -X POST "https://api.canva.com/rest/v1/exports" --header "Authorization:
 
 Poll with the same export status endpoint as above.
 
----
-
 ### 7. List Design Pages
 
 Get all pages of a design. Replace `<design-id>` with an actual design ID:
@@ -191,8 +153,6 @@ Get all pages of a design. Replace `<design-id>` with an actual design ID:
 ```bash
 curl -s "https://api.canva.com/rest/v1/designs/<design-id>/pages" --header "Authorization: Bearer $CANVA_TOKEN" | jq '.items[] | {index: .index, title: .title, width: .width, height: .height}'
 ```
-
----
 
 ### 8. Create a Folder
 
@@ -213,8 +173,6 @@ Then run:
 curl -s -X POST "https://api.canva.com/rest/v1/folders" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json | jq '.folder | {id, name}'
 ```
 
----
-
 ### 9. List Folder Items
 
 List items in a folder. Replace `<folder-id>` with an actual folder ID:
@@ -222,8 +180,6 @@ List items in a folder. Replace `<folder-id>` with an actual folder ID:
 ```bash
 curl -s "https://api.canva.com/rest/v1/folders/<folder-id>/items?limit=20" --header "Authorization: Bearer $CANVA_TOKEN" | jq '.items[] | {type, id: .design.id // .folder.id, name: .design.title // .folder.name}'
 ```
-
----
 
 ### 10. Move Item to Folder
 
@@ -246,8 +202,6 @@ Then run:
 curl -s -X POST "https://api.canva.com/rest/v1/folders/move" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json
 ```
 
----
-
 ### 11. Get Asset Details
 
 Get metadata for an uploaded asset. Replace `<asset-id>` with an actual asset ID:
@@ -255,8 +209,6 @@ Get metadata for an uploaded asset. Replace `<asset-id>` with an actual asset ID
 ```bash
 curl -s "https://api.canva.com/rest/v1/assets/<asset-id>" --header "Authorization: Bearer $CANVA_TOKEN" | jq '.asset | {id, name, tags, created_at, updated_at, thumbnail}'
 ```
-
----
 
 ### 12. Update Asset
 
@@ -277,8 +229,6 @@ Then run:
 curl -s -X PATCH "https://api.canva.com/rest/v1/assets/<asset-id>" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json | jq '.asset | {id, name, tags}'
 ```
 
----
-
 ### 13. Delete Asset
 
 Delete an asset (moves to trash). Replace `<asset-id>` with an actual asset ID:
@@ -286,8 +236,6 @@ Delete an asset (moves to trash). Replace `<asset-id>` with an actual asset ID:
 ```bash
 curl -s -X DELETE "https://api.canva.com/rest/v1/assets/<asset-id>" --header "Authorization: Bearer $CANVA_TOKEN"
 ```
-
----
 
 ### 14. Create Comment Thread
 
@@ -310,8 +258,6 @@ Then run:
 curl -s -X POST "https://api.canva.com/rest/v1/designs/<design-id>/comments" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json | jq '.thread | {id, message}'
 ```
 
----
-
 ### 15. Reply to Comment Thread
 
 Reply to an existing comment thread. Replace `<design-id>` and `<thread-id>`:
@@ -330,8 +276,6 @@ Then run:
 curl -s -X POST "https://api.canva.com/rest/v1/designs/<design-id>/comments/<thread-id>/replies" --header "Authorization: Bearer $CANVA_TOKEN" --header "Content-Type: application/json" -d @/tmp/canva_request.json | jq '.reply | {id, message}'
 ```
 
----
-
 ### 16. List Brand Templates
 
 List available brand templates (requires Canva Enterprise):
@@ -339,8 +283,6 @@ List available brand templates (requires Canva Enterprise):
 ```bash
 curl -s "https://api.canva.com/rest/v1/brand-templates?limit=20" --header "Authorization: Bearer $CANVA_TOKEN" | jq '.items[] | {id, title, created_at}'
 ```
-
----
 
 ## Guidelines
 

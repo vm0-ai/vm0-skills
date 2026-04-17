@@ -5,31 +5,9 @@ vm0_env:
   - MANUS_TOKEN
 ---
 
-# Manus
+## Troubleshooting
 
-Manus is an AI agent platform that can plan, execute multi-step workflows, browse the web, run tools, and deliver structured results. Use this skill to create and monitor tasks, manage projects, upload files, and configure webhooks programmatically.
-
-> Official docs: `https://open.manus.im/docs/api-reference`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Run an AI agent task (research, analysis, content creation, data processing)
-- Monitor the status of a running Manus task
-- Organize tasks into projects with shared instructions
-- Upload files for the agent to work with
-- Register webhooks to receive async task results
-
----
-
-## Prerequisites
-
-Connect the **Manus** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MANUS_TOKEN` or `zero doctor check-connector --url https://api.manus.ai/v2/task.detail?task_id= --method GET`
+If requests fail, run `zero doctor check-connector --env-name MANUS_TOKEN` or `zero doctor check-connector --url https://api.manus.ai/v2/task.detail?task_id= --method GET`
 
 ## Tasks
 
@@ -182,8 +160,6 @@ Response includes `status`, `credit_usage`, and `task_url`. Poll this endpoint t
 
 **Task status values:** `pending`, `running`, `completed`, `failed`, `cancelled`
 
----
-
 ## Projects
 
 ### Create a Project
@@ -210,8 +186,6 @@ Response includes `project.id` — use this as `project_id` when creating tasks.
 ```bash
 curl -s "https://api.manus.ai/v2/project.list" --header "x-manus-api-key: $MANUS_TOKEN"
 ```
-
----
 
 ## Files
 
@@ -250,8 +224,6 @@ Check the file status before attaching it to a task. Only files with `status: up
 ```bash
 curl -s "https://api.manus.ai/v2/file.detail?file_id=<file-id>" --header "x-manus-api-key: $MANUS_TOKEN"
 ```
-
----
 
 ## Webhooks
 
@@ -293,8 +265,6 @@ Then run:
 curl -s -X POST "https://api.manus.ai/v2/webhook.delete" --header "x-manus-api-key: $MANUS_TOKEN" --header "Content-Type: application/json" -d @/tmp/manus_webhook_delete.json
 ```
 
----
-
 ## API Parameters Reference
 
 ### task.create Body
@@ -314,8 +284,6 @@ curl -s -X POST "https://api.manus.ai/v2/webhook.delete" --header "x-manus-api-k
 | `share_visibility` | enum | No | `private`, `team`, or `public` |
 | `hide_in_task_list` | boolean | No | Hide from webapp task list |
 
----
-
 ## Guidelines
 
 1. **Polling**: Tasks are asynchronous. Poll `task.detail` until `status` is `completed` or `failed`. For production use, prefer webhooks.
@@ -324,8 +292,6 @@ curl -s -X POST "https://api.manus.ai/v2/webhook.delete" --header "x-manus-api-k
 4. **Rate limits**: 10 requests per second per API key.
 5. **Credits**: Tasks consume credits based on complexity. Use `manus-1.6-lite` to reduce cost for simple tasks.
 6. **Projects**: Use projects to apply shared instructions to groups of related tasks.
-
----
 
 ## API Reference
 

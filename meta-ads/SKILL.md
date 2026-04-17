@@ -4,38 +4,9 @@ description: Meta Ads API for Facebook/Instagram advertising. Use when user ment
   "Meta Ads", "Facebook Ads", "Instagram Ads", or ad campaigns.
 ---
 
-# Meta Marketing API
+## Troubleshooting
 
-Manage Facebook and Instagram advertising campaigns, ad sets, ads, and performance insights via the Meta Marketing API (Graph API).
-
-> Official docs: https://developers.facebook.com/docs/marketing-api/reference/
-
----
-
-## Prerequisites
-
-Connect the **Meta Ads** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name META_ADS_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v22.0/me/adaccounts --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- List and manage ad accounts
-- Create, update, or pause ad campaigns
-- Create and manage ad sets (targeting, budgets, scheduling)
-- Create and manage ads (creatives)
-- Retrieve performance insights and analytics
-- Manage custom audiences
-
----
-
----
-
-> **Placeholders:** Values in `{curly-braces}` like `{ad-account-id}` are placeholders. Replace them with actual values when executing. Ad account IDs must be prefixed with `act_` (e.g., `act_123456789`).
-
----
+If requests fail, run `zero doctor check-connector --env-name META_ADS_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v22.0/me/adaccounts --method GET`
 
 ## Ad Accounts
 
@@ -50,8 +21,6 @@ curl -s "https://graph.facebook.com/v22.0/me/adaccounts?fields=id,name,account_s
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}?fields=id,name,account_status,currency,timezone_name,balance,amount_spent,spend_cap&access_token=$META_ADS_TOKEN"
 ```
-
----
 
 ## Campaigns
 
@@ -101,8 +70,6 @@ curl -s -X POST "https://graph.facebook.com/v22.0/{campaign-id}?access_token=$ME
 curl -s -X DELETE "https://graph.facebook.com/v22.0/{campaign-id}?access_token=$META_ADS_TOKEN"
 ```
 
----
-
 ## Ad Sets
 
 ### List Ad Sets
@@ -142,8 +109,6 @@ EOF
 curl -s -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/adsets?access_token=$META_ADS_TOKEN" --header "Content-Type: application/json" -d @/tmp/adset.json
 ```
 
----
-
 ## Ads
 
 ### List Ads
@@ -157,8 +122,6 @@ curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/ads?fields=id,name,sta
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-id}?fields=id,name,status,adset_id,campaign_id,creative,created_time,updated_time&access_token=$META_ADS_TOKEN"
 ```
-
----
 
 ## Insights (Performance Analytics)
 
@@ -194,8 +157,6 @@ curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impres
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend&date_preset=last_30d&breakdowns=age,gender&access_token=$META_ADS_TOKEN" | jq '.data[] | {age, gender, impressions, clicks, spend}'
 ```
 
----
-
 ## Custom Audiences
 
 ### List Custom Audiences
@@ -203,8 +164,6 @@ curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impres
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/customaudiences?fields=id,name,approximate_count_lower_bound,approximate_count_upper_bound&access_token=$META_ADS_TOKEN" | jq '.data[] | {id, name, approximate_count_lower_bound}'
 ```
-
----
 
 ## Guidelines
 

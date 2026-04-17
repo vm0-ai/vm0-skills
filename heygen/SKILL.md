@@ -4,31 +4,9 @@ description: HeyGen API for AI video avatars. Use when user mentions "HeyGen", "
   avatar", "video avatar", or "AI presenter".
 ---
 
-# HeyGen API
+## Troubleshooting
 
-Use the HeyGen API via direct `curl` calls to create **AI-generated videos** with digital avatars, text-to-speech voices, and video templates.
-
-> Official docs: `https://docs.heygen.com/reference`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Create AI avatar videos** from text scripts with digital presenters
-- **List available avatars and voices** to choose the right presenter and narration
-- **Generate videos from templates** with variable substitution
-- **Translate videos** into 175+ languages with natural voice dubbing
-- **Check video generation status** and retrieve completed video URLs
-
----
-
-## Prerequisites
-
-Connect the **HeyGen** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name HEYGEN_TOKEN` or `zero doctor check-connector --url https://api.heygen.com/v2/avatars --method GET`
+If requests fail, run `zero doctor check-connector --env-name HEYGEN_TOKEN` or `zero doctor check-connector --url https://api.heygen.com/v2/avatars --method GET`
 
 ## How to Use
 
@@ -38,8 +16,6 @@ The base URL for the HeyGen API is:
 
 - v1 endpoints: `https://api.heygen.com/v1`
 - v2 endpoints: `https://api.heygen.com/v2`
-
----
 
 ### 1. List Available Avatars
 
@@ -51,8 +27,6 @@ curl -s -X GET "https://api.heygen.com/v2/avatars" --header "x-api-key: $HEYGEN_
 
 Each avatar has an `avatar_id` needed for video generation.
 
----
-
 ### 2. Get Avatar Details
 
 Retrieve detailed information about a specific avatar. Replace `<avatar_id>` with an actual avatar ID:
@@ -60,8 +34,6 @@ Retrieve detailed information about a specific avatar. Replace `<avatar_id>` wit
 ```bash
 curl -s -X GET "https://api.heygen.com/v2/avatar/<avatar_id>/details" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
-
----
 
 ### 3. List Available Voices
 
@@ -76,8 +48,6 @@ Voice properties include:
 - `language`: Primary language (e.g., "English", "Multilingual")
 - `gender`: "female", "male", or "unknown"
 - `emotion_support`: Whether the voice supports emotion variations
-
----
 
 ### 4. Create an Avatar Video
 
@@ -122,8 +92,6 @@ curl -s -X POST "https://api.heygen.com/v2/video/generate" --header "x-api-key: 
 
 The response contains a `video_id` to track the generation progress.
 
----
-
 ### 5. Check Video Status
 
 Poll for video generation status using the `video_id` from the generate response. Replace `<video_id>` with the actual video ID:
@@ -138,8 +106,6 @@ Status values:
 - `completed`: Video is ready (includes `video_url`)
 - `failed`: Generation failed (includes error details)
 
----
-
 ### 6. List Videos
 
 Retrieve all videos associated with your account:
@@ -147,8 +113,6 @@ Retrieve all videos associated with your account:
 ```bash
 curl -s -X GET "https://api.heygen.com/v1/video.list" --header "x-api-key: $HEYGEN_TOKEN" | jq .
 ```
-
----
 
 ### 7. Delete a Video
 
@@ -158,8 +122,6 @@ Remove a video from your account. Replace `<video_id>` with the actual video ID:
 curl -s -X DELETE "https://api.heygen.com/v1/video.delete" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d '{"video_id": "<video_id>"}' | jq .
 ```
 
----
-
 ### 8. List Templates
 
 Get all video templates created in your account:
@@ -168,8 +130,6 @@ Get all video templates created in your account:
 curl -s -X GET "https://api.heygen.com/v2/templates" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
 
----
-
 ### 9. Get Template Details
 
 Retrieve a template configuration and its variables. Replace `<template_id>` with the actual template ID:
@@ -177,8 +137,6 @@ Retrieve a template configuration and its variables. Replace `<template_id>` wit
 ```bash
 curl -s -X GET "https://api.heygen.com/v2/template/<template_id>" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
-
----
 
 ### 10. Generate Video from Template
 
@@ -208,8 +166,6 @@ Then run:
 curl -s -X POST "https://api.heygen.com/v2/template/<template_id>/generate" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
 ```
 
----
-
 ### 11. Translate a Video
 
 Translate an existing video into another language. Replace `<video_url>` and `<language>` with actual values:
@@ -230,8 +186,6 @@ Then run:
 curl -s -X POST "https://api.heygen.com/v2/video_translate" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d @/tmp/heygen_request.json | jq .
 ```
 
----
-
 ### 12. List Supported Translation Languages
 
 Get all languages available for video translation:
@@ -240,8 +194,6 @@ Get all languages available for video translation:
 curl -s -X GET "https://api.heygen.com/v2/video_translate/target_languages" --header "x-api-key: $HEYGEN_TOKEN" | jq .data
 ```
 
----
-
 ### 13. Share a Video
 
 Generate a public sharing URL for a video. Replace `<video_id>` with the actual video ID:
@@ -249,8 +201,6 @@ Generate a public sharing URL for a video. Replace `<video_id>` with the actual 
 ```bash
 curl -s -X POST "https://api.heygen.com/v1/video/share" --header "x-api-key: $HEYGEN_TOKEN" --header "Content-Type: application/json" -d '{"video_id": "<video_id>"}' | jq .
 ```
-
----
 
 ## Guidelines
 

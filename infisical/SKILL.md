@@ -3,22 +3,6 @@ name: infisical
 description: Infisical Cloud Secrets Manager API for retrieving and listing secrets. Use when user mentions "Infisical", "infisical secrets", "machine identity token", or asks about secrets management with Infisical.
 ---
 
-# Infisical Cloud Secrets Manager API
-
-Infisical is an open-source secrets manager. This skill enables fetching individual secrets or listing all secrets from an Infisical project and environment using Machine Identity credentials.
-
-> Official docs: `https://infisical.com/docs/api-reference/overview/introduction`
-
-## When to Use
-
-- Retrieve the value of a specific secret from an Infisical project
-- List all secrets in a given project and environment
-- Inspect secrets with reference expansion and import resolution
-
-## Prerequisites
-
-Connect the **Infisical** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Core APIs
 
 ### 1. Obtain an Access Token
@@ -50,8 +34,6 @@ cat /tmp/infisical_token.txt | head -c 50
 
 Use `$(cat /tmp/infisical_token.txt)` in subsequent requests.
 
----
-
 ### 2. Fetch a Single Secret by Name
 
 Retrieve a secret by its key name from a specific Infisical project and environment.
@@ -62,8 +44,6 @@ curl -s -X GET "https://app.infisical.com/api/v3/secrets/raw/<SECRET_NAME>?works
 
 Replace `<SECRET_NAME>` with the exact secret key, `<workspace-id>` with your Infisical project ID (found in project settings), and `<env-slug>` with the environment slug (e.g., `dev`, `staging`, `prod`).
 
----
-
 ### 3. List All Secrets in a Project/Environment
 
 ```bash
@@ -73,8 +53,6 @@ curl -s -X GET "https://app.infisical.com/api/v3/secrets/raw?workspaceId=<worksp
 Replace `<workspace-id>` and `<env-slug>` as above.
 
 To include secrets from sub-folders recursively, append `&recursive=true` to the query string.
-
----
 
 ## Guidelines
 

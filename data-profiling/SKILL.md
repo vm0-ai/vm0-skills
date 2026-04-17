@@ -3,14 +3,6 @@ name: data-profiling
 description: Profile and explore unfamiliar datasets — assess schema structure, column distributions, data quality, null rates, cardinality, outliers, relationships between tables, and temporal coverage. Use when onboarding to a new data source, auditing data freshness, discovering foreign keys, or deciding what to analyze.
 ---
 
-# Data Profiling
-
-Systematic approach to understanding a dataset's structure, quality, and analytical potential before diving into analysis.
-
-## Prerequisites
-
-Connect the **Data Profiling** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Structural Reconnaissance
 
 ### Table-Level Inventory
@@ -170,6 +162,7 @@ Across numeric columns:
 ### Dataset Summary Template
 
 ```markdown
+
 ## Table: [schema.table_name]
 
 **Purpose**: [What this table captures]

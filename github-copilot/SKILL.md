@@ -4,33 +4,9 @@ description: GitHub Copilot API for AI coding assistance. Use when user mentions
   "GitHub Copilot", "AI coding", or asks about Copilot features.
 ---
 
-# GitHub Copilot API
+## Troubleshooting
 
-Use the GitHub Copilot REST API via direct `curl` calls to **manage Copilot subscriptions and retrieve usage metrics** for your organization.
-
-> Official docs: `https://docs.github.com/en/rest/copilot`
-
-**Note:** This API is for managing Copilot subscriptions and viewing metrics, not for code generation.
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage Copilot seat assignments** (add/remove users and teams)
-- **View Copilot billing information** for an organization
-- **Retrieve usage metrics** (active users, code completions, chat usage)
-- **Monitor Copilot adoption** across teams
-- **Audit Copilot usage** for compliance
-
----
-
-## Prerequisites
-
-Connect the **GitHub Copilot** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITHUB_TOKEN` or `zero doctor check-connector --url https://api.github.com/orgs/your-org/copilot/billing --method GET`
+If requests fail, run `zero doctor check-connector --env-name GITHUB_TOKEN` or `zero doctor check-connector --url https://api.github.com/orgs/your-org/copilot/billing --method GET`
 
 ## How to Use
 
@@ -42,8 +18,6 @@ Base URL: `https://api.github.com`
 - `Authorization: Bearer ${GITHUB_TOKEN}`
 - `Accept: application/vnd.github+json`
 - `X-GitHub-Api-Version: 2022-11-28`
-
----
 
 ### 1. Get Copilot Billing Information
 
@@ -69,8 +43,6 @@ curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billing" --hea
 }
 ```
 
----
-
 ### 2. List All Copilot Seat Assignments
 
 Get all users with Copilot seats. Replace `your-org-name` with your organization name:
@@ -79,8 +51,6 @@ Get all users with Copilot seats. Replace `your-org-name` with your organization
 curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/billing/seats?per_page=50" --header "Authorization: Bearer $GITHUB_TOKEN" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" | jq '.seats[] | {login: .assignee.login, last_activity: .last_activity_at}'
 ```
 
----
-
 ### 3. Get Copilot Seat Details for a User
 
 Get specific user's Copilot seat information. Replace `your-org-name` with your organization name and `username` with the target username:
@@ -88,8 +58,6 @@ Get specific user's Copilot seat information. Replace `your-org-name` with your 
 ```bash
 curl -s -X GET "https://api.github.com/orgs/your-org-name/members/username/copilot" --header "Authorization: Bearer $GITHUB_TOKEN" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"
 ```
-
----
 
 ### 4. Add Users to Copilot Subscription
 
@@ -116,8 +84,6 @@ curl -s -X POST "https://api.github.com/orgs/your-org-name/copilot/billing/selec
 }
 ```
 
----
-
 ### 5. Remove Users from Copilot Subscription
 
 Remove Copilot seats from specific users. Replace `your-org-name` with your organization name:
@@ -143,8 +109,6 @@ curl -s -X DELETE "https://api.github.com/orgs/your-org-name/copilot/billing/sel
 }
 ```
 
----
-
 ### 6. Add Teams to Copilot Subscription
 
 Assign Copilot to entire teams. Replace `your-org-name` with your organization name:
@@ -162,8 +126,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.github.com/orgs/your-org-name/copilot/billing/selected_teams" --header "Authorization: Bearer $GITHUB_TOKEN" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json
 ```
-
----
 
 ### 7. Remove Teams from Copilot Subscription
 
@@ -183,8 +145,6 @@ Then run:
 curl -s -X DELETE "https://api.github.com/orgs/your-org-name/copilot/billing/selected_teams" --header "Authorization: Bearer $GITHUB_TOKEN" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28" --header "Content-Type: application/json" -d @/tmp/github_copilot_request.json
 ```
 
----
-
 ### 8. Get Copilot Usage Metrics for Organization
 
 Get usage statistics (requires 5+ active users). Replace `your-org-name` with your organization name:
@@ -202,8 +162,6 @@ curl -s -X GET "https://api.github.com/orgs/your-org-name/copilot/metrics?per_pa
 }
 ```
 
----
-
 ### 9. Get Copilot Metrics for a Team
 
 Get team-specific usage metrics. Replace `your-org-name` with your organization name and `team-name` with the target team:
@@ -211,8 +169,6 @@ Get team-specific usage metrics. Replace `your-org-name` with your organization 
 ```bash
 curl -s -X GET "https://api.github.com/orgs/your-org-name/team/team-name/copilot/metrics" --header "Authorization: Bearer $GITHUB_TOKEN" --header "Accept: application/vnd.github+json" --header "X-GitHub-Api-Version: 2022-11-28"
 ```
-
----
 
 ## Metrics Data Structure
 
@@ -226,8 +182,6 @@ The metrics response includes:
 | `copilot_ide_chat` | IDE chat usage stats |
 | `copilot_dotcom_chat` | GitHub.com chat usage |
 | `copilot_dotcom_pull_requests` | PR summary usage |
-
----
 
 ## Guidelines
 

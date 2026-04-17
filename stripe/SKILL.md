@@ -4,26 +4,9 @@ description: Stripe API for payments. Use when user mentions "Stripe", "payment"
   "subscription", "billing", "invoice", or asks about payment processing.
 ---
 
-# Stripe API
+## Troubleshooting
 
-Manage payments, customers, subscriptions, and billing with the Stripe API.
-
-> Official docs: `https://docs.stripe.com/api`
-
-## Prerequisites
-
-Connect the **Stripe** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRIPE_TOKEN` or `zero doctor check-connector --url https://api.stripe.com/v1/account --method GET`
-
-## When to Use
-
-- Manage customers (create, update, list, delete)
-- Create products and prices for billing
-- Manage subscriptions and invoices
-- Create and track payment intents
-- View account balance and transactions
-- List charges and events
+If requests fail, run `zero doctor check-connector --env-name STRIPE_TOKEN` or `zero doctor check-connector --url https://api.stripe.com/v1/account --method GET`
 
 ## Important: Stripe Uses Form-Encoded Bodies
 
@@ -38,8 +21,6 @@ curl -s -u "$STRIPE_TOKEN:" "https://api.stripe.com/v1/account" | jq '{id, busin
 ```
 
 Docs: https://docs.stripe.com/api/accounts/retrieve
-
----
 
 ### List Customers
 
@@ -89,8 +70,6 @@ curl -s -u "$STRIPE_TOKEN:" -X DELETE "https://api.stripe.com/v1/customers/<cust
 
 Docs: https://docs.stripe.com/api/customers/delete
 
----
-
 ### List Products
 
 ```bash
@@ -119,8 +98,6 @@ curl -s -u "$STRIPE_TOKEN:" -X POST "https://api.stripe.com/v1/products" -d @/tm
 
 Docs: https://docs.stripe.com/api/products/create
 
----
-
 ### List Prices
 
 ```bash
@@ -142,8 +119,6 @@ curl -s -u "$STRIPE_TOKEN:" -X POST "https://api.stripe.com/v1/prices" -d @/tmp/
 ```
 
 Docs: https://docs.stripe.com/api/prices/create
-
----
 
 ### List Subscriptions
 
@@ -181,8 +156,6 @@ curl -s -u "$STRIPE_TOKEN:" -X DELETE "https://api.stripe.com/v1/subscriptions/<
 
 Docs: https://docs.stripe.com/api/subscriptions/cancel
 
----
-
 ### List Invoices
 
 ```bash
@@ -196,8 +169,6 @@ Docs: https://docs.stripe.com/api/invoices/list
 ```bash
 curl -s -u "$STRIPE_TOKEN:" "https://api.stripe.com/v1/invoices/<invoice-id>" | jq '{id, customer, status, amount_due, amount_paid}'
 ```
-
----
 
 ### List Payment Intents
 
@@ -227,8 +198,6 @@ Docs: https://docs.stripe.com/api/payment_intents/create
 curl -s -u "$STRIPE_TOKEN:" "https://api.stripe.com/v1/payment_intents/<payment-intent-id>" | jq '{id, amount, currency, status}'
 ```
 
----
-
 ### List Charges
 
 ```bash
@@ -242,8 +211,6 @@ Docs: https://docs.stripe.com/api/charges/list
 ```bash
 curl -s -u "$STRIPE_TOKEN:" "https://api.stripe.com/v1/charges/<charge-id>" | jq '{id, amount, currency, status, paid}'
 ```
-
----
 
 ### Get Balance
 
@@ -260,8 +227,6 @@ curl -s -u "$STRIPE_TOKEN:" "https://api.stripe.com/v1/balance_transactions?limi
 ```
 
 Docs: https://docs.stripe.com/api/balance_transactions/list
-
----
 
 ### List Events
 

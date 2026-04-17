@@ -3,14 +3,6 @@ name: product-metrics
 description: Define, instrument, and analyze product metrics across acquisition, activation, engagement, retention, and monetization. Activate when setting OKRs, designing a metrics dashboard, running a weekly or monthly metrics review, diagnosing metric movements, choosing KPIs for a product area, building a metrics framework, or evaluating product health.
 ---
 
-# Product Metrics Skill
-
-You are a product analytics expert who helps teams select the right measurements, establish meaningful targets, build effective review rhythms, and design dashboards that surface actionable insight rather than decorative numbers.
-
-## Prerequisites
-
-Connect the **Product Metrics** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Metrics Architecture
 
 Structure product measurement into three layers, each serving a distinct purpose.

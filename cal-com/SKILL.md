@@ -3,24 +3,9 @@ name: cal-com
 description: Cal.com open-source scheduling API. Use when user mentions "Cal.com", "cal.com", "open source scheduling", "booking", "event types", or asks about interview or meeting scheduling.
 ---
 
-# Cal.com API
+## Troubleshooting
 
-Manage bookings, event types, and availability via the Cal.com REST API v2.
-
-> Official docs: `https://cal.com/docs/api-reference/v2/introduction`
-
-## When to Use
-
-- List event types (meeting formats available for booking)
-- Create, retrieve, or cancel bookings programmatically
-- Check a user's availability for scheduling
-- Integrate booking flows into your own application
-
-## Prerequisites
-
-Connect the **Cal.com** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CALCOM_TOKEN` or `zero doctor check-connector --url https://api.cal.com/v2/me --method GET`
+If requests fail, run `zero doctor check-connector --env-name CALCOM_TOKEN` or `zero doctor check-connector --url https://api.cal.com/v2/me --method GET`
 
 ## Core APIs
 
@@ -30,15 +15,11 @@ Connect the **Cal.com** connector at [app.vm0.ai/connectors](https://app.vm0.ai/
 curl -s "https://api.cal.com/v2/me" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '{id, email, name, username, timeZone}'
 ```
 
----
-
 ### List Event Types
 
 ```bash
 curl -s "https://api.cal.com/v2/event-types" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '[.data[] | {id, title, slug, length, hidden}]'
 ```
-
----
 
 ### Get Event Type
 
@@ -48,8 +29,6 @@ Replace `<event-type-id>` with the numeric ID from the list above:
 curl -s "https://api.cal.com/v2/event-types/<event-type-id>" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '.data | {id, title, length, description, locations}'
 ```
 
----
-
 ### Get Availability
 
 Check available slots for an event type. Replace `<username>` and `<event-type-slug>` with actual values. Dates in `YYYY-MM-DD` format:
@@ -57,8 +36,6 @@ Check available slots for an event type. Replace `<username>` and `<event-type-s
 ```bash
 curl -s "https://api.cal.com/v2/slots/available?username=<username>&eventTypeSlug=<event-type-slug>&startTime=2025-01-15&endTime=2025-01-22&timeZone=America/New_York" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '{slots: [.data.slots | to_entries[] | {date: .key, times: [.value[] | .time]}] | .[0:3]}'
 ```
-
----
 
 ### Create Booking
 
@@ -86,15 +63,11 @@ curl -s -X POST "https://api.cal.com/v2/bookings" --header "Authorization: Beare
 
 Docs: https://cal.com/docs/api-reference/v2/bookings/create-a-booking
 
----
-
 ### List Bookings
 
 ```bash
 curl -s "https://api.cal.com/v2/bookings?take=20" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '[.data[] | {uid, status, title, start, end, attendeeName: .attendees[0].name}]'
 ```
-
----
 
 ### Get Booking
 
@@ -103,8 +76,6 @@ Replace `<booking-uid>` with the booking UID from the list above:
 ```bash
 curl -s "https://api.cal.com/v2/bookings/<booking-uid>" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '{uid, status, title, start, end, attendees}'
 ```
-
----
 
 ### Cancel Booking
 
@@ -122,8 +93,6 @@ Write to `/tmp/calcom_request.json`:
 curl -s -X DELETE "https://api.cal.com/v2/bookings/<booking-uid>/cancel" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json | jq '{status}'
 ```
 
----
-
 ### Reschedule Booking
 
 Replace `<booking-uid>` with the booking UID.
@@ -140,8 +109,6 @@ Write to `/tmp/calcom_request.json`:
 ```bash
 curl -s -X POST "https://api.cal.com/v2/bookings/<booking-uid>/reschedule" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" --header "Content-Type: application/json" -d @/tmp/calcom_request.json | jq '{uid, status, start, end}'
 ```
-
----
 
 ## Guidelines
 

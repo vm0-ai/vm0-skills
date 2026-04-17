@@ -4,31 +4,9 @@ description: Kommo (formerly amoCRM) API. Use when user mentions "Kommo", "amoCR
   "CRM", or sales pipeline management.
 ---
 
-# Kommo API
+## Troubleshooting
 
-Use the Kommo API via direct `curl` calls for **CRM management** including leads, contacts, companies, tasks, and sales pipelines.
-
-> Official docs: `https://developers.kommo.com/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage leads** - Create, list, update leads in your sales pipeline
-- **Handle contacts** - Add and retrieve customer contact information
-- **Track companies** - Manage company records and associations
-- **Create tasks** - Schedule follow-ups and meetings
-- **View pipelines** - Get sales pipeline stages and statuses
-
----
-
-## Prerequisites
-
-Connect the **Kommo** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name KOMMO_API_KEY` or `zero doctor check-connector --url https://your-subdomain.kommo.com/api/v4/leads --method GET`
+If requests fail, run `zero doctor check-connector --env-name KOMMO_API_KEY` or `zero doctor check-connector --url https://your-subdomain.kommo.com/api/v4/leads --method GET`
 
 ## How to Use
 
@@ -39,8 +17,6 @@ The base URL is: `https://${KOMMO_SUBDOMAIN}.kommo.com/api/v4`
 Authentication uses Bearer token in the `Authorization` header.
 
 **Rate limit:** Maximum 7 requests per second.
-
----
 
 ### 1. List Leads
 
@@ -56,8 +32,6 @@ With filters:
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/leads?limit=10&page=1" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" | jq '.["_embedded"]["leads"]'
 ```
 
----
-
 ### 2. Get Lead by ID
 
 Get a specific lead:
@@ -67,8 +41,6 @@ Replace `<your-lead-id>` with the actual lead ID:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/leads/<your-lead-id>" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY"
 ```
-
----
 
 ### 3. Create Lead
 
@@ -88,8 +60,6 @@ Then run:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/leads" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" -d @/tmp/kommo_request.json
 ```
-
----
 
 ### 4. Create Lead with Contact and Company
 
@@ -119,8 +89,6 @@ Then run:
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/leads/complex" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" -d @/tmp/kommo_request.json
 ```
 
----
-
 ### 5. Update Lead
 
 Update an existing lead:
@@ -142,8 +110,6 @@ Replace `<your-lead-id>` with the actual lead ID:
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/leads/<your-lead-id>" -X PATCH -H "Content-Type: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" -d @/tmp/kommo_request.json
 ```
 
----
-
 ### 6. List Contacts
 
 Get all contacts:
@@ -151,8 +117,6 @@ Get all contacts:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/contacts" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" | jq '.["_embedded"]["contacts"][] | {id, name}'
 ```
-
----
 
 ### 7. Get Contact by ID
 
@@ -163,8 +127,6 @@ Replace `<your-contact-id>` with the actual contact ID:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/contacts/<your-contact-id>" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY"
 ```
-
----
 
 ### 8. Create Contact
 
@@ -185,8 +147,6 @@ Then run:
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/contacts" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" -d @/tmp/kommo_request.json
 ```
 
----
-
 ### 9. List Companies
 
 Get all companies:
@@ -194,8 +154,6 @@ Get all companies:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/companies" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" | jq '.["_embedded"]["companies"][] | {id, name}'
 ```
-
----
 
 ### 10. Create Company
 
@@ -215,8 +173,6 @@ Then run:
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/companies" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" -d @/tmp/kommo_request.json
 ```
 
----
-
 ### 11. List Tasks
 
 Get all tasks:
@@ -224,8 +180,6 @@ Get all tasks:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/tasks" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" | jq '.["_embedded"]["tasks"][] | {id, text, complete_till}'
 ```
-
----
 
 ### 12. Create Task
 
@@ -249,8 +203,6 @@ curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/tasks" -X POST -H "Content-Ty
 
 **Task types:** `1` = Follow-up, `2` = Meeting
 
----
-
 ### 13. List Pipelines
 
 Get all sales pipelines:
@@ -258,8 +210,6 @@ Get all sales pipelines:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/leads/pipelines" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" | jq '.["_embedded"]["pipelines"][] | {id, name}'
 ```
-
----
 
 ### 14. Get Pipeline Stages
 
@@ -271,8 +221,6 @@ Replace `<your-pipeline-id>` with the actual pipeline ID:
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/leads/pipelines/<your-pipeline-id>" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" | jq '.["_embedded"]["statuses"][] | {id, name}'
 ```
 
----
-
 ### 15. Get Account Info
 
 Get account information:
@@ -280,8 +228,6 @@ Get account information:
 ```bash
 curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/account" -H "Accept: application/json" -H "Authorization: Bearer $KOMMO_API_KEY" | jq '{id, name, subdomain, currency}'
 ```
-
----
 
 ## Response Format
 
@@ -308,8 +254,6 @@ curl -s "https://$KOMMO_SUBDOMAIN.kommo.com/api/v4/account" -H "Accept: applicat
   "last_name": "Doe"
 }
 ```
-
----
 
 ## Guidelines
 

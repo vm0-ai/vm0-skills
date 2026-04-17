@@ -3,14 +3,6 @@ name: gaap-reporting
 description: Prepare GAAP-compliant financial statements including P&L, balance sheet, and cash flow statement with proper classification, disclosure requirements, and period comparisons. Use for income statement generation, balance sheet preparation, statement of cash flows, financial report formatting, ASC standards compliance, reclassification entries, or building management reporting packages.
 ---
 
-# GAAP Financial Reporting
-
-Authoritative guidance, structural templates, required disclosures, and analytical procedures for producing compliant financial statements under US GAAP (with IFRS references where relevant).
-
-## Prerequisites
-
-Connect the **GAAP Financial Reporting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Profit and Loss Statement
 
 ### Recommended Line-Item Structure (Functional Expense Method)

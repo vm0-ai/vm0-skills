@@ -4,35 +4,9 @@ description: RevenueCat API for in-app purchases. Use when user mentions "Revenu
   "in-app purchase", "subscription", or mobile monetization.
 ---
 
-# RevenueCat API
+## Troubleshooting
 
-Manage in-app subscriptions, customers, entitlements, offerings, and products in RevenueCat via the REST API.
-
-> Official docs: `https://www.revenuecat.com/docs/api-v2`
->
-> API v1 reference: `https://www.revenuecat.com/docs/api-v1`
-
----
-
-## Prerequisites
-
-Connect the **RevenueCat** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REVENUECAT_TOKEN` or `zero doctor check-connector --url https://api.revenuecat.com/v1/subscribers/APP_USER_ID --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- Look up customer subscription status and entitlements
-- Manage offerings, products, and entitlements configuration
-- Grant or revoke promotional entitlements
-- Retrieve purchase and transaction history
-- Delete customers for GDPR compliance
-
----
-
----
+If requests fail, run `zero doctor check-connector --env-name REVENUECAT_TOKEN` or `zero doctor check-connector --url https://api.revenuecat.com/v1/subscribers/APP_USER_ID --method GET`
 
 ## How to Use
 
@@ -45,8 +19,6 @@ RevenueCat has two API versions:
 Both use Bearer token authentication.
 
 Replace `PROJECT_ID` with your RevenueCat project ID and `APP_USER_ID` with the customer's app user ID.
-
----
 
 ## Customers (API v1)
 
@@ -82,8 +54,6 @@ Permanently delete a customer and their data (for GDPR compliance).
 curl -s -X DELETE "https://api.revenuecat.com/v1/subscribers/APP_USER_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN" | jq .
 ```
 
----
-
 ## Promotional Entitlements (API v1)
 
 ### Grant a Promotional Entitlement
@@ -113,8 +83,6 @@ Revoke all promotional entitlements for a customer.
 curl -s -X POST "https://api.revenuecat.com/v1/subscribers/APP_USER_ID/entitlements/ENTITLEMENT_ID/revoke_promotionals" --header "Authorization: Bearer $REVENUECAT_TOKEN" | jq .
 ```
 
----
-
 ## Receipts (API v1)
 
 ### Submit a Receipt
@@ -134,8 +102,6 @@ Write to `/tmp/revenuecat_request.json`:
 ```bash
 curl -s -X POST "https://api.revenuecat.com/v1/receipts" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d @/tmp/revenuecat_request.json | jq .
 ```
-
----
 
 ## Offerings (API v2)
 
@@ -172,8 +138,6 @@ curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings" --
 curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN" | jq .
 ```
 
----
-
 ## Products (API v2)
 
 ### List Products
@@ -209,8 +173,6 @@ curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/products" --h
 ```bash
 curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/products/PRODUCT_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN" | jq .
 ```
-
----
 
 ## Entitlements (API v2)
 
@@ -253,8 +215,6 @@ curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/
 curl -s -X DELETE "https://api.revenuecat.com/v2/projects/PROJECT_ID/entitlements/ENTITLEMENT_ID" --header "Authorization: Bearer $REVENUECAT_TOKEN" | jq .
 ```
 
----
-
 ## Packages (API v2)
 
 ### List Packages in an Offering
@@ -285,8 +245,6 @@ curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFF
 curl -s -X POST "https://api.revenuecat.com/v2/projects/PROJECT_ID/offerings/OFFERING_ID/packages/PACKAGE_ID/actions/attach_products" --header "Content-Type: application/json" --header "Authorization: Bearer $REVENUECAT_TOKEN" -d '{"product_ids": ["PRODUCT_ID"]}' | jq .
 ```
 
----
-
 ## Customer Subscriptions (API v2)
 
 ### List Customer Subscriptions
@@ -300,8 +258,6 @@ curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/customers/APP_USER_ID
 ```bash
 curl -s "https://api.revenuecat.com/v2/projects/PROJECT_ID/customers/APP_USER_ID/active_entitlements" --header "Authorization: Bearer $REVENUECAT_TOKEN" | jq '.items[] | {entitlement_identifier, expires_date}'
 ```
-
----
 
 ## Guidelines
 

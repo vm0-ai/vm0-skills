@@ -4,37 +4,13 @@ description: Monday.com API for work management. Use when user mentions "Monday.
   "monday.com", shares a Monday link, "Monday board", or asks about Monday workspace.
 ---
 
-# Monday.com API
+## Troubleshooting
 
-Use the Monday.com GraphQL API via direct `curl` calls to **manage boards, items, and project data**.
-
-> Official docs: `https://developer.monday.com/api-reference/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Query boards and items** from Monday.com
-- **Create, update, or delete items** in boards
-- **Manage board columns and groups**
-- **Sync data** between Monday.com and other systems
-- **Automate project workflows**
-
----
-
-## Prerequisites
-
-Connect the **Monday.com** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MONDAY_TOKEN` or `zero doctor check-connector --url https://api.monday.com/v2 --method POST`
+If requests fail, run `zero doctor check-connector --env-name MONDAY_TOKEN` or `zero doctor check-connector --url https://api.monday.com/v2 --method POST`
 
 ## How to Use
 
 All examples below assume you have `MONDAY_TOKEN` set.
-
----
 
 ### 1. Get Current User
 
@@ -54,8 +30,6 @@ Then run:
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
----
-
 ### 2. List All Boards
 
 Get all boards in your account:
@@ -73,8 +47,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
-
----
 
 ### 3. Get Board Details
 
@@ -96,8 +68,6 @@ Then run:
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
----
-
 ### 4. Get Items from a Board
 
 Get items (rows) from a specific board:
@@ -117,8 +87,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
-
----
 
 ### 5. Create a New Item
 
@@ -142,8 +110,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
-
----
 
 ### 6. Create Item with Column Values
 
@@ -174,8 +140,6 @@ Then run:
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
----
-
 ### 7. Update an Item
 
 Update an existing item's column values:
@@ -203,8 +167,6 @@ Then run:
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
----
-
 ### 8. Delete an Item
 
 Delete an item from a board:
@@ -225,8 +187,6 @@ Then run:
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
----
-
 ### 9. Create a New Board
 
 Create a new board:
@@ -244,8 +204,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
-
----
 
 ### 10. Search Items
 
@@ -267,8 +225,6 @@ Then run:
 curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOKEN" --header "API-Version: 2024-10" --header "Content-Type: application/json" -d @/tmp/monday_request.json
 ```
 
----
-
 ## Common Column Types
 
 | Column Type | Value Format |
@@ -280,8 +236,6 @@ curl -s -X POST "https://api.monday.com/v2" --header "Authorization: $MONDAY_TOK
 | Person | `{"id": 12345678}` |
 | Dropdown | `{"labels": ["Option1", "Option2"]}` |
 | Checkbox | `{"checked": true}` |
-
----
 
 ## Guidelines
 

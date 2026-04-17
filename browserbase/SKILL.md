@@ -4,32 +4,9 @@ description: Browserbase API for headless browser automation. Use when user ment
   "headless browser", "browser automation", or "Browserbase".
 ---
 
-# Browserbase
+## Troubleshooting
 
-Cloud browser infrastructure for AI agents and automation. Create browser sessions, persist authentication with contexts, debug live sessions, and retrieve session recordings.
-
-> Official docs: https://docs.browserbase.com/
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Create cloud browser sessions for Playwright/Puppeteer automation
-- Persist login state and cookies across sessions using Contexts
-- Debug browser sessions in real-time with live URLs
-- Retrieve session recordings and logs for debugging
-- Manage browser sessions programmatically (list, get, update)
-- Run browser automation with proxy and stealth support
-
----
-
-## Prerequisites
-
-Connect the **Browserbase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BROWSERBASE_TOKEN` or `zero doctor check-connector --url https://api.browserbase.com/v1/sessions --method POST`
+If requests fail, run `zero doctor check-connector --env-name BROWSERBASE_TOKEN` or `zero doctor check-connector --url https://api.browserbase.com/v1/sessions --method POST`
 
 ## How to Use
 
@@ -217,8 +194,6 @@ Upload files to use in a browser session. Replace `<your-session-id>` with the a
 curl -s -X POST "https://api.browserbase.com/v1/sessions/<your-session-id>/uploads" --header "X-BB-API-Key: $BROWSERBASE_TOKEN" -F "file=@/path/to/file.pdf"
 ```
 
----
-
 ## Contexts API
 
 Contexts allow you to persist cookies, cache, and session storage across multiple browser sessions.
@@ -285,8 +260,6 @@ curl -s -X DELETE "https://api.browserbase.com/v1/contexts/<your-context-id>" --
 
 Successful deletion returns HTTP 204 (No Content).
 
----
-
 ## Projects API
 
 ### Get Project Usage
@@ -296,8 +269,6 @@ Retrieve project-wide usage statistics (browser minutes and proxy bytes). Replac
 ```bash
 curl -s -X GET "https://api.browserbase.com/v1/projects/<your-project-id>/usage" --header "X-BB-API-Key: $BROWSERBASE_TOKEN"
 ```
-
----
 
 ## API Endpoints Reference
 
@@ -317,8 +288,6 @@ curl -s -X GET "https://api.browserbase.com/v1/projects/<your-project-id>/usage"
 | `/v1/contexts/{id}` | DELETE | Delete a context |
 | `/v1/projects/{id}/usage` | GET | Get project usage stats |
 
----
-
 ## Session Status Values
 
 | Status | Description |
@@ -328,8 +297,6 @@ curl -s -X GET "https://api.browserbase.com/v1/projects/<your-project-id>/usage"
 | `ERROR` | Session ended with an error |
 | `TIMED_OUT` | Session exceeded timeout |
 | `REQUEST_RELEASE` | Request to end session |
-
----
 
 ## Guidelines
 

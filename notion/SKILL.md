@@ -5,23 +5,9 @@ description: Notion API for pages and databases. Use when user mentions "Notion"
   or asks about Notion workspace.
 ---
 
-# Notion API
+## Troubleshooting
 
-Manage pages, databases, and content blocks in Notion workspaces.
-
-## When to Use
-
-- Create and update Notion pages
-- Query and filter database entries
-- Search across workspace content
-- Append content blocks to pages
-- Manage database schemas and properties
-
-## Prerequisites
-
-Connect the **Notion** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN` or `zero doctor check-connector --url https://api.notion.com/v1/pages --method GET`
+If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN` or `zero doctor check-connector --url https://api.notion.com/v1/pages --method GET`
 
 ## Core APIs
 

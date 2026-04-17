@@ -4,38 +4,13 @@ description: Metabase API for business intelligence. Use when user mentions "Met
   "dashboard", "BI", "SQL query", or data visualization.
 ---
 
-# Metabase API
+## Troubleshooting
 
-Use the Metabase API via direct `curl` calls to **query data, manage dashboards, cards (questions), collections, databases, and users** on your Metabase instance.
-
-> Official docs: `https://www.metabase.com/docs/latest/api` (live OpenAPI docs available at your instance's `/api/docs`)
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Run queries** and retrieve data from connected databases
-- **Manage dashboards** and their cards (questions)
-- **Create and update cards** (saved questions)
-- **Organize content** into collections
-- **Manage databases** and their connections
-- **Administer users** and permission groups
-
----
-
-## Prerequisites
-
-Connect the **Metabase** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name METABASE_TOKEN` or `zero doctor check-connector --url https://your-metabase.example.com/api/user/current --method GET`
+If requests fail, run `zero doctor check-connector --env-name METABASE_TOKEN` or `zero doctor check-connector --url https://your-metabase.example.com/api/user/current --method GET`
 
 ## How to Use
 
 All examples below assume you have `METABASE_TOKEN` set. Authentication uses the `x-api-key` header.
-
----
 
 ### 1. Get Current User Info
 
@@ -45,8 +20,6 @@ Retrieve information about the authenticated user.
 curl -s "$METABASE_BASE_URL/api/user/current" --header "x-api-key: $METABASE_TOKEN" | jq .
 ```
 
----
-
 ### 2. List Databases
 
 Retrieve all connected databases.
@@ -55,8 +28,6 @@ Retrieve all connected databases.
 curl -s "$METABASE_BASE_URL/api/database" --header "x-api-key: $METABASE_TOKEN" | jq '.data[] | {id, name, engine}'
 ```
 
----
-
 ### 3. Get Database Details
 
 Retrieve details of a specific database including its tables.
@@ -64,8 +35,6 @@ Retrieve details of a specific database including its tables.
 ```bash
 curl -s "$METABASE_BASE_URL/api/database/DATABASE_ID?include=tables" --header "x-api-key: $METABASE_TOKEN" | jq .
 ```
-
----
 
 ### 4. Run a Query (Dataset)
 
@@ -89,8 +58,6 @@ Then run:
 curl -s -X POST "$METABASE_BASE_URL/api/dataset" --header "Content-Type: application/json" --header "x-api-key: $METABASE_TOKEN" -d @/tmp/metabase_request.json | jq '{columns: [.data.cols[].name], row_count: .row_count}'
 ```
 
----
-
 ### 5. List Cards (Saved Questions)
 
 Retrieve all saved questions.
@@ -98,8 +65,6 @@ Retrieve all saved questions.
 ```bash
 curl -s "$METABASE_BASE_URL/api/card" --header "x-api-key: $METABASE_TOKEN" | jq '.[] | {id, name, display, database_id}'
 ```
-
----
 
 ### 6. Get Card Details
 
@@ -109,8 +74,6 @@ Retrieve a specific card (question) by ID.
 curl -s "$METABASE_BASE_URL/api/card/CARD_ID" --header "x-api-key: $METABASE_TOKEN" | jq '{id, name, display, dataset_query}'
 ```
 
----
-
 ### 7. Run a Card Query
 
 Execute a saved question and return its results.
@@ -118,8 +81,6 @@ Execute a saved question and return its results.
 ```bash
 curl -s -X POST "$METABASE_BASE_URL/api/card/CARD_ID/query" --header "x-api-key: $METABASE_TOKEN" | jq '{columns: [.data.cols[].name], row_count: .row_count}'
 ```
-
----
 
 ### 8. Create a Card (Question)
 
@@ -149,8 +110,6 @@ Then run:
 curl -s -X POST "$METABASE_BASE_URL/api/card" --header "Content-Type: application/json" --header "x-api-key: $METABASE_TOKEN" -d @/tmp/metabase_request.json | jq '{id, name}'
 ```
 
----
-
 ### 9. Update a Card
 
 Update a saved question's properties.
@@ -170,8 +129,6 @@ Then run:
 curl -s -X PUT "$METABASE_BASE_URL/api/card/CARD_ID" --header "Content-Type: application/json" --header "x-api-key: $METABASE_TOKEN" -d @/tmp/metabase_request.json | jq .
 ```
 
----
-
 ### 10. List Dashboards
 
 Retrieve all dashboards.
@@ -179,8 +136,6 @@ Retrieve all dashboards.
 ```bash
 curl -s "$METABASE_BASE_URL/api/dashboard" --header "x-api-key: $METABASE_TOKEN" | jq '.[] | {id, name, collection_id}'
 ```
-
----
 
 ### 11. Get Dashboard Details
 
@@ -190,8 +145,6 @@ Retrieve a dashboard with all its cards.
 curl -s "$METABASE_BASE_URL/api/dashboard/DASHBOARD_ID" --header "x-api-key: $METABASE_TOKEN" | jq '{id, name, dashcards: [.dashcards[] | {id, card_id, card: .card.name}]}'
 ```
 
----
-
 ### 12. Create a Dashboard
 
 Create a new dashboard.
@@ -199,8 +152,6 @@ Create a new dashboard.
 ```bash
 curl -s -X POST "$METABASE_BASE_URL/api/dashboard" --header "Content-Type: application/json" --header "x-api-key: $METABASE_TOKEN" -d '{"name":"My Dashboard","collection_id":null}' | jq '{id, name}'
 ```
-
----
 
 ### 13. Add a Card to Dashboard
 
@@ -224,8 +175,6 @@ Then run:
 curl -s -X POST "$METABASE_BASE_URL/api/dashboard/DASHBOARD_ID/cards" --header "Content-Type: application/json" --header "x-api-key: $METABASE_TOKEN" -d @/tmp/metabase_request.json | jq .
 ```
 
----
-
 ### 14. List Collections
 
 Retrieve all collections (folders for organizing content).
@@ -233,8 +182,6 @@ Retrieve all collections (folders for organizing content).
 ```bash
 curl -s "$METABASE_BASE_URL/api/collection" --header "x-api-key: $METABASE_TOKEN" | jq '.[] | {id, name, location}'
 ```
-
----
 
 ### 15. Get Collection Items
 
@@ -244,8 +191,6 @@ Retrieve all items in a specific collection.
 curl -s "$METABASE_BASE_URL/api/collection/COLLECTION_ID/items" --header "x-api-key: $METABASE_TOKEN" | jq '.data[] | {id, name, model}'
 ```
 
----
-
 ### 16. Create a Collection
 
 Create a new collection for organizing dashboards and questions.
@@ -253,8 +198,6 @@ Create a new collection for organizing dashboards and questions.
 ```bash
 curl -s -X POST "$METABASE_BASE_URL/api/collection" --header "Content-Type: application/json" --header "x-api-key: $METABASE_TOKEN" -d '{"name":"My Collection","parent_id":null}' | jq '{id, name}'
 ```
-
----
 
 ### 17. Search
 
@@ -270,8 +213,6 @@ Filter by model type:
 curl -s "$METABASE_BASE_URL/api/search?q=revenue&models=card" --header "x-api-key: $METABASE_TOKEN" | jq '.data[] | {id, name}'
 ```
 
----
-
 ### 18. List Users
 
 Retrieve all users in the Metabase instance.
@@ -279,8 +220,6 @@ Retrieve all users in the Metabase instance.
 ```bash
 curl -s "$METABASE_BASE_URL/api/user" --header "x-api-key: $METABASE_TOKEN" | jq '.data[] | {id, email, first_name, last_name, is_active}'
 ```
-
----
 
 ### 19. Get Permission Groups
 
@@ -290,8 +229,6 @@ List all permission groups.
 curl -s "$METABASE_BASE_URL/api/permissions/group" --header "x-api-key: $METABASE_TOKEN" | jq '.[] | {id, name, member_count}'
 ```
 
----
-
 ### 20. Get Table Metadata
 
 Retrieve metadata for a specific table including columns and types.
@@ -299,8 +236,6 @@ Retrieve metadata for a specific table including columns and types.
 ```bash
 curl -s "$METABASE_BASE_URL/api/table/TABLE_ID/query_metadata" --header "x-api-key: $METABASE_TOKEN" | jq '{name, fields: [.fields[] | {name, base_type, semantic_type}]}'
 ```
-
----
 
 ## Guidelines
 

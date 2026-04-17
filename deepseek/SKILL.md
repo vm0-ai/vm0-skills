@@ -4,30 +4,9 @@ description: DeepSeek API for AI model inference. Use when user mentions "DeepSe
   "DeepSeek API", or asks about DeepSeek models.
 ---
 
-# DeepSeek API
+## Troubleshooting
 
-Use the DeepSeek API via direct `curl` calls to access **powerful AI language models** for chat, reasoning, and code generation.
-
-> Official docs: `https://api-docs.deepseek.com/`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Chat completions** with DeepSeek-V3.2 model
-- **Deep reasoning** tasks using the reasoning model
-- **Code generation and completion** (FIM - Fill-in-the-Middle)
-- **OpenAI-compatible API** as a cost-effective alternative
-
----
-
-## Prerequisites
-
-Connect the **DeepSeek** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name DEEPSEEK_TOKEN` or `zero doctor check-connector --url https://api.deepseek.com/chat/completions --method POST`
+If requests fail, run `zero doctor check-connector --env-name DEEPSEEK_TOKEN` or `zero doctor check-connector --url https://api.deepseek.com/chat/completions --method POST`
 
 ## How to Use
 
@@ -37,8 +16,6 @@ The base URL for the DeepSeek API is:
 
 - `https://api.deepseek.com` (recommended)
 - `https://api.deepseek.com/v1` (OpenAI-compatible)
-
----
 
 ### 1. Basic Chat Completion
 
@@ -73,8 +50,6 @@ curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: ap
 - `deepseek-chat`: DeepSeek-V3.2 non-thinking mode (128K context, 8K max output)
 - `deepseek-reasoner`: DeepSeek-V3.2 thinking mode (128K context, 64K max output)
 
----
-
 ### 2. Chat with Temperature Control
 
 Adjust creativity/randomness with temperature:
@@ -107,8 +82,6 @@ curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: ap
 - `top_p` (0-1, default 1): Nucleus sampling threshold
 - `max_tokens`: Maximum tokens to generate
 
----
-
 ### 3. Streaming Response
 
 Get real-time token-by-token output:
@@ -136,8 +109,6 @@ curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: ap
 
 Streaming returns Server-Sent Events (SSE) with delta chunks, ending with `data: [DONE]`.
 
----
-
 ### 4. Deep Reasoning (Thinking Mode)
 
 Use the reasoner model for complex reasoning tasks:
@@ -163,8 +134,6 @@ curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: ap
 ```
 
 The reasoner model excels at math, logic, and multi-step problems.
-
----
 
 ### 5. JSON Output Mode
 
@@ -196,8 +165,6 @@ Then run:
 ```bash
 curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DEEPSEEK_TOKEN" -d @/tmp/deepseek_request.json | jq -r '.choices[0].message.content'
 ```
-
----
 
 ### 6. Multi-turn Conversation
 
@@ -231,8 +198,6 @@ Then run:
 curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DEEPSEEK_TOKEN" -d @/tmp/deepseek_request.json | jq -r '.choices[0].message.content'
 ```
 
----
-
 ### 7. Code Completion (FIM)
 
 Use Fill-in-the-Middle for code completion (beta endpoint):
@@ -257,8 +222,6 @@ FIM is useful for:
 - Code completion in editors
 - Filling gaps in documents
 - Context-aware text generation
-
----
 
 ### 8. Function Calling (Tools)
 
@@ -305,8 +268,6 @@ curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: ap
 
 The model will return a `tool_calls` array when it wants to use a function.
 
----
-
 ### 9. Check Token Usage
 
 Extract usage information from response:
@@ -336,8 +297,6 @@ Response includes:
 - `completion_tokens`: Output token count
 - `total_tokens`: Sum of both
 
----
-
 ## OpenAI SDK Compatibility
 
 DeepSeek is fully compatible with OpenAI SDKs. Just change the base URL:
@@ -353,8 +312,6 @@ client = OpenAI(api_key="your-deepseek-key", base_url="https://api.deepseek.com"
 import OpenAI from 'openai';
 const client = new OpenAI({ apiKey: 'your-deepseek-key', baseURL: 'https://api.deepseek.com' });
 ```
-
----
 
 ## Tips: Complex JSON Payloads
 
@@ -386,8 +343,6 @@ Then run:
 ```bash
 curl -s "https://api.deepseek.com/chat/completions" -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $DEEPSEEK_TOKEN" -d @/tmp/deepseek_request.json
 ```
-
----
 
 ## Guidelines
 

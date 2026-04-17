@@ -3,24 +3,9 @@ name: salesforce
 description: Salesforce CRM REST API. Use when user mentions "Salesforce", "SFDC", "Salesforce CRM", "leads", "opportunities", "SOQL", or asks about enterprise CRM data.
 ---
 
-# Salesforce REST API
+## Troubleshooting
 
-Manage Contacts, Leads, Accounts, and Opportunities via the Salesforce REST API.
-
-> Official docs: `https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/`
-
-## When to Use
-
-- Create or update Contacts and Leads from Clerk user data
-- Query CRM records using SOQL
-- Manage Accounts and Opportunities
-- Search across Salesforce objects
-
-## Prerequisites
-
-Connect the **Salesforce** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SALESFORCE_TOKEN` or `zero doctor check-connector --url https://your-instance.my.salesforce.com/services/data/v60.0/query --method GET`
+If requests fail, run `zero doctor check-connector --env-name SALESFORCE_TOKEN` or `zero doctor check-connector --url https://your-instance.my.salesforce.com/services/data/v60.0/query --method GET`
 
 ## Core APIs
 
@@ -32,8 +17,6 @@ curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/quer
 
 Docs: https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/dome_query.htm
 
----
-
 ### Search Contacts by Email
 
 Replace `<email>` with the email address to search for:
@@ -42,8 +25,6 @@ Replace `<email>` with the email address to search for:
 curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/query?q=SELECT+Id,FirstName,LastName,Email+FROM+Contact+WHERE+Email=%27<email>%27+LIMIT+5" --header "Authorization: Bearer $SALESFORCE_TOKEN" | jq '[.records[] | {Id, FirstName, LastName, Email}]'
 ```
 
----
-
 ### Get Contact
 
 Replace `<contact-id>` with the Salesforce Contact ID (18-char string starting with `003`):
@@ -51,8 +32,6 @@ Replace `<contact-id>` with the Salesforce Contact ID (18-char string starting w
 ```bash
 curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Contact/<contact-id>" --header "Authorization: Bearer $SALESFORCE_TOKEN" | jq '{Id, FirstName, LastName, Email, Phone, AccountId}'
 ```
-
----
 
 ### Create Contact
 
@@ -73,8 +52,6 @@ Write to `/tmp/sf_request.json`:
 curl -s -X POST "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Contact/" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json | jq '{id, success}'
 ```
 
----
-
 ### Update Contact
 
 Replace `<contact-id>` with the Contact ID.
@@ -91,8 +68,6 @@ Write to `/tmp/sf_request.json`:
 ```bash
 curl -s -X PATCH "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Contact/<contact-id>" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json -w "\nHTTP Status: %{http_code}\n"
 ```
-
----
 
 ### Create Lead
 
@@ -113,15 +88,11 @@ Write to `/tmp/sf_request.json`:
 curl -s -X POST "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/sobjects/Lead/" --header "Authorization: Bearer $SALESFORCE_TOKEN" --header "Content-Type: application/json" -d @/tmp/sf_request.json | jq '{id, success}'
 ```
 
----
-
 ### Query Accounts
 
 ```bash
 curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/query?q=SELECT+Id,Name,Industry,AnnualRevenue+FROM+Account+LIMIT+20" --header "Authorization: Bearer $SALESFORCE_TOKEN" | jq '[.records[] | {Id, Name, Industry, AnnualRevenue}]'
 ```
-
----
 
 ### SOSL Full-Text Search
 
@@ -130,8 +101,6 @@ Search across multiple objects. Replace `<search-term>`:
 ```bash
 curl -s "https://$SALESFORCE_INSTANCE.my.salesforce.com/services/data/v60.0/search?q=FIND+%7B<search-term>%7D+IN+ALL+FIELDS+RETURNING+Contact(Id,Name,Email),Lead(Id,Name,Email)" --header "Authorization: Bearer $SALESFORCE_TOKEN" | jq '[.searchRecords[] | {Id, Name, type: .attributes.type}]'
 ```
-
----
 
 ## Guidelines
 

@@ -4,26 +4,9 @@ description: Close CRM API for sales management. Use when user mentions "Close C
   "Close.io", "sales leads", or asks about sales pipeline.
 ---
 
-# Close CRM API
+## Troubleshooting
 
-Manage leads, contacts, opportunities, tasks, and activities in Close CRM.
-
-> Official docs: `https://developer.close.com/`
-
-## Prerequisites
-
-Connect the **Close** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOSE_TOKEN` or `zero doctor check-connector --url https://api.close.com/api/v1/me/ --method GET`
-
-## When to Use
-
-- List, search, create, update, and delete leads
-- Manage contacts within leads
-- Track opportunities (deals) and their statuses
-- Create and manage tasks
-- View activities (calls, emails, notes, meetings)
-- Get current user and organization info
+If requests fail, run `zero doctor check-connector --env-name CLOSE_TOKEN` or `zero doctor check-connector --url https://api.close.com/api/v1/me/ --method GET`
 
 ## Core APIs
 

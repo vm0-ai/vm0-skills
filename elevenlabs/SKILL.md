@@ -4,30 +4,9 @@ description: ElevenLabs API for text-to-speech and voice. Use when user mentions
   "text to speech", "voice cloning", or "AI voice".
 ---
 
-# ElevenLabs API
+## Troubleshooting
 
-Use the ElevenLabs API via direct `curl` calls to generate **realistic AI speech** from text.
-
-> Official docs: `https://elevenlabs.io/docs/api-reference`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Convert text to speech** with high-quality AI voices
-- **List available voices** to find the right voice for your use case
-- **Stream audio output** for real-time playback
-- **Generate voiceovers** for videos, podcasts, or accessibility
-
----
-
-## Prerequisites
-
-Connect the **ElevenLabs** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ELEVENLABS_TOKEN` or `zero doctor check-connector --url https://api.elevenlabs.io/v1/voices --method GET`
+If requests fail, run `zero doctor check-connector --env-name ELEVENLABS_TOKEN` or `zero doctor check-connector --url https://api.elevenlabs.io/v1/voices --method GET`
 
 ## How to Use
 
@@ -36,8 +15,6 @@ All examples below assume you have `ELEVENLABS_TOKEN` set.
 The base URL for the ElevenLabs API is:
 
 - `https://api.elevenlabs.io/v1`
-
----
 
 ### 1. List Available Voices
 
@@ -52,8 +29,6 @@ This returns voice IDs needed for text-to-speech. Common voice categories:
 - `cloned`: Your cloned voices
 - `generated`: AI-designed voices
 
----
-
 ### 2. Get Voice Details
 
 Get detailed information about a specific voice. Replace `<your-voice-id>` with an actual voice ID:
@@ -61,8 +36,6 @@ Get detailed information about a specific voice. Replace `<your-voice-id>` with 
 ```bash
 curl -s -X GET "https://api.elevenlabs.io/v1/voices/<your-voice-id>" --header "xi-api-key: $ELEVENLABS_TOKEN"
 ```
-
----
 
 ### 3. List Available Models
 
@@ -76,8 +49,6 @@ Common models:
 - `eleven_multilingual_v2`: Best quality, supports 29 languages
 - `eleven_flash_v2_5`: Low latency, good for real-time
 - `eleven_v3`: Latest model (alpha)
-
----
 
 ### 4. Text to Speech (Save to File)
 
@@ -107,8 +78,6 @@ curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>" --
 - `stability` (0.0-1.0): Higher = more consistent, lower = more expressive
 - `similarity_boost` (0.0-1.0): Higher = closer to original voice
 
----
-
 ### 5. Text to Speech with Streaming
 
 Stream audio for real-time playback. Replace `<your-voice-id>` with an actual voice ID:
@@ -128,8 +97,6 @@ Then run:
 curl -s -X POST "https://api.elevenlabs.io/v1/text-to-speech/<your-voice-id>/stream" --header "xi-api-key: $ELEVENLABS_TOKEN" --header "Content-Type: application/json" --header "Accept: audio/mpeg" -d @/tmp/elevenlabs_request.json --output streamed.mp3
 ```
 
----
-
 ### 6. Get User Subscription Info
 
 Check your usage and character limits:
@@ -137,8 +104,6 @@ Check your usage and character limits:
 ```bash
 curl -s -X GET "https://api.elevenlabs.io/v1/user/subscription" --header "xi-api-key: $ELEVENLABS_TOKEN" | jq '{character_count, character_limit, tier}'
 ```
-
----
 
 ## Output Formats
 
@@ -165,8 +130,6 @@ Available formats:
 - `pcm_16000`: PCM at 16kHz
 - `pcm_22050`: PCM at 22.05kHz
 - `pcm_24000`: PCM at 24kHz
-
----
 
 ## Guidelines
 

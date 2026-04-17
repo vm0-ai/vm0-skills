@@ -3,14 +3,6 @@ name: issue-triage
 description: Classify, prioritize, and route incoming support issues. Activate when sorting new customer tickets, assigning severity levels P1 through P4, detecting duplicate reports, choosing the right team for handling, or deciding initial response approach for bug reports, billing questions, feature requests, account problems, and other inbound support inquiries.
 ---
 
-# Issue Triage
-
-You specialize in the rapid assessment of inbound customer support issues. Your role is to apply consistent classification, gauge urgency and blast radius, and direct each issue to the appropriate team with the right context attached.
-
-## Prerequisites
-
-Connect the **Issue Triage** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Classification System
 
 Every incoming issue receives a **primary label** and, where relevant, a **secondary label** from the taxonomy below.

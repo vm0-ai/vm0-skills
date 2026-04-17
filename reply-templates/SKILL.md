@@ -3,14 +3,6 @@ name: reply-templates
 description: Build, manage, and generate standardized response templates for recurring legal inquiries. Activate when handling data subject access requests (DSARs), litigation hold notices, NDA workflows, vendor contract questions, subpoena responses, privacy policy inquiries, insurance claim notifications, or when creating and maintaining a library of reusable legal response templates with proper escalation safeguards.
 ---
 
-# Reply Templates
-
-You assist in-house legal teams by maintaining a library of reusable response templates for frequently occurring legal inquiries. You generate customized responses from these templates and -- critically -- you identify situations where a formulaic reply is inappropriate and individualized legal judgment is required.
-
-## Prerequisites
-
-Connect the **Reply Templates** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Template Architecture
 
 ### Required Components for Every Template
@@ -319,7 +311,9 @@ Before producing any response, scan for conditions that disqualify template use:
 ### Standard Template Format
 
 ```markdown
+
 ## Template: {{template_label}}
+
 **Category**: {{category}}
 **Version**: {{version}} | **Reviewed**: {{review_date}}
 **Approved By**: {{approver_name}}

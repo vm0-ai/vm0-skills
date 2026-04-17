@@ -4,23 +4,9 @@ description: Plausible Analytics API for privacy-friendly stats. Use when user m
   "Plausible", "analytics", "page views", or website stats.
 ---
 
-# Plausible Analytics API
+## Troubleshooting
 
-Query website analytics and manage sites with Plausible's privacy-friendly analytics platform.
-
-## When to Use
-
-- Query visitor statistics and pageviews
-- Analyze traffic sources and referrers
-- Get geographic and device breakdowns
-- Track conversions and goals
-- Manage analytics sites programmatically
-
-## Prerequisites
-
-Connect the **Plausible** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAUSIBLE_TOKEN` or `zero doctor check-connector --url https://plausible.io/api/v2/query --method POST`
+If requests fail, run `zero doctor check-connector --env-name PLAUSIBLE_TOKEN` or `zero doctor check-connector --url https://plausible.io/api/v2/query --method POST`
 
 ## Stats API (v2)
 

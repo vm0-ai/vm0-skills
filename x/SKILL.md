@@ -5,30 +5,6 @@ description: X (Twitter) API for tweets and profiles. Use when user mentions "X"
   social media posts.
 ---
 
-# X (Twitter) API
-
-Use `xurl` CLI to **read tweets, search posts, view user profiles, timelines, and social graphs**.
-
-> xurl docs: `https://github.com/xdevplatform/xurl`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **View user profiles** - look up users by username or ID
-- **Read tweets** - get tweet details by ID or URL
-- **Browse timelines** - get a user's tweets or mentions
-- **Search posts** - find recent tweets matching a query
-- **Explore social graphs** - list followers and following
-
----
-
-## Prerequisites
-
-Connect the **X (Twitter)** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 ### 1. Get Authenticated User Profile
@@ -36,8 +12,6 @@ Connect the **X (Twitter)** connector at [app.vm0.ai/connectors](https://app.vm0
 ```bash
 xurl whoami
 ```
-
----
 
 ### 2. Look Up User by Username
 
@@ -47,8 +21,6 @@ xurl whoami
 xurl user elonmusk
 ```
 
----
-
 ### 3. Look Up User by ID
 
 > **Note:** Replace `12345` with the actual user ID. You can obtain user IDs from other endpoint responses.
@@ -56,8 +28,6 @@ xurl user elonmusk
 ```bash
 xurl /2/users/12345?user.fields=id,name,username,description,public_metrics,created_at
 ```
-
----
 
 ### 4. Look Up Multiple Users
 
@@ -69,8 +39,6 @@ Get profiles for multiple users at once (up to 100):
 xurl '/2/users?ids=12345,67890&user.fields=id,name,username,description,public_metrics'
 ```
 
----
-
 ### 5. Get a Tweet by ID
 
 > **Note:** Replace `1234567890` with the actual tweet ID. Full URLs like `https://x.com/user/status/1234567890` also work.
@@ -78,8 +46,6 @@ xurl '/2/users?ids=12345,67890&user.fields=id,name,username,description,public_m
 ```bash
 xurl read 1234567890
 ```
-
----
 
 ### 6. Get Multiple Tweets
 
@@ -90,8 +56,6 @@ Get details for multiple tweets at once (up to 100):
 ```bash
 xurl '/2/tweets?ids=1234567890,0987654321&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username'
 ```
-
----
 
 ### 7. Get User's Tweets (Timeline)
 
@@ -113,15 +77,11 @@ xurl '/2/users/USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metr
 - `pagination_token` - For paginating results
 - `exclude` - Comma-separated: `retweets`, `replies`
 
----
-
 ### 8. Get User's Mentions
 
 ```bash
 xurl mentions -n 10
 ```
-
----
 
 ### 9. Search Recent Tweets
 
@@ -144,8 +104,6 @@ Common search operators:
 - `lang:en` - Filter by language
 - `conversation_id:123` - Tweets in a conversation thread
 
----
-
 ### 10. Get User's Followers
 
 > **Note:** Replace `elonmusk` with the actual username.
@@ -154,8 +112,6 @@ Common search operators:
 xurl followers --of elonmusk -n 20
 ```
 
----
-
 ### 11. Get User's Following
 
 > **Note:** Replace `elonmusk` with the actual username.
@@ -163,8 +119,6 @@ xurl followers --of elonmusk -n 20
 ```bash
 xurl following --of elonmusk -n 20
 ```
-
----
 
 ## Pagination
 
@@ -177,8 +131,6 @@ xurl '/2/tweets/search/recent?query=example&max_results=10' | jq .meta
 ```
 
 Use the returned `next_token` value as `pagination_token` in the next request to get more results.
-
----
 
 ## Common user.fields
 
@@ -208,8 +160,6 @@ Use the returned `next_token` value as `pagination_token` in the next request to
 | `lang` | Detected language |
 | `referenced_tweets` | Retweet/quote/reply references |
 | `entities` | URLs, hashtags, mentions, cashtags |
-
----
 
 ## Guidelines
 

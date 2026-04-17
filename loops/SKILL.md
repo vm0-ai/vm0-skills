@@ -3,24 +3,9 @@ name: loops
 description: Loops email platform for SaaS. Use when user mentions "Loops", "Loops.so", "email marketing", "onboarding emails", "transactional email", or asks about SaaS lifecycle emails.
 ---
 
-# Loops API
+## Troubleshooting
 
-Send onboarding, marketing, and transactional emails to SaaS users via Loops.
-
-> Official docs: `https://loops.so/docs/api-reference`
-
-## When to Use
-
-- Add or update contacts synced from Clerk or another auth provider
-- Trigger automated email sequences via events (e.g., user signed up, upgraded plan)
-- Send one-off transactional emails (password reset, invoice, etc.)
-- List or manage mailing lists and contact properties
-
-## Prerequisites
-
-Connect the **Loops** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LOOPS_TOKEN` or `zero doctor check-connector --url https://app.loops.so/api/v1/api-key --method GET`
+If requests fail, run `zero doctor check-connector --env-name LOOPS_TOKEN` or `zero doctor check-connector --url https://app.loops.so/api/v1/api-key --method GET`
 
 ## Core APIs
 
@@ -31,8 +16,6 @@ Verify your API key is valid:
 ```bash
 curl -s "https://app.loops.so/api/v1/api-key" --header "Authorization: Bearer $LOOPS_TOKEN"
 ```
-
----
 
 ### Create Contact
 
@@ -55,8 +38,6 @@ curl -s -X POST "https://app.loops.so/api/v1/contacts/create" --header "Authoriz
 
 Docs: https://loops.so/docs/api-reference/create-contact
 
----
-
 ### Update Contact
 
 Write to `/tmp/loops_request.json`:
@@ -73,8 +54,6 @@ Write to `/tmp/loops_request.json`:
 curl -s -X PUT "https://app.loops.so/api/v1/contacts/update" --header "Authorization: Bearer $LOOPS_TOKEN" --header "Content-Type: application/json" -d @/tmp/loops_request.json
 ```
 
----
-
 ### Find Contact
 
 Find a contact by email address. Replace `<email>` with the actual email:
@@ -82,8 +61,6 @@ Find a contact by email address. Replace `<email>` with the actual email:
 ```bash
 curl -s "https://app.loops.so/api/v1/contacts/find?email=<email>" --header "Authorization: Bearer $LOOPS_TOKEN"
 ```
-
----
 
 ### Delete Contact
 
@@ -98,8 +75,6 @@ Write to `/tmp/loops_request.json`:
 ```bash
 curl -s -X DELETE "https://app.loops.so/api/v1/contacts/delete" --header "Authorization: Bearer $LOOPS_TOKEN" --header "Content-Type: application/json" -d @/tmp/loops_request.json
 ```
-
----
 
 ### Send Event
 
@@ -124,8 +99,6 @@ curl -s -X POST "https://app.loops.so/api/v1/events/send" --header "Authorizatio
 
 Docs: https://loops.so/docs/api-reference/send-event
 
----
-
 ### Send Transactional Email
 
 Send a one-off email using a transactional template. Replace `<transactional-id>` with the ID from your Loops dashboard.
@@ -149,15 +122,11 @@ curl -s -X POST "https://app.loops.so/api/v1/transactional" --header "Authorizat
 
 Docs: https://loops.so/docs/api-reference/send-transactional-email
 
----
-
 ### List Transactional Emails
 
 ```bash
 curl -s "https://app.loops.so/api/v1/transactional" --header "Authorization: Bearer $LOOPS_TOKEN" | jq '[.[] | {id, name}]'
 ```
-
----
 
 ### List Mailing Lists
 
@@ -165,15 +134,11 @@ curl -s "https://app.loops.so/api/v1/transactional" --header "Authorization: Bea
 curl -s "https://app.loops.so/api/v1/lists" --header "Authorization: Bearer $LOOPS_TOKEN" | jq '[.[] | {id, name}]'
 ```
 
----
-
 ### List Contact Properties
 
 ```bash
 curl -s "https://app.loops.so/api/v1/contacts/customFields" --header "Authorization: Bearer $LOOPS_TOKEN" | jq '[.[] | {key, label, type}]'
 ```
-
----
 
 ## Guidelines
 

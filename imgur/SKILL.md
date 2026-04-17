@@ -4,21 +4,6 @@ description: Imgur API for image hosting. Use when user mentions "Imgur", "uploa
   image", "image hosting", or asks about image sharing.
 ---
 
-# Imgur Image Hosting
-
-Imgur is a free image hosting service. Upload images and get URLs for sharing, embedding in articles, or using in documentation.
-
-## When to Use
-
-- Upload images to get shareable URLs
-- Host images for blog posts or documentation
-- Get image URLs for use in Markdown content
-- Anonymous image uploads (no account needed)
-
-## Prerequisites
-
-Connect the **Imgur Image Hosting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## How to Use
 
 ### Upload Local Image

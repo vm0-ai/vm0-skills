@@ -4,27 +4,9 @@ description: AgentMail API for email inboxes. Use when user says "create email i
   "send email", "check messages", or mentions "agentmail" or email for agents.
 ---
 
-# AgentMail API
+## Troubleshooting
 
-Create and manage email inboxes for AI agents. Send, receive, and reply to emails in threads via AgentMail's REST API.
-
-> Official docs: https://docs.agentmail.to
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Create email inboxes for AI agents on the fly
-- Send emails and reply to conversation threads
-- Manage drafts with scheduled sending
-- Set up webhooks for real-time email event notifications
-- Register and verify custom sending domains
-- Organize inboxes with pods
-- Track email delivery metrics
-
----
+If requests fail, run `zero doctor check-connector --env-name AGENTMAIL_TOKEN` or `zero doctor check-connector --url https://api.agentmail.to/v0/inboxes --method POST`
 
 ## Scenarios
 
@@ -113,14 +95,6 @@ An AI agent triages inbound emails and routes them appropriately.
 6. **Forward to the right team** by sending a new email from a different inbox or notifying via webhook
 7. **Review unhandled messages**: `GET /v0/inboxes/{inbox-id}/messages?labels=needs-review`
 
----
-
-## Prerequisites
-
-Connect the **AgentMail** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name AGENTMAIL_TOKEN` or `zero doctor check-connector --url https://api.agentmail.to/v0/inboxes --method POST`
-
 ## Inboxes
 
 ### Create Inbox
@@ -164,8 +138,6 @@ curl -s -X PATCH "https://api.agentmail.to/v0/inboxes/{inbox-id}" --header "Auth
 ```bash
 curl -s -X DELETE "https://api.agentmail.to/v0/inboxes/{inbox-id}" --header "Authorization: Bearer $AGENTMAIL_TOKEN"
 ```
-
----
 
 ## Messages
 
@@ -341,8 +313,6 @@ Returns a `download_url` (temporary pre-signed URL) and `expires_at`. Download t
 curl -s -o attachment.bin "{download-url}"
 ```
 
----
-
 ## Threads
 
 ### List Threads
@@ -376,8 +346,6 @@ curl -s "https://api.agentmail.to/v0/inboxes/{inbox-id}/threads/{thread-id}/atta
 ```bash
 curl -s -X DELETE "https://api.agentmail.to/v0/inboxes/{inbox-id}/threads/{thread-id}" --header "Authorization: Bearer $AGENTMAIL_TOKEN"
 ```
-
----
 
 ## Drafts
 
@@ -460,8 +428,6 @@ curl -s -X POST "https://api.agentmail.to/v0/inboxes/{inbox-id}/drafts/{draft-id
 curl -s -X DELETE "https://api.agentmail.to/v0/inboxes/{inbox-id}/drafts/{draft-id}" --header "Authorization: Bearer $AGENTMAIL_TOKEN"
 ```
 
----
-
 ## Webhooks
 
 ### Create Webhook
@@ -538,8 +504,6 @@ curl -s -X PATCH "https://api.agentmail.to/v0/webhooks/{webhook-id}" --header "A
 curl -s -X DELETE "https://api.agentmail.to/v0/webhooks/{webhook-id}" --header "Authorization: Bearer $AGENTMAIL_TOKEN"
 ```
 
----
-
 ## Domains
 
 ### Create Domain
@@ -578,8 +542,6 @@ Domain status values: `NOT_STARTED`, `PENDING`, `INVALID`, `FAILED`, `VERIFYING`
 curl -s -X DELETE "https://api.agentmail.to/v0/domains/{domain-id}" --header "Authorization: Bearer $AGENTMAIL_TOKEN"
 ```
 
----
-
 ## Pods
 
 Pods are organizational groups for inboxes.
@@ -608,8 +570,6 @@ curl -s "https://api.agentmail.to/v0/pods/{pod-id}" --header "Authorization: Bea
 curl -s -X DELETE "https://api.agentmail.to/v0/pods/{pod-id}" --header "Authorization: Bearer $AGENTMAIL_TOKEN"
 ```
 
----
-
 ## Metrics
 
 ### Get Delivery Metrics
@@ -625,8 +585,6 @@ curl -s "https://api.agentmail.to/v0/metrics?start_timestamp=2025-01-01T00:00:00
 ```
 
 Supported event types: `message.sent`, `message.delivered`, `message.bounced`, `message.delayed`, `message.rejected`, `message.complained`, `message.received`
-
----
 
 ## API Keys
 
@@ -649,8 +607,6 @@ The `api_key` value is only returned once at creation time. Save it immediately.
 ```bash
 curl -s -X DELETE "https://api.agentmail.to/v0/api-keys/{api-key}" --header "Authorization: Bearer $AGENTMAIL_TOKEN"
 ```
-
----
 
 ## Webhook Event Payload
 
@@ -682,8 +638,6 @@ When a webhook fires, AgentMail sends a POST request with this JSON payload:
 
 Your endpoint should return HTTP 200 immediately and process the payload asynchronously.
 
----
-
 ## Send Parameters Reference
 
 | Parameter | Type | Description |
@@ -699,8 +653,6 @@ Your endpoint should return HTTP 200 immediately and process the payload asynchr
 | `attachments` | object[] | Attachments (with `filename`, `content_type`, `content` as base64 or `url`) |
 | `headers` | object | Custom email headers |
 
----
-
 ## Response Codes
 
 | Status | Description |
@@ -712,8 +664,6 @@ Your endpoint should return HTTP 200 immediately and process the payload asynchr
 | `403` | Forbidden (sending not allowed) |
 | `404` | Resource not found |
 
----
-
 ## Guidelines
 
 1. **Always send both text and HTML**: Provide both formats for best deliverability across email clients
@@ -723,8 +673,6 @@ Your endpoint should return HTTP 200 immediately and process the payload asynchr
 5. **Custom domains improve deliverability**: Set up verified custom domains for production use
 6. **Default domain**: Without a custom domain, inboxes use `@agentmail.to`
 7. **Webhook response**: Return HTTP 200 immediately from webhook endpoints; process payloads asynchronously
-
----
 
 ## API Reference
 

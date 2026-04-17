@@ -3,14 +3,6 @@ name: flux-analysis
 description: Decompose financial variances into underlying drivers and produce narrative explanations with waterfall bridge analysis. Use for budget vs actual analysis, period-over-period comparison, revenue variance decomposition, expense variance analysis, variance commentary, waterfall charts, forecast accuracy measurement, or P&L flux review.
 ---
 
-# Flux & Variance Analysis
-
-Methods for breaking apart financial movements into causal components, setting investigation thresholds, writing clear variance narratives, constructing bridge visualizations, and measuring forecast precision.
-
-## Prerequisites
-
-Connect the **Flux & Variance Analysis** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Decomposition Techniques
 
 ### Price x Volume Separation

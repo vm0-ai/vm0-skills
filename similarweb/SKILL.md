@@ -4,25 +4,9 @@ description: Similarweb API for web analytics. Use when user mentions "Similarwe
   "website traffic", "competitor analysis", or market intelligence.
 ---
 
-# SimilarWeb API
+## Troubleshooting
 
-Analyze website traffic, engagement metrics, traffic sources, keywords, and competitive intelligence.
-
-> Official docs: `https://developers.similarweb.com/docs/getting-started`
-
-## When to Use
-
-- Analyze website traffic and engagement metrics (visits, bounce rate, pages per visit)
-- Break down traffic sources (search, social, referral, direct, display, mail)
-- Research organic and paid keywords driving traffic to a website
-- Find competitors and similar websites
-- Check API capabilities and remaining credits
-
-## Prerequisites
-
-Connect the **SimilarWeb** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SIMILARWEB_TOKEN` or `zero doctor check-connector --url https://api.similarweb.com/capabilities --method GET`
+If requests fail, run `zero doctor check-connector --env-name SIMILARWEB_TOKEN` or `zero doctor check-connector --url https://api.similarweb.com/capabilities --method GET`
 
 ## Core APIs
 

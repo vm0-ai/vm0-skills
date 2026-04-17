@@ -4,20 +4,6 @@ description: Slack Webhook for posting messages. Use when user says "post to Sla
   "Slack webhook", or "send Slack notification".
 ---
 
-# Slack Incoming Webhook
-
-Send messages to a Slack channel using Incoming Webhooks. No OAuth or bot setup required.
-
-## When to Use
-
-- Send notifications to a specific channel
-- CI/CD notifications, alerts, status updates
-- Quick integration without full Slack app setup
-
-## Prerequisites
-
-Connect the **Slack Incoming Webhook** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Usage
 
 ### Simple Message

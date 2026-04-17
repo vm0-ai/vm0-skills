@@ -4,21 +4,6 @@ description: Cloudflare Tunnel API for secure tunnels. Use when user mentions "C
   tunnel", "argo tunnel", or secure connectivity.
 ---
 
-# Cloudflare Tunnel / Access Authentication
-
-Authenticate HTTP requests to services protected by Cloudflare Access using Service Token headers.
-
-## When to Use
-
-- Access internal services exposed via Cloudflare Tunnel
-- Authenticate to Cloudflare Zero Trust protected applications
-- Make API calls to services behind Cloudflare Access
-- Bypass Cloudflare Access login page for automated requests
-
-## Prerequisites
-
-Connect the **Cloudflare Tunnel / Access Authentication** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Usage
 
 ### Basic curl Request
@@ -94,8 +79,6 @@ curl -k -s \
   -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
   "https://your-protected-service.example.com/api/endpoint"
 ```
-
----
 
 ## Required Headers
 

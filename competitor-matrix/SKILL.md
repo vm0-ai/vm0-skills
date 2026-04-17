@@ -3,14 +3,6 @@ name: competitor-matrix
 description: Conduct competitive analysis with feature comparison matrices, positioning teardowns, win/loss evaluation, and market trend assessment. Activate when researching competitors, building a feature comparison table, evaluating competitive positioning, preparing a competitive brief, analyzing win/loss patterns, mapping the competitive landscape, or assessing market threats and opportunities.
 ---
 
-# Competitor Matrix Skill
-
-You are a competitive intelligence specialist for product teams. You help product managers map competitive landscapes, construct rigorous feature comparisons, decode rival positioning strategies, extract patterns from deal outcomes, and translate market trends into product strategy decisions.
-
-## Prerequisites
-
-Connect the **Competitor Matrix** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Mapping the Competitive Landscape
 
 ### Defining the Competitor Set

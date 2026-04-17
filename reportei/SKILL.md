@@ -4,35 +4,11 @@ description: Reportei API for marketing reports. Use when user mentions "Reporte
   "marketing report", "digital marketing", or report automation.
 ---
 
-# Reportei
+## Troubleshooting
 
-Use Reportei via direct `curl` calls to **generate and manage marketing reports** with automated analytics.
-
-> Official docs: `https://app.reportei.com/docs/api`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Retrieve company and template information**
-- **List and manage client projects**
-- **Generate and access marketing reports**
-- **Manage integrations** (Google Analytics, Meta, etc.)
-- **Set up webhooks** for automated notifications
-
----
-
-## Prerequisites
-
-Connect the **Reportei** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REPORTEI_TOKEN` or `zero doctor check-connector --url https://app.reportei.com/api/v1/me --method GET`
+If requests fail, run `zero doctor check-connector --env-name REPORTEI_TOKEN` or `zero doctor check-connector --url https://app.reportei.com/api/v1/me --method GET`
 
 ## How to Use
-
----
 
 ### 1. Get Company Details
 
@@ -57,8 +33,6 @@ Response:
 }
 ```
 
----
-
 ### 2. List Templates
 
 Retrieve all report templates in your company:
@@ -66,8 +40,6 @@ Retrieve all report templates in your company:
 ```bash
 curl -s -X GET "https://app.reportei.com/api/v1/templates" -H "Authorization: Bearer $REPORTEI_TOKEN" | jq '.data[] | {id, title, used_count}'
 ```
-
----
 
 ### 3. List Clients (Projects)
 
@@ -77,8 +49,6 @@ Retrieve all client projects:
 curl -s -X GET "https://app.reportei.com/api/v1/clients" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
 
----
-
 ### 4. Get Client Details
 
 Retrieve details of a specific client. Replace `<your-client-id>` with the actual client ID:
@@ -86,8 +56,6 @@ Retrieve details of a specific client. Replace `<your-client-id>` with the actua
 ```bash
 curl -s -X GET "https://app.reportei.com/api/v1/clients/<your-client-id>" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
-
----
 
 ### 5. List Client Reports
 
@@ -97,8 +65,6 @@ Get all reports for a specific client. Replace `<your-client-id>` with the actua
 curl -s -X GET "https://app.reportei.com/api/v1/clients/<your-client-id>/reports" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
 
----
-
 ### 6. Get Report Details
 
 Retrieve details of a specific report. Replace `<your-report-id>` with the actual report ID:
@@ -106,8 +72,6 @@ Retrieve details of a specific report. Replace `<your-report-id>` with the actua
 ```bash
 curl -s -X GET "https://app.reportei.com/api/v1/reports/<your-report-id>" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
-
----
 
 ### 7. List Client Integrations
 
@@ -117,8 +81,6 @@ Get all integrations for a specific client. Replace `<your-client-id>` with the 
 curl -s -X GET "https://app.reportei.com/api/v1/clients/<your-client-id>/integrations" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
 
----
-
 ### 8. Get Integration Details
 
 Retrieve details of a specific integration. Replace `<your-integration-id>` with the actual integration ID:
@@ -127,8 +89,6 @@ Retrieve details of a specific integration. Replace `<your-integration-id>` with
 curl -s -X GET "https://app.reportei.com/api/v1/integrations/<your-integration-id>" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
 
----
-
 ### 9. Get Integration Widgets
 
 List available widgets for an integration. Replace `<your-integration-id>` with the actual integration ID:
@@ -136,8 +96,6 @@ List available widgets for an integration. Replace `<your-integration-id>` with 
 ```bash
 curl -s -X GET "https://app.reportei.com/api/v1/integrations/<your-integration-id>/widgets" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
-
----
 
 ### 10. Get Widget Value
 
@@ -158,8 +116,6 @@ Then run (replace `<your-integration-id>` with the actual integration ID):
 ```bash
 curl -s -X POST "https://app.reportei.com/api/v1/integrations/<your-integration-id>/widgets/value" -H "Authorization: Bearer $REPORTEI_TOKEN" -H "Content-Type: application/json" -d @/tmp/reportei_request.json
 ```
-
----
 
 ### 11. Create Report (Connector Action)
 
@@ -182,8 +138,6 @@ Then run:
 curl -s -X POST "https://app.reportei.com/api/v1/create_report" -H "Authorization: Bearer $REPORTEI_TOKEN" -H "Content-Type: application/json" -d @/tmp/reportei_request.json
 ```
 
----
-
 ### 12. Create Dashboard (Connector Action)
 
 Create a new dashboard.
@@ -202,8 +156,6 @@ Then run:
 ```bash
 curl -s -X POST "https://app.reportei.com/api/v1/create_dashboard" -H "Authorization: Bearer $REPORTEI_TOKEN" -H "Content-Type: application/json" -d @/tmp/reportei_request.json
 ```
-
----
 
 ### 13. Add to Timeline (Connector Action)
 
@@ -225,8 +177,6 @@ Then run:
 curl -s -X POST "https://app.reportei.com/api/v1/add_to_timeline" -H "Authorization: Bearer $REPORTEI_TOKEN" -H "Content-Type: application/json" -d @/tmp/reportei_request.json
 ```
 
----
-
 ### 14. List Webhook Events
 
 Get available webhook event types:
@@ -234,8 +184,6 @@ Get available webhook event types:
 ```bash
 curl -s -X GET "https://app.reportei.com/api/v1/webhook/events" -H "Authorization: Bearer $REPORTEI_TOKEN"
 ```
-
----
 
 ### 15. Subscribe to Webhook
 
@@ -256,8 +204,6 @@ Then run:
 curl -s -X POST "https://app.reportei.com/api/v1/webhooks/subscribe" -H "Authorization: Bearer $REPORTEI_TOKEN" -H "Content-Type: application/json" -d @/tmp/reportei_request.json
 ```
 
----
-
 ### 16. Unsubscribe from Webhook
 
 Unsubscribe from webhook notifications.
@@ -276,8 +222,6 @@ Then run:
 curl -s -X POST "https://app.reportei.com/api/v1/webhooks/unsubscribe" -H "Authorization: Bearer $REPORTEI_TOKEN" -H "Content-Type: application/json" -d @/tmp/reportei_request.json
 ```
 
----
-
 ## Company Types
 
 | Type | Description |
@@ -285,8 +229,6 @@ curl -s -X POST "https://app.reportei.com/api/v1/webhooks/unsubscribe" -H "Autho
 | `agency` | Marketing agency |
 | `freelancer` | Independent professional |
 | `company` | In-house marketing team |
-
----
 
 ## Response Fields
 
@@ -311,8 +253,6 @@ curl -s -X POST "https://app.reportei.com/api/v1/webhooks/unsubscribe" -H "Autho
 | `used_count` | Times template has been used |
 | `created_at` | Creation timestamp |
 | `updated_at` | Last update timestamp |
-
----
 
 ## Guidelines
 

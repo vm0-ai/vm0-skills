@@ -5,47 +5,13 @@ description: Google Drive API for file management. Use when user mentions "Googl
   storage.
 ---
 
-# Google Drive API
+## Troubleshooting
 
-Use the Google Drive API via direct `curl` calls to **manage files, folders, uploads, downloads, sharing, and permissions**.
-
-> Official docs: `https://developers.google.com/drive/api/v3/reference`
-
----
-
-## Prerequisites
-
-Connect the **Google Drive** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_DRIVE_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/drive/v3/files --method GET`
-
-## When to Use
-
-Use this skill when you need to:
-
-- **List and search** files and folders
-- **Upload files** to Google Drive
-- **Download files** from Google Drive
-- **Create folders** and organize files
-- **Move and copy** files between locations
-- **Share files** and manage permissions
-- **Get file metadata** (name, size, type, modified date)
-- **Delete files** (move to trash or permanent deletion)
-- **Export Google Docs** to different formats (PDF, DOCX, etc.)
-
----
-
----
-
-> **Placeholders:** Values in `{curly-braces}` like `{file-id}` are placeholders. Replace them with actual values when executing.
-
----
+If requests fail, run `zero doctor check-connector --env-name GOOGLE_DRIVE_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/drive/v3/files --method GET`
 
 ## How to Use
 
 Base URL: `https://www.googleapis.com/drive/v3`
-
----
 
 ## Files
 
@@ -191,8 +157,6 @@ Permanently delete a file (cannot be restored):
 curl -s -X DELETE "https://www.googleapis.com/drive/v3/files/{file-id}" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN"
 ```
 
----
-
 ## Folders
 
 ### List Folders Only
@@ -249,8 +213,6 @@ List all files in a specific folder:
 ```bash
 curl -s "https://www.googleapis.com/drive/v3/files?q='{folder-id}'+in+parents&fields=files(id,name,mimeType,size)" --header "Authorization: Bearer $GOOGLE_DRIVE_TOKEN" | jq '.files'
 ```
-
----
 
 ## Sharing and Permissions
 
@@ -339,8 +301,6 @@ Permission types:
 - **domain**: Everyone in organization
 - **anyone**: Public access
 
----
-
 ## Common MIME Types
 
 | Type | MIME Type |
@@ -356,8 +316,6 @@ Permission types:
 | PNG | `image/png` |
 | ZIP | `application/zip` |
 
----
-
 ## Guidelines
 
 1. **Rate limits**: Default quota is 1,000 requests per 100 seconds per user
@@ -366,8 +324,6 @@ Permission types:
 4. **Fields parameter**: Specify `fields` to reduce response size and improve performance
 5. **Upload size limits**: Simple upload limited to 5MB; use resumable upload for larger files
 6. **Query escaping**: Escape single quotes in queries as `\'` and backslashes as `\\`
-
----
 
 ## API Reference
 

@@ -3,14 +3,6 @@ name: kb-authoring
 description: Author and maintain knowledge base articles derived from resolved support cases. Activate when documenting a solution from a closed ticket, writing how-to guides, building troubleshooting walkthroughs, creating FAQ entries, publishing known-issue advisories, updating stale documentation, organizing KB taxonomy, or performing content gap analysis to reduce future ticket volume.
 ---
 
-# KB Authoring
-
-You produce, organize, and maintain self-service knowledge base content that empowers customers to solve problems independently. Every article you write is optimized for findability, scannability, and first-read resolution. Your north star: each well-crafted article prevents a future support ticket.
-
-## Prerequisites
-
-Connect the **KB Authoring** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
 ## Article Anatomy
 
 ### Mandatory Components
@@ -77,10 +69,12 @@ Anchor every article with a first sentence that restates the task or problem in 
 [Summary: what this covers and when you would need it]
 
 ## Before You Begin
+
 - [Prerequisite 1]
 - [Prerequisite 2]
 
 ## Instructions
+
 ### Step 1: [Action verb phrase]
 [Precise instruction with path: Settings > Integrations > API Keys]
 
@@ -88,12 +82,15 @@ Anchor every article with a first sentence that restates the task or problem in 
 [Instruction, including what the user should see after completing this step]
 
 ## Confirm Success
+
 [How to verify the task completed correctly]
 
 ## Troubleshooting
+
 - [Potential hiccup]: [Resolution]
 
 ## See Also
+
 - [Related article links]
 ```
 
@@ -111,13 +108,16 @@ Anchor every article with a first sentence that restates the task or problem in 
 # [Problem statement matching what the user observes]
 
 ## What You See
+
 - [Observable symptom 1]
 - [Observable symptom 2]
 
 ## Why This Happens
+
 [Concise, jargon-free explanation of the root cause]
 
 ## How to Fix It
+
 ### Fix 1: [Most likely resolution]
 [Step-by-step instructions]
 
@@ -125,9 +125,11 @@ Anchor every article with a first sentence that restates the task or problem in 
 [Step-by-step instructions]
 
 ## Preventing Recurrence
+
 [Configuration change or practice that avoids this in the future]
 
 ## Need More Help?
+
 [How to contact support]
 ```
 
@@ -147,9 +149,11 @@ Anchor every article with a first sentence that restates the task or problem in 
 [Direct answer: 1-3 sentences]
 
 ## Additional Context
+
 [Deeper explanation, edge cases, or nuance if needed]
 
 ## Related Questions
+
 - [Link to related FAQ 1]
 - [Link to related FAQ 2]
 ```
@@ -171,15 +175,19 @@ Anchor every article with a first sentence that restates the task or problem in 
 **Last updated:** [Date]
 
 ## What Users Experience
+
 [Description of the observable behavior]
 
 ## Workaround
+
 [Step-by-step workaround, or "No workaround is currently available."]
 
 ## Resolution Timeline
+
 [Estimated fix date or current engineering status]
 
 ## Change Log
+
 - [Date]: [Update summary]
 ```
 

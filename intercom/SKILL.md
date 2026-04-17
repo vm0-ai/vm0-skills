@@ -4,35 +4,9 @@ description: Intercom API for customer messaging. Use when user mentions "Interc
   "customer chat", "messaging", or asks about Intercom conversations.
 ---
 
-# Intercom API
+## Troubleshooting
 
-Manage customer conversations, contacts, messages, articles, and support operations via the Intercom REST API.
-
-> Official docs: `https://developers.intercom.com/docs`
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- **Manage contacts** - Create, update, search, and delete user profiles
-- **Handle conversations** - List, search, reply to, assign, and close conversations
-- **Send messages** - Create and send messages to contacts
-- **Manage companies** - Track organizations and their members
-- **Work with articles** - Access help center content and knowledge base
-- **Add notes** - Annotate contact profiles with internal notes
-- **Use tags** - Organize contacts and conversations with labels
-- **Track events** - Record custom user activities and behaviors
-- **Manage tickets** - Create and handle support tickets
-
----
-
-## Prerequisites
-
-Connect the **Intercom** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name INTERCOM_TOKEN` or `zero doctor check-connector --url https://api.intercom.io/admins --method GET`
+If requests fail, run `zero doctor check-connector --env-name INTERCOM_TOKEN` or `zero doctor check-connector --url https://api.intercom.io/admins --method GET`
 
 ## How to Use
 
@@ -45,8 +19,6 @@ All examples assume `INTERCOM_TOKEN` is set.
 - `Accept: application/json`
 - `Intercom-Version: 2.14`
 
----
-
 ## Core APIs
 
 ### 1. List Admins
@@ -56,8 +28,6 @@ Get all admins/teammates in your workspace:
 ```bash
 curl -s "https://api.intercom.io/admins" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Accept: application/json" -H "Intercom-Version: 2.14" | jq '.admins[] | {id, name, email}'
 ```
-
----
 
 ### 2. Create Contact
 
@@ -100,8 +70,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/contacts" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Accept: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ### 3. Get Contact
 
 Retrieve a specific contact by ID. Replace `<your-contact-id>` with the actual contact ID:
@@ -109,8 +77,6 @@ Retrieve a specific contact by ID. Replace `<your-contact-id>` with the actual c
 ```bash
 curl -s "https://api.intercom.io/contacts/<your-contact-id>" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Accept: application/json" -H "Intercom-Version: 2.14"
 ```
-
----
 
 ### 4. Update Contact
 
@@ -135,8 +101,6 @@ curl -s -X PATCH "https://api.intercom.io/contacts/<your-contact-id>" -H "Author
 
 **Note**: Newly created contacts may need a few seconds before they can be updated.
 
----
-
 ### 5. Delete Contact
 
 Permanently delete a contact. Replace `<your-contact-id>` with the actual contact ID:
@@ -144,8 +108,6 @@ Permanently delete a contact. Replace `<your-contact-id>` with the actual contac
 ```bash
 curl -s -X DELETE "https://api.intercom.io/contacts/<your-contact-id>" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Accept: application/json" -H "Intercom-Version: 2.14"
 ```
-
----
 
 ### 6. Search Contacts
 
@@ -199,8 +161,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/contacts/search" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json | jq '.data[] | {id, email, name}'
 ```
 
----
-
 ### 7. List Conversations
 
 Get all conversations:
@@ -209,8 +169,6 @@ Get all conversations:
 curl -s "https://api.intercom.io/conversations?order=desc&sort=updated_at" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Accept: application/json" -H "Intercom-Version: 2.14" | jq '.conversations[] | {id, state, created_at, updated_at}'
 ```
 
----
-
 ### 8. Get Conversation
 
 Retrieve a specific conversation. Replace `<your-conversation-id>` with the actual conversation ID:
@@ -218,8 +176,6 @@ Retrieve a specific conversation. Replace `<your-conversation-id>` with the actu
 ```bash
 curl -s "https://api.intercom.io/conversations/<your-conversation-id>" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Accept: application/json" -H "Intercom-Version: 2.14"
 ```
-
----
 
 ### 9. Search Conversations
 
@@ -270,8 +226,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/conversations/search" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json | jq '.conversations[] | {id, state, created_at}'
 ```
 
----
-
 ### 10. Reply to Conversation
 
 Reply as an admin. Replace `<your-conversation-id>` and `<your-admin-id>` with actual IDs:
@@ -292,8 +246,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.intercom.io/conversations/<your-conversation-id>/parts" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
-
----
 
 ### 11. Assign Conversation
 
@@ -316,8 +268,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/conversations/<your-conversation-id>/parts" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ### 12. Close Conversation
 
 Close an open conversation. Replace `<your-conversation-id>` and `<your-admin-id>` with actual IDs:
@@ -338,8 +288,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/conversations/<your-conversation-id>/parts" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ### 13. Create Note
 
 Add an internal note to a contact. Replace `<your-contact-id>` with the actual contact ID:
@@ -358,8 +306,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/contacts/<your-contact-id>/notes" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ### 14. List Tags
 
 Get all tags:
@@ -367,8 +313,6 @@ Get all tags:
 ```bash
 curl -s "https://api.intercom.io/tags" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Intercom-Version: 2.14" | jq '.data[] | {id, name}'
 ```
-
----
 
 ### 15. Create Tag
 
@@ -388,8 +332,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/tags" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ### 16. Tag Contact
 
 Add a tag to a contact. Replace `<your-contact-id>` and `<your-tag-id>` with actual IDs:
@@ -408,8 +350,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/contacts/<your-contact-id>/tags" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ### 17. Untag Contact
 
 Remove a tag from a contact. Replace `<your-contact-id>` and `<your-tag-id>` with actual IDs:
@@ -417,8 +357,6 @@ Remove a tag from a contact. Replace `<your-contact-id>` and `<your-tag-id>` wit
 ```bash
 curl -s -X DELETE "https://api.intercom.io/contacts/<your-contact-id>/tags/<your-tag-id>" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Intercom-Version: 2.14"
 ```
-
----
 
 ### 18. List Articles
 
@@ -428,8 +366,6 @@ Get help center articles:
 curl -s "https://api.intercom.io/articles" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Intercom-Version: 2.14" | jq '.data[] | {id, title, url}'
 ```
 
----
-
 ### 19. Get Article
 
 Retrieve a specific article. Replace `<your-article-id>` with the actual article ID:
@@ -437,8 +373,6 @@ Retrieve a specific article. Replace `<your-article-id>` with the actual article
 ```bash
 curl -s "https://api.intercom.io/articles/<your-article-id>" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Intercom-Version: 2.14"
 ```
-
----
 
 ### 20. Create Company
 
@@ -462,8 +396,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/companies" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ### 21. Attach Contact to Company
 
 Associate a contact with a company. Replace `<your-contact-id>` and `<your-company-id>` with actual IDs:
@@ -481,8 +413,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.intercom.io/contacts/<your-contact-id>/companies" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
-
----
 
 ### 22. Track Event
 
@@ -507,8 +437,6 @@ Then run:
 ```bash
 curl -s -X POST "https://api.intercom.io/events" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
-
----
 
 ## Common Workflows
 
@@ -588,8 +516,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/contacts/${CONTACT_ID}/companies" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json
 ```
 
----
-
 ## Search Operators
 
 ### Field Operators
@@ -648,8 +574,6 @@ Then run:
 curl -s -X POST "https://api.intercom.io/contacts/search" -H "Authorization: Bearer $INTERCOM_TOKEN" -H "Content-Type: application/json" -H "Intercom-Version: 2.14" -d @/tmp/intercom_request.json | jq '.data[] | {id, email, name}'
 ```
 
----
-
 ## Rate Limits
 
 - **Private Apps**: 10,000 API calls per minute
@@ -662,8 +586,6 @@ When rate limited, API returns `429 Too Many Requests`.
 - `X-RateLimit-Limit`: Requests per minute allowed
 - `X-RateLimit-Remaining`: Remaining requests in current window
 - `X-RateLimit-Reset`: Unix timestamp when limit resets
-
----
 
 ## Guidelines
 
@@ -683,8 +605,6 @@ When rate limited, API returns `429 Too Many Requests`.
 10. **Conversation states**: Valid states are `open`, `closed`, `snoozed`
 11. **Custom attributes**: Define custom fields in Intercom UI before using in API
 12. **Check workspace ID**: Your workspace ID is included in contact responses for verification
-
----
 
 ## API Reference
 

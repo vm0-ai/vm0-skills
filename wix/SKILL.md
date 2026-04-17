@@ -4,25 +4,9 @@ description: Wix API for website management. Use when user mentions "Wix", "wix.
   "wixsite.com", shares a Wix link, "Wix site", or asks about Wix CMS.
 ---
 
-# Wix API
+## Troubleshooting
 
-Manage contacts, blog posts, store products, and orders on a connected Wix site.
-
-> Official docs: `https://dev.wix.com/docs/rest`
-
-## When to Use
-
-- View and manage site contacts and CRM data
-- Create, read, and update blog posts
-- Query store products and inventory
-- View and manage orders
-- Get site information and stats
-
-## Prerequisites
-
-Connect the **Wix** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WIX_TOKEN` or `zero doctor check-connector --url https://www.wixapis.com/apps/v1/instance --method GET`
+If requests fail, run `zero doctor check-connector --env-name WIX_TOKEN` or `zero doctor check-connector --url https://www.wixapis.com/apps/v1/instance --method GET`
 
 ## Core APIs
 

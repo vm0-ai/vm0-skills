@@ -5,35 +5,9 @@ description: Slack API for messages and channels. Use when user mentions "Slack"
   workspace.
 ---
 
-# Slack API
+## Troubleshooting
 
-Send messages, manage channels, search content, and interact with Slack workspaces via the Web API.
-
-> Official docs: https://docs.slack.dev/reference/methods
-
----
-
-## When to Use
-
-Use this skill when you need to:
-
-- Send, update, schedule, and delete messages
-- Read channel history and thread replies
-- Create, archive, and manage channels
-- Search messages, files, and content
-- Upload and manage files
-- List and manage users and user groups
-- Add and remove reactions, pins, and bookmarks
-- Manage reminders
-- View workspace and team info
-
----
-
-## Prerequisites
-
-Connect the **Slack** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SLACK_TOKEN` or `zero doctor check-connector --url https://slack.com/api/chat.postMessage --method POST`
+If requests fail, run `zero doctor check-connector --env-name SLACK_TOKEN` or `zero doctor check-connector --url https://slack.com/api/chat.postMessage --method POST`
 
 ## Messages
 
@@ -130,8 +104,6 @@ curl -s -X POST "https://slack.com/api/chat.postEphemeral" \
 curl -s "https://slack.com/api/chat.getPermalink?channel=<channel-id>&message_ts=<message-ts>" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
-
----
 
 ## Channels (Conversations)
 
@@ -286,8 +258,6 @@ curl -s -X POST "https://slack.com/api/conversations.open" \
 
 Returns a channel ID for the DM. Use multiple comma-separated user IDs for group DM.
 
----
-
 ## Users
 
 ### List Users
@@ -345,8 +315,6 @@ curl -s "https://slack.com/api/users.conversations?user=<user-id>&types=public_c
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
 
----
-
 ## Search
 
 ### Search Messages
@@ -371,8 +339,6 @@ curl -s "https://slack.com/api/search.files?query=presentation&count=20" \
 curl -s "https://slack.com/api/search.all?query=project%20update&count=20" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
-
----
 
 ## Files
 
@@ -431,8 +397,6 @@ curl -s -X POST "https://slack.com/api/files.delete" \
   -d "{\"file\": \"<file-id>\"}"
 ```
 
----
-
 ## Reactions
 
 ### Add Reaction
@@ -467,8 +431,6 @@ curl -s "https://slack.com/api/reactions.list?user=<user-id>&count=20" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
 
----
-
 ## Pins
 
 ### Pin a Message
@@ -495,8 +457,6 @@ curl -s -X POST "https://slack.com/api/pins.remove" \
 curl -s "https://slack.com/api/pins.list?channel=<channel-id>" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
-
----
 
 ## Bookmarks
 
@@ -526,8 +486,6 @@ curl -s -X POST "https://slack.com/api/bookmarks.remove" \
   --header "Content-Type: application/json" \
   -d "{\"channel_id\": \"<channel-id>\", \"bookmark_id\": \"<bookmark-id>\"}"
 ```
-
----
 
 ## User Groups
 
@@ -562,8 +520,6 @@ curl -s -X POST "https://slack.com/api/usergroups.users.update" \
 curl -s "https://slack.com/api/usergroups.users.list?usergroup=<usergroup-id>" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
-
----
 
 ## Reminders
 
@@ -603,8 +559,6 @@ curl -s -X POST "https://slack.com/api/reminders.delete" \
   -d "{\"reminder\": \"<reminder-id>\"}"
 ```
 
----
-
 ## Do Not Disturb
 
 ### Get DND Status
@@ -628,8 +582,6 @@ curl -s -X POST "https://slack.com/api/dnd.endDnd" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
 
----
-
 ## Emoji
 
 ### List Custom Emoji
@@ -638,8 +590,6 @@ curl -s -X POST "https://slack.com/api/dnd.endDnd" \
 curl -s "https://slack.com/api/emoji.list" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
-
----
 
 ## Team Info
 
@@ -657,8 +607,6 @@ curl -s "https://slack.com/api/team.profile.get" \
   --header "Authorization: Bearer $SLACK_TOKEN"
 ```
 
----
-
 ## Auth
 
 ### Test Token
@@ -669,8 +617,6 @@ curl -s -X POST "https://slack.com/api/auth.test" \
 ```
 
 Returns workspace, user, and bot info for the token. Useful for verifying connectivity and discovering the bot's user ID.
-
----
 
 ## Guidelines
 
@@ -685,8 +631,6 @@ Returns workspace, user, and bot info for the token. Useful for verifying connec
 9. **User IDs**: Users are identified by IDs like `U1234567890`. Use `users.lookupByEmail` to find a user by email.
 10. **File uploads**: The legacy `files.upload` still works but is deprecated. Prefer the two-step flow: `files.getUploadURLExternal` → upload → `files.completeUploadExternal`.
 
----
-
 ## Message Formatting
 
 | Syntax | Result |
@@ -700,8 +644,6 @@ Returns workspace, user, and bot info for the token. Useful for verifying connec
 | `<#C123>` | #channel link |
 | `<!here>` | @here |
 | `<!channel>` | @channel |
-
----
 
 ## Admin API (Enterprise Grid Only)
 
@@ -720,8 +662,6 @@ The `admin.*` methods (100+ endpoints) are only available on Slack Enterprise Gr
 - **admin.audit** — access audit logs
 
 > **Note:** These methods require Enterprise Grid admin tokens with `admin.*` scopes. They will return `missing_scope` or `not_allowed` errors on non-Enterprise workspaces. See docs for details.
-
----
 
 ## How to Look Up More API Details
 
