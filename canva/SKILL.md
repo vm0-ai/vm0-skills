@@ -28,14 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-
-### Rate Limits
-
-Canva API has per-user rate limits that vary by endpoint. Most read endpoints allow 100 requests/user, write endpoints allow 20-30 requests/user.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CANVA_TOKEN` or `zero doctor check-connector --url https://api.canva.com/rest/v1/users/me/profile --method GET`
+Connect the **Canva API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
