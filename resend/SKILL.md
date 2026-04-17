@@ -26,11 +26,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name RESEND_TOKEN` or `zero doctor check-connector --url https://api.resend.com/emails --method POST`
+Connect the **Resend Email API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Emails
 
