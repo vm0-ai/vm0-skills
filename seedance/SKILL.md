@@ -23,14 +23,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [BytePlus ModelArk Console](https://console.byteplus.com/ark)
-2. Complete real-name verification in the console
-3. Purchase a prepaid resource pack (20 free Fast invocations/month included for new accounts)
-4. Navigate to **API Keys** and create a new key
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name SEEDANCE_TOKEN` or `zero doctor check-connector --url https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks --method POST`
-
----
+Connect the **Seedance 2.0** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
