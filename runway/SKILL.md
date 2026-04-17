@@ -27,23 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Sign up at [Runway Developer Portal](https://dev.runwayml.com/)
-2. Purchase credits ($10 for 1000 credits)
-3. Create an API key in the dashboard
-4. Store it in the environment variable `RUNWAY_TOKEN`
-
-```bash
-export RUNWAY_TOKEN="your-api-key"
-```
-
-### Pricing
-
-- Credits are consumed per generation
-- ~25 credits per 5-second video
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name RUNWAY_TOKEN` or `zero doctor check-connector --url https://api.dev.runwayml.com/v1/organization --method GET`
+Connect the **Runway API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
