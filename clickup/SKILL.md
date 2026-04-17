@@ -14,7 +14,7 @@ Manage tasks, lists, folders, spaces, and workspaces in ClickUp via the REST API
 
 ## Prerequisites
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLICKUP_TOKEN` or `zero doctor check-connector --url https://api.clickup.com/api/v2/user --method GET`
+Connect the **ClickUp API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
