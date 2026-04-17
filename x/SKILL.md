@@ -27,29 +27,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Configure xurl with the bearer token (run once per session):
-
-```bash
-xurl auth app --bearer-token "$X_TOKEN"
-```
-
-Verify authentication:
-
-```bash
-xurl whoami
-```
-
-### Available Scopes
-
-The connector grants read-only access:
-
-- `tweet.read` - Read tweets and timelines
-- `users.read` - Read user profiles
-- `follows.read` - Read followers and following
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name X_TOKEN`
+Connect the **X (Twitter) API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
