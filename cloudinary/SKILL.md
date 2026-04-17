@@ -21,6 +21,8 @@ Cloudinary provides image and video hosting with CDN delivery, automatic optimiz
 
 Connect the **Cloudinary Media Hosting** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDINARY_TOKEN` or `zero doctor check-connector --url https://api.cloudinary.com/v1_1/your-cloud-name/image/upload --method POST`
+
 ## How to Use
 
 ### Method 1: Unsigned Upload (Simpler)
