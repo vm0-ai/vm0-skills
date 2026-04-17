@@ -28,23 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Go to [Atlassian Account Settings](https://id.atlassian.com/manage-profile/security/api-tokens)
-2. Click **Create API token**
-3. Copy the generated token (you won't see it again)
-
-```bash
-export JIRA_DOMAIN="mycompany" # e.g., "mycompany" or "mycompany.atlassian.net"
-export JIRA_EMAIL="you@example.com" # Your Atlassian account email
-export JIRA_API_TOKEN="your-api-token" # API token from step 2
-```
-
-### Rate Limits
-
-Jira Cloud has rate limits that vary by endpoint. For most REST API calls, expect limits around 100-500 requests per minute.
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name JIRA_API_TOKEN`
+Connect the **Jira API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
