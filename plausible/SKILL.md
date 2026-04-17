@@ -20,6 +20,8 @@ Query website analytics and manage sites with Plausible's privacy-friendly analy
 
 Connect the **Plausible** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PLAUSIBLE_TOKEN` or `zero doctor check-connector --url https://plausible.io/api/v2/query --method POST`
+
 ## Stats API (v2)
 
 ### Basic Query - Total Visitors
