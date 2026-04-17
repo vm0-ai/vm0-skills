@@ -28,18 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. Create an account at https://pdf.co/
-2. Get your API key from https://app.pdf.co/
-
-Set environment variable:
-
-```bash
-export PDFCO_TOKEN="your-email@example.com_your-api-key"
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PDFCO_TOKEN` or `zero doctor check-connector --url https://api.pdf.co/v1/pdf/convert/to/text --method GET`
+Connect the **PDF.co** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
