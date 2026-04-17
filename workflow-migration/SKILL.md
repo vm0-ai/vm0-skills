@@ -7,15 +7,6 @@ description: VM0 migration helper for Claude Code workflows. Use when user says 
 
 If requests fail, run `zero doctor check-connector --env-name NOTION_API_KEY`
 
-## When to Use This Skill
-
-Use when the user wants to:
-- "Migrate my local Claude Code workflow to VM0"
-- "Convert my Claude Code skills to VM0 agent"
-- "Run my local automation on VM0"
-- "Move my Claude Code setup to VM0 cloud"
-- "Deploy my local skill to VM0"
-
 ## How It Works
 
 ### Step 1: Identify the Local Skill to Migrate
