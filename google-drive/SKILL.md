@@ -15,7 +15,7 @@ Use the Google Drive API via direct `curl` calls to **manage files, folders, upl
 
 ## Prerequisites
 
-Connect the **Google Drive API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Google Drive** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
