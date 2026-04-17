@@ -30,24 +30,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-
-### Discovering Your Project ID
-
-Most endpoints require a project ID. Get it from the projects endpoint:
-
-```bash
-curl -s "https://us.posthog.com/api/projects/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '.results[] | {id, name}'
-```
-
-### Verify Authentication
-
-```bash
-curl -s "https://us.posthog.com/api/users/@me/" --header "Authorization: Bearer $POSTHOG_TOKEN" | jq '{uuid, first_name, email}'
-```
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name POSTHOG_TOKEN` or `zero doctor check-connector --url https://us.posthog.com/api/projects --method GET`
+Connect the **PostHog API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
