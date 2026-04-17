@@ -14,7 +14,7 @@ Access meeting recordings, transcripts, highlights, and AI-generated notes from 
 
 ## Prerequisites
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name TLDV_TOKEN` or `zero doctor check-connector --url https://pasta.tldv.io/v1alpha1/health --method GET`
+Connect the **tl;dv API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
