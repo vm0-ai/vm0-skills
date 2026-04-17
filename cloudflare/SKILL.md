@@ -29,6 +29,8 @@ Use this skill when you need to:
 
 Connect the **Cloudflare** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CLOUDFLARE_TOKEN` or `zero doctor check-connector --url https://api.cloudflare.com/client/v4/user/tokens/verify --method GET`
+
 ## How to Use
 
 ### Base URL
