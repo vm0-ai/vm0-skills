@@ -28,25 +28,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-1. You need a GitHub organization with Copilot Business or Enterprise
-2. Generate a Personal Access Token (PAT) or use a GitHub App
-3. Required permissions: `manage_billing:copilot` or `admin:org`
-4. Store your token in the environment variable `GITHUB_TOKEN`
-
-```bash
-export GITHUB_TOKEN="ghp_xxxxxxxxxxxx"
-```
-
-### Token Permissions
-
-- `manage_billing:copilot` - For billing and seat management
-- `read:org` - For reading organization data
-- `admin:org` - For adding/removing users and teams
-
----
-
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GITHUB_TOKEN` or `zero doctor check-connector --url https://api.github.com/orgs/your-org-name/copilot/billing --method GET`
+Connect the **GitHub Copilot API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## How to Use
 
