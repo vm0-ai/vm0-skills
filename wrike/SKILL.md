@@ -14,7 +14,7 @@ Manage tasks, folders, projects, spaces, comments, timelogs, and workflows in Wr
 
 ## Prerequisites
 
-Connect the **Wrike API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Wrike** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
