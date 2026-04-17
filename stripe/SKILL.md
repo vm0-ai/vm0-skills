@@ -14,6 +14,8 @@ Manage payments, customers, subscriptions, and billing with the Stripe API.
 
 Connect the **Stripe** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STRIPE_TOKEN` or `zero doctor check-connector --url https://api.stripe.com/v1/account --method GET`
+
 ## When to Use
 
 - Manage customers (create, update, list, delete)
