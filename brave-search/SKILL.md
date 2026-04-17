@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **Brave Search** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name BRAVE_API_KEY` or `zero doctor check-connector --url https://api.search.brave.com/res/v1/web/search --method GET`
+
 ## How to Use
 
 All examples below assume you have `BRAVE_API_KEY` set.
