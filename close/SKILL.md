@@ -12,7 +12,7 @@ Manage leads, contacts, opportunities, tasks, and activities in Close CRM.
 
 ## Prerequisites
 
-Connect the **Close CRM API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Close** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## When to Use
 
