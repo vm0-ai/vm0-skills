@@ -28,6 +28,8 @@ Use this skill when you need to:
 
 Connect the **ZapSign** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZAPSIGN_TOKEN` or `zero doctor check-connector --url https://sandbox.api.zapsign.com.br/api/v1/docs/ --method GET`
+
 ## How to Use
 
 All examples use the **sandbox** environment. For production, replace `sandbox.api.zapsign.com.br` with `api.zapsign.com.br`.
