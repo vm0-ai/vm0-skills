@@ -17,6 +17,8 @@ Use the Google Drive API via direct `curl` calls to **manage files, folders, upl
 
 Connect the **Google Drive** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_DRIVE_TOKEN` or `zero doctor check-connector --url https://www.googleapis.com/drive/v3/files --method GET`
+
 ## When to Use
 
 Use this skill when you need to:
