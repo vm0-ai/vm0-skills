@@ -62,7 +62,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Configure `ENV_VAR_1` in [vm0.ai Settings → Connectors](https://app.vm0.ai/settings/connectors).
+Connect the **<Service Name>** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ENV_VAR_1` or `zero doctor check-connector --url https://api.example.com/endpoint --method GET`
 
@@ -99,20 +99,20 @@ curl -s -X POST "https://api.example.com/endpoint" --header "Content-Type: appli
 - Use `--header` instead of `-H` (better compatibility)
 - All examples should be copy-paste executable
 - Include the API documentation URL so agents can look up additional endpoints
-- Reference tokens via environment variables (e.g. `$SERVICE_TOKEN`) — users configure them through vm0.ai Settings → Connectors, never via manual `export`
+- Reference tokens via environment variables (e.g. `$SERVICE_TOKEN`) — users connect the service at app.vm0.ai/connectors, never via manual `export`
 
 ---
 
 ## 3. Document How to Obtain API Tokens
 
-In the Prerequisites section of SKILL.md, instruct users to configure their token via **vm0.ai Settings → Connectors**. Do NOT ask users to manually export environment variables.
+In the Prerequisites section of SKILL.md, instruct users to connect the service at **app.vm0.ai/connectors**. Do NOT ask users to manually export environment variables.
 
 The Prerequisites section must follow this exact format:
 
 ```markdown
 ## Prerequisites
 
-Configure `{SERVICE}_TOKEN` in [vm0.ai Settings → Connectors](https://app.vm0.ai/settings/connectors).
+Connect the **{Service Name}** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name {SERVICE}_TOKEN` or `zero doctor check-connector --url <base-url>/<representative-endpoint> --method GET`
 ```
