@@ -20,7 +20,7 @@ Manage audiences (lists), campaigns, templates, and subscribers with the Mailchi
 
 ## Prerequisites
 
-Connect the **Mailchimp Marketing API** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Mailchimp** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Core APIs
 
