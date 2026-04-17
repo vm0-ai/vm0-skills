@@ -17,30 +17,7 @@ Authenticate HTTP requests to services protected by Cloudflare Access using Serv
 
 ## Prerequisites
 
-```bash
-export CF_ACCESS_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxx.access
-export CF_ACCESS_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-### Create Service Token
-
-1. Go to [Cloudflare Zero Trust Dashboard](https://one.dash.cloudflare.com/)
-2. Navigate to **Access** → **Service Auth** → **Service Tokens**
-3. Click **Create Service Token**
-4. Name your token and click **Generate token**
-5. Copy both **Client ID** and **Client Secret** (shown only once!)
-
-### Configure Access Policy
-
-Ensure your Access Application allows service token authentication:
-
-1. Go to **Access** → **Applications** → Select your app
-2. Add a policy with **Service Token** as Include rule
-3. Select your created token
-
----
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name CF_ACCESS_CLIENT_ID`
+Connect the **Cloudflare Tunnel / Access Authentication** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
 ## Usage
 
