@@ -22,6 +22,8 @@ Manage audiences (lists), campaigns, templates, and subscribers with the Mailchi
 
 Connect the **Mailchimp** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name MAILCHIMP_TOKEN` or `zero doctor check-connector --url https://us1.api.mailchimp.com/3.0/ping --method GET`
+
 ## Core APIs
 
 ### Get Account Info (Ping)
