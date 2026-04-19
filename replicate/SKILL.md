@@ -26,7 +26,7 @@ Use this skill when you need to:
 
 Connect the **Replicate** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REPLICATE_API_TOKEN` or `zero doctor check-connector --url https://api.replicate.com/v1/models --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name REPLICATE_TOKEN` or `zero doctor check-connector --url https://api.replicate.com/v1/models --method GET`
 
 ---
 
@@ -48,7 +48,7 @@ Write to `/tmp/replicate_prediction.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.replicate.com/v1/predictions" --header "Authorization: Bearer $REPLICATE_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_prediction.json | jq '{id, status, urls}'
+curl -s -X POST "https://api.replicate.com/v1/predictions" --header "Authorization: Bearer $REPLICATE_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_prediction.json | jq '{id, status, urls}'
 ```
 
 The response includes a prediction `id` and a `urls.get` URL for polling.
@@ -68,7 +68,7 @@ Write to `/tmp/replicate_prediction.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.replicate.com/v1/models/<owner>/<model-name>/predictions" --header "Authorization: Bearer $REPLICATE_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_prediction.json | jq '{id, status, urls}'
+curl -s -X POST "https://api.replicate.com/v1/models/<owner>/<model-name>/predictions" --header "Authorization: Bearer $REPLICATE_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_prediction.json | jq '{id, status, urls}'
 ```
 
 ### 3. Poll Prediction Status
@@ -76,7 +76,7 @@ curl -s -X POST "https://api.replicate.com/v1/models/<owner>/<model-name>/predic
 Replace `<prediction-id>` with the `id` from the create response.
 
 ```bash
-curl -s "https://api.replicate.com/v1/predictions/<prediction-id>" --header "Authorization: Bearer $REPLICATE_API_TOKEN" | jq '{id, status, output, error}'
+curl -s "https://api.replicate.com/v1/predictions/<prediction-id>" --header "Authorization: Bearer $REPLICATE_TOKEN" | jq '{id, status, output, error}'
 ```
 
 Keep polling every 2–5 seconds until `status` is `succeeded` or `failed`.
@@ -103,7 +103,7 @@ Write to `/tmp/replicate_flux.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions" --header "Authorization: Bearer $REPLICATE_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_flux.json | jq '{id, status, urls}'
+curl -s -X POST "https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions" --header "Authorization: Bearer $REPLICATE_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_flux.json | jq '{id, status, urls}'
 ```
 
 ### 5. Generate an Image with Stability AI SDXL
@@ -123,7 +123,7 @@ Write to `/tmp/replicate_sdxl.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.replicate.com/v1/models/stability-ai/sdxl/predictions" --header "Authorization: Bearer $REPLICATE_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_sdxl.json | jq '{id, status, urls}'
+curl -s -X POST "https://api.replicate.com/v1/models/stability-ai/sdxl/predictions" --header "Authorization: Bearer $REPLICATE_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_sdxl.json | jq '{id, status, urls}'
 ```
 
 ### 6. Run a Text Generation Model (Llama 3 70B)
@@ -140,7 +140,7 @@ Write to `/tmp/replicate_llama.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.replicate.com/v1/models/meta/llama-3-70b-instruct/predictions" --header "Authorization: Bearer $REPLICATE_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_llama.json | jq '{id, status, urls}'
+curl -s -X POST "https://api.replicate.com/v1/models/meta/llama-3-70b-instruct/predictions" --header "Authorization: Bearer $REPLICATE_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_llama.json | jq '{id, status, urls}'
 ```
 
 Text generation responses stream tokens as an array. Poll until `succeeded`, then read `output` (an array of strings — join them for the full response).
@@ -148,13 +148,13 @@ Text generation responses stream tokens as an array. Poll until `succeeded`, the
 ### 7. List Recent Predictions
 
 ```bash
-curl -s "https://api.replicate.com/v1/predictions" --header "Authorization: Bearer $REPLICATE_API_TOKEN" | jq '.results[] | {id, status, created_at, urls}'
+curl -s "https://api.replicate.com/v1/predictions" --header "Authorization: Bearer $REPLICATE_TOKEN" | jq '.results[] | {id, status, created_at, urls}'
 ```
 
 ### 8. Search for Models
 
 ```bash
-curl -s "https://api.replicate.com/v1/models" --header "Authorization: Bearer $REPLICATE_API_TOKEN" | jq '.results[] | {url, description}'
+curl -s "https://api.replicate.com/v1/models" --header "Authorization: Bearer $REPLICATE_TOKEN" | jq '.results[] | {url, description}'
 ```
 
 ### 9. Get Model Details
@@ -162,7 +162,7 @@ curl -s "https://api.replicate.com/v1/models" --header "Authorization: Bearer $R
 Replace `<owner>/<model-name>` with the model identifier.
 
 ```bash
-curl -s "https://api.replicate.com/v1/models/<owner>/<model-name>" --header "Authorization: Bearer $REPLICATE_API_TOKEN" | jq '{url, description, latest_version}'
+curl -s "https://api.replicate.com/v1/models/<owner>/<model-name>" --header "Authorization: Bearer $REPLICATE_TOKEN" | jq '{url, description, latest_version}'
 ```
 
 ### 10. Run via a Deployment
@@ -180,7 +180,7 @@ Write to `/tmp/replicate_deploy.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.replicate.com/v1/deployments/<deployment-owner>/<deployment-name>/predictions" --header "Authorization: Bearer $REPLICATE_API_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_deploy.json | jq '{id, status, urls}'
+curl -s -X POST "https://api.replicate.com/v1/deployments/<deployment-owner>/<deployment-name>/predictions" --header "Authorization: Bearer $REPLICATE_TOKEN" --header "Content-Type: application/json" -d @/tmp/replicate_deploy.json | jq '{id, status, urls}'
 ```
 
 ---
