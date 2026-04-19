@@ -5,14 +5,14 @@ description: Zep API for long-term memory and conversation history management in
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name ZEP_API_KEY` or `zero doctor check-connector --url https://api.getzep.com/api/v2/sessions --method GET`
+If requests fail, run `zero doctor check-connector --env-name ZEP_TOKEN` or `zero doctor check-connector --url https://api.getzep.com/api/v2/sessions --method GET`
 
 ## Authentication
 
 All requests require an API key passed in the header:
 
 ```
-Authorization: Api-Key $ZEP_API_KEY
+Authorization: Api-Key $ZEP_TOKEN
 ```
 
 > Official docs: `https://help.getzep.com/api`
@@ -21,13 +21,13 @@ Authorization: Api-Key $ZEP_API_KEY
 
 | Variable | Description |
 |---|---|
-| `ZEP_API_KEY` | Zep API key from app.getzep.com → Settings → API Keys |
+| `ZEP_TOKEN` | Zep API key from app.getzep.com → Settings → API Keys |
 
 ## Prerequisites
 
 Connect the **Zep** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZEP_API_KEY` or `zero doctor check-connector --url https://api.getzep.com/api/v2/sessions --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name ZEP_TOKEN` or `zero doctor check-connector --url https://api.getzep.com/api/v2/sessions --method GET`
 
 ## Key Concepts
 
@@ -57,19 +57,19 @@ Write to `/tmp/zep_user.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.getzep.com/api/v2/users" --header "Authorization: Api-Key $ZEP_API_KEY" --header "Content-Type: application/json" -d @/tmp/zep_user.json
+curl -s -X POST "https://api.getzep.com/api/v2/users" --header "Authorization: Api-Key $ZEP_TOKEN" --header "Content-Type: application/json" -d @/tmp/zep_user.json
 ```
 
 ### Get a User
 
 ```bash
-curl -s "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ### List Users
 
 ```bash
-curl -s "https://api.getzep.com/api/v2/users?limit=50" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/users?limit=50" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ### Update a User
@@ -86,13 +86,13 @@ Write to `/tmp/zep_user_update.json`:
 ```
 
 ```bash
-curl -s -X PATCH "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_API_KEY" --header "Content-Type: application/json" -d @/tmp/zep_user_update.json
+curl -s -X PATCH "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_TOKEN" --header "Content-Type: application/json" -d @/tmp/zep_user_update.json
 ```
 
 ### Delete a User
 
 ```bash
-curl -s -X DELETE "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s -X DELETE "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ---
@@ -112,25 +112,25 @@ Write to `/tmp/zep_session.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.getzep.com/api/v2/sessions" --header "Authorization: Api-Key $ZEP_API_KEY" --header "Content-Type: application/json" -d @/tmp/zep_session.json
+curl -s -X POST "https://api.getzep.com/api/v2/sessions" --header "Authorization: Api-Key $ZEP_TOKEN" --header "Content-Type: application/json" -d @/tmp/zep_session.json
 ```
 
 ### Get a Session
 
 ```bash
-curl -s "https://api.getzep.com/api/v2/sessions/<session-id>" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/sessions/<session-id>" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ### List Sessions
 
 ```bash
-curl -s "https://api.getzep.com/api/v2/sessions?limit=50" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/sessions?limit=50" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ### List Sessions for a User
 
 ```bash
-curl -s "https://api.getzep.com/api/v2/users/<user-id>/sessions" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/users/<user-id>/sessions" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ---
@@ -159,7 +159,7 @@ Write to `/tmp/zep_messages.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_API_KEY" --header "Content-Type: application/json" -d @/tmp/zep_messages.json
+curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_TOKEN" --header "Content-Type: application/json" -d @/tmp/zep_messages.json
 ```
 
 ### Get Memory for a Session
@@ -167,13 +167,13 @@ curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --h
 Returns the distilled memory context and recent messages for a session.
 
 ```bash
-curl -s "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ### Delete Memory for a Session
 
 ```bash
-curl -s -X DELETE "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s -X DELETE "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ---
@@ -194,7 +194,7 @@ Write to `/tmp/zep_search.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.getzep.com/api/v2/users/<user-id>/search" --header "Authorization: Api-Key $ZEP_API_KEY" --header "Content-Type: application/json" -d @/tmp/zep_search.json
+curl -s -X POST "https://api.getzep.com/api/v2/users/<user-id>/search" --header "Authorization: Api-Key $ZEP_TOKEN" --header "Content-Type: application/json" -d @/tmp/zep_search.json
 ```
 
 Key parameters:
@@ -206,7 +206,7 @@ Key parameters:
 ### Search Sessions for a User
 
 ```bash
-curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/search" --header "Authorization: Api-Key $ZEP_API_KEY" --header "Content-Type: application/json" -d @/tmp/zep_search.json
+curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/search" --header "Authorization: Api-Key $ZEP_TOKEN" --header "Content-Type: application/json" -d @/tmp/zep_search.json
 ```
 
 ---
@@ -218,7 +218,7 @@ curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/search" --h
 Returns all extracted facts about a user across their sessions.
 
 ```bash
-curl -s "https://api.getzep.com/api/v2/users/<user-id>/facts" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/users/<user-id>/facts" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ---
@@ -229,20 +229,20 @@ curl -s "https://api.getzep.com/api/v2/users/<user-id>/facts" --header "Authoriz
 
 ```bash
 # 1. Ensure the user exists (create if needed)
-curl -s "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/users/<user-id>" --header "Authorization: Api-Key $ZEP_TOKEN"
 
 # 2. Ensure the session exists (create if needed)
-curl -s "https://api.getzep.com/api/v2/sessions/<session-id>" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/sessions/<session-id>" --header "Authorization: Api-Key $ZEP_TOKEN"
 
 # 3. Add the new messages to the session
-curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_API_KEY" --header "Content-Type: application/json" -d @/tmp/zep_messages.json
+curl -s -X POST "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_TOKEN" --header "Content-Type: application/json" -d @/tmp/zep_messages.json
 ```
 
 ### Load Context for a New Agent Turn
 
 ```bash
 # Retrieve distilled memory + recent messages to inject into the system prompt
-curl -s "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_API_KEY"
+curl -s "https://api.getzep.com/api/v2/sessions/<session-id>/memory" --header "Authorization: Api-Key $ZEP_TOKEN"
 ```
 
 ---
