@@ -5,14 +5,14 @@ description: Weights & Biases (W&B) API for ML experiment tracking, LLM observab
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name WANDB_API_KEY` or `zero doctor check-connector --url https://api.wandb.ai/graphql --method POST`
+If requests fail, run `zero doctor check-connector --env-name WANDB_TOKEN` or `zero doctor check-connector --url https://api.wandb.ai/graphql --method POST`
 
 ## Authentication
 
 All requests require an API key passed as a Bearer token:
 
 ```
-Authorization: Bearer $WANDB_API_KEY
+Authorization: Bearer $WANDB_TOKEN
 ```
 
 ## Key Endpoints
@@ -30,7 +30,7 @@ W&B exposes two main interfaces:
 List all runs in a project with their metrics and config.
 
 ```bash
-curl -s "https://api.wandb.ai/api/v1/runs/<entity>/<project>" --header "Authorization: Bearer $WANDB_API_KEY"
+curl -s "https://api.wandb.ai/api/v1/runs/<entity>/<project>" --header "Authorization: Bearer $WANDB_TOKEN"
 ```
 
 Replace `<entity>` with your W&B username or team name, and `<project>` with your project name.
@@ -40,7 +40,7 @@ Response includes an array of run objects with `name`, `state`, `summary` (final
 ### 2. Fetch a Single Run
 
 ```bash
-curl -s "https://api.wandb.ai/api/v1/runs/<entity>/<project>/<run-id>" --header "Authorization: Bearer $WANDB_API_KEY"
+curl -s "https://api.wandb.ai/api/v1/runs/<entity>/<project>/<run-id>" --header "Authorization: Bearer $WANDB_TOKEN"
 ```
 
 ### 3. Update Run Tags or Notes
@@ -55,7 +55,7 @@ Write to `/tmp/wandb_run_patch.json`:
 ```
 
 ```bash
-curl -s -X PATCH "https://api.wandb.ai/api/v1/runs/<entity>/<project>/<run-id>" --header "Authorization: Bearer $WANDB_API_KEY" --header "Content-Type: application/json" -d @/tmp/wandb_run_patch.json
+curl -s -X PATCH "https://api.wandb.ai/api/v1/runs/<entity>/<project>/<run-id>" --header "Authorization: Bearer $WANDB_TOKEN" --header "Content-Type: application/json" -d @/tmp/wandb_run_patch.json
 ```
 
 ### 4. Query Runs via GraphQL
@@ -73,13 +73,13 @@ GraphQL is the most powerful interface for filtering and aggregating runs. Write
 ```
 
 ```bash
-curl -s -X POST "https://api.wandb.ai/graphql" --header "Authorization: Bearer $WANDB_API_KEY" --header "Content-Type: application/json" -d @/tmp/wandb_query.json
+curl -s -X POST "https://api.wandb.ai/graphql" --header "Authorization: Bearer $WANDB_TOKEN" --header "Content-Type: application/json" -d @/tmp/wandb_query.json
 ```
 
 ### 5. List Artifacts for a Project
 
 ```bash
-curl -s "https://api.wandb.ai/api/v1/artifacts/<entity>/<project>" --header "Authorization: Bearer $WANDB_API_KEY"
+curl -s "https://api.wandb.ai/api/v1/artifacts/<entity>/<project>" --header "Authorization: Bearer $WANDB_TOKEN"
 ```
 
 ### 6. Download an Artifact File
@@ -87,7 +87,7 @@ curl -s "https://api.wandb.ai/api/v1/artifacts/<entity>/<project>" --header "Aut
 First fetch the artifact manifest to get file download URLs:
 
 ```bash
-curl -s "https://api.wandb.ai/api/v1/artifacts/<entity>/<project>/<artifact-sequence-name>/<artifact-version>" --header "Authorization: Bearer $WANDB_API_KEY"
+curl -s "https://api.wandb.ai/api/v1/artifacts/<entity>/<project>/<artifact-sequence-name>/<artifact-version>" --header "Authorization: Bearer $WANDB_TOKEN"
 ```
 
 Replace `<artifact-version>` with `latest` or a specific version like `v3`.
@@ -95,7 +95,7 @@ Replace `<artifact-version>` with `latest` or a specific version like `v3`.
 ### 7. List Reports (Saved Views)
 
 ```bash
-curl -s "https://api.wandb.ai/api/v1/reports/<entity>/<project>" --header "Authorization: Bearer $WANDB_API_KEY"
+curl -s "https://api.wandb.ai/api/v1/reports/<entity>/<project>" --header "Authorization: Bearer $WANDB_TOKEN"
 ```
 
 ### 8. Log a Custom Metric to a Run (via GraphQL Mutation)
@@ -115,7 +115,7 @@ Write to `/tmp/wandb_upsert.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.wandb.ai/graphql" --header "Authorization: Bearer $WANDB_API_KEY" --header "Content-Type: application/json" -d @/tmp/wandb_upsert.json
+curl -s -X POST "https://api.wandb.ai/graphql" --header "Authorization: Bearer $WANDB_TOKEN" --header "Content-Type: application/json" -d @/tmp/wandb_upsert.json
 ```
 
 ---
@@ -124,7 +124,7 @@ curl -s -X POST "https://api.wandb.ai/graphql" --header "Authorization: Bearer $
 
 Connect the **Weights & Biases** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WANDB_API_KEY` or `zero doctor check-connector --url https://api.wandb.ai/graphql --method POST`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WANDB_TOKEN` or `zero doctor check-connector --url https://api.wandb.ai/graphql --method POST`
 
 ---
 
