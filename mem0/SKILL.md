@@ -5,14 +5,14 @@ description: Mem0 API for persistent AI memory across conversations and sessions
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name MEM0_API_KEY` or `zero doctor check-connector --url https://api.mem0.ai/v1/memories --method GET`
+If requests fail, run `zero doctor check-connector --env-name MEM0_TOKEN` or `zero doctor check-connector --url https://api.mem0.ai/v1/memories --method GET`
 
 ## Authentication
 
 All requests require an API key passed in the Authorization header:
 
 ```
-Authorization: Token $MEM0_API_KEY
+Authorization: Token $MEM0_TOKEN
 ```
 
 Get your API key from: [app.mem0.ai](https://app.mem0.ai) → **API Keys** → create or copy your key.
@@ -21,7 +21,7 @@ Get your API key from: [app.mem0.ai](https://app.mem0.ai) → **API Keys** → c
 
 | Variable | Description |
 |---|---|
-| `MEM0_API_KEY` | Mem0 API key (starts with `m0-`) |
+| `MEM0_TOKEN` | Mem0 API key (starts with `m0-`) |
 
 ## Key Endpoints
 
@@ -50,7 +50,7 @@ Write to `/tmp/mem0_add.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.mem0.ai/v1/memories/" --header "Authorization: Token $MEM0_API_KEY" --header "Content-Type: application/json" -d @/tmp/mem0_add.json
+curl -s -X POST "https://api.mem0.ai/v1/memories/" --header "Authorization: Token $MEM0_TOKEN" --header "Content-Type: application/json" -d @/tmp/mem0_add.json
 ```
 
 Optional fields alongside `user_id`:
@@ -79,7 +79,7 @@ Write to `/tmp/mem0_search.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.mem0.ai/v1/memories/search/" --header "Authorization: Token $MEM0_API_KEY" --header "Content-Type: application/json" -d @/tmp/mem0_search.json
+curl -s -X POST "https://api.mem0.ai/v1/memories/search/" --header "Authorization: Token $MEM0_TOKEN" --header "Content-Type: application/json" -d @/tmp/mem0_search.json
 ```
 
 Optional fields:
@@ -96,7 +96,7 @@ Response includes a `results` array of matching memories with `id`, `memory`, `s
 Retrieve all memories for a user (or agent/run).
 
 ```bash
-curl -s "https://api.mem0.ai/v1/memories/?user_id=<your-user-id>" --header "Authorization: Token $MEM0_API_KEY"
+curl -s "https://api.mem0.ai/v1/memories/?user_id=<your-user-id>" --header "Authorization: Token $MEM0_TOKEN"
 ```
 
 To filter by agent or run, add `agent_id=<agent-id>` or `run_id=<run-id>` as query parameters.
@@ -110,7 +110,7 @@ Response includes a paginated `results` array.
 Retrieve a single memory by its ID.
 
 ```bash
-curl -s "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Authorization: Token $MEM0_API_KEY"
+curl -s "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Authorization: Token $MEM0_TOKEN"
 ```
 
 ### 5. Update a Memory
@@ -130,7 +130,7 @@ Write to `/tmp/mem0_update.json`:
 Then run:
 
 ```bash
-curl -s -X PUT "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Authorization: Token $MEM0_API_KEY" --header "Content-Type: application/json" -d @/tmp/mem0_update.json
+curl -s -X PUT "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Authorization: Token $MEM0_TOKEN" --header "Content-Type: application/json" -d @/tmp/mem0_update.json
 ```
 
 ### 6. Delete a Memory
@@ -140,7 +140,7 @@ curl -s -X PUT "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Authoriz
 Delete a specific memory.
 
 ```bash
-curl -s -X DELETE "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Authorization: Token $MEM0_API_KEY"
+curl -s -X DELETE "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Authorization: Token $MEM0_TOKEN"
 ```
 
 ### 7. Delete All Memories for a User
@@ -150,7 +150,7 @@ curl -s -X DELETE "https://api.mem0.ai/v1/memories/<memory-id>/" --header "Autho
 Delete all memories scoped to a user.
 
 ```bash
-curl -s -X DELETE "https://api.mem0.ai/v1/memories/?user_id=<your-user-id>" --header "Authorization: Token $MEM0_API_KEY"
+curl -s -X DELETE "https://api.mem0.ai/v1/memories/?user_id=<your-user-id>" --header "Authorization: Token $MEM0_TOKEN"
 ```
 
 ### 8. Get Memory History
@@ -160,7 +160,7 @@ curl -s -X DELETE "https://api.mem0.ai/v1/memories/?user_id=<your-user-id>" --he
 Retrieve the change history for a specific memory (shows ADD, UPDATE, DELETE events over time).
 
 ```bash
-curl -s "https://api.mem0.ai/v1/memories/<memory-id>/history/" --header "Authorization: Token $MEM0_API_KEY"
+curl -s "https://api.mem0.ai/v1/memories/<memory-id>/history/" --header "Authorization: Token $MEM0_TOKEN"
 ```
 
 ## Common Workflows
@@ -171,12 +171,12 @@ curl -s "https://api.mem0.ai/v1/memories/<memory-id>/history/" --header "Authori
 # Step 1: Store user preferences at end of session
 # Write to /tmp/mem0_add.json:
 # { "messages": [{"role": "user", "content": "I work in the fintech industry and prefer concise summaries."}], "user_id": "user-123" }
-curl -s -X POST "https://api.mem0.ai/v1/memories/" --header "Authorization: Token $MEM0_API_KEY" --header "Content-Type: application/json" -d @/tmp/mem0_add.json
+curl -s -X POST "https://api.mem0.ai/v1/memories/" --header "Authorization: Token $MEM0_TOKEN" --header "Content-Type: application/json" -d @/tmp/mem0_add.json
 
 # Step 2: Retrieve relevant memories at start of next session
 # Write to /tmp/mem0_search.json:
 # { "query": "user industry and preferences", "user_id": "user-123", "limit": 5 }
-curl -s -X POST "https://api.mem0.ai/v1/memories/search/" --header "Authorization: Token $MEM0_API_KEY" --header "Content-Type: application/json" -d @/tmp/mem0_search.json
+curl -s -X POST "https://api.mem0.ai/v1/memories/search/" --header "Authorization: Token $MEM0_TOKEN" --header "Content-Type: application/json" -d @/tmp/mem0_search.json
 ```
 
 ### Store Memory with Metadata Tags
@@ -202,7 +202,7 @@ Write to `/tmp/mem0_tagged.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.mem0.ai/v1/memories/" --header "Authorization: Token $MEM0_API_KEY" --header "Content-Type: application/json" -d @/tmp/mem0_tagged.json
+curl -s -X POST "https://api.mem0.ai/v1/memories/" --header "Authorization: Token $MEM0_TOKEN" --header "Content-Type: application/json" -d @/tmp/mem0_tagged.json
 ```
 
 ### Filter Memories by Metadata
@@ -222,7 +222,7 @@ Write to `/tmp/mem0_filter.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.mem0.ai/v1/memories/search/" --header "Authorization: Token $MEM0_API_KEY" --header "Content-Type: application/json" -d @/tmp/mem0_filter.json
+curl -s -X POST "https://api.mem0.ai/v1/memories/search/" --header "Authorization: Token $MEM0_TOKEN" --header "Content-Type: application/json" -d @/tmp/mem0_filter.json
 ```
 
 ## Memory Scoping
