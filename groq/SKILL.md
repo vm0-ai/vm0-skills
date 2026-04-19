@@ -30,13 +30,13 @@ Use this skill when you need to:
 
 Connect the **Groq** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GROQ_API_KEY` or `zero doctor check-connector --url https://api.groq.com/openai/v1/models --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GROQ_TOKEN` or `zero doctor check-connector --url https://api.groq.com/openai/v1/models --method GET`
 
 ---
 
 ## How to Use
 
-All examples below assume you have `GROQ_API_KEY` set via the Groq connector.
+All examples below assume you have `GROQ_TOKEN` set via the Groq connector.
 
 Base URL: `https://api.groq.com/openai/v1`
 
@@ -54,7 +54,7 @@ Write to `/tmp/groq_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_API_KEY" -d @/tmp/groq_request.json | jq '.choices[0].message.content'
+curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_TOKEN" -d @/tmp/groq_request.json | jq '.choices[0].message.content'
 ```
 
 **Key models:**
@@ -82,7 +82,7 @@ Write to `/tmp/groq_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_API_KEY" -d @/tmp/groq_request.json | jq '.choices[0].message.content'
+curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_TOKEN" -d @/tmp/groq_request.json | jq '.choices[0].message.content'
 ```
 
 ### 3. Streaming Chat Completion
@@ -102,7 +102,7 @@ Write to `/tmp/groq_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_API_KEY" -d @/tmp/groq_request.json
+curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_TOKEN" -d @/tmp/groq_request.json
 ```
 
 Each SSE chunk is a `data: {...}` line with a `delta.content` field. The stream ends with `data: [DONE]`.
@@ -112,7 +112,7 @@ Each SSE chunk is a `data: {...}` line with a `delta.content` field. The stream 
 Transcribe audio files using Groq's hosted `whisper-large-v3` model.
 
 ```bash
-curl -s "https://api.groq.com/openai/v1/audio/transcriptions" --header "Authorization: Bearer $GROQ_API_KEY" -F "file=@audio.mp3" -F "model=whisper-large-v3" | jq '.text'
+curl -s "https://api.groq.com/openai/v1/audio/transcriptions" --header "Authorization: Bearer $GROQ_TOKEN" -F "file=@audio.mp3" -F "model=whisper-large-v3" | jq '.text'
 ```
 
 Supported formats: `mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, `webm` (max 25 MB per file).
@@ -124,7 +124,7 @@ Supported formats: `mp3`, `mp4`, `mpeg`, `mpga`, `m4a`, `wav`, `webm` (max 25 MB
 Retrieve all models currently available on the Groq platform:
 
 ```bash
-curl -s "https://api.groq.com/openai/v1/models" --header "Authorization: Bearer $GROQ_API_KEY" | jq -r '.data[].id' | sort
+curl -s "https://api.groq.com/openai/v1/models" --header "Authorization: Bearer $GROQ_TOKEN" | jq -r '.data[].id' | sort
 ```
 
 ### 6. Check Token Usage
@@ -143,7 +143,7 @@ Write to `/tmp/groq_request.json`:
 Then run:
 
 ```bash
-curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_API_KEY" -d @/tmp/groq_request.json | jq '.usage'
+curl -s "https://api.groq.com/openai/v1/chat/completions" --header "Content-Type: application/json" --header "Authorization: Bearer $GROQ_TOKEN" -d @/tmp/groq_request.json | jq '.usage'
 ```
 
 Response includes `prompt_tokens`, `completion_tokens`, and `total_tokens`.
