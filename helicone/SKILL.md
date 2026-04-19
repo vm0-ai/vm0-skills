@@ -5,14 +5,14 @@ description: Helicone API for LLM observability — request logging, cost tracki
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name HELICONE_API_KEY` or `zero doctor check-connector --url https://api.helicone.ai/v1/request --method GET`
+If requests fail, run `zero doctor check-connector --env-name HELICONE_TOKEN` or `zero doctor check-connector --url https://api.helicone.ai/v1/request --method GET`
 
 ## Authentication
 
 All requests require a Bearer token in the Authorization header:
 
 ```
-Authorization: Bearer $HELICONE_API_KEY
+Authorization: Bearer $HELICONE_TOKEN
 ```
 
 Get your API key from: helicone.ai → Settings → API Keys → create a new key.
@@ -21,7 +21,7 @@ Get your API key from: helicone.ai → Settings → API Keys → create a new ke
 
 | Variable | Description |
 |---|---|
-| `HELICONE_API_KEY` | Helicone API key (starts with `sk-helicone-`) |
+| `HELICONE_TOKEN` | Helicone API key (starts with `sk-helicone-`) |
 
 ## Key Endpoints
 
@@ -48,7 +48,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
 ```
 
 Response includes `data` array with `request_id`, `model`, `prompt_tokens`, `completion_tokens`, `latency`, `cost`, `created_at`, and the full request/response bodies.
@@ -77,7 +77,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
 ```
 
 ### 3. Filter Requests by Date Range
@@ -105,7 +105,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
 ```
 
 ### 4. Filter Requests by User
@@ -129,7 +129,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
 ```
 
 ### 5. Get Aggregated Cost Stats
@@ -160,7 +160,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq '[.data[] | {model: .model, cost: .cost_usd, prompt_tokens: .prompt_tokens, completion_tokens: .completion_tokens}]'
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq '[.data[] | {model: .model, cost: .cost_usd, prompt_tokens: .prompt_tokens, completion_tokens: .completion_tokens}]'
 ```
 
 ### 6. Get a Single Request
@@ -170,7 +170,7 @@ curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorizati
 Retrieve the full details of a specific request by ID.
 
 ```bash
-curl -s "https://api.helicone.ai/v1/request/<request-id>" --header "Authorization: Bearer $HELICONE_API_KEY"
+curl -s "https://api.helicone.ai/v1/request/<request-id>" --header "Authorization: Bearer $HELICONE_TOKEN"
 ```
 
 Replace `<request-id>` with the UUID returned in a query response.
@@ -182,7 +182,7 @@ Replace `<request-id>` with the UUID returned in a query response.
 List all custom property keys used across your requests.
 
 ```bash
-curl -s "https://api.helicone.ai/v1/property/query" --header "Authorization: Bearer $HELICONE_API_KEY"
+curl -s "https://api.helicone.ai/v1/property/query" --header "Authorization: Bearer $HELICONE_TOKEN"
 ```
 
 ### 8. Filter Requests by Custom Property
@@ -206,7 +206,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json
 ```
 
 ### 9. Get Usage Over Time (Dashboard Stats)
@@ -237,7 +237,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq 'group_by(.created_at[:10]) | map({date: .[0].created_at[:10], total_cost: (map(.cost_usd // 0) | add), requests: length})'
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq 'group_by(.created_at[:10]) | map({date: .[0].created_at[:10], total_cost: (map(.cost_usd // 0) | add), requests: length})'
 ```
 
 ## Common Workflows
@@ -245,7 +245,7 @@ curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorizati
 ### Audit LLM Spend by Model
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq 'group_by(.model) | map({model: .[0].model, total_cost: (map(.cost_usd // 0) | add), request_count: length, avg_latency_ms: (map(.latency // 0) | add / length | floor)})'
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq 'group_by(.model) | map({model: .[0].model, total_cost: (map(.cost_usd // 0) | add), request_count: length, avg_latency_ms: (map(.latency // 0) | add / length | floor)})'
 ```
 
 ### Find Slowest Requests
@@ -265,7 +265,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq '[.data[] | {request_id: .request_id, model: .model, latency_ms: .latency, created_at: .created_at}]'
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq '[.data[] | {request_id: .request_id, model: .model, latency_ms: .latency, created_at: .created_at}]'
 ```
 
 ### Find Most Expensive Requests
@@ -285,7 +285,7 @@ Write to `/tmp/helicone_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_API_KEY" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq '[.data[] | {request_id: .request_id, model: .model, cost_usd: .cost_usd, prompt_tokens: .prompt_tokens, completion_tokens: .completion_tokens}]'
+curl -s -X POST "https://api.helicone.ai/v1/request/query" --header "Authorization: Bearer $HELICONE_TOKEN" --header "Content-Type: application/json" -d @/tmp/helicone_request.json | jq '[.data[] | {request_id: .request_id, model: .model, cost_usd: .cost_usd, prompt_tokens: .prompt_tokens, completion_tokens: .completion_tokens}]'
 ```
 
 ## Response Fields Reference
