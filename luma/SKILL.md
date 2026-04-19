@@ -29,7 +29,7 @@ Use this skill when you need to:
 
 Connect the **Luma** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LUMAAI_API_KEY` or `zero doctor check-connector --url https://api.lumalabs.ai/dream-machine/v1/generations --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LUMA_TOKEN` or `zero doctor check-connector --url https://api.lumalabs.ai/dream-machine/v1/generations --method GET`
 
 ---
 
@@ -51,7 +51,7 @@ Submit a text-to-video generation request. Write to `/tmp/luma_video_request.jso
 ```
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMAAI_API_KEY" --header "Content-Type: application/json" -d @/tmp/luma_video_request.json | jq '{id, state, created_at}'
+curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_video_request.json | jq '{id, state, created_at}'
 ```
 
 Save the returned `id` for polling.
@@ -76,7 +76,7 @@ Use a keyframe to anchor the starting image. Write to `/tmp/luma_video_request.j
 ```
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMAAI_API_KEY" --header "Content-Type: application/json" -d @/tmp/luma_video_request.json | jq '{id, state}'
+curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_video_request.json | jq '{id, state}'
 ```
 
 ### 3. Poll Generation Status
@@ -84,7 +84,7 @@ curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --h
 Poll until `state` is `completed` or `failed`. Replace `<generation-id>` with the ID from the create response:
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMAAI_API_KEY" | jq '{id, state, failure_reason, assets}'
+curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN" | jq '{id, state, failure_reason, assets}'
 ```
 
 State values:
@@ -97,7 +97,7 @@ State values:
 Once state is `completed`, the `assets.video` field contains a direct download URL:
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMAAI_API_KEY" | jq -r '.assets.video'
+curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN" | jq -r '.assets.video'
 ```
 
 Then download:
@@ -119,13 +119,13 @@ Write to `/tmp/luma_image_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/image" --header "Authorization: Bearer $LUMAAI_API_KEY" --header "Content-Type: application/json" -d @/tmp/luma_image_request.json | jq '{id, state, created_at}'
+curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/image" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_image_request.json | jq '{id, state, created_at}'
 ```
 
 ### 6. Poll Image Generation Status
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMAAI_API_KEY" | jq '{id, state, failure_reason, assets}'
+curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN" | jq '{id, state, failure_reason, assets}'
 ```
 
 Once `state` is `completed`, `assets.image` contains the image URL.
@@ -150,31 +150,31 @@ Extend a completed video by referencing its ID in keyframes. Write to `/tmp/luma
 ```
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMAAI_API_KEY" --header "Content-Type: application/json" -d @/tmp/luma_extend_request.json | jq '{id, state}'
+curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_extend_request.json | jq '{id, state}'
 ```
 
 ### 8. List Recent Generations
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations?limit=10&offset=0" --header "Authorization: Bearer $LUMAAI_API_KEY" | jq '.generations[] | {id, state, created_at}'
+curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations?limit=10&offset=0" --header "Authorization: Bearer $LUMA_TOKEN" | jq '.generations[] | {id, state, created_at}'
 ```
 
 ### 9. Delete a Generation
 
 ```bash
-curl -s -X DELETE "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMAAI_API_KEY"
+curl -s -X DELETE "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN"
 ```
 
 ### 10. List Available Camera Motions
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/camera_motion/list" --header "Authorization: Bearer $LUMAAI_API_KEY" | jq '.[]'
+curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/camera_motion/list" --header "Authorization: Bearer $LUMA_TOKEN" | jq '.[]'
 ```
 
 ### 11. List Available Creative Concepts
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/concepts/list" --header "Authorization: Bearer $LUMAAI_API_KEY" | jq '.[]'
+curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/concepts/list" --header "Authorization: Bearer $LUMA_TOKEN" | jq '.[]'
 ```
 
 ---
