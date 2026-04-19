@@ -5,14 +5,14 @@ description: WorkOS API for enterprise SSO, SCIM directory sync, RBAC fine-grain
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name WORKOS_API_KEY` or `zero doctor check-connector --url https://api.workos.com/organizations --method GET`
+If requests fail, run `zero doctor check-connector --env-name WORKOS_TOKEN` or `zero doctor check-connector --url https://api.workos.com/organizations --method GET`
 
 ## Authentication
 
 All requests require a secret API key passed as a Bearer token:
 
 ```
-Authorization: Bearer $WORKOS_API_KEY
+Authorization: Bearer $WORKOS_TOKEN
 ```
 
 > Official docs: `https://workos.com/docs/reference`
@@ -21,7 +21,7 @@ Authorization: Bearer $WORKOS_API_KEY
 
 | Variable | Description |
 |---|---|
-| `WORKOS_API_KEY` | WorkOS secret API key (`sk_live_...` or `sk_test_...`) |
+| `WORKOS_TOKEN` | WorkOS secret API key (`sk_live_...` or `sk_test_...`) |
 
 ## Key Endpoints
 
@@ -34,7 +34,7 @@ Base URL: `https://api.workos.com`
 ### List Organizations
 
 ```bash
-curl -s "https://api.workos.com/organizations" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/organizations" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 Response includes a `data` array of organization objects, each with `id`, `name`, `domains`, and `created_at`.
@@ -42,7 +42,7 @@ Response includes a `data` array of organization objects, each with `id`, `name`
 ### Get Organization
 
 ```bash
-curl -s "https://api.workos.com/organizations/<organization-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/organizations/<organization-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Create Organization
@@ -57,13 +57,13 @@ Write to `/tmp/workos_org.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.workos.com/organizations" --header "Authorization: Bearer $WORKOS_API_KEY" --header "Content-Type: application/json" -d @/tmp/workos_org.json
+curl -s -X POST "https://api.workos.com/organizations" --header "Authorization: Bearer $WORKOS_TOKEN" --header "Content-Type: application/json" -d @/tmp/workos_org.json
 ```
 
 ### Delete Organization
 
 ```bash
-curl -s -X DELETE "https://api.workos.com/organizations/<organization-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s -X DELETE "https://api.workos.com/organizations/<organization-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ---
@@ -73,25 +73,25 @@ curl -s -X DELETE "https://api.workos.com/organizations/<organization-id>" --hea
 ### List SSO Connections
 
 ```bash
-curl -s "https://api.workos.com/connections" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/connections" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 Filter by organization:
 
 ```bash
-curl -s "https://api.workos.com/connections?organization_id=<organization-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/connections?organization_id=<organization-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Get SSO Connection
 
 ```bash
-curl -s "https://api.workos.com/connections/<connection-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/connections/<connection-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Delete SSO Connection
 
 ```bash
-curl -s -X DELETE "https://api.workos.com/connections/<connection-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s -X DELETE "https://api.workos.com/connections/<connection-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ---
@@ -101,25 +101,25 @@ curl -s -X DELETE "https://api.workos.com/connections/<connection-id>" --header 
 ### List Directories
 
 ```bash
-curl -s "https://api.workos.com/directories" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/directories" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 Filter by organization:
 
 ```bash
-curl -s "https://api.workos.com/directories?organization_id=<organization-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/directories?organization_id=<organization-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Get Directory
 
 ```bash
-curl -s "https://api.workos.com/directories/<directory-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/directories/<directory-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### List Directory Users
 
 ```bash
-curl -s "https://api.workos.com/directory_users?directory=<directory-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/directory_users?directory=<directory-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 Response includes a `data` array of directory user objects with `id`, `username`, `emails`, `first_name`, `last_name`, `state`, and group memberships.
@@ -127,19 +127,19 @@ Response includes a `data` array of directory user objects with `id`, `username`
 ### Get Directory User
 
 ```bash
-curl -s "https://api.workos.com/directory_users/<directory-user-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/directory_users/<directory-user-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### List Directory Groups
 
 ```bash
-curl -s "https://api.workos.com/directory_groups?directory=<directory-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/directory_groups?directory=<directory-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Get Directory Group
 
 ```bash
-curl -s "https://api.workos.com/directory_groups/<directory-group-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/directory_groups/<directory-group-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ---
@@ -149,7 +149,7 @@ curl -s "https://api.workos.com/directory_groups/<directory-group-id>" --header 
 ### List Users
 
 ```bash
-curl -s "https://api.workos.com/user_management/users" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/user_management/users" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 Filter options via query parameters: `email`, `organization_id`, `limit` (default 10, max 100), `after` (cursor for pagination).
@@ -157,7 +157,7 @@ Filter options via query parameters: `email`, `organization_id`, `limit` (defaul
 ### Get User
 
 ```bash
-curl -s "https://api.workos.com/user_management/users/<user-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/user_management/users/<user-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Create User
@@ -174,7 +174,7 @@ Write to `/tmp/workos_user.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.workos.com/user_management/users" --header "Authorization: Bearer $WORKOS_API_KEY" --header "Content-Type: application/json" -d @/tmp/workos_user.json
+curl -s -X POST "https://api.workos.com/user_management/users" --header "Authorization: Bearer $WORKOS_TOKEN" --header "Content-Type: application/json" -d @/tmp/workos_user.json
 ```
 
 ### Update User
@@ -189,13 +189,13 @@ Write to `/tmp/workos_user_update.json`:
 ```
 
 ```bash
-curl -s -X PUT "https://api.workos.com/user_management/users/<user-id>" --header "Authorization: Bearer $WORKOS_API_KEY" --header "Content-Type: application/json" -d @/tmp/workos_user_update.json
+curl -s -X PUT "https://api.workos.com/user_management/users/<user-id>" --header "Authorization: Bearer $WORKOS_TOKEN" --header "Content-Type: application/json" -d @/tmp/workos_user_update.json
 ```
 
 ### Delete User
 
 ```bash
-curl -s -X DELETE "https://api.workos.com/user_management/users/<user-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s -X DELETE "https://api.workos.com/user_management/users/<user-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ---
@@ -205,7 +205,7 @@ curl -s -X DELETE "https://api.workos.com/user_management/users/<user-id>" --hea
 ### List Organization Memberships
 
 ```bash
-curl -s "https://api.workos.com/user_management/organization_memberships?organization_id=<organization-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/user_management/organization_memberships?organization_id=<organization-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Create Organization Membership
@@ -220,13 +220,13 @@ Write to `/tmp/workos_membership.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.workos.com/user_management/organization_memberships" --header "Authorization: Bearer $WORKOS_API_KEY" --header "Content-Type: application/json" -d @/tmp/workos_membership.json
+curl -s -X POST "https://api.workos.com/user_management/organization_memberships" --header "Authorization: Bearer $WORKOS_TOKEN" --header "Content-Type: application/json" -d @/tmp/workos_membership.json
 ```
 
 ### Delete Organization Membership
 
 ```bash
-curl -s -X DELETE "https://api.workos.com/user_management/organization_memberships/<membership-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s -X DELETE "https://api.workos.com/user_management/organization_memberships/<membership-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ---
@@ -249,13 +249,13 @@ Write to `/tmp/workos_audit_export.json`:
 Create an export first:
 
 ```bash
-curl -s -X POST "https://api.workos.com/audit_logs/exports" --header "Authorization: Bearer $WORKOS_API_KEY" --header "Content-Type: application/json" -d @/tmp/workos_audit_export.json
+curl -s -X POST "https://api.workos.com/audit_logs/exports" --header "Authorization: Bearer $WORKOS_TOKEN" --header "Content-Type: application/json" -d @/tmp/workos_audit_export.json
 ```
 
 Then poll the export using the returned `id` until `state` is `ready`:
 
 ```bash
-curl -s "https://api.workos.com/audit_logs/exports/<export-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/audit_logs/exports/<export-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 When `state` is `ready`, download the CSV from the `url` field in the response.
@@ -267,13 +267,13 @@ When `state` is `ready`, download the CSV from the `url` field in the response.
 ### List Roles
 
 ```bash
-curl -s "https://api.workos.com/roles" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/roles" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ### Get Role
 
 ```bash
-curl -s "https://api.workos.com/roles/<role-id>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/roles/<role-id>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 ---
@@ -283,7 +283,7 @@ curl -s "https://api.workos.com/roles/<role-id>" --header "Authorization: Bearer
 All list endpoints support cursor-based pagination via `after` and `limit` parameters:
 
 ```bash
-curl -s "https://api.workos.com/organizations?limit=20&after=<cursor>" --header "Authorization: Bearer $WORKOS_API_KEY"
+curl -s "https://api.workos.com/organizations?limit=20&after=<cursor>" --header "Authorization: Bearer $WORKOS_TOKEN"
 ```
 
 Response includes `list_metadata.after` (cursor for the next page, `null` when on the last page) and `list_metadata.before`.
@@ -294,7 +294,7 @@ Response includes `list_metadata.after` (cursor for the next page, `null` when o
 
 Connect the **WorkOS** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WORKOS_API_KEY` or `zero doctor check-connector --url https://api.workos.com/organizations --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name WORKOS_TOKEN` or `zero doctor check-connector --url https://api.workos.com/organizations --method GET`
 
 ---
 
