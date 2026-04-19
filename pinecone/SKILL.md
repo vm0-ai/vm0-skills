@@ -5,14 +5,14 @@ description: Pinecone vector database API for storing, querying, and managing ve
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name PINECONE_API_KEY` or `zero doctor check-connector --url https://api.pinecone.io/indexes --method GET`
+If requests fail, run `zero doctor check-connector --env-name PINECONE_TOKEN` or `zero doctor check-connector --url https://api.pinecone.io/indexes --method GET`
 
 ## Authentication
 
 All requests require an API key in the header:
 
 ```
-Api-Key: $PINECONE_API_KEY
+Api-Key: $PINECONE_TOKEN
 ```
 
 > Official docs: `https://docs.pinecone.io/reference/api/`
@@ -22,13 +22,13 @@ Api-Key: $PINECONE_API_KEY
 ### List Indexes
 
 ```bash
-curl -s -X GET "https://api.pinecone.io/indexes" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "https://api.pinecone.io/indexes" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 ### Describe Index
 
 ```bash
-curl -s -X GET "https://api.pinecone.io/indexes/<index-name>" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "https://api.pinecone.io/indexes/<index-name>" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 ### Create Index (Serverless)
@@ -52,7 +52,7 @@ Write to `/tmp/pinecone_create_index.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pinecone.io/indexes" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_create_index.json
+curl -s -X POST "https://api.pinecone.io/indexes" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_create_index.json
 ```
 
 Supported metrics: `cosine`, `euclidean`, `dotproduct`. Common dimension sizes: `1536` (OpenAI text-embedding-3-small), `3072` (text-embedding-3-large), `768` (many open-source models).
@@ -60,7 +60,7 @@ Supported metrics: `cosine`, `euclidean`, `dotproduct`. Common dimension sizes: 
 ### Delete Index
 
 ```bash
-curl -s -X DELETE "https://api.pinecone.io/indexes/<index-name>" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X DELETE "https://api.pinecone.io/indexes/<index-name>" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 ## Vectors
@@ -70,7 +70,7 @@ Pinecone data plane operations are performed against the index host URL, which i
 Retrieve the host first:
 
 ```bash
-curl -s -X GET "https://api.pinecone.io/indexes/<index-name>" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "https://api.pinecone.io/indexes/<index-name>" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 Use the `host` value from the response in all data plane requests below. Replace `<index-host>` with the full host URL (e.g. `https://my-index-abc123.svc.aped-1234-56ab.pinecone.io`).
@@ -98,7 +98,7 @@ Write to `/tmp/pinecone_upsert.json`:
 Then run:
 
 ```bash
-curl -s -X POST "<index-host>/vectors/upsert" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_upsert.json
+curl -s -X POST "<index-host>/vectors/upsert" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_upsert.json
 ```
 
 The `namespace` field is optional — omit it to use the default namespace. The `values` array must match the index dimension exactly. Up to 100 vectors per upsert request.
@@ -120,7 +120,7 @@ Write to `/tmp/pinecone_query.json`:
 Then run:
 
 ```bash
-curl -s -X POST "<index-host>/query" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_query.json
+curl -s -X POST "<index-host>/query" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_query.json
 ```
 
 Returns `matches` array with `id`, `score`, and optionally `values` and `metadata`. Scores are cosine similarity (higher = more similar).
@@ -141,13 +141,13 @@ Write to `/tmp/pinecone_query_by_id.json`:
 Then run:
 
 ```bash
-curl -s -X POST "<index-host>/query" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_query_by_id.json
+curl -s -X POST "<index-host>/query" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_query_by_id.json
 ```
 
 ### Fetch Vectors by ID
 
 ```bash
-curl -s -X GET "<index-host>/vectors/fetch?ids=<id1>&ids=<id2>&namespace=<namespace>" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "<index-host>/vectors/fetch?ids=<id1>&ids=<id2>&namespace=<namespace>" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 ### Delete Vectors by ID
@@ -164,7 +164,7 @@ Write to `/tmp/pinecone_delete.json`:
 Then run:
 
 ```bash
-curl -s -X POST "<index-host>/vectors/delete" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_delete.json
+curl -s -X POST "<index-host>/vectors/delete" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_delete.json
 ```
 
 ### Delete All Vectors in Namespace
@@ -181,13 +181,13 @@ Write to `/tmp/pinecone_delete_all.json`:
 Then run:
 
 ```bash
-curl -s -X POST "<index-host>/vectors/delete" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_delete_all.json
+curl -s -X POST "<index-host>/vectors/delete" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_delete_all.json
 ```
 
 ### Describe Index Stats
 
 ```bash
-curl -s -X GET "<index-host>/describe_index_stats" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "<index-host>/describe_index_stats" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 Returns total vector count and per-namespace breakdown.
@@ -195,7 +195,7 @@ Returns total vector count and per-namespace breakdown.
 ### List Vector IDs
 
 ```bash
-curl -s -X GET "<index-host>/vectors/list?namespace=<namespace>&limit=100" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "<index-host>/vectors/list?namespace=<namespace>&limit=100" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 Use the `pagination_token` from the response to page through results.
@@ -205,7 +205,7 @@ Use the `pagination_token` from the response to page through results.
 ### List Collections
 
 ```bash
-curl -s -X GET "https://api.pinecone.io/collections" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "https://api.pinecone.io/collections" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 ### Create Collection from Index
@@ -222,26 +222,26 @@ Write to `/tmp/pinecone_create_collection.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.pinecone.io/collections" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_create_collection.json
+curl -s -X POST "https://api.pinecone.io/collections" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04" --header "Content-Type: application/json" -d @/tmp/pinecone_create_collection.json
 ```
 
 ### Describe Collection
 
 ```bash
-curl -s -X GET "https://api.pinecone.io/collections/<collection-name>" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X GET "https://api.pinecone.io/collections/<collection-name>" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 ### Delete Collection
 
 ```bash
-curl -s -X DELETE "https://api.pinecone.io/collections/<collection-name>" --header "Api-Key: $PINECONE_API_KEY" --header "X-Pinecone-API-Version: 2025-04"
+curl -s -X DELETE "https://api.pinecone.io/collections/<collection-name>" --header "Api-Key: $PINECONE_TOKEN" --header "X-Pinecone-API-Version: 2025-04"
 ```
 
 ## Prerequisites
 
 Connect the **Pinecone** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PINECONE_API_KEY` or `zero doctor check-connector --url https://api.pinecone.io/indexes --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name PINECONE_TOKEN` or `zero doctor check-connector --url https://api.pinecone.io/indexes --method GET`
 
 ## Guidelines
 
