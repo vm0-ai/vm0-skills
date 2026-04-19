@@ -27,7 +27,7 @@ Use this skill when you need to:
 
 Connect the **Stability AI** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STABILITY_API_KEY` or `zero doctor check-connector --url https://api.stability.ai/v1/user/account --method GET`
+> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name STABILITY_TOKEN` or `zero doctor check-connector --url https://api.stability.ai/v1/user/account --method GET`
 
 ---
 
@@ -40,7 +40,7 @@ Connect the **Stability AI** connector at [app.vm0.ai/connectors](https://app.vm
 Verify your API key is working and check your credit balance:
 
 ```bash
-curl -s -X GET "https://api.stability.ai/v1/user/account" --header "Authorization: Bearer $STABILITY_API_KEY"
+curl -s -X GET "https://api.stability.ai/v1/user/account" --header "Authorization: Bearer $STABILITY_TOKEN"
 ```
 
 ### 2. Generate Image — Core (Recommended, Fastest)
@@ -57,13 +57,13 @@ Write to `/tmp/stability_request.json`:
 Then run (saves image to file):
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/core" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: image/*" -F prompt="A photorealistic mountain landscape at golden hour, 4k, highly detailed" -F output_format="png" --output /tmp/generated_image.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/core" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: image/*" -F prompt="A photorealistic mountain landscape at golden hour, 4k, highly detailed" -F output_format="png" --output /tmp/generated_image.png
 ```
 
 ### 3. Generate Image — Ultra (SDXL, Highest Quality)
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/ultra" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: image/*" -F prompt="A futuristic city skyline at night with neon lights, cinematic" -F output_format="png" --output /tmp/generated_ultra.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/ultra" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: image/*" -F prompt="A futuristic city skyline at night with neon lights, cinematic" -F output_format="png" --output /tmp/generated_ultra.png
 ```
 
 ### 4. Generate Image — SD3 (Stable Diffusion 3)
@@ -71,7 +71,7 @@ curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/ultra" --
 Write to `/tmp/sd3_gen.sh`:
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/sd3" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: image/*" -F prompt="An abstract digital painting with vibrant colors and geometric shapes" -F model="sd3-large" -F output_format="png" --output /tmp/generated_sd3.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/sd3" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: image/*" -F prompt="An abstract digital painting with vibrant colors and geometric shapes" -F model="sd3-large" -F output_format="png" --output /tmp/generated_sd3.png
 ```
 
 Available `model` values: `sd3-large`, `sd3-large-turbo`, `sd3-medium`
@@ -83,7 +83,7 @@ Write to `/tmp/stability_b64.json`:
 Use `"Accept: application/json"` to receive base64-encoded image in JSON:
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/core" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: application/json" -F prompt="A serene Japanese zen garden with cherry blossoms" -F output_format="png" | jq -r '.image' | base64 -d > /tmp/generated_b64.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/core" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: application/json" -F prompt="A serene Japanese zen garden with cherry blossoms" -F output_format="png" | jq -r '.image' | base64 -d > /tmp/generated_b64.png
 ```
 
 ### 6. Conservative Image Upscale
@@ -91,7 +91,7 @@ curl -s -X POST "https://api.stability.ai/v2beta/stable-image/generate/core" --h
 Upscale an existing image (provide a local file path):
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/upscale/conservative" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: image/*" -F image="@/tmp/source_image.png" -F prompt="high quality, sharp details" -F output_format="png" --output /tmp/upscaled_image.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/upscale/conservative" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: image/*" -F image="@/tmp/source_image.png" -F prompt="high quality, sharp details" -F output_format="png" --output /tmp/upscaled_image.png
 ```
 
 ### 7. Inpainting (Edit a Region of an Image)
@@ -107,7 +107,7 @@ White pixels in the mask will be replaced; black pixels are preserved.
 ```
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/edit/inpaint" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: image/*" -F image="@/tmp/source.png" -F mask="@/tmp/mask.png" -F prompt="A beautiful garden with blooming flowers" -F output_format="png" --output /tmp/inpainted.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/edit/inpaint" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: image/*" -F image="@/tmp/source.png" -F mask="@/tmp/mask.png" -F prompt="A beautiful garden with blooming flowers" -F output_format="png" --output /tmp/inpainted.png
 ```
 
 ### 8. Outpainting (Extend an Image Beyond Its Borders)
@@ -115,7 +115,7 @@ curl -s -X POST "https://api.stability.ai/v2beta/stable-image/edit/inpaint" --he
 Extend an image by specifying pixel amounts to add on each side:
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/edit/outpaint" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: image/*" -F image="@/tmp/source.png" -F left=200 -F right=200 -F prompt="Seamlessly extend the scene" -F output_format="png" --output /tmp/outpainted.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/edit/outpaint" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: image/*" -F image="@/tmp/source.png" -F left=200 -F right=200 -F prompt="Seamlessly extend the scene" -F output_format="png" --output /tmp/outpainted.png
 ```
 
 ### 9. Sketch to Image
@@ -123,7 +123,7 @@ curl -s -X POST "https://api.stability.ai/v2beta/stable-image/edit/outpaint" --h
 Convert a sketch or line art into a polished image:
 
 ```bash
-curl -s -X POST "https://api.stability.ai/v2beta/stable-image/control/sketch" --header "Authorization: Bearer $STABILITY_API_KEY" --header "Accept: image/*" -F image="@/tmp/sketch.png" -F prompt="A detailed architectural drawing rendered as a photorealistic building" -F output_format="png" --output /tmp/sketch_result.png
+curl -s -X POST "https://api.stability.ai/v2beta/stable-image/control/sketch" --header "Authorization: Bearer $STABILITY_TOKEN" --header "Accept: image/*" -F image="@/tmp/sketch.png" -F prompt="A detailed architectural drawing rendered as a photorealistic building" -F output_format="png" --output /tmp/sketch_result.png
 ```
 
 ---
