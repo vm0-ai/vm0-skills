@@ -5,14 +5,14 @@ description: LangSmith API for LLM observability, tracing, evaluation, and datas
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name LANGSMITH_API_KEY` or `zero doctor check-connector --url https://api.smith.langchain.com/api/v1/runs --method GET`
+If requests fail, run `zero doctor check-connector --env-name LANGSMITH_TOKEN` or `zero doctor check-connector --url https://api.smith.langchain.com/api/v1/runs --method GET`
 
 ## Authentication
 
 All requests require an API key passed in the header:
 
 ```
-X-Api-Key: $LANGSMITH_API_KEY
+X-Api-Key: $LANGSMITH_TOKEN
 ```
 
 > Official docs: `https://docs.smith.langchain.com/reference/api`
@@ -21,7 +21,7 @@ X-Api-Key: $LANGSMITH_API_KEY
 
 | Variable | Description |
 |---|---|
-| `LANGSMITH_API_KEY` | LangSmith API key |
+| `LANGSMITH_TOKEN` | LangSmith API key |
 
 ## Key Endpoints
 
@@ -36,7 +36,7 @@ Base URL: `https://api.smith.langchain.com`
 List runs (traces) in a project with optional filters.
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/runs?session_name=<your-project-name>&limit=20" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/runs?session_name=<your-project-name>&limit=20" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 Key query parameters:
@@ -51,7 +51,7 @@ Response includes `runs` array. Each run has `id`, `name`, `run_type`, `status`,
 ### Get a Run
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/runs/<run-id>" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/runs/<run-id>" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ### Query Runs (Advanced Filtering)
@@ -69,7 +69,7 @@ Write to `/tmp/langsmith_runs_query.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/runs/query" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_runs_query.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/runs/query" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_runs_query.json
 ```
 
 ---
@@ -79,7 +79,7 @@ curl -s -X POST "https://api.smith.langchain.com/api/v1/runs/query" --header "X-
 ### List Projects
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/sessions" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/sessions" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 Response includes an array of projects with `id`, `name`, `description`, `run_count`, `latency_p50`, `latency_p99`, `total_tokens`, `feedback_stats`.
@@ -87,7 +87,7 @@ Response includes an array of projects with `id`, `name`, `description`, `run_co
 ### Get a Project by Name
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/sessions?name=<your-project-name>" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/sessions?name=<your-project-name>" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ### Create a Project
@@ -102,7 +102,7 @@ Write to `/tmp/langsmith_project.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/sessions" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_project.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/sessions" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_project.json
 ```
 
 ---
@@ -112,7 +112,7 @@ curl -s -X POST "https://api.smith.langchain.com/api/v1/sessions" --header "X-Ap
 ### List Datasets
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/datasets" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/datasets" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 Response includes `datasets` array with `id`, `name`, `description`, `created_at`, `example_count`.
@@ -130,7 +130,7 @@ Write to `/tmp/langsmith_dataset.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/datasets" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_dataset.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/datasets" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_dataset.json
 ```
 
 `data_type` options: `kv` (key-value, default), `llm` (chat messages format).
@@ -138,13 +138,13 @@ curl -s -X POST "https://api.smith.langchain.com/api/v1/datasets" --header "X-Ap
 ### Get a Dataset
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/datasets/<dataset-id>" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/datasets/<dataset-id>" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ### Delete a Dataset
 
 ```bash
-curl -s -X DELETE "https://api.smith.langchain.com/api/v1/datasets/<dataset-id>" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X DELETE "https://api.smith.langchain.com/api/v1/datasets/<dataset-id>" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ---
@@ -154,7 +154,7 @@ curl -s -X DELETE "https://api.smith.langchain.com/api/v1/datasets/<dataset-id>"
 ### List Examples in a Dataset
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/examples?dataset_id=<dataset-id>&limit=50" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/examples?dataset_id=<dataset-id>&limit=50" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ### Create an Example
@@ -174,7 +174,7 @@ Write to `/tmp/langsmith_example.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/examples" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_example.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/examples" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_example.json
 ```
 
 ### Batch Create Examples
@@ -196,13 +196,13 @@ Write to `/tmp/langsmith_examples_batch.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/examples/bulk" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_examples_batch.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/examples/bulk" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_examples_batch.json
 ```
 
 ### Delete an Example
 
 ```bash
-curl -s -X DELETE "https://api.smith.langchain.com/api/v1/examples/<example-id>" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X DELETE "https://api.smith.langchain.com/api/v1/examples/<example-id>" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ---
@@ -223,7 +223,7 @@ Write to `/tmp/langsmith_feedback.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/feedback" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_feedback.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/feedback" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_feedback.json
 ```
 
 `score` is a float between 0.0 and 1.0. Use `key` to name the feedback metric (e.g. `correctness`, `helpfulness`, `relevance`).
@@ -231,7 +231,7 @@ curl -s -X POST "https://api.smith.langchain.com/api/v1/feedback" --header "X-Ap
 ### List Feedback for a Run
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/feedback?run_id=<run-id>" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/feedback?run_id=<run-id>" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ---
@@ -241,7 +241,7 @@ curl -s -X GET "https://api.smith.langchain.com/api/v1/feedback?run_id=<run-id>"
 ### List Annotation Queues
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/annotation-queues" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/annotation-queues" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ### Add Runs to an Annotation Queue
@@ -256,7 +256,7 @@ Write to `/tmp/langsmith_queue_runs.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/annotation-queues/<queue-id>/runs" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_queue_runs.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/annotation-queues/<queue-id>/runs" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_queue_runs.json
 ```
 
 ---
@@ -266,7 +266,7 @@ curl -s -X POST "https://api.smith.langchain.com/api/v1/annotation-queues/<queue
 ### Inspect Failed Runs
 
 ```bash
-curl -s -X GET "https://api.smith.langchain.com/api/v1/runs?session_name=<your-project-name>&error=true&limit=20" --header "X-Api-Key: $LANGSMITH_API_KEY"
+curl -s -X GET "https://api.smith.langchain.com/api/v1/runs?session_name=<your-project-name>&error=true&limit=20" --header "X-Api-Key: $LANGSMITH_TOKEN"
 ```
 
 ### Export Runs to a Dataset (for Evaluation)
@@ -283,7 +283,7 @@ Write to `/tmp/langsmith_dataset.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/datasets" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_dataset.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/datasets" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_dataset.json
 ```
 
 Step 2 — add examples from run inputs/outputs. Replace `<dataset-id>` with the ID returned above and `<run-id>` with the run you want to capture:
@@ -300,7 +300,7 @@ Write to `/tmp/langsmith_example.json`:
 ```
 
 ```bash
-curl -s -X POST "https://api.smith.langchain.com/api/v1/examples" --header "X-Api-Key: $LANGSMITH_API_KEY" --header "Content-Type: application/json" -d @/tmp/langsmith_example.json
+curl -s -X POST "https://api.smith.langchain.com/api/v1/examples" --header "X-Api-Key: $LANGSMITH_TOKEN" --header "Content-Type: application/json" -d @/tmp/langsmith_example.json
 ```
 
 ---
