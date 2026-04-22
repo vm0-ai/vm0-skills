@@ -24,7 +24,7 @@ Before writing a skill, thoroughly understand the target API:
 
 ```bash
 # Example: search API docs with Tavily
-curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_API_KEY" -d '{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}' | jq .
+curl -s -X POST "https://api.tavily.com/search" --header "Content-Type: application/json" --header "Authorization: Bearer $TAVILY_TOKEN" -d '{"query": "Notion API authentication guide", "search_depth": "advanced", "max_results": 5}' | jq .
 ```
 
 ---
@@ -126,7 +126,7 @@ Rules:
 After writing, test each curl example in SKILL.md. Environment variables are injected by vm0 at runtime from the configured connector — no manual sourcing needed:
 
 ```bash
-curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_API_KEY" | jq .
+curl -s -X GET "https://api.example.com/endpoint" --header "Authorization: Bearer $EXAMPLE_TOKEN" | jq .
 ```
 
 Checklist:

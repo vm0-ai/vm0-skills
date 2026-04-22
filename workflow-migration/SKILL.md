@@ -5,7 +5,7 @@ description: VM0 migration helper for Claude Code workflows. Use when user says 
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name NOTION_API_KEY`
+If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN`
 
 ## How It Works
 
@@ -58,7 +58,7 @@ ls -la ~/.claude/skills/{skill-name}/scripts/ 2>/dev/null
 ```
 
 **Extract environment variables from SKILL.md**:
-- Look for mentions of environment variables (e.g., `NOTION_API_KEY`, `DATABASE_ID`)
+- Look for mentions of environment variables (e.g., `NOTION_TOKEN`, `DATABASE_ID`)
 - Find patterns like `$VARIABLE_NAME` or `env.VARIABLE_NAME`
 - Note which variables are required vs optional
 
@@ -83,7 +83,7 @@ grep -E '\$\{?[A-Z_]+\}?|NOTION_|DATABASE_|API_|TOKEN|SECRET' ~/.claude/skills/{
 3. **Read current environment values**:
 ```bash
 # For each detected variable, get its current value
-echo $NOTION_API_KEY
+echo $NOTION_TOKEN
 echo $DATABASE_ID
 # etc.
 ```
@@ -93,7 +93,7 @@ echo $DATABASE_ID
 I detected the following environment variables from your local skill:
 
 ✓ CLAUDE_CODE_OAUTH_TOKEN: sk-ant-oat01-... (found in environment)
-✓ NOTION_API_KEY: ntn_F391... (found in ~/.claude/skills/world-news-summary/.env)
+✓ NOTION_TOKEN: ntn_F391... (found in ~/.claude/skills/world-news-summary/.env)
 ✓ NOTION_TOKEN: ntn_F391... (found in ~/.claude/skills/world-news-summary/.env)
 ✓ DATABASE_ID: 2e80e96f... (found in ~/.claude/skills/world-news-summary/.env)
 ✓ NEWS_CATEGORIES: ai_agents,international,business (found in .env)
@@ -146,7 +146,7 @@ agents:
 # Auto-generate .env file with detected values
 cat > .env << EOF
 CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-...
-NOTION_API_KEY=ntn_F391...
+NOTION_TOKEN=ntn_F391...
 NOTION_TOKEN=ntn_F391...
 DATABASE_ID=2e80e96f...
 NEWS_CATEGORIES=ai_agents,international,business
@@ -284,7 +284,7 @@ This is a real migration case showing exactly how to convert a local Claude Code
 
 **Required environment variables**:
 - `CLAUDE_CODE_OAUTH_TOKEN`
-- `NOTION_API_KEY` / `NOTION_TOKEN`
+- `NOTION_TOKEN` / `NOTION_TOKEN`
 - `DATABASE_ID`
 
 ### Generated VM0 Configuration
@@ -317,8 +317,8 @@ agents:
       # Claude Code OAuth token
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 
-      # Notion credentials (skill uses NOTION_API_KEY)
-      NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+      # Notion credentials (skill uses NOTION_TOKEN)
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       DATABASE_ID: ${{ secrets.DATABASE_ID }}
 
@@ -434,7 +434,7 @@ CMD ["/bin/bash"]
 **`.env`** (for local testing):
 ```bash
 CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-...
-NOTION_API_KEY=ntn_...
+NOTION_TOKEN=ntn_...
 NOTION_TOKEN=ntn_...
 DATABASE_ID=2e80e96f...
 NEWS_CATEGORIES=ai_agents,international,business
@@ -524,7 +524,7 @@ env | grep -E 'NOTION_|DATABASE_|API_|CLAUDE_|TOKEN'
 I detected these environment variables:
 
 ✓ CLAUDE_CODE_OAUTH_TOKEN: sk-ant-oat01-... (from environment)
-✓ NOTION_API_KEY: ntn_F391... (from ~/.claude/skills/{skill-name}/.env)
+✓ NOTION_TOKEN: ntn_F391... (from ~/.claude/skills/{skill-name}/.env)
 ✓ DATABASE_ID: 2e80e96f... (from .env)
 
 Use these values? (y/n)

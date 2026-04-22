@@ -7,7 +7,7 @@ description: Supabase API for Postgres and auth. Use when user mentions "Supabas
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name SUPABASE_PUBLISHABLE_KEY` or `zero doctor check-connector --url https://your-project.supabase.co/rest/v1/ --method GET`
+If requests fail, run `zero doctor check-connector --env-name SUPABASE_TOKEN` or `zero doctor check-connector --url https://your-project.supabase.co/rest/v1/ --method GET`
 
 ## How to Use
 
@@ -20,7 +20,7 @@ All requests require the `apikey` header with your API key.
 Get all rows from a table:
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 ### 2. Select Specific Columns
@@ -28,7 +28,7 @@ curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_PUBLISHABLE
 Get only specific columns:
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?select=id,name,email" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?select=id,name,email" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 ### 3. Filter with Operators
@@ -38,19 +38,19 @@ Filter rows using PostgREST operators.
 **Equal to:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?status=eq.active" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?status=eq.active" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 **Greater than:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/products?price=gt.100" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/products?price=gt.100" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 **Multiple conditions (AND):**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 **Available Operators:**
@@ -73,7 +73,7 @@ curl -s "$SUPABASE_URL/rest/v1/users?age=gte.18&status=eq.active" -H "apikey: $S
 Use `or` for OR logic:
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?or=(status.eq.active,status.eq.pending)" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 ### 5. Ordering
@@ -83,19 +83,19 @@ Sort results.
 **Ascending:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?order=created_at.asc" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?order=created_at.asc" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 **Descending:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?order=created_at.desc" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?order=created_at.desc" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 **Multiple columns:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?order=status.asc,created_at.desc" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 ### 6. Pagination
@@ -105,13 +105,13 @@ Use `limit` and `offset`.
 **First 10 rows:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?limit=10" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?limit=10" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 **Page 2 (rows 11-20):**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?limit=10&offset=10" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?limit=10&offset=10" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 ### 7. Get Row Count
@@ -119,7 +119,7 @@ curl -s "$SUPABASE_URL/rest/v1/users?limit=10&offset=10" -H "apikey: $SUPABASE_P
 Use `Prefer: count=exact` header:
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_PUBLISHABLE_KEY" -H "Prefer: count=exact" -I | grep -i "content-range"
+curl -s "$SUPABASE_URL/rest/v1/users?select=*" -H "apikey: $SUPABASE_TOKEN" -H "Prefer: count=exact" -I | grep -i "content-range"
 ```
 
 ### 8. Insert Single Row
@@ -209,13 +209,13 @@ Embed related data using foreign keys.
 **Get posts with their author:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/posts?select=*,author:users(*)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/posts?select=*,author:users(*)" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 **Get users with their posts:**
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/users?select=*,posts(*)" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/users?select=*,posts(*)" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 ### 14. Full-Text Search
@@ -223,7 +223,7 @@ curl -s "$SUPABASE_URL/rest/v1/users?select=*,posts(*)" -H "apikey: $SUPABASE_PU
 Search text columns:
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/posts?title=fts.hello" -H "apikey: $SUPABASE_PUBLISHABLE_KEY"
+curl -s "$SUPABASE_URL/rest/v1/posts?title=fts.hello" -H "apikey: $SUPABASE_TOKEN"
 ```
 
 ### 15. Call RPC Functions

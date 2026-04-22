@@ -218,7 +218,7 @@ curl -s -X POST '.../query' -d '{"page_size": 100, "start_cursor": "abc123"}'
 ```
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_API_KEY" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
+curl -s -X POST "https://api.notion.com/v1/databases/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
 ```
 
 **Benefits:**

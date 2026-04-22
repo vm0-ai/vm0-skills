@@ -79,7 +79,7 @@ This document tracks the testing status of all skills.
 
 **axiom** (actually works, but response format differs from expected)
 ```bash
-curl -s "https://api.axiom.co/v2/datasets" --header "Authorization: Bearer $AXIOM_API_KEY" | jq '[.[] | .name]'
+curl -s "https://api.axiom.co/v2/datasets" --header "Authorization: Bearer $AXIOM_TOKEN" | jq '[.[] | .name]'
 # Error: jq: error (at <stdin>:0): Cannot index number with string "name"
 # Root cause: API returns object not array, need different jq query
 ```
