@@ -1,6 +1,6 @@
 ---
 name: nano-banana
-description: Google Gemini image generation (Nano Banana) via the Gemini API. Use when the user mentions "Nano Banana", "Gemini image generation", "gemini-3-pro-image", "gemini-2.5-flash-image", or wants to generate/edit images with Google's native image model.
+description: Google Gemini image generation (Nano Banana) via the Gemini API. Use when user mentions "Nano Banana", "Gemini image generation", "gemini-3-pro-image", "gemini-2.5-flash-image", or wants to generate/edit images with Google's native image model.
 ---
 
 # Nano Banana (Gemini Image Generation)
