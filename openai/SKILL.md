@@ -198,28 +198,47 @@ This extracts the first 5 dimensions of the embedding vector.
 - `text-embedding-3-small`: 1536 dimensions, fastest
 - `text-embedding-3-large`: 3072 dimensions, most capable
 
-### 8. Generate Image (DALL-E 3)
+### 8. Generate Image
 
-Create an image from text:
+Create an image from text using GPT-Image 2.0 (recommended) or DALL-E 3:
 
 Write to `/tmp/openai_request.json`:
 
 ```json
 {
-  "model": "dall-e-3",
+  "model": "gpt-image-2",
   "prompt": "A white cat sitting on a windowsill, digital art",
   "n": 1,
-  "size": "1024x1024"
+  "size": "1024x1024",
+  "quality": "high",
+  "output_format": "png"
 }
 ```
 
 Then run:
 
 ```bash
-curl -s "https://api.openai.com/v1/images/generations" -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_TOKEN" -d @/tmp/openai_request.json | jq '.data[0].url'
+curl -s "https://api.openai.com/v1/images/generations" -H "Content-Type: application/json" -H "Authorization: Bearer $OPENAI_TOKEN" -d @/tmp/openai_request.json | jq '.data[0].b64_json' -r | base64 -d > /tmp/generated_image.png
 ```
 
-**Parameters:**
+**Image models:**
+
+- `gpt-image-2`: Latest model, highest quality, supports transparent backgrounds and flexible sizes
+- `dall-e-3`: Previous generation, simpler interface
+
+**Parameters (gpt-image-2):**
+
+- `size`: `1024x1024`, `1536x1024`, `1024x1536`, or `auto` (default). Supports any size where max edge < 3840px, both edges are multiples of 16, and ratio ≤ 3:1
+- `quality`: `low`, `medium`, `high`, or `auto` (default)
+- `output_format`: `png`, `jpeg`, or `webp` (default: `png`)
+- `output_compression`: 0–100, only with `jpeg` or `webp`
+- `background`: `transparent`, `opaque`, or `auto` (default)
+- `moderation`: `low` (less restrictive) or `auto` (default)
+- `n`: 1–10 images per call
+- `response_format`: `b64_json` (gpt-image-2 always returns base64)
+- `stream`: `true` for streaming mode with `partial_images` (0–3) progress updates
+
+**Parameters (dall-e-3):**
 
 - `size`: `1024x1024`, `1792x1024`, or `1024x1792`
 - `quality`: `standard` or `hd`
