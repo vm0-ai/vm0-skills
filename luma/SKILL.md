@@ -1,191 +1,202 @@
 ---
 name: luma
-description: Luma AI Dream Machine API for AI video and image generation. Use when
-  user mentions "Luma", "Dream Machine", "luma video", "luma image", or "lumalabs".
+description: Luma event platform API for managing events, guests, tickets, and calendar data. Use when user mentions "Luma", "lu.ma", "event", "ticket", "guest list", "RSVP", or "calendar event".
 ---
 
-# Luma AI Dream Machine
+## Troubleshooting
 
-Generate AI videos and images using Luma AI's Dream Machine API. Supports text-to-video, image-to-video, video extension, and image generation.
+If requests fail, run `zero doctor check-connector --env-name LUMA_API_KEY` or `zero doctor check-connector --url https://public-api.luma.com/v1/user/get-self --method GET`
 
-> Official docs: `https://docs.lumalabs.ai/docs/api`
+## Authentication
 
----
+All requests require an API key passed in the header:
 
-## When to Use
-
-Use this skill when you need to:
-
-- Generate AI videos from text prompts (text-to-video)
-- Generate AI videos from images (image-to-video)
-- Extend existing videos forward or backward
-- Generate AI images from text prompts
-- Poll for and retrieve completed generation results
-- List or delete past generations
-
----
-
-## Prerequisites
-
-Connect the **Luma** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
-
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name LUMA_TOKEN` or `zero doctor check-connector --url https://api.lumalabs.ai/dream-machine/v1/generations --method GET`
-
----
-
-## How to Use
-
-### 1. Generate a Video from Text
-
-Submit a text-to-video generation request. Write to `/tmp/luma_video_request.json`:
-
-```json
-{
-  "prompt": "A serene mountain lake at sunrise, mist rising from the water, cinematic slow pan",
-  "model": "ray-2",
-  "aspect_ratio": "16:9",
-  "resolution": "720p",
-  "duration": "5s",
-  "loop": false
-}
 ```
+x-luma-api-key: $LUMA_API_KEY
+```
+
+Get your API key from: Luma → Calendars Home → select calendar → Settings → Developer → API Keys.
+
+> A Luma Plus subscription is required for API access. Each API key is scoped to a single calendar.
+
+## Rate Limits
+
+- Calendar API keys: 200 requests/min
+- Organization API keys: 500 requests/min
+
+## Key Endpoints
+
+Base URL: `https://public-api.luma.com`
+
+### Events
+
+**Get Event**
+`GET /v1/event/get?id=evt-...`
+
+Returns admin information about an event you have manage access for.
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_video_request.json | jq '{id, state, created_at}'
+curl -s "https://public-api.luma.com/v1/event/get?id=$EVENT_ID" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-Save the returned `id` for polling.
+**List Calendar Events**
+`GET /v1/calendar/list-events`
 
-### 2. Generate a Video from an Image (Image-to-Video)
-
-Use a keyframe to anchor the starting image. Write to `/tmp/luma_video_request.json`:
-
-```json
-{
-  "prompt": "The scene slowly comes alive, gentle waves, birds taking flight",
-  "model": "ray-2",
-  "aspect_ratio": "16:9",
-  "duration": "5s",
-  "keyframes": {
-    "frame0": {
-      "type": "image",
-      "url": "<your-image-url>"
-    }
-  }
-}
-```
+List all events managed by the calendar. Supports pagination, date filtering, and status.
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_video_request.json | jq '{id, state}'
+curl -s "https://public-api.luma.com/v1/calendar/list-events?pagination_limit=25" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-### 3. Poll Generation Status
+Parameters:
+- `before` / `after` — ISO 8601 datetime filter
+- `pagination_cursor` — cursor from previous response `next_cursor`
+- `pagination_limit` — results per page
+- `status` — `approved` (default) or `pending`
 
-Poll until `state` is `completed` or `failed`. Replace `<generation-id>` with the ID from the create response:
+### Guests
+
+**Get Guest**
+`GET /v1/event/get-guest?event_id=evt-...&id=gst-...`
+
+Look up a guest by guest ID, ticket key, guest key, or email.
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN" | jq '{id, state, failure_reason, assets}'
+curl -s "https://public-api.luma.com/v1/event/get-guest?event_id=$EVENT_ID&id=$GUEST_ID" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-State values:
-- `dreaming`: Generation is in progress
-- `completed`: Generation is finished — `assets.video` contains the download URL
-- `failed`: Generation failed — `failure_reason` contains the error
+**List Guests**
+`GET /v1/event/get-guests?event_id=evt-...`
 
-### 4. Download the Completed Video
-
-Once state is `completed`, the `assets.video` field contains a direct download URL:
+Paginated list of guests registered or invited to an event.
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN" | jq -r '.assets.video'
+curl -s "https://public-api.luma.com/v1/event/get-guests?event_id=$EVENT_ID&pagination_limit=50" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-Then download:
+Parameters:
+- `approval_status` — filter: `approved`, `session`, `pending_approval`, `invited`, `declined`, `waitlist`
+- `sort_column` — `name`, `email`, `created_at`, `registered_at`, `checked_in_at`
+- `sort_direction` — `asc`, `desc`
+
+### Calendar
+
+**Get Calendar**
+`GET /v1/calendar/get`
+
+Returns calendar info: name, slug, description, location, social handles.
 
 ```bash
-curl -L "<video-url>" -o /tmp/luma_output.mp4
+curl -s "https://public-api.luma.com/v1/calendar/get" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-### 5. Generate an Image from Text
+**List People**
+`GET /v1/calendar/list-people`
 
-Write to `/tmp/luma_image_request.json`:
-
-```json
-{
-  "prompt": "A photorealistic portrait of a red fox in a forest at golden hour",
-  "model": "photon-1",
-  "aspect_ratio": "1:1"
-}
-```
+Search and filter people associated with the calendar.
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/image" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_image_request.json | jq '{id, state, created_at}'
+curl -s "https://public-api.luma.com/v1/calendar/list-people?pagination_limit=25" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-### 6. Poll Image Generation Status
+Parameters:
+- `query` — search over names and emails
+- `member_status` — `approved`, `pending`, `approved-pending-payment`, `declined`
+- `sort_column` — `created_at`, `event_checked_in_count`, `event_approved_count`, `name`, `revenue_usd_cents`
+
+**List Admins**
+`GET /v1/calendar/admins/list`
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN" | jq '{id, state, failure_reason, assets}'
+curl -s "https://public-api.luma.com/v1/calendar/admins/list" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-Once `state` is `completed`, `assets.image` contains the image URL.
+### Tickets
 
-### 7. Extend an Existing Video
-
-Extend a completed video by referencing its ID in keyframes. Write to `/tmp/luma_extend_request.json`:
-
-```json
-{
-  "prompt": "Continue the scene with the camera pulling back to reveal the full landscape",
-  "model": "ray-2",
-  "aspect_ratio": "16:9",
-  "duration": "5s",
-  "keyframes": {
-    "frame0": {
-      "type": "generation",
-      "id": "<source-generation-id>"
-    }
-  }
-}
-```
+**List Ticket Types**
+`GET /v1/event/ticket-types/list?event_id=evt-...`
 
 ```bash
-curl -s -X POST "https://api.lumalabs.ai/dream-machine/v1/generations/video" --header "Authorization: Bearer $LUMA_TOKEN" --header "Content-Type: application/json" -d @/tmp/luma_extend_request.json | jq '{id, state}'
+curl -s "https://public-api.luma.com/v1/event/ticket-types/list?event_id=$EVENT_ID" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-### 8. List Recent Generations
+### Coupons
+
+**List Event Coupons**
+`GET /v1/event/coupons?event_id=evt-...`
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations?limit=10&offset=0" --header "Authorization: Bearer $LUMA_TOKEN" | jq '.generations[] | {id, state, created_at}'
+curl -s "https://public-api.luma.com/v1/event/coupons?event_id=$EVENT_ID" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-### 9. Delete a Generation
+**List Calendar Coupons**
+`GET /v1/calendar/coupons`
 
 ```bash
-curl -s -X DELETE "https://api.lumalabs.ai/dream-machine/v1/generations/<generation-id>" --header "Authorization: Bearer $LUMA_TOKEN"
+curl -s "https://public-api.luma.com/v1/calendar/coupons" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-### 10. List Available Camera Motions
+### User
+
+**Get Current User**
+`GET /v1/user/get-self`
+
+Test authentication and get the authenticated user's info.
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/camera_motion/list" --header "Authorization: Bearer $LUMA_TOKEN" | jq '.[]'
+curl -s "https://public-api.luma.com/v1/user/get-self" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
-### 11. List Available Creative Concepts
+### Lookup
+
+**Lookup Entity by Slug**
+`GET /v1/entity/lookup?slug=...`
+
+Resolve a calendar or event by its slug.
 
 ```bash
-curl -s -X GET "https://api.lumalabs.ai/dream-machine/v1/generations/concepts/list" --header "Authorization: Bearer $LUMA_TOKEN" | jq '.[]'
+curl -s "https://public-api.luma.com/v1/entity/lookup?slug=$SLUG" \
+  -H "x-luma-api-key: $LUMA_API_KEY"
 ```
 
----
+## Common Workflows
 
-## Guidelines
+### Check Upcoming Events
 
-1. **Poll until terminal state**: Generation is async — after submitting, poll `GET /generations/<id>` until `state` is `completed` or `failed`. Typical generation takes 30–120 seconds.
-2. **Video models**: Use `ray-2` for highest quality, `ray-flash-2` for faster/cheaper generation.
-3. **Image models**: Use `photon-1` for highest quality, `photon-flash-1` for faster generation.
-4. **Aspect ratios**: Supported values are `1:1`, `3:4`, `4:3`, `9:16`, `16:9` (default), `9:21`, `21:9`.
-5. **Duration**: Video duration is `5s` or `9s`.
-6. **Resolution**: Supported values are `540p`, `720p`, `1080p`, `4k`.
-7. **Extend via keyframes**: To extend a video, reference the source generation `id` in `keyframes.frame0` with `type: "generation"`. To anchor end frame use `frame1`.
-8. **Use JSON files for request bodies**: Always write request bodies to `/tmp/luma_*.json` to avoid shell quoting issues.
+```bash
+curl -s "https://public-api.luma.com/v1/calendar/list-events?pagination_limit=10" \
+  -H "x-luma-api-key: $LUMA_API_KEY" | jq '.entries[] | {name: .event.name, start: .event.start_at, url: .event.url}'
+```
+
+### Get Guest List for an Event
+
+```bash
+curl -s "https://public-api.luma.com/v1/event/get-guests?event_id=$EVENT_ID&pagination_limit=50" \
+  -H "x-luma-api-key: $LUMA_API_KEY" | jq '.entries[] | {name: .user_name, email: .user_email, status: .approval_status}'
+```
+
+### Find a Person by Email
+
+```bash
+curl -s "https://public-api.luma.com/v1/calendar/list-people?query=$EMAIL&pagination_limit=5" \
+  -H "x-luma-api-key: $LUMA_API_KEY" | jq '.entries[] | {name: .user.name, email: .email, events: .event_approved_count}'
+```
+
+## Notes
+
+- All list endpoints use cursor-based pagination: pass `pagination_cursor` from the prior response's `next_cursor`
+- All datetime fields use ISO 8601 format
+- The `api_id` parameter is deprecated across all endpoints; use `id` instead
+- Event IDs start with `evt-`, guest IDs with `gst-`, ticket type IDs with `ett-`
+- Full OpenAPI spec available at `https://public-api.luma.com/openapi.json`
