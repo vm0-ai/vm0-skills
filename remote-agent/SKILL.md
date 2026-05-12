@@ -66,6 +66,44 @@ Options:
 
 The command queues the job, polls until it finishes or times out, prints the remote output, and exits non-zero if the remote job fails.
 
+## Inspect Runs
+
+Use run inspection commands when the user asks for previous remote-agent jobs,
+when `run` times out, or when you need to check a job without re-running it.
+
+List recent remote-agent runs:
+
+```bash
+npx -y -p @vm0/cli zero remote-agent runs list
+```
+
+Useful filters:
+
+```bash
+npx -y -p @vm0/cli zero remote-agent runs list --status running
+npx -y -p @vm0/cli zero remote-agent runs list --host "<host-name>" --limit 10
+npx -y -p @vm0/cli zero remote-agent runs list --json
+```
+
+The list output shows job id, status, host, backend, creation time, and a prompt
+preview. Use the job id for status and result lookups.
+
+Check one job's status:
+
+```bash
+npx -y -p @vm0/cli zero remote-agent runs status <job-id>
+```
+
+Print one job's final result:
+
+```bash
+npx -y -p @vm0/cli zero remote-agent runs result <job-id>
+```
+
+`runs result` prints successful job output to stdout. For failed jobs it prints
+the remote error and exits non-zero. For queued or running jobs, use `runs status`
+first or wait before asking for the result.
+
 For multiline prompts, pass one shell argument:
 
 ```bash
