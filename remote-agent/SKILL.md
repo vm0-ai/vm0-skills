@@ -19,7 +19,8 @@ npx -y -p @vm0/cli zero remote-agent <command>
 
 ## List Hosts
 
-List remote-agent hosts before choosing where to run a job:
+List remote-agent hosts only when the user asks to see hosts, when they ask to
+choose between hosts, or when an explicit host reference is ambiguous:
 
 ```bash
 npx -y -p @vm0/cli zero remote-agent list
@@ -36,6 +37,12 @@ The output columns are:
 Important: `run --host` takes the host `NAME`, not the host id. If multiple hosts have the same name, the run will fail as ambiguous.
 
 ## Run a Job
+
+When the user invokes `/remote-agent <task>`:
+
+- If they explicitly name a host, run the task with `--host "<host-name>"`.
+- If they do not specify a host, do not list hosts first; run directly on any online host.
+- Treat everything after `/remote-agent` as the remote job prompt, preserving the user's intent.
 
 Run on any online host:
 
