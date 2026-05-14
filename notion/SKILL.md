@@ -5,133 +5,174 @@ description: Notion API for pages and databases. Use when user mentions "Notion"
   or asks about Notion workspace.
 ---
 
+## Setup
+
+This skill uses Notion's official CLI (`ntn`). Install it once per session, then
+export the token variable:
+
+```bash
+curl -fsSL https://ntn.dev | bash
+export NOTION_API_TOKEN=will_replace_outside_sandbox
+```
+
+`ntn api`, `ntn pages`, `ntn datasources`, and `ntn files` all read
+`NOTION_API_TOKEN`. The value itself does not matter — `NOTION_API_TOKEN` only
+needs to be **non-empty** so `ntn` takes the API-token path instead of falling
+back to `ntn login`. The real credential is injected at the network boundary by
+the Notion connector when the request reaches `https://api.notion.com`. (Do not
+use `ntn login` / `ntn workers` — those need an interactive browser session.)
+
+`ntn` sends the `Notion-Version` header automatically; override with
+`--notion-version` if ever needed.
+
+## IMPORTANT: always close stdin
+
+`ntn` tries to read a request body from stdin and will **hang forever** in this
+sandbox if stdin is left open. Every invocation must either:
+
+- redirect `< /dev/null` (for GET calls, flag-based calls, and inline body
+  inputs), or
+- supply the body via a heredoc (which closes stdin itself).
+
+All examples below follow this rule — keep it when adapting them.
+
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN` or `zero doctor check-connector --url https://api.notion.com/v1/pages --method GET`
+If requests fail, run `zero doctor check-connector --env-name NOTION_TOKEN` or
+`zero doctor check-connector --url https://api.notion.com/v1/pages --method GET`.
+
+If `ntn` reports `No workspace selected`, `NOTION_API_TOKEN` is unset or empty —
+re-run the export from Setup. If a command hangs, you forgot to close stdin
+(see above).
+
+## Request Input Syntax (`ntn api`)
+
+`ntn api <PATH>` defaults to GET. It switches to POST automatically when a body
+is present. Provide a body in one of two ways:
+
+- `-d '<JSON>'` — raw JSON string (still add `< /dev/null`). `-d @file` is **not**
+  supported.
+- stdin JSON — pipe or heredoc.
+
+Inline inputs after the path (combine with `< /dev/null`):
+
+- `Header:Value` — request header
+- `name==value` — query parameter
+- `path=value` — body string field
+- `path:=json` — body typed field (numbers, booleans, arrays, objects, null)
+
+Nested body paths: `properties[Status][select][name]=Done`,
+`children[][paragraph][rich_text][0][text][content]=Hello`.
+
+Run `ntn api ls < /dev/null` to list every supported endpoint, or
+`ntn api <PATH> --spec < /dev/null` / `--docs` for one endpoint's schema and docs.
 
 ## Core APIs
 
-### Read Page with Content
+### Read Page as Markdown
 
-Replace `<your-page-id>` with your actual Notion page ID:
+`ntn pages get` returns the full page (properties + content) rendered as
+Markdown — preferred over walking blocks manually:
 
 ```bash
-# Get page metadata
-curl -s -X GET "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" | jq '{title: .properties.title.title[0].plain_text, url, last_edited_time}'
-
-# Get page content blocks
-curl -s -X GET "https://api.notion.com/v1/blocks/<your-page-id>/children?page_size=100" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join("")), has_children}'
+ntn pages get <your-page-id> < /dev/null
 ```
 
-### Read Nested Blocks (Toggle, etc.)
+Add `--json` for the raw API payload.
 
-Blocks with `has_children: true` contain nested content. Replace `<your-block-id>` with your actual block ID:
+### Read Page Metadata / Properties
 
 ```bash
-curl -s -X GET "https://api.notion.com/v1/blocks/<your-block-id>/children" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" | jq '.results[] | {type, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
+ntn api /v1/pages/<your-page-id> < /dev/null | jq '{id, url, properties}'
+```
+
+### Read Block Children (Toggle, nested content, etc.)
+
+Blocks with `has_children: true` contain nested content — fetch their children
+by block ID:
+
+```bash
+ntn api /v1/blocks/<your-block-id>/children page_size==100 < /dev/null \
+  | jq '.results[] | {type, id, has_children, text: (.[.type].rich_text // [] | map(.plain_text) | join(""))}'
 ```
 
 ### Search Workspace
 
-Write to `/tmp/notion_request.json`:
-
-```json
-{
-  "query": "Meeting Notes",
-  "page_size": 10
-}
-```
-
-Then run:
-
 ```bash
-curl -s -X POST "https://api.notion.com/v1/search" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json | jq '.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}'
+ntn api /v1/search -d '{"query": "Meeting Notes", "page_size": 10}' < /dev/null \
+  | jq '.results[] | {id, object, title: .properties.title.title[0].plain_text // .title[0].plain_text}'
 ```
 
 Docs: https://developers.notion.com/reference/post-search
 
-### List Database Entries
+### Resolve a Database to its Data Source IDs
 
-Write to `/tmp/notion_request.json`:
-
-```json
-{
-  "page_size": 100
-}
-```
-
-Replace `<your-database-id>` with your actual database ID and run:
+Notion's query API operates on data sources, not databases. Resolve first:
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json | jq '.results[] | {id, properties}'
+ntn datasources resolve <your-database-id> < /dev/null
+```
+
+### List Database Entries
+
+```bash
+ntn datasources query <your-data-source-id> --limit 100 < /dev/null
+```
+
+Or via the raw API:
+
+```bash
+ntn api /v1/data_sources/<your-data-source-id>/query -d '{"page_size": 100}' < /dev/null \
+  | jq '.results[] | {id, properties}'
 ```
 
 Docs: https://developers.notion.com/reference/query-a-data-source
 
 ### Query with Filter
 
-Replace `<your-database-id>` with your actual database ID:
-
 ```bash
-curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
-{
-  "filter": {
-  "property": "Status",
-  "select": {"equals": "Done"}
-  },
-  "sorts": [{"property": "Date", "direction": "descending"}],
-  "page_size": 50
-}
-EOF
+ntn datasources query <your-data-source-id> \
+  --filter '{"property": "Status", "select": {"equals": "Done"}}' \
+  --sort 'Date desc' --limit 50 < /dev/null
 ```
 
 ### Query with Multiple Filters
 
-Replace `<your-database-id>` with your actual database ID:
+`--filter-file -` reads the filter JSON from stdin, so a heredoc satisfies the
+close-stdin rule:
 
 ```bash
-curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+ntn datasources query <your-data-source-id> --filter-file - << 'EOF'
 {
-  "filter": {
   "and": [
-  {"property": "Status", "select": {"does_not_equal": "Archived"}},
-  {"property": "Due", "date": {"on_or_before": "2024-12-31"}}
+    {"property": "Status", "select": {"does_not_equal": "Archived"}},
+    {"property": "Due", "date": {"on_or_before": "2024-12-31"}}
   ]
-  }
 }
 EOF
 ```
 
 ### Get Database Schema
 
-Replace `<your-database-id>` with your actual database ID:
-
 ```bash
-curl -s "https://api.notion.com/v1/databases/<your-database-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" | jq '{title: .title[0].plain_text, properties: .properties | keys}'
+ntn api /v1/databases/<your-database-id> < /dev/null \
+  | jq '{title: .title[0].plain_text, properties: .properties | keys}'
 ```
 
 Docs: https://developers.notion.com/reference/retrieve-a-database
 
-### Get Page
-
-Replace `<your-page-id>` with your actual page ID:
-
-```bash
-curl -s "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" | jq '{id, url, properties}'
-```
-
-Docs: https://developers.notion.com/reference/retrieve-a-page
-
 ### Create Page in Database
 
+Pass the body via heredoc (closes stdin, no `-d` needed):
+
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/pages' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+ntn api /v1/pages << 'EOF'
 {
   "parent": {"database_id": "your-database-id"},
   "properties": {
-  "Name": {"title": [{"text": {"content": "New Task"}}]},
-  "Status": {"select": {"name": "To Do"}},
-  "Due": {"date": {"start": "2024-12-31"}}
+    "Name": {"title": [{"text": {"content": "New Task"}}]},
+    "Status": {"select": {"name": "To Do"}},
+    "Due": {"date": {"start": "2024-12-31"}}
   }
 }
 EOF
@@ -139,26 +180,28 @@ EOF
 
 Docs: https://developers.notion.com/reference/post-page
 
-### Create Page with Content
+### Create Page with Markdown Content
+
+`ntn pages create` accepts Markdown directly — no block JSON needed:
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/pages' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+ntn pages create --parent page:<parent-page-id> --content '## Introduction
+
+This is the content.' < /dev/null
+```
+
+For full control over properties and blocks, use the raw API:
+
+```bash
+ntn api /v1/pages << 'EOF'
 {
   "parent": {"page_id": "parent-page-id"},
   "properties": {
-  "title": {"title": [{"text": {"content": "My New Page"}}]}
+    "title": {"title": [{"text": {"content": "My New Page"}}]}
   },
   "children": [
-  {
-  "object": "block",
-  "type": "heading_2",
-  "heading_2": {"rich_text": [{"text": {"content": "Introduction"}}]}
-  },
-  {
-  "object": "block",
-  "type": "paragraph",
-  "paragraph": {"rich_text": [{"text": {"content": "This is the content."}}]}
-  }
+    {"object": "block", "type": "heading_2", "heading_2": {"rich_text": [{"text": {"content": "Introduction"}}]}},
+    {"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"text": {"content": "This is the content."}}]}}
   ]
 }
 EOF
@@ -166,67 +209,36 @@ EOF
 
 ### Update Page Properties
 
-Replace `<your-page-id>` with your actual page ID:
-
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
-{
-  "properties": {
-  "Status": {"select": {"name": "In Progress"}}
-  }
-}
-EOF
+ntn api /v1/pages/<your-page-id> -X PATCH \
+  -d '{"properties": {"Status": {"select": {"name": "In Progress"}}}}' < /dev/null
 ```
 
 Docs: https://developers.notion.com/reference/patch-page
 
 ### Archive Page
 
-Write to `/tmp/notion_request.json`:
-
-```json
-{
-  "archived": true
-}
-```
-
-Replace `<your-page-id>` with your actual page ID and run:
-
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/pages/<your-page-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
+ntn api /v1/pages/<your-page-id> -X PATCH archived:=true < /dev/null
 ```
 
 ### Get Block Children
 
-Replace `<your-block-id>` with your actual block ID:
-
 ```bash
-curl -s "https://api.notion.com/v1/blocks/<your-block-id>/children?page_size=100" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" | jq '.results[] | {type, id}'
+ntn api /v1/blocks/<your-block-id>/children page_size==100 < /dev/null \
+  | jq '.results[] | {type, id}'
 ```
 
 Docs: https://developers.notion.com/reference/get-block-children
 
 ### Append Blocks to Page
 
-Replace `<your-page-id>` with your actual page ID:
-
 ```bash
-curl -s -X PATCH "https://api.notion.com/v1/blocks/<your-page-id>/children" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+ntn api /v1/blocks/<your-page-id>/children -X PATCH << 'EOF'
 {
   "children": [
-  {
-  "object": "block",
-  "type": "paragraph",
-  "paragraph": {"rich_text": [{"text": {"content": "New paragraph added."}}]}
-  },
-  {
-  "object": "block",
-  "type": "to_do",
-  "to_do": {
-  "rich_text": [{"text": {"content": "Task item"}}],
-  "checked": false
-  }
-  }
+    {"object": "block", "type": "paragraph", "paragraph": {"rich_text": [{"text": {"content": "New paragraph added."}}]}},
+    {"object": "block", "type": "to_do", "to_do": {"rich_text": [{"text": {"content": "Task item"}}], "checked": false}}
   ]
 }
 EOF
@@ -236,16 +248,14 @@ Docs: https://developers.notion.com/reference/patch-block-children
 
 ### Delete Block
 
-Replace `<your-block-id>` with your actual block ID:
-
 ```bash
-curl -s -X DELETE "https://api.notion.com/v1/blocks/<your-block-id>" --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28'
+ntn api /v1/blocks/<your-block-id> -X DELETE < /dev/null
 ```
 
 ### List Users
 
 ```bash
-curl -s "https://api.notion.com/v1/users" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" | jq '.results[] | {id, name, type}'
+ntn api /v1/users < /dev/null | jq '.results[] | {id, name, type}'
 ```
 
 Docs: https://developers.notion.com/reference/get-users
@@ -253,30 +263,30 @@ Docs: https://developers.notion.com/reference/get-users
 ### Get Current Bot
 
 ```bash
-curl -s 'https://api.notion.com/v1/users/me' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28'
+ntn api /v1/users/me < /dev/null
 ```
 
 ### Create Database
 
 ```bash
-curl -s -X POST 'https://api.notion.com/v1/databases' --header "Authorization: Bearer $NOTION_TOKEN" --header 'Notion-Version: 2022-06-28' --header 'Content-Type: application/json' -d @- << 'EOF'
+ntn api /v1/databases << 'EOF'
 {
   "parent": {"page_id": "parent-page-id"},
   "title": [{"text": {"content": "Task Tracker"}}],
   "properties": {
-  "Name": {"title": {}},
-  "Status": {"select": {"options": [
-  {"name": "To Do", "color": "gray"},
-  {"name": "In Progress", "color": "blue"},
-  {"name": "Done", "color": "green"}
-  ]}},
-  "Due Date": {"date": {}},
-  "Assignee": {"people": {}},
-  "Priority": {"select": {"options": [
-  {"name": "High", "color": "red"},
-  {"name": "Medium", "color": "yellow"},
-  {"name": "Low", "color": "green"}
-  ]}}
+    "Name": {"title": {}},
+    "Status": {"select": {"options": [
+      {"name": "To Do", "color": "gray"},
+      {"name": "In Progress", "color": "blue"},
+      {"name": "Done", "color": "green"}
+    ]}},
+    "Due Date": {"date": {}},
+    "Assignee": {"people": {}},
+    "Priority": {"select": {"options": [
+      {"name": "High", "color": "red"},
+      {"name": "Medium", "color": "yellow"},
+      {"name": "Low", "color": "green"}
+    ]}}
   }
 }
 EOF
@@ -360,12 +370,12 @@ Docs: https://developers.notion.com/reference/create-a-database
 {
   "text": {"content": "Styled text", "link": {"url": "https://example.com"}},
   "annotations": {
-  "bold": true,
-  "italic": false,
-  "strikethrough": false,
-  "underline": false,
-  "code": false,
-  "color": "red"
+    "bold": true,
+    "italic": false,
+    "strikethrough": false,
+    "underline": false,
+    "code": false,
+    "color": "red"
   }
 }
 ```
@@ -374,34 +384,16 @@ Docs: https://developers.notion.com/reference/create-a-database
 
 ## Pagination
 
-All list endpoints support cursor-based pagination:
-
-Write to `/tmp/notion_request.json`:
-
-```json
-{
-  "page_size": 100
-}
-```
+All list endpoints support cursor-based pagination. `ntn datasources query`
+exposes `--start-cursor`; the raw API uses `start_cursor` in the body:
 
 ```bash
-# First request
-curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
-# Response includes: {"next_cursor": "abc123", "has_more": true}
-```
+# First request — response includes {"next_cursor": "abc123", "has_more": true}
+ntn api /v1/data_sources/<your-data-source-id>/query -d '{"page_size": 100}' < /dev/null
 
-Write to `/tmp/notion_request.json`:
-
-```json
-{
-  "page_size": 100,
-  "start_cursor": "<your-cursor>"
-}
-```
-
-```bash
 # Next page
-curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query" --header "Authorization: Bearer $NOTION_TOKEN" --header "Notion-Version: 2022-06-28" --header "Content-Type: application/json" -d @/tmp/notion_request.json
+ntn api /v1/data_sources/<your-data-source-id>/query \
+  -d '{"page_size": 100, "start_cursor": "<your-cursor>"}' < /dev/null
 ```
 
 ## Rate Limits
@@ -414,4 +406,5 @@ curl -s -X POST "https://api.notion.com/v1/data_sources/<your-database-id>/query
 
 - Main Docs: https://developers.notion.com
 - API Reference: https://developers.notion.com/reference
+- CLI: `ntn --help`, `ntn api ls`, `ntn api <PATH> --docs`
 - Integration Settings: https://www.notion.so/profile/integrations
