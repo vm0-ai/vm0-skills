@@ -67,6 +67,7 @@
 - [ ] [EfiBank](https://dev.efipay.com.br/) - Brazilian Bank/Pix Payment
 - [ ] [OpenPix](https://developers.openpix.com.br/) - Pix Payment Platform
 - [x] [Mercury](https://docs.mercury.com/reference/getaccount) - Business Banking API
+- [x] [Square](https://developer.squareup.com/reference/square) - Payments & Point of Sale Platform
 - [x] [Bitrix](https://apidocs.bitrix24.com/) - CRM & Collaboration Platform
 - [x] [Notion](https://developers.notion.com/) - Notes & Knowledge Base
 - [x] [Twenty CRM](https://twenty.com/developers) - Open Source CRM
