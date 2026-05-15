@@ -7,6 +7,27 @@ description: Snowflake API for data warehouse operations. Use when user mentions
 
 If requests fail, run `zero doctor check-connector --env-name SNOWFLAKE_PAT` or `zero doctor check-connector --url https://$SNOWFLAKE_ACCOUNT.snowflakecomputing.com/api/v2/databases --method GET`
 
+### Error 390432: `Network policy is required`
+
+Snowflake refuses PAT authentication for any user that is not bound to a network policy. The account admin must attach one before the PAT can authenticate. Steps (perform in Snowsight):
+
+1. Open [https://app.snowflake.com](https://app.snowflake.com) and sign in with an `ACCOUNTADMIN` or `SECURITYADMIN` role.
+2. In the left sidebar go to **Projects → Worksheets** and open (or create) a SQL worksheet.
+3. Run `SHOW USERS;` and note the value in the `name` column for the PAT-owning user.
+4. Run the policy creation statement on its own:
+
+   ```sql
+   CREATE NETWORK POLICY pat_policy ALLOWED_IP_LIST = ('0.0.0.0/0');
+   ```
+
+5. Then run the user binding statement on its own (replace `USER_NAME` with the value from step 3 — **no quotes**):
+
+   ```sql
+   ALTER USER USER_NAME SET NETWORK_POLICY = pat_policy;
+   ```
+
+Execute the two statements separately — Snowsight rejects them when pasted and submitted together. `0.0.0.0/0` is a deliberately permissive list to unblock the connector; tighten it to the runner egress range once available. Prefer `ALTER USER` over `ALTER ACCOUNT` so the policy does not affect other login paths.
+
 ## How to Use
 
 All examples assume these environment variables are set:
