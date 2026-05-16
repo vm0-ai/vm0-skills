@@ -55,6 +55,15 @@
       ]
     },
     {
+      "name": "bentoml",
+      "description": "BentoML and BentoCloud API for model serving and protected deployment endpoints. Use this skill to call deployed Bento services and protected inference routes.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./bentoml"
+      ]
+    },
+    {
       "name": "bitrix",
       "description": "Bitrix24 REST API via curl. Use this skill to manage CRM (leads, deals, contacts), tasks, and users.",
       "source": "./",
@@ -664,6 +673,15 @@
       "strict": false,
       "skills": [
         "./qiita"
+      ]
+    },
+    {
+      "name": "reap",
+      "description": "Reap API for modular fintech infrastructure. Use this skill to manage users, accounts, cards, activities, reconciliations, and embedded finance workflows.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./reap"
       ]
     },
     {
