@@ -16,7 +16,7 @@
 - [ ] [WAHA](https://waha.devlike.pro/docs/) - WhatsApp HTTP API
 - [ ] [Z-API](https://developer.z-api.io/en/) - WhatsApp API
 - [ ] [Exotel](https://developer.exotel.com/api) - Cloud Communication Platform
-- [x] [Feishu/Lark](https://open.larkoffice.com/document/home/index) - Enterprise Collaboration Platform
+- [x] [Lark](https://open.larksuite.com/document/home/index) - Enterprise Collaboration Platform
 - [ ] [WhatsApp Business API](https://business.whatsapp.com/developers/developer-hub) - Official WhatsApp Business API
 - [x] [Instagram API](https://developers.facebook.com/docs/instagram-api) - Official Instagram API
 - [x] [Slack](https://api.slack.com/docs) - Team Communication Platform
