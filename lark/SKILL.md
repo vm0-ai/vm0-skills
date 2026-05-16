@@ -1,12 +1,11 @@
 ---
 name: lark
-description: Lark/Feishu API for collaboration. Use when user mentions "Lark", "Feishu",
-  "Lark docs", or asks about ByteDance workspace tools.
+description: Lark API for collaboration. Use when user mentions "Lark", "Lark docs", or asks about ByteDance workspace tools.
 ---
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name LARK_TOKEN` or `zero doctor check-connector --url https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal --method POST`
+If requests fail, run `zero doctor check-connector --env-name LARK_TOKEN` or `zero doctor check-connector --url https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal --method POST`
 
 ## Token Management
 
@@ -28,7 +27,7 @@ get_lark_token() {
   fi
 
   # Get new token
-  local response=$(curl -s -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
+  local response=$(curl -s -X POST "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal" \
     -H "Content-Type: application/json" \
     -d "{\"app_id\": \"${LARK_APP_ID}\", \"app_secret\": \"${LARK_TOKEN}\"}")
 
@@ -51,7 +50,7 @@ TOKEN=$(get_lark_token)
 Or get token directly without caching:
 
 ```bash
-TOKEN=$(curl -s -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
+TOKEN=$(curl -s -X POST "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal" \
   -H "Content-Type: application/json" \
   -d "{\"app_id\": \"$LARK_APP_ID\", \"app_secret\": \"$LARK_TOKEN\"}" | jq -r '.tenant_access_token')
 ```
@@ -71,7 +70,7 @@ Write to `/tmp/lark_request.json`:
 ```
 
 ```bash
-curl -X POST "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal" \
+curl -X POST "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
 ```
@@ -91,7 +90,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -110,7 +109,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type=chat_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -129,7 +128,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -148,7 +147,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type=chat_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -166,7 +165,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages/om_xxx/reply" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/messages/om_xxx/reply" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -176,7 +175,7 @@ curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages/om_xxx/reply" \
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/im/v1/messages?container_id_type=chat&container_id=oc_xxx&page_size=20" \
+curl -X GET "https://open.larksuite.com/open-apis/im/v1/messages?container_id_type=chat&container_id=oc_xxx&page_size=20" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -195,7 +194,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats?user_id_type=open_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/chats?user_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -205,7 +204,7 @@ curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats?user_id_type=open_id"
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/im/v1/chats" \
+curl -X GET "https://open.larksuite.com/open-apis/im/v1/chats" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -213,7 +212,7 @@ curl -X GET "https://open.feishu.cn/open-apis/im/v1/chats" \
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/im/v1/chats/oc_xxx" \
+curl -X GET "https://open.larksuite.com/open-apis/im/v1/chats/oc_xxx" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -228,7 +227,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats/oc_xxx/members?member_id_type=open_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/chats/oc_xxx/members?member_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -245,7 +244,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X DELETE "https://open.feishu.cn/open-apis/im/v1/chats/oc_xxx/members?member_id_type=open_id" \
+curl -X DELETE "https://open.larksuite.com/open-apis/im/v1/chats/oc_xxx/members?member_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -257,7 +256,7 @@ curl -X DELETE "https://open.feishu.cn/open-apis/im/v1/chats/oc_xxx/members?memb
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/contact/v3/users/ou_xxx?user_id_type=open_id" \
+curl -X GET "https://open.larksuite.com/open-apis/contact/v3/users/ou_xxx?user_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -272,7 +271,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/contact/v3/users/search?user_id_type=open_id" \
+curl -X POST "https://open.larksuite.com/open-apis/contact/v3/users/search?user_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -282,7 +281,7 @@ curl -X POST "https://open.feishu.cn/open-apis/contact/v3/users/search?user_id_t
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/contact/v3/departments?parent_department_id=0" \
+curl -X GET "https://open.larksuite.com/open-apis/contact/v3/departments?parent_department_id=0" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -290,7 +289,7 @@ curl -X GET "https://open.feishu.cn/open-apis/contact/v3/departments?parent_depa
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/contact/v3/users/find_by_department?department_id=od_xxx&user_id_type=open_id" \
+curl -X GET "https://open.larksuite.com/open-apis/contact/v3/users/find_by_department?department_id=od_xxx&user_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -300,7 +299,7 @@ curl -X GET "https://open.feishu.cn/open-apis/contact/v3/users/find_by_departmen
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/calendar/v4/calendars" \
+curl -X GET "https://open.larksuite.com/open-apis/calendar/v4/calendars" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -316,7 +315,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars" \
+curl -X POST "https://open.larksuite.com/open-apis/calendar/v4/calendars" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -343,7 +342,7 @@ cat > /tmp/lark_request.json <<EOF
 }
 EOF
 
-curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events" \
+curl -X POST "https://open.larksuite.com/open-apis/calendar/v4/calendars/<calendar_id>/events" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -358,7 +357,7 @@ TOKEN=$(get_lark_token)
 START_TS=$(date -d "2025-01-01T00:00:00+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-01T00:00:00+08:00" +%s)
 END_TS=$(date -d "2025-01-31T23:59:59+08:00" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S%z" "2025-01-31T23:59:59+08:00" +%s)
 
-curl -X GET "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events?start_time=${START_TS}&end_time=${END_TS}" \
+curl -X GET "https://open.larksuite.com/open-apis/calendar/v4/calendars/<calendar_id>/events?start_time=${START_TS}&end_time=${END_TS}" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -368,7 +367,7 @@ curl -X GET "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X GET "https://open.feishu.cn/open-apis/bot/v3/info" \
+curl -X GET "https://open.larksuite.com/open-apis/bot/v3/info" \
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
@@ -387,7 +386,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type=chat_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -406,7 +405,7 @@ Write to `/tmp/lark_request.json`:
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats?user_id_type=open_id" \
+curl -X POST "https://open.larksuite.com/open-apis/im/v1/chats?user_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -418,11 +417,11 @@ curl -X POST "https://open.feishu.cn/open-apis/im/v1/chats?user_id_type=open_id"
 TOKEN=$(get_lark_token)
 
 # Get root departments
-curl -X GET "https://open.feishu.cn/open-apis/contact/v3/departments?parent_department_id=0" \
+curl -X GET "https://open.larksuite.com/open-apis/contact/v3/departments?parent_department_id=0" \
   -H "Authorization: Bearer ${TOKEN}" | jq '.data.items[] | {id: .department_id, name: .name}'
 
 # Get members in a department
-curl -X GET "https://open.feishu.cn/open-apis/contact/v3/users/find_by_department?department_id=od_xxx&user_id_type=open_id" \
+curl -X GET "https://open.larksuite.com/open-apis/contact/v3/users/find_by_department?department_id=od_xxx&user_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" | jq '.data.items[] | {id: .user_id, name: .name}'
 ```
 
@@ -444,7 +443,7 @@ cat > /tmp/lark_request.json <<EOF
 }
 EOF
 
-curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_id>/events" \
+curl -X POST "https://open.larksuite.com/open-apis/calendar/v4/calendars/<calendar_id>/events" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -477,7 +476,7 @@ curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_i
 
 3. **ID Types**: Use `open_id` for most user operations. Use `chat_id` when targeting group chats.
 
-4. **Card Builder**: Design complex interactive cards using Lark Card Builder: https://open.larkoffice.com/tool/cardbuilder
+4. **Card Builder**: Design complex interactive cards using Lark Card Builder: https://open.larksuite.com/tool/cardbuilder
 
 5. **Error Handling**: Check the `code` field in responses. `0` means success, non-zero indicates an error.
 
@@ -493,7 +492,7 @@ curl -X POST "https://open.feishu.cn/open-apis/calendar/v4/calendars/<calendar_i
 
 ## API Reference
 
-- API Documentation: https://open.larkoffice.com/document/home/index
-- API Explorer: https://open.larkoffice.com/api-explorer
-- Card Builder: https://open.larkoffice.com/tool/cardbuilder
-- Permissions: https://open.larkoffice.com/document/home/introduction-to-scope-and-authorization/overview
+- API Documentation: https://open.larksuite.com/document/home/index
+- API Explorer: https://open.larksuite.com/api-explorer
+- Card Builder: https://open.larksuite.com/tool/cardbuilder
+- Permissions: https://open.larksuite.com/document/home/introduction-to-scope-and-authorization/overview
