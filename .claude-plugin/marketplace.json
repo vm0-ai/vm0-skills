@@ -685,12 +685,12 @@
       ]
     },
     {
-      "name": "remote-agent",
-      "description": "VM0 remote-agent CLI for delegating work to a linked local Codex or Claude host. Use this skill to list remote-agent hosts and submit jobs with npx -p @vm0/cli zero remote-agent.",
+      "name": "local-agent",
+      "description": "VM0 local-agent CLI for delegating work to a linked local Codex or Claude host. Use this skill to list local-agent hosts and submit jobs with npx -p @vm0/cli zero local-agent.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./remote-agent"
+        "./local-agent"
       ]
     },
     {
