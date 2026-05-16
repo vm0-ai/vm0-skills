@@ -5,16 +5,23 @@ description: Lark API for collaboration. Use when user mentions "Lark", "Lark do
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name LARK_TOKEN` or `zero doctor check-connector --url https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal --method POST`
+If requests fail, first check the required credentials:
+
+```bash
+zero doctor check-connector --env-name LARK_APP_ID
+zero doctor check-connector --env-name LARK_TOKEN
+```
+
+Then call the token endpoint with both values in the request body. The tenant access token endpoint requires `app_id` and `app_secret`; this skill stores the Lark app secret in `LARK_TOKEN`.
 
 ## Token Management
 
 Lark uses tenant access tokens that expire after 2 hours. Use this helper to get or refresh the token:
 
 ```bash
-# Get or refresh token (cached to /tmp/lark_token.json)
+# Get or refresh token. The cache is keyed by app ID so different apps do not reuse tokens.
 get_lark_token() {
-  local token_file="/tmp/lark_token.json"
+  local token_file="/tmp/lark_token_${LARK_APP_ID}.json"
   local current_time=$(date +%s)
 
   # Check if cached token is still valid
@@ -62,11 +69,13 @@ TOKEN=$(curl -s -X POST "https://open.larksuite.com/open-apis/auth/v3/tenant_acc
 Get and display tenant access token:
 
 Write to `/tmp/lark_request.json`:
-```json
+```bash
+cat > /tmp/lark_request.json <<EOF
 {
   "app_id": "${LARK_APP_ID}",
   "app_secret": "${LARK_TOKEN}"
 }
+EOF
 ```
 
 ```bash
@@ -260,18 +269,20 @@ curl -X GET "https://open.larksuite.com/open-apis/contact/v3/users/ou_xxx?user_i
   -H "Authorization: Bearer ${TOKEN}"
 ```
 
-#### Search Users
+#### Look Up User IDs by Email or Mobile
 
 Write to `/tmp/lark_request.json`:
 ```json
 {
-  "query": "John"
+  "emails": ["user@example.com"],
+  "mobiles": ["+15551234567"],
+  "include_resigned": false
 }
 ```
 
 ```bash
 TOKEN=$(get_lark_token)
-curl -X POST "https://open.larksuite.com/open-apis/contact/v3/users/search?user_id_type=open_id" \
+curl -X POST "https://open.larksuite.com/open-apis/contact/v3/users/batch_get_id?user_id_type=open_id" \
   -H "Authorization: Bearer ${TOKEN}" \
   -H "Content-Type: application/json" \
   -d @/tmp/lark_request.json
@@ -482,8 +493,12 @@ curl -X POST "https://open.larksuite.com/open-apis/calendar/v4/calendars/<calend
 
 6. **Content Escaping**: Message content must be JSON-escaped when passed as string. Use `jq` to build complex payloads:
    ```bash
-   CONTENT=$(jq -n --arg text "Hello" '{text: $text}')
-   curl ... -d "{\"content\": \"$(echo $CONTENT | jq -c .)\"}"
+   CONTENT=$(jq -cn --arg text "Hello" '{text: $text}')
+   jq -n \
+     --arg receive_id "ou_xxx" \
+     --arg content "$CONTENT" \
+     '{receive_id: $receive_id, msg_type: "text", content: $content}' \
+     > /tmp/lark_request.json
    ```
 
 7. **Date Conversion**: Calendar events require Unix timestamps. Use `date` command with appropriate flags for your OS:
