@@ -121,13 +121,7 @@ The server expects `X-Dat9-Rename-Source`:
 curl -s -X POST "https://api.drive9.ai/v1/fs/<new-path>?rename" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "X-Dat9-Rename-Source: <old-path>"
 ```
 
-### 9. Append
-
-```bash
-curl -s -X POST "https://api.drive9.ai/v1/fs/<path>?append" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "Content-Type: text/plain" --data-binary @/tmp/append.txt
-```
-
-### 10. Search and Find
+### 9. Search and Find
 
 Content search:
 
@@ -141,7 +135,7 @@ Find files by attributes:
 curl -s --get "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_API_KEY" --data-urlencode "find=" --data-urlencode "name=*.md"
 ```
 
-### 11. Batch Operations
+### 10. Batch Operations
 
 Batch stat:
 
@@ -155,7 +149,7 @@ Batch read small files:
 curl -s -X POST "https://api.drive9.ai/v1/fs:batch-read-small" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "Content-Type: application/json" --data-binary '{"paths":["/notes/a.md"],"max_bytes":50000}'
 ```
 
-### 12. Large File Uploads
+### 11. Large File Uploads
 
 For large files, prefer the drive9 CLI or SDK. If calling HTTP directly, use the V2 multipart upload flow:
 
@@ -167,7 +161,9 @@ POST /v2/uploads/{id}/complete
 POST /v2/uploads/{id}/abort
 ```
 
-### 13. Change Events
+Advanced append uploads use `POST /v1/fs/{path}?append` with a JSON body such as `{"append_size":123,"part_size":5242880}`. It returns an append upload plan; it does not append raw request bytes directly.
+
+### 12. Change Events
 
 SSE change stream:
 
