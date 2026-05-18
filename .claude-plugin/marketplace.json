@@ -967,13 +967,6 @@
       "skills": ["./diffbot"]
     },
     {
-      "name": "flightapi",
-      "description": "FlightAPI for flight schedules, airport status, fares, and trip planning data.",
-      "source": "./",
-      "strict": false,
-      "skills": ["./flightapi"]
-    },
-    {
       "name": "google-maps",
       "description": "Google Maps Platform API for geocoding, places, directions, and distance matrix.",
       "source": "./",
@@ -1023,13 +1016,6 @@
       "skills": ["./openweather"]
     },
     {
-      "name": "postalform",
-      "description": "PostalForm API for sending direct mail, postcards, and physical letters from your app.",
-      "source": "./",
-      "strict": false,
-      "skills": ["./postalform"]
-    },
-    {
       "name": "reducto",
       "description": "Reducto API for parsing, OCR, and chunking PDFs, scans, and complex documents into structured JSON.",
       "source": "./",
@@ -1042,13 +1028,6 @@
       "source": "./",
       "strict": false,
       "skills": ["./suno"]
-    },
-    {
-      "name": "twocaptcha",
-      "description": "2Captcha API for solving reCAPTCHA, hCaptcha, image, and audio captchas during automated browsing.",
-      "source": "./",
-      "strict": false,
-      "skills": ["./twocaptcha"]
     },
     {
       "name": "finance-accounting",
