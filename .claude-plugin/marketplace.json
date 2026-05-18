@@ -939,6 +939,97 @@
       ]
     },
     {
+      "name": "aviationstack",
+      "description": "AviationStack API for real-time flight status, schedules, airline, airport, and route data. Use when looking up a flight number, route, or airport.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./aviationstack"]
+    },
+    {
+      "name": "builtwith",
+      "description": "BuiltWith API for the technology stack, traffic, and contact data of any website. Use when qualifying a prospect by detected SaaS tools.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./builtwith"]
+    },
+    {
+      "name": "clado",
+      "description": "Clado API for searching and enriching a B2B people graph. Use for prospecting, recruiting, and targeted lead lists from structured queries.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./clado"]
+    },
+    {
+      "name": "diffbot",
+      "description": "Diffbot API for extracting structured article, product, and entity data from web pages or its knowledge graph.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./diffbot"]
+    },
+    {
+      "name": "google-maps",
+      "description": "Google Maps Platform API for geocoding, places, directions, and distance matrix.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./google-maps"]
+    },
+    {
+      "name": "hunter",
+      "description": "Hunter.io API for finding and verifying professional email addresses for prospecting.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./hunter"]
+    },
+    {
+      "name": "mapbox",
+      "description": "Mapbox API for geocoding, directions, isochrones, matrix, and map matching.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./mapbox"]
+    },
+    {
+      "name": "mathpix",
+      "description": "Mathpix API for converting images, PDFs, and handwriting into LaTeX, Markdown, DOCX, or structured JSON.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./mathpix"]
+    },
+    {
+      "name": "nyne",
+      "description": "Nyne API for orchestrating AI sales agents that prospect, qualify, and book meetings.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./nyne"]
+    },
+    {
+      "name": "openrouter",
+      "description": "OpenRouter API for routing prompts to hundreds of LLMs through a single OpenAI-compatible endpoint.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./openrouter"]
+    },
+    {
+      "name": "openweather",
+      "description": "OpenWeather API for current weather, forecast, and historical climate data.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./openweather"]
+    },
+    {
+      "name": "reducto",
+      "description": "Reducto API for parsing, OCR, and chunking PDFs, scans, and complex documents into structured JSON.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./reducto"]
+    },
+    {
+      "name": "suno",
+      "description": "Suno API for generating AI music tracks, vocals, and instrumentals from a text prompt.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./suno"]
+    },
+    {
       "name": "finance-accounting",
       "description": "Financial accounting toolkit — GAAP-compliant statements, journal entries, reconciliations, month-end close, variance analysis, and audit preparation.",
       "source": "./",
