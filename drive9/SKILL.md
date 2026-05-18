@@ -7,14 +7,14 @@ docs: https://github.com/mem9-ai/drive9/blob/main/README.md
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name DRIVE9_API_KEY` or `zero doctor check-connector --url https://api.drive9.ai/v1/fs/ --method GET`.
+If requests fail, run `zero doctor check-connector --env-name DRIVE9_TOKEN` or `zero doctor check-connector --url https://api.drive9.ai/v1/fs/ --method GET`.
 
 ## How It Works
 
 drive9 is a filesystem-like API for AI agents. Files are auto-embedded and full-text indexed so they can be retrieved by meaning, not just filename. Small files (<50 KB) live in db9 with instant embedding; large files go to S3 via presigned URLs. A single path namespace spans both tiers.
 
 ```
-Account (DRIVE9_API_KEY)
+Account (DRIVE9_TOKEN)
 └── Filesystem
     ├── Files (auto-embedded + FTS indexed)
     ├── Directories
@@ -32,16 +32,16 @@ All filesystem operations use the unified `/v1/fs/{path}` endpoint with method v
 Use a drive9 API key as a bearer token:
 
 ```
-Authorization: Bearer $DRIVE9_API_KEY
+Authorization: Bearer $DRIVE9_TOKEN
 ```
 
-The server also accepts `X-API-Key: $DRIVE9_API_KEY` for compatibility. Get a key via the drive9.ai console or the `drive9 create` CLI.
+The server also accepts `X-API-Key: $DRIVE9_TOKEN` for compatibility. Get a key via the drive9.ai console or the `drive9 create` CLI.
 
 ## Environment Variables
 
 | Variable | Description |
 |---|---|
-| `DRIVE9_API_KEY` | drive9 API key |
+| `DRIVE9_TOKEN` | drive9 API key |
 
 ## Key Endpoints
 
@@ -50,7 +50,7 @@ The server also accepts `X-API-Key: $DRIVE9_API_KEY` for compatibility. Get a ke
 Body is the raw file contents. Replace `<path>` with a path such as `notes/todo.md`:
 
 ```bash
-curl -s -X PUT "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "Content-Type: text/markdown" --data-binary @/tmp/payload.txt
+curl -s -X PUT "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_TOKEN" --header "Content-Type: text/markdown" --data-binary @/tmp/payload.txt
 ```
 
 Optional write headers:
@@ -64,13 +64,13 @@ Optional write headers:
 ### 2. Read a File
 
 ```bash
-curl -s "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 ### 3. List a Directory
 
 ```bash
-curl -s "https://api.drive9.ai/v1/fs/<path>?list" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s "https://api.drive9.ai/v1/fs/<path>?list" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 ### 4. Stat
@@ -78,31 +78,31 @@ curl -s "https://api.drive9.ai/v1/fs/<path>?list" --header "Authorization: Beare
 Lightweight stat via headers:
 
 ```bash
-curl -s -I "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s -I "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 JSON metadata stat:
 
 ```bash
-curl -s "https://api.drive9.ai/v1/fs/<path>?stat" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s "https://api.drive9.ai/v1/fs/<path>?stat" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 ### 5. Delete a File or Directory
 
 ```bash
-curl -s -X DELETE "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s -X DELETE "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 Recursive delete:
 
 ```bash
-curl -s -X DELETE "https://api.drive9.ai/v1/fs/<path>?recursive" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s -X DELETE "https://api.drive9.ai/v1/fs/<path>?recursive" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 ### 6. Make a Directory
 
 ```bash
-curl -s -X POST "https://api.drive9.ai/v1/fs/<path>?mkdir" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s -X POST "https://api.drive9.ai/v1/fs/<path>?mkdir" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 ### 7. Zero-Copy Duplicate
@@ -110,7 +110,7 @@ curl -s -X POST "https://api.drive9.ai/v1/fs/<path>?mkdir" --header "Authorizati
 One file can appear at multiple paths without re-uploading. The server expects `X-Dat9-Copy-Source`:
 
 ```bash
-curl -s -X POST "https://api.drive9.ai/v1/fs/<destination>?copy" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "X-Dat9-Copy-Source: <source-path>"
+curl -s -X POST "https://api.drive9.ai/v1/fs/<destination>?copy" --header "Authorization: Bearer $DRIVE9_TOKEN" --header "X-Dat9-Copy-Source: <source-path>"
 ```
 
 ### 8. Rename
@@ -118,7 +118,7 @@ curl -s -X POST "https://api.drive9.ai/v1/fs/<destination>?copy" --header "Autho
 The server expects `X-Dat9-Rename-Source`:
 
 ```bash
-curl -s -X POST "https://api.drive9.ai/v1/fs/<new-path>?rename" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "X-Dat9-Rename-Source: <old-path>"
+curl -s -X POST "https://api.drive9.ai/v1/fs/<new-path>?rename" --header "Authorization: Bearer $DRIVE9_TOKEN" --header "X-Dat9-Rename-Source: <old-path>"
 ```
 
 ### 9. Search and Find
@@ -126,13 +126,13 @@ curl -s -X POST "https://api.drive9.ai/v1/fs/<new-path>?rename" --header "Author
 Content search:
 
 ```bash
-curl -s --get "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_API_KEY" --data-urlencode "grep=<query>" --data-urlencode "limit=20"
+curl -s --get "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_TOKEN" --data-urlencode "grep=<query>" --data-urlencode "limit=20"
 ```
 
 Find files by attributes:
 
 ```bash
-curl -s --get "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_API_KEY" --data-urlencode "find=" --data-urlencode "name=*.md"
+curl -s --get "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bearer $DRIVE9_TOKEN" --data-urlencode "find=" --data-urlencode "name=*.md"
 ```
 
 ### 10. Batch Operations
@@ -140,13 +140,13 @@ curl -s --get "https://api.drive9.ai/v1/fs/<path>" --header "Authorization: Bear
 Batch stat:
 
 ```bash
-curl -s -X POST "https://api.drive9.ai/v1/fs:batch-stat" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "Content-Type: application/json" --data-binary '{"paths":["/notes/a.md","/notes/b.md"]}'
+curl -s -X POST "https://api.drive9.ai/v1/fs:batch-stat" --header "Authorization: Bearer $DRIVE9_TOKEN" --header "Content-Type: application/json" --data-binary '{"paths":["/notes/a.md","/notes/b.md"]}'
 ```
 
 Batch read small files:
 
 ```bash
-curl -s -X POST "https://api.drive9.ai/v1/fs:batch-read-small" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "Content-Type: application/json" --data-binary '{"paths":["/notes/a.md"],"max_bytes":50000}'
+curl -s -X POST "https://api.drive9.ai/v1/fs:batch-read-small" --header "Authorization: Bearer $DRIVE9_TOKEN" --header "Content-Type: application/json" --data-binary '{"paths":["/notes/a.md"],"max_bytes":50000}'
 ```
 
 ### 11. Large File Uploads
@@ -168,34 +168,34 @@ Advanced append uploads use `POST /v1/fs/{path}?append` with a JSON body such as
 SSE change stream:
 
 ```bash
-curl -N "https://api.drive9.ai/v1/events" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -N "https://api.drive9.ai/v1/events" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 ## Common Workflow: Persistent Agent Notes with Semantic Search
 
 ```bash
 # 1. Create a directory
-curl -s -X POST "https://api.drive9.ai/v1/fs/notes?mkdir" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s -X POST "https://api.drive9.ai/v1/fs/notes?mkdir" --header "Authorization: Bearer $DRIVE9_TOKEN"
 
 # 2. Write an abstract so future agents can skim this directory cheaply
 echo "Research notes on agent memory systems." > /tmp/drive9_abstract.md
-curl -s -X PUT "https://api.drive9.ai/v1/fs/notes/.abstract.md" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "Content-Type: text/markdown" --data-binary @/tmp/drive9_abstract.md
+curl -s -X PUT "https://api.drive9.ai/v1/fs/notes/.abstract.md" --header "Authorization: Bearer $DRIVE9_TOKEN" --header "Content-Type: text/markdown" --data-binary @/tmp/drive9_abstract.md
 
 # 3. Write a note
 cat > /tmp/drive9_note.md << 'NOTE'
 # Mem9 architecture
 Cloud-persistent memory with hybrid vector + keyword search.
 NOTE
-curl -s -X PUT "https://api.drive9.ai/v1/fs/notes/mem9-arch.md" --header "Authorization: Bearer $DRIVE9_API_KEY" --header "Content-Type: text/markdown" --data-binary @/tmp/drive9_note.md
+curl -s -X PUT "https://api.drive9.ai/v1/fs/notes/mem9-arch.md" --header "Authorization: Bearer $DRIVE9_TOKEN" --header "Content-Type: text/markdown" --data-binary @/tmp/drive9_note.md
 
 # 4. List
-curl -s "https://api.drive9.ai/v1/fs/notes?list" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s "https://api.drive9.ai/v1/fs/notes?list" --header "Authorization: Bearer $DRIVE9_TOKEN"
 
 # 5. Search
-curl -s --get "https://api.drive9.ai/v1/fs/notes" --header "Authorization: Bearer $DRIVE9_API_KEY" --data-urlencode "grep=memory systems" --data-urlencode "limit=20"
+curl -s --get "https://api.drive9.ai/v1/fs/notes" --header "Authorization: Bearer $DRIVE9_TOKEN" --data-urlencode "grep=memory systems" --data-urlencode "limit=20"
 
 # 6. Read back
-curl -s "https://api.drive9.ai/v1/fs/notes/mem9-arch.md" --header "Authorization: Bearer $DRIVE9_API_KEY"
+curl -s "https://api.drive9.ai/v1/fs/notes/mem9-arch.md" --header "Authorization: Bearer $DRIVE9_TOKEN"
 ```
 
 ## Guidelines
