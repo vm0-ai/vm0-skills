@@ -96,6 +96,7 @@
 - [x] [Runway](https://docs.dev.runwayml.com/) - AI Video Generation
 - [x] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
 - [x] [OpenAI](https://platform.openai.com/docs/api-reference) - GPT & Codex AI Models
+- [x] [Atlas Cloud](https://www.atlascloud.ai/docs/en/models/get-start) - Full-Modal AI Platform
 - [ ] [Cursor](https://docs.cursor.com/) - AI Code Editor
 - [ ] [Dust](https://docs.dust.tt/) - AI Workflow Platform
 - [ ] [Replit](https://docs.replit.com/) - Cloud Development & AI Platform
@@ -191,7 +192,7 @@
 | Browser Automation & Web Scraping | 8 |
 | Data Processing & Utilities | 1 |
 | API & Cloud Integrations | 27 |
-| AI, LLM & Voice | 10 |
+| AI, LLM & Voice | 11 |
 | File & PDF Manipulation | 3 |
 | Analytics & Monitoring | 7 |
 | Development & Engineering | 6 |
@@ -200,7 +201,7 @@
 | Automation | 2 |
 | Design & Media | 4 |
 | Miscellaneous | 11 |
-| **Total** | **104** |
+| **Total** | **105** |
 
 ---
 
