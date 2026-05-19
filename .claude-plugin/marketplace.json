@@ -1023,13 +1023,6 @@
       "skills": ["./reducto"]
     },
     {
-      "name": "suno",
-      "description": "Suno API for generating AI music tracks, vocals, and instrumentals from a text prompt.",
-      "source": "./",
-      "strict": false,
-      "skills": ["./suno"]
-    },
-    {
       "name": "finance-accounting",
       "description": "Financial accounting toolkit — GAAP-compliant statements, journal entries, reconciliations, month-end close, variance analysis, and audit preparation.",
       "source": "./",
