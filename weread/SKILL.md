@@ -9,7 +9,7 @@ description: WeRead (微信读书) API for searching books, browsing your booksh
 
 ## Troubleshooting
 
-If a request fails, run `zero doctor check-connector --env-name WEREAD_API_KEY` or
+If a request fails, run `zero doctor check-connector --env-name WEREAD_TOKEN` or
 `zero doctor check-connector --url "https://i.weread.qq.com/api/agent/gateway"`.
 
 A non-zero `errcode` in the JSON response means the request failed — surface the
@@ -29,7 +29,7 @@ scanning the QR code with WeChat to sign in, and copying the generated key (form
 
 The connector provides:
 
-- `WEREAD_API_KEY` — the `wrk-` API key, bound to one WeChat Reading account
+- `WEREAD_TOKEN` — the `wrk-` API key, bound to one WeChat Reading account
 
 ## Gateway API
 
@@ -40,7 +40,7 @@ path-based REST — the `api_name` field in the request body selects the sub-API
 
 ```
 POST https://i.weread.qq.com/api/agent/gateway
-Authorization: Bearer $WEREAD_API_KEY
+Authorization: Bearer $WEREAD_TOKEN
 Content-Type: application/json
 ```
 
@@ -56,7 +56,7 @@ user identity resolve it automatically from the key — never pass `vid` manuall
 
 ```bash
 curl -X POST "https://i.weread.qq.com/api/agent/gateway" \
-  -H "Authorization: Bearer $WEREAD_API_KEY" \
+  -H "Authorization: Bearer $WEREAD_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"api_name": "/store/search", "keyword": "三体", "skill_version": "1.0.3"}'
 ```
