@@ -1,8 +1,9 @@
 ---
 name: novita
 description: Novita AI API for LLM inference, image generation, and video generation. Use
-  when the user mentions "Novita", "Novita AI", "novita.ai", or wants to run open models
-  (DeepSeek, Llama, Qwen) or generate images and videos through an OpenAI-compatible API.
+  when the user mentions "Novita", "Novita AI", "novita.ai", "Seedance", or wants to run
+  open models (DeepSeek, Llama, Qwen) or generate images and videos (including Seedance
+  2.0) through an OpenAI-compatible or async API.
 ---
 
 # Novita AI
@@ -22,7 +23,8 @@ Use this skill when you need to:
 
 - Run open LLMs (DeepSeek, Llama, Qwen, Mistral, etc.) via an OpenAI-compatible API
 - Generate images from text prompts with Stable Diffusion or FLUX models
-- Generate videos from text or image prompts
+- Generate videos from text, image, or multi-modal reference prompts (including
+  Seedance 2.0)
 - List the models available on the Novita AI platform
 
 ---
@@ -183,6 +185,72 @@ Poll for the result with the same `task-result` endpoint. Replace `<task-id>`:
 curl -s "https://api.novita.ai/v3/async/task-result?task_id=<task-id>" --header "Authorization: Bearer $NOVITA_TOKEN" | jq '{status: .task.status, videos: [.videos[].video_url]}'
 ```
 
+### 7. Seedance 2.0 Video Generation
+
+Seedance 2.0 is a multi-modal video model with its own dedicated endpoint
+(`/v3/async/seedance-2.0`). It supports text-to-video, image-to-video (first
+frame / first+last frame), and multi-modal reference generation (images +
+videos + audio). Two variants — `seedance-2.0` (standard) and
+`seedance-2.0-fast` (lower price, faster) — are selected with the `fast` flag.
+
+**Text-to-video.** Write to `/tmp/novita_seedance.json`:
+
+```json
+{
+  "prompt": "a dynamic beach volleyball rally on a sunny tropical beach, energetic tracking camera, golden afternoon light, cinematic",
+  "duration": 5,
+  "resolution": "720p",
+  "ratio": "16:9",
+  "generate_audio": true,
+  "watermark": false,
+  "fast": false,
+  "seed": -1
+}
+```
+
+Submit the task:
+
+```bash
+curl -s -X POST "https://api.novita.ai/v3/async/seedance-2.0" --header "Content-Type: application/json" --header "Authorization: Bearer $NOVITA_TOKEN" -d @/tmp/novita_seedance.json | jq '.task_id'
+```
+
+Poll for the result with the same `task-result` endpoint. Replace `<task-id>`:
+
+```bash
+curl -s "https://api.novita.ai/v3/async/task-result?task_id=<task-id>" --header "Authorization: Bearer $NOVITA_TOKEN" | jq '{status: .task.status, videos: [.videos[].video_url]}'
+```
+
+When `task.status` is `TASK_STATUS_SUCCEED`, `videos[].video_url` holds the MP4
+output. The URL is time-limited — `video_url_ttl` is its lifetime in seconds.
+
+**Request body fields** (all optional unless noted):
+
+- `prompt` — text description; **required for text-to-video**. Chinese or
+  English, recommended ≤1000 English words / ≤500 Chinese characters.
+- `fast` — use the `seedance-2.0-fast` variant.
+- `duration` — video length in seconds, range `[4, 15]`.
+- `resolution` — `480p`, `720p`, or `1080p`. `1080p` requires the standard
+  model (`fast: false`).
+- `ratio` — `16:9`, `4:3`, `1:1`, `3:4`, `9:16`, `21:9`, or `adaptive`.
+- `generate_audio` — generate synchronized voice, sound effects, and music.
+- `watermark` — include a watermark in the output.
+- `web_search` — let the model search the web for timeliness (adds latency).
+- `seed` — randomness control, range `[-1, 2^32-1]`; `-1` is random.
+- `return_last_frame` — also return the final frame as a watermark-free PNG
+  (useful for sequential video generation).
+
+**Image-to-video.** Add `image` (first-frame URL or Base64; jpeg/png/webp/bmp/
+tiff/gif, aspect ratio 0.4–2.5, ≤30MB). Add `last_image` for first+last-frame
+mode — `last_image` requires `image` and is invalid on its own.
+
+**Multi-modal reference.** Provide `reference_images` (1–9), `reference_videos`
+(mp4/mov, 1–3, each 2–15s, ≤50MB) and/or `reference_audios` (wav/mp3, 1–3,
+total ≤15s); reference the slots inside `prompt` as `[Image1]…`, `[Image2]…`.
+
+> **Minimum charge:** multi-modal reference jobs with video input bill
+> `max(per-second price × seconds, minimum charge)`. A short reference video
+> can push the job to the per-tier minimum (e.g. $0.30 for the 4s / 480p tier).
+
 ---
 
 ## Guidelines
@@ -192,3 +260,4 @@ curl -s "https://api.novita.ai/v3/async/task-result?task_id=<task-id>" --header 
 3. **OpenAI compatibility**: `model`, `messages`, `max_tokens`, `temperature`, `stream`, and `tools` all behave as they do with OpenAI
 4. **Browse models first**: model IDs change as new models launch — call the models endpoint (example 4) to confirm an exact ID before using it
 5. **402 Payment Required**: this means the account is out of credits — add credits in the Novita dashboard's Billing section
+6. **Seedance 2.0**: uses its own endpoint (`/v3/async/seedance-2.0`), separate from the generic `txt2video` — it adds image-to-video and multi-modal reference modes; output `video_url`s are time-limited (see `video_url_ttl`)
