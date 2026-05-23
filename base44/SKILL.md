@@ -61,13 +61,7 @@ Current confirmed MCP tools:
 
 ### App REST API Endpoints
 
-Base44's public App REST API documentation is not as complete as the MCP tool schema. For endpoint coverage, use the official Base44 CLI source as the reference implementation:
-
-```bash
-test -d /tmp/base44-cli || git clone https://github.com/base44/cli.git /tmp/base44-cli && rg -n "api/apps|entity-schemas|backend-functions|agent-configs|external-auth|secrets|deploy-dist|published-url" /tmp/base44-cli/packages/cli/src/core
-```
-
-Confirmed endpoint map from the official CLI:
+Base44 does not currently expose a machine-readable discovery document for the App REST API. Use the confirmed endpoint map below for common app operations. For edge cases, check the official Base44 CLI source at `https://github.com/base44/cli`.
 
 | Operation | Method | Path |
 | --- | --- | --- |
