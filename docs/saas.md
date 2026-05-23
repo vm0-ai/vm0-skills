@@ -97,6 +97,7 @@
 - [x] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
 - [x] [OpenAI](https://platform.openai.com/docs/api-reference) - GPT & Codex AI Models
 - [x] [Atlas Cloud](https://www.atlascloud.ai/docs/en/models/get-start) - Full-Modal AI Platform
+- [x] [Base44](https://docs.base44.com/) - AI App Builder with REST API and MCP
 - [ ] [Cursor](https://docs.cursor.com/) - AI Code Editor
 - [ ] [Dust](https://docs.dust.tt/) - AI Workflow Platform
 - [ ] [Replit](https://docs.replit.com/) - Cloud Development & AI Platform
@@ -192,7 +193,7 @@
 | Browser Automation & Web Scraping | 8 |
 | Data Processing & Utilities | 1 |
 | API & Cloud Integrations | 27 |
-| AI, LLM & Voice | 11 |
+| AI, LLM & Voice | 12 |
 | File & PDF Manipulation | 3 |
 | Analytics & Monitoring | 7 |
 | Development & Engineering | 6 |
@@ -201,8 +202,8 @@
 | Automation | 2 |
 | Design & Media | 4 |
 | Miscellaneous | 11 |
-| **Total** | **105** |
+| **Total** | **106** |
 
 ---
 
-> Last updated: 2026-03-03
+> Last updated: 2026-05-23
