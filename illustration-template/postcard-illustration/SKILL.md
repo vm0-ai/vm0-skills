@@ -11,13 +11,12 @@ The aesthetic sits in the urban-sketcher / travel-postcard / picture-book editor
 
 ## Reference anchors
 
-Three locked reference images live alongside this SKILL.md and define the look:
+Two locked reference images live alongside this SKILL.md and define the look:
 
-- `ref-baths.png` — a thermal-spa architectural scene with snow speckles. Anchors the **postcard-warm palette** and **L2 complexity**.
-- `ref-bee.png` — a botanical close-up of a bee on pink flowers with a blue-sky band. Anchors the **botanical bright palette** and **L1 complexity**.
-- `ref-oldtown.png` — a European old-town cityscape with ink-outlined fluffy clouds and a green mountain backdrop. Anchors the **dense L3 architectural scene** and **ink-cloud sky treatment**.
+- `ref-sensoji.png` — Tokyo Senso-ji temple at golden hour: Kaminarimon gate with the giant red lantern, five-story pagoda, Mt. Fuji silhouette, drifting sakura petals, ink-outlined clouds, paper lanterns strung overhead, silhouette pedestrians. Anchors the **Tokyo warm palette**, **L3 architectural complexity**, **drifting-petals atmosphere**, **ink-cloud sky**, and **high pattern density** (roof tile shingle curves, woodgrain on pagoda beams, repeated lantern marks).
+- `ref-shibuya.png` — Shibuya scramble crossing at twilight in the rain: indigo→magenta gradient sky, towering buildings packed with vertical neon kanji signs and lit windows, a sea of black-umbrella silhouettes with three focal sakura-pink / cyan / yellow umbrellas, a yellow taxi, wet asphalt with neon reflections. Anchors the **neon dusk palette**, **L3 modern urban complexity**, **rainy-streaks atmosphere**, **gradient-sky treatment**, and **very high pattern density** (endless tiny windows, vertical kanji marks, umbrella spokes, crosswalk stripes).
 
-When generating, the executing agent should pass all three references to the model as style anchors (image-to-image with high input fidelity). The prompt then names the new scene and dials the knobs.
+When generating, the executing agent should pass both references to the model as style anchors (image-to-image with high input fidelity). The prompt then names the new scene and dials the knobs.
 
 ## Locked style axes (NEVER vary)
 
@@ -51,10 +50,10 @@ When generating, the executing agent should pass all three references to the mod
 ### 1. Palette
 A saturated, warm-leaning postcard palette anchored in charcoal-black ink. Pick or compose one — examples:
 
-- **Postcard warm** — cream / tan / ochre / sky-blue / red accents (matches `ref-baths.png`, `ref-oldtown.png`).
-- **Botanical bright** — magenta-pink / lime-yellow / leaf-green / sky-blue / golden bee-yellow (matches `ref-bee.png`).
-- **Tokyo warm** — ivory / vermillion-red / slate-grey roof / sakura-pink / Fuji-blue.
-- **Neon dusk** — deep indigo / magenta-pink / cyan-neon / window-gold / wet-asphalt charcoal.
+- **Tokyo warm** — ivory / vermillion-red / slate-grey roof / sakura-pink / Fuji-blue (matches `ref-sensoji.png`).
+- **Neon dusk** — deep indigo / magenta-pink / cyan-neon / window-gold / wet-asphalt charcoal (matches `ref-shibuya.png`).
+- **Postcard warm** — cream / tan / ochre / sky-blue / red accents.
+- **Botanical bright** — magenta-pink / lime-yellow / leaf-green / sky-blue / golden bee-yellow.
 - **Jiangnan garden** — ivory / slate-grey roof / koi-orange / peony-pink / bamboo-green.
 - **Nordic muted** — sage / sand / dusty-rose / charcoal.
 - **Monsoon cool** — slate / teal / cream / mustard.
@@ -70,9 +69,9 @@ Always state 4–6 specific palette anchors in the prompt.
 - **Modern urban** — crossing, neon street, skyline.
 
 ### 3. Complexity
-- **L1** — single subject + simple background. Sparse and graphic (the bee piece).
-- **L2** — one main scene + light secondary layer (the bathhouse piece).
-- **L3** — dense layered scene with clear foreground, midground, and background (the old-town piece, the Senso-ji temple, the Shibuya crossing).
+- **L1** — single subject + simple background. Sparse and graphic.
+- **L2** — one main scene + light secondary layer.
+- **L3** — dense layered scene with clear foreground, midground, and background (matches both `ref-sensoji.png` and `ref-shibuya.png`).
 
 ### 4. Atmosphere
 - Snowfall (white speckles dominate).
@@ -96,7 +95,7 @@ How busy the ink hatching / stippling / repeated marks are on surfaces.
 
 - **Low** — clean fills with minimal marks.
 - **Medium** — windows-as-rectangles on buildings, occasional hatching, simple shingle indication.
-- **High** — every surface packed with stippling, shingle curves, micro-marks, woodgrain hatching, repeated kanji or signage marks (matches `ref-baths.png`, `ref-oldtown.png`, dense urban scenes).
+- **High** — every surface packed with stippling, shingle curves, micro-marks, woodgrain hatching, repeated kanji or signage marks (matches both `ref-sensoji.png` and `ref-shibuya.png`).
 
 ### 7. Cast
 - None.
@@ -128,7 +127,7 @@ When generating, compose a single prompt that:
 4. States the palette with 4–6 named color anchors.
 5. Explicitly forbids: anime, manga, 3D rendering, photoreal, clean vector, soft watercolor wash, pastel haze.
 
-Pass all three locked reference images as style anchors (image-to-image / multi-image edit, high input fidelity) so the model holds the line-work weight, color flatness, and pattern density steady.
+Pass both locked reference images as style anchors (image-to-image / multi-image edit, high input fidelity) so the model holds the line-work weight, color flatness, and pattern density steady.
 
 ## Model guidance
 
