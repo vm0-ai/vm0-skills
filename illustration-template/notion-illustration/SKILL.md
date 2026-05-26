@@ -1,6 +1,6 @@
 ---
 name: notion-illustration
-description: Generate a Notion-editorial-style hand-drawn spot illustration via fal-ai/nano-banana/edit. Black brush-pen ink on white, tapered confident strokes, solid-black curly hair, solid-black pants/shoes, 3/4 face turned toward viewer with closed-eye smile and soft nose hint, open breathing body outlines, and 1-3 supporting scene props + ambient marks that frame the moment. Trigger when user says /notion-illustration, asks for a "Notion-style illustration", "Notion spot illustration", or a new piece in this hand-drawn brush-pen Notion editorial style.
+description: Generate a Notion-editorial-style hand-drawn spot illustration with the nano-banana image-edit model. Black brush-pen ink on white, tapered confident strokes, solid-black curly hair, solid-black pants/shoes, 3/4 face turned toward viewer with closed-eye smile and soft nose hint, open breathing body outlines, and 1-3 supporting scene props + ambient marks that frame the moment. Trigger when user says /notion-illustration, asks for a "Notion-style illustration", "Notion spot illustration", or a new piece in this hand-drawn brush-pen Notion editorial style.
 ---
 
 # /notion-illustration — locked Notion-style spot illustration
@@ -16,7 +16,7 @@ For each invocation:
 1. **Take the user's short prompt as the seed.** Treat it as a starting hook, not the whole brief.
 2. **Brainstorm the moment.** Picture a specific time of day, a specific mood, a specific small detail that makes this scene feel *this scene* and not generic. What is the character actually doing in their hands? What's around them? What's the temperature of the moment — sleepy, focused, playful, cozy?
 3. **Compose the scene** with 1-3 supporting props + 2-4 ambient marks (see playbook for inspiration, but go beyond it — make creative choices specific to this prompt). Don't crowd the figure — supporting props frame, they don't compete.
-4. **Generate immediately** via the Path B recipe below. Lead the reply with the result and a one-line note on the creative choices you made (so the user can redirect if your interpretation missed).
+4. **Generate immediately** with the model recipe below. Lead the reply with the result and a one-line note on the creative choices you made (so the user can redirect if your interpretation missed).
 
 Bias toward concrete, lived-in details: a half-drunk mug, a kicked-off shoe, a single tossed sock, a bookmark sticking out, a window cracked open. The scene should feel like the artist *was there*.
 
@@ -149,13 +149,13 @@ This is **inspiration, not a template**. Always go beyond these starter combos �
 - 2-3 small ambient marks for mood (sparkles, dashes, sun, music note, heart)
 - ONE atmospheric detail (time of day, weather, mood signal)
 
-## Path — image-to-image via fal-ai/nano-banana/edit
+## Model Recipe
 
-Always use the `edit` endpoint with the bundled reference anchors. Text-to-image alone misses the face angle, line tapering, and breathing breaks.
+Use the **nano-banana image-edit model** with the bundled reference anchors. Text-to-image alone misses the face angle, line tapering, and breathing breaks.
 
 ### Reference anchors — STABLE URLS (always use these)
 
-All reference anchors are committed with this register-only resource under `illustration-template/notion-illustration/` and exposed through raw.githubusercontent.com after merge. Do not re-host them to temporary URLs; use the committed PNGs so fal receives stable image/png assets.
+All reference anchors are committed with this register-only resource under `illustration-template/notion-illustration/` and exposed through raw.githubusercontent.com after merge. Do not re-host them to temporary URLs; use the committed PNGs so the model receives stable image/png anchors.
 
 **Base URL:** `https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/`
 
@@ -181,15 +181,7 @@ All reference anchors are committed with this register-only resource under `illu
 
 All under the same base URL above; just append the filename.
 
-### Endpoint
-
-```
-POST https://queue.fal.run/fal-ai/nano-banana/edit
-```
-
-(NOT `fal.run/...` — direct fal.run is firewalled in this sandbox. `queue.fal.run` works.)
-
-### Request body template
+### Generation inputs
 
 ```json
 {
@@ -202,22 +194,6 @@ POST https://queue.fal.run/fal-ai/nano-banana/edit
   "num_images": 1,
   "output_format": "png"
 }
-```
-
-### Async flow
-
-The queue endpoint is async — submit, then poll status, then fetch result:
-
-```bash
-# 1. Submit
-REQ=$(curl -sS -X POST "https://queue.fal.run/fal-ai/nano-banana/edit" \
-  -H "Authorization: Key $FAL_TOKEN" -H "Content-Type: application/json" \
-  -d @body.json | jq -r .request_id)
-
-# 2. Wait ~25s then fetch result
-sleep 25
-curl -sS "https://queue.fal.run/fal-ai/nano-banana/requests/$REQ" \
-  -H "Authorization: Key $FAL_TOKEN" | jq -r '.images[0].url'
 ```
 
 ### PROMPT TEMPLATE (fill in `{{ACTIVITY}}` and `{{SCENE}}`)
@@ -310,6 +286,6 @@ If the first output misses on a specific axis, the proven correction prompts:
 | Feels too clean / designed | "Looser playful 30-second-doodle quality, larger head proportions, brushy imperfect edges on the black silhouettes." |
 | Lines feel stiff / static (not 潇洒, not floaty) | "More FLOWING FLOATY gestural quality — each shape SUGGESTED by 3-4 confident sweeping brush strokes, NOT drawn as a complete outline with small breaks. WHOLE SECTIONS of contour simply absent (the back of the couch, half of one body side). Calligraphy-meets-life-drawing energy: minimum strokes, lots of breathing white space, motion and flow throughout. Viewer's eye fills in 30-50% of implied shape." |
 
-## Cost & timing
-- ~25s per generation via the queue endpoint
-- ~$0.04 per image (fal-ai/nano-banana/edit pricing)
+## Output
+
+Generate one square PNG image and inspect it against the locked style axes before presenting it.
