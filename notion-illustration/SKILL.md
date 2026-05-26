@@ -1,13 +1,13 @@
 ---
 name: notion-illustration
-description: Generate a Notion-editorial-style hand-drawn spot illustration via fal-ai/nano-banana/edit. Black brush-pen ink on white, tapered confident strokes, solid-black curly hair, solid-black pants/shoes, 3/4 face turned toward viewer with closed-eye smile and soft nose hint, open breathing body outlines, and 1-3 supporting scene props + ambient marks that frame the moment. Trigger when user says /notion-illustration, asks for a "Notion-style illustration", "Notion spot illustration", or a new piece in this hand-drawn brush-pen Notion editorial style.
+description: Notion-editorial-style hand-drawn spot illustration. Black brush-pen ink on white, tapered confident strokes, solid-black curly hair, solid-black pants/shoes, 3/4 face turned toward viewer with closed-eye smile and soft nose hint, open breathing body outlines, and 1-3 supporting scene props + ambient marks that frame the moment. Trigger when user says /notion-illustration, asks for a "Notion-style illustration", "Notion spot illustration", or a new piece in this hand-drawn brush-pen Notion editorial style.
 ---
 
-# /notion-illustration — locked Notion-style spot illustration
+# /notion-illustration - locked Notion-style spot illustration
 
 This skill produces single-character spot illustrations in the Notion editorial hand-drawn brush-pen style. Loose playful sketch energy, tapered confident ink strokes, breathing-open contours, solid-black hair and pants — **plus a small supporting scene that anchors the moment in a place** (not a figure floating in white). Each invocation swaps only the **scene/activity** — every other style axis stays locked.
 
-## Invocation flow
+## Prompt interpretation
 
 The user will give a **short, simple prompt** — usually just the activity (e.g. "reading", "walking the dog", "making coffee"). It is your job to **brainstorm and expand it into a rich, specific scene**. Do not ask the user to flesh it out. Do not stop to confirm. Just imagine the moment vividly and run.
 
@@ -16,7 +16,7 @@ For each invocation:
 1. **Take the user's short prompt as the seed.** Treat it as a starting hook, not the whole brief.
 2. **Brainstorm the moment.** Picture a specific time of day, a specific mood, a specific small detail that makes this scene feel *this scene* and not generic. What is the character actually doing in their hands? What's around them? What's the temperature of the moment — sleepy, focused, playful, cozy?
 3. **Compose the scene** with 1-3 supporting props + 2-4 ambient marks (see playbook for inspiration, but go beyond it — make creative choices specific to this prompt). Don't crowd the figure — supporting props frame, they don't compete.
-4. **Generate immediately** via the Path B recipe below. Lead the reply with the result and a one-line note on the creative choices you made (so the user can redirect if your interpretation missed).
+4. **Keep the final image brief style-locked.** The only creative variation should be the scene/activity and the supporting details.
 
 Bias toward concrete, lived-in details: a half-drunk mug, a kicked-off shoe, a single tossed sock, a bookmark sticking out, a window cracked open. The scene should feel like the artist *was there*.
 
@@ -95,8 +95,8 @@ The rule of thumb: at least 3-5 obvious visible breaks across the whole illustra
 - Body loose and lightly elongated, NOT chibi, NOT abstract gesture, NOT anatomical
 - Limbs feel light and floaty, drawn as quick gestures
 
-### Scene context (NEW — always extend)
-The figure should NEVER float alone in white space. Every generation includes:
+### Scene context (NEW - always extend)
+The figure should NEVER float alone in white space. Every illustration includes:
 
 - **1-3 supporting PROPS** that frame the activity. Drawn in the same loose brush-pen style as the character — same line weight, same tapered quality, same level of detail. Props are quick supporting sketches, NOT detailed background. Examples:
   - Sleeping/waking → bed with rumpled blanket + pillow, nightstand with alarm clock, slippers on floor
@@ -149,64 +149,7 @@ This is **inspiration, not a template**. Always go beyond these starter combos �
 - 2-3 small ambient marks for mood (sparkles, dashes, sun, music note, heart)
 - ONE atmospheric detail (time of day, weather, mood signal)
 
-## Path — image-to-image via fal-ai/nano-banana/edit
-
-Always use the `edit` endpoint with the bundled reference anchors. Text-to-image alone misses the face angle, line tapering, and breathing breaks.
-
-### Reference anchors (always include all three in `image_urls`)
-
-The bundled reference PNGs are hosted on `raw.githubusercontent.com` and are directly fetchable by fal's `/edit` endpoint (correct `Content-Type: image/png` header, no redirect, no auth, no expiry). Do NOT re-host them via `cdn.vm0.io`, GitHub release assets, or base64 data URIs — all three are rejected by fal's image fetcher (signed-redirect + `application/octet-stream`).
-
-Base path: `https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/`
-
-Pass three primary anchors:
-
-1. **`ref-locked.png`** — the canonical exemplar that already matches every style axis. PRIMARY anchor; controls overall style.
-2. **`ref-anchor.png`** — face angle reference (3/4 facing viewer, both closed-smile eyes, soft integrated nose).
-3. **`ref-golf.png`** OR **`ref-cat.png`** — line tapering + breathing breaks reference (golf is best for body openness, cat is best for hair texture).
-
-The bundled `ref-scene-binoculars.png`, `ref-scene-cake.png`, `ref-scene-couch.png`, and `ref-scene-workflow.png` are scene-extension references — sub in one when its scene pattern matches the activity (grass+kneeling, multiple-character+props, furniture, floating-UI).
-
-### Endpoint
-
-```
-POST https://queue.fal.run/fal-ai/nano-banana/edit
-```
-
-(NOT `fal.run/...` — direct fal.run is firewalled in this sandbox. `queue.fal.run` works.)
-
-### Request body template
-
-```json
-{
-  "prompt": "<see PROMPT TEMPLATE below>",
-  "image_urls": [
-    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/ref-locked.png",
-    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/ref-anchor.png",
-    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/ref-golf.png"
-  ],
-  "num_images": 1,
-  "output_format": "png"
-}
-```
-
-### Async flow
-
-The queue endpoint is async — submit, then poll status, then fetch result:
-
-```bash
-# 1. Submit
-REQ=$(curl -sS -X POST "https://queue.fal.run/fal-ai/nano-banana/edit" \
-  -H "Authorization: Key $FAL_TOKEN" -H "Content-Type: application/json" \
-  -d @body.json | jq -r .request_id)
-
-# 2. Wait ~25s then fetch result
-sleep 25
-curl -sS "https://queue.fal.run/fal-ai/nano-banana/requests/$REQ" \
-  -H "Authorization: Key $FAL_TOKEN" | jq -r '.images[0].url'
-```
-
-### PROMPT TEMPLATE (fill in `{{ACTIVITY}}` and `{{SCENE}}`)
+## Style brief structure
 
 ```
 Generate a single-scene spot illustration in the Notion editorial hand-drawn style shown in the reference images. Match the locked style EXACTLY.
@@ -275,14 +218,14 @@ COMPOSITION:
 
 MOOD: warm, candid, everyday — a quiet captured moment in its setting.
 
-Match the locked exemplar style precisely. Scene props should follow the look of the bundled scene references (cake/binoculars/couch/workflow). Do NOT copy any text or UI from the references.
+Match the locked exemplar style precisely. Do NOT copy any text or UI from references.
 ```
 
-## Iteration playbook
+## Style correction guide
 
-If the first output misses on a specific axis, the proven correction prompts:
+If the output misses on a specific style axis, use a correction focused only on the visual issue:
 
-| Issue | Correction (i2i with prior output as anchor) |
+| Issue | Correction |
 |---|---|
 | Figure floating alone, no scene | "Add scene context — 1-3 supporting props that frame the activity (specify which), plus 2-4 small ambient marks (sparkles, action dashes). All in the same brush-pen style." |
 | Scene props too detailed / crowding | "Simplify the scene — fewer props, looser brush sketches, more white space around the character." |
@@ -295,7 +238,3 @@ If the first output misses on a specific axis, the proven correction prompts:
 | Hair too many white gaps | "Reduce internal white gaps in hair — mostly solid black with only one or two subtle brush separations." |
 | Feels too clean / designed | "Looser playful 30-second-doodle quality, larger head proportions, brushy imperfect edges on the black silhouettes." |
 | Lines feel stiff / static (not 潇洒, not floaty) | "More FLOWING FLOATY gestural quality — each shape SUGGESTED by 3-4 confident sweeping brush strokes, NOT drawn as a complete outline with small breaks. WHOLE SECTIONS of contour simply absent (the back of the couch, half of one body side). Calligraphy-meets-life-drawing energy: minimum strokes, lots of breathing white space, motion and flow throughout. Viewer's eye fills in 30-50% of implied shape." |
-
-## Cost & timing
-- ~25s per generation via the queue endpoint
-- ~$0.04 per image (fal-ai/nano-banana/edit pricing)
