@@ -9,6 +9,20 @@ This skill produces one tall portrait illustration in a locked hand-drawn editor
 
 The aesthetic sits in the urban-sketcher / travel-postcard / picture-book editorial space. Think dense layered architectural and botanical scenes, confident ink line work, flat saturated gouache color, and a charming slightly imperfect hand. Not anime, not manga, not 3D, not vector, not photoreal, not soft watercolor wash.
 
+## Required model
+
+This style is locked to **`gpt-image-1.5`** (OpenAI GPT image generation, served through whichever provider the executing tool routes to). The dense small ink patterns, flat-but-textured color medium, and consistent line weight do NOT survive on weaker or differently-tuned image models — they collapse into either soft-watercolor wash or clean vector. Do not substitute with another model unless you have validated that the two locked reference anchors regenerate faithfully.
+
+Required generation parameters:
+
+- **Model:** `gpt-image-1.5`
+- **Size:** `1024x1536` (tall portrait)
+- **Quality:** `high` — the dense ink patterns and small speckles need resolution to read
+- **Mode:** image-to-image with BOTH locked reference anchors (`ref-sensoji.png` and `ref-shibuya.png`) passed as style references
+- **Input fidelity:** `high` — the model must hold line-work weight, color flatness, and pattern density from the references
+
+These are semantic parameters. The executing tool decides the invocation mechanics (CLI command, REST call, gateway, local runtime).
+
 ## Reference anchors
 
 Two locked reference images live alongside this SKILL.md and define the look:
@@ -131,10 +145,10 @@ Pass both locked reference images as style anchors (image-to-image / multi-image
 
 ## Model guidance
 
-- This style holds best on GPT-Image-1.5 with multi-image style references at high input fidelity. Other strong-context image models with image-to-image support can substitute; in that case, the executing tool decides the invocation mechanics. The semantic constraints in this SKILL.md stay the same.
-- Size: 1024×1536 (tall portrait).
-- Quality: high. The dense ink patterns and small speckles need resolution to read.
+See the **Required model** section near the top of this file for the locked model and required generation parameters. Additional notes:
+
 - Do not request `--style` chaining with another vm0 image style — this style is self-contained and the resource is selected as the primary style.
+- Do not silently fall back to a different image model if `gpt-image-1.5` is unavailable. Surface the unavailability and ask the caller before substituting — the locked look will not survive on a weaker model.
 
 ## Evaluation cues
 
