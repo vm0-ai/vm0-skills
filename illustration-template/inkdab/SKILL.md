@@ -1,9 +1,11 @@
 ---
-name: brush-pen-accent
-description: Brush-pen editorial illustration with a single free-floating accent color. Black hand-wobbled ink linework on pure white background, ONE flat accent-color shape per prop (painted-first, never outlined in black), scribbled hatched hair, open-outline bodies with zero fill, and one small solid-accent triangle floating freely as a recurring motif. Trigger when user says /brush-pen-accent, asks for a "brush-pen illustration with a single accent color", a "free-floating color block illustration", or briefs in the style of the included reference images.
+name: inkdab
+description: Brush-pen editorial illustration with a single free-floating accent color "dab" sitting underneath loose ink linework. Black hand-wobbled ink on pure white background, ONE flat accent-color shape per prop (painted-first, never outlined in black), scribbled hatched hair, open-outline bodies with zero fill, and one small solid-accent triangle floating freely as a recurring motif. Trigger when user says /inkdab, asks for an "inkdab illustration", a "brush-pen illustration with a single accent color", a "free-floating color block illustration", or briefs in the style of the included reference images.
 ---
 
-# /brush-pen-accent — locked brush-pen + single-accent-color editorial illustration
+# /inkdab — locked brush-pen + single-accent-color editorial illustration
+
+The name comes from the style's two-layer construction: a flat color **dab** painted first, then loose **ink** drawn freely on top. The dab is never outlined; the ink never frames it. They overlap imperfectly.
 
 This skill produces editorial spot illustrations in a hand-drawn brush-pen style with exactly ONE flat accent color and a strict free-floating color rule. Each invocation swaps the **palette, cast, scene, and density**; every other style axis stays locked.
 
