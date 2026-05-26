@@ -153,19 +153,33 @@ This is **inspiration, not a template**. Always go beyond these starter combos �
 
 Always use the `edit` endpoint with the bundled reference anchors. Text-to-image alone misses the face angle, line tapering, and breathing breaks.
 
-### Reference anchors (always include all three in `image_urls`)
+### Reference anchors — STABLE URLS (always use these)
 
-The bundled reference PNGs are hosted on `raw.githubusercontent.com` and are directly fetchable by fal's `/edit` endpoint (correct `Content-Type: image/png` header, no redirect, no auth, no expiry). Do NOT re-host them via `cdn.vm0.io`, GitHub release assets, or base64 data URIs — all three are rejected by fal's image fetcher (signed-redirect + `application/octet-stream`).
+All reference anchors are committed with this register-only resource under `illustration-template/notion-illustration/` and exposed through raw.githubusercontent.com after merge. Do not re-host them to temporary URLs; use the committed PNGs so fal receives stable image/png assets.
 
-Base path: `https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/`
+**Base URL:** `https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/`
 
-Pass three primary anchors:
+**Active anchors (always pass all three to `image_urls`, in this exact order):**
 
-1. **`ref-locked.png`** — the canonical exemplar that already matches every style axis. PRIMARY anchor; controls overall style.
-2. **`ref-anchor.png`** — face angle reference (3/4 facing viewer, both closed-smile eyes, soft integrated nose).
-3. **`ref-golf.png`** OR **`ref-cat.png`** — line tapering + breathing breaks reference (golf is best for body openness, cat is best for hair texture).
+1. **`nb-ref-locked.png`** — the canonical exemplar. PRIMARY anchor; controls overall style.
+   `https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/nb-ref-locked.png`
+2. **`nb-ref-face-angle.png`** — 3/4 face turned toward viewer reference.
+   `https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/nb-ref-face-angle.png`
+3. **`nb-ref-line-tapering.png`** — calligraphic brush stroke + body breathing-breaks reference.
+   `https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/nb-ref-line-tapering.png`
 
-The bundled `ref-scene-binoculars.png`, `ref-scene-cake.png`, `ref-scene-couch.png`, and `ref-scene-workflow.png` are scene-extension references — sub in one when its scene pattern matches the activity (grass+kneeling, multiple-character+props, furniture, floating-UI).
+**Supplementary anchors (swap in selectively when their pattern fits the activity):**
+
+- `nb-ref-hair-texture.png` — best for hair internal-texture details
+- `nb-ref-face-closeup.png` — face detail close-up
+- `nb-ref-loose-set.png` — 6-tile loose Notion variety set
+- `nb-ref-grid.png` — original 8-tile Notion style grid
+- `nb-ref-scene-cake.png` — multi-character + birthday/celebration patterns
+- `nb-ref-scene-binoculars.png` — outdoor/kneeling-with-grass patterns
+- `nb-ref-scene-workflow.png` — floating-UI/workflow-boxes patterns
+- `nb-ref-scene-couch.png` — furniture/cuddle patterns
+
+All under the same base URL above; just append the filename.
 
 ### Endpoint
 
@@ -181,9 +195,9 @@ POST https://queue.fal.run/fal-ai/nano-banana/edit
 {
   "prompt": "<see PROMPT TEMPLATE below>",
   "image_urls": [
-    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/ref-locked.png",
-    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/ref-anchor.png",
-    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/notion-illustration/ref-golf.png"
+    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/nb-ref-locked.png",
+    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/nb-ref-face-angle.png",
+    "https://raw.githubusercontent.com/vm0-ai/vm0-skills/main/illustration-template/notion-illustration/nb-ref-line-tapering.png"
   ],
   "num_images": 1,
   "output_format": "png"
