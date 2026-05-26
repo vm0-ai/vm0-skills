@@ -11,9 +11,9 @@ This style is distinct from Notion Illustration (which is line-only ink) and vm0
 
 Bundled reference imagery — three canonical outputs that demonstrate the framework in action:
 
-- `ref-reading-nook.png` — Charcoal tabby cat curled in a dusty-slate-blue armchair reading a tiny book, sage-green lamp, cream star pillow, dusty-blue wallpaper with cream florets. Establishes the **default cool-folk palette** (dusty blue dominant, oatmeal cream + muted sage support, tiny warm accents only) and the cozy-interior L2 archetype.
-- `ref-puzzle.png` — Long-haired calico cat (cream + caramel + charcoal patches) belly-down on a folk-pattern rug working on a jigsaw puzzle. Demonstrates **cast rotation** — a completely different character from the reading-nook scene, no scarf, looser posture. Same palette discipline; different wallpaper motif (cream berry-and-leaf sprigs).
-- `ref-chill-tussle.png` — Tuxedo cat + scruffy brown terrier mid-tumble, paws raised, tail puffed, fur tufts drifting, knocked-over star pillow, unspooled yarn. Demonstrates the **chill-face rule under action**: both characters keep closed crescent eyes + soft smiles even while wrestling. All energy lives in the body posture and scene props, never in the face.
+- `ref-reading-nook.jpg` — Charcoal tabby cat curled in a dusty-slate-blue armchair reading a tiny book, sage-green lamp, cream star pillow, dusty-blue wallpaper with cream florets. Establishes the **default cool-folk palette** (dusty blue dominant, oatmeal cream + muted sage support, tiny warm accents only) and the cozy-interior L2 archetype.
+- `ref-puzzle.jpg` — Long-haired calico cat (cream + caramel + charcoal patches) belly-down on a folk-pattern rug working on a jigsaw puzzle. Demonstrates **cast rotation** — a completely different character from the reading-nook scene, no scarf, looser posture. Same palette discipline; different wallpaper motif (cream berry-and-leaf sprigs).
+- `ref-chill-tussle.jpg` — Tuxedo cat + scruffy brown terrier mid-tumble, paws raised, tail puffed, fur tufts drifting, knocked-over star pillow, unspooled yarn. Demonstrates the **chill-face rule under action**: both characters keep closed crescent eyes + soft smiles even while wrestling. All energy lives in the body posture and scene props, never in the face.
 
 ## Locked Style Fundamentals (never vary)
 
@@ -141,7 +141,7 @@ Mood: quiet afternoon, gently absorbed, lazy.
 
 This style is designed for narrative compositions with multiple props, characters, and patterned surfaces — the kind of scene a strong text-to-image model can compose in one pass from a detailed prompt. Recommended pairing: `gpt-image-1.5` at `high` quality, square 1024×1024, with prompt enhancement disabled so the locked-fundamentals language reaches the model verbatim.
 
-The bundled reference images (`ref-reading-nook.png`, `ref-puzzle.png`, `ref-chill-tussle.png`) are canonical outputs of this framework — provided for *human* style study and prompt authoring. They are not required as image inputs at generation time — the style transfers entirely through the detailed prompt language. If output drifts (paper grain too clean, palette too saturated, brushwork too smooth, faces too alert), tighten the prompt by re-emphasizing "gouache + watercolor on aged paper, visible paper grain, soft hand-drawn outlines, no harsh black lines" and (for action scenes) restate the chill-face rule — rather than reaching for image-to-image.
+The bundled reference images (`ref-reading-nook.jpg`, `ref-puzzle.jpg`, `ref-chill-tussle.jpg`) are canonical outputs of this framework — provided for *human* style study and prompt authoring. They are not required as image inputs at generation time — the style transfers entirely through the detailed prompt language. If output drifts (paper grain too clean, palette too saturated, brushwork too smooth, faces too alert), tighten the prompt by re-emphasizing "gouache + watercolor on aged paper, visible paper grain, soft hand-drawn outlines, no harsh black lines" and (for action scenes) restate the chill-face rule — rather than reaching for image-to-image.
 
 ## Quality checklist
 
