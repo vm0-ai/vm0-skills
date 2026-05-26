@@ -1,0 +1,158 @@
+---
+name: postcard-illustration
+description: Hand-drawn editorial postcard illustration style. Fine black marker/pen ink linework over flat saturated gouache color fills with sharp edges, dense small repeated ink patterns on surfaces (rows of windows, shingle curves, hatching, stippling), subtle paper-grain background texture, tiny scattered white speckles (snow / petals / sparkle), and a tall portrait composition with a layered foreground-midground-background. Travel-journal / urban-sketcher aesthetic. Trigger when the user says /postcard-illustration, asks for a "postcard illustration", "travel illustration", "urban sketcher style", or briefs a palette + scene archetype + complexity.
+---
+
+# /postcard-illustration — locked postcard / travel-journal illustration
+
+This skill produces one tall portrait illustration in a locked hand-drawn editorial postcard style. The line work, color medium, surface texture, and overall composition are constants. The caller only dials seven creative knobs (palette, scene archetype, subject, complexity, atmosphere, sky treatment, surface-pattern density, cast).
+
+The aesthetic sits in the urban-sketcher / travel-postcard / picture-book editorial space. Think dense layered architectural and botanical scenes, confident ink line work, flat saturated gouache color, and a charming slightly imperfect hand. Not anime, not manga, not 3D, not vector, not photoreal, not soft watercolor wash.
+
+## Reference anchors
+
+Three locked reference images live alongside this SKILL.md and define the look:
+
+- `ref-baths.png` — a thermal-spa architectural scene with snow speckles. Anchors the **postcard-warm palette** and **L2 complexity**.
+- `ref-bee.png` — a botanical close-up of a bee on pink flowers with a blue-sky band. Anchors the **botanical bright palette** and **L1 complexity**.
+- `ref-oldtown.png` — a European old-town cityscape with ink-outlined fluffy clouds and a green mountain backdrop. Anchors the **dense L3 architectural scene** and **ink-cloud sky treatment**.
+
+When generating, the executing agent should pass all three references to the model as style anchors (image-to-image with high input fidelity). The prompt then names the new scene and dials the knobs.
+
+## Locked style axes (NEVER vary)
+
+### Orientation
+- Tall portrait, approximately 2:3 — generate at 1024×1536.
+
+### Line tool
+- Fine BLACK MARKER or technical pen.
+- Thin, fairly uniform weight. Confident, deliberate strokes.
+- NOT a wet watercolor brush. NOT a wobbly sketch line. NOT variable calligraphic taper.
+- Architectural straight lines are drawn straight, but with a hand-made feel — slight imperfections are welcome, geometric perfection is not.
+
+### Color medium
+- FLAT, SATURATED gouache or marker fills.
+- Sharp, hard edges between color zones — colors do not bleed or blur into each other.
+- NO wet-on-wet watercolor bloom.
+- NO soft pastel haze or airbrush gradient (sky may have a gentle vertical gradient — see Sky knob below — but everywhere else is flat).
+- Each color zone stays roughly within its ink contour, but small imperfections (a tiny patch of color crossing a line, a tiny patch of white inside a fill) read as hand-painted.
+
+### Surface texture
+- Subtle paper-grain texture layered across the whole canvas. Visible but quiet — never the dominant element.
+
+### Speckles
+- Small sparse scattered white (or white-pink) dot specks distributed across the canvas. They read as snow, drifting petals, or sparkle depending on the scene. Stay light and airy — never blizzard density.
+
+### Mood
+- Editorial, travel-journal, picture-book postcard. Charming, layered, slightly imperfect.
+
+## Dial-able knobs (vary per illustration)
+
+### 1. Palette
+A saturated, warm-leaning postcard palette anchored in charcoal-black ink. Pick or compose one — examples:
+
+- **Postcard warm** — cream / tan / ochre / sky-blue / red accents (matches `ref-baths.png`, `ref-oldtown.png`).
+- **Botanical bright** — magenta-pink / lime-yellow / leaf-green / sky-blue / golden bee-yellow (matches `ref-bee.png`).
+- **Tokyo warm** — ivory / vermillion-red / slate-grey roof / sakura-pink / Fuji-blue.
+- **Neon dusk** — deep indigo / magenta-pink / cyan-neon / window-gold / wet-asphalt charcoal.
+- **Jiangnan garden** — ivory / slate-grey roof / koi-orange / peony-pink / bamboo-green.
+- **Nordic muted** — sage / sand / dusty-rose / charcoal.
+- **Monsoon cool** — slate / teal / cream / mustard.
+
+Always state 4–6 specific palette anchors in the prompt.
+
+### 2. Scene archetype
+- **Architectural landmark** — a building or street scene (temple, plaza, old town, monument).
+- **Botanical close-up** — flowers, insects, a single small creature.
+- **Interior** — a room, café, library, shop, bathhouse.
+- **Vehicle / object** — boat, train, market stall, taxi.
+- **Travel landscape** — mountains, harbor, garden, coastline.
+- **Modern urban** — crossing, neon street, skyline.
+
+### 3. Complexity
+- **L1** — single subject + simple background. Sparse and graphic (the bee piece).
+- **L2** — one main scene + light secondary layer (the bathhouse piece).
+- **L3** — dense layered scene with clear foreground, midground, and background (the old-town piece, the Senso-ji temple, the Shibuya crossing).
+
+### 4. Atmosphere
+- Snowfall (white speckles dominate).
+- Drifting petals (sakura, jacaranda — speckles take on petal color).
+- Bright clear daylight.
+- Cloud-cover with ink-outlined fluffy cumulus clouds.
+- Foggy or overcast.
+- Golden hour or dusk.
+- Rainy (speckles become diagonal rain streaks).
+- Night with neon glow.
+
+### 5. Sky treatment
+- Solid color band.
+- Vertical gradient (light blue → cream, or indigo → magenta-pink at dusk).
+- Ink-outlined cumulus clouds against a gradient.
+- No sky (the subject fills the canvas top to bottom).
+- A distant mountain or landmark silhouette layered into the sky (Fuji, an alpine ridge).
+
+### 6. Surface-pattern density
+How busy the ink hatching / stippling / repeated marks are on surfaces.
+
+- **Low** — clean fills with minimal marks.
+- **Medium** — windows-as-rectangles on buildings, occasional hatching, simple shingle indication.
+- **High** — every surface packed with stippling, shingle curves, micro-marks, woodgrain hatching, repeated kanji or signage marks (matches `ref-baths.png`, `ref-oldtown.png`, dense urban scenes).
+
+### 7. Cast
+- None.
+- 1–3 tiny silhouette pedestrians for scale.
+- A featured creature (bee, cat, bird, koi).
+- A dense crowd (umbrellas in rain, market shoppers).
+- Bird silhouettes flying in the sky.
+
+## Brief template the caller fills in
+
+```
+Palette: {palette name + 4–6 color anchors}
+Scene archetype: {architectural | botanical | interior | landscape | urban | …}
+Subject: {one or two sentences describing what the scene IS}
+Complexity: {L1 | L2 | L3}
+Atmosphere: {snowfall | drifting petals | clear | cloudy | dusk | rainy | …}
+Sky: {solid | gradient | ink-clouds | mountain silhouette | none}
+Pattern density: {low | medium | high}
+Cast: {none | silhouette figures | featured creature | crowd | birds}
+```
+
+## Prompt assembly
+
+When generating, compose a single prompt that:
+
+1. Begins with: "Create a new illustration in EXACTLY the same hand-drawn editorial postcard style as the reference images."
+2. Restates the LOCKED STYLE block in plain language: tall portrait, fine confident black marker/pen ink, flat saturated gouache fills, sharp edges, paper-grain texture, sparse white speckles, dense small repeated ink patterns, urban-sketcher mood.
+3. Names the scene in concrete detail — foreground / midground / background elements, lighting, key props.
+4. States the palette with 4–6 named color anchors.
+5. Explicitly forbids: anime, manga, 3D rendering, photoreal, clean vector, soft watercolor wash, pastel haze.
+
+Pass all three locked reference images as style anchors (image-to-image / multi-image edit, high input fidelity) so the model holds the line-work weight, color flatness, and pattern density steady.
+
+## Model guidance
+
+- This style holds best on GPT-Image-1.5 with multi-image style references at high input fidelity. Other strong-context image models with image-to-image support can substitute; in that case, the executing tool decides the invocation mechanics. The semantic constraints in this SKILL.md stay the same.
+- Size: 1024×1536 (tall portrait).
+- Quality: high. The dense ink patterns and small speckles need resolution to read.
+- Do not request `--style` chaining with another vm0 image style — this style is self-contained and the resource is selected as the primary style.
+
+## Evaluation cues
+
+A correct output should show:
+
+- Tall portrait composition with clear foreground, midground, and background layering (L2 or L3) or a single subject on a simple flat background (L1).
+- Black marker / pen ink line work that is thin, confident, and deliberate — visible across every shape.
+- Flat saturated color fills with sharp edges between zones. No watercolor bleed.
+- Dense small repeated ink marks on appropriate surfaces (windows, shingles, hatching, stippling) when pattern density is medium or high.
+- Subtle paper-grain texture across the whole canvas.
+- Small sparse white dot or streak speckles (snow, petals, sparkle, rain) distributed across the canvas.
+- A palette that matches the brief's named anchors.
+
+A wrong output usually shows one of:
+
+- Soft watercolor wash with bleeding edges (treat as a regeneration trigger).
+- Anime / manga character styling.
+- Clean vector flat-design illustration with no ink hand.
+- Photoreal or 3D rendering.
+- Empty surfaces lacking the small repeated ink marks.
