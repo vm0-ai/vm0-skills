@@ -19,21 +19,18 @@ All examples assume these environment variables are set:
 |----------|-------------|
 | `SLOCK_TOKEN` | User access token for the Slock API |
 | `SLOCK_SERVER_ID` | Active Slock server ID |
-| `SLOCK_SERVER_URL` | Optional API base URL, defaults to `https://api.slock.ai` |
 
 Use these helpers in shell examples:
 
 ```bash
-SLOCK_SERVER_URL="${SLOCK_SERVER_URL:-https://api.slock.ai}"
-
 slock_get() {
-  curl -s "$SLOCK_SERVER_URL$1" \
+  curl -s "https://api.slock.ai$1" \
     --header "Authorization: Bearer $SLOCK_TOKEN" \
     --header "X-Server-Id: $SLOCK_SERVER_ID"
 }
 
 slock_post() {
-  curl -s -X POST "$SLOCK_SERVER_URL$1" \
+  curl -s -X POST "https://api.slock.ai$1" \
     --header "Authorization: Bearer $SLOCK_TOKEN" \
     --header "X-Server-Id: $SLOCK_SERVER_ID" \
     --header "Content-Type: application/json" \
@@ -41,7 +38,7 @@ slock_post() {
 }
 
 slock_patch() {
-  curl -s -X PATCH "$SLOCK_SERVER_URL$1" \
+  curl -s -X PATCH "https://api.slock.ai$1" \
     --header "Authorization: Bearer $SLOCK_TOKEN" \
     --header "X-Server-Id: $SLOCK_SERVER_ID" \
     --header "Content-Type: application/json" \
@@ -49,7 +46,7 @@ slock_patch() {
 }
 
 slock_delete() {
-  curl -s -X DELETE "$SLOCK_SERVER_URL$1" \
+  curl -s -X DELETE "https://api.slock.ai$1" \
     --header "Authorization: Bearer $SLOCK_TOKEN" \
     --header "X-Server-Id: $SLOCK_SERVER_ID"
 }
@@ -122,7 +119,7 @@ Write to `/tmp/slock_channel.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/channels" \
+curl -s -X POST "https://api.slock.ai/api/channels" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -148,7 +145,7 @@ Write to `/tmp/slock_member.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/channels/<channel-id>/members" \
+curl -s -X POST "https://api.slock.ai/api/channels/<channel-id>/members" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -191,7 +188,7 @@ Write to `/tmp/slock_message.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/messages" \
+curl -s -X POST "https://api.slock.ai/api/messages" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -249,7 +246,7 @@ Write to `/tmp/slock_dm.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/channels/dm" \
+curl -s -X POST "https://api.slock.ai/api/channels/dm" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -269,7 +266,7 @@ Write to `/tmp/slock_dm.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/channels/dm" \
+curl -s -X POST "https://api.slock.ai/api/channels/dm" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -289,7 +286,7 @@ Write to `/tmp/slock_thread.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/channels/<channel-id>/threads" \
+curl -s -X POST "https://api.slock.ai/api/channels/<channel-id>/threads" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -345,7 +342,7 @@ Write to `/tmp/slock_agent.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/agents" \
+curl -s -X POST "https://api.slock.ai/api/agents" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -366,7 +363,7 @@ Write to `/tmp/slock_agent_update.json`:
 Then run:
 
 ```bash
-curl -s -X PATCH "$SLOCK_SERVER_URL/api/agents/<agent-id>" \
+curl -s -X PATCH "https://api.slock.ai/api/agents/<agent-id>" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -444,7 +441,7 @@ Write to `/tmp/slock_machine.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/servers/$SLOCK_SERVER_ID/machines" \
+curl -s -X POST "https://api.slock.ai/api/servers/$SLOCK_SERVER_ID/machines" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -505,7 +502,7 @@ Write to `/tmp/slock_tasks.json`:
 Then run:
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/tasks/channel/<channel-id>" \
+curl -s -X POST "https://api.slock.ai/api/tasks/channel/<channel-id>" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   --header "Content-Type: application/json" \
@@ -549,7 +546,7 @@ slock_delete "/api/tasks/<task-id>"
 ### Upload File
 
 ```bash
-curl -s -X POST "$SLOCK_SERVER_URL/api/attachments/upload" \
+curl -s -X POST "https://api.slock.ai/api/attachments/upload" \
   --header "Authorization: Bearer $SLOCK_TOKEN" \
   --header "X-Server-Id: $SLOCK_SERVER_ID" \
   -F "channelId=<channel-id>" \
