@@ -66,14 +66,12 @@ These are the only things that should change between pieces.
 
 | # | Axis | What it controls | Example values |
 |---|---|---|---|
-| 1 | **Palette** | The named or custom color system for the piece | `cool-dawn` (powder blue + cream + dusty teal + pink-red skin + black) · `sunset-coral` (coral + mustard + dusty teal + cream + pink-red skin + black) · `twilight` (deep navy + mustard + dusty pink + cream + pink-red skin + black) · `forest-green` (sage + ochre + cream + pink-red skin + black) · `warm-earth` (warm gray + rust orange + sage green + pink-red skin + black — legacy palette, do not auto-default) · custom hex set |
+| 1 | **Palette** | The named or custom color system for the piece | `cool-dawn` (powder blue + cream + dusty teal + pink-red skin + black) · `sunset-coral` (coral + mustard + dusty teal + cream + pink-red skin + black) · `twilight` (deep navy + mustard + dusty pink + cream + pink-red skin + black) · `forest-green` (sage + ochre + cream + pink-red skin + black) · custom hex set |
 | 2 | **Mood** | The emotional tone the piece carries; subtly shapes pose & palette | calm · focused · joyful · melancholic · tender |
 | 3 | **Scene** | Where the figure is — empty poster vs. environmental | `empty-poster` (default, no scene) · `domestic-interior` · `cafe` · `outdoor` · `workspace` |
 | 4 | **Cast** | Who is in the frame | `solo` (default) · `pair` · `parent-child` · `group-plus-pets` |
 | 5 | **Complexity** | How much beyond the hero prop is drawn | `L1` (figure + one hero prop, default — strongest in this style) · `L2` (figure + 2–3 scene props) · `L3` (full environment with depth) |
 | 6 | **Framing** | The angle on the figure | `side-profile` (default — strongest in this style) · `three-quarter` · `wide-scene` |
-
-> **Palette note:** `warm-earth` is the original palette the style was developed against. It is preserved here as a legacy option but should not be chosen as a default — pick `cool-dawn`, `sunset-coral`, `twilight`, `forest-green`, or a custom set for new work.
 
 ## Brief template
 
@@ -114,53 +112,9 @@ Evaluation rubric for the returned image — if any of these fail, regenerate:
 
 ## Worked examples
 
-Eight reference pieces below — four hold the locked frame across compositional variation (warm-earth palette, legacy), four hold the locked frame across palette variation (current recommended palettes).
+Seven reference pieces below — four hold the locked frame across the four named palettes at L1 (the strongest baseline), three push beyond L1 to show L2/L3 scene-complexity and multi-figure cast.
 
-### Compositional reference set (L1 framing demonstrations — palette is the legacy warm-earth)
-
-These show the strength of the L1 side-profile poster framing. The palette here is the legacy `warm-earth` system — see palette note above; do not default to this palette for new work.
-
-#### A1 — cyclist · warm-earth · L1 · solo
-
-![cyclist · warm-earth](./ref-cyclist-warmearth-l1-solo.png)
-
-- Hero prop: bicycle (walked, both hands on handlebars)
-- Cast: solo
-- Framing: side-profile (slight three-quarter)
-- Textile: trousers, sage-green grain splash
-- Mood: focused
-
-#### A2 — bouquet · warm-earth · L1 · solo  *(strongest face fidelity)*
-
-![bouquet · warm-earth](./ref-bouquet-warmearth-l1-solo.png)
-
-- Hero prop: oversized bouquet of wild flowers held against chest
-- Cast: solo
-- Framing: side-profile
-- Textile: skirt, sage-green grain splash
-- Mood: tender
-
-#### A3 — cradling cat · warm-earth · L1 · solo
-
-![cradling cat · warm-earth](./ref-cradlingcat-warmearth-l1-solo.png)
-
-- Hero prop: sleeping black cat cradled against chest
-- Cast: solo
-- Framing: side-profile
-- Textile: skirt, sage-green grain splash
-- Mood: tender
-
-#### A4 — reader · warm-earth · L1 · solo
-
-![reader · warm-earth](./ref-reader-warmearth-l1-solo.png)
-
-- Hero prop: open hardcover book held at chest level
-- Cast: solo
-- Framing: side-profile
-- Textile: trousers (inverted palette — rust sweater + black trousers), sage-green grain splash
-- Mood: calm
-
-### Palette reference set (current recommended palettes)
+### Palette reference set — L1 (the recommended baseline)
 
 These show the same L1 framing across the four named palettes — the cleanest demonstration that the style is palette-agnostic when the grain-on-textile rule is held.
 
@@ -203,6 +157,51 @@ These show the same L1 framing across the four named palettes — the cleanest d
 - Background: muted sage green
 - Textile: skirt (ochre), sage-green grain splash
 - Mood: calm
+
+### Scene-complexity reference set — L2 / L3
+
+These three reference pieces push beyond L1's "figure + one hero prop" into environmental scenes and multi-figure cast. The locked frame still holds (closed-eye face, blush, grain confined to a single textile, muted palette, no headlines) — the scene around the figure expands.
+
+#### C1 — café · cool-dawn · L2 · solo
+
+![café · cool-dawn · L2](./ref-cafe-cooldawn-l2-solo.png)
+
+- Scene: woman seated sideways at a small café table by a window, holding a coffee cup in both hands
+- Hero props (L2): coffee cup · croissant on a plate · small table lamp · window
+- Palette: cool-dawn (powder blue · cream · dusty teal · black · pink-red skin)
+- Background: pale powder blue
+- Textile: trousers (dusty teal), faint blue grain splash
+- Cast: solo
+- Framing: side-profile
+- Mood: contemplative
+
+#### C2 — bench · sunset-coral · L2 · pair + pet
+
+![bench · sunset-coral · L2 · pair](./ref-bench-sunsetcoral-l2-pair.png)
+
+- Scene: two friends sitting side-by-side on a teal park bench, both holding ice cream cones, a small black dog at their feet
+- Hero props (L2): ice cream cones (×2) · park bench · small dog
+- Palette: sunset-coral (coral · mustard · dusty teal · cream · black · pink-red skin)
+- Background: dusty coral pink
+- Textile: trousers/skirt of both figures hold the grain accents
+- Cast: pair + pet
+- Framing: three-quarter (both figures facing camera)
+- Mood: joyful
+
+#### C3 — twilight desk · twilight · L3 · solo
+
+![twilight desk · L3](./ref-twilightdesk-twilight-l3-solo.png)
+
+- Scene: full interior — figure at a wooden desk under a small lamp, working on a laptop, stacks of books beside them, a cat curled on a chair behind, a tall window showing a moonlit city skyline
+- Hero props (L3): desk · lamp · laptop · books · cat · window · moon · city silhouette
+- Palette: twilight (deep navy · mustard · dusty pink · cream · warm beige · pink-red skin)
+- Background: deep dusty navy
+- Textile: mustard trousers carry the grain (in this L3 the grain is subtler — the scene props compete for visual weight)
+- Cast: solo (+ cat as environmental detail)
+- Framing: wide-scene
+- Mood: focused / quiet
+
+> **L2/L3 note:** as complexity climbs, the grain texture tends to weaken because the model spends visual budget on scene props. To hold the signature, restate the grain rule explicitly in the prompt ("grain confined to the trousers/skirt only; flat color everywhere else").
 
 ## Anti-patterns
 
