@@ -18,21 +18,20 @@ Required generation parameters:
 - **Model:** `gpt-image-1.5`
 - **Size:** `1024x1024` (square)
 - **Quality:** `high` — the paper grain and ink hatching need resolution to read
-- **Mode:** **image-to-image** with `ref-anchor.png` (the locked style anchor that lives next to this SKILL.md) passed as the style reference
+- **Mode:** **image-to-image** with `ref-harbor.png` (the locked style anchor that lives next to this SKILL.md) passed as the style reference
 - **Style:** caller must opt out of stacked style injection (the executing tool should pass `--skip-style` or its equivalent — the SKILL itself is the style)
 
 These are semantic parameters. The executing tool decides the invocation mechanics (CLI command, REST call, gateway, local runtime).
 
 ## Reference anchors
 
-Four reference images live alongside this SKILL.md:
+Three reference images live alongside this SKILL.md:
 
-- `ref-anchor.png` — **the canonical style anchor** (a sunny European street scene with tall narrow colored row houses, a cyclist, a pedestrian, one-point perspective). This is the locked anchor every generation must use for image-to-image style hold.
-- `ref-harbor.png` — clean output from the validation batch: coastal-peach palette, harbor metaphor, golden-hour light, solo wanderer cast, one-point dock perspective.
+- `ref-harbor.png` — **the canonical style anchor** (coastal-peach palette, harbor metaphor, golden-hour light, solo wanderer cast, one-point dock perspective). This is the locked anchor every generation must use for image-to-image style hold.
 - `ref-alpine.png` — clean output from the validation batch: winter-cool palette, alpine-village metaphor, snow-midday light, solo child cast, one-point sloped lane perspective.
 - `ref-park.png` — clean output from the validation batch: autumn-rust palette, park metaphor, midday light, seated character cast, low-angle hero perspective.
 
-`ref-anchor.png` is the **required** style reference. The other three are exemplars showing how the dials move within the locked style.
+`ref-harbor.png` is the **required** style reference. The other two are exemplars showing how the dials move within the locked style.
 
 ## Locked style axes (NEVER vary)
 
@@ -77,8 +76,8 @@ Pick one. Always name 4–6 specific anchor colors in the prompt.
 ### 2. Scene metaphor
 The scene IS the metaphor — pick a place that itself embodies the idea. Examples that respect the style:
 
-- **street** — tall narrow row houses lining a cobblestone lane (the canonical anchor).
-- **harbor** — wooden dock between two rows of fishing boats with colored hulls, harbor-front shops behind.
+- **street** — tall narrow row houses lining a cobblestone lane.
+- **harbor** — wooden dock between two rows of fishing boats with colored hulls, harbor-front shops behind (the canonical anchor).
 - **market** — covered stalls lining a market street, awnings, hanging lanterns.
 - **transit** — a small train platform, a tram stop, a ferry terminal.
 - **park** — a clearing with a bench, fountain, or stone bridge; tall trees as the flanking depth elements.
@@ -122,7 +121,7 @@ These are validated failure modes from the calibration batch:
 
 ## Prompt template
 
-Given a brief, assemble this prompt and pass it to the model together with `ref-anchor.png` as the image-to-image style reference:
+Given a brief, assemble this prompt and pass it to the model together with `ref-harbor.png` as the image-to-image style reference:
 
 ```
 Editorial flat-vector illustration in EXACTLY the same hand-drawn naive book-illustration style as the reference image: flat saturated color blocks, loose imperfect hand-drawn ink line overlay, subtle paper grain texture, organic edges, no rendering, no soft shading, no atmospheric texture, no impressionist brushwork.
