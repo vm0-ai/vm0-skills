@@ -110,13 +110,7 @@ Color count: 5 max
 
 ## Worked examples
 
-The anchor reference is a 2×2 grid of four girls in this style (see `ref-grid-anchor.png`). Below are six locked-style portraits, each holding the frame and varying the eight dials.
-
-### Anchor — the 2×2 reference grid
-
-![anchor — 2×2 grid of girls](./ref-grid-anchor.png)
-
-Four character portraits in the canonical light hand-drawn flat-vector style: chunky black bobs and pigtails, big shiny eyes with thin lashes, tiny red noses, pink star-sparkle blush, color-blocked striped outfits, single small prop each (glasses, ponytail flick, beret + spider on a thread, cherry/pinwheel), saturated single-color blocks (red, blue, blue, orange).
+Six locked-style portraits, each holding the frame and varying the eight dials.
 
 ### Example 1 — cheerful girl · yellow bucket hat · mushroom umbrella · cobalt
 
