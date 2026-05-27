@@ -140,7 +140,7 @@ Format:       <axis 8>
 
 ## How to render
 
-Generate this style with a high-quality image model that handles watercolor and gouache realism well. The reference set was produced with OpenAI's `gpt-image-1.5` at portrait 1024×1536, high quality — that combination is recommended where available. Other strong painterly models (Flux Pro, Seedream, Qwen Image) will also produce acceptable results; lower-fidelity models tend to lose the translucent-wash quality and the crisp ink accent restraint.
+Generate this style with a high-quality image model that handles watercolor and gouache realism well. The reference set was produced with OpenAI's `gpt-image-2` at portrait 1024×1536, high quality — that combination is the current recommendation. Other strong painterly models (Flux Pro, Seedream 5, Qwen Image) will also produce acceptable results; lower-fidelity models tend to lose the translucent-wash quality and the crisp ink accent restraint.
 
 Translate the filled-in brief into a single dense paragraph that names:
 1. The medium and rendering style ("soft painterly watercolor and gouache digital illustration")

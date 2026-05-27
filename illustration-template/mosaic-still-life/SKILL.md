@@ -137,7 +137,7 @@ This style is best produced by an **image-to-image** model with a strong referen
 - **Quality**: high — fine mosaic grain requires resolution to read correctly.
 - **Size**: portrait 1024x1536 by default.
 
-Known-good model: `gpt-image-1.5` via fal.ai. Other strong painterly models with i2i support may also work; calibrate input fidelity to preserve the mosaic ground.
+Known-good model: `gpt-image-2` via fal.ai. Other strong painterly models with i2i support may also work; calibrate input fidelity to preserve the mosaic ground.
 
 If a model rejects high input fidelity or strips the mosaic on first pass, increase emphasis on "tessellated/mosaic ground rendered as small square tiles, pointillist" in the prompt, and explicitly call out the surface that should carry the mosaic.
 

@@ -139,7 +139,7 @@ Mood: quiet afternoon, gently absorbed, lazy.
 
 ## Model guidance
 
-This style is designed for narrative compositions with multiple props, characters, and patterned surfaces — the kind of scene a strong text-to-image model can compose in one pass from a detailed prompt. Recommended pairing: `gpt-image-1.5` at `high` quality, square 1024×1024, with prompt enhancement disabled so the locked-fundamentals language reaches the model verbatim.
+This style is designed for narrative compositions with multiple props, characters, and patterned surfaces — the kind of scene a strong text-to-image model can compose in one pass from a detailed prompt. Recommended pairing: `gpt-image-2` at `high` quality, square 1024×1024, with prompt enhancement disabled so the locked-fundamentals language reaches the model verbatim.
 
 The bundled reference images (`ref-reading-nook.jpg`, `ref-puzzle.jpg`, `ref-chill-tussle.jpg`) are canonical outputs of this framework — provided for *human* style study and prompt authoring. They are not required as image inputs at generation time — the style transfers entirely through the detailed prompt language. If output drifts (paper grain too clean, palette too saturated, brushwork too smooth, faces too alert), tighten the prompt by re-emphasizing "gouache + watercolor on aged paper, visible paper grain, soft hand-drawn outlines, no harsh black lines" and (for action scenes) restate the chill-face rule — rather than reaching for image-to-image.
 
