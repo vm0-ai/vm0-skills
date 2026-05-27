@@ -48,6 +48,7 @@ Bias toward concrete, lived-in details: a striped mug rather than "a mug", a str
 - **Breathing room** between objects — they should not overlap or merge.
 - **NO drop shadows.** Objects sit on white, not on the page.
 - **NO scene context** — no shelf, no desk, no floor. Just objects on white.
+- **NO human figures of any kind** — no people, no faces, no portraits, no family photos with figures, no character stickers, no figurines, no avatar badges, no person silhouettes. The sheet is a collection of **objects**. (Small animal characters — a cat, a duck, a bird — are fine as a playful surprise; they are not human figures.) If a brief seems to imply a person (e.g. "a framed family photo", "a passport photo"), substitute an object equivalent (a framed botanical print, a passport with only an ink seal visible).
 
 ### Mood
 - Cheerful, cozy, lifestyle-journal warm.
@@ -141,6 +142,7 @@ Inspect each generated sheet against the locked axes before accepting:
 - [ ] Theme reads instantly from the object collection
 - [ ] At least one **small playful surprise** in the sheet (the unexpected item)
 - [ ] Mood reads as **cheerful cozy journal**, not lifestyle-stock
+- [ ] **No human figures, faces, or portraits** anywhere on the sheet
 
 If a generation fails on two or more checks, regenerate rather than ship it. Re-running with the same reference + a tighter object list usually fixes drift.
 
@@ -155,3 +157,4 @@ If a generation fails on two or more checks, regenerate rather than ship it. Re-
 - Objects perfectly aligned to a grid — each should tilt at its own angle
 - "Lifestyle stock" mood — should feel hand-assembled and journal-warm
 - More than 2 generic objects in a row without an ink detail — every object needs its own small marks
+- **Any human figure, face, portrait, or person-shaped sticker** — the sheet is objects only (small animal characters are fine; humans are not)
