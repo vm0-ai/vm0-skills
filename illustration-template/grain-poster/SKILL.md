@@ -1,6 +1,6 @@
 ---
 name: grain-poster
-description: Flat-vector editorial poster of a serene full-body figure interacting with one hero prop — riso/halftone grain confined to a single textile (skirt or trousers), closed-eye smiling face with a single round red blush, solid black hair, limited 5-6 color palette per piece, and editorial poster framing. Six tunable dials: palette, mood, scene, cast, complexity, framing. Trigger when the user says /grain-poster, asks for a "flat-vector editorial poster", "riso-grain figure poster", "grainy editorial illustration", or briefs with a scene + palette + cast in this house style.
+description: 'Flat-vector editorial poster of a serene full-body figure interacting with one hero prop — riso/halftone grain confined to a single textile (skirt or trousers), closed-eye smiling face with a single round red blush, solid black hair, limited 5-6 color palette per piece, and editorial poster framing. Six tunable dials — palette, mood, scene, cast, complexity, framing. Trigger when the user says /grain-poster, asks for a "flat-vector editorial poster", "riso-grain figure poster", "grainy editorial illustration", or briefs with a scene + palette + cast in this house style.'
 ---
 
 # /grain-poster — locked flat-vector editorial poster style
