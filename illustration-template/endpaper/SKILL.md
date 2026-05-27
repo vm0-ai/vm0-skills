@@ -171,19 +171,9 @@ Drive the model with the i2i path using one of the reference images below as a s
 
 ## Worked examples
 
-Six reference pieces below — each holds the locked frame and varies the five dials.
+Five reference pieces below — each holds the locked frame and varies the five dials.
 
-### Example 1 — cats · cobalt · warm-earth · L2 (anchor piece)
-
-![cats · cobalt · warm-earth · L2](./ref-cobalt-cats-l2.png)
-
-- Cast: ginger tabby (loaf, sleeping) · charcoal-grey tabby (loaf with subtle stripes) · tuxedo (sitting tall) · calico (mid-stretch) · cream longhair (belly-up) · white kitten (in cardboard box) · sleeping cream cat (curled) · thin black cat (curled tail, looking at fishbowl)
-- Background: `cobalt #1F3D8A`
-- Palette: `warm-earth` — ginger orange · charcoal · cream · warm grey
-- Density: L2 balanced
-- Props: striped yarn ball with spiral · goldfish bowl with one orange fish · cardboard box · food bowl · book stack · tiny potted plant
-
-### Example 2 — foxes · dusty-plum · cool-forest · L2
+### Example 1 — foxes · dusty-plum · cool-forest · L2
 
 ![foxes · dusty-plum · cool-forest · L2](./ref-plum-foxes-l2.png)
 
@@ -193,7 +183,7 @@ Six reference pieces below — each holds the locked frame and varies the five d
 - Density: L2 balanced
 - Props: pinecone · red-capped mushroom · autumn leaves · berry cluster · fallen birch log
 
-### Example 3 — garden-birds · butter · jewel-garden · L3
+### Example 2 — garden-birds · butter · jewel-garden · L3
 
 ![garden-birds · butter · jewel-garden · L3](./ref-butter-birds-l3.png)
 
@@ -203,7 +193,7 @@ Six reference pieces below — each holds the locked frame and varies the five d
 - Density: L3 packed (birds nearly edge-to-edge, branches reach into the gaps)
 - Props: stone birdbath · scattered seeds · twig · woven nest · sunflower
 
-### Example 4 — houseplants-in-pots · slate · terracotta-sand · L2
+### Example 3 — houseplants-in-pots · slate · terracotta-sand · L2
 
 ![houseplants-in-pots · slate · terracotta-sand · L2](./ref-slate-houseplants-l2.png)
 
@@ -215,7 +205,7 @@ Six reference pieces below — each holds the locked frame and varies the five d
 
 Object-only cast — proves the style does not require animals. Two-tone shading still applies (darker leaf-tops, lighter leaf-undersides; darker pot rims, lighter pot bodies).
 
-### Example 5 — sea-creatures · cobalt · ocean-coral · L3
+### Example 4 — sea-creatures · cobalt · ocean-coral · L3
 
 ![sea-creatures · cobalt · ocean-coral · L3](./ref-cobalt-sea-l3.png)
 
@@ -225,7 +215,7 @@ Object-only cast — proves the style does not require animals. Two-tone shading
 - Density: L3 packed
 - Props: spiral and fan seashells · seaweed strand · simple anchor · round bubbles
 
-### Example 6 — cats · mossy-teal · warm-earth · L2 (cool background, warm cast)
+### Example 5 — cats · mossy-teal · warm-earth · L2 (cool background, warm cast)
 
 ![cats · mossy-teal · warm-earth · L2](./ref-mossy-teal-cats-l2.png)
 
