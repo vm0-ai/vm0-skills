@@ -141,7 +141,7 @@ Mood:         <one short phrase>
 
 ## Generation guidance
 
-Models with strong typography and clean flat-vector handling (e.g. gpt-image-1.5) produce the most reliable output here. When briefing the model:
+Models with strong typography and clean flat-vector handling (e.g. gpt-image-2) produce the most reliable output here. When briefing the model:
 
 - State **explicitly** that the canvas is portrait 2:3, with the flat color filling edge to edge.
 - State **explicitly** that the only text on the canvas is the top-left headline and the bottom-right wordmark — no captions, no body copy, no subtitle.

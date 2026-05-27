@@ -11,11 +11,11 @@ The aesthetic sits in the urban-sketcher / travel-postcard / picture-book editor
 
 ## Required model
 
-This style is locked to **`gpt-image-1.5`** (OpenAI GPT image generation, served through whichever provider the executing tool routes to). The dense small ink patterns, flat-but-textured color medium, and consistent line weight do NOT survive on weaker or differently-tuned image models — they collapse into either soft-watercolor wash or clean vector. Do not substitute with another model unless you have validated that the two locked reference anchors regenerate faithfully.
+This style is locked to **`gpt-image-2`** (OpenAI GPT image generation, served through whichever provider the executing tool routes to). The dense small ink patterns, flat-but-textured color medium, and consistent line weight do NOT survive on weaker or differently-tuned image models — they collapse into either soft-watercolor wash or clean vector. Do not substitute with another model unless you have validated that the two locked reference anchors regenerate faithfully.
 
 Required generation parameters:
 
-- **Model:** `gpt-image-1.5`
+- **Model:** `gpt-image-2`
 - **Size:** `1024x1536` (tall portrait)
 - **Quality:** `high` — the dense ink patterns and small speckles need resolution to read
 - **Mode:** image-to-image with BOTH locked reference anchors (`ref-sensoji.png` and `ref-shibuya.png`) passed as style references
@@ -148,7 +148,7 @@ Pass both locked reference images as style anchors (image-to-image / multi-image
 See the **Required model** section near the top of this file for the locked model and required generation parameters. Additional notes:
 
 - Do not request `--style` chaining with another vm0 image style — this style is self-contained and the resource is selected as the primary style.
-- Do not silently fall back to a different image model if `gpt-image-1.5` is unavailable. Surface the unavailability and ask the caller before substituting — the locked look will not survive on a weaker model.
+- Do not silently fall back to a different image model if `gpt-image-2` is unavailable. Surface the unavailability and ask the caller before substituting — the locked look will not survive on a weaker model.
 
 ## Evaluation cues
 

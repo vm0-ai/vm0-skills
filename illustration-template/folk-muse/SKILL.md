@@ -158,9 +158,9 @@ Style anchors: Carson Ellis, Maja Tomljanovic, Bodil Jane. Flat opaque gouache c
 
 ## Recommended model
 
-This style was developed and validated on **ByteDance Seedream 4** at 1024×1536. Seedream's flat-painterly bias and willingness to render repeating textile motifs match this aesthetic well.
+This style is now generated on **ByteDance Seedream 5** at 1024×1536 (the v5 lite endpoint on fal). Seedream's flat-painterly bias and willingness to render repeating textile motifs match this aesthetic well; v5 carries the same character anatomy + textile handling as v4 but with sharper edge fidelity.
 
-Other models that have worked at lower fidelity: GPT-Image-1.5 (occasionally drifts toward cute / children's-book; counter it with stronger anti-pattern phrasing). Avoid flux for this style — it tends to render the face too photorealistically.
+Other models that have worked at lower fidelity: GPT-Image-2 (occasionally drifts toward cute / children's-book; counter it with stronger anti-pattern phrasing). Avoid flux for this style — it tends to render the face too photorealistically.
 
 When invoking the model, **bypass any host or app style overlay** so the locked style brief above is what the model actually receives. Generate at a portrait aspect ratio; tighten the prompt rather than the size if the figure is being clipped.
 

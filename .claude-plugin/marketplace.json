@@ -560,7 +560,7 @@
     },
     {
       "name": "notion-illustration",
-      "description": "Notion-editorial-style hand-drawn spot illustration generation with locked reference anchors via fal-ai/nano-banana/edit.",
+      "description": "Notion-editorial-style hand-drawn spot illustration generation with locked reference anchors via fal-ai/nano-banana-2/edit.",
       "source": "./",
       "strict": false,
       "skills": [

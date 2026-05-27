@@ -121,9 +121,9 @@ Vary sizes and rotations. Cheerful cozy lifestyle journal mood. Same charming wo
 
 ## Model guidance
 
-This style has been validated on the **nano-banana** family of image-to-image models (e.g. `fal-ai/nano-banana/edit`). Nano-banana preserves the thick brushy ink linework, wobbly hand-drawn quality, and flat gouache fills that the style requires.
+This style is generated on the **nano-banana-2** family of image-to-image models (`fal-ai/nano-banana-2/edit`), which supersedes plain nano-banana on fal. Nano-banana-2 (Gemini 3.1 Flash Image) preserves the thick brushy ink linework, wobbly hand-drawn quality, and flat gouache fills that the style requires, and accepts up to 14 reference images for compositing.
 
-**Avoid GPT-Image-1.5 for this style.** Side-by-side tests showed it returns muted pastel output with thin clean lines and faint 3D shading — even with a strong reference and `input-fidelity high`. The look ends up "lifestyle stock" rather than "hand-painted journal".
+**Avoid OpenAI GPT-Image models for this style.** Side-by-side tests on GPT-Image-1.5 showed it returns muted pastel output with thin clean lines and faint 3D shading — even with a strong reference and `input-fidelity high`. The look ends up "lifestyle stock" rather than "hand-painted journal". GPT-Image-2 has not been retested here, but the underlying photographic-fidelity bias is unlikely to have changed.
 
 When the chosen model supports image-to-image, **always pass `ref-desk.jpg` as the primary reference** (it is the canonical anchor with the broadest palette and densest composition). Optionally pass a theme-aligned secondary reference (`ref-kitchen.jpg`, `ref-travel.jpg`, `ref-plants.jpg`) when the brief matches that theme family.
 

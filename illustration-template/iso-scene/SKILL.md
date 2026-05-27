@@ -150,7 +150,7 @@ Soft drop-shadow on the {BG_NAME} ground beneath the scene. No background scener
 
 ## Generation notes
 
-- **Model recommendation:** a high-fidelity text-to-image model with strong long-prompt adherence (gpt-image-1.5 has been the most reliable in testing). Image-to-image is not required — the locked style is fully describable in text.
+- **Model recommendation:** a high-fidelity text-to-image model with strong long-prompt adherence (gpt-image-2 is the current best for this style — supersedes gpt-image-1.5 with stronger long-prompt adherence and cleaner flat-vector output). Image-to-image is not required — the locked style is fully describable in text.
 - **Output:** 1024×1024 PNG, high quality
 - **Cost / determinism:** since this is text-to-image, output varies slightly between runs even with the same prompt. For exact reproductions, pin a seed if the underlying model supports it.
 

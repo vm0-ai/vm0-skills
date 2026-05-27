@@ -137,7 +137,7 @@ Color palette: cream + butter-yellow sunlight, sky blue, sage green, terracotta 
 
 ## Model guidance
 
-This style has been validated on **GPT-Image-1.5** at vertical 1024×1536 with high quality. It also works on Seedream4 and Qwen-Image with slightly looser brush handling. Avoid Flux Pro — it tends toward photographic interpretation that breaks the gouache surface.
+This style has been validated on **GPT-Image-2** at vertical 1024×1536 with high quality. It also works on Seedream 5 and Qwen-Image with slightly looser brush handling. Avoid Flux Pro — it tends toward photographic interpretation that breaks the gouache surface.
 
 When the chosen model supports image-to-image, pass `ref-market-arcade.jpg` (the canonical anchor) as the reference image and reduce prompt length. When the model is text-only, the prompt recipe above is sufficient on its own.
 
