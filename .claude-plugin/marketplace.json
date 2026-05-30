@@ -1056,10 +1056,10 @@
     },
     {
       "name": "marketing-content",
-      "description": "Marketing toolkit — copywriting across channels, brand voice guidelines, campaign strategy, performance analytics, and stakeholder communications.",
+      "description": "Marketing toolkit — copywriting across channels, brand voice guidelines, campaign strategy, paid ads operation, performance analytics, and stakeholder communications.",
       "source": "./",
       "strict": false,
-      "skills": ["./copywriting", "./brand-guidelines", "./campaign-strategy", "./marketing-analytics", "./status-updates"]
+      "skills": ["./copywriting", "./brand-guidelines", "./campaign-strategy", "./paid-ads-operator", "./marketing-analytics", "./status-updates"]
     },
     {
       "name": "customer-support",
