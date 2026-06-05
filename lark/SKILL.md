@@ -5,23 +5,23 @@ description: Lark API for collaboration. Use when user mentions "Lark", "Lark do
 
 ## Troubleshooting
 
-If requests fail, first check the required credentials:
+If Lark requests fail after the Lark connector is connected, check the runtime token and API access:
 
 ```bash
 zero doctor check-connector --env-name LARK_TOKEN
 zero doctor check-connector --url https://open.larksuite.com/open-apis/bot/v3/info --method GET
 ```
 
-`LARK_TOKEN` is the Lark API bearer token available in the runtime; do not use it as an app secret.
+`LARK_TOKEN` is the Lark API bearer token available after the Lark connector is connected; do not use it as an app secret.
 
 ## Authentication Helper
 
-Use this helper in shell examples to read the bearer token and fail clearly when it is missing:
+Use this helper in shell examples to read the bearer token and fail clearly when it is missing from the runtime:
 
 ```bash
 get_lark_token() {
   if [ -z "${LARK_TOKEN:-}" ]; then
-    echo "Error: LARK_TOKEN is not set. Run zero doctor check-connector --env-name LARK_TOKEN." >&2
+    echo "Error: LARK_TOKEN is not set. Connect the Lark connector, then run zero doctor check-connector --env-name LARK_TOKEN." >&2
     return 1
   fi
   printf '%s\n' "$LARK_TOKEN"
@@ -438,7 +438,7 @@ curl -X POST "https://open.larksuite.com/open-apis/calendar/v4/calendars/<calend
 
 ## Guidelines
 
-1. **Authentication**: Use the `get_lark_token` helper in shell examples so commands fail clearly when `LARK_TOKEN` is missing.
+1. **Authentication**: Use the `get_lark_token` helper in shell examples so commands fail clearly when `LARK_TOKEN` is missing from the runtime.
 
 2. **Rate Limits**: Lark has rate limits per app. Add delays for bulk operations to avoid hitting limits.
 
