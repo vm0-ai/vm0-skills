@@ -5,83 +5,40 @@ description: Lark API for collaboration. Use when user mentions "Lark", "Lark do
 
 ## Troubleshooting
 
-If requests fail, first check the required credentials:
+If Lark requests fail after the Lark connector is connected, check the runtime token and API access:
 
 ```bash
-zero doctor check-connector --env-name LARK_APP_ID
 zero doctor check-connector --env-name LARK_TOKEN
+zero doctor check-connector --url https://open.larksuite.com/open-apis/bot/v3/info --method GET
 ```
 
-Then call the token endpoint with both values in the request body. The tenant access token endpoint requires `app_id` and `app_secret`; this skill stores the Lark app secret in `LARK_TOKEN`.
+`LARK_TOKEN` is the Lark API bearer token available after the Lark connector is connected; do not use it as an app secret.
 
-## Token Management
+## Authentication Helper
 
-Lark uses tenant access tokens that expire after 2 hours. Use this helper to get or refresh the token:
+Use this helper in shell examples to read the bearer token and fail clearly when it is missing from the runtime:
 
 ```bash
-# Get or refresh token. The cache is keyed by app ID so different apps do not reuse tokens.
 get_lark_token() {
-  local token_file="/tmp/lark_token_${LARK_APP_ID}.json"
-  local current_time=$(date +%s)
-
-  # Check if cached token is still valid
-  if [ -f "$token_file" ]; then
-    local expire_time=$(jq -r '.expire_time // 0' "$token_file" 2>/dev/null || echo "0")
-    if [ "$current_time" -lt "$expire_time" ]; then
-      jq -r '.tenant_access_token' "$token_file"
-      return 0
-    fi
-  fi
-
-  # Get new token
-  local response=$(curl -s -X POST "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal" \
-    -H "Content-Type: application/json" \
-    -d "{\"app_id\": \"${LARK_APP_ID}\", \"app_secret\": \"${LARK_TOKEN}\"}")
-
-  local code=$(echo "$response" | jq -r '.code // -1')
-  if [ "$code" != "0" ]; then
-    echo "Error: $(echo "$response" | jq -r '.msg')" >&2
+  if [ -z "${LARK_TOKEN:-}" ]; then
+    echo "Error: LARK_TOKEN is not set. Connect the Lark connector, then run zero doctor check-connector --env-name LARK_TOKEN." >&2
     return 1
   fi
-
-  local expire=$(echo "$response" | jq -r '.expire')
-  local expire_time=$((current_time + expire - 300))
-  echo "$response" | jq ". + {expire_time: $expire_time}" > "$token_file"
-  jq -r '.tenant_access_token' "$token_file"
+  printf '%s\n' "$LARK_TOKEN"
 }
 
 # Usage in commands
 TOKEN=$(get_lark_token)
 ```
 
-Or get token directly without caching:
-
-```bash
-TOKEN=$(curl -s -X POST "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal" \
-  -H "Content-Type: application/json" \
-  -d "{\"app_id\": \"$LARK_APP_ID\", \"app_secret\": \"$LARK_TOKEN\"}" | jq -r '.tenant_access_token')
-```
-
 ## Examples
 
-### 1. Authentication - Get Access Token
-
-Get and display tenant access token:
-
-Write to `/tmp/lark_request.json`:
-```bash
-cat > /tmp/lark_request.json <<EOF
-{
-  "app_id": "${LARK_APP_ID}",
-  "app_secret": "${LARK_TOKEN}"
-}
-EOF
-```
+### 1. Authentication - Verify Token
 
 ```bash
-curl -X POST "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal" \
-  -H "Content-Type: application/json" \
-  -d @/tmp/lark_request.json
+TOKEN=$(get_lark_token)
+curl -X GET "https://open.larksuite.com/open-apis/bot/v3/info" \
+  -H "Authorization: Bearer ${TOKEN}"
 ```
 
 ### 2. Messaging - Send Messages
@@ -481,7 +438,7 @@ curl -X POST "https://open.larksuite.com/open-apis/calendar/v4/calendars/<calend
 
 ## Guidelines
 
-1. **Token Management**: Tokens expire after 2 hours. Use the `get_lark_token` helper function for automatic caching and refresh.
+1. **Authentication**: Use the `get_lark_token` helper in shell examples so commands fail clearly when `LARK_TOKEN` is missing from the runtime.
 
 2. **Rate Limits**: Lark has rate limits per app. Add delays for bulk operations to avoid hitting limits.
 
