@@ -12,11 +12,11 @@ zero doctor check-connector --env-name LARK_TOKEN
 zero doctor check-connector --url https://open.larksuite.com/open-apis/bot/v3/info --method GET
 ```
 
-`LARK_TOKEN` is the tenant access token exposed by the vm0 Lark connector. The connector stores the app credentials and refreshes this access token; do not use `LARK_TOKEN` as an app secret.
+`LARK_TOKEN` is the Lark API bearer token available in the runtime; do not use it as an app secret.
 
-## Token Management
+## Authentication Helper
 
-Lark tenant access tokens expire after 2 hours. The vm0 connector refreshes the token and exposes it as `LARK_TOKEN`. Use this helper in shell examples:
+Use this helper in shell examples to read the bearer token and fail clearly when it is missing:
 
 ```bash
 get_lark_token() {
@@ -438,7 +438,7 @@ curl -X POST "https://open.larksuite.com/open-apis/calendar/v4/calendars/<calend
 
 ## Guidelines
 
-1. **Token Management**: Tokens expire after 2 hours. Use the `get_lark_token` helper function; vm0 refreshes `LARK_TOKEN` through the Lark connector.
+1. **Authentication**: Use the `get_lark_token` helper in shell examples so commands fail clearly when `LARK_TOKEN` is missing.
 
 2. **Rate Limits**: Lark has rate limits per app. Add delays for bulk operations to avoid hitting limits.
 
