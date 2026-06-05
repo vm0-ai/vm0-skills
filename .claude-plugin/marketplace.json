@@ -37,6 +37,15 @@
       ]
     },
     {
+      "name": "ashby",
+      "description": "Ashby API for applicant tracking and recruiting. Use this skill to list candidates, applications, jobs, openings, job postings, and projects.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./ashby"
+      ]
+    },
+    {
       "name": "atlassian",
       "description": "Atlassian REST API via curl. Use this skill to manage Jira issues, Confluence pages, and other Atlassian Cloud products.",
       "source": "./",
