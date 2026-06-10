@@ -12,7 +12,7 @@ description: Meta Ads API for Facebook/Instagram advertising. Use when user ment
 
 ## Authentication
 
-Every request requires this header:
+Normal connector requests require this header:
 
 ```
 Authorization: Bearer $META_ADS_TOKEN
@@ -20,9 +20,42 @@ Authorization: Bearer $META_ADS_TOKEN
 
 Do not pass `META_ADS_TOKEN` as an `access_token` query parameter or in the request body. Zero connector tokens are placeholders that are resolved at the network boundary when sent as the `Authorization` header to `https://graph.facebook.com`. Putting the placeholder in `access_token=` can send it literally and cause Meta to return a malformed access token error.
 
+Exception: Page access tokens returned by Graph API are real secondary tokens, not Zero placeholders. For Page-token-only endpoints such as `/{page-id}/ads_posts`, get the Page access token with the connector token first, then use `Authorization: Bearer $page_token` for that Page-token request.
+
 ## Troubleshooting
 
 If requests fail, run `zero doctor check-connector --env-name META_ADS_TOKEN` or `zero doctor check-connector --url https://graph.facebook.com/v22.0/me/adaccounts --method GET`
+
+If `/{page-id}/ads_posts` returns `(#200) Not enough permission to call this endpoint` while `/me/permissions` shows `pages_manage_ads` is granted, verify that the request is using a real Page access token. Calling `/me?fields=id,name,category` with `Authorization: Bearer $page_token` should return the Page ID, not the user ID.
+
+## Pages
+
+### List Pages
+
+```bash
+curl -sS --get "https://graph.facebook.com/v22.0/me/accounts" \
+  --data-urlencode "fields=id,name,tasks" \
+  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {id, name, tasks}'
+```
+
+### Test Page Ads Posts (`pages_manage_ads`)
+
+Use a real Page access token for Page Ads Posts. Do not use `META_ADS_TOKEN` for this endpoint.
+
+```bash
+PAGE_ID="{page-id}"
+
+page_token=$(curl -sS --get "https://graph.facebook.com/v22.0/$PAGE_ID" \
+  --data-urlencode "fields=id,name,access_token" \
+  --header "Authorization: Bearer $META_ADS_TOKEN" | jq -r '.access_token')
+
+curl -sS --get "https://graph.facebook.com/v22.0/$PAGE_ID/ads_posts" \
+  --data-urlencode "fields=id,created_time" \
+  --data-urlencode "limit=1" \
+  --header "Authorization: Bearer $page_token" | jq .
+```
+
+An empty response such as `{"data":[]}` is a successful call when the Page has no ad posts.
 
 ## Ad Accounts
 
@@ -66,6 +99,7 @@ cat > /tmp/campaign.json << 'EOF'
   "name": "My Campaign",
   "objective": "OUTCOME_AWARENESS",
   "status": "PAUSED",
+  "is_adset_budget_sharing_enabled": false,
   "special_ad_categories": []
 }
 EOF
