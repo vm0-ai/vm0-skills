@@ -9,48 +9,83 @@ description: Operate the user's connected desktop apps through Zero Computer Use
 
 Use `npx -p @vm0/cli zero computer-use <command>` to inspect and operate apps on the connected Zero Desktop host. Treat it as a GUI control surface: read the app state, inspect screenshots, then act through accessibility elements whenever possible.
 
+`--app` accepts an app bundle id only, such as `com.apple.Safari` or `com.google.Chrome`. App names like `Safari`, `Google Chrome`, `Slack`, or `WeChat` are display labels only and must not be passed to `--app`.
+
 ## Core Workflow
 
-1. Confirm the host is available:
+1. List apps and choose the target app's `bundleId`:
 
 ```bash
 npx -p @vm0/cli zero computer-use list-apps
 ```
 
-2. Inspect the target app:
+Use the `name` field only to identify the app for yourself, then copy the `bundleId` field. Apps listed without a `bundleId` cannot be targeted.
+
+2. Set the bundle id you found:
 
 ```bash
-npx -p @vm0/cli zero computer-use get-app-state --app Slack --timeout 10
+app_bundle_id="com.apple.Safari"
 ```
 
-3. Read the JSON result:
+3. If the app is not running, open it by bundle id:
+
+```bash
+npx -p @vm0/cli zero computer-use open-app --app "$app_bundle_id" --timeout 10
+```
+
+4. Inspect the target app by bundle id:
+
+```bash
+npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout 10
+```
+
+5. Read the JSON result:
 
 - `snapshotId` is required for follow-up actions against the same state.
 - `appState` is expected to be a local file path containing the full accessibility tree. Read or filter that file to find element indexes, roles, labels, URLs, and the focused element.
 - `screenshot` is a local image path under `/tmp/vm0/computer-use/...`; inspect it with the image viewer when visual judgment matters.
 - During rollout, older CLI versions may still return `appState` as an inline string. If it is not a path, save the JSON output to a temp file and extract/filter the inline string.
 
-4. Act on elements first:
+6. Act on elements first, using the same bundle id and snapshot:
 
 ```bash
-npx -p @vm0/cli zero computer-use click --app Slack --snapshot-id <snapshotId> --element-index <index>
-npx -p @vm0/cli zero computer-use set-value --app Slack --snapshot-id <snapshotId> --element-index <index> --value "text"
-npx -p @vm0/cli zero computer-use type-text --app Slack --text "literal text"
-npx -p @vm0/cli zero computer-use press-key --app Slack --key Command+L
-npx -p @vm0/cli zero computer-use scroll --app Slack --snapshot-id <snapshotId> --element-index <index> --direction down --pages 1
+npx -p @vm0/cli zero computer-use click --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index>
+npx -p @vm0/cli zero computer-use set-value --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index> --value "text"
+npx -p @vm0/cli zero computer-use type-text --app "$app_bundle_id" --snapshot-id <snapshotId> --text "literal text"
+npx -p @vm0/cli zero computer-use press-key --app "$app_bundle_id" --snapshot-id <snapshotId> --key Command+L
+npx -p @vm0/cli zero computer-use scroll --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index> --direction down --pages 1
 ```
 
-5. Re-read state after every meaningful UI change. Element indexes and coordinates can become stale after navigation, scrolling, or opening a new window.
+7. Re-read state after every meaningful UI change. Element indexes and coordinates can become stale after navigation, scrolling, or opening a new window.
 
-Post-action commands also return a fresh state. Treat successful `open-app`, `click`, `scroll`, `set-value`, `perform-action`, `type-text`, and `press-key` responses as new snapshots with their own `snapshotId`, `appState` file, screenshot, and compact action metadata.
+If a post-action command returns a new `snapshotId` and `appState`, use that new snapshot. Otherwise, explicitly run `get-app-state` again before choosing the next element index or coordinate.
+
+## App Identity Rules
+
+- Always run `list-apps` before targeting an app unless you already know the exact bundle id from the same host.
+- Always pass the `bundleId` value to `--app`.
+- Never pass display names such as `Slack`, `Safari`, `Google Chrome`, or `WeChat` to `--app`.
+- If a command fails with `app_not_found` and the `--app` value looks like a name, re-run `list-apps`, find the app record, and retry with its `bundleId`.
+- If the target app has no `bundleId` in `list-apps`, report that it is not targetable through Computer Use.
+
+To search the `list-apps` output for a likely target:
+
+```bash
+apps_json=/tmp/computer-use-apps.json
+npx -p @vm0/cli zero computer-use list-apps > "$apps_json"
+node -e "const fs=require('fs'); const q=(process.argv[2]||'').toLowerCase(); const apps=JSON.parse(fs.readFileSync(process.argv[1],'utf8')).apps || []; for (const a of apps) { if (!q || String(a.name || '').toLowerCase().includes(q)) console.log([a.name || '', a.bundleId || 'NO_BUNDLE_ID', a.running ? 'running' : 'not running'].join('\t')); }" "$apps_json" "Slack"
+```
+
+Copy the exact `bundleId` from the matching row into `app_bundle_id`.
 
 ## Reading App State
 
 Accessibility trees can be very large. Prefer the `appState` file returned by the command:
 
 ```bash
+app_bundle_id="com.apple.Safari"
 state_json=/tmp/computer-use-state.json
-npx -p @vm0/cli zero computer-use get-app-state --app Slack --timeout 10 > "$state_json"
+npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout 10 > "$state_json"
 app_state_path=$(node -e "const fs=require('fs'); const r=JSON.parse(fs.readFileSync(process.argv[1],'utf8')); console.log(r.appState)" "$state_json")
 rg -n "Ethan|showcase|sites\\.vm0|Send now" "$app_state_path"
 ```
@@ -58,31 +93,35 @@ rg -n "Ethan|showcase|sites\\.vm0|Send now" "$app_state_path"
 If the CLI still returns inline app state instead of a path, use the transition workaround:
 
 ```bash
-npx -p @vm0/cli zero computer-use get-app-state --app Slack --timeout 10 > /tmp/slack-state.json
-node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync('/tmp/slack-state.json','utf8')).appState; s.split('\\n').forEach((l,i)=>{ if(/Ethan|showcase|sites\\.vm0|Send now/.test(l)) console.log((i+1)+': '+l) })"
+state_json=/tmp/computer-use-state.json
+npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout 10 > "$state_json"
+node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync(process.argv[1],'utf8')).appState; s.split('\\n').forEach((l,i)=>{ if(/Ethan|showcase|sites\\.vm0|Send now/.test(l)) console.log((i+1)+': '+l) })" "$state_json"
 ```
 
 Use filtered output to locate clickable `link`, `button`, `text field`, `checkbox`, or `outline row` entries and their element indexes.
 
 ## Action Rules
 
+- Use the same bundle id for `get-app-state` and follow-up actions against that snapshot.
 - Prefer `--element-index` or `--element` over coordinate clicks.
 - Use `--x/--y` only when the screenshot clearly shows the target but the accessibility tree has no useful element.
 - Always pass the matching `--snapshot-id` from the state used to pick the element or coordinate.
-- Use `open-app --app <name>` when the app is not visible or not running.
+- Use `open-app --app <bundleId>` when the app is not visible or not running.
 - Use `press-key` for reliable shortcuts such as `Command+L`, `Command+T`, `Command+W`, `Enter`, and arrow keys.
 - Use `type-text` only after confirming focus is in the right field.
+- If `type-text` fails with `element_not_editable`, click into a text field first or use `set-value` on a settable text field.
 - Avoid destructive UI actions unless the user explicitly requested them and the current state confirms the target.
 
 ## Slack Pattern
 
 For Slack reading tasks:
 
-1. Run `get-app-state --app Slack`.
-2. Inspect the screenshot to understand channel/thread layout.
-3. Filter the `appState` file for sender names, link domains, message text, composer labels, and `Send now`.
-4. Click Slack links by element index when the user specifically asked to use the GUI.
-5. If the task is simply to send a message and no GUI interaction is required, prefer `zero slack message send` for reliability; note that this is a Slack API shortcut, not desktop computer use.
+1. Run `list-apps` and find Slack's `bundleId` from the app record. Slack is often `com.tinyspeck.slackmacgap`, but use the value returned by the host.
+2. Run `get-app-state --app <slackBundleId>`.
+3. Inspect the screenshot to understand channel/thread layout.
+4. Filter the `appState` file for sender names, link domains, message text, composer labels, and `Send now`.
+5. Click Slack links by element index when the user specifically asked to use the GUI.
+6. If the task is simply to send a message and no GUI interaction is required, prefer `zero slack message send` for reliability; note that this is a Slack API shortcut, not desktop computer use.
 
 For Slack thread messages, watch for composer options like `Also send to #channel`. If the user asked to post in the channel rather than only reply in a thread, either select that option in Slack or use `zero slack message send -c <channel-id>`.
 
@@ -90,11 +129,18 @@ For Slack thread messages, watch for composer options like `Also send to #channe
 
 After clicking a link from another app:
 
-1. Check likely browsers with `get-app-state --app Arc`, `--app Safari`, or `--app Google Chrome`.
+1. Use `list-apps` to find the browser bundle id, such as `com.apple.Safari`, `com.google.Chrome`, or the Arc bundle id returned by the host.
 2. Inspect the address field, page title, and screenshot.
-3. Use `press-key --key Command+L` plus `type-text` and `Enter` when direct navigation is faster than finding a link.
+3. Use `press-key --app <browserBundleId> --snapshot-id <snapshotId> --key Command+L` plus `type-text` and `Enter` when direct navigation is faster than finding a link.
 4. For visual review, always inspect the screenshot path. Browser accessibility text alone is not enough for layout, design, or image-heavy pages.
+
+## Failure Handling
+
+- `app_not_found`: check whether `--app` was a display name. If so, retry with the app's `bundleId` from `list-apps`. If it was already a bundle id, the app may not be installed, not running, or not targetable on the host.
+- `window_unavailable`: try `open-app --app <bundleId>`, then run `get-app-state` again. If it still fails, report that the app has no controllable window.
+- `element_not_editable`: click into the target text field, re-read state, then use `type-text`; or use `set-value` when a settable text field is available.
+- `permission_denied`, `accessibility_unavailable`, or `screen_recording_unavailable`: report the missing Desktop permission instead of retrying the same command.
 
 ## Reporting Back
 
-State what was actually done through computer-use: apps inspected, key screenshots reviewed, and whether actions succeeded. If a desktop action times out or the host is unavailable, say that directly and use a stable fallback only when it still satisfies the user request.
+State what was actually done through Computer Use: apps inspected by bundle id, key screenshots reviewed, and whether actions succeeded. If a desktop action times out or the host is unavailable, say that directly and use a stable fallback only when it still satisfies the user request.
