@@ -316,6 +316,15 @@
       ]
     },
     {
+      "name": "google-cloud",
+      "description": "Google Cloud REST APIs via curl. Use this skill to inspect projects, IAM, enabled APIs, Compute Engine, Cloud Storage, BigQuery, Cloud Run, GKE, Cloud Build, Secret Manager, logs, metrics, and billing.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./google-cloud"
+      ]
+    },
+    {
       "name": "google-sheets",
       "description": "Google Sheets API via curl. Use this skill to read, write, and manage spreadsheet data programmatically.",
       "source": "./",
