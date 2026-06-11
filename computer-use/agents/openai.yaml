@@ -1,4 +1,0 @@
-interface:
-  display_name: "Computer Use"
-  short_description: "Use Zero Computer Use for desktop apps"
-  default_prompt: "Use $computer-use to inspect a desktop app and complete the requested UI task."
