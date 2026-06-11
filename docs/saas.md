@@ -57,6 +57,7 @@
 
 - [x] [Kommo](https://developers.kommo.com/) - CRM System
 - [ ] [Power BI](https://learn.microsoft.com/en-us/rest/api/power-bi/) - Microsoft Data Visualization
+- [x] [Google Cloud](https://cloud.google.com/apis/docs/overview) - Cloud infrastructure and resource management APIs
 - [x] [MinIO](https://min.io/docs/minio/linux/developers/minio-drivers.html) - Object Storage Service
 - [x] [Tavily](https://docs.tavily.com/) - AI Search Engine
 - [x] [Qdrant](https://api.qdrant.tech/api-reference) - Vector Search Engine
@@ -194,7 +195,7 @@
 | Document & Content Generation | 2 |
 | Browser Automation & Web Scraping | 8 |
 | Data Processing & Utilities | 1 |
-| API & Cloud Integrations | 27 |
+| API & Cloud Integrations | 28 |
 | AI, LLM & Voice | 12 |
 | File & PDF Manipulation | 3 |
 | Analytics & Monitoring | 9 |
@@ -204,8 +205,8 @@
 | Automation | 2 |
 | Design & Media | 4 |
 | Miscellaneous | 11 |
-| **Total** | **108** |
+| **Total** | **109** |
 
 ---
 
-> Last updated: 2026-06-10
+> Last updated: 2026-06-11
