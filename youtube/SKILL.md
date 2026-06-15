@@ -2,12 +2,12 @@
 name: youtube
 description: YouTube API for videos and channels. Use when user mentions "YouTube",
   "youtube.com", "youtu.be", shares a video link, "channel stats", or asks about video
-  content.
+  metadata, playlists, or comments.
 ---
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name YOUTUBE_TOKEN` or `zero doctor check-connector --url https://youtube.googleapis.com/youtube/v3/search --method GET`
+If requests fail, run `zero doctor check-connector --env-name YOUTUBE_TOKEN` or `zero doctor check-connector --url "https://youtube.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US" --method GET`
 
 ## How to Use
 
@@ -169,4 +169,5 @@ curl -s "https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=python&
 2. **Rate limits**: Implement exponential backoff on 403/429 errors
 3. **OAuth token handling**: Treat `YOUTUBE_TOKEN` as a short-lived access token provided by vm0 and never print it
 4. **Caching**: Cache responses to reduce quota usage
-5. **Video IDs**: Extract from URLs like `youtube.com/watch?v=VIDEO_ID` or `youtu.be/VIDEO_ID`
+5. **URL encoding**: URL-encode user-provided query values; use `curl --get --data-urlencode` for arbitrary search text
+6. **Video IDs**: Extract from URLs like `youtube.com/watch?v=VIDEO_ID` or `youtu.be/VIDEO_ID`
