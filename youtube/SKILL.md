@@ -13,7 +13,7 @@ If requests fail, run `zero doctor check-connector --env-name YOUTUBE_TOKEN` or 
 
 Base URL: `https://youtube.googleapis.com/youtube/v3`
 
-All requests use `Authorization: Bearer $YOUTUBE_TOKEN`. The token is provided by the vm0 YouTube OAuth connector and refreshed by vm0; skills do not need to handle refresh tokens.
+Use `Authorization: Bearer $YOUTUBE_TOKEN` for all requests.
 
 ### 1. Search Videos
 
@@ -167,7 +167,6 @@ curl -s "https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=python&
 
 1. **Quota limits**: API has 10,000 units/day quota. Search costs 100 units, most others cost 1 unit
 2. **Rate limits**: Implement exponential backoff on 403/429 errors
-3. **OAuth token handling**: Treat `YOUTUBE_TOKEN` as a short-lived access token provided by vm0 and never print it
-4. **Caching**: Cache responses to reduce quota usage
-5. **URL encoding**: URL-encode user-provided query values; use `curl --get --data-urlencode` for arbitrary search text
-6. **Video IDs**: Extract from URLs like `youtube.com/watch?v=VIDEO_ID` or `youtu.be/VIDEO_ID`
+3. **Caching**: Cache responses to reduce quota usage
+4. **URL encoding**: URL-encode user-provided query values; use `curl --get --data-urlencode` for arbitrary search text
+5. **Video IDs**: Extract from URLs like `youtube.com/watch?v=VIDEO_ID` or `youtu.be/VIDEO_ID`
