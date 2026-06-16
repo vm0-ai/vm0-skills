@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tomorrow Lab — deck</title>
+<title>Tomorrow Lab - deck</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Figtree:wght@300;400;500;600&family=Fraunces:wght@400;500;600&family=Work+Sans:wght@300;400;500;600&family=Sora:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Lexend:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&family=Montserrat:wght@400;500;600&family=Lora:wght@400;500;600&family=Archivo:wght@400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#FFFDF7; --surface:#FFFFFF; --ink:#221C14; --soft:#5E564A; --ph:#EFEADF;
@@ -24,224 +24,217 @@ html,body{background:#cfd2d8;color:var(--ink);font-family:var(--fb),sans-serif;}
 .slide{width:100vw;height:100vh;scroll-snap-align:start;display:flex;background:#cfd2d8;}
 .stage{position:relative;width:min(92vw,163.55vh);height:min(51.75vw,92vh);margin:auto;overflow:hidden;container-type:size;
   background:var(--bg);color:var(--ink);border:1px solid rgba(0,0,0,.12);box-shadow:0 14px 50px rgba(0,0,0,.2);}
-.fit{position:absolute;inset:0;transform-origin:top center;}  /* auto-scaled to keep content in-frame on any font */
-/* ---- type scale (projection-legible) ---- */
-.display{font-family:var(--fd);font-size:7cqw;font-weight:600;line-height:1.0;letter-spacing:-.02em;}
-.h1{font-family:var(--fd);font-size:4.6cqw;font-weight:500;line-height:1.04;letter-spacing:-.01em;}
-.h2{font-family:var(--fd);font-size:3.2cqw;font-weight:500;line-height:1.08;letter-spacing:-.01em;}
+.fit{position:absolute;inset:0;transform-origin:top center;}
+.display{font-family:var(--fd);font-size:7cqw;font-weight:600;line-height:1;}
+.h1{font-family:var(--fd);font-size:4.6cqw;font-weight:500;line-height:1.04;}
+.h2{font-family:var(--fd);font-size:3.2cqw;font-weight:500;line-height:1.08;}
 .h3{font-family:var(--fd);font-size:1.95cqw;font-weight:500;line-height:1.18;}
-.stat{font-family:var(--fd);font-size:5.2cqw;font-weight:600;line-height:1;letter-spacing:-.01em;}
+.stat{font-family:var(--fd);font-size:5.2cqw;font-weight:600;line-height:1;}
 .kicker{font-family:var(--fd);font-size:1.15cqw;font-weight:500;letter-spacing:.20em;text-transform:uppercase;}
 .lead{font-size:2cqw;font-weight:300;line-height:1.5;}
 .body{font-size:1.5cqw;font-weight:400;line-height:1.5;}
 .cap{font-size:1.2cqw;font-weight:400;line-height:1.4;letter-spacing:.02em;}
 .pagenum{position:absolute;right:3cqw;bottom:3.2cqh;font-family:var(--fd);font-size:1cqw;font-weight:500;letter-spacing:.06em;opacity:.65;z-index:6;}
-/* ---- signature motifs ---- */
 .tile{display:flex;align-items:center;justify-content:center;border-radius:var(--r-md);}
-.tile svg{width:55%;height:55%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .badge{display:flex;align-items:center;justify-content:center;border-radius:var(--r-md);font-family:var(--fd);font-weight:600;}
-.tick{position:absolute;}
 .card{background:var(--surface);border-radius:var(--r-md);}
-.dot{border-radius:50%;}.qcircle{border-radius:50% 0 0 0;}.semi{border-radius:999px 999px 0 0;}.tri{width:0;height:0;}
-.dim{opacity:.84;}
 .soft{color:var(--soft);}
-.band{position:absolute;display:flex;flex-direction:column;align-items:center;gap:1.6cqh;}
-.band>*{flex:none;}
-
+ul{padding-left:0}
 </style>
 </head>
 <body>
 <div class="deck" id="deck">
-<div class="slide"><div class="stage" style="background:var(--g2);color:var(--t2)"><div data-photocell="1" data-photo-seed="cover-r" style="position:absolute;right:6cqw;top:14cqh;width:22cqw;height:22cqw;background:var(--ph);opacity:0.85;border-radius:50%;z-index:1"></div><div data-photocell="1" data-photo-seed="cover-l" style="position:absolute;left:5cqw;top:50cqh;width:20cqw;height:20cqw;background:var(--ph);opacity:0.85;border-radius:50%;z-index:1"></div><svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--t2)" stroke-width="2.4" stroke-linecap="round"/></svg><svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--t2)" stroke-width="2.4" stroke-linecap="round"/></svg><div style="position:absolute;left:5cqw;top:3cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
+<div class="slide"><div class="stage" style="background:var(--g2);color:var(--t2)">
+      <div data-photocell="1" data-photo-seed="cover-r" style="position:absolute;background:var(--ph);overflow:hidden;right:6cqw;top:14cqh;width:22cqw;height:22cqw;border-radius:50%;opacity:.85;z-index:1"></div>
+      <div data-photocell="1" data-photo-seed="cover-l" style="position:absolute;background:var(--ph);overflow:hidden;left:5cqw;top:50cqh;width:20cqw;height:20cqw;border-radius:50%;opacity:.85;z-index:1"></div>
+      <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--t2)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--t2)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div style="position:absolute;left:5cqw;top:3cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--ink)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--bg)">2026</div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.96cqw;color:var(--bg)">2026</div>
   </div></div>
-   <div style="position:absolute;right:8cqw;bottom:11cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div style="position:absolute;right:8cqw;bottom:11cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--ink)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--bg)"></div>
-  </div></div><div class="fit"><div style="position:absolute;left:14cqw;right:14cqw;top:18cqh;text-align:center;z-index:4">
-     <h1 class="display" style="font-size:6.6cqw;line-height:.98;letter-spacing:-.025em;text-transform:uppercase">Play<br>with<br>great<br>ideas</h1>
-   </div>
-   <div style="position:absolute;left:50%;top:75cqh;transform:translateX(-50%);z-index:5"><span data-pill="1" style="display:inline-block;background:var(--ink);color:var(--bg);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh">#PlayfulMinds</div></div><div class="pagenum">01</div></div></div>
-<div class="slide"><div class="stage" style=""><div style="position:absolute;right:6cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--bg)"></div>
   </div></div>
-   <div style="position:absolute;left:5cqw;bottom:11cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div class="fit"><div style="position:absolute;left:14cqw;right:14cqw;top:18cqh;text-align:center;z-index:4">
+        <h1 class="display" style="font-size:6.6cqw;line-height:.98;text-transform:uppercase">Play<br>with<br>great<br>ideas</h1>
+      </div>
+      <div style="position:absolute;left:50%;top:75cqh;transform:translateX(-50%);z-index:5"><span data-pill="1" style="display:inline-block;background:var(--ink);color:var(--bg);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
+      <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:1;color:var(--t2)">#PlayfulMinds</div></div><div class="pagenum">01</div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;right:6cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
   </div></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:8cqw;top:11cqh;width:48cqw">
-     <div class="kicker" style="color:var(--ka)">Agenda</div>
-     <h1 class="h1" style="margin-top:1.4cqh">What's<br>inside</h1>
-   </div>
-   <div style="position:absolute;right:8cqw;top:14cqh;width:36cqw">
-     <div data-device="toc" style="display:flex;flex-direction:column;width:100%"><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
+      <div style="position:absolute;left:5cqw;bottom:11cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;color:var(--oa)"></div>
+  </div></div>
+      <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div class="fit"><div style="position:absolute;left:8cqw;top:11cqh;width:48cqw">
+        <div class="kicker" style="color:var(--ka)">Agenda</div>
+        <h1 class="h1" style="margin-top:1.4cqh">What's<br>inside</h1>
+      </div>
+      <div style="position:absolute;right:8cqw;top:14cqh;width:36cqw"><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
       <div style="flex:none;color:var(--accent);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">01</div>
-      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">About — who we are</h3>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">About - who we are</h3>
       <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">03</div>
     </div><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
       <div style="flex:none;color:var(--s1);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">02</div>
-      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">Work — what we make</h3>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">Work - what we make</h3>
       <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">07</div>
     </div><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
       <div style="flex:none;color:var(--s2);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">03</div>
-      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">Proof — the impact</h3>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">Proof - the impact</h3>
       <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">11</div>
     </div><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
       <div style="flex:none;color:var(--s3);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">04</div>
-      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">Close — find us</h3>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">Close - find us</h3>
       <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">15</div>
     </div></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">02</div></div></div>
-<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)"><div style="position:absolute;left:3cqw;top:28cqh"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">02</div></div></div>
+<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)">
+    <div style="position:absolute;left:3cqw;top:28cqh"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;color:var(--oa)"></div>
   </div></div>
-   <div style="position:absolute;right:3cqw;bottom:22cqh"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center">
+    <div style="position:absolute;right:3cqw;bottom:22cqh"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;letter-spacing:-.01em;color:var(--ink)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--ink)"></div>
   </div></div>
-   <div style="position:absolute;left:4cqw;bottom:12cqh"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
+    <div style="position:absolute;left:4cqw;bottom:12cqh"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;color:var(--oa)"></div>
   </div></div>
-   <div style="position:absolute;right:4cqw;top:10cqh;z-index:3"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Chapter 01</span></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:22cqw;right:22cqw;top:32cqh;text-align:center">
-     <div class="kicker" style="opacity:.7">Chapter 01</div>
-     <h1 class="display" style="font-size:7cqw;margin-top:2.4cqh;line-height:1">About</h1>
-     <div style="margin-top:5cqh"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.6">#PlayfulMinds</div></div><div class="pagenum"></div></div></div>
-<div class="slide"><div class="stage" style=""><div data-photocell="1" data-photo-seed="about-portrait" style="position:absolute;left:6cqw;top:11cqh;width:32cqw;height:78cqh;background:var(--ph);border-radius:var(--r-lg);overflow:hidden"></div>
-   <div style="position:absolute;left:32cqw;top:5cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
+    <div style="position:absolute;right:4cqw;top:10cqh;z-index:3"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Chapter 01</span></div>
+    <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:0.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:0.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div class="fit"><div style="position:absolute;left:22cqw;right:22cqw;top:32cqh;text-align:center">
+      <div class="kicker" style="opacity:.7">Chapter 01</div>
+      <h1 class="display" style="font-size:7cqw;margin-top:2.4cqh;line-height:1">About</h1>
+      <div style="margin-top:5cqh"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
+    </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.6;color:inherit">#PlayfulMinds</div></div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div data-photocell="1" data-photo-seed="about-portrait" style="position:absolute;background:var(--ph);overflow:hidden;left:6cqw;top:11cqh;width:32cqw;height:78cqh;border-radius:var(--r-lg)"></div>
+      <div style="position:absolute;left:32cqw;top:5cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
   </div></div>
-   <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;right:6cqw;top:13cqh;width:40cqw">
-     <div class="kicker" style="color:var(--ka)">About us</div>
-     <h1 class="h1" style="margin-top:1.4cqh">A small studio<br>building joyful tools</h1>
-     <p class="lead" style="margin-top:2.6cqh">We make learning toys, books, and apps for the under-tens — built by parents, tested by classrooms, used by families.</p>
-     <p class="body" style="margin-top:2cqh;max-width:38cqw;opacity:.88">Founded in 2022 in a single room with a sketch wall, a pile of cardboard, and a stubborn belief that kids deserve better than another bright-button app.</p>
-     <div style="margin-top:4.5cqh;display:flex;gap:1cqw"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Education</span><span data-pill="1" style="display:inline-block;background:var(--g1);color:var(--t1);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Play</span></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">04</div></div></div>
-<div class="slide"><div class="stage" style=""><div data-angle="1" style="position:absolute;inset:0;background:var(--bg);z-index:0"></div>
-<div data-angle="1" style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0, 42% 0, 36% 100%, 0 100%);z-index:0"></div><div style="position:absolute;left:5cqw;top:14cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:8cqw;height:8cqw;display:inline-flex;align-items:center;justify-content:center">
+      <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div class="fit"><div style="position:absolute;right:6cqw;top:13cqh;width:40cqw">
+        <div class="kicker" style="color:var(--ka)">About us</div>
+        <h1 class="h1" style="margin-top:1.4cqh">A small studio<br>building joyful tools</h1>
+        <p class="lead" style="margin-top:2.6cqh">We make learning toys, books, and apps for the under-tens - built by parents, tested by classrooms, used by families.</p>
+        <p class="body" style="margin-top:2cqh;max-width:38cqw;opacity:.88">Founded in 2022 in a single room with a sketch wall, a pile of cardboard, and a stubborn belief that kids deserve better than another bright-button app.</p>
+        <div style="margin-top:4.5cqh;display:flex;gap:1cqw"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Education</span><span data-pill="1" style="display:inline-block;background:var(--g1);color:var(--t1);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Play</span></div>
+      </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">04</div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;inset:0;background:var(--bg);z-index:0"></div>
+      <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0, 42% 0, 36% 100%, 0 100%);z-index:0"></div>
+      <div style="position:absolute;left:5cqw;top:14cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:8cqw;height:8cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:2.24cqw;letter-spacing:-.01em;color:var(--ink)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:2.24cqw;color:var(--ink)"></div>
   </div></div>
-   <div style="position:absolute;left:5cqw;top:50cqh;z-index:3;display:flex;flex-direction:column;gap:1.4cqh;align-items:flex-start">
-     <span data-pill="1" style="display:inline-block;background:var(--bg);color:var(--ink);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">#Favorite</span>
-     <span data-pill="1" style="display:inline-block;background:var(--bg);color:var(--ink);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;margin-left:1.6cqw">#Havefun</span>
-   </div>
-   <svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:.6;z-index:3" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <div style="position:absolute;right:6cqw;bottom:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div style="position:absolute;left:5cqw;top:50cqh;z-index:3;display:flex;flex-direction:column;gap:1.4cqh;align-items:flex-start">
+        <span data-pill="1" style="display:inline-block;background:var(--bg);color:var(--ink);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">#Favorite</span>
+        <span data-pill="1" style="display:inline-block;background:var(--bg);color:var(--ink);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;margin-left:1.6cqw">#Havefun</span>
+      </div>
+      <svg style="position:absolute;left:5cqw;bottom:11cqh;z-index:3;width:1.8cqw;height:1.8cqw;opacity:0.6" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div style="position:absolute;right:6cqw;bottom:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
-  </div></div><div class="fit"><div style="position:absolute;right:6cqw;top:11cqh;width:46cqw">
-     <div class="kicker" style="color:var(--ka)">What we believe</div>
-     <h1 class="h1" style="margin-top:1.4cqh;font-size:5.4cqw;line-height:.98">Our<br>Vision</h1>
-     <div style="margin-top:3cqh">
-       <div data-device="numbered-list" style="display:flex;flex-direction:column;width:100%"><div style="display:flex;gap:2cqw;align-items:flex-start;margin-bottom:3.4cqh">
-      <div style="flex:none"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.58,14.26 74.50,7.56 76.16,23.84 92.44,25.50 85.74,40.42 99.00,50.00 85.74,59.58 92.44,74.50 76.16,76.16 74.50,92.44 59.58,85.74 50.00,99.00 40.42,85.74 25.50,92.44 23.84,76.16 7.56,74.50 14.26,59.58 1.00,50.00 14.26,40.42 7.56,25.50 23.84,23.84 25.50,7.56 40.42,14.26" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--oa)">01</div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
   </div></div>
-      <div style="flex:1;padding-top:.6cqh"><h3 class="h3">Build for kids first</h3><p class="body" style="margin-top:.6cqh;opacity:.92">Every choice begins with a young learner — clear, kind, joyful.</p></div>
+      <div class="fit"><div style="position:absolute;right:6cqw;top:11cqh;width:46cqw">
+        <div class="kicker" style="color:var(--ka)">What we believe</div>
+        <h1 class="h1" style="margin-top:1.4cqh;font-size:5.4cqw;line-height:.98">Our<br>Vision</h1>
+        <div style="margin-top:3cqh"><div style="display:flex;gap:2cqw;align-items:flex-start;margin-bottom:3.4cqh">
+      <div style="flex:none"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.84,13.29 74.50,7.56 76.87,23.13 92.44,25.50 86.71,40.16 99.00,50.00 86.71,59.84 92.44,74.50 76.87,76.87 74.50,92.44 59.84,86.71 50.00,99.00 40.16,86.71 25.50,92.44 23.13,76.87 7.56,74.50 13.29,59.84 1.00,50.00 13.29,40.16 7.56,25.50 23.13,23.13 25.50,7.56 40.16,13.29" fill="var(--accent)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;color:var(--oa)">01</div>
+  </div></div>
+      <div style="flex:1;padding-top:.6cqh"><h3 class="h3">Build for kids first</h3><p class="body" style="margin-top:.6cqh;opacity:.92">Every choice begins with a young learner - clear, kind, joyful.</p></div>
     </div><div style="display:flex;gap:2cqw;align-items:flex-start;margin-bottom:3.4cqh">
-      <div style="flex:none"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.58,14.26 74.50,7.56 76.16,23.84 92.44,25.50 85.74,40.42 99.00,50.00 85.74,59.58 92.44,74.50 76.16,76.16 74.50,92.44 59.58,85.74 50.00,99.00 40.42,85.74 25.50,92.44 23.84,76.16 7.56,74.50 14.26,59.58 1.00,50.00 14.26,40.42 7.56,25.50 23.84,23.84 25.50,7.56 40.42,14.26" fill="var(--s1)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--o1)">02</div>
+      <div style="flex:none"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.84,13.29 74.50,7.56 76.87,23.13 92.44,25.50 86.71,40.16 99.00,50.00 86.71,59.84 92.44,74.50 76.87,76.87 74.50,92.44 59.84,86.71 50.00,99.00 40.16,86.71 25.50,92.44 23.13,76.87 7.56,74.50 13.29,59.84 1.00,50.00 13.29,40.16 7.56,25.50 23.13,23.13 25.50,7.56 40.16,13.29" fill="var(--s1)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;color:var(--o1)">02</div>
   </div></div>
       <div style="flex:1;padding-top:.6cqh"><h3 class="h3">Make it joyful</h3><p class="body" style="margin-top:.6cqh;opacity:.92">Curiosity is fragile. We protect it with playful tools and gentle defaults.</p></div>
     </div><div style="display:flex;gap:2cqw;align-items:flex-start;margin-bottom:3.4cqh">
-      <div style="flex:none"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.58,14.26 74.50,7.56 76.16,23.84 92.44,25.50 85.74,40.42 99.00,50.00 85.74,59.58 92.44,74.50 76.16,76.16 74.50,92.44 59.58,85.74 50.00,99.00 40.42,85.74 25.50,92.44 23.84,76.16 7.56,74.50 14.26,59.58 1.00,50.00 14.26,40.42 7.56,25.50 23.84,23.84 25.50,7.56 40.42,14.26" fill="var(--s2)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--o2)">03</div>
+      <div style="flex:none"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.84,13.29 74.50,7.56 76.87,23.13 92.44,25.50 86.71,40.16 99.00,50.00 86.71,59.84 92.44,74.50 76.87,76.87 74.50,92.44 59.84,86.71 50.00,99.00 40.16,86.71 25.50,92.44 23.13,76.87 7.56,74.50 13.29,59.84 1.00,50.00 13.29,40.16 7.56,25.50 23.13,23.13 25.50,7.56 40.16,13.29" fill="var(--s2)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;color:var(--o2)">03</div>
   </div></div>
       <div style="flex:1;padding-top:.6cqh"><h3 class="h3">Practice over polish</h3><p class="body" style="margin-top:.6cqh;opacity:.92">Daily repetition builds confidence faster than any one-off lesson.</p></div>
     </div></div>
-     </div>
-   </div></div><div class="pagenum">05</div></div></div>
-<div class="slide"><div class="stage" style=""><div style="position:absolute;right:6cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
+      </div></div><div class="pagenum">05</div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;right:6cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
   </div></div>
-   <div style="position:absolute;left:1cqw;top:1cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:3cqw;height:3cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div style="position:absolute;left:1cqw;top:1cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:3cqw;height:3cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:0.8400000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:0.8400000000000001cqw;color:var(--oa)"></div>
   </div></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:6cqw;top:11cqh">
-     <div class="kicker" style="color:var(--ka)">Our makers</div>
-     <h1 class="h1" style="margin-top:1.4cqh">Meet the team</h1>
-   </div>
-   <div style="position:absolute;left:6cqw;right:6cqw;top:36cqh;bottom:11cqh">
-     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.6cqw;width:100%"><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
-      <div data-photocell="1" data-photo-seed="team-jordy" style="position:relative;width:100%;aspect-ratio:1;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
-      <div>
-        <h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Jordy Koero</h3>
-        <p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Founder</p>
+      <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div class="fit"><div style="position:absolute;left:6cqw;top:11cqh">
+        <div class="kicker" style="color:var(--ka)">Our makers</div>
+        <h1 class="h1" style="margin-top:1.4cqh">Meet the team</h1>
       </div>
+      <div style="position:absolute;left:6cqw;right:6cqw;top:36cqh;bottom:11cqh">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.6cqw;width:100%"><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
+      <div data-photocell="1" data-photo-seed="team-jordy" style="position:relative;width:100%;aspect-ratio:1;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+      <div><h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Jordy Koero</h3><p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Founder</p></div>
     </div><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
       <div data-photocell="1" data-photo-seed="team-olivia" style="position:relative;width:100%;aspect-ratio:1;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
-      <div>
-        <h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Olivia Wolff</h3>
-        <p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Design lead</p>
-      </div>
+      <div><h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Olivia Wolff</h3><p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Design lead</p></div>
     </div><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
       <div data-photocell="1" data-photo-seed="team-daniel" style="position:relative;width:100%;aspect-ratio:1;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
-      <div>
-        <h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Daniel Musell</h3>
-        <p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Engineering</p>
-      </div>
+      <div><h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Daniel Musell</h3><p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Engineering</p></div>
     </div><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
       <div data-photocell="1" data-photo-seed="team-jesse" style="position:relative;width:100%;aspect-ratio:1;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
-      <div>
-        <h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Jesse Roie</h3>
-        <p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Workshops</p>
-      </div>
+      <div><h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Jesse Roie</h3><p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Workshops</p></div>
     </div></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">06</div></div></div>
-<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)"><div style="position:absolute;left:3cqw;top:28cqh"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
+      </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">06</div></div></div>
+<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)">
+    <div style="position:absolute;left:3cqw;top:28cqh"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;color:var(--oa)"></div>
   </div></div>
-   <div style="position:absolute;right:3cqw;bottom:22cqh"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center">
+    <div style="position:absolute;right:3cqw;bottom:22cqh"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;letter-spacing:-.01em;color:var(--ink)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--ink)"></div>
   </div></div>
-   <div style="position:absolute;left:4cqw;bottom:12cqh"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
+    <div style="position:absolute;left:4cqw;bottom:12cqh"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;color:var(--oa)"></div>
   </div></div>
-   <div style="position:absolute;right:4cqw;top:10cqh;z-index:3"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Chapter 02</span></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:22cqw;right:22cqw;top:32cqh;text-align:center">
-     <div class="kicker" style="opacity:.7">Chapter 02</div>
-     <h1 class="display" style="font-size:7cqw;margin-top:2.4cqh;line-height:1">Work</h1>
-     <div style="margin-top:5cqh"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.6">#PlayfulMinds</div></div><div class="pagenum"></div></div></div>
-<div class="slide"><div class="stage" style=""><div style="position:absolute;right:6cqw;bottom:11cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
+    <div style="position:absolute;right:4cqw;top:10cqh;z-index:3"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Chapter 02</span></div>
+    <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:0.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:0.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div class="fit"><div style="position:absolute;left:22cqw;right:22cqw;top:32cqh;text-align:center">
+      <div class="kicker" style="opacity:.7">Chapter 02</div>
+      <h1 class="display" style="font-size:7cqw;margin-top:2.4cqh;line-height:1">Work</h1>
+      <div style="margin-top:5cqh"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
+    </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.6;color:inherit">#PlayfulMinds</div></div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;right:6cqw;bottom:11cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
   </div></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:6cqw;top:11cqh;width:48cqw">
-     <div class="kicker" style="color:var(--ka)">What we offer</div>
-     <h1 class="h1" style="margin-top:1.4cqh">Services</h1>
-     <p class="body" style="margin-top:2cqh;max-width:42cqw;opacity:.84">Four playful disciplines, one curious approach — pick the mix that fits your family or classroom.</p>
-   </div>
-   <div style="position:absolute;left:6cqw;right:6cqw;top:42cqh">
-     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2cqw;"><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
+      <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div class="fit"><div style="position:absolute;left:6cqw;top:11cqh;width:48cqw">
+        <div class="kicker" style="color:var(--ka)">What we offer</div>
+        <h1 class="h1" style="margin-top:1.4cqh">Services</h1>
+        <p class="body" style="margin-top:2cqh;max-width:42cqw;opacity:.84">Four playful disciplines, one curious approach - pick the mix that fits your family or classroom.</p>
+      </div>
+      <div style="position:absolute;left:6cqw;right:6cqw;top:42cqh">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2cqw;"><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
       <div class="tile" data-tile="1" style="width:5cqw;height:5cqw;flex:none;background:var(--g0);color:var(--t0)"><svg viewBox="0 0 24 24" style="width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polygon points="12 2 15 9 22 9 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9 9 9"/></svg></div>
       <div><h3 class="h3" style="color:var(--ink)">Play equipment</h3><p class="body soft" style="margin-top:.5cqh">Cardboard kits, wooden builds, soft modular sets.</p></div>
     </div><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
@@ -249,209 +242,179 @@ html,body{background:#cfd2d8;color:var(--ink);font-family:var(--fb),sans-serif;}
       <div><h3 class="h3" style="color:var(--ink)">Interactive play panels</h3><p class="body soft" style="margin-top:.5cqh">Tactile, magnetic, room-friendly story scenes.</p></div>
     </div><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
       <div class="tile" data-tile="1" style="width:5cqw;height:5cqw;flex:none;background:var(--g2);color:var(--t2)"><svg viewBox="0 0 24 24" style="width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
-      <div><h3 class="h3" style="color:var(--ink)">Murals & walls</h3><p class="body soft" style="margin-top:.5cqh">Hand-painted classroom and bedroom murals.</p></div>
+      <div><h3 class="h3" style="color:var(--ink)">Murals &amp; walls</h3><p class="body soft" style="margin-top:.5cqh">Hand-painted classroom and bedroom murals.</p></div>
     </div><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
       <div class="tile" data-tile="1" style="width:5cqw;height:5cqw;flex:none;background:var(--g3);color:var(--t3)"><svg viewBox="0 0 24 24" style="width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M2 19V6a2 2 0 0 1 2-2h7v17H4a2 2 0 0 1-2-2zM22 19V6a2 2 0 0 0-2-2h-7v17h7a2 2 0 0 0 2-2z"/></svg></div>
       <div><h3 class="h3" style="color:var(--ink)">Read-along bundles</h3><p class="body soft" style="margin-top:.5cqh">Audio + book + sticker packs sent monthly.</p></div>
     </div></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">08</div></div></div>
-<div class="slide"><div class="stage" style=""><div style="position:absolute;right:5cqw;top:3cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
+      </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">08</div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;left:5cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
   </div></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:6cqw;top:11cqh">
-     <div class="kicker" style="color:var(--ka)">How it works</div>
-     <h1 class="h1" style="margin-top:1.4cqh">From idea to playroom</h1>
-   </div>
-   <div style="position:absolute;left:6cqw;right:6cqw;top:36cqh">
-     <div data-device="process" style="position:relative;display:flex;height:46cqh;"><div data-connector="1" style="position:absolute;left:12.5%;right:12.5%;top:50%;height:.55cqh;background:color-mix(in srgb, var(--ink) 24%, transparent);transform:translateY(-50%);z-index:0"></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);bottom:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 01</div><h3 class="h3" style="margin-top:.4cqh">Sketch</h3><p class="body soft" style="margin-top:.3cqh">Pen-and-paper sessions with families.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g0);color:var(--t0)"><svg viewBox="0 0 24 24" style="width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);top:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 02</div><h3 class="h3" style="margin-top:.4cqh">Prototype</h3><p class="body soft" style="margin-top:.3cqh">Cardboard mockups, weekly testing.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g1);color:var(--t1)"><svg viewBox="0 0 24 24" style="width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);bottom:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 03</div><h3 class="h3" style="margin-top:.4cqh">Refine</h3><p class="body soft" style="margin-top:.3cqh">Small batches with real classrooms.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g2);color:var(--t2)"><svg viewBox="0 0 24 24" style="width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);top:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 04</div><h3 class="h3" style="margin-top:.4cqh">Ship</h3><p class="body soft" style="margin-top:.3cqh">Print, pack, send — direct to home.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g3);color:var(--t3)"><svg viewBox="0 0 24 24" style="width:52%;height:52%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polygon points="12 2 15 9 22 9 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9 9 9"/></svg></div></div></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">09</div></div></div>
-<div class="slide"><div class="stage" style=""><div style="position:absolute;right:3cqw;bottom:14cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
-  </div></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:6cqw;top:14cqh;width:30cqw">
-     <div class="kicker" style="color:var(--ka)">Around the studio</div>
-     <h1 class="h1" style="margin-top:1.4cqh">Gallery</h1>
-     <p class="body" style="margin-top:2.4cqh;opacity:.84">Snapshots from sessions, sketch tables, and the makers who come back every week.</p>
-     <p class="cap" style="margin-top:1.6cqh;color:var(--ka)">12 sessions · 4 cities · one studio</p>
-   </div>
-   <div style="position:absolute;right:6cqw;top:11cqh;bottom:9cqh;width:52cqw;display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:1fr 1fr;grid-template-areas:'a a b' 'a c d';gap:1.2cqw">
-     <div data-photocell="1" data-photo-seed="gallery-1" style="grid-area:a;position:relative;background:var(--ph);border-radius:var(--r-md)"></div>
-     <div data-photocell="1" data-photo-seed="gallery-2" style="grid-area:b;position:relative;background:var(--ph);border-radius:var(--r-md)"></div>
-     <div data-photocell="1" data-photo-seed="gallery-3" style="grid-area:c;position:relative;background:var(--ph);border-radius:var(--r-md)"></div>
-     <div data-photocell="1" data-photo-seed="gallery-4" style="grid-area:d;position:relative;background:var(--ph);border-radius:var(--r-md)"></div>
-   </div>
-   <div style="position:absolute;right:7cqw;top:14cqh;z-index:5"><span data-pill="1" style="display:inline-block;background:var(--g1);color:var(--t1);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">#Sessions</span></div>
-   <div style="position:absolute;right:24cqw;top:50cqh;z-index:5"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">#Studio</span></div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">10</div></div></div>
-<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)"><div style="position:absolute;left:3cqw;top:28cqh"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--oa)"></div>
-  </div></div>
-   <div style="position:absolute;right:3cqw;bottom:22cqh"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;letter-spacing:-.01em;color:var(--ink)"></div>
-  </div></div>
-   <div style="position:absolute;left:4cqw;bottom:12cqh"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--oa)"></div>
-  </div></div>
-   <div style="position:absolute;right:4cqw;top:10cqh;z-index:3"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Chapter 03</span></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:22cqw;right:22cqw;top:32cqh;text-align:center">
-     <div class="kicker" style="opacity:.7">Chapter 03</div>
-     <h1 class="display" style="font-size:7cqw;margin-top:2.4cqh;line-height:1">Proof</h1>
-     <div style="margin-top:5cqh"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.6">#PlayfulMinds</div></div><div class="pagenum"></div></div></div>
-<div class="slide"><div class="stage" style="background:var(--g1);color:var(--t1)"><div data-bigcircle="1" style="position:absolute;right:-39cqw;top:50%;transform:translateY(-50%);width:78cqw;height:78cqw;background:var(--s2);border-radius:50%;opacity:1;z-index:1"></div><div style="position:absolute;left:5cqw;top:1cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--ink)"></div>
-  </div></div>
-   <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;z-index:3" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--o2)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:.6;z-index:3" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--t1)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:6cqw;top:14cqh;width:48cqw;z-index:2">
-     <div class="kicker">By the numbers</div>
-     <h1 class="h1" style="margin-top:1.4cqh;font-size:5.4cqw;line-height:1.02">Joyful learning,<br>at scale.</h1>
-     <p class="body" style="margin-top:2.6cqh;max-width:38cqw;opacity:.92">Built and tested with families across thirty cities — small daily moments that keep momentum.</p>
-   </div>
-   <div style="position:absolute;left:6cqw;right:6cqw;top:58cqh;display:flex;justify-content:space-around;align-items:flex-start;z-index:3">
-     <div data-device="stat-cell" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.2cqh;z-index:3">
-  <div data-bbadge="1" style="position:relative;width:11cqw;height:11cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--s2)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:3.08cqw;letter-spacing:-.01em;color:var(--o2)">80%</div>
-  </div>
-  <div class="cap" style="max-width:13cqw;color:var(--t1)">Kids ask for more practice</div>
-</div>
-     <div data-device="stat-cell" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.2cqh;z-index:3">
-  <div data-bbadge="1" style="position:relative;width:11cqw;height:11cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:3.08cqw;letter-spacing:-.01em;color:var(--oa)">75%</div>
-  </div>
-  <div class="cap" style="max-width:13cqw;color:var(--t1)">Parents see a calmer routine</div>
-</div>
-     <div data-device="stat-cell" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.2cqh;z-index:3">
-  <div data-bbadge="1" style="position:relative;width:11cqw;height:11cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:3.08cqw;letter-spacing:-.01em;color:var(--ink)">65%</div>
-  </div>
-  <div class="cap" style="max-width:13cqw;color:var(--t1)">New skills tried each month</div>
-</div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;color:var(--t1);opacity:.7">#PlayfulMinds</div></div><div class="pagenum">12</div></div></div>
-<div class="slide"><div class="stage" style=""><div style="position:absolute;right:6cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
-  </div></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:8cqw;top:11cqh">
-     <div class="kicker" style="color:var(--ka)">What families say</div>
-     <h1 class="h1" style="margin-top:1.4cqh">Testimonials</h1>
-   </div>
-   <div style="position:absolute;left:8cqw;right:8cqw;top:36cqh;bottom:11cqh">
-     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw;height:100%"><div data-device="quote" style="background:var(--g0);color:var(--t0);border-radius:var(--r-lg);padding:3cqh 2cqw;display:flex;flex-direction:column;height:100%">
-      <div style="font-family:var(--fd);font-weight:700;font-size:5cqw;line-height:.6;opacity:.45">"</div>
-      <p class="body" style="margin-top:.4cqh;flex:1">My 6-year-old asks for the Saturday box first thing every weekend — the rhythm has been a gift.</p>
-      <div style="margin-top:2cqh;display:flex;align-items:center;gap:1cqw">
-        <div data-photocell="1" data-photo-seed="quote-priya" style="position:relative;width:4cqw;height:4cqw;background:var(--ph);border-radius:50%;overflow:hidden;flex:none"></div>
-        <div style="min-width:0">
-          <div style="font-family:var(--fd);font-weight:600;font-size:1.4cqw;line-height:1.1">Priya R.</div>
-          <div class="cap" style="opacity:.85;font-size:1.1cqw">Parent of one, Bristol</div>
-        </div>
+      <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:1" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div class="fit"><div style="position:absolute;left:6cqw;top:11cqh;width:50cqw">
+        <div class="kicker" style="color:var(--ka)">How it works</div>
+        <h1 class="h1" style="margin-top:1.4cqh">From spark<br>to shelf</h1>
       </div>
-    </div><div data-device="quote" style="background:var(--g1);color:var(--t1);border-radius:var(--r-lg);padding:3cqh 2cqw;display:flex;flex-direction:column;height:100%">
-      <div style="font-family:var(--fd);font-weight:700;font-size:5cqw;line-height:.6;opacity:.45">"</div>
-      <p class="body" style="margin-top:.4cqh;flex:1">I run a classroom of twenty-four. Their materials are the only ones every kid wants to take home.</p>
-      <div style="margin-top:2cqh;display:flex;align-items:center;gap:1cqw">
-        <div data-photocell="1" data-photo-seed="quote-owens" style="position:relative;width:4cqw;height:4cqw;background:var(--ph);border-radius:50%;overflow:hidden;flex:none"></div>
-        <div style="min-width:0">
-          <div style="font-family:var(--fd);font-weight:600;font-size:1.4cqw;line-height:1.1">Mr. Owens</div>
-          <div class="cap" style="opacity:.85;font-size:1.1cqw">Year-2 teacher, Leeds</div>
-        </div>
+      <div style="position:absolute;left:6cqw;right:6cqw;top:43cqh;display:flex;gap:2cqw">
+        <div style="position:absolute;left:0;right:0;top:2.8cqh;height:.4cqh;background:var(--ink);opacity:.12"></div>
+        <div style="position:relative;flex:1;padding-top:8cqh">
+      <div style="position:absolute;top:0;left:0"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.84,13.29 74.50,7.56 76.87,23.13 92.44,25.50 86.71,40.16 99.00,50.00 86.71,59.84 92.44,74.50 76.87,76.87 74.50,92.44 59.84,86.71 50.00,99.00 40.16,86.71 25.50,92.44 23.13,76.87 7.56,74.50 13.29,59.84 1.00,50.00 13.29,40.16 7.56,25.50 23.13,23.13 25.50,7.56 40.16,13.29" fill="var(--accent)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--bg)">01</div>
+  </div></div>
+      <h3 class="h3">Discovery</h3>
+      <p class="body soft" style="margin-top:.8cqh">A playful audit of the child, room, curriculum, and daily routine.</p>
+    </div><div style="position:relative;flex:1;padding-top:8cqh">
+      <div style="position:absolute;top:0;left:0"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.84,13.29 74.50,7.56 76.87,23.13 92.44,25.50 86.71,40.16 99.00,50.00 86.71,59.84 92.44,74.50 76.87,76.87 74.50,92.44 59.84,86.71 50.00,99.00 40.16,86.71 25.50,92.44 23.13,76.87 7.56,74.50 13.29,59.84 1.00,50.00 13.29,40.16 7.56,25.50 23.13,23.13 25.50,7.56 40.16,13.29" fill="var(--s1)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--bg)">02</div>
+  </div></div>
+      <h3 class="h3">Prototype</h3>
+      <p class="body soft" style="margin-top:.8cqh">Quick sketches, storyboards, and cardboard models tested with families.</p>
+    </div><div style="position:relative;flex:1;padding-top:8cqh">
+      <div style="position:absolute;top:0;left:0"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.84,13.29 74.50,7.56 76.87,23.13 92.44,25.50 86.71,40.16 99.00,50.00 86.71,59.84 92.44,74.50 76.87,76.87 74.50,92.44 59.84,86.71 50.00,99.00 40.16,86.71 25.50,92.44 23.13,76.87 7.56,74.50 13.29,59.84 1.00,50.00 13.29,40.16 7.56,25.50 23.13,23.13 25.50,7.56 40.16,13.29" fill="var(--s2)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--ink)">03</div>
+  </div></div>
+      <h3 class="h3">Build</h3>
+      <p class="body soft" style="margin-top:.8cqh">Production with durable materials, friendly copy, and accessible defaults.</p>
+    </div><div style="position:relative;flex:1;padding-top:8cqh">
+      <div style="position:absolute;top:0;left:0"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 59.84,13.29 74.50,7.56 76.87,23.13 92.44,25.50 86.71,40.16 99.00,50.00 86.71,59.84 92.44,74.50 76.87,76.87 74.50,92.44 59.84,86.71 50.00,99.00 40.16,86.71 25.50,92.44 23.13,76.87 7.56,74.50 13.29,59.84 1.00,50.00 13.29,40.16 7.56,25.50 23.13,23.13 25.50,7.56 40.16,13.29" fill="var(--s3)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--bg)">04</div>
+  </div></div>
+      <h3 class="h3">Learn</h3>
+      <p class="body soft" style="margin-top:.8cqh">We measure use, collect stories, and tune the next release.</p>
+    </div>
+      </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">09</div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div class="fit"><div style="position:absolute;left:6cqw;top:8cqh;width:34cqw;z-index:3">
+        <div class="kicker" style="color:var(--ka)">Gallery</div>
+        <h1 class="h1" style="margin-top:1.4cqh">Things we<br>make</h1>
+        <p class="body" style="margin-top:2cqh">A fast scan of products, rooms, workshops, and prototype rituals.</p>
       </div>
-    </div><div data-device="quote" style="background:var(--g2);color:var(--t2);border-radius:var(--r-lg);padding:3cqh 2cqw;display:flex;flex-direction:column;height:100%">
-      <div style="font-family:var(--fd);font-weight:700;font-size:5cqw;line-height:.6;opacity:.45">"</div>
-      <p class="body" style="margin-top:.4cqh;flex:1">They listen — we said "less screen", they replied with paper, paint, and a sticker plan we love.</p>
-      <div style="margin-top:2cqh;display:flex;align-items:center;gap:1cqw">
-        <div data-photocell="1" data-photo-seed="quote-cho" style="position:relative;width:4cqw;height:4cqw;background:var(--ph);border-radius:50%;overflow:hidden;flex:none"></div>
-        <div style="min-width:0">
-          <div style="font-family:var(--fd);font-weight:600;font-size:1.4cqw;line-height:1.1">The Cho family</div>
-          <div class="cap" style="opacity:.85;font-size:1.1cqw">Family of four</div>
-        </div>
+      <div data-photocell="1" data-photo-seed="gallery-a" style="position:absolute;background:var(--ph);overflow:hidden;left:43cqw;top:7cqh;width:24cqw;height:27cqh;border-radius:var(--r-md)"></div>
+      <div data-photocell="1" data-photo-seed="gallery-b" style="position:absolute;background:var(--ph);overflow:hidden;left:68cqw;top:12cqh;width:20cqw;height:35cqh;border-radius:var(--r-md)"></div>
+      <div data-photocell="1" data-photo-seed="gallery-c" style="position:absolute;background:var(--ph);overflow:hidden;left:8cqw;top:50cqh;width:30cqw;height:32cqh;border-radius:var(--r-md)"></div>
+      <div data-photocell="1" data-photo-seed="gallery-d" style="position:absolute;background:var(--ph);overflow:hidden;left:40cqw;top:42cqh;width:31cqw;height:39cqh;border-radius:var(--r-md)"></div>
+      <div data-photocell="1" data-photo-seed="gallery-e" style="position:absolute;background:var(--ph);overflow:hidden;left:73cqw;top:55cqh;width:17cqw;height:24cqh;border-radius:var(--r-md)"></div>
+      <div style="position:absolute;left:54cqw;top:35cqh;z-index:5"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">#Build</span></div>
+      <div style="position:absolute;left:21cqw;top:78cqh;z-index:5"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">#Play</span></div>
+      <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">10</div></div></div>
+<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)">
+    <div style="position:absolute;left:3cqw;top:28cqh"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;color:var(--oa)"></div>
+  </div></div>
+    <div style="position:absolute;right:3cqw;bottom:22cqh"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--ink)"></div>
+  </div></div>
+    <div style="position:absolute;left:4cqw;bottom:12cqh"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;color:var(--oa)"></div>
+  </div></div>
+    <div style="position:absolute;right:4cqw;top:10cqh;z-index:3"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Chapter 03</span></div>
+    <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:0.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:0.55" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div class="fit"><div style="position:absolute;left:22cqw;right:22cqw;top:32cqh;text-align:center">
+      <div class="kicker" style="opacity:.7">Chapter 03</div>
+      <h1 class="display" style="font-size:7cqw;margin-top:2.4cqh;line-height:1">Proof</h1>
+      <div style="margin-top:5cqh"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
+    </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.6;color:inherit">#PlayfulMinds</div></div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;left:-8cqw;top:10cqh;width:48cqw;height:48cqw;border-radius:50%;background:var(--g2);"></div>
+      <div style="position:absolute;right:7cqw;top:7cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--ink)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--bg)"></div>
+  </div></div>
+      <div class="fit"><div style="position:absolute;left:8cqw;top:16cqh;width:38cqw">
+        <div class="kicker">Impact</div>
+        <h1 class="h1" style="margin-top:1.4cqh">Proof in<br>the wild</h1>
+        <p class="body" style="margin-top:2cqh">Families and teachers use the system across homes, shops, and classrooms.</p>
+      </div>
+      <div style="position:absolute;right:7cqw;top:19cqh;width:42cqw;display:grid;grid-template-columns:1fr;gap:2cqh">
+        <div class="card" style="padding:2.2cqh 2cqw;display:flex;align-items:center;gap:2cqw"><div><div data-bbadge="1" style="position:relative;width:8cqw;height:8cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:2.05cqw;color:var(--bg)">42k</div>
+  </div></div><h3 class="h3">kits shipped</h3></div><div class="card" style="padding:2.2cqh 2cqw;display:flex;align-items:center;gap:2cqw"><div><div data-bbadge="1" style="position:relative;width:8cqw;height:8cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--s1)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:2.05cqw;color:var(--o1)">180</div>
+  </div></div><h3 class="h3">classrooms</h3></div><div class="card" style="padding:2.2cqh 2cqw;display:flex;align-items:center;gap:2cqw"><div><div data-bbadge="1" style="position:relative;width:8cqw;height:8cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--s3)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:2.05cqw;color:var(--o1)">94%</div>
+  </div></div><h3 class="h3">repeat use</h3></div>
+      </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">12</div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;right:6cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
+    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
+  </div></div>
+      <div class="fit"><div style="position:absolute;left:6cqw;top:10cqh;width:54cqw">
+        <div class="kicker">What people say</div>
+        <h1 class="h1" style="margin-top:1.4cqh">Loved by<br>families</h1>
+      </div>
+      <div style="position:absolute;left:6cqw;right:6cqw;top:42cqh;display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw"><div class="card" style="padding:3cqh 2cqw;min-height:39cqh;display:flex;flex-direction:column;justify-content:space-between">
+      <p class="lead" style="font-size:1.75cqw;line-height:1.35">"The first kit that kept my twins busy without me hovering."</p>
+      <div style="display:flex;align-items:center;gap:1cqw;margin-top:3cqh">
+        <div data-photocell="1" data-photo-seed="quote-mara" style="width:4.5cqw;height:4.5cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div>
+        <div><h3 class="h3" style="font-size:1.55cqw">Mara Chen</h3><p class="cap soft">Parent</p></div>
+      </div>
+    </div><div class="card" style="padding:3cqh 2cqw;min-height:39cqh;display:flex;flex-direction:column;justify-content:space-between">
+      <p class="lead" style="font-size:1.75cqw;line-height:1.35">"It turns a corner of our classroom into a little invention studio."</p>
+      <div style="display:flex;align-items:center;gap:1cqw;margin-top:3cqh">
+        <div data-photocell="1" data-photo-seed="quote-tomas" style="width:4.5cqw;height:4.5cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div>
+        <div><h3 class="h3" style="font-size:1.55cqw">Tomas Reid</h3><p class="cap soft">Teacher</p></div>
+      </div>
+    </div><div class="card" style="padding:3cqh 2cqw;min-height:39cqh;display:flex;flex-direction:column;justify-content:space-between">
+      <p class="lead" style="font-size:1.75cqw;line-height:1.35">"Beautiful, robust, and calm enough to live in a real home."</p>
+      <div style="display:flex;align-items:center;gap:1cqw;margin-top:3cqh">
+        <div data-photocell="1" data-photo-seed="quote-priya" style="width:4.5cqw;height:4.5cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div>
+        <div><h3 class="h3" style="font-size:1.55cqw">Priya Shah</h3><p class="cap soft">Retail partner</p></div>
       </div>
     </div></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">13</div></div></div>
-<div class="slide"><div class="stage" style=""><div style="position:absolute;right:5cqw;top:1cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">13</div></div></div>
+<div class="slide"><div class="stage" style="">
+      <div style="position:absolute;right:6cqw;top:6cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:5cqw;height:5cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;letter-spacing:-.01em;color:var(--oa)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.4000000000000001cqw;color:var(--oa)"></div>
   </div></div>
-   <div style="position:absolute;left:4cqw;bottom:14cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--oa)"></div>
-  </div></div>
-   <svg style="position:absolute;left:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;right:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--ka)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:8cqw;top:11cqh">
-     <div class="kicker" style="color:var(--ka)">Pricelist</div>
-     <h1 class="h1" style="margin-top:1.4cqh">A plan for every family</h1>
-     <p class="body" style="margin-top:1.6cqh;max-width:46cqw;opacity:.84">Start free, upgrade when the moment fits — every plan keeps weekend project packs and the print + ship workbook within reach.</p>
-   </div>
-   <div style="position:absolute;left:8cqw;right:8cqw;top:38cqh;bottom:11cqh">
-     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw;height:100%"><div data-device="price" style="background:var(--g0);color:var(--t0);border-radius:var(--r-lg);padding:3.2cqh 2cqw;display:flex;flex-direction:column;height:100%">
-      
-      <div class="kicker" style="opacity:.85">Starter</div>
-      <div style="display:flex;align-items:baseline;gap:.4cqw;margin-top:2cqh">
-        <span class="h1" style="line-height:1">$0</span>
-        <span class="cap" style="opacity:.8">/forever</span>
+      <div class="fit"><div style="position:absolute;left:6cqw;top:9cqh;width:56cqw">
+        <div class="kicker">Pricelist</div>
+        <h1 class="h1" style="margin-top:1.4cqh">Simple ways<br>to start</h1>
+        <p class="body" style="margin-top:1.6cqh;max-width:42cqw">Choose a monthly path and change it as children, rooms, and classroom needs evolve.</p>
       </div>
-      <div style="height:1px;background:currentColor;opacity:.25;margin:2.2cqh 0 .4cqh"></div>
-      <div class="body" style="margin-top:.8cqh;opacity:.92">• Daily 10-minute playset</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Two parent dashboards</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Community library</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Weekly newsletter</div>
-    </div><div data-device="price" style="background:var(--g2);color:var(--t2);border-radius:var(--r-lg);padding:3.2cqh 2cqw;display:flex;flex-direction:column;height:100%">
-      <div style="align-self:flex-start;background:var(--ink);color:var(--bg);padding:.7cqh 1.2cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.15cqw;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2cqh">Most popular</div>
-      <div class="kicker" style="opacity:.85">Plus</div>
-      <div style="display:flex;align-items:baseline;gap:.4cqw;margin-top:2cqh">
-        <span class="h1" style="line-height:1">$19</span>
-        <span class="cap" style="opacity:.8">/month</span>
-      </div>
-      <div style="height:1px;background:currentColor;opacity:.25;margin:2.2cqh 0 .4cqh"></div>
-      <div class="body" style="margin-top:.8cqh;opacity:.92">• Everything in Starter</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Adaptive lesson paths</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Weekend project packs</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Read-along audio</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Offline mode</div>
-    </div><div data-device="price" style="background:var(--g1);color:var(--t1);border-radius:var(--r-lg);padding:3.2cqh 2cqw;display:flex;flex-direction:column;height:100%">
-      
-      <div class="kicker" style="opacity:.85">Studio</div>
-      <div style="display:flex;align-items:baseline;gap:.4cqw;margin-top:2cqh">
-        <span class="h1" style="line-height:1">$49</span>
-        <span class="cap" style="opacity:.8">/month</span>
-      </div>
-      <div style="height:1px;background:currentColor;opacity:.25;margin:2.2cqh 0 .4cqh"></div>
-      <div class="body" style="margin-top:.8cqh;opacity:.92">• Everything in Plus</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Live tutor sessions</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Print + ship workbook</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Two-classroom seats</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Priority support</div>
+      <div style="position:absolute;left:6cqw;right:6cqw;top:43cqh;display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw"><div style="background:var(--g0);color:var(--t0);border-radius:var(--r-md);padding:3cqh 2cqw;min-height:45cqh;display:flex;flex-direction:column;justify-content:space-between">
+      <div><div class="kicker" style="opacity:.8">Starter</div><div class="stat" style="margin-top:1.4cqh">$29</div><p class="cap" style="opacity:.8;margin-top:.5cqh">per month</p></div>
+      <ul class="body" style="list-style:none;display:flex;flex-direction:column;gap:.7cqh;opacity:.9"><li>One monthly kit</li><li>Parent guide</li><li>Audio story</li></ul>
+    </div><div style="background:var(--g1);color:var(--t1);border-radius:var(--r-md);padding:3cqh 2cqw;min-height:45cqh;display:flex;flex-direction:column;justify-content:space-between">
+      <div><div style="margin-bottom:2cqh"><span data-pill="1" style="display:inline-block;background:var(--ink);color:var(--bg);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Most popular</span></div><div class="kicker" style="opacity:.8">Studio</div><div class="stat" style="margin-top:1.4cqh">$79</div><p class="cap" style="opacity:.8;margin-top:.5cqh">per month</p></div>
+      <ul class="body" style="list-style:none;display:flex;flex-direction:column;gap:.7cqh;opacity:.9"><li>Three kit bundle</li><li>Workshop cards</li><li>Priority support</li></ul>
+    </div><div style="background:var(--g3);color:var(--t3);border-radius:var(--r-md);padding:3cqh 2cqw;min-height:45cqh;display:flex;flex-direction:column;justify-content:space-between">
+      <div><div class="kicker" style="opacity:.8">Classroom</div><div class="stat" style="margin-top:1.4cqh">$249</div><p class="cap" style="opacity:.8;margin-top:.5cqh">per month</p></div>
+      <ul class="body" style="list-style:none;display:flex;flex-direction:column;gap:.7cqh;opacity:.9"><li>12 learner packs</li><li>Teacher notes</li><li>Quarterly refresh</li></ul>
     </div></div>
-   </div>
-   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.7">#PlayfulMinds</div></div><div class="pagenum">14</div></div></div>
-<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)"><div style="position:absolute;left:7cqw;top:12cqh"><div data-bbadge="1" style="position:relative;width:10cqw;height:10cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.7;color:inherit">#PlayfulMinds</div></div><div class="pagenum">14</div></div></div>
+<div class="slide"><div class="stage" style="background:var(--ink);color:var(--bg)">
+      <div style="position:absolute;left:6cqw;top:7cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:8cqw;height:8cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:2.8000000000000003cqw;letter-spacing:-.01em;color:var(--oa)">2026</div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:2.2cqw;color:var(--oa)">2026</div>
   </div></div>
-   <div style="position:absolute;right:9cqw;bottom:14cqh"><div data-bbadge="1" style="position:relative;width:7cqw;height:7cqw;display:inline-flex;align-items:center;justify-content:center">
+      <div style="position:absolute;right:7cqw;bottom:12cqh;z-index:3"><div data-bbadge="1" style="position:relative;width:6cqw;height:6cqw;display:inline-flex;align-items:center;justify-content:center;">
     <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--bg)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.9600000000000002cqw;letter-spacing:-.01em;color:var(--ink)"></div>
+    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.6800000000000002cqw;color:var(--ink)"></div>
   </div></div>
-   <div style="position:absolute;right:8cqw;top:10cqh"><div data-bbadge="1" style="position:relative;width:4cqw;height:4cqw;display:inline-flex;align-items:center;justify-content:center">
-    <svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;display:block"><polygon points="50.00,1.00 58.01,14.90 71.26,5.85 72.45,21.85 88.31,19.45 82.43,34.38 97.77,39.10 86.00,50.00 97.77,60.90 82.43,65.62 88.31,80.55 72.45,78.15 71.26,94.15 58.01,85.10 50.00,99.00 41.99,85.10 28.74,94.15 27.55,78.15 11.69,80.55 17.57,65.62 2.23,60.90 14.00,50.00 2.23,39.10 17.57,34.38 11.69,19.45 27.55,21.85 28.74,5.85 41.99,14.90" fill="var(--accent)"/></svg>
-    <div style="position:relative;text-align:center;line-height:1;font-family:var(--fd);font-weight:600;font-size:1.12cqw;letter-spacing:-.01em;color:var(--oa)"></div>
-  </div></div>
-   <div style="position:absolute;left:7cqw;bottom:14cqh;z-index:3"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
-   <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:.6" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
-   <svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:.6" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg><div class="fit"><div style="position:absolute;left:22cqw;right:22cqw;top:30cqh;text-align:center">
-     <h1 class="display" style="font-size:9cqw;line-height:.96;letter-spacing:-.02em">Thank<br>you</h1>
-     <p class="body" style="margin-top:3.4cqh;opacity:.78">Come build the next day with us.</p>
-   </div>
-   <div class="kicker" style="position:absolute;left:50%;bottom:3.4cqh;transform:translateX(-50%);opacity:.7">hello@yourcompany.com · yourcompany.com</div></div><div class="pagenum">15</div></div></div>
+      <svg style="position:absolute;right:5cqw;top:5cqh;width:1.8cqw;height:1.8cqw;opacity:0.65" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <svg style="position:absolute;left:5cqw;bottom:11cqh;width:1.8cqw;height:1.8cqw;opacity:0.65" viewBox="0 0 24 24"><path d="M12 3 V21 M3 12 H21" stroke="var(--bg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div class="fit"><div style="position:absolute;left:12cqw;right:12cqw;top:25cqh;text-align:center">
+        <div class="kicker" style="opacity:.75">Thank you</div>
+        <h1 class="display" style="margin-top:2cqh;font-size:7.2cqw;line-height:.98">Let's play<br>again</h1>
+        <div style="margin-top:5cqh"><span data-pill="1" style="display:inline-block;background:var(--g0);color:var(--t0);padding:1cqh 1.6cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.3cqw;letter-spacing:.06em;text-transform:uppercase;">Tomorrow Lab</span></div>
+        <p class="lead" style="margin-top:4cqh">hello@tomorrowlab.example<br>tomorrowlab.example</p>
+      </div><div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:0.62;color:var(--bg)">#PlayfulMinds</div></div><div class="pagenum">15</div></div></div>
 </div>
-
-
 </body>
 </html>

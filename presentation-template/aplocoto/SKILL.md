@@ -7,7 +7,7 @@ description: 15-slot HTML presentation structure — cover · agenda · 3 sectio
 
 The structure layer: **what goes where**, palette-agnostic. Colour/font are bound to CSS role vars so the skin is swappable.
 
-Reference: `example.html` (rendered static deck) · `preview/slide-01..15.png`.
+Reference: `build.mjs` (source generator) -> `example.html` (rendered static deck) · `preview/slide-01..15.png`.
 
 A 15-page deck for consumer / family / event / brand-pitch briefs. Each slot's **role and required content** are defined in the [content-role contract](../canonical-page-set.md); the slot map below adds aplocoto's **layout** for each slot (by number).
 
@@ -38,7 +38,18 @@ A 15-page deck for consumer / family / event / brand-pitch briefs. Each slot's *
 - **A motif on every slide** — the same burst-star / pill / numeral recurs (the visual fuse).
 - **Text never sits on a decorative shape** — keep a clear band between text and motifs.
 - **SVG-first** — shapes/charts as inline SVG/HTML (0 image credits); photo frames are gray placeholders for real photos.
+- **Final decks must fill media slots** — any photo frame in this template is a required visual slot. Use real, approved imagery when available; if no suitable image exists, replace the frame with an intentional chart / diagram / quote / logo composition instead of leaving an empty placeholder.
 - Sentence case for headings (kicker uppercase, wide tracking); title ≤ 6 words, lead ≤ 28, body bullet ≤ 14.
+
+## Build the reference deck
+
+Run from this directory:
+
+```bash
+node build.mjs
+```
+
+The script regenerates `example.html` from structured demo data and small layout helpers (burst badges, pills, media frames, cards, dividers). The checked-in previews are screenshots of the generated example deck.
 
 ## Apply to other content
 
