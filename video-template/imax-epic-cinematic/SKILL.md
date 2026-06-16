@@ -32,7 +32,7 @@ Write **one cohesive video prompt in your own words**, adapted to the user's sub
 
 **Never:** indoor, handheld shake, fast cuts, flat / cold / desaturated, neon.
 
-Adapt everything else to the subject — vantage, exact light moment, and wording should suit what's in frame (a city reads best from a high aerial vantage; a lone hero reads best near eye level on the ridge). If the subject isn't a grand exterior, restage it in one. See the worked examples below for range.
+Adapt everything else to the subject — vantage, exact light moment, and wording should suit what's in frame (a city reads best from a high aerial vantage; a lone hero reads best near eye level on the ridge). If the subject isn't a grand exterior (e.g. a product on white, an indoor scene, an abstract graphic), this style only fits by restaging it in a vast exterior — and if that would distort the user's intent, prefer a different style. See the worked examples below for range.
 
 Put framing ratio, negatives, and seed in the **params** (next section), not in the prose.
 
@@ -41,10 +41,11 @@ Put framing ratio, negatives, and seed in the **params** (next section), not in 
 Set these through the model's own parameters (not in the prompt text):
 
 - **aspectRatio**: `21:9` for the cinematic letterbox (fall back to `16:9` if 21:9 is unavailable).
+- **resolution & model tier**: target resolution must be supported by the chosen model tier — fast/draft tiers cap lower (often `720p`), and `1080p` needs a full-quality tier. Confirm the tier supports your resolution before locking it.
 - **duration**: `5–10s`; pace the single camera move to fill the whole clip.
 - **negativePrompt**: `close-up, indoor scene, handheld shake, fast cuts, flat or desaturated grade, cold color, neon, low resolution, distorted subject`.
-- **generateAudio**: on — ambient wind / atmosphere only (Seedance does not generate spoken narration; leave room for added voiceover/text in edit).
-- **seed**: pin a fixed seed to reproduce this look or keep a multi-clip series visually consistent.
+- **generateAudio**: Seedance generates ambient sound, not spoken narration. Leave **on** for atmospheric wind / room tone; turn it **off** if you'll add your own voiceover or music in edit.
+- **seed**: some run-to-run determinism, but for text-to-video it's a **mild** lever — it does not carry the look across different subjects. Use it to re-roll variations of the *same* prompt, not as the main consistency tool (that's `firstFrameImageUrl`).
 - **firstFrameImageUrl** (strongest stability lever): generate one still in this look (see *Reference stills* — these were made with Seedream at a fixed seed) and pass it as the first frame for image-to-video. This anchors the style far harder than text alone.
 
 ## How to apply
@@ -53,7 +54,7 @@ Take the user's subject and stage it at grand environmental scale in this look. 
 
 ## Worked examples
 
-Only the **subject** changes; the rest of the template stays verbatim.
+Same locked look every time; the subject — and the wording around it — adapts to each brief. These are illustrative, not a fixed template to echo.
 
 1. **"a coastal city at dawn"** *(full paragraph)*
    > A coastal city at dawn, set within a vast environment at grand scale. Wide to extreme-wide large-format establishing shot, high aerial vantage, deep focus, layered atmospheric depth to the horizon. Slow crane-up revealing the full coastline and skyline, one continuous unhurried take. Low golden backlight with god-rays and a subtle horizon lens flare, warm high-contrast cinematic color grade with rich shadow and filmic rolloff. Grand, awe-struck, photoreal live-action, IMAX epic look. Safe for all audiences, positive and uplifting, no violence, no explicit content.
@@ -73,4 +74,4 @@ Only the **subject** changes; the rest of the template stays verbatim.
 | Reference still — coastal city (Seedream, seed 43) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/307a3304-d1a0-41bd-a704-b144790510b2/image-307a3304.png` |
 | Canonical | wide vista · subject small-to-medium, never close-up · sunrise + flare · warm saturated · one slow aerial/crane move · 21:9 |
 
-> The two reference stills hold the identical IMAX look across very different subjects (a climber vs. a city) — proof the style is subject-invariant. Either can be passed as `firstFrameImageUrl` to lock the look for image-to-video.
+> The two reference stills show the look holding across different **grand-exterior** subjects (a climber vs. a city). Non-exterior subjects (a product on white, an indoor scene, an abstract graphic) fall outside this style and need restaging — or a different style. Either still can be passed as `firstFrameImageUrl` to lock the look for image-to-video.
