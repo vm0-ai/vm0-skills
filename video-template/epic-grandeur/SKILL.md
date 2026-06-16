@@ -1,9 +1,9 @@
 ---
-name: imax-epic-cinematic
-description: A large-format epic cinematic video style — wide-to-extreme-wide framing, sweeping aerial scope, vast environmental scale, warm high-contrast film grade, and a grand awe-struck tone. Applies to whatever subject the user brings; keep their subject and wrap it in this look. Trigger on /imax-epic-cinematic, "epic cinematic", "IMAX look", or "grand cinematic trailer" style requests.
+name: epic-grandeur
+description: A large-format epic cinematic video style — wide-to-extreme-wide framing, sweeping aerial scope, vast environmental scale, warm high-contrast film grade, and a grand awe-struck tone. Applies to whatever subject the user brings; keep their subject and wrap it in this look. Trigger on /epic-grandeur, "epic cinematic", "monumental / grand cinematic", "IMAX look", or "grand cinematic trailer" style requests.
 ---
 
-# IMAX Epic Cinematic
+# Epic Grandeur
 
 A trailer-grade, large-format cinematic **style**, not a fixed scene. Keep the user's subject exactly as briefed — a city, a product, a person, a landscape — and render it through the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and framing/scale/negatives are expressed the way Seedance follows most reliably.
 
