@@ -1,11 +1,11 @@
 ---
 name: playful-editorial
-description: Playful-editorial presentation look — saturated colour fields, scalloped sunburst badges and pill chips, oversized stacked headlines. Carnival palette · Archivo + Manrope · pill radius. The design system (visual language); pairs with a structure template such as aplocoto.
+description: Playful-editorial presentation look — saturated colour fields, scalloped sunburst badges and pill chips, oversized stacked headlines. Carnival palette · Archivo + Manrope · pill radius. The design system (visual language).
 ---
 
 # Playful Editorial — design system (visual language)
 
-The look layer: **colours, fonts, radius, motifs**. Pairs with a structure template (default `aplocoto`); carries no layout.
+The look layer: **colours, fonts, radius, motifs**; carries no layout.
 
 **Essence** — playful editorial: high-saturation colour fields, scalloped sunburst badges and pill chips, oversized stacked headlines kept legible by editorial restraint. Vibrant: a neutral cream base + 4 co-equal saturated accents.
 
