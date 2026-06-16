@@ -7,6 +7,14 @@ description: A large-format epic cinematic video style — wide-to-extreme-wide 
 
 A trailer-grade, large-format cinematic **style**, not a fixed scene. Keep the user's subject exactly as briefed — a city, a product, a person, a landscape — and render it through the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and framing/scale/negatives are expressed the way Seedance follows most reliably.
 
+## What this style is
+
+**The essence:** a style whose whole job is to make the subject feel **monumental** — to overwhelm the viewer with scale and reverent awe, like the opening shot of a nature documentary or a prestige-film trailer. The goal is **awe**, not beauty, tension, or nostalgia; every choice below is a means to that end.
+
+**Touchstones** (anchor the look to these, not to loose adjectives): Planet Earth / BBC aerial cinematography · *Dune* and *Interstellar* (Greig Fraser, Hoyte van Hoytema) · Terrence Malick · Ron Fricke's *Baraka* / *Samsara* · large-format IMAX nature films.
+
+**What makes it distinct** from other cinematic styles: **scale + reverence** — not the intimacy and handheld immediacy of indie-naturalistic, not the shadowed tension of film-noir, not kinetic action energy. Two real ingredients combine: the **IMAX part** = large-format scale, depth, and immersion; the **epic part** = the slow, reverent register that lets that scale sink in.
+
 ## Style dimensions (locked)
 
 - **Visual tone — cinematic**: high-contrast large-format film look; deep focus front-to-back, rich filmic grade with deep blacks and controlled highlight rolloff, warm golden cast, subtle horizon lens flare.
@@ -15,7 +23,7 @@ A trailer-grade, large-format cinematic **style**, not a fixed scene. Keep the u
 - **Framing & scale (this is how "epic" is rendered)**: lead with shot **size**, not mood words. `wide to extreme-wide establishing shot`, `vast environmental scale`, `layered atmospheric-perspective depth to the horizon`. Vantage suits the subject — high aerial for landscapes and cities, near eye-level for a lone hero. If the subject includes a figure, keep it **small-to-medium within the vast frame — never a close-up**.
 - **Light & atmosphere**: low golden backlight (sunrise/sunset), god-rays, haze or cloud layers for depth. Warm, directional, dramatic.
 - **Production type — live action**: photoreal real-world footage. Not animation, not stylized CGI.
-- **Style reference — IMAX epic**: large-format epic in the register of a nature-doc or prestige-film opening.
+- **Style reference — IMAX epic**: the large-format scale and immersion of IMAX, rendered in the reverent register of the touchstones above (BBC aerials, *Dune* / *Interstellar*, *Baraka*). Note: the slow, stately pacing comes from the **epic-awe register**, not from IMAX itself — IMAX is the *scale*, "epic" is the *pace*.
 
 ## Prompt construction
 
