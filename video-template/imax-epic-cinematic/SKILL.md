@@ -1,0 +1,69 @@
+---
+name: imax-epic-cinematic
+description: A large-format epic cinematic video style — wide-to-extreme-wide framing, sweeping aerial scope, vast environmental scale, warm high-contrast film grade, and a grand awe-struck tone. Applies to whatever subject the user brings; keep their subject and wrap it in this look. Trigger on /imax-epic-cinematic, "epic cinematic", "IMAX look", or "grand cinematic trailer" style requests.
+---
+
+# IMAX Epic Cinematic
+
+A trailer-grade, large-format cinematic **style**, not a fixed scene. Keep the user's subject exactly as briefed — a city, a product, a person, a landscape — and render it through the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and framing/scale/negatives are expressed the way Seedance follows most reliably.
+
+## Style dimensions (locked)
+
+- **Visual tone — cinematic**: high-contrast large-format film look; deep focus front-to-back, rich filmic grade with deep blacks and controlled highlight rolloff, warm golden cast, subtle horizon lens flare.
+- **Camera — aerial / drone**: one slow, smooth, stately move using explicit Seedance camera language — `slow push-in`, `crane-up revealing the horizon`, `aerial fly-over`, or `slow orbit`. No abrupt or shaky motion.
+- **Shot continuity**: default to **one continuous unhurried long take**. Only when the user wants a montage, allow a `2–3 shot sequence` (Seedance handles multi-shot) — never rapid cutting.
+- **Framing & scale (this is how "epic" is rendered)**: lead with shot **size**, not mood words. `wide to extreme-wide establishing shot`, `high aerial vantage`, `vast environmental scale`, `layered atmospheric-perspective depth to the horizon`. If the subject includes a figure, keep it **small-to-medium within the vast frame — never a close-up**.
+- **Light & atmosphere**: low golden backlight (sunrise/sunset), god-rays, haze or cloud layers for depth. Warm, directional, dramatic.
+- **Production type — live action**: photoreal real-world footage. Not animation, not stylized CGI.
+- **Style reference — IMAX epic**: large-format epic in the register of a nature-doc or prestige-film opening.
+
+## Prompt construction
+
+Compose **one flowing paragraph** in this fixed order, swapping only the subject; keep everything else verbatim:
+
+```text
+[SUBJECT — exactly as the user briefed it], set within a vast environment at grand scale. Wide to extreme-wide large-format establishing shot, high aerial vantage, deep focus, layered atmospheric depth to the horizon. Slow [CAMERA MOVE: sweeping aerial / crane-up revealing the horizon / push-in], one continuous unhurried take. Low golden backlight with god-rays and a subtle horizon lens flare, warm high-contrast cinematic color grade with rich shadow and filmic rolloff. Grand, awe-struck, photoreal live-action, IMAX epic look.
+Safe for all audiences, positive and uplifting, no violence, no explicit content.
+```
+
+Rules: lead the paragraph with the **user's subject**; never replace it with a mountain/hero. If the subject is a person, keep them small-to-medium in the frame. Pick exactly **one** camera move.
+
+## Generation parameters
+
+Set these through the model's own parameters (not in the prompt text):
+
+- **aspectRatio**: `21:9` for the cinematic letterbox (fall back to `16:9` if 21:9 is unavailable).
+- **duration**: `5–10s`; pace the single camera move to fill the whole clip.
+- **negativePrompt**: `close-up, indoor scene, handheld shake, fast cuts, flat or desaturated grade, cold color, neon, low resolution, distorted subject`.
+- **generateAudio**: on — ambient wind / atmosphere only (Seedance does not generate spoken narration; leave room for added voiceover/text in edit).
+- **seed**: pin a fixed seed to reproduce this look or keep a multi-clip series visually consistent.
+- **firstFrameImageUrl** (strongest stability lever): generate one still in this look (see *Reference stills* — these were made with Seedream at a fixed seed) and pass it as the first frame for image-to-video. This anchors the style far harder than text alone.
+
+## How to apply
+
+Take the user's subject and stage it at grand environmental scale in this look. The subject becomes the epic focal point of a vast space, seen through one slow sweeping aerial move, deep focus, warm golden grade, with an awe-struck tone. Do **not** swap the subject for a generic landscape, and do **not** push in to a close-up.
+
+## Worked examples
+
+Only the **subject** changes; the rest of the template stays verbatim.
+
+1. **"a coastal city at dawn"** *(full paragraph)*
+   > A coastal city at dawn, set within a vast environment at grand scale. Wide to extreme-wide large-format establishing shot, high aerial vantage, deep focus, layered atmospheric depth to the horizon. Slow crane-up revealing the full coastline and skyline, one continuous unhurried take. Low golden backlight with god-rays and a subtle horizon lens flare, warm high-contrast cinematic color grade with rich shadow and filmic rolloff. Grand, awe-struck, photoreal live-action, IMAX epic look. Safe for all audiences, positive and uplifting, no violence, no explicit content.
+
+2. **"a mountaineer reaching the summit"** → SUBJECT = `a mountaineer in a red jacket cresting a snow ridge toward camera, a sea of clouds below snow-capped peaks`; CAMERA = `push-in as the horizon opens`. (Canonical look — see reference still.)
+
+3. **"our new sports car"** → SUBJECT = `a sports car on an empty desert salt flat`; CAMERA = `aerial fly-over descending toward the car`. Subject stays small-to-medium in the vast flat; no close-up on the badge.
+
+4. **"a herd of wild horses"** → SUBJECT = `a herd of wild horses crossing a vast open plain`; CAMERA = `slow sweeping aerial alongside the herd`.
+
+## Reference output
+
+| Field | Value |
+| --- | --- |
+| Sample video | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/df99de74-8eea-420c-86d1-c104ba5ba6b6/video-df99de74.mp4` |
+| Picker thumbnail | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/2c0eb943-f65a-4225-beaa-78246f7c4a1b/thumbnail-imax-epic-cinematic.jpg` |
+| Reference still — mountaineer (Seedream, seed 42) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/cf0fe91e-34ba-4760-b2be-c7dd8c020636/image-cf0fe91e.png` |
+| Reference still — coastal city (Seedream, seed 43) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/307a3304-d1a0-41bd-a704-b144790510b2/image-307a3304.png` |
+| Canonical | wide vista · subject small-to-medium, never close-up · sunrise + flare · warm saturated · one slow aerial/crane move · 21:9 |
+
+> The two reference stills hold the identical IMAX look across very different subjects (a climber vs. a city) — proof the style is subject-invariant. Either can be passed as `firstFrameImageUrl` to lock the look for image-to-video.
