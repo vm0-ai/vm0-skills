@@ -68,7 +68,6 @@ Only the **subject** changes; the rest of the template stays verbatim.
 
 | Field | Value |
 | --- | --- |
-| Sample video | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/df99de74-8eea-420c-86d1-c104ba5ba6b6/video-df99de74.mp4` |
 | Picker thumbnail | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/2c0eb943-f65a-4225-beaa-78246f7c4a1b/thumbnail-imax-epic-cinematic.jpg` |
 | Reference still — mountaineer (Seedream, seed 42) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/cf0fe91e-34ba-4760-b2be-c7dd8c020636/image-cf0fe91e.png` |
 | Reference still — coastal city (Seedream, seed 43) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/307a3304-d1a0-41bd-a704-b144790510b2/image-307a3304.png` |
