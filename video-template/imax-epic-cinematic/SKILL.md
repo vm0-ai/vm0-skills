@@ -12,21 +12,29 @@ A trailer-grade, large-format cinematic **style**, not a fixed scene. Keep the u
 - **Visual tone — cinematic**: high-contrast large-format film look; deep focus front-to-back, rich filmic grade with deep blacks and controlled highlight rolloff, warm golden cast, subtle horizon lens flare.
 - **Camera — aerial / drone**: one slow, smooth, stately move using explicit Seedance camera language — `slow push-in`, `crane-up revealing the horizon`, `aerial fly-over`, or `slow orbit`. No abrupt or shaky motion.
 - **Shot continuity**: default to **one continuous unhurried long take**. Only when the user wants a montage, allow a `2–3 shot sequence` (Seedance handles multi-shot) — never rapid cutting.
-- **Framing & scale (this is how "epic" is rendered)**: lead with shot **size**, not mood words. `wide to extreme-wide establishing shot`, `high aerial vantage`, `vast environmental scale`, `layered atmospheric-perspective depth to the horizon`. If the subject includes a figure, keep it **small-to-medium within the vast frame — never a close-up**.
+- **Framing & scale (this is how "epic" is rendered)**: lead with shot **size**, not mood words. `wide to extreme-wide establishing shot`, `vast environmental scale`, `layered atmospheric-perspective depth to the horizon`. Vantage suits the subject — high aerial for landscapes and cities, near eye-level for a lone hero. If the subject includes a figure, keep it **small-to-medium within the vast frame — never a close-up**.
 - **Light & atmosphere**: low golden backlight (sunrise/sunset), god-rays, haze or cloud layers for depth. Warm, directional, dramatic.
 - **Production type — live action**: photoreal real-world footage. Not animation, not stylized CGI.
 - **Style reference — IMAX epic**: large-format epic in the register of a nature-doc or prestige-film opening.
 
 ## Prompt construction
 
-Compose **one flowing paragraph** in this fixed order, swapping only the subject; keep everything else verbatim:
+Write **one cohesive video prompt in your own words**, adapted to the user's subject — don't fill a fixed template. Compose naturally, but hit these beats roughly in Seedance order:
 
-```text
-[SUBJECT — exactly as the user briefed it], set within a vast environment at grand scale. Wide to extreme-wide large-format establishing shot, high aerial vantage, deep focus, layered atmospheric depth to the horizon. Slow [CAMERA MOVE: sweeping aerial / crane-up revealing the horizon / push-in], one continuous unhurried take. Low golden backlight with god-rays and a subtle horizon lens flare, warm high-contrast cinematic color grade with rich shadow and filmic rolloff. Grand, awe-struck, photoreal live-action, IMAX epic look.
-Safe for all audiences, positive and uplifting, no violence, no explicit content.
-```
+`subject (as briefed) → its grand-scale setting → motion → one slow camera move → golden backlight & atmosphere → warm cinematic grade → epic tone`
 
-Rules: lead the paragraph with the **user's subject**; never replace it with a mountain/hero. If the subject is a person, keep them small-to-medium in the frame. Pick exactly **one** camera move.
+**Always convey (the non-negotiable IMAX look):**
+
+- wide / extreme-wide framing; **never a close-up** (a person stays small-to-medium, prominent against a vast backdrop)
+- one slow smooth camera move — push-in / crane-up / aerial fly-over / orbit — **pick what fits the subject**
+- low golden backlight, lens flare / god-rays, atmospheric depth (haze / clouds)
+- warm, high-contrast, deep-focus cinematic grade; photoreal live-action
+
+**Never:** indoor, handheld shake, fast cuts, flat / cold / desaturated, neon.
+
+Adapt everything else to the subject — vantage, exact light moment, and wording should suit what's in frame (a city reads best from a high aerial vantage; a lone hero reads best near eye level on the ridge). If the subject isn't a grand exterior, restage it in one. See the worked examples below for range.
+
+Put framing ratio, negatives, and seed in the **params** (next section), not in the prose.
 
 ## Generation parameters
 
