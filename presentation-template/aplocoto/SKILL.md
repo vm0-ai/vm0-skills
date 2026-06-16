@@ -9,7 +9,7 @@ The structure layer: **what goes where**, palette-agnostic. Pairs with a design 
 
 Reference: `example.html` (rendered static deck) · `preview/slide-01..15.png`.
 
-A 15-page deck for consumer / family / event / brand-pitch briefs. Fixed 15 slots — every slot filled, none skipped.
+A 15-page deck for consumer / family / event / brand-pitch briefs. Follows the 15-slot **content-role contract** ([`../canonical-page-set.md`](../canonical-page-set.md)) — that defines each slot's role and required content; the slot map below adds aplocoto's layout per role.
 
 ## Slot map
 
