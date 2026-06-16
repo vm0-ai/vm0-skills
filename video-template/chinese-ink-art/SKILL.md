@@ -1,15 +1,15 @@
 ---
 name: chinese-ink-art
-description: A Chinese ink-wash (shuimo) video style — monochrome ink gradients, generous white space, visible brushstroke texture, mist-and-mountain composition, and a calm classical-poetry mood. Applies to whatever subject the user brings. Trigger on /chinese-ink-art, "Chinese ink painting", "shuimo / 水墨", "ink wash animation", or "Eastern zen ink style".
+description: A Chinese ink-wash (shuimo) video style — monochrome ink gradients, generous white space, visible brushstroke texture, mist-and-mountain composition, and a calm classical-poetry mood. Applies to whatever subject the user brings. Trigger on /chinese-ink-art, "Chinese ink painting", "shuimo", "ink wash animation", or "Eastern zen ink style".
 ---
 
 # Chinese Ink Painting
 
-A **Chinese ink-wash (水墨) style**, not a fixed scene. Keep the user's subject exactly as briefed — a mountain, a crane, a figure, an object — and render it as flowing ink on paper in the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
+A **Chinese ink-wash (shuimo) style**, not a fixed scene. Keep the user's subject exactly as briefed — a mountain, a crane, a figure, an object — and render it as flowing ink on paper in the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
 ## What this style is
 
-**The essence:** **stillness and emptiness as beauty** — a few confident ink strokes floating in vast white space, evoking a classical Chinese poem. The goal is **calm, breath, and suggestion** (留白): what's left unpainted matters as much as the ink.
+**The essence:** **stillness and emptiness as beauty** — a few confident ink strokes floating in vast white space, evoking a classical Chinese poem. The goal is **calm, breath, and negative space**: what's left unpainted matters as much as the ink.
 
 **Touchstones:** classical Chinese shuimo painting (Qi Baishi, Xu Beihong), *Shanshui* landscapes, the ink-animation of *Where Is Mama / Feeling from Mountain and Water* (Shanghai Animation Film Studio).
 
