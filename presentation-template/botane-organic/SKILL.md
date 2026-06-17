@@ -50,7 +50,7 @@ Run from this directory:
 node build.mjs
 ```
 
-The script regenerates `example.html` from structured demo data and local layout helpers (colour blocks, circular media frames, numbered badges, icon cards, process spine, donut stats, quote cards, and price cards). The checked-in previews are screenshots of the generated example deck.
+The script regenerates `example.html` from structured demo data and inline layout helpers (colour blocks, circular media frames, numbered badges, icon cards, process spine, donut stats, quote cards, and price cards). The checked-in previews are screenshots of the generated example deck.
 
 ## Apply to other content
 
