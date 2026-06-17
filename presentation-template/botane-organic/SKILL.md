@@ -9,7 +9,7 @@ The structure layer: **what goes where**, palette-agnostic. Colour/font are boun
 
 Reference: `build.mjs` (source generator) -> `example.html` (rendered static deck) · `preview/slide-01..15.png`.
 
-A 15-page deck for organic / natural / wellness / hospitality / slow-brand briefs. Each slot's **role and required content** are defined in the [content-role contract](../canonical-page-set.md); the slot map below adds Botane Organic's **layout** for each slot (by number).
+A 15-page deck for organic / natural / wellness / hospitality / slow-brand briefs. Each slot's **role and required content** are defined in the [content-role contract](../canonical-page-set.md); the slot map below is derived from `build.mjs` / `example.html` and adds Botane Organic's **layout** for each slot (by number).
 
 ## Slot map (layout per slot)
 
@@ -18,13 +18,13 @@ A 15-page deck for organic / natural / wellness / hospitality / slow-brand brief
 | 01 | serif wordmark column · full-height right colour-block panel · large circular media frame · small accent dots |
 | 02 | narrow full-height colour strip · vertical TOC list — 4 entries pointing to dividers 03 / 07 / 11 / 15 · small circular media accent |
 | 03 | left half colour-block chapter panel · serif display title · large circular media frame on the right |
-| 04 | full-height soft photo panel · rotated side-title · right editorial text column with kicker, headline, lead, body |
-| 05 | 3-item numbered circle-badge list · right full-height colour block · small circular media accent |
+| 04 | tall inset left photo panel · rotated side-title · right editorial text column with kicker, headline, lead, body |
+| 05 | 3-item numbered rounded-badge list · right full-height colour block · small circular media accent |
 | 06 | calm heading band · 3 × 1 team cards (rounded photo + name + role) |
 | 07 | same as 03 |
 | 08 | 2 × 2 rounded icon-card quad · each card has a line icon in a soft badge plus title/body |
 | 09 | 4-step horizontal process spine · alternating above/below labels · icon-in-circle nodes on one connector |
-| 10 | rotated side-title · short editorial copy column · irregular 3-column photo grid |
+| 10 | rotated side-title · short editorial copy column · 4-cell irregular 3-column photo grid |
 | 11 | same as 03 |
 | 12 | left headline + proof copy · donut ring with centre percentage · stacked supporting stats |
 | 13 | 2 quote cards (photo + quote + attribution) on colour-blocked grounds |
@@ -35,7 +35,7 @@ A 15-page deck for organic / natural / wellness / hospitality / slow-brand brief
 
 - **Balanced editorial density** — every slide carries a structural motif (colour-block panel / circular media / side-title / icon node / donut / rounded card), but the page should still feel calm and spacious.
 - **Colour blocks define structure** — use panels for covers, chapter dividers, closing slides, and side fields. Text on a colour panel must use the matching on-colour token.
-- **A circular motif on every slide** — media circles, circle badges, soft dots, icon-in-circle nodes, and donut rings are the visual fuse of the deck.
+- **A circular motif on every slide** — media circles, soft dots, icon-in-circle nodes, donut rings, and rounded number badges are the visual fuse of the deck.
 - **Rotated side-titles are signature accents** — use them on about / gallery / feature slides where they clarify the composition; do not add them to every page.
 - **Process and proof have fixed devices** — sequences use the 4-step horizontal spine; breakdowns use a donut ring plus labelled supporting stats.
 - **SVG-first** — icons, connector lines, donut charts, dots, cards, and panels are inline SVG/HTML (0 image credits); photo frames are gray placeholders for real photos.
