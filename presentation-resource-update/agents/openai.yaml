@@ -1,0 +1,4 @@
+interface:
+  display_name: "Presentation Resource Update"
+  short_description: "Update private presentation resources safely"
+  default_prompt: "Use $presentation-resource-update to update a presentation template resource while keeping previews public and source archives private."
