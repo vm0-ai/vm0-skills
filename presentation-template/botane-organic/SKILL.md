@@ -9,7 +9,7 @@ The structure layer: **what goes where**, palette-agnostic. Colour/font are boun
 
 Reference: `build.mjs` (source generator) -> `example.html` (rendered static deck) · `preview/slide-01..15.png`.
 
-A 15-page deck for organic / natural / wellness / hospitality / slow-brand briefs. Its source contract is `PPT Template MD/botane-organic/tmpl-botane-organic.md`: balanced density, SVG-first rendering, automatic content fitting, and these reusable archetypes from `System MD/visual-design.md`:
+A 15-page deck for organic / natural / wellness / hospitality / slow-brand briefs. Its source contract is `PPT Template MD/botane-organic/tmpl-botane-organic.md`: balanced density, SVG-first rendering, automatic content fitting, and these Botane signature devices declared by the template block:
 
 - `cover` - colour-block + serif wordmark.
 - `numbered-circle-list` - numbered circle badges plus short title/body rows.
@@ -18,7 +18,7 @@ A 15-page deck for organic / natural / wellness / hospitality / slow-brand brief
 - `donut-statement` - donut ring with centred value and supporting stats.
 - `thank-you` - colour-block close with large media and contact.
 
-Every presentation template still follows the shared [content-role contract](../canonical-page-set.md). The simplified slot map below applies Botane Organic's source archetypes to those 15 canonical roles.
+`System MD/visual-design.md` supplies the shared density, shape-layering, safe-distance, render, and pre-flight principles; the [content-role contract](../canonical-page-set.md) supplies the 15 canonical roles. The simplified slot map below applies Botane Organic's source devices to those canonical roles.
 
 ## Slot map (layout per slot)
 

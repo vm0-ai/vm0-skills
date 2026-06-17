@@ -40,3 +40,13 @@ Source: `System MD/design-system.md` Mauve Dusk palette, Fraunces / Work Sans pa
 - **radius: soft** - rounded cards, round icon tiles, soft photo rectangles, and circular badges.
 - **motifs**: `colour-block-panel`, `circle-badge`, `icon-in-circle`, `soft-dot`, `donut-ring`, `rotated-side-title`.
 - Keep the visual rhythm calm and airy: fewer motifs than a playful deck, but at least one repeated dot, circle, side-title, or panel on every slide.
+
+## Usage & avoid rules
+
+- Use `accent` as the single hero colour; keep `support-*` to secondary panels, chart segments, badges, icons, and small decoration.
+- Keep support colours to 3 or fewer per slide. Do not use `support-*` for body text.
+- Body copy uses `ink` or `ink-soft`. Accent-colour text is allowed only when it clears contrast against the ground.
+- Text on colour-block panels must use a computed on-colour (`--t0`, `--t1`, `--t2`, or equivalent), never raw mauve/blue/pink text on a coloured fill.
+- Use no more than two font families: Fraunces for display moments, Work Sans for all readable body and annotation text.
+- Use radius tokens consistently: soft rectangles use medium/large radii; circular media, badges, dots, and icon tiles use `50%`.
+- Avoid one-off hex values, decorative gradients not declared by the design system, and dense multi-hue slides that overpower the soft editorial mood.
