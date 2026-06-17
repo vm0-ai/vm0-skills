@@ -7,7 +7,7 @@ description: 15-slot HTML presentation structure for organic, wellness, and slow
 
 The structure layer: **what goes where**, palette-agnostic. Colour/font should be bound to CSS role vars so the skin remains swappable.
 
-Reference: `example.html` (rendered static deck) and `preview/slide-01..15.png`.
+Reference: `build.mjs` (source generator) -> `example.html` (rendered static deck) and `preview/slide-01..15.png`.
 
 A 15-page deck for organic / natural / wellness / hospitality / slow-brand briefs. Each slot's **role and required content** are defined in the [content-role contract](../canonical-page-set.md); the slot map below adds Botane Organic's **layout** for each slot.
 
@@ -50,3 +50,13 @@ A 15-page deck for organic / natural / wellness / hospitality / slow-brand brief
 | Hospitality / venue | About -> place story · Team -> hosts · Services -> rooms / experiences · Gallery -> property photos · Pricelist -> packages |
 | Community programme | Mission -> commitments · Process -> participation path · Stats -> outcomes · Testimonials -> participant quotes |
 | Product line | Services -> ranges · Gallery -> product uses · Stats -> repeat purchase / units / impact · Pricelist -> bundles |
+
+## Build the reference deck
+
+Run from this directory:
+
+```bash
+node build.mjs
+```
+
+The script regenerates `example.html` from structured demo data and local layout helpers. It bakes the Mauve Dusk tokens into static CSS and removes the theme switcher/runtime script before writing the delivered reference HTML.
