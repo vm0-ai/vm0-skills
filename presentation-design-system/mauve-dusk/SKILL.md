@@ -7,6 +7,8 @@ description: Mauve Dusk presentation look - soft lavender grounds, warm serif he
 
 The look layer: colours, fonts, radius, and motifs. It carries no deck layout.
 
+Source: `System MD/design-system.md` Mauve Dusk palette, Fraunces / Work Sans pairing, and soft radius tokens; selected by `tmpl-botane-organic.md` as the skin for this reference deck.
+
 **Essence** - calm editorial softness: pale lavender grounds, muted mauve as the primary accent, cool blue and dusty pink supports, high-contrast ink, and generous whitespace. It works well for organic, wellness, lifestyle, hospitality, and slow-brand presentations.
 
 ## Colours - Mauve Dusk (8 role tokens)

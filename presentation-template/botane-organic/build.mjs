@@ -303,7 +303,7 @@ const s10 = slide(
   `<div style="position:absolute;left:9cqw;top:14cqh;width:26cqw">
      <div class="kicker" style="color:var(--ka)">Around the garden</div>
      <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">This season.</h1>
-     <p class="body" style="margin-top:2cqh;opacity:.84">Six small snapshots — beds, beds, the still, a finished tincture, and the wrap.</p>
+     <p class="body" style="margin-top:2cqh;opacity:.84">Four small snapshots — beds, the still, a finished tincture, and the wrap.</p>
    </div>
    <div style="position:absolute;right:6cqw;top:11cqh;bottom:11cqh;width:54cqw;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:1.2cqw">
      ${photoCell('1 / 1 / 2 / 3','gallery-1')}
@@ -448,9 +448,9 @@ html,body{background:#cfd2d8;color:var(--ink);font-family:var(--fb),sans-serif;}
 .cap{font-size:1.2cqw;font-weight:400;line-height:1.4;letter-spacing:.02em;}
 .pagenum{position:absolute;right:3cqw;bottom:3.2cqh;font-family:var(--fd);font-size:1cqw;font-weight:500;letter-spacing:.06em;opacity:.65;z-index:6;}
 /* ---- signature motifs ---- */
-.tile{display:flex;align-items:center;justify-content:center;border-radius:var(--r-md);}
+.tile{display:flex;align-items:center;justify-content:center;border-radius:50%;}
 .tile svg{width:55%;height:55%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.badge{display:flex;align-items:center;justify-content:center;border-radius:var(--r-md);font-family:var(--fd);font-weight:600;}
+.badge{display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:var(--fd);font-weight:600;}
 .tick{position:absolute;}
 .card{background:var(--surface);border-radius:var(--r-md);}
 .dot{border-radius:50%;}.qcircle{border-radius:50% 0 0 0;}.semi{border-radius:999px 999px 0 0;}.tri{width:0;height:0;}
