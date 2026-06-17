@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Botane — deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7FB; --surface:#FFFFFF; --ink:#2B2533; --soft:#635B70; --ph:#ECE7F0;
+  --accent:#9C7BB8; --s1:#8AA0C9; --s2:#E0B6C9; --s3:#2B2533;
+  --oa:#FFFFFF; --o1:#FFFFFF; --o2:#15151A; --o3:#FFFFFF;
+  --ka:#2B2533; --kad:#FAF7FB;
+  --g0:#85699d; --g1:#61708d; --g2:#e0b6c9; --g3:#2b2533;
+  --t0:#FFFFFF; --t1:#FFFFFF; --t2:#15131C; --t3:#FFFFFF;
+  --fd:'Fraunces'; --fb:'Work Sans';
+  --r-xs:.5cqw; --r-sm:.9cqw; --r-md:1.7cqw; --r-lg:3cqw; --r-xl:5cqw;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#cfd2d8;color:var(--ink);font-family:var(--fb),sans-serif;}
+.deck{scroll-snap-type:y mandatory;height:100vh;overflow-y:scroll;}
+.slide{width:100vw;height:100vh;scroll-snap-align:start;display:flex;background:#cfd2d8;}
+.stage{position:relative;width:min(92vw,163.55vh);height:min(51.75vw,92vh);margin:auto;overflow:hidden;container-type:size;
+  background:var(--bg);color:var(--ink);border:1px solid rgba(0,0,0,.12);box-shadow:0 14px 50px rgba(0,0,0,.2);}
+.fit{position:absolute;inset:0;transform-origin:top center;}  /* auto-scaled to keep content in-frame on any font */
+/* ---- type scale (projection-legible) ---- */
+.display{font-family:var(--fd);font-size:7cqw;font-weight:600;line-height:1.0;letter-spacing:-.02em;}
+.h1{font-family:var(--fd);font-size:4.6cqw;font-weight:500;line-height:1.04;letter-spacing:-.01em;}
+.h2{font-family:var(--fd);font-size:3.2cqw;font-weight:500;line-height:1.08;letter-spacing:-.01em;}
+.h3{font-family:var(--fd);font-size:1.95cqw;font-weight:500;line-height:1.18;}
+.stat{font-family:var(--fd);font-size:5.2cqw;font-weight:600;line-height:1;letter-spacing:-.01em;}
+.kicker{font-family:var(--fd);font-size:1.15cqw;font-weight:500;letter-spacing:.20em;text-transform:uppercase;}
+.lead{font-size:2cqw;font-weight:300;line-height:1.5;}
+.body{font-size:1.5cqw;font-weight:400;line-height:1.5;}
+.cap{font-size:1.2cqw;font-weight:400;line-height:1.4;letter-spacing:.02em;}
+.pagenum{position:absolute;right:3cqw;bottom:3.2cqh;font-family:var(--fd);font-size:1cqw;font-weight:500;letter-spacing:.06em;opacity:.65;z-index:6;}
+/* ---- signature motifs ---- */
+.tile{display:flex;align-items:center;justify-content:center;border-radius:50%;}
+.tile svg{width:55%;height:55%;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.badge{display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:var(--fd);font-weight:600;}
+.tick{position:absolute;}
+.card{background:var(--surface);border-radius:var(--r-md);}
+.dot{border-radius:50%;}.qcircle{border-radius:50% 0 0 0;}.semi{border-radius:999px 999px 0 0;}.tri{width:0;height:0;}
+.dim{opacity:.84;}
+.soft{color:var(--soft);}
+.band{position:absolute;display:flex;flex-direction:column;align-items:center;gap:1.6cqh;}
+.band>*{flex:none;}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+<div class="slide"><div class="stage" style=""><div data-bigcircle="1" style="position:absolute;right:0;top:0;width:46cqw;height:100cqh;background:var(--g0);color:var(--t0);border-radius:var(--r-md);border-radius:0"></div><div data-photocell="1" data-photo-seed="botane-cover" style="position:absolute;right:14cqw;top:50cqh;transform:translateY(-50%);width:28cqw;height:28cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div><div class="dot" style="position:absolute;left:7cqw;top:8cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;left:14cqw;top:9cqh;width:0.7cqw;height:0.7cqw;background:var(--accent);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:7cqw;top:18cqh;width:38cqw">
+     <div class="kicker" style="color:var(--ka)">A wellness studio · 2026</div>
+     <h1 class="display" style="font-size:7cqw;margin-top:3cqh;line-height:1.02;letter-spacing:-.015em">Botane.<br>Made of<br>the garden.</h1>
+     <p class="lead soft" style="margin-top:3.4cqh;max-width:34cqw">Small batches from one Welsh garden.</p>
+   </div>
+   <div class="kicker" style="position:absolute;left:7cqw;bottom:3.4cqh;opacity:.75">yourcompany.com</div></div><div class="pagenum">01</div></div></div>
+<div class="slide"><div class="stage" style=""><div data-bigcircle="1" style="position:absolute;left:0;top:0;width:8cqw;height:100cqh;background:var(--g0);color:var(--t0);border-radius:var(--r-md);border-radius:0"></div><div class="dot" style="position:absolute;left:18cqw;top:5cqh;width:1.2cqw;height:1.2cqw;background:var(--accent);border-radius:50%;"></div><div data-photocell="1" data-photo-seed="agenda-still" style="position:absolute;right:10cqw;bottom:14cqh;width:16cqw;height:16cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div><div class="fit"><div style="position:absolute;left:18cqw;top:14cqh;width:36cqw">
+     <div class="kicker" style="color:var(--ka)">Inside</div>
+     <h1 class="h1" style="margin-top:1.6cqh;font-family:var(--fd);font-weight:500;line-height:1">What we cover</h1>
+     <div style="margin-top:3.4cqh">
+       <div data-device="toc" style="display:flex;flex-direction:column;width:100%"><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
+      <div style="flex:none;color:var(--accent);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">01</div>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">The garden behind the brand</h3>
+      <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">03</div>
+    </div><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
+      <div style="flex:none;color:var(--s1);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">02</div>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">The herbs we grow this year</h3>
+      <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">07</div>
+    </div><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
+      <div style="flex:none;color:var(--s2);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">03</div>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">The numbers we are proud of</h3>
+      <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">11</div>
+    </div><div style="display:flex;align-items:baseline;gap:1.6cqw;padding:1.6cqh 0;border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent)">
+      <div style="flex:none;color:var(--s3);font-family:var(--fd);font-weight:600;font-size:1.7cqw;letter-spacing:.04em;width:5cqw">04</div>
+      <h3 class="h3" style="flex:1;color:var(--ink);font-size:2.4cqw">Find us, write us, visit us</h3>
+      <div style="flex:none;color:var(--ink);opacity:.55;font-family:var(--fd);font-weight:500;font-size:1.4cqw;text-align:right;width:5cqw">15</div>
+    </div></div>
+     </div>
+   </div>
+   <div class="kicker" style="position:absolute;left:18cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; agenda</div></div><div class="pagenum">02</div></div></div>
+<div class="slide"><div class="stage" style=""><div data-photocell="1" data-photo-seed="divider-01" style="position:absolute;right:10cqw;top:50cqh;transform:translateY(-50%);width:26cqw;height:26cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div><div class="dot" style="position:absolute;right:7cqw;top:6cqh;width:1cqw;height:1cqw;background:var(--accent);border-radius:50%;"></div><div class="fit"><div data-bigcircle="1" style="position:absolute;left:0;top:0;width:48cqw;height:100cqh;background:var(--g0);color:var(--t0);padding:18cqh 0 0 6cqw;box-sizing:border-box">
+     <div class="kicker">Chapter 01</div>
+     <h1 class="display" style="font-size:7cqw;margin-top:3cqh;line-height:1.0;letter-spacing:-.01em">Garden</h1>
+     <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.85">Botane &nbsp;·&nbsp; 01/03</div>
+   </div></div><div class="pagenum"></div></div></div>
+<div class="slide"><div class="stage" style=""><div data-photocell="1" data-photo-seed="about-portrait" style="position:absolute;left:0;top:8cqh;width:42cqw;height:84cqh;background:var(--ph);border-radius:0 var(--r-lg) var(--r-lg) 0;overflow:hidden"></div><div style="position:absolute;left:46cqw;top:18cqh;transform-origin:0 0;transform:rotate(-90deg) translate(-50%,0);font-family:var(--fd);font-weight:500;font-size:1.05cqw;letter-spacing:.24em;text-transform:uppercase;color:var(--soft);white-space:nowrap;z-index:3">About — 2026</div><div class="dot" style="position:absolute;right:8cqw;top:7cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;right:14cqw;top:5cqh;width:0.7cqw;height:0.7cqw;background:var(--accent);border-radius:50%;"></div><div class="fit"><div style="position:absolute;right:6cqw;top:14cqh;width:40cqw">
+     <div class="kicker" style="color:var(--ka)">A small studio</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500;line-height:1.04">Built one season at a time.</h1>
+     <p class="lead" style="margin-top:2.8cqh">We make small batches of skincare, tinctures and teas from a single Welsh garden — slow, honest, and made by hand.</p>
+     <p class="body" style="margin-top:2cqh;max-width:38cqw;opacity:.88">Founded in 2018 with three rows of calendula and a hand-cranked still. Six years on, still small, still slow, still ours.</p>
+   </div>
+   <div class="kicker" style="position:absolute;right:6cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 04</div></div><div class="pagenum">04</div></div></div>
+<div class="slide"><div class="stage" style=""><div data-bigcircle="1" style="position:absolute;right:0;top:0;width:38cqw;height:100cqh;background:var(--g2);color:var(--t2);border-radius:var(--r-md);border-radius:0"></div><div data-photocell="1" data-photo-seed="vision-flower" style="position:absolute;right:6cqw;top:6cqh;width:14cqw;height:14cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div><div class="dot" style="position:absolute;left:7cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:7cqw;top:14cqh;width:46cqw">
+     <div class="kicker" style="color:var(--ka)">What we believe</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">Three small promises.</h1>
+     <div style="margin-top:3.4cqh">
+       <div data-device="numbered-list" style="display:flex;flex-direction:column;width:100%"><div style="display:flex;gap:2cqw;align-items:flex-start;margin-bottom:3.4cqh">
+      <div style="flex:none"><div class="badge" data-badge="1" style="width:5cqw;height:5cqw;background:var(--g0);color:var(--t0)">01</div></div>
+      <div style="flex:1;padding-top:.6cqh"><h3 class="h3">Grown not bought</h3><p class="body" style="margin-top:.6cqh;opacity:.92">Every leaf, root and petal in our blends is from our garden, in this season.</p></div>
+    </div><div style="display:flex;gap:2cqw;align-items:flex-start;margin-bottom:3.4cqh">
+      <div style="flex:none"><div class="badge" data-badge="1" style="width:5cqw;height:5cqw;background:var(--g1);color:var(--t1)">02</div></div>
+      <div style="flex:1;padding-top:.6cqh"><h3 class="h3">Small batch, slow craft</h3><p class="body" style="margin-top:.6cqh;opacity:.92">Hand-poured, hand-labelled, hand-checked. We make what one of us can carry in a day.</p></div>
+    </div><div style="display:flex;gap:2cqw;align-items:flex-start;margin-bottom:3.4cqh">
+      <div style="flex:none"><div class="badge" data-badge="1" style="width:5cqw;height:5cqw;background:var(--g2);color:var(--t2)">03</div></div>
+      <div style="flex:1;padding-top:.6cqh"><h3 class="h3">Honest on every label</h3><p class="body" style="margin-top:.6cqh;opacity:.92">We list every ingredient, the season it grew in, and how to read the small print.</p></div>
+    </div></div>
+     </div>
+   </div>
+   <div class="kicker" style="position:absolute;left:7cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 05</div></div><div class="pagenum">05</div></div></div>
+<div class="slide"><div class="stage" style=""><div class="dot" style="position:absolute;right:6cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;left:7cqw;bottom:18cqh;width:1cqw;height:1cqw;background:var(--s2);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:6cqw;top:14cqh">
+     <div class="kicker" style="color:var(--ka)">The garden hands</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">Three of us, six rows.</h1>
+   </div>
+   <div style="position:absolute;left:6cqw;right:6cqw;top:42cqh;bottom:14cqh">
+     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.6cqw;width:100%"><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
+      <div data-photocell="1" data-photo-seed="team-ines" style="position:relative;width:100%;aspect-ratio:3/2;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+      <div>
+        <h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Ines Holm</h3>
+        <p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Grower & Founder</p>
+      </div>
+    </div><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
+      <div data-photocell="1" data-photo-seed="team-mara" style="position:relative;width:100%;aspect-ratio:3/2;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+      <div>
+        <h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Mara Kwan</h3>
+        <p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Distiller</p>
+      </div>
+    </div><div data-device="team" style="display:flex;flex-direction:column;gap:1.2cqh">
+      <div data-photocell="1" data-photo-seed="team-owen" style="position:relative;width:100%;aspect-ratio:3/2;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+      <div>
+        <h3 class="h3" style="color:var(--ink);font-size:1.7cqw">Owen Riley</h3>
+        <p class="cap" style="color:var(--ink);opacity:.65;margin-top:.2cqh">Designer & Writer</p>
+      </div>
+    </div></div>
+   </div>
+   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 06</div></div><div class="pagenum">06</div></div></div>
+<div class="slide"><div class="stage" style=""><div data-photocell="1" data-photo-seed="divider-02" style="position:absolute;right:10cqw;top:50cqh;transform:translateY(-50%);width:26cqw;height:26cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div><div class="dot" style="position:absolute;right:7cqw;top:6cqh;width:1cqw;height:1cqw;background:var(--s1);border-radius:50%;"></div><div class="fit"><div data-bigcircle="1" style="position:absolute;left:0;top:0;width:48cqw;height:100cqh;background:var(--g1);color:var(--t1);padding:18cqh 0 0 6cqw;box-sizing:border-box">
+     <div class="kicker">Chapter 02</div>
+     <h1 class="display" style="font-size:7cqw;margin-top:3cqh;line-height:1.0;letter-spacing:-.01em">Herbs</h1>
+     <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.85">Botane &nbsp;·&nbsp; 02/03</div>
+   </div></div><div class="pagenum"></div></div></div>
+<div class="slide"><div class="stage" style=""><div class="dot" style="position:absolute;right:6cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;left:7cqw;bottom:18cqh;width:1cqw;height:1cqw;background:var(--s1);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:6cqw;top:14cqh;width:50cqw">
+     <div class="kicker" style="color:var(--ka)">What we make</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">Four small ranges.</h1>
+     <p class="lead soft" style="margin-top:2cqh;max-width:46cqw">Each range is a single garden's worth of one ingredient — made, bottled, and sent in the season it grew in.</p>
+   </div>
+   <div style="position:absolute;left:6cqw;right:6cqw;top:46cqh">
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2cqw;"><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
+      <div class="tile" data-tile="1" style="width:5cqw;height:5cqw;flex:none;background:var(--g0);color:var(--t0)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M11 20A7 7 0 0 1 4 13c0-5 5-9 11-9 0 6-4 11-9 11"/><path d="M2 22c2-2 5-5 9-7"/></svg></div>
+      <div><h3 class="h3" style="color:var(--ink)">Skin & body</h3><p class="body soft" style="margin-top:.5cqh">Cold-pressed oils and balms from calendula, comfrey, plantain.</p></div>
+    </div><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
+      <div class="tile" data-tile="1" style="width:5cqw;height:5cqw;flex:none;background:var(--g1);color:var(--t1)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M5 8h12v9a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg></div>
+      <div><h3 class="h3" style="color:var(--ink)">Teas & tinctures</h3><p class="body soft" style="margin-top:.5cqh">Loose-leaf blends and herbal extracts, gentle and slow.</p></div>
+    </div><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
+      <div class="tile" data-tile="1" style="width:5cqw;height:5cqw;flex:none;background:var(--g2);color:var(--t2)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <div><h3 class="h3" style="color:var(--ink)">Slow soaps</h3><p class="body soft" style="margin-top:.5cqh">Cured 8 weeks, cut by hand, wrapped in unbleached paper.</p></div>
+    </div><div class="card" data-device="icon-cell" style="display:flex;gap:1.4cqw;align-items:flex-start;padding:2.4cqh 1.8cqw;">
+      <div class="tile" data-tile="1" style="width:5cqw;height:5cqw;flex:none;background:var(--g3);color:var(--t3)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M2 19V6a2 2 0 0 1 2-2h7v17H4a2 2 0 0 1-2-2zM22 19V6a2 2 0 0 0-2-2h-7v17h7a2 2 0 0 0 2-2z"/></svg></div>
+      <div><h3 class="h3" style="color:var(--ink)">Garden books</h3><p class="body soft" style="margin-top:.5cqh">Small printed books on growing what we grow at home.</p></div>
+    </div></div>
+   </div>
+   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 08</div></div><div class="pagenum">08</div></div></div>
+<div class="slide"><div class="stage" style=""><div class="dot" style="position:absolute;right:6cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;left:7cqw;bottom:18cqh;width:1cqw;height:1cqw;background:var(--s2);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:6cqw;top:14cqh">
+     <div class="kicker" style="color:var(--ka)">From plot to bottle</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">A year in four turns.</h1>
+   </div>
+   <div style="position:absolute;left:6cqw;right:6cqw;top:42cqh">
+     <div data-device="process" style="position:relative;display:flex;height:46cqh;"><div data-connector="1" style="position:absolute;left:12.5%;right:12.5%;top:50%;height:.55cqh;background:color-mix(in srgb, var(--ink) 24%, transparent);transform:translateY(-50%);z-index:0"></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);bottom:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 01</div><h3 class="h3" style="margin-top:.4cqh">Sow</h3><p class="body soft" style="margin-top:.3cqh">Seeds in February under cloches.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g0);color:var(--t0)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M7 20h10"/><path d="M12 20v-8"/><path d="M12 12c0-4-3-7-7-7 0 4 3 7 7 7zm0 0c0-4 3-7 7-7 0 4-3 7-7 7z"/></svg></div></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);top:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 02</div><h3 class="h3" style="margin-top:.4cqh">Tend</h3><p class="body soft" style="margin-top:.3cqh">Weekly weeding, watering, weeks of patience.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g1);color:var(--t1)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></div></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);bottom:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 03</div><h3 class="h3" style="margin-top:.4cqh">Harvest</h3><p class="body soft" style="margin-top:.3cqh">Two pickings, August and October.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g2);color:var(--t2)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M11 20A7 7 0 0 1 4 13c0-5 5-9 11-9 0 6-4 11-9 11"/><path d="M2 22c2-2 5-5 9-7"/></svg></div></div><div style="position:relative;z-index:1;width:25%;height:100%"><div style="position:absolute;left:50%;transform:translateX(-50%);top:calc(50% + 5.6cqw);width:92%;text-align:center"><div class="kicker" style="color:var(--ka)">Step 04</div><h3 class="h3" style="margin-top:.4cqh">Make</h3><p class="body soft" style="margin-top:.3cqh">Press, distill, cure. Bottle. Send.</p></div><div class="tile" data-node="1" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:6cqw;height:6cqw;border-radius:50%;background:var(--g3);color:var(--t3)"><svg viewBox="0 0 24 24" style="width:50%;height:50%;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M21 12a9 9 0 1 1-9-9c2.5 0 5 1 7 3"/><path d="M21 3v6h-6"/></svg></div></div></div>
+   </div>
+   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 09</div></div><div class="pagenum">09</div></div></div>
+<div class="slide"><div class="stage" style=""><div style="position:absolute;left:3cqw;top:50cqh;transform-origin:0 0;transform:rotate(-90deg) translate(-50%,0);font-family:var(--fd);font-weight:500;font-size:1.05cqw;letter-spacing:.24em;text-transform:uppercase;color:var(--soft);white-space:nowrap;z-index:3">Selected work · 2026</div><div class="dot" style="position:absolute;right:6cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:9cqw;top:14cqh;width:26cqw">
+     <div class="kicker" style="color:var(--ka)">Around the garden</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">This season.</h1>
+     <p class="body" style="margin-top:2cqh;opacity:.84">Four small snapshots — beds, the still, a finished tincture, and the wrap.</p>
+   </div>
+   <div style="position:absolute;right:6cqw;top:11cqh;bottom:11cqh;width:54cqw;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:1.2cqw">
+     <div data-photocell="1" data-photo-seed="gallery-1" style="grid-area:1 / 1 / 2 / 3;position:relative;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+     <div data-photocell="1" data-photo-seed="gallery-2" style="grid-area:1 / 3 / 2 / 4;position:relative;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+     <div data-photocell="1" data-photo-seed="gallery-3" style="grid-area:2 / 1 / 3 / 2;position:relative;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+     <div data-photocell="1" data-photo-seed="gallery-4" style="grid-area:2 / 2 / 3 / 4;position:relative;background:var(--ph);border-radius:var(--r-md);overflow:hidden"></div>
+   </div>
+   <div class="kicker" style="position:absolute;left:9cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 10</div></div><div class="pagenum">10</div></div></div>
+<div class="slide"><div class="stage" style=""><div data-photocell="1" data-photo-seed="divider-03" style="position:absolute;right:10cqw;top:50cqh;transform:translateY(-50%);width:26cqw;height:26cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div><div class="dot" style="position:absolute;right:7cqw;top:6cqh;width:1cqw;height:1cqw;background:var(--s2);border-radius:50%;"></div><div class="fit"><div data-bigcircle="1" style="position:absolute;left:0;top:0;width:48cqw;height:100cqh;background:var(--g2);color:var(--t2);padding:18cqh 0 0 6cqw;box-sizing:border-box">
+     <div class="kicker">Chapter 03</div>
+     <h1 class="display" style="font-size:7cqw;margin-top:3cqh;line-height:1.0;letter-spacing:-.01em">Numbers</h1>
+     <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.85">Botane &nbsp;·&nbsp; 03/03</div>
+   </div></div><div class="pagenum"></div></div></div>
+<div class="slide"><div class="stage" style=""><div class="dot" style="position:absolute;right:6cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;left:7cqw;bottom:18cqh;width:1cqw;height:1cqw;background:var(--s2);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:6cqw;top:14cqh;width:42cqw">
+     <div class="kicker" style="color:var(--ka)">A year in numbers</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">A small operation,<br>growing slowly.</h1>
+     <p class="body" style="margin-top:2.4cqh;max-width:38cqw;opacity:.88">Six rows turned into seventeen products. Two of us became three. Repeat orders quietly outgrew new ones.</p>
+   </div>
+   <div style="position:absolute;right:6cqw;top:18cqh;width:36cqw;display:flex;align-items:center;gap:3cqw">
+     <div data-device="stat-cell" style="position:relative">
+       <svg viewBox="0 0 100 100" data-bbadge="1" style="width:22cqw;height:22cqw">
+  <circle cx="50" cy="50" r="38" fill="none" stroke="var(--ph)" stroke-width="9"/>
+  <circle cx="50" cy="50" r="38" fill="none" stroke="var(--accent)" stroke-width="9"
+          stroke-dasharray="171.9 238.76" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+</svg>
+       <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column">
+         <div style="font-family:var(--fd);font-weight:600;font-size:4cqw;line-height:1">72%</div>
+         <div class="cap" style="opacity:.7;margin-top:.5cqh">Repeat buyers</div>
+       </div>
+     </div>
+     <div data-device="stat-cell" style="display:flex;flex-direction:column;gap:2cqh">
+       <div>
+         <div style="font-family:var(--fd);font-weight:600;font-size:3.4cqw;line-height:1">17</div>
+         <div class="cap" style="opacity:.7;margin-top:.4cqh">Products in catalogue</div>
+       </div>
+       <div>
+         <div style="font-family:var(--fd);font-weight:600;font-size:3.4cqw;line-height:1">8wk</div>
+         <div class="cap" style="opacity:.7;margin-top:.4cqh">Average soap cure time</div>
+       </div>
+     </div>
+   </div>
+   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 12</div></div><div class="pagenum">12</div></div></div>
+<div class="slide"><div class="stage" style=""><div class="dot" style="position:absolute;right:6cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;left:7cqw;bottom:18cqh;width:1cqw;height:1cqw;background:var(--s1);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:8cqw;top:14cqh;width:46cqw">
+     <div class="kicker" style="color:var(--ka)">What buyers tell us</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">In their words.</h1>
+   </div>
+   <div style="position:absolute;left:8cqw;right:8cqw;top:40cqh;bottom:14cqh">
+     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2cqw;height:100%"><div data-device="quote" style="background:var(--g0);color:var(--t0);border-radius:var(--r-lg);padding:3cqh 2cqw;display:flex;flex-direction:column;height:100%">
+      <div style="font-family:var(--fd);font-weight:700;font-size:5cqw;line-height:.6;opacity:.45">"</div>
+      <p class="body" style="margin-top:.4cqh;flex:1">The calendula balm replaced three things in my cupboard. Smells like a garden, not a chemist.</p>
+      <div style="margin-top:2cqh;display:flex;align-items:center;gap:1cqw">
+        <div data-photocell="1" data-photo-seed="quote-hannah" style="position:relative;width:4cqw;height:4cqw;background:var(--ph);border-radius:50%;overflow:hidden;flex:none"></div>
+        <div style="min-width:0">
+          <div style="font-family:var(--fd);font-weight:600;font-size:1.4cqw;line-height:1.1">Hannah W.</div>
+          <div class="cap" style="opacity:.85;font-size:1.1cqw">Subscriber since 2022, Cardiff</div>
+        </div>
+      </div>
+    </div><div data-device="quote" style="background:var(--g1);color:var(--t1);border-radius:var(--r-lg);padding:3cqh 2cqw;display:flex;flex-direction:column;height:100%">
+      <div style="font-family:var(--fd);font-weight:700;font-size:5cqw;line-height:.6;opacity:.45">"</div>
+      <p class="body" style="margin-top:.4cqh;flex:1">A small package, hand-wrapped, hand-noted. The kind of post you stop and read on the stairs.</p>
+      <div style="margin-top:2cqh;display:flex;align-items:center;gap:1cqw">
+        <div data-photocell="1" data-photo-seed="quote-niall" style="position:relative;width:4cqw;height:4cqw;background:var(--ph);border-radius:50%;overflow:hidden;flex:none"></div>
+        <div style="min-width:0">
+          <div style="font-family:var(--fd);font-weight:600;font-size:1.4cqw;line-height:1.1">Niall O.</div>
+          <div class="cap" style="opacity:.85;font-size:1.1cqw">New customer, Edinburgh</div>
+        </div>
+      </div>
+    </div></div>
+   </div>
+   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 13</div></div><div class="pagenum">13</div></div></div>
+<div class="slide"><div class="stage" style=""><div class="dot" style="position:absolute;right:6cqw;top:6cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;left:7cqw;bottom:18cqh;width:1cqw;height:1cqw;background:var(--s2);border-radius:50%;"></div><div class="fit"><div style="position:absolute;left:8cqw;top:11cqh">
+     <div class="kicker" style="color:var(--ka)">Pricelist</div>
+     <h1 class="h1" style="margin-top:1.4cqh;font-family:var(--fd);font-weight:500">Three small boxes.</h1>
+     <p class="body" style="margin-top:1.6cqh;max-width:46cqw;opacity:.84">Sent four times a year, in the season that grew them. Cancel any time, keep what you love.</p>
+   </div>
+   <div style="position:absolute;left:8cqw;right:8cqw;top:38cqh;bottom:11cqh">
+     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2cqw;height:100%"><div data-device="price" style="background:var(--g0);color:var(--t0);border-radius:var(--r-lg);padding:3.2cqh 2cqw;display:flex;flex-direction:column;height:100%">
+      
+      <div class="kicker" style="opacity:.85">Single</div>
+      <div style="display:flex;align-items:baseline;gap:.4cqw;margin-top:2cqh">
+        <span class="h1" style="line-height:1">£18</span>
+        <span class="cap" style="opacity:.8">/quarter</span>
+      </div>
+      <div style="height:1px;background:currentColor;opacity:.25;margin:2.2cqh 0 .4cqh"></div>
+      <div class="body" style="margin-top:.8cqh;opacity:.92">• One soap or tea</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Hand-labelled card</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Seasonal note</div>
+    </div><div data-device="price" style="background:var(--g2);color:var(--t2);border-radius:var(--r-lg);padding:3.2cqh 2cqw;display:flex;flex-direction:column;height:100%">
+      <div style="align-self:flex-start;background:var(--ink);color:var(--bg);padding:.7cqh 1.2cqw;border-radius:999px;font-family:var(--fd);font-weight:600;font-size:1.15cqw;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2cqh">Most loved</div>
+      <div class="kicker" style="opacity:.85">Pair</div>
+      <div style="display:flex;align-items:baseline;gap:.4cqw;margin-top:2cqh">
+        <span class="h1" style="line-height:1">£32</span>
+        <span class="cap" style="opacity:.8">/quarter</span>
+      </div>
+      <div style="height:1px;background:currentColor;opacity:.25;margin:2.2cqh 0 .4cqh"></div>
+      <div class="body" style="margin-top:.8cqh;opacity:.92">• Two products</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Choose your blends</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Free postage in UK</div><div class="body" style="margin-top:.8cqh;opacity:.92">• First pick of new ranges</div>
+    </div><div data-device="price" style="background:var(--g1);color:var(--t1);border-radius:var(--r-lg);padding:3.2cqh 2cqw;display:flex;flex-direction:column;height:100%">
+      
+      <div class="kicker" style="opacity:.85">Garden</div>
+      <div style="display:flex;align-items:baseline;gap:.4cqw;margin-top:2cqh">
+        <span class="h1" style="line-height:1">£58</span>
+        <span class="cap" style="opacity:.8">/quarter</span>
+      </div>
+      <div style="height:1px;background:currentColor;opacity:.25;margin:2.2cqh 0 .4cqh"></div>
+      <div class="body" style="margin-top:.8cqh;opacity:.92">• Five products</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Includes the small book</div><div class="body" style="margin-top:.8cqh;opacity:.92">• Postage + a thank-you card</div>
+    </div></div>
+   </div>
+   <div class="kicker" style="position:absolute;left:6cqw;bottom:3.4cqh;opacity:.65">Botane &nbsp;·&nbsp; 14</div></div><div class="pagenum">14</div></div></div>
+<div class="slide"><div class="stage" style=""><div data-bigcircle="1" style="position:absolute;left:0;top:0;width:46cqw;height:100cqh;background:var(--g0);color:var(--t0);border-radius:var(--r-md);border-radius:0"></div><div data-photocell="1" data-photo-seed="thanks-still" style="position:absolute;left:10cqw;top:50cqh;transform:translateY(-50%);width:24cqw;height:24cqw;background:var(--ph);border-radius:50%;overflow:hidden"></div><div class="dot" style="position:absolute;right:7cqw;top:8cqh;width:1.4cqw;height:1.4cqw;background:var(--accent);border-radius:50%;"></div><div class="dot" style="position:absolute;right:13cqw;top:9cqh;width:0.7cqw;height:0.7cqw;background:var(--accent);border-radius:50%;"></div><div class="fit"><div style="position:absolute;right:6cqw;top:18cqh;width:40cqw">
+     <div class="kicker" style="color:var(--ka)">Thank you</div>
+     <h1 class="display" style="font-size:7cqw;margin-top:3cqh;line-height:1.02;letter-spacing:-.015em">Visit the<br>garden.</h1>
+     <p class="lead soft" style="margin-top:3cqh;max-width:34cqw">Open the last Saturday of every month.</p>
+     <div class="kicker" style="margin-top:4cqh;opacity:.85">hello@yourcompany.com</div>
+   </div></div><div class="pagenum">15</div></div></div>
+</div>
+
+</body>
+</html>
