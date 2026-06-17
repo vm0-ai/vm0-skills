@@ -118,6 +118,7 @@
 - [x] [Axiom](https://axiom.co/docs/restapi/introduction) - Cloud-Native Observability Platform
 - [x] [Plausible](https://plausible.io/docs) - Privacy-Friendly Web Analytics
 - [x] [Semrush](https://developer.semrush.com/api/get-started/quick-start/) - SEO, keyword, backlink, and competitive intelligence API
+- [x] [Profound](https://docs.tryprofound.com/rest-api/introduction) - AI search visibility, citations, sentiment, fanout, and Agent Analytics API
 - [x] [Massive](https://massive.com/docs/rest/quickstart) - Market data API for stocks, options, forex, crypto, and indices
 - [ ] [Datadog](https://docs.datadoghq.com/api/) - Infrastructure Monitoring & APM
 - [ ] [Airbyte](https://docs.airbyte.com/api-documentation) - Data Integration Platform
@@ -198,15 +199,15 @@
 | API & Cloud Integrations | 28 |
 | AI, LLM & Voice | 12 |
 | File & PDF Manipulation | 3 |
-| Analytics & Monitoring | 9 |
+| Analytics & Monitoring | 10 |
 | Development & Engineering | 6 |
 | Customer Support | 3 |
 | Security & Compliance | 4 |
 | Automation | 2 |
 | Design & Media | 4 |
 | Miscellaneous | 11 |
-| **Total** | **109** |
+| **Total** | **110** |
 
 ---
 
-> Last updated: 2026-06-11
+> Last updated: 2026-06-17
