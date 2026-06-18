@@ -1,6 +1,7 @@
 # Awesome N8N - SaaS Service List
 
 > Sources:
+>
 > - https://github.com/restyler/awesome-n8n
 > - https://linear.app/integrations
 
@@ -188,26 +189,62 @@
 
 ---
 
-## Statistics
+## YC P26 API Token Connectors
 
-| Category | API Count |
-| --------------------------------- | --------- |
-| Communication & Messaging | 16 |
-| Document & Content Generation | 2 |
-| Browser Automation & Web Scraping | 8 |
-| Data Processing & Utilities | 1 |
-| API & Cloud Integrations | 28 |
-| AI, LLM & Voice | 12 |
-| File & PDF Manipulation | 3 |
-| Analytics & Monitoring | 10 |
-| Development & Engineering | 6 |
-| Customer Support | 3 |
-| Security & Compliance | 4 |
-| Automation | 2 |
-| Design & Media | 4 |
-| Miscellaneous | 11 |
-| **Total** | **110** |
+- [x] [InsForge](https://docs.insforge.dev/) - Backend and cloud infrastructure APIs for agent-native apps
+- [x] [KugelAudio](https://docs.kugelaudio.com/) - Text-to-speech and voice AI API
+- [x] [Runtime](https://docs.runtm.com/introduction) - Agent runtime and sandbox API
+- [x] [TesterArmy](https://docs.tester.army/api-reference/) - AI web and mobile app testing API
+- [x] [Silmaril](https://www.silmaril.dev/docs) - AI application firewall API and SDK
+- [x] [Ardent](https://docs.tryardent.com/) - Postgres branching API
+- [x] [Armature](https://armature.tech/docs) - Agent session analytics and evaluation API
+- [x] [Minicor](https://www.minicor.com/docs) - Computer-use and RPA automation API
+- [x] [Archer](https://docs.archermoney.com) - Gifting, rewards, and payout API
+- [x] [River Markets](https://docs.rivermarkets.com/introduction) - Prediction-market execution and data API
+- [x] [smol machines](https://smolmachines.com/docs/cloud-api) - MicroVM and sandbox infrastructure API
+- [x] [Keyframe Labs](https://docs.keyframelabs.com) - Realtime AI video persona API
+- [x] [Voquill](https://docs.voquill.com/) - Medical lab workflow API
+- [x] [Oddpool](https://docs.oddpool.com/llms.txt) - Prediction-market data API
+- [x] [BentoLabs AI](https://docs.bentolabs.ai/llms.txt) - Agent observability API and SDK
+- [x] [StableBrowse](https://docs.stablebrowse.com/introduction) - Browser automation API
+- [x] [Arga Labs](https://argalabs.com/docs) - API twin and sandbox API
+- [x] [RentAHuman](https://rentahuman.ai/docs) - Human-task API and MCP for agent workflows
+- [x] [Salesgraph](https://docs.salesgraph.com) - Revenue agent API
+- [x] [qomplement](https://docs.qomplement.com/) - AI ERP and supply-chain API
+- [x] [Interfaze](https://interfaze.ai/docs) - Deterministic AI model API
+- [x] [Limrun](https://docs.limrun.com/docs) - Remote mobile build and simulator API
+- [x] [Trellis](https://docs.trellistech.com) - Short-rental operations API
+- [x] [Chert](https://docs.trychert.com/introduction) - iMessage infrastructure API
+- [x] [Replicas](https://docs.tryreplicas.com) - Cloud coding-agent API
+- [x] [Totalis](https://docs.totalis.trade/api-reference/introduction) - Prediction-market derivatives and trading API
+- [x] [primitive](https://www.primitive.dev/openapi.json) - Email infrastructure API
+- [x] [Bloom](https://www.trybloom.ai/docs/api) - Brand generation API and MCP
+- [x] [Inth](https://inth.com/docs/getting-started) - Privacy-compliance infrastructure API
+- [x] [Netter](https://netter.ai/docs) - AI data platform API
 
 ---
 
-> Last updated: 2026-06-17
+## Statistics
+
+| Category                          | API Count |
+| --------------------------------- | --------- |
+| Communication & Messaging         | 16        |
+| Document & Content Generation     | 2         |
+| Browser Automation & Web Scraping | 8         |
+| Data Processing & Utilities       | 1         |
+| API & Cloud Integrations          | 28        |
+| AI, LLM & Voice                   | 12        |
+| File & PDF Manipulation           | 3         |
+| Analytics & Monitoring            | 10        |
+| Development & Engineering         | 6         |
+| Customer Support                  | 3         |
+| Security & Compliance             | 4         |
+| Automation                        | 2         |
+| Design & Media                    | 4         |
+| Miscellaneous                     | 11        |
+| YC P26 API Token Connectors       | 30        |
+| **Total**                         | **140**   |
+
+---
+
+> Last updated: 2026-06-18
