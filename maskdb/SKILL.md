@@ -13,7 +13,7 @@ maskdb is a read-only REST gateway that turns a Postgres database into a masked,
 
 Use this skill when you need to:
 
-- Discover the databases, tables, columns, and indexes an agent token can reach
+- Discover the databases, tables, columns, and indexes a token can reach
 - Run safe, read-only structured queries against a Postgres database
 - Read data without exposing sensitive columns (they come back masked)
 
@@ -29,7 +29,7 @@ Connect the **maskdb** connector at [app.vm0.ai/connectors](https://app.vm0.ai/c
 
 ## How to Use
 
-All requests are authenticated with `Authorization: Bearer $MASKDB_TOKEN`. The token is a maskdb **agent token** (read-only data plane) and is injected by vm0 from the connected connector. Base URL: `https://api.maskdb.ai`.
+All requests are authenticated with `Authorization: Bearer $MASKDB_TOKEN`. The token is a maskdb **token** with the `db:query` + `db:metadata` scopes (read-only) and is injected by vm0 from the connected connector. Base URL: `https://api.maskdb.ai`.
 
 ### 1. List Databases
 
