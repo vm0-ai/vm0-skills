@@ -30,6 +30,16 @@ zero goal resume                                   # resume a paused/blocked goa
 - `zero goal get` returns `404: Goal not found` when no goal exists yet — that is
   normal, not an error.
 
+## When to create a goal
+
+Create a goal **only when the user explicitly asks** for a persistent,
+autonomous, cross-turn task ("keep working on this until it's done", "set a
+goal", "drive this to completion"). **Do not infer a goal from an ordinary
+one-off request.** A normal task you can finish in the current turn is not a
+goal — just do it. Turning a routine request into a self-continuing goal makes
+the agent run unprompted turn after turn, which is rarely what the user wants.
+When in doubt, do the work directly and ask before creating a goal.
+
 ## Step 1 - Create the goal
 
 Resolve the objective from the user's request, then:
