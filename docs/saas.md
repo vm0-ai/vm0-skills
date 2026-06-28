@@ -133,6 +133,7 @@
 
 - [x] [GitHub](https://docs.github.com/en/rest) - Code Hosting & Version Control
 - [x] [GitLab](https://docs.gitlab.com/ee/api/) - DevOps Platform
+- [x] [Render](https://render.com/docs/api) - PaaS hosting, deploys, services, databases, and workspace management
 - [x] [Sentry](https://docs.sentry.io/api/) - Error Tracking & Performance Monitoring
 - [ ] [Honeybadger](https://docs.honeybadger.io/api/) - Error Management
 - [ ] [Raycast](https://developers.raycast.com/) - Productivity Launcher
@@ -236,15 +237,15 @@
 | AI, LLM & Voice                   | 12        |
 | File & PDF Manipulation           | 3         |
 | Analytics & Monitoring            | 10        |
-| Development & Engineering         | 6         |
+| Development & Engineering         | 7         |
 | Customer Support                  | 3         |
 | Security & Compliance             | 4         |
 | Automation                        | 2         |
 | Design & Media                    | 4         |
 | Miscellaneous                     | 11        |
 | YC P26 API Token Connectors       | 30        |
-| **Total**                         | **140**   |
+| **Total**                         | **141**   |
 
 ---
 
-> Last updated: 2026-06-18
+> Last updated: 2026-06-28
