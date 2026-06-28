@@ -9,6 +9,9 @@ Use the Zero CLI to create and manage durable workflows and workflow triggers.
 Focus on the user's desired automation, then map it to `zero workflow` and
 `zero workflow trigger` commands.
 
+Prefer workflow triggers over legacy automations unless the user explicitly asks
+for the old automation system.
+
 Run Zero CLI commands as:
 
 ```bash
@@ -20,7 +23,8 @@ fine.
 
 ## Fast Path
 
-1. Clarify the workflow objective and trigger when they are missing.
+1. Clarify the workflow objective, trigger, and unsafe side effects when they are
+   missing.
 2. Check existing workflows before creating a new one:
    ```bash
    zero workflow list
@@ -43,8 +47,15 @@ Ask only for missing information needed to execute the next command:
 - Workflow: create a new workflow, edit an existing workflow, or inspect one?
 - Agent: which agent should host it? Default to `$ZERO_AGENT_ID` when the user
   does not specify another agent.
-- Definition: workflow name, display name, description, and instruction text.
+- Definition: workflow name, display name, description, instruction text, and
+  expected side effects.
 - Trigger: trigger kind and the required parameters for that kind.
+- Schedules: cadence, exact wall-clock time, timezone, start time, one-time run
+  time, and any business-day assumptions.
+- Gmail triggers: message fields to match (`from`, `to`, `cc`, `subject`, or
+  `body`) or the label name.
+- Webhook triggers: expected sender, payload shape, and whether the caller can
+  store and sign with the webhook secret.
 - Replacement: if an existing trigger appears to cover the same event, ask
   whether to keep both, disable the old trigger, or update it.
 
@@ -52,6 +63,21 @@ Do not fork/copy a workflow unless the user explicitly asks to copy, fork, move,
 or reuse an existing workflow on another agent. The normal setup path is
 `workflow create` or `workflow edit`, then `workflow trigger add` or
 `workflow trigger update`.
+
+## Safety Rules
+
+- Ask before enabling or testing workflows that send external messages, modify
+  production systems, spend money, delete data, or contact customers.
+- Do not silently create recurring triggers when the user only asked to discuss
+  an automation.
+- For trigger kinds with broad matching behavior, call out the scope before
+  creating the trigger.
+- Treat webhook secrets as sensitive. Preserve the creation output, but do not
+  expose full secrets in normal responses unless the user explicitly needs the
+  creation-time secret.
+- If a Zero command or workflow run reports connector authorization or
+  permission failure, stop the blocked action and use the connector-specific
+  doctor or permission flow requested by the platform instructions.
 
 ## Workflow Commands
 
