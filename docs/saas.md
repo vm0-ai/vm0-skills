@@ -237,15 +237,15 @@
 | AI, LLM & Voice                   | 12        |
 | File & PDF Manipulation           | 3         |
 | Analytics & Monitoring            | 10        |
-| Development & Engineering         | 6         |
+| Development & Engineering         | 7         |
 | Customer Support                  | 3         |
 | Security & Compliance             | 4         |
 | Automation                        | 2         |
 | Design & Media                    | 4         |
 | Miscellaneous                     | 11        |
 | YC P26 API Token Connectors       | 30        |
-| **Total**                         | **140**   |
+| **Total**                         | **141**   |
 
 ---
 
-> Last updated: 2026-06-18
+> Last updated: 2026-06-28
