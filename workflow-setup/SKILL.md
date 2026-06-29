@@ -33,12 +33,31 @@ fine.
 3. Create or edit the workflow definition.
 4. Add or update the workflow trigger.
 5. Verify with `workflow view` and `workflow trigger list`.
-6. Report the workflow id, trigger id, trigger summary, and any blocker.
+6. Report the outcome in plain language. Include workflow ids, trigger ids, and
+   check details only when the user asks for technical details or debugging
+   context is needed.
 
 Do not inspect connector authorization or request permissions as part of the
 default setup path. If the workflow run later fails with a permission denial,
 then use the connector-specific doctor flow requested by the platform
 instructions.
+
+## Requirements-First UX
+
+For create, setup, or design requests, keep the user-facing exchange focused on
+requirements until the workflow is actionable. Do not show generic templates,
+raw CLI commands, workflow ids, trigger ids, or verification details before the
+requirements are complete.
+
+Ask a short question instead. For trigger workflows, collect:
+
+- Exact trigger source and match criteria.
+- Desired action when the trigger fires.
+- Allowed side effects.
+- Whether missing external resources may be created.
+
+Expose technical details only when the user asks for implementation details,
+debugging, auditability, or when a failure requires explanation.
 
 ## Questions To Ask
 
@@ -78,6 +97,23 @@ or reuse an existing workflow on another agent. The normal setup path is
 - If a Zero command or workflow run reports connector authorization or
   permission failure, stop the blocked action and use the connector-specific
   doctor or permission flow requested by the platform instructions.
+
+## Gmail Label Applied Fast Path
+
+When the trigger kind is `gmail-label-applied`, ask only for missing details:
+
+1. Which exact Gmail label should trigger the workflow?
+2. What should happen when that label is applied?
+3. What side effects are allowed, such as creating drafts, sending email,
+   creating issues, modifying labels, archiving, or marking read?
+4. If the Gmail label does not exist, may it be created?
+
+Do not print the generic workflow template or trigger command by default.
+
+Before adding the trigger, check whether the Gmail label exists. If it is
+missing and the user already allowed creation, create the label first, then add
+the trigger. If creation was not approved, stop and ask. This avoids creating a
+workflow, failing the trigger bind, then doing a label-creation retry.
 
 ## Workflow Commands
 
@@ -125,7 +161,9 @@ zero workflow delete <workflow-id> -y
 
 ## Trigger Commands
 
-Always check the current CLI help for the latest trigger kinds and options:
+For common paths already documented here, use the known syntax directly. Check
+the current CLI help when the trigger kind is unfamiliar, the user asks for
+syntax details, or a command fails:
 
 ```bash
 zero workflow trigger --help
@@ -189,7 +227,17 @@ zero workflow trigger list <workflow-id>
 For webhook triggers, preserve the creation output because the signing secret is
 printed only once.
 
-Final response format:
+Default final response:
+
+- State the outcome in plain language.
+- Tell the user what to do next, such as applying a Gmail label.
+- Mention important safety behavior, such as "draft only, never sends".
+
+Do not include workflow ids, trigger ids, raw CLI commands, or check lists by
+default. Include them only when the user asks for technical details, the task is
+administrative or audit-oriented, or a failure requires debugging context.
+
+Technical final response format, when needed:
 
 - Workflow: name and id.
 - Trigger: kind, id, enabled status, and match/schedule summary.
