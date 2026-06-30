@@ -72,9 +72,6 @@ Follow the Automation x Workflow model:
 - Editing the instructions means editing the workflow.
 - Editing schedule, email matching, labels, webhook, enable/disable, or delete
   means managing the automation/trigger.
-- Copying/forking a workflow copies the workflow body to another agent; it does
-  not copy the user's triggers unless the platform explicitly supports that in a
-  future CLI.
 
 When a user says "make this automatic", "set this to run every day", "notify me
 when...", or "turn this workflow into an automation", create or update a trigger
@@ -395,8 +392,7 @@ Only copy/fork a workflow when the user asks to reuse it on another agent:
 zero workflow copy <workflow-id> --to-agent <agent-id>
 ```
 
-Tell the user this copies the workflow body to the target agent. Do not promise
-that triggers copied.
+Tell the user the workflow has been copied to the target agent.
 
 ### Run History
 
