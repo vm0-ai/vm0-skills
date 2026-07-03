@@ -18,6 +18,8 @@ Normal connector requests require this header:
 Authorization: Bearer $META_ADS_TOKEN
 ```
 
+Because Graph API is shared by multiple Zero connectors, include `X-VM0-Connector-Intent: meta-ads` on Graph API calls. This is a VM0 proxy routing hint only; it is not authentication or permission.
+
 Do not pass `META_ADS_TOKEN` as an `access_token` query parameter or in the request body. Zero connector tokens are placeholders that are resolved at the network boundary when sent as the `Authorization` header to `https://graph.facebook.com`. Putting the placeholder in `access_token=` can send it literally and cause Meta to return a malformed access token error.
 
 Exception: Page access tokens returned by Graph API are real secondary tokens, not Zero placeholders. For Page-token-only endpoints such as `/{page-id}/ads_posts`, get the Page access token with the connector token first, then use `Authorization: Bearer $page_token` for that Page-token request.
@@ -35,7 +37,8 @@ If `/{page-id}/ads_posts` returns `(#200) Not enough permission to call this end
 ```bash
 curl -sS --get "https://graph.facebook.com/v22.0/me/accounts" \
   --data-urlencode "fields=id,name,tasks" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {id, name, tasks}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {id, name, tasks}'
 ```
 
 ### Test Page Ads Posts (`pages_manage_ads`)
@@ -47,12 +50,14 @@ PAGE_ID="{page-id}"
 
 page_token=$(curl -sS --get "https://graph.facebook.com/v22.0/$PAGE_ID" \
   --data-urlencode "fields=id,name,access_token" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq -r '.access_token')
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq -r '.access_token')
 
 curl -sS --get "https://graph.facebook.com/v22.0/$PAGE_ID/ads_posts" \
   --data-urlencode "fields=id,created_time" \
   --data-urlencode "limit=1" \
-  --header "Authorization: Bearer $page_token" | jq .
+  --header "Authorization: Bearer $page_token" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq .
 ```
 
 An empty response such as `{"data":[]}` is a successful call when the Page has no ad posts.
@@ -63,14 +68,16 @@ An empty response such as `{"data":[]}` is a successful call when the Page has n
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/me/adaccounts?fields=id,name,account_status,currency,timezone_name,amount_spent" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {id, name, account_status, currency}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {id, name, account_status, currency}'
 ```
 
 ### Get Ad Account Details
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}?fields=id,name,account_status,currency,timezone_name,balance,amount_spent,spend_cap" \
-  --header "Authorization: Bearer $META_ADS_TOKEN"
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads"
 ```
 
 ## Campaigns
@@ -79,14 +86,16 @@ curl -s "https://graph.facebook.com/v22.0/{ad-account-id}?fields=id,name,account
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/campaigns?fields=id,name,status,objective,daily_budget,lifetime_budget,start_time,stop_time" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {id, name, status, objective}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {id, name, status, objective}'
 ```
 
 ### Get Campaign Details
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{campaign-id}?fields=id,name,status,objective,daily_budget,lifetime_budget,start_time,stop_time,created_time,updated_time" \
-  --header "Authorization: Bearer $META_ADS_TOKEN"
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads"
 ```
 
 ### Create Campaign
@@ -105,6 +114,7 @@ cat > /tmp/campaign.json << 'EOF'
 EOF
 curl -s -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/campaigns" \
   --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" \
   --header "Content-Type: application/json" \
   -d @/tmp/campaign.json
 ```
@@ -120,6 +130,7 @@ cat > /tmp/campaign-update.json << 'EOF'
 EOF
 curl -s -X POST "https://graph.facebook.com/v22.0/{campaign-id}" \
   --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" \
   --header "Content-Type: application/json" \
   -d @/tmp/campaign-update.json
 ```
@@ -128,7 +139,8 @@ curl -s -X POST "https://graph.facebook.com/v22.0/{campaign-id}" \
 
 ```bash
 curl -s -X DELETE "https://graph.facebook.com/v22.0/{campaign-id}" \
-  --header "Authorization: Bearer $META_ADS_TOKEN"
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads"
 ```
 
 ## Ad Sets
@@ -137,14 +149,16 @@ curl -s -X DELETE "https://graph.facebook.com/v22.0/{campaign-id}" \
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/adsets?fields=id,name,status,campaign_id,daily_budget,lifetime_budget,start_time,end_time,targeting" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {id, name, status, campaign_id, daily_budget}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {id, name, status, campaign_id, daily_budget}'
 ```
 
 ### Get Ad Set Details
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{adset-id}?fields=id,name,status,campaign_id,daily_budget,lifetime_budget,bid_amount,billing_event,optimization_goal,start_time,end_time,targeting" \
-  --header "Authorization: Bearer $META_ADS_TOKEN"
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads"
 ```
 
 ### Create Ad Set
@@ -171,6 +185,7 @@ cat > /tmp/adset.json << 'EOF'
 EOF
 curl -s -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/adsets" \
   --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" \
   --header "Content-Type: application/json" \
   -d @/tmp/adset.json
 ```
@@ -181,14 +196,16 @@ curl -s -X POST "https://graph.facebook.com/v22.0/{ad-account-id}/adsets" \
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/ads?fields=id,name,status,adset_id,campaign_id,created_time" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {id, name, status, adset_id}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {id, name, status, adset_id}'
 ```
 
 ### Get Ad Details
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-id}?fields=id,name,status,adset_id,campaign_id,creative,created_time,updated_time" \
-  --header "Authorization: Bearer $META_ADS_TOKEN"
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads"
 ```
 
 ## Insights (Performance Analytics)
@@ -199,35 +216,40 @@ Get overall account performance for the last 7 days:
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr,cpc,cpm,reach,frequency&date_preset=last_7d" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[0]'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[0]'
 ```
 
 ### Campaign-Level Insights
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=campaign_name,campaign_id,impressions,clicks,spend,ctr,cpc,actions&level=campaign&date_preset=last_30d" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {campaign_name, impressions, clicks, spend, ctr}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {campaign_name, impressions, clicks, spend, ctr}'
 ```
 
 ### Insights with Date Range
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr,cpc,reach,actions&time_range={\"since\":\"2026-01-01\",\"until\":\"2026-01-31\"}" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[0]'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[0]'
 ```
 
 ### Insights with Daily Breakdown
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend,ctr&date_preset=last_7d&time_increment=1" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {date_start, impressions, clicks, spend}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {date_start, impressions, clicks, spend}'
 ```
 
 ### Insights by Age and Gender
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impressions,clicks,spend&date_preset=last_30d&breakdowns=age,gender" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {age, gender, impressions, clicks, spend}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {age, gender, impressions, clicks, spend}'
 ```
 
 ## Custom Audiences
@@ -236,7 +258,8 @@ curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/insights?fields=impres
 
 ```bash
 curl -s "https://graph.facebook.com/v22.0/{ad-account-id}/customaudiences?fields=id,name,approximate_count_lower_bound,approximate_count_upper_bound" \
-  --header "Authorization: Bearer $META_ADS_TOKEN" | jq '.data[] | {id, name, approximate_count_lower_bound}'
+  --header "Authorization: Bearer $META_ADS_TOKEN" \
+  --header "X-VM0-Connector-Intent: meta-ads" | jq '.data[] | {id, name, approximate_count_lower_bound}'
 ```
 
 ## Guidelines
