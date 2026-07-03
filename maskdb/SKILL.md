@@ -3,7 +3,7 @@ name: maskdb
 description: maskdb read-only masked Postgres query gateway. Use when user mentions "maskdb", "masked database", "masked query", or querying a Postgres database through a masked, structured API.
 ---
 
-maskdb is a read-only REST gateway that turns a Postgres database into a masked, structured query API for AI agents. List databases, tables, schemas, and indexes, then run structured (non-SQL) reads. Masked columns are returned masked and can never be used to filter or sort.
+maskdb is a read-only REST gateway that turns a Postgres database into a masked, structured query API for AI agents. List databases, tables, schemas, and indexes, then run structured (non-SQL) reads or simple aggregate queries. Masked columns are returned masked and can never be used to filter, sort, group, or aggregate.
 
 > Official docs: `https://github.com/e7h4n/maskdb`
 
@@ -15,6 +15,7 @@ Use this skill when you need to:
 
 - Discover the databases, tables, columns, and indexes a token can reach
 - Run safe, read-only structured queries against a Postgres database
+- Run grouped `count` / `sum` aggregate queries over unmasked columns
 - Read data without exposing sensitive columns (they come back masked)
 
 ---
@@ -150,6 +151,41 @@ Write to `/tmp/maskdb_query.json`:
 curl -s -X POST "https://api.maskdb.ai/v1/databases/<database>/query" --header "Authorization: Bearer $MASKDB_TOKEN" --header "Content-Type: application/json" -d @/tmp/maskdb_query.json
 ```
 
+### 8. Run an Aggregate Query
+
+Use the aggregate endpoint for grouped counts and sums. Aggregate queries never accept raw SQL. `where`, `group_by`, `count(col)`, and `sum(col)` can only reference enabled, unmasked columns. Use `count` without `col` for `count(*)`.
+
+Write to `/tmp/maskdb_aggregate.json`:
+
+```json
+{
+  "table": "orders",
+  "where": { "col": "status", "op": "eq", "value": "paid" },
+  "group_by": ["country"],
+  "metrics": [
+    { "op": "count", "as": "orders" },
+    { "op": "sum", "col": "amount", "as": "revenue" }
+  ],
+  "order_by": [{ "col": "revenue", "dir": "desc" }],
+  "limit": 50,
+  "offset": 0
+}
+```
+
+```bash
+curl -s -X POST "https://api.maskdb.ai/v1/databases/<database>/aggregate" --header "Authorization: Bearer $MASKDB_TOKEN" --header "Content-Type: application/json" -d @/tmp/maskdb_aggregate.json
+```
+
+The response shape is:
+
+```json
+{
+  "rows": [{ "country": "US", "orders": "42", "revenue": "1234.56" }],
+  "masked": [],
+  "page": { "limit": 50, "offset": 0, "returned": 1 }
+}
+```
+
 ---
 
 ## Query Reference
@@ -165,11 +201,35 @@ curl -s -X POST "https://api.maskdb.ai/v1/databases/<database>/query" --header "
 
 **Operators:** `eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `contains`, `in`, `is_null`.
 
+## Aggregate Reference
+
+Use `POST /v1/databases/<database>/aggregate`.
+
+- `table`: table to aggregate (required)
+- `where`: optional recursive filter node; same operators as row queries
+- `group_by`: optional array of enabled, unmasked columns
+- `metrics`: required array of aggregate metrics
+- `metrics[].op`: `count` or `sum`
+- `metrics[].col`: optional for `count`; required for `sum`
+- `metrics[].as`: optional output alias; required when the default alias would not be a simple identifier
+- `order_by`: optional list of returned group columns or metric aliases
+- `limit`: max groups to return
+- `offset`: groups to skip
+
+Aggregate restrictions:
+
+- `where` can only reference enabled, unmasked columns.
+- `group_by` can only reference enabled, unmasked columns.
+- `count(col)` can only reference enabled, unmasked columns.
+- `sum(col)` can only reference enabled, unmasked numeric columns.
+- `count(*)` is written as `{ "op": "count" }`.
+- Raw expressions, joins, `HAVING`, `DISTINCT`, and aggregates over masked columns are not supported.
+
 ---
 
 ## Guidelines
 
 1. **Read-only:** maskdb is a read-only data plane. There are no write, update, or delete endpoints, and raw SQL is never accepted.
-2. **Masked columns:** Columns flagged `masked` in the schema may appear in `select` (returned masked) but using them in `where` or `order_by` is rejected with HTTP 400. Check the schema's `masked`/`filterable` flags before building a query.
+2. **Masked columns:** Columns flagged `masked` in the schema may appear in row-query `select` (returned masked) but using them in `where`, `order_by`, `group_by`, `count(col)`, or `sum(col)` is rejected with HTTP 400. Check the schema's `masked`/`filterable` flags before building a query.
 3. **Discover first:** Call the schema endpoint before querying so you only reference real, filterable columns.
 4. **Pagination:** Use `limit` and `offset` to page through large tables; the response `page` object reports `limit`, `offset`, and `returned`.
