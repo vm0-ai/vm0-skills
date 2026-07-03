@@ -15,6 +15,8 @@ Railway exposes a single GraphQL endpoint. A **project token** is scoped to one 
 Project-Access-Token: $RAILWAY_PROJECT_TOKEN
 ```
 
+Because Railway account/workspace and project tokens share one GraphQL endpoint, include `X-VM0-Connector-Intent: railway-project` on Railway GraphQL calls. This is a VM0 proxy routing hint only; it is not authentication or permission.
+
 > Do NOT also send `Authorization: Bearer` — Railway will accept the project token but you should treat the two auth surfaces as mutually exclusive. If you need cross-project or account-level operations, switch to the broader **railway** skill.
 
 ## Environment Variables
@@ -57,7 +59,7 @@ Write to `/tmp/railway_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "Content-Type: application/json" -d @/tmp/railway_request.json
+curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "X-VM0-Connector-Intent: railway-project" --header "Content-Type: application/json" -d @/tmp/railway_request.json
 ```
 
 ## Discover the Schema
@@ -74,7 +76,7 @@ Write to `/tmp/railway_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "Content-Type: application/json" -d @/tmp/railway_request.json
+curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "X-VM0-Connector-Intent: railway-project" --header "Content-Type: application/json" -d @/tmp/railway_request.json
 ```
 
 Re-run with `"Query"`, `"Project"`, `"Service"`, `"Deployment"`, etc.
@@ -101,7 +103,7 @@ Write to `/tmp/railway_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "Content-Type: application/json" -d @/tmp/railway_request.json
+curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "X-VM0-Connector-Intent: railway-project" --header "Content-Type: application/json" -d @/tmp/railway_request.json
 ```
 
 ### Redeploy a Deployment
@@ -118,7 +120,7 @@ Write to `/tmp/railway_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "Content-Type: application/json" -d @/tmp/railway_request.json
+curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "X-VM0-Connector-Intent: railway-project" --header "Content-Type: application/json" -d @/tmp/railway_request.json
 ```
 
 ### Trigger a New Deployment from Latest
@@ -138,7 +140,7 @@ Write to `/tmp/railway_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "Content-Type: application/json" -d @/tmp/railway_request.json
+curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "X-VM0-Connector-Intent: railway-project" --header "Content-Type: application/json" -d @/tmp/railway_request.json
 ```
 
 ## Variables
@@ -159,7 +161,7 @@ Write to `/tmp/railway_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "Content-Type: application/json" -d @/tmp/railway_request.json
+curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "X-VM0-Connector-Intent: railway-project" --header "Content-Type: application/json" -d @/tmp/railway_request.json
 ```
 
 ### Upsert a Variable
@@ -182,7 +184,7 @@ Write to `/tmp/railway_request.json`:
 ```
 
 ```bash
-curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "Content-Type: application/json" -d @/tmp/railway_request.json
+curl -s -X POST "https://backboard.railway.com/graphql/v2" --header "Project-Access-Token: $RAILWAY_PROJECT_TOKEN" --header "X-VM0-Connector-Intent: railway-project" --header "Content-Type: application/json" -d @/tmp/railway_request.json
 ```
 
 ## Guidelines

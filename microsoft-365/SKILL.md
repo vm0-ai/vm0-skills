@@ -15,13 +15,16 @@ Base URL: `https://graph.microsoft.com`
 
 All calls use `Authorization: Bearer $MICROSOFT_365_TOKEN`. `MICROSOFT_GRAPH_TOKEN` is also bound to the same OAuth access token for compatibility.
 
+Because Microsoft Graph is shared by multiple Zero connectors, include `X-VM0-Connector-Intent: microsoft-365` on Graph API calls. This is a VM0 proxy routing hint only; it is not authentication or permission.
+
 ## User
 
 ### Get Current User
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/me" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '{id, displayName, userPrincipalName, mail}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '{id, displayName, userPrincipalName, mail}'
 ```
 
 ## OneDrive
@@ -30,14 +33,16 @@ curl -s "https://graph.microsoft.com/v1.0/me" \
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/me/drive/root/children" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, name, folder, file, size, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, name, folder, file, size, webUrl}'
 ```
 
 ### Get Item Metadata
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/me/drive/items/<item-id>" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '{id, name, size, file, folder, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '{id, name, size, file, folder, webUrl}'
 ```
 
 ### Download File
@@ -45,6 +50,7 @@ curl -s "https://graph.microsoft.com/v1.0/me/drive/items/<item-id>" \
 ```bash
 curl -L "https://graph.microsoft.com/v1.0/me/drive/items/<item-id>/content" \
   --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" \
   -o /tmp/onedrive-download.bin
 ```
 
@@ -55,6 +61,7 @@ This works for files up to 250 MB.
 ```bash
 curl -s -X PUT "https://graph.microsoft.com/v1.0/me/drive/root:/Uploads/report.txt:/content" \
   --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" \
   --header "Content-Type: text/plain" \
   --data-binary @/tmp/report.txt | jq '{id, name, size, webUrl}'
 ```
@@ -64,6 +71,7 @@ curl -s -X PUT "https://graph.microsoft.com/v1.0/me/drive/root:/Uploads/report.t
 ```bash
 curl -s -X POST "https://graph.microsoft.com/v1.0/me/drive/root/children" \
   --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" \
   --header "Content-Type: application/json" \
   -d '{"name":"Project Files","folder":{},"@microsoft.graph.conflictBehavior":"rename"}' | jq '{id, name, webUrl}'
 ```
@@ -72,7 +80,8 @@ curl -s -X POST "https://graph.microsoft.com/v1.0/me/drive/root/children" \
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/me/drive/root/search(q='report')" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, name, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, name, webUrl}'
 ```
 
 ## SharePoint
@@ -81,35 +90,40 @@ curl -s "https://graph.microsoft.com/v1.0/me/drive/root/search(q='report')" \
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/sites?search=*" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, name, displayName, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, name, displayName, webUrl}'
 ```
 
 ### Get Site by Hostname and Path
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/sites/<tenant>.sharepoint.com:/sites/<site-name>" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '{id, name, displayName, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '{id, name, displayName, webUrl}'
 ```
 
 ### List Site Drives
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/sites/<site-id>/drives" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, name, driveType, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, name, driveType, webUrl}'
 ```
 
 ### List SharePoint Drive Items
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/drives/<drive-id>/root/children" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, name, folder, file, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, name, folder, file, webUrl}'
 ```
 
 ### List Site Lists
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/sites/<site-id>/lists" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, name, displayName, webUrl}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, name, displayName, webUrl}'
 ```
 
 ## Teams
@@ -118,21 +132,24 @@ curl -s "https://graph.microsoft.com/v1.0/sites/<site-id>/lists" \
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/me/joinedTeams" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, displayName, description}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, displayName, description}'
 ```
 
 ### List Team Channels
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/teams/<team-id>/channels" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, displayName, description, membershipType}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, displayName, description, membershipType}'
 ```
 
 ### List Channel Messages
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/teams/<team-id>/channels/<channel-id>/messages" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, from, createdDateTime, body}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, from, createdDateTime, body}'
 ```
 
 ### Send Channel Message
@@ -150,6 +167,7 @@ Write to `/tmp/teams_message.json`:
 ```bash
 curl -s -X POST "https://graph.microsoft.com/v1.0/teams/<team-id>/channels/<channel-id>/messages" \
   --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" \
   --header "Content-Type: application/json" \
   -d @/tmp/teams_message.json | jq '{id, createdDateTime, webUrl}'
 ```
@@ -158,7 +176,8 @@ curl -s -X POST "https://graph.microsoft.com/v1.0/teams/<team-id>/channels/<chan
 
 ```bash
 curl -s "https://graph.microsoft.com/v1.0/chats" \
-  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" | jq '.value[] | {id, topic, chatType}'
+  --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" | jq '.value[] | {id, topic, chatType}'
 ```
 
 ### Send Chat Message
@@ -166,6 +185,7 @@ curl -s "https://graph.microsoft.com/v1.0/chats" \
 ```bash
 curl -s -X POST "https://graph.microsoft.com/v1.0/chats/<chat-id>/messages" \
   --header "Authorization: Bearer $MICROSOFT_365_TOKEN" \
+  --header "X-VM0-Connector-Intent: microsoft-365" \
   --header "Content-Type: application/json" \
   -d '{"body":{"content":"Hello from Zero"}}' | jq '{id, createdDateTime}'
 ```
