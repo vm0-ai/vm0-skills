@@ -1,6 +1,6 @@
 ---
 name: workflow-setup
-description: Set up and manage Zero workflows and workflow automations through the Zero CLI. Use when the user asks to create, edit, inspect, run, schedule, trigger, enable, disable, copy, or delete a workflow or automation, or asks for help with workflow/trigger setup. Keep this generic to all workflow trigger kinds; do not trigger only on a specific connector or event source.
+description: Set up and manage Zero workflows and workflow automations through the Zero CLI. Use when the user asks to create, edit, inspect, run, schedule, trigger, enable, disable, copy, or delete a workflow or automation; wants to modify, refine, improve, optimize, or update an existing workflow; or asks for help with workflow/trigger setup. Keep this generic to all workflow trigger kinds; do not trigger only on a specific connector or event source.
 ---
 
 # Zero Workflow Setup
