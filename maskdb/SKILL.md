@@ -17,6 +17,7 @@ Use this skill when you need to:
 - Run safe, read-only structured queries against a Postgres database
 - Run grouped `count` / `sum` aggregate queries over unmasked columns
 - Read data without exposing sensitive columns (they come back masked)
+- Rotate a registered database connection string when the user explicitly asks and a `db:manage` token is available
 
 ---
 
@@ -30,7 +31,9 @@ Connect the **maskdb** connector at [app.vm0.ai/connectors](https://app.vm0.ai/c
 
 ## How to Use
 
-All requests are authenticated with `Authorization: Bearer $MASKDB_TOKEN`. The token is a maskdb **token** with the `db:query` + `db:metadata` scopes (read-only) and is injected by vm0 from the connected connector. Base URL: `https://api.maskdb.ai`.
+All requests are authenticated with `Authorization: Bearer $MASKDB_TOKEN`. The usual token is a maskdb **token** with the `db:query` + `db:metadata` scopes (read-only) and is injected by vm0 from the connected connector. Base URL: `https://api.maskdb.ai`.
+
+Control-plane operations need broader scopes. Only use them when the user explicitly asks for administrative changes and the available token has the matching scope. For example, replacing a database connection string requires `db:manage` and the token must be scoped to that database.
 
 ### 1. List Databases
 
@@ -188,6 +191,44 @@ The response shape is:
 
 ---
 
+## Admin: Replace a Database Connection String
+
+Use `PUT /v1/databases/<database>/connection` to rotate or reset the upstream Postgres connection string for an existing database registration.
+
+Requirements:
+
+- The token must have `db:manage`.
+- The token must include the target database in its `databases` reach.
+- In vm0, the MaskDB firewall permission for this endpoint is `db:manage`, which is denied by default for the standard read-only connector policy.
+
+Write the request body to `/tmp/maskdb_connection.json`:
+
+```json
+{
+  "connection_string": "postgresql://readonly:REDACTED@host/database?sslmode=require"
+}
+```
+
+Then run:
+
+```bash
+curl -s -X PUT "https://api.maskdb.ai/v1/databases/<database>/connection" --header "Authorization: Bearer $MASKDB_TOKEN" --header "Content-Type: application/json" -d @/tmp/maskdb_connection.json
+```
+
+The endpoint validates the replacement by connecting and running `SELECT 1` before saving it. If validation fails, the old encrypted connection string is retained. A successful response looks like:
+
+```json
+{
+  "ok": true,
+  "db_id": "<database>",
+  "name": "prod"
+}
+```
+
+This changes only the encrypted upstream connection string for the existing database id. It does not create a new database registration, change masking policy, or broaden any token's database reach.
+
+---
+
 ## Query Reference
 
 | Field | Type | Description |
@@ -229,7 +270,7 @@ Aggregate restrictions:
 
 ## Guidelines
 
-1. **Read-only:** maskdb is a read-only data plane. There are no write, update, or delete endpoints, and raw SQL is never accepted.
+1. **Read-only data plane:** maskdb queries are read-only. There are no row write, update, or delete endpoints, and raw SQL is never accepted. Control-plane endpoints such as connection-string replacement require explicit administrative scopes.
 2. **Masked columns:** Columns flagged `masked` in the schema may appear in row-query `select` (returned masked) but using them in `where`, `order_by`, `group_by`, `count(col)`, or `sum(col)` is rejected with HTTP 400. Check the schema's `masked`/`filterable` flags before building a query.
 3. **Discover first:** Call the schema endpoint before querying so you only reference real, filterable columns.
 4. **Pagination:** Use `limit` and `offset` to page through large tables; the response `page` object reports `limit`, `offset`, and `returned`.
