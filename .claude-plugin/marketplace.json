@@ -631,6 +631,15 @@
       ]
     },
     {
+      "name": "playstation",
+      "description": "PlayStation Network API via curl. Use this skill to read PSN profiles, presence, friends, played games, purchased games, trophies, account search, and devices.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./playstation"
+      ]
+    },
+    {
       "name": "plausible",
       "description": "Plausible Analytics API for querying website statistics and managing sites. Use this skill to get visitor counts, pageviews, traffic sources, and manage analytics sites.",
       "source": "./",
