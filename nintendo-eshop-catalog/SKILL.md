@@ -7,6 +7,8 @@ description: Public Nintendo eShop catalog, search, metadata, and country pricin
 
 Use the Nintendo eShop Catalog connector for public Nintendo Switch catalog, search, metadata, and pricing data. This connector does not use Nintendo Account login and does not provide player-specific data such as playtime, owned library, wishlist, friends, purchase history, or Parental Controls data.
 
+Nintendo's public catalog sources are unauthenticated public endpoints and can change their response shape. Prefer the normalized vm0 connector fields when they are available; when debugging a public source directly, inspect the raw response before assuming a field exists.
+
 ## Troubleshooting
 
 If public catalog requests fail, first verify that the public source is reachable from the sandbox:
@@ -83,7 +85,7 @@ curl -s "https://www.nintendo.co.jp/data/software/xml/switch.xml" \
 
 ```bash
 curl -s "https://www.nintendo.com/hk/data/json/switch_software.json" \
-  | jq '[.[]? | {title, item_code, product_code, link, price, release_date}] | .[:10]'
+  | jq '[.[]? | {title, titleId: (if (.item_code // "") != "" then .item_code else (try (.link | capture("(?<id>[0-9]{14})$").id) catch null) end), product_code, link, price, release_date}] | .[:10]'
 ```
 
 ## 5. Browse Taiwan or Korea
@@ -94,14 +96,14 @@ Use `/api/software` to browse current catalog records. `/api/search` uses the sa
 curl -s -G "https://www.nintendo.com/tw/api/software" \
   --data-urlencode "limit=10" \
   --data-urlencode "offset=0" \
-  | jq '[.items[]? | {title, nsuid, releaseDate, hardwareCategory}]'
+  | jq '[.items[]? | {title, nsuid, releaseDate, hardwareCategory}] | .[:10]'
 ```
 
 ```bash
 curl -s -G "https://www.nintendo.com/kr/api/software" \
   --data-urlencode "limit=10" \
   --data-urlencode "offset=0" \
-  | jq '[.items[]? | {title, nsuid, releaseDate, hardwareCategory}]'
+  | jq '[.items[]? | {title, nsuid, releaseDate, hardwareCategory}] | .[:10]'
 ```
 
 ## 6. Search Southeast Asia
