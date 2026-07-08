@@ -1,15 +1,15 @@
 ---
 name: steam
-description: Steam Web API for player profiles, game libraries, playtime, wishlists, friends, groups, bans, achievements, game stats, app metadata, and Steam news. Use when user mentions "Steam", Steam profile, Steam games, playtime, wishlist, achievements, Steam friends, or asks about a Steam app.
+description: Steam Web API and public Steam Store APIs for player profiles, game libraries, playtime, wishlists, friends, groups, bans, achievements, game stats, app metadata, reviews, prices, featured games, packages, and Steam news. Use when user mentions "Steam", Steam profile, Steam games, playtime, wishlist, achievements, Steam friends, Steam reviews, Steam prices, or asks about a Steam app.
 ---
 
 # Steam
 
-Use the Steam Web API with the vm0 Steam connector.
+Use public Steam APIs when no account data is needed. Use the vm0 Steam connector for connected-player data.
 
 ## Troubleshooting
 
-If requests fail, run:
+If connector-backed requests fail, run:
 
 ```bash
 zero doctor check-connector --env-name STEAM_ID
@@ -22,8 +22,84 @@ zero doctor check-connector --url https://api.steampowered.com/ISteamUser/GetPla
 - Connect Steam under vm0.ai -> Settings -> Connectors.
 - The connector signs the user in with Steam OpenID and exposes the connected account ID as `$STEAM_ID`.
 - Steam Web API requests use `https://api.steampowered.com`.
-- vm0 injects the Steam Web API key as the `key` query parameter at the network boundary. Do not add `key=` manually in curl commands.
+- Public app, news, stats, and Store metadata requests do not need a Steam account or Web API key.
+- Public Store JSON requests use `https://store.steampowered.com`.
+- vm0 injects the Steam Web API key as the `key` query parameter at the network boundary for connector-backed Web API requests. Do not add `key=` manually in curl commands.
 - The connector is read-only. It can read public Steam data and connected-player data that Steam exposes to the configured Web API key.
+
+## Public APIs That Do Not Need Steam Authentication
+
+Use these when the user asks about Steam apps, reviews, prices, featured games, or public stats and no connected-player data is needed.
+
+### Get Public Steam Web API Methods
+
+Without a key, `GetSupportedAPIList` lists Web API methods currently exposed publicly.
+
+```bash
+curl -s "https://api.steampowered.com/ISteamWebAPIUtil/GetSupportedAPIList/v1/?format=json" \
+  | jq '.apilist.interfaces[] | {name, methods: [.methods[] | {name, version, parameters}]}'
+```
+
+### Get Store App Details
+
+Use this for app metadata, prices, platforms, genres, categories, recommendations, and release dates. Replace `<country-code>` with a two-letter country code such as `US`.
+
+```bash
+APP_ID=<app-id>
+curl -s -G "https://store.steampowered.com/api/appdetails" \
+  --data-urlencode "appids=$APP_ID" \
+  --data-urlencode "cc=<country-code>" \
+  --data-urlencode "l=en" \
+  --data-urlencode "filters=basic,price_overview,platforms,metacritic,categories,genres,recommendations,release_date" \
+  | jq --arg appid "$APP_ID" '.[$appid] | {success, data: (.data | {type, name, steam_appid, is_free, price_overview, platforms, metacritic, categories, genres, recommendations, release_date})}'
+```
+
+### Get Store App Reviews
+
+Use this for public review summaries and recent review text.
+
+```bash
+curl -s -G "https://store.steampowered.com/appreviews/<app-id>" \
+  --data-urlencode "json=1" \
+  --data-urlencode "filter=recent" \
+  --data-urlencode "language=all" \
+  --data-urlencode "purchase_type=all" \
+  --data-urlencode "num_per_page=20" \
+  | jq '{success, query_summary, reviews: [.reviews[]? | {recommendationid, language, voted_up, votes_up, weighted_vote_score, playtime_forever: .author.playtime_forever, timestamp_created, review: (.review | .[:500])}], cursor}'
+```
+
+### Get Featured Store Categories
+
+Use this for public sale, top seller, and new release lists. Replace `<country-code>` with a two-letter country code such as `US`.
+
+```bash
+curl -s -G "https://store.steampowered.com/api/featuredcategories" \
+  --data-urlencode "cc=<country-code>" \
+  --data-urlencode "l=en" \
+  | jq '{specials: [.specials.items[]? | {id, name, discount_percent, final_price, currency}], top_sellers: [.top_sellers.items[]? | {id, name, final_price, currency}], new_releases: [.new_releases.items[]? | {id, name, final_price, currency}]}'
+```
+
+### Get Featured Store Apps
+
+```bash
+curl -s -G "https://store.steampowered.com/api/featured" \
+  --data-urlencode "cc=<country-code>" \
+  --data-urlencode "l=en" \
+  | jq '{specials: [.specials[]? | {id, name, discount_percent, final_price, currency}], featured_win: [.featured_win[]? | {id, name, final_price, currency}], featured_mac: [.featured_mac[]? | {id, name, final_price, currency}], featured_linux: [.featured_linux[]? | {id, name, final_price, currency}]}'
+```
+
+### Get Store Package Details
+
+Use this when the user gives a Steam package or bundle package ID.
+
+```bash
+PACKAGE_ID=<package-id>
+curl -s -G "https://store.steampowered.com/api/packagedetails" \
+  --data-urlencode "packageids=$PACKAGE_ID" \
+  --data-urlencode "cc=<country-code>" \
+  --data-urlencode "l=en" \
+  | jq --arg package_id "$PACKAGE_ID" '.[$package_id] | {success, data: (.data | {name, apps, price})}'
+```
 
 ## Connected Player
 
@@ -289,4 +365,6 @@ curl -s "https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/" \
 3. Many player endpoints depend on the target account's privacy settings and can return empty data even when the connector is working.
 4. Use `--data-urlencode` for user-provided values such as vanity names, app IDs, and stat names.
 5. Keep `GetAppList` calls filtered; the response is large.
-6. All supported connector permissions are read-only. Do not attempt Store purchase, inventory mutation, or Steam partner write APIs with this connector.
+6. Public Store endpoints can be rate-limited; keep review pages modest and cache repeated app, package, and featured-list lookups.
+7. Pass `cc` and `l` when prices or localized names matter.
+8. All supported connector permissions are read-only. Do not attempt Store purchase, inventory mutation, or Steam partner write APIs with this connector.
