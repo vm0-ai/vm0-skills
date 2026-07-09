@@ -17,8 +17,6 @@ If requests fail, run:
 zero doctor check-connector --env-name NINTENDO_PLAY_ACTIVITY_TOKEN
 zero doctor check-connector --url https://api.accounts.nintendo.com/2.0.0/users/me --method GET
 zero doctor check-connector --url https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories --method GET
-zero doctor check-connector --url https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories --method GET
-zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories --method GET
 ```
 
 ## Prerequisites
@@ -30,8 +28,6 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
 - The connector is read-only and currently allows only:
   - `GET https://api.accounts.nintendo.com/2.0.0/users/me`
   - `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories`
-  - `GET https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories`
-  - `GET https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories`
 - These are Nintendo app endpoints and response fields can vary by account, region, and Nintendo API changes. Inspect the raw response before assuming field names.
 - Play history responses commonly include `playHistories`, `recentPlayHistories`, `hiddenTitleList`, and `lastUpdatedAt`.
 
@@ -53,50 +49,12 @@ curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
   | jq .
 ```
 
-## 3. Get Nintendo Entry Play Activity
-
-```bash
-curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
-  --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  | jq .
-```
-
-## 4. Get My Nintendo Play Activity
-
-```bash
-curl -s "https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories" \
-  --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  | jq .
-```
-
-## 5. Try All Play Activity Sources
-
-Use this when one source returns an empty list or a non-200 response for the connected account.
-
-```bash
-for url in \
-  "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
-  "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
-  "https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories"
-do
-  status=$(curl -sS -o /tmp/nintendo-play-activity.json -w "%{http_code}" "$url" \
-    --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN")
-
-  if [ "$status" = "200" ]; then
-    jq . /tmp/nintendo-play-activity.json
-    break
-  fi
-
-  printf "%s returned HTTP %s\n" "$url" "$status" >&2
-done
-```
-
-## 6. Summarize Common Play History Fields
+## 3. Summarize Common Play History Fields
 
 Inspect the raw response first. This example handles several common container and field names, but Nintendo may return different shapes.
 
 ```bash
-curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
   | jq '
     def histories:
@@ -120,12 +78,12 @@ curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories"
     | .[:20]'
 ```
 
-## 7. Summarize Recent Daily Play Activity
+## 4. Summarize Recent Daily Play Activity
 
 Use `recentPlayHistories` when the user asks what they played recently or how long they played on each recent day.
 
 ```bash
-curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
   | jq '
     (.recentPlayHistories // .recent_play_histories // [])
@@ -146,5 +104,5 @@ curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories"
 ## Guidelines
 
 1. Start with the raw response, then adapt parsing to the fields Nintendo returns for the account.
-2. Use only the allowed `GET` account profile and play history endpoints.
-3. Treat empty responses as valid API results; try the other allowed play history endpoints and inspect raw fields such as `hiddenTitleList` and `lastUpdatedAt` before concluding that no play history exists.
+2. Use only the allowed `GET` account profile and Nintendo Store app play history endpoints.
+3. Treat empty responses as valid API results; inspect raw fields such as `hiddenTitleList` and `lastUpdatedAt` before concluding that no play history exists.
