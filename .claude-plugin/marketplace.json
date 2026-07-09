@@ -568,6 +568,15 @@
       ]
     },
     {
+      "name": "nintendo-play-activity",
+      "description": "Nintendo Play Activity API for connected Nintendo Account profile, play history, and playtime. Use this skill to read Nintendo Account profile data, Nintendo Switch play activity, recently played games, and playtime from Nintendo Store / My Nintendo app.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./nintendo-play-activity"
+      ]
+    },
+    {
       "name": "notion",
       "description": "Notion API for managing pages, databases, and blocks. Use this skill to create pages, query databases, search content, and build integrations with Notion workspaces.",
       "source": "./",
