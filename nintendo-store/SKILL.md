@@ -146,6 +146,7 @@ Use connected endpoints when the user asks about account-specific data. Connect 
 
 - Send `Authorization: Bearer $NINTENDO_STORE_TOKEN`.
 - vm0 injects Nintendo Store app headers, including `User-Agent` and `gentry-locale`, for allowed Store app endpoints.
+- Use `productType` values `DIGITAL` or `PHYSICAL` where required.
 - Nintendo response shapes can change. Inspect raw responses before assuming field names.
 
 ### Account Endpoints
@@ -161,23 +162,21 @@ Use connected endpoints when the user asks about account-specific data. Connect 
 ### Play Activity Endpoints
 
 - `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories/game_titles/{titleId}`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories/hidden_list`
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories/game_titles/{titleId}?offset={offset}&limit={limit}`
 
 ### Wishlist and Check-In Endpoints
 
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist/{productId}`
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist?productType={DIGITAL|PHYSICAL}`
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist/{productId}?productType={DIGITAL|PHYSICAL}`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/check_in_histories`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/received_prize_histories`
 
 ### Store App Catalog and Metadata Endpoints
 
-Prefer public eShop catalog/pricing endpoints for normal product search and prices. Use these connected Store app endpoints for Store app shelves, news, app metadata, check-in events, and product metadata that is not available from public catalog responses.
+Use these connected Store app endpoints for Store app shelves, news, app metadata, check-in events, and product metadata.
 
 - `GET https://app-api.znej.nintendo.com/api/v2.0/check_in_events`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/check_in_events/{eventId}/check_in_points`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/check_in_events/{eventId}/check_in_points/{checkInPointId}`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/maintenance_check`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/news`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/news/app_news/{appNewsId}`
@@ -188,12 +187,46 @@ Prefer public eShop catalog/pricing endpoints for normal product search and pric
 - `GET https://app-api.znej.nintendo.com/api/v2.0/search_shelves`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/search_shelves/{shelfId}`
 - `GET https://app-api.znej.nintendo.com/api/v2.0/shelves/summary`
+- `GET https://app-api.znej.nintendo.com/api/v2.0/products:search?query={query}&page={page}&productType={DIGITAL|PHYSICAL}`
 - `POST https://app-api.znej.nintendo.com/api/v2.0/product_details`
 - `POST https://app-api.znej.nintendo.com/api/v2.0/products/-/images:batch_get`
 - `POST https://app-api.znej.nintendo.com/api/v2.0/products/-/meta:batch_get`
-- `POST https://app-api.znej.nintendo.com/api/v2.0/products:search`
 
-For `POST` product endpoints, use the exact body shape required by Nintendo. If the endpoint returns `400`, inspect the response and adjust the request body instead of guessing fields.
+For `POST` product endpoints, send a JSON body with `products`, where each item has `productId` and `productType`:
+
+```json
+{
+  "products": [
+    {
+      "productId": "example-product-id",
+      "productType": "DIGITAL"
+    }
+  ]
+}
+```
+
+### Search Store App Products
+
+```bash
+curl -s -G "https://app-api.znej.nintendo.com/api/v2.0/products:search" \
+  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
+  --data-urlencode "query=zelda" \
+  --data-urlencode "page=0" \
+  --data-urlencode "productType=DIGITAL" \
+  | jq .
+```
+
+### Fetch Store App Product Details
+
+Use `productId` values from Store app search, shelf, or wishlist responses.
+
+```bash
+curl -s -X POST "https://app-api.znej.nintendo.com/api/v2.0/product_details" \
+  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
+  --header "Content-Type: application/json" \
+  -d '{"products":[{"productId":"example-product-id","productType":"DIGITAL"}]}' \
+  | jq .
+```
 
 ### Get Nintendo Account Profile
 
