@@ -1,11 +1,11 @@
 ---
 name: nintendo-play-activity
-description: Nintendo Play Activity API for connected Nintendo Account play history, recently played Nintendo games, and playtime from Nintendo Store / My Nintendo app. Use when the user asks about Nintendo Switch play activity, Nintendo play history, Nintendo game playtime, or recently played Nintendo games.
+description: Nintendo Play Activity API for connected Nintendo Account profile, play history, recently played Nintendo games, and playtime from Nintendo Store / My Nintendo app. Use when the user asks about Nintendo Account profile data, Nintendo Switch play activity, Nintendo play history, Nintendo game playtime, or recently played Nintendo games.
 ---
 
 # Nintendo Play Activity
 
-Use the Nintendo Play Activity connector for connected Nintendo Account play history and playtime data from Nintendo Store / My Nintendo app.
+Use the Nintendo Play Activity connector for connected Nintendo Account profile, play history, and playtime data from Nintendo Store / My Nintendo app.
 
 This connector is not the public Nintendo eShop catalog and does not provide eShop search, prices, wishlists, friends, Nintendo Switch Online, Parental Controls, SplatNet, NookLink, purchase history, or write actions.
 
@@ -15,7 +15,9 @@ If requests fail, run:
 
 ```bash
 zero doctor check-connector --env-name NINTENDO_PLAY_ACTIVITY_TOKEN
+zero doctor check-connector --url https://api.accounts.nintendo.com/2.0.0/users/me --method GET
 zero doctor check-connector --url https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories --method GET
+zero doctor check-connector --url https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories --method GET
 zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories --method GET
 ```
 
@@ -25,39 +27,65 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
 - The connector exposes `$NINTENDO_PLAY_ACTIVITY_TOKEN` for authenticated Nintendo Play Activity API requests.
 - Send the token only with `Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN`.
 - The connector is read-only and currently allows only:
+  - `GET https://api.accounts.nintendo.com/2.0.0/users/me`
   - `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories`
+  - `GET https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories`
   - `GET https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories`
 - These are Nintendo app endpoints and response fields can vary by account, region, and Nintendo API changes. Inspect the raw response before assuming field names.
 - Play history responses commonly include `playHistories`, `recentPlayHistories`, `hiddenTitleList`, and `lastUpdatedAt`.
-- Nintendo Account profile endpoints such as `https://api.accounts.nintendo.com/2.0.0/users/me` are intentionally outside this connector's firewall surface.
+- If Nintendo rejects a request from a generic HTTP client, include `User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)`.
 
-## 1. Get Nintendo Store App Play Activity
+## 1. Get Nintendo Account Profile
+
+Use this for the connected account nickname, country, language, birthday, and Mii fields when Nintendo returns them.
+
+```bash
+curl -s "https://api.accounts.nintendo.com/2.0.0/users/me" \
+  --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
+  | jq '{id, nickname, country, language, birthday, mii}'
+```
+
+## 2. Get Nintendo Store App Play Activity
 
 ```bash
 curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq .
 ```
 
-## 2. Get My Nintendo Play Activity
+## 3. Get Nintendo Entry Play Activity
+
+```bash
+curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
+  --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
+  | jq .
+```
+
+## 4. Get My Nintendo Play Activity
 
 ```bash
 curl -s "https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq .
 ```
 
-## 3. Try Both Play Activity Sources
+## 5. Try All Play Activity Sources
 
 Use this when one source returns an empty list or a non-200 response for the connected account.
 
 ```bash
 for url in \
   "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
+  "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
   "https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories"
 do
   status=$(curl -sS -o /tmp/nintendo-play-activity.json -w "%{http_code}" "$url" \
-    --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN")
+    --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+    --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)")
 
   if [ "$status" = "200" ]; then
     jq . /tmp/nintendo-play-activity.json
@@ -68,13 +96,14 @@ do
 done
 ```
 
-## 4. Summarize Common Play History Fields
+## 6. Summarize Common Play History Fields
 
 Inspect the raw response first. This example handles several common container and field names, but Nintendo may return different shapes.
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
+curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq '
     def histories:
       if type == "array" then .
@@ -97,13 +126,14 @@ curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
     | .[:20]'
 ```
 
-## 5. Summarize Recent Daily Play Activity
+## 7. Summarize Recent Daily Play Activity
 
 Use `recentPlayHistories` when the user asks what they played recently or how long they played on each recent day.
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
+curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq '
     (.recentPlayHistories // .recent_play_histories // [])
     | map({
@@ -123,7 +153,7 @@ curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
 ## Guidelines
 
 1. Start with the raw response, then adapt parsing to the fields Nintendo returns for the account.
-2. Use only the two allowed `GET` play history endpoints.
+2. Use only the allowed `GET` account profile and play history endpoints.
 3. Treat empty responses as possible account, privacy, region, or Nintendo API behavior instead of assuming the user has no play history.
 4. Do not call unsupported Nintendo APIs with this connector.
 5. For public catalog, metadata, and pricing requests, use the `nintendo-eshop-catalog` skill instead.
