@@ -34,7 +34,6 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
   - `GET https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories`
 - These are Nintendo app endpoints and response fields can vary by account, region, and Nintendo API changes. Inspect the raw response before assuming field names.
 - Play history responses commonly include `playHistories`, `recentPlayHistories`, `hiddenTitleList`, and `lastUpdatedAt`.
-- Do not guess `gentry-locale` values. vm0 injects the connected account locale for the Nintendo Store app endpoint.
 
 ## 1. Get Nintendo Account Profile
 
