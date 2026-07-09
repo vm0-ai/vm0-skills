@@ -25,6 +25,7 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
 
 - Connect Nintendo Play Activity under vm0.ai -> Settings -> Connectors.
 - The connector exposes `$NINTENDO_PLAY_ACTIVITY_TOKEN` for authenticated Nintendo Play Activity API requests.
+- The connector derives the Nintendo profile locale during connection/refresh and vm0 injects required Nintendo app headers, including `User-Agent` and `gentry-locale`, for allowed endpoints.
 - Send the token only with `Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN`.
 - The connector is read-only and currently allows only:
   - `GET https://api.accounts.nintendo.com/2.0.0/users/me`
@@ -33,7 +34,6 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
   - `GET https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories`
 - These are Nintendo app endpoints and response fields can vary by account, region, and Nintendo API changes. Inspect the raw response before assuming field names.
 - Play history responses commonly include `playHistories`, `recentPlayHistories`, `hiddenTitleList`, and `lastUpdatedAt`.
-- If Nintendo rejects a request from a generic HTTP client, include `User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)`.
 
 ## 1. Get Nintendo Account Profile
 
@@ -42,7 +42,6 @@ Use this for the connected account nickname, country, language, birthday, and Mi
 ```bash
 curl -s "https://api.accounts.nintendo.com/2.0.0/users/me" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq '{id, nickname, country, language, birthday, mii}'
 ```
 
@@ -51,7 +50,6 @@ curl -s "https://api.accounts.nintendo.com/2.0.0/users/me" \
 ```bash
 curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq .
 ```
 
@@ -60,7 +58,6 @@ curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
 ```bash
 curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq .
 ```
 
@@ -69,7 +66,6 @@ curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories"
 ```bash
 curl -s "https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq .
 ```
 
@@ -84,8 +80,7 @@ for url in \
   "https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories"
 do
   status=$(curl -sS -o /tmp/nintendo-play-activity.json -w "%{http_code}" "$url" \
-    --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-    --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)")
+    --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN")
 
   if [ "$status" = "200" ]; then
     jq . /tmp/nintendo-play-activity.json
@@ -103,7 +98,6 @@ Inspect the raw response first. This example handles several common container an
 ```bash
 curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq '
     def histories:
       if type == "array" then .
@@ -133,7 +127,6 @@ Use `recentPlayHistories` when the user asks what they played recently or how lo
 ```bash
 curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories" \
   --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
-  --header "User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)" \
   | jq '
     (.recentPlayHistories // .recent_play_histories // [])
     | map({
