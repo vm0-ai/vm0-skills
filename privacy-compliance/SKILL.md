@@ -1,6 +1,6 @@
 ---
 name: privacy-compliance
-description: Guide teams through GDPR, CCPA/CPRA, and international privacy law obligations including DPA reviews, data subject access and deletion requests, cross-border data transfers, breach notification, and regulatory monitoring. Use when evaluating data processing agreements, handling DSAR or right-to-delete requests, assessing international data transfer mechanisms, reviewing privacy notices, or tracking privacy regulation changes.
+description: Handle privacy compliance tasks such as GDPR, CCPA, DPAs, DSARs, deletion, transfers, and breach notices.
 ---
 
 ## Global Privacy Landscape

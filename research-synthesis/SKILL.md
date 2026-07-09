@@ -1,6 +1,6 @@
 ---
 name: research-synthesis
-description: Transform raw user research data into actionable product insights, personas, and prioritized opportunities. Activate for interview analysis, survey interpretation, usability test findings, support ticket pattern mining, behavioral data synthesis, thematic coding, affinity diagramming, persona building, or opportunity scoring.
+description: Synthesize user research into insights, personas, opportunities, themes, and prioritized actions.
 ---
 
 ## Core Analytical Methods

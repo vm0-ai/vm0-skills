@@ -1,6 +1,6 @@
 ---
 name: copywriting
-description: Write and edit marketing copy for any channel — blogs, emails, social posts, landing pages, press releases, case studies, ads, and web pages. Trigger on requests for drafting content, writing headlines, crafting CTAs, SEO copywriting, email subject lines, social captions, or any persuasive marketing text.
+description: Write or edit marketing copy for blogs, emails, landing pages, ads, social posts, and case studies.
 ---
 
 ## Channel Formats and Anatomy

@@ -1,6 +1,6 @@
 ---
 name: account-reconciliation
-description: Perform account reconciliations comparing general ledger balances against subledgers, bank statements, or external records. Use for bank reconciliation, GL-to-subledger reconciliation, intercompany reconciliation, balance sheet reconciliation, reconciling item analysis, outstanding item aging, or clearing open items.
+description: Reconcile accounts, ledgers, bank statements, subledgers, variances, and supporting schedules.
 ---
 
 ## Reconciliation Categories

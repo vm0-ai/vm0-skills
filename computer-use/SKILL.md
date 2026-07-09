@@ -1,6 +1,6 @@
 ---
 name: computer-use
-description: Operate the user's connected desktop apps through Zero Computer Use. Use when a task explicitly asks for zero computer-use, desktop computer use, opening or inspecting a local app, reading a GUI, clicking UI elements, using Slack/Safari/Chrome/Arc/Notion/Finder or another desktop app, taking an app screenshot, or performing a UI workflow that cannot be completed through normal APIs alone.
+description: Operate connected desktop apps or GUI workflows through Zero Computer Use when APIs are not enough.
 ---
 
 # Computer Use

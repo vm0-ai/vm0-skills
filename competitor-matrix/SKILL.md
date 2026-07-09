@@ -1,6 +1,6 @@
 ---
 name: competitor-matrix
-description: Conduct competitive analysis with feature comparison matrices, positioning teardowns, win/loss evaluation, and market trend assessment. Activate when researching competitors, building a feature comparison table, evaluating competitive positioning, preparing a competitive brief, analyzing win/loss patterns, mapping the competitive landscape, or assessing market threats and opportunities.
+description: Research competitors and produce feature matrices, positioning notes, win/loss analysis, or market briefs.
 ---
 
 ## Mapping the Competitive Landscape

@@ -1,6 +1,6 @@
 ---
 name: period-close
-description: Orchestrate the month-end and quarter-end accounting close with task sequencing, dependency management, and progress tracking. Use for close calendar planning, close checklist management, close task tracking, close timeline optimization, close day activities, hard close procedures, accelerated close planning, or close process improvement.
+description: Plan and track month-end or quarter-end close tasks, timelines, dependencies, and process improvements.
 ---
 
 ## Close Activity Checklist

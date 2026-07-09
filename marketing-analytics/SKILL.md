@@ -1,6 +1,6 @@
 ---
 name: marketing-analytics
-description: Measure, report on, and optimize marketing performance across channels and campaigns. Trigger on requests for performance dashboards, campaign result analysis, channel metrics review (email, social, paid ads, SEO, content), trend analysis, forecasting, attribution modeling, A/B testing guidance, or actionable optimization recommendations.
+description: Analyze marketing performance, attribution, channel metrics, forecasts, A/B tests, and optimization opportunities.
 ---
 
 ## Channel Metric Reference

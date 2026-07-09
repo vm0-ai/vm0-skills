@@ -1,6 +1,6 @@
 ---
 name: goal
-description: Create and manage a persistent thread goal that the agent autonomously continues every idle turn until the full objective is verifiably achieved. Use when the user says "set a goal", "/goal", "keep working on this until it's done", asks for an autonomous long-running task, or wants work to continue across turns without re-prompting. Replaces the harness built-in /goal.
+description: Create or manage a persistent thread goal for autonomous work across idle turns.
 ---
 
 # Thread Goals

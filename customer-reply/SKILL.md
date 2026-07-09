@@ -1,6 +1,6 @@
 ---
 name: customer-reply
-description: Compose professional, empathetic customer-facing messages tailored to context, channel, and urgency. Activate when writing support ticket replies, outage notifications, bug acknowledgments, feature request responses, billing communications, follow-up emails, escalation updates, or any external customer correspondence that needs the right tone and structure.
+description: Write customer-facing support, outage, billing, bug, feature-request, and escalation replies.
 ---
 
 ## Foundational Communication Principles

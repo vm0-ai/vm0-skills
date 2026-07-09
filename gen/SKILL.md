@@ -1,6 +1,6 @@
 ---
 name: gen
-description: Use vm0 Zero generation pipelines via `zero generate` for images, videos, voice, presentations, websites, reports, posters, docs designs, dashboard designs, mobile app designs, and connector-backed text/code/document generation. Use when a user asks to generate an artifact and the right built-in pipeline, style, model, or connector should be discovered at runtime.
+description: Use Zero generation pipelines for images, video, voice, presentations, websites, reports, and designs.
 ---
 
 # Gen

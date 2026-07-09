@@ -1,6 +1,6 @@
 ---
 name: gaap-reporting
-description: Prepare GAAP-compliant financial statements including P&L, balance sheet, and cash flow statement with proper classification, disclosure requirements, and period comparisons. Use for income statement generation, balance sheet preparation, statement of cash flows, financial report formatting, ASC standards compliance, reclassification entries, or building management reporting packages.
+description: Prepare GAAP financial statements, classifications, disclosures, and management reporting packages.
 ---
 
 ## Profit and Loss Statement

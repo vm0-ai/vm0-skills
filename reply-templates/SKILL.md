@@ -1,6 +1,6 @@
 ---
 name: reply-templates
-description: Build, manage, and generate standardized response templates for recurring legal inquiries. Activate when handling data subject access requests (DSARs), litigation hold notices, NDA workflows, vendor contract questions, subpoena responses, privacy policy inquiries, insurance claim notifications, or when creating and maintaining a library of reusable legal response templates with proper escalation safeguards.
+description: Create and use reusable legal response templates for DSARs, subpoenas, NDAs, policies, and similar requests.
 ---
 
 ## Template Architecture

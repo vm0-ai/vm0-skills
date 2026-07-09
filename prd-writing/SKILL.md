@@ -1,6 +1,6 @@
 ---
 name: prd-writing
-description: Author product requirements documents with structured problem framing, user narratives, prioritized requirements, and measurable outcomes. Activate when drafting a PRD, writing a product spec, defining user stories, setting acceptance criteria, scoping MVP requirements, managing feature scope, or documenting what to build and why.
+description: Draft PRDs with problem framing, users, requirements, acceptance criteria, scope, and measurable outcomes.
 ---
 
 ## Document Architecture

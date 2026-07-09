@@ -1,6 +1,6 @@
 ---
 name: brand-guidelines
-description: Define, document, and enforce brand voice, tone, messaging pillars, style rules, and terminology standards. Trigger on requests about brand consistency, voice documentation, tone of voice guides, style guide creation, messaging frameworks, terminology governance, inclusive language, or reviewing content for brand compliance.
+description: Define or enforce brand voice, messaging, terminology, tone, and style standards.
 ---
 
 ## Building a Brand Voice Document
