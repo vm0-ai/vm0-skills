@@ -28,6 +28,8 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
   - `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories`
   - `GET https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories`
 - These are Nintendo app endpoints and response fields can vary by account, region, and Nintendo API changes. Inspect the raw response before assuming field names.
+- Play history responses commonly include `playHistories`, `recentPlayHistories`, `hiddenTitleList`, and `lastUpdatedAt`.
+- Nintendo Account profile endpoints such as `https://api.accounts.nintendo.com/2.0.0/users/me` are intentionally outside this connector's firewall surface.
 
 ## 1. Get Nintendo Store App Play Activity
 
@@ -93,6 +95,29 @@ curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
         totalPlayedDays: (.totalPlayedDays // .total_played_days)
       })
     | .[:20]'
+```
+
+## 5. Summarize Recent Daily Play Activity
+
+Use `recentPlayHistories` when the user asks what they played recently or how long they played on each recent day.
+
+```bash
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
+  --header "Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN" \
+  | jq '
+    (.recentPlayHistories // .recent_play_histories // [])
+    | map({
+        playedDate: (.playedDate // .played_date),
+        games: [
+          (.dailyPlayHistories // .daily_play_histories // [])[]
+          | {
+              title: (.titleName // .title // .name),
+              titleId: (.titleId // .title_id // .nsuid),
+              totalPlayedMinutes: (.totalPlayedMinutes // .total_played_minutes)
+            }
+        ]
+      })
+    | .[:7]'
 ```
 
 ## Guidelines
