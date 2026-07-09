@@ -25,7 +25,7 @@ zero doctor check-connector --url https://app-api.znej.nintendo.com/api/v2.0/use
 - The connector exposes `$NINTENDO_PLAY_ACTIVITY_TOKEN` for authenticated Nintendo Play Activity API requests.
 - The connector derives the Nintendo profile locale during connection/refresh and vm0 injects required Nintendo app headers, including `User-Agent` and `gentry-locale`, for allowed endpoints.
 - Send the token only with `Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN`.
-- The connector is read-only and currently allows only:
+- The connector is read-only. Use these verified endpoints:
   - `GET https://api.accounts.nintendo.com/2.0.0/users/me`
   - `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories`
 - These are Nintendo app endpoints and response fields can vary by account, region, and Nintendo API changes. Inspect the raw response before assuming field names.
