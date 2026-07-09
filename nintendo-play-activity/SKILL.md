@@ -25,6 +25,7 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
 
 - Connect Nintendo Play Activity under vm0.ai -> Settings -> Connectors.
 - The connector exposes `$NINTENDO_PLAY_ACTIVITY_TOKEN` for authenticated Nintendo Play Activity API requests.
+- The connector derives the Nintendo profile locale during connection/refresh and the firewall injects the required Nintendo app headers for allowed endpoints.
 - Send the token only with `Authorization: Bearer $NINTENDO_PLAY_ACTIVITY_TOKEN`.
 - The connector is read-only and currently allows only:
   - `GET https://api.accounts.nintendo.com/2.0.0/users/me`
@@ -33,7 +34,7 @@ zero doctor check-connector --url https://mypage-api.entry.nintendo.co.jp/api/v1
   - `GET https://mypage-api.entry.nintendo.co.jp/api/v1/users/me/play_histories`
 - These are Nintendo app endpoints and response fields can vary by account, region, and Nintendo API changes. Inspect the raw response before assuming field names.
 - Play history responses commonly include `playHistories`, `recentPlayHistories`, `hiddenTitleList`, and `lastUpdatedAt`.
-- If Nintendo rejects a request from a generic HTTP client, include `User-Agent: com.nintendo.znej/1.13.0 (Android/7.1.2)`.
+- Do not guess `gentry-locale` values. vm0 injects the connected account locale for the Nintendo Store app endpoint.
 
 ## 1. Get Nintendo Account Profile
 
