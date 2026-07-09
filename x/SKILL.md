@@ -7,10 +7,16 @@ description: X (Twitter) API for tweets and profiles. Use when user mentions "X"
 
 ## How to Use
 
+Use `curl` directly against `https://api.x.com`. Agent-local wrapper commands may
+fail even when the connector boundary can inject valid X API authentication for
+direct `api.x.com` requests.
+
+All examples below are read-only. Pipe through `jq` when you need structured output.
+
 ### 1. Get Authenticated User Profile
 
 ```bash
-xurl whoami
+curl -sS 'https://api.x.com/2/users/me?user.fields=id,name,username,description,public_metrics,created_at,verified'
 ```
 
 ### 2. Look Up User by Username
@@ -18,7 +24,7 @@ xurl whoami
 > **Note:** Replace `elonmusk` with the actual username. Leading `@` is optional.
 
 ```bash
-xurl user elonmusk
+curl -sS 'https://api.x.com/2/users/by/username/elonmusk?user.fields=id,name,username,description,public_metrics,created_at,verified,location,url'
 ```
 
 ### 3. Look Up User by ID
@@ -26,7 +32,7 @@ xurl user elonmusk
 > **Note:** Replace `12345` with the actual user ID. You can obtain user IDs from other endpoint responses.
 
 ```bash
-xurl /2/users/12345?user.fields=id,name,username,description,public_metrics,created_at
+curl -sS 'https://api.x.com/2/users/12345?user.fields=id,name,username,description,public_metrics,created_at,verified,location,url'
 ```
 
 ### 4. Look Up Multiple Users
@@ -36,15 +42,16 @@ Get profiles for multiple users at once (up to 100):
 > **Note:** Replace the IDs with actual user IDs, comma-separated.
 
 ```bash
-xurl '/2/users?ids=12345,67890&user.fields=id,name,username,description,public_metrics'
+curl -sS 'https://api.x.com/2/users?ids=12345,67890&user.fields=id,name,username,description,public_metrics,created_at,verified'
 ```
 
 ### 5. Get a Tweet by ID
 
-> **Note:** Replace `1234567890` with the actual tweet ID. Full URLs like `https://x.com/user/status/1234567890` also work.
+> **Note:** Replace `1234567890` with the actual tweet ID. For full URLs like
+> `https://x.com/user/status/1234567890`, extract the numeric status ID first.
 
 ```bash
-xurl read 1234567890
+curl -sS 'https://api.x.com/2/tweets/1234567890?tweet.fields=created_at,public_metrics,author_id,text,conversation_id,lang,referenced_tweets,entities&expansions=author_id&user.fields=name,username,verified'
 ```
 
 ### 6. Get Multiple Tweets
@@ -54,21 +61,23 @@ Get details for multiple tweets at once (up to 100):
 > **Note:** Replace the IDs with actual tweet IDs, comma-separated.
 
 ```bash
-xurl '/2/tweets?ids=1234567890,0987654321&tweet.fields=created_at,public_metrics,author_id,text&expansions=author_id&user.fields=name,username'
+curl -sS 'https://api.x.com/2/tweets?ids=1234567890,0987654321&tweet.fields=created_at,public_metrics,author_id,text,conversation_id,lang,referenced_tweets,entities&expansions=author_id&user.fields=name,username,verified'
 ```
 
 ### 7. Get User's Tweets (Timeline)
 
-Get recent tweets posted by the authenticated user:
+Get recent tweets posted by a user. If you only have the username, resolve it to a
+user ID first:
 
 ```bash
-xurl timeline -n 10
+USER_ID="$(curl -sS 'https://api.x.com/2/users/by/username/elonmusk?user.fields=id' | jq -r '.data.id')"
+curl -sS "https://api.x.com/2/users/${USER_ID}/tweets?max_results=10&tweet.fields=created_at,public_metrics,text,conversation_id,lang,referenced_tweets&exclude=retweets,replies"
 ```
 
-Query parameters for raw API (if you need another user's timeline):
+Query parameters:
 
 ```bash
-xurl '/2/users/USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&exclude=retweets,replies'
+curl -sS 'https://api.x.com/2/users/USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metrics,text&exclude=retweets,replies'
 ```
 
 - `max_results` - 5 to 100 (default: 10)
@@ -80,7 +89,8 @@ xurl '/2/users/USER_ID/tweets?max_results=10&tweet.fields=created_at,public_metr
 ### 8. Get User's Mentions
 
 ```bash
-xurl mentions -n 10
+USER_ID="$(curl -sS 'https://api.x.com/2/users/me?user.fields=id' | jq -r '.data.id')"
+curl -sS "https://api.x.com/2/users/${USER_ID}/mentions?max_results=10&tweet.fields=created_at,public_metrics,text,author_id,conversation_id,lang&expansions=author_id&user.fields=name,username,verified"
 ```
 
 ### 9. Search Recent Tweets
@@ -90,7 +100,12 @@ Search for tweets from the past 7 days:
 > **Note:** Replace the query with your search terms.
 
 ```bash
-xurl search "openai lang:en -is:retweet" -n 10
+curl -sS --get 'https://api.x.com/2/tweets/search/recent' \
+  --data-urlencode 'query=openai lang:en -is:retweet' \
+  --data-urlencode 'max_results=10' \
+  --data-urlencode 'tweet.fields=created_at,public_metrics,author_id,text,conversation_id,lang,referenced_tweets,entities' \
+  --data-urlencode 'expansions=author_id' \
+  --data-urlencode 'user.fields=name,username,verified'
 ```
 
 Common search operators:
@@ -109,7 +124,8 @@ Common search operators:
 > **Note:** Replace `elonmusk` with the actual username.
 
 ```bash
-xurl followers --of elonmusk -n 20
+USER_ID="$(curl -sS 'https://api.x.com/2/users/by/username/elonmusk?user.fields=id' | jq -r '.data.id')"
+curl -sS "https://api.x.com/2/users/${USER_ID}/followers?max_results=20&user.fields=id,name,username,description,public_metrics,verified"
 ```
 
 ### 11. Get User's Following
@@ -117,17 +133,20 @@ xurl followers --of elonmusk -n 20
 > **Note:** Replace `elonmusk` with the actual username.
 
 ```bash
-xurl following --of elonmusk -n 20
+USER_ID="$(curl -sS 'https://api.x.com/2/users/by/username/elonmusk?user.fields=id' | jq -r '.data.id')"
+curl -sS "https://api.x.com/2/users/${USER_ID}/following?max_results=20&user.fields=id,name,username,description,public_metrics,verified"
 ```
 
 ## Pagination
 
-Most list endpoints support pagination. For shortcut commands, use `-n` to control result count.
+Most list endpoints support pagination. Use `max_results` to control result count.
 
-For raw API endpoints, check the `meta.next_token` field in the response:
+Check the `meta.next_token` field in the response:
 
 ```bash
-xurl '/2/tweets/search/recent?query=example&max_results=10' | jq .meta
+curl -sS --get 'https://api.x.com/2/tweets/search/recent' \
+  --data-urlencode 'query=example' \
+  --data-urlencode 'max_results=10' | jq .meta
 ```
 
 Use the returned `next_token` value as `pagination_token` in the next request to get more results.
@@ -165,8 +184,8 @@ Use the returned `next_token` value as `pagination_token` in the next request to
 
 1. **Read-only access**: This connector only grants read permissions; you cannot post, like, or retweet
 2. **Rate limits**: X API has strict rate limits; avoid rapid successive calls
-3. **Prefer shortcut commands**: Use `xurl search`, `xurl user`, `xurl read` etc. over raw API paths when possible
-4. **Raw API fallback**: For bulk lookups or advanced queries, use `xurl '/2/...'` with query parameters
-5. **Fields are opt-in (raw API only)**: Raw endpoints only return `id` and `text` by default; specify `tweet.fields` and `user.fields` for richer data. Shortcut commands include common fields automatically
+3. **Use direct curl**: Call `https://api.x.com/2/...` with `curl -sS`
+4. **Let the connector inject auth**: Do not hard-code bearer tokens in commands or docs
+5. **Fields are opt-in**: Endpoints only return minimal fields by default; specify `tweet.fields` and `user.fields` for richer data
 6. **7-day search window**: The recent search endpoint only covers the past 7 days
-7. **Pagination**: Use `-n` for shortcut commands, `max_results` and `pagination_token` for raw API
+7. **Pagination**: Use `max_results` and `pagination_token`
