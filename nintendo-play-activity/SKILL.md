@@ -154,4 +154,4 @@ curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories"
 
 1. Start with the raw response, then adapt parsing to the fields Nintendo returns for the account.
 2. Use only the allowed `GET` account profile and play history endpoints.
-3. Treat empty responses as possible account, privacy, region, or Nintendo API behavior instead of assuming the user has no play history.
+3. Treat empty responses as valid API results; try the other allowed play history endpoints and inspect raw fields such as `hiddenTitleList` and `lastUpdatedAt` before concluding that no play history exists.
