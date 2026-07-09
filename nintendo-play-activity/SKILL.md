@@ -155,5 +155,3 @@ curl -s "https://news-api.entry.nintendo.co.jp/api/v1.1/users/me/play_histories"
 1. Start with the raw response, then adapt parsing to the fields Nintendo returns for the account.
 2. Use only the allowed `GET` account profile and play history endpoints.
 3. Treat empty responses as possible account, privacy, region, or Nintendo API behavior instead of assuming the user has no play history.
-4. Do not call unsupported Nintendo APIs with this connector.
-5. For public catalog, metadata, and pricing requests, use the `nintendo-eshop-catalog` skill instead.
