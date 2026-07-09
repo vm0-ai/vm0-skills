@@ -1,6 +1,6 @@
 ---
 name: escalation-brief
-description: Prepare structured escalation packages for engineering, product, security, or leadership with reproduction steps, business impact, and full context. Activate when a support issue needs to go beyond the support team, when writing an escalation document, when evaluating whether a problem warrants escalation, or when tracking follow-through after handing off an issue.
+description: Create escalation briefs with impact, reproduction, context, owner, and follow-up tracking.
 ---
 
 ## Deciding: Escalate or Resolve In-House?

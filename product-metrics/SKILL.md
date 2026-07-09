@@ -1,6 +1,6 @@
 ---
 name: product-metrics
-description: Define, instrument, and analyze product metrics across acquisition, activation, engagement, retention, and monetization. Activate when setting OKRs, designing a metrics dashboard, running a weekly or monthly metrics review, diagnosing metric movements, choosing KPIs for a product area, building a metrics framework, or evaluating product health.
+description: Define, instrument, and analyze product metrics, KPIs, dashboards, OKRs, retention, and growth.
 ---
 
 ## Metrics Architecture

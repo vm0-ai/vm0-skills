@@ -1,6 +1,6 @@
 ---
 name: campaign-strategy
-description: Plan and structure marketing campaigns — set objectives, segment audiences, choose channels, build content calendars, allocate budgets, and define KPIs. Trigger on requests for campaign planning, product launch strategy, go-to-market plans, content scheduling, media mix decisions, campaign briefs, or marketing budget allocation.
+description: Plan marketing campaigns, launches, audiences, channels, calendars, budgets, and KPIs.
 ---
 
 ## Five-Part Campaign Architecture

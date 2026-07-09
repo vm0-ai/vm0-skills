@@ -1,6 +1,6 @@
 ---
 name: legal-briefing
-description: Build structured briefing documents for meetings with legal significance and track resulting action items. Use when preparing for contract negotiations, board meetings, regulatory discussions, vendor calls, deal reviews, compliance meetings, litigation strategy sessions, or any meeting requiring legal context, participant research, talking points, or post-meeting task tracking.
+description: Prepare legal meeting briefs with context, talking points, participant research, and follow-up actions.
 ---
 
 ## Preparation Workflow

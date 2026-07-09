@@ -1,6 +1,6 @@
 ---
 name: legal-risk-scoring
-description: Score and classify legal risks on a severity-times-likelihood matrix, assign GREEN/YELLOW/ORANGE/RED ratings, document findings in structured memos, and determine escalation paths. Use when scoring contract exposure, evaluating deal risk, rating legal issues by severity and probability, deciding whether to involve senior counsel or outside lawyers, or building a legal risk register.
+description: Score legal risks by severity and likelihood, assign ratings, and document escalation paths.
 ---
 
 ## Scoring Model

@@ -1,6 +1,6 @@
 ---
 name: flux-analysis
-description: Decompose financial variances into underlying drivers and produce narrative explanations with waterfall bridge analysis. Use for budget vs actual analysis, period-over-period comparison, revenue variance decomposition, expense variance analysis, variance commentary, waterfall charts, forecast accuracy measurement, or P&L flux review.
+description: Explain financial variances with driver analysis, period comparisons, waterfall bridges, and commentary.
 ---
 
 ## Decomposition Techniques

@@ -1,6 +1,6 @@
 ---
 name: data-profiling
-description: Profile and explore unfamiliar datasets — assess schema structure, column distributions, data quality, null rates, cardinality, outliers, relationships between tables, and temporal coverage. Use when onboarding to a new data source, auditing data freshness, discovering foreign keys, or deciding what to analyze.
+description: Profile datasets for schema, distributions, nulls, cardinality, outliers, relationships, and data quality.
 ---
 
 ## Structural Reconnaissance

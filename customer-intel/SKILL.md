@@ -1,6 +1,6 @@
 ---
 name: customer-intel
-description: Investigate and answer customer questions by gathering information from docs, CRMs, wikis, tickets, emails, and web sources, then deliver a confidence-rated response with citations. Activate for customer inquiry research, account background investigation, support question lookup, customer context gathering, or knowledge base queries.
+description: Research customer context across docs, tickets, CRM, email, and web sources with cited confidence.
 ---
 
 ## Investigation Framework

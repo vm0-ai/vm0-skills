@@ -1,6 +1,6 @@
 ---
 name: stats-methods
-description: Apply statistical techniques to data — descriptive statistics, distributions, hypothesis testing, A/B test evaluation, outlier detection, trend analysis, correlation, forecasting, p-values, confidence intervals, significance testing, and avoiding common statistical pitfalls like Simpson's paradox and survivorship bias.
+description: Apply statistics for summaries, tests, distributions, experiments, outliers, and trends.
 ---
 
 ## Summarizing Numeric Data

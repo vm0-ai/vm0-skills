@@ -1,6 +1,6 @@
 ---
 name: analysis-qa
-description: Quality-check a data analysis before sharing — verify joins, aggregations, denominators, time ranges, and metric definitions. Detect pitfalls like survivorship bias, average-of-averages, join explosion, timezone mismatches, incomplete periods, and selection bias. Includes documentation templates for reproducible analyses.
+description: Quality-check data analysis for joins, metrics, denominators, date ranges, leakage, and statistical pitfalls.
 ---
 
 ## Review Checklist

@@ -1,6 +1,6 @@
 ---
 name: steam
-description: Steam Web API and public Steam Store APIs for player profiles, game libraries, playtime, wishlists, friends, groups, bans, achievements, game stats, app metadata, reviews, prices, featured games, packages, and Steam news. Use when user mentions "Steam", Steam profile, Steam games, playtime, wishlist, achievements, Steam friends, Steam reviews, Steam prices, or asks about a Steam app.
+description: Use Steam APIs for profiles, libraries, playtime, achievements, friends, reviews, prices, and app metadata.
 ---
 
 # Steam

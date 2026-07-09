@@ -1,6 +1,6 @@
 ---
 name: contract-redline
-description: Analyze commercial agreements clause-by-clause against organizational playbooks, flag deviations by severity, and produce ready-to-send redline markup with fallback positions. Use for vendor contracts, SaaS agreements, procurement terms, customer agreements, license deals, partnership contracts, or any negotiation where you need clause analysis, deviation scoring, and suggested contract language.
+description: Review commercial contracts against a playbook, flag risk, and draft redlines or fallback language.
 ---
 
 ## Pre-Review Setup

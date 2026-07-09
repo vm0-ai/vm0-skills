@@ -1,6 +1,6 @@
 ---
 name: paid-ads-operator
-description: Operate paid advertising campaigns across Google Ads, Meta Ads, and other channels. Use when asked to launch, audit, monitor, troubleshoot, or optimize paid ads, PPC, performance marketing, media buying, search terms, negative keywords, ad creative tests, conversion tracking, attribution, budget pacing, CPA, CAC, ROAS, or campaign experiments.
+description: Launch, audit, monitor, or optimize paid advertising campaigns, tracking, budgets, CAC, CPA, and ROAS.
 ---
 
 # Paid Ads Operator

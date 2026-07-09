@@ -1,6 +1,6 @@
 ---
 name: status-updates
-description: Draft clear status updates, progress reports, and stakeholder communications for any audience — executives, engineering teams, cross-functional partners, or customers. Trigger on requests for weekly updates, monthly reports, launch announcements, project status emails, risk escalations, decision records (ADRs), meeting agendas, sprint retrospectives, or any structured team communication.
+description: Draft status updates, launch notes, project reports, agendas, retrospectives, and stakeholder comms.
 ---
 
 ## Audience-Specific Update Formats

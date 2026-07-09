@@ -1,6 +1,6 @@
 ---
 name: kb-authoring
-description: Author and maintain knowledge base articles derived from resolved support cases. Activate when documenting a solution from a closed ticket, writing how-to guides, building troubleshooting walkthroughs, creating FAQ entries, publishing known-issue advisories, updating stale documentation, organizing KB taxonomy, or performing content gap analysis to reduce future ticket volume.
+description: Write or update knowledge base articles, FAQs, troubleshooting guides, and known-issue docs.
 ---
 
 ## Article Anatomy

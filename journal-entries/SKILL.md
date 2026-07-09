@@ -1,6 +1,6 @@
 ---
 name: journal-entries
-description: Construct and review journal entries with correct debit/credit structure, supporting calculations, and approval workflows. Use for month-end accruals, prepaid amortization, depreciation entries, payroll booking, revenue recognition journal entries, manual adjustments, recurring entries, reversing entries, or intercompany journal entries.
+description: Create or review journal entries, accruals, amortization, depreciation, payroll, revenue, and adjustments.
 ---
 
 ## Core Entry Patterns by Accounting Cycle

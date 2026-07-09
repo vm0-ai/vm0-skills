@@ -1,6 +1,6 @@
 ---
 name: nda-screening
-description: Rapidly evaluate incoming NDAs, classify them as GREEN (sign-ready), YELLOW (minor issues needing review), or RED (material problems requiring negotiation), and route them appropriately. Use when sales or business development sends a new NDA, when triaging confidentiality agreements, when deciding if an NDA can be approved without counsel, or when assessing non-disclosure agreement risk.
+description: Review NDAs, classify risk, and route sign-ready or problematic agreements.
 ---
 
 ## Evaluation Framework

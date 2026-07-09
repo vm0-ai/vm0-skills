@@ -1,6 +1,6 @@
 ---
 name: google-cloud
-description: Google Cloud REST APIs for projects, IAM, enabled services, Compute Engine, Cloud Storage, BigQuery, Cloud Run, GKE, Cloud Build, Secret Manager, Logging, Monitoring, Pub/Sub, Firestore, Spanner, Cloud SQL, and billing. Use when user mentions "Google Cloud", "GCP", "gcloud", "project", "IAM", "Compute Engine", "GKE", "Cloud Run", "BigQuery", or "Cloud Storage".
+description: Use Google Cloud APIs for projects, IAM, compute, storage, BigQuery, Cloud Run, GKE, logging, and billing.
 ---
 
 # Google Cloud

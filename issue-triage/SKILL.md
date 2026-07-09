@@ -1,6 +1,6 @@
 ---
 name: issue-triage
-description: Classify, prioritize, and route incoming support issues. Activate when sorting new customer tickets, assigning severity levels P1 through P4, detecting duplicate reports, choosing the right team for handling, or deciding initial response approach for bug reports, billing questions, feature requests, account problems, and other inbound support inquiries.
+description: Triage support issues by severity, duplicates, ownership, and first-response approach.
 ---
 
 ## Classification System

@@ -1,6 +1,6 @@
 ---
 name: roadmap-planning
-description: Build and prioritize product roadmaps using scoring models like RICE, ICE, and value-effort matrices. Activate when creating a product roadmap, prioritizing features, sequencing initiatives, mapping dependencies, balancing team capacity, choosing between Now/Next/Later or quarterly planning, or communicating roadmap tradeoffs to executives and stakeholders.
+description: Plan and prioritize roadmaps with RICE, ICE, value-effort scoring, sequencing, and capacity tradeoffs.
 ---
 
 ## Roadmap Formats
