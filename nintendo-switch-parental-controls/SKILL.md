@@ -7,6 +7,8 @@ description: Use the connected Nintendo Switch Parental Controls app API to insp
 
 Use the vm0 connector for Nintendo Switch Parental Controls app data. Prefer the default-allowed read workflow. Treat PIN-bearing reads, device pairing, and every mutation as sensitive.
 
+Default allowed means the response is free of known credentials, not that it is non-sensitive. Play summaries and GameChat responses can identify children, local players, friends, and household activity. Return only the data needed for the user's request.
+
 This integration documents the private app protocol observed in Nintendo Switch Parental Controls 2.4.0, build 660. It is not a public Nintendo API and can change without notice.
 
 ## Prerequisites
@@ -84,6 +86,8 @@ curl -fsS -G \
   | jq .
 ```
 
+The verified summary routes are not paginated. An empty summary/list is a valid result; report that no activity was returned for the selected device and period instead of retrying other devices or dates without approval. Response fields can vary by console generation and app version, so inspect the returned structure before aggregating per-title or per-player time and state which fields were used.
+
 ### 4. Read Account and App User Data
 
 Nintendo Account profile:
@@ -130,6 +134,7 @@ curl -fsS -G \
 
 - Ask for the exact user intent before requesting a default-denied permission.
 - Confirm the target device and effect before every mutation.
+- The firewall validates the method and route, not query-value ownership or date ranges. Confirm `deviceId`, `playerId`, `year`, and `month` from the user's requested target before sending a request.
 - Never retrieve, reveal, guess, or store unlock PINs, synchronized PINs, pairing codes, notification tokens, or serial numbers unless the user explicitly requests the specific sensitive read and has authorized its permission.
 - Do not call raw federation or notification-token routes as routine setup. The connector owns its smart-device lifecycle and does not consume push notifications.
 - Do not guess POST bodies. Use a body verified for app 2.4.0 and the requested operation.
