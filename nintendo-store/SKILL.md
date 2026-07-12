@@ -144,6 +144,7 @@ curl -s -G "https://api.ec.nintendo.com/v1/price" \
 
 Use connected endpoints when the user asks about account-specific data. Connect Nintendo Store under vm0.ai -> Settings -> Connectors before calling these endpoints.
 
+- For the special Nintendo Account profile request `GET https://api.accounts.nintendo.com/2.0.0/users/me`, include `X-VM0-Connector-Intent: nintendo-store`.
 - Send `Authorization: Bearer $NINTENDO_STORE_TOKEN`.
 - vm0 injects Nintendo Store app headers, including `User-Agent` and `gentry-locale`, for allowed Store app endpoints.
 - Use `productType` values `DIGITAL` or `PHYSICAL` where required.
@@ -233,6 +234,7 @@ curl -s -X POST "https://app-api.znej.nintendo.com/api/v2.0/product_details" \
 ```bash
 curl -s "https://api.accounts.nintendo.com/2.0.0/users/me" \
   --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
+  --header "X-VM0-Connector-Intent: nintendo-store" \
   | jq '{id, nickname, country, language, birthday, mii}'
 ```
 

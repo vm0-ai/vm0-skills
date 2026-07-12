@@ -44,6 +44,8 @@ ACTION_BASE=https://app.lp1.znma.srv.nintendo.net
 ACCOUNT_BASE=https://api.accounts.nintendo.com
 ```
 
+For the special Nintendo Account profile request `GET $ACCOUNT_BASE/2.0.0/users/me`, include `X-VM0-Connector-Intent: nintendo-switch-parental-controls`.
+
 For an action `GET`, pass query values with `--data-urlencode`:
 
 ```bash
@@ -117,6 +119,7 @@ Account profile example:
 ```bash
 curl -fsS "$ACCOUNT_BASE/2.0.0/users/me" \
   --header "Authorization: Bearer $NINTENDO_SWITCH_PARENTAL_CONTROLS_ACCOUNT_TOKEN" \
+  --header "X-VM0-Connector-Intent: nintendo-switch-parental-controls" \
   | jq '{id, nickname, country, language}'
 ```
 
