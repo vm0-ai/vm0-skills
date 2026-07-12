@@ -44,7 +44,7 @@ ACTION_BASE=https://app.lp1.znma.srv.nintendo.net
 ACCOUNT_BASE=https://api.accounts.nintendo.com
 ```
 
-Because the Nintendo Account profile route is shared with Nintendo Store, include `X-VM0-Connector-Intent: nintendo-switch-parental-controls` on `GET $ACCOUNT_BASE/2.0.0/users/me`. VM0 consumes and removes this private routing hint before forwarding the request to Nintendo; it is not authentication, authorization, or firewall permission policy. App actions use the separate `$ACTION_BASE` origin and do not need this selector.
+For the special Nintendo Account profile request `GET $ACCOUNT_BASE/2.0.0/users/me`, include `X-VM0-Connector-Intent: nintendo-switch-parental-controls`.
 
 For an action `GET`, pass query values with `--data-urlencode`:
 
