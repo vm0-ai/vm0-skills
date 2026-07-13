@@ -79,7 +79,7 @@
 - [x] [Monday.com](https://developer.monday.com/api-reference/) - Project Management Platform
 - [ ] [IONOS](https://docs.ionos.com/reference) - Cloud Infrastructure Service
 - [x] [short.io](https://developers.short.io/docs) - URL Shortener Service
-- [ ] [NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_1559132836.html) - Oracle ERP System
+- [x] [NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/book_1559132836.html) - Oracle ERP System
 - [x] [Streak CRM](https://streak.readme.io/) - Gmail CRM
 - [x] [Linear](https://developers.linear.app/docs) - Issue Tracking & Project Management
 - [x] [Jira](https://developer.atlassian.com/cloud/jira/platform/rest/v3/) - Project Management & Issue Tracking
@@ -121,7 +121,7 @@
 - [x] [Semrush](https://developer.semrush.com/api/get-started/quick-start/) - SEO, keyword, backlink, and competitive intelligence API
 - [x] [Profound](https://docs.tryprofound.com/rest-api/introduction) - AI search visibility, citations, sentiment, fanout, and Agent Analytics API
 - [x] [Massive](https://massive.com/docs/rest/quickstart) - Market data API for stocks, options, forex, crypto, and indices
-- [ ] [Datadog](https://docs.datadoghq.com/api/) - Infrastructure Monitoring & APM
+- [x] [Datadog](https://docs.datadoghq.com/api/) - Infrastructure Monitoring & APM
 - [ ] [Airbyte](https://docs.airbyte.com/api-documentation) - Data Integration Platform
 - [ ] [Retool](https://docs.retool.com/docs) - Internal Tool Builder
 - [ ] [Fivetran](https://fivetran.com/docs/rest-api) - Data Pipeline Service

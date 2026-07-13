@@ -3,6 +3,11 @@ name: cal-com
 description: Cal.com open-source scheduling API. Use when user mentions "Cal.com", "cal.com", "open source scheduling", "booking", "event types", or asks about interview or meeting scheduling.
 ---
 
+## Prerequisites
+
+1. Connect Cal.com in Zero at Settings > Connectors > Cal.com.
+2. Requests require `CALCOM_TOKEN`. Zero supplies the same environment variable for OAuth and API token connections.
+
 ## Troubleshooting
 
 If requests fail, run `zero doctor check-connector --env-name CALCOM_TOKEN` or `zero doctor check-connector --url https://api.cal.com/v2/me --method GET`
@@ -12,7 +17,7 @@ If requests fail, run `zero doctor check-connector --env-name CALCOM_TOKEN` or `
 ### Get Current User
 
 ```bash
-curl -s "https://api.cal.com/v2/me" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '{id, email, name, username, timeZone}'
+curl -s "https://api.cal.com/v2/me" --header "Authorization: Bearer $CALCOM_TOKEN" --header "cal-api-version: 2024-08-13" | jq '.data | {id, email, name, username, timeZone}'
 ```
 
 ### List Event Types
@@ -113,9 +118,9 @@ curl -s -X POST "https://api.cal.com/v2/bookings/<booking-uid>/reschedule" --hea
 ## Guidelines
 
 1. **API version header**: Always include `cal-api-version: 2024-08-13` — requests without this header will fail.
-2. **API key prefix**: Cal.com API keys are prefixed with `cal_live_` (production) or `cal_test_` (test environment).
+2. **Authentication**: Zero refreshes OAuth tokens automatically. API keys use the `cal_live_` prefix for live environments and `cal_` for test environments.
 3. **eventTypeId**: Required when creating a booking — get it from the List Event Types endpoint.
 4. **Timestamps**: Use ISO 8601 format with UTC timezone (e.g., `2025-01-20T14:00:00.000Z`).
 5. **Rate limits**: 120 requests per minute with API key auth. Response headers include `X-RateLimit-Remaining`.
-6. **Self-hosted**: If using a self-hosted Cal.com instance, replace `api.cal.com` with your own domain.
+6. **Hosted API**: The Zero connector allows requests to the hosted `api.cal.com` API.
 7. **Booking confirmation**: If an event type requires manual confirmation, bookings start with `pending` status until confirmed.
