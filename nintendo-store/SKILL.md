@@ -142,64 +142,65 @@ curl -s -G "https://api.ec.nintendo.com/v1/price" \
 
 ## Connected Nintendo Store App and Account
 
-Use connected endpoints when the user asks about account-specific data. Connect Nintendo Store under vm0.ai -> Settings -> Connectors before calling these endpoints.
+Use connected endpoints when the user asks about account-specific data or data exposed by the Nintendo Store app API. Connect Nintendo Store under vm0.ai -> Settings -> Connectors before calling these endpoints.
 
 - For the special Nintendo Account profile request `GET https://api.accounts.nintendo.com/2.0.0/users/me`, include `X-VM0-Connector-Intent: nintendo-store`.
 - Send `Authorization: Bearer $NINTENDO_STORE_TOKEN`.
 - vm0 injects Nintendo Store app headers, including `User-Agent` and `gentry-locale`, for allowed Store app endpoints.
-- Use `productType` values `DIGITAL` or `PHYSICAL` where required.
-- Nintendo response shapes can change. Inspect raw responses before assuming field names.
+- Use `productType=DIGITAL` or `productType=PHYSICAL`. It is required for wishlist reads and optional for product search.
+- Start `products:search` at `page=1`. Per-title play history uses `offset=0` instead of page numbers.
+- Inspect a raw response before narrowing it with `jq`; the fields below match Nintendo Store Android app 3.2.0.
 
 ### Account Endpoints
 
-- `GET https://api.accounts.nintendo.com/2.0.0/users/me`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/age`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/family/children`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/points`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/push_notification_config`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/rights`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/{naid}/qrcode_param`
+- `GET https://api.accounts.nintendo.com/2.0.0/users/me` — account profile. Its `id` is the `{naid}` used by the QR-code endpoint.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/age` — `age`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/family/children` — `children`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/points` — `points` and `expirationPoints`; `points` contains `gold` and `platinum`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/push_notification_config` — `isReceivedAll`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/rights` — `scheduledOrderItem` and `purchasedItem`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/{naid}/qrcode_param` — `userId`, `param`, and `exp`.
 
 ### Play Activity Endpoints
 
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories/game_titles/{titleId}?offset={offset}&limit={limit}`
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories` — `playHistories`, `hiddenTitleList`, and `recentPlayHistories`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories/game_titles/{titleId}?offset={offset}&limit={limit}` — aggregate play fields plus `playedDaysOffset` and `playedDays`; each day has `playedDate` and `minutesPlayed`.
 
 ### Wishlist and Check-In Endpoints
 
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist?productType={DIGITAL|PHYSICAL}`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist/{productId}?productType={DIGITAL|PHYSICAL}`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/check_in_histories`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/received_prize_histories`
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist?productType={DIGITAL|PHYSICAL}` — `products`. Fetch both product types when the user asks for the complete wishlist.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist/{productId}?productType={DIGITAL|PHYSICAL}` — `productId`, `productType`, and `isInWishList`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/check_in_histories` — `checkInHistories`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/users/me/received_prize_histories` — `eventIds`.
 
 ### Store App Catalog and Metadata Endpoints
 
 Use these connected Store app endpoints for Store app shelves, news, app metadata, check-in events, and product metadata.
 
-- `GET https://app-api.znej.nintendo.com/api/v2.0/check_in_events`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/check_in_events/{eventId}/check_in_points`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/maintenance_check`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/news`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/news/app_news/{appNewsId}`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/news_tab_config`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/notifications`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/now`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/point_goods_shelves`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/search_shelves`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/search_shelves/{shelfId}`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/shelves/summary`
-- `GET https://app-api.znej.nintendo.com/api/v2.0/products:search?query={query}&page={page}&productType={DIGITAL|PHYSICAL}`
-- `POST https://app-api.znej.nintendo.com/api/v2.0/product_details`
-- `POST https://app-api.znej.nintendo.com/api/v2.0/products/-/images:batch_get`
-- `POST https://app-api.znej.nintendo.com/api/v2.0/products/-/meta:batch_get`
+- `GET https://app-api.znej.nintendo.com/api/v2.0/check_in_events?latitude={latitude}&longitude={longitude}` — location is optional; the response groups events into `currentRegionCheckInEvents`, `otherRegionsCheckInEvents`, and `upcomingCheckInEvents`. Use an event's `checkInEventId` as `{eventId}`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/check_in_events/{eventId}/check_in_points?page={page}&latitude={latitude}&longitude={longitude}` — `page` and location are optional; the response contains `page` and `checkInPoints`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/maintenance_check` — a successful check has no response body.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/news_tab_config` — `lastUpdatedAt` and `newsTabs`; use a returned `tabId` as `newsTabId`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/news?page={page}&newsTabId={tabId}` — both queries are optional; the response contains `page`, `articles`, and `pinnedArticle`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/news/app_news/{appNewsId}` — use `articles[].appNews.id` from the news response; the detail contains `id`, `title`, `publicationBeginAt`, `thumbnailUrl`, `components`, and optional `storeUrl`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/notifications` — `notifications`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/now` — `now`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/point_goods_shelves` — a list of shelves with `title`, `shelfId`, and `products`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/search_shelves` — categories containing `shelves`; use a returned `shelfId` for the detail request.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/search_shelves/{shelfId}?page={page}&filterId={filterId}&sortId={sortId}` — start at `page=1`; `filterId` and `sortId` are optional. The response contains `products`, `totalCount`, `hasNextPage`, `filterOptions`, and `sortOptions`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/shelves/summary` — `data` with `shelfId`, `shelfType`, and optional `featuredShelfType`.
+- `GET https://app-api.znej.nintendo.com/api/v2.0/products:search?query={query}&page={page}&productType={DIGITAL|PHYSICAL}` — `hits`, `totalCount`, and `hasNextPage`; `productType` is optional.
+- `POST https://app-api.znej.nintendo.com/api/v2.0/product_details` — `products`.
+- `POST https://app-api.znej.nintendo.com/api/v2.0/products/-/images:batch_get` — `productImages`.
+- `POST https://app-api.znej.nintendo.com/api/v2.0/products/-/meta:batch_get` — `products`.
 
-For `POST` product endpoints, send a JSON body with `products`, where each item has `productId` and `productType`:
+For `POST` product endpoints, write `/tmp/nintendo-store-products.json` with `products`, where each item has `productId` and `productType`:
 
 ```json
 {
   "products": [
     {
-      "productId": "example-product-id",
+      "productId": "<product-id>",
       "productType": "DIGITAL"
     }
   ]
@@ -209,12 +210,7 @@ For `POST` product endpoints, send a JSON body with `products`, where each item 
 ### Search Store App Products
 
 ```bash
-curl -s -G "https://app-api.znej.nintendo.com/api/v2.0/products:search" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  --data-urlencode "query=zelda" \
-  --data-urlencode "page=0" \
-  --data-urlencode "productType=DIGITAL" \
-  | jq .
+curl -s -G "https://app-api.znej.nintendo.com/api/v2.0/products:search" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" --data-urlencode "query=zelda" --data-urlencode "page=1" --data-urlencode "productType=DIGITAL" | jq '{hits, totalCount, hasNextPage}'
 ```
 
 ### Fetch Store App Product Details
@@ -222,57 +218,50 @@ curl -s -G "https://app-api.znej.nintendo.com/api/v2.0/products:search" \
 Use `productId` values from Store app search, shelf, or wishlist responses.
 
 ```bash
-curl -s -X POST "https://app-api.znej.nintendo.com/api/v2.0/product_details" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  --header "Content-Type: application/json" \
-  -d '{"products":[{"productId":"example-product-id","productType":"DIGITAL"}]}' \
-  | jq .
+curl -s -X POST "https://app-api.znej.nintendo.com/api/v2.0/product_details" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" --header "Content-Type: application/json" -d @/tmp/nintendo-store-products.json | jq '.products'
 ```
 
 ### Get Nintendo Account Profile
 
 ```bash
-curl -s "https://api.accounts.nintendo.com/2.0.0/users/me" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  --header "X-VM0-Connector-Intent: nintendo-store" \
-  | jq '{id, nickname, country, language, birthday, mii}'
+curl -s "https://api.accounts.nintendo.com/2.0.0/users/me" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" --header "X-VM0-Connector-Intent: nintendo-store" | jq '{id, nickname, country, language, birthday, mii}'
+```
+
+Use the profile `id` as `{naid}` when requesting a Store check-in QR parameter. Replace `<naid>` with that value:
+
+```bash
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/<naid>/qrcode_param" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" | jq '{userId, param, exp}'
 ```
 
 ### Get Nintendo Store App Play Activity
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  | jq .
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN"
 ```
 
-### Summarize Common Play History Fields
+### Summarize Play History
 
-Inspect the raw response first. This example handles several common container and field names, but Nintendo may return different shapes.
+The 3.2.0 Store app reads these fields from `playHistories`:
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  | jq '
-    def histories:
-      if type == "array" then .
-      elif (.playHistories? | type) == "array" then .playHistories
-      elif (.play_histories? | type) == "array" then .play_histories
-      elif (.histories? | type) == "array" then .histories
-      elif (.items? | type) == "array" then .items
-      elif (.data? | type) == "array" then .data
-      else [] end;
-
-    histories
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" | jq '
+    .playHistories
     | map({
-        title: (.title // .name // .softwareName // .applicationName // .gameTitle),
-        titleId: (.titleId // .title_id // .applicationId // .nsuid),
-        firstPlayedAt: (.firstPlayedAt // .first_played_at // .firstPlayedDateTime),
-        lastPlayedAt: (.lastPlayedAt // .last_played_at // .lastPlayedDateTime),
-        totalPlayedMinutes: (.totalPlayedMinutes // .total_played_minutes // .playTimeMinutes),
-        totalPlayedDays: (.totalPlayedDays // .total_played_days)
+        title: .titleName,
+        titleId,
+        platform,
+        firstPlayedAt,
+        lastPlayedAt,
+        totalPlayedMinutes,
+        totalPlayedDays
       })
     | .[:20]'
+```
+
+Fetch daily history for a `titleId` returned above. Replace `<title-id>` with that value. For the next page, set `offset` to the returned `playedDaysOffset` plus the number of returned `playedDays`; stop when `playedDays` is empty:
+
+```bash
+curl -s -G "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories/game_titles/<title-id>" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" --data-urlencode "offset=0" --data-urlencode "limit=16" | jq '{titleId, firstPlayedAt, lastPlayedAt, totalPlayedDays, totalPlayedMinutes, playedDaysOffset, playedDays}'
 ```
 
 ### Summarize Recent Daily Play Activity
@@ -280,18 +269,17 @@ curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
 Use `recentPlayHistories` when the user asks what they played recently or how long they played on each recent day.
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  | jq '
-    (.recentPlayHistories // .recent_play_histories // [])
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" | jq '
+    .recentPlayHistories
     | map({
-        playedDate: (.playedDate // .played_date),
+        playedDate,
         games: [
-          (.dailyPlayHistories // .daily_play_histories // [])[]
+          .dailyPlayHistories[]
           | {
-              title: (.titleName // .title // .name),
-              titleId: (.titleId // .title_id // .nsuid),
-              totalPlayedMinutes: (.totalPlayedMinutes // .total_played_minutes)
+              title: .titleName,
+              titleId,
+              platform,
+              totalPlayedMinutes
             }
         ]
       })
@@ -301,27 +289,21 @@ curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/play_histories" \
 ### Get Wishlist, Points, Rights, and Check-In History
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  | jq .
+curl -s -G "https://app-api.znej.nintendo.com/api/v2.0/users/me/wishlist" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" --data-urlencode "productType=DIGITAL" | jq '.products'
+```
+
+Repeat the wishlist request with `productType=PHYSICAL` when the user asks for all saved products.
+
+```bash
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/points" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" | jq '{points, expirationPoints}'
 ```
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/points" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  | jq .
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/rights" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" | jq '{scheduledOrderItem, purchasedItem}'
 ```
 
 ```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/rights" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  | jq .
-```
-
-```bash
-curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/check_in_histories" \
-  --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" \
-  | jq .
+curl -s "https://app-api.znej.nintendo.com/api/v2.0/users/me/check_in_histories" --header "Authorization: Bearer $NINTENDO_STORE_TOKEN" | jq '.checkInHistories'
 ```
 
 ## Guidelines
