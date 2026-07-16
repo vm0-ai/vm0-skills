@@ -186,6 +186,7 @@
 - [x] [Google Docs](https://developers.google.com/workspace/docs/api) - Document Creation & Editing
 - [x] [Google Drive](https://developers.google.com/drive/api) - File Storage & Management
 - [x] [Google Sheets](https://developers.google.com/sheets/api) - Spreadsheet Platform
+- [x] [Google Slides](https://developers.google.com/workspace/slides/api) - Presentation Creation & Editing
 - [x] [Podchaser](https://api-docs.podchaser.com/) - Podcast Database & Discovery API
 
 ---
