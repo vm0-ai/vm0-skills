@@ -7,7 +7,7 @@ description: Operate connected desktop apps or GUI workflows through Zero Comput
 
 ## Overview
 
-Use `npx -p @vm0/cli zero computer-use <command>` to inspect and operate apps on the connected Zero Desktop host. Treat it as a GUI control surface: read the app state, inspect screenshots, then act through accessibility elements whenever possible.
+Use `npx -p @vm0/cli zero computer-use <command>` to inspect and operate apps on the connected Zero Desktop host. Treat it as an accessibility-first GUI control surface: read the app state, act through accessibility elements, and inspect screenshots only when visual information is required or the accessibility state is insufficient.
 
 `--app` accepts an app bundle id only, such as `com.apple.Safari` or `com.google.Chrome`. App names like `Safari`, `Google Chrome`, `Slack`, or `WeChat` are display labels only and must not be passed to `--app`.
 
@@ -43,7 +43,7 @@ npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout
 
 - `snapshotId` is required for follow-up actions against the same state.
 - `appState` is expected to be a local file path containing the full accessibility tree. Read or filter that file to find element indexes, roles, labels, URLs, and the focused element.
-- `screenshot` is a local image path under `/tmp/vm0/computer-use/...`; inspect it with the image viewer when visual judgment matters.
+- `screenshot` is a local image path under `/tmp/vm0/computer-use/...`. Do not inspect it by default; use the image viewer only when visual judgment matters or the accessibility tree does not expose a usable target.
 - During rollout, older CLI versions may still return `appState` as an inline string. If it is not a path, save the JSON output to a temp file and extract/filter the inline string.
 
 6. Act on elements first, using the same bundle id and snapshot:
@@ -59,6 +59,13 @@ npx -p @vm0/cli zero computer-use scroll --app "$app_bundle_id" --snapshot-id <s
 7. Re-read state after every meaningful UI change. Element indexes and coordinates can become stale after navigation, scrolling, or opening a new window.
 
 If a post-action command returns a new `snapshotId` and `appState`, use that new snapshot. Otherwise, explicitly run `get-app-state` again before choosing the next element index or coordinate.
+
+## Accessibility-First Policy
+
+- Start with the `appState` accessibility tree. For routine forms, buttons, lists, links, and navigation, do not inspect the screenshot when accessibility roles and labels provide enough information to act safely.
+- If the UI behaves unexpectedly, re-read and filter the latest `appState` before falling back to the screenshot.
+- Inspect the screenshot when the accessibility tree is incomplete or ambiguous, the task depends on visual appearance or layout, or no useful accessibility element exists and coordinate input is required.
+- Use coordinates only after inspecting the screenshot from the same snapshot. Return to element-index actions as soon as the accessibility tree exposes a reliable target.
 
 ## App Identity Rules
 
@@ -112,27 +119,14 @@ Use filtered output to locate clickable `link`, `button`, `text field`, `checkbo
 - If `type-text` fails with `element_not_editable`, click into a text field first or use `set-value` on a settable text field.
 - Avoid destructive UI actions unless the user explicitly requested them and the current state confirms the target.
 
-## Slack Pattern
-
-For Slack reading tasks:
-
-1. Run `list-apps` and find Slack's `bundleId` from the app record. Slack is often `com.tinyspeck.slackmacgap`, but use the value returned by the host.
-2. Run `get-app-state --app <slackBundleId>`.
-3. Inspect the screenshot to understand channel/thread layout.
-4. Filter the `appState` file for sender names, link domains, message text, composer labels, and `Send now`.
-5. Click Slack links by element index when the user specifically asked to use the GUI.
-6. If the task is simply to send a message and no GUI interaction is required, prefer `zero slack message send` for reliability; note that this is a Slack API shortcut, not desktop computer use.
-
-For Slack thread messages, watch for composer options like `Also send to #channel`. If the user asked to post in the channel rather than only reply in a thread, either select that option in Slack or use `zero slack message send -c <channel-id>`.
-
 ## Browser Pattern
 
 After clicking a link from another app:
 
 1. Use `list-apps` to find the browser bundle id, such as `com.apple.Safari`, `com.google.Chrome`, or the Arc bundle id returned by the host.
-2. Inspect the address field, page title, and screenshot.
+2. Read or filter the browser `appState` for the address field, page title, links, controls, and focused element.
 3. Use `press-key --app <browserBundleId> --snapshot-id <snapshotId> --key Command+L` plus `type-text` and `Enter` when direct navigation is faster than finding a link.
-4. For visual review, always inspect the screenshot path. Browser accessibility text alone is not enough for layout, design, or image-heavy pages.
+4. Inspect the screenshot only when the task depends on layout, design, images, canvas content, or another detail that the accessibility tree does not represent reliably.
 
 ## Failure Handling
 
@@ -143,4 +137,4 @@ After clicking a link from another app:
 
 ## Reporting Back
 
-State what was actually done through Computer Use: apps inspected by bundle id, key screenshots reviewed, and whether actions succeeded. If a desktop action times out or the host is unavailable, say that directly and use a stable fallback only when it still satisfies the user request.
+State what was actually done through Computer Use: apps inspected by bundle id, whether screenshot fallback was needed, and whether actions succeeded. If a desktop action times out or the host is unavailable, say that directly and use a stable fallback only when it still satisfies the user request.
