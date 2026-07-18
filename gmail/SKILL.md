@@ -258,13 +258,6 @@ DRAFT_ID=$(printf '%s' "$DRAFT_RESPONSE" | jq -er '.id')
 printf '%s\n' "$DRAFT_ID"
 ```
 
-When working from a Zero web chat, link the new draft to the current thread and
-return the resulting URL to the user:
-
-```bash
-zero mail link "$DRAFT_ID"
-```
-
 ### Send Draft
 
 Write to `/tmp/gmail_request.json`:
