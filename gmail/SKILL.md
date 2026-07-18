@@ -59,7 +59,7 @@ curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages/{message-id}?fo
 ENCODED_SUBJECT="=?UTF-8?B?$(printf '%s' "{subject}" | base64 -w 0)?="
 
 # Create RFC 2822 message and base64url encode
-RAW_MESSAGE=$(printf "To: {recipient-email}\r\nSubject: ${ENCODED_SUBJECT}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 -w 0 | tr '+/' '-_' | tr -d '=')
+RAW_MESSAGE=$(printf "From: {sender-email}\r\nTo: {recipient-email}\r\nSubject: ${ENCODED_SUBJECT}\r\nContent-Type: text/plain; charset=utf-8\r\n\r\n{body-text}" | base64 -w 0 | tr '+/' '-_' | tr -d '=')
 ```
 
 Write to `/tmp/gmail_request.json`:
@@ -213,6 +213,56 @@ Then run:
 
 ```bash
 curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/drafts" --header "Authorization: Bearer $GMAIL_TOKEN" --header "Content-Type: application/json" -d @/tmp/gmail_request.json
+```
+
+### Create Draft with Attachments
+
+Use Python's standard email library to build the RFC822 message. Pass one or
+more attachment paths after the body argument:
+
+```bash
+python - "{sender-email}" "{recipient-email}" "{subject}" "{body-text}" "{attachment-path}" <<'PY'
+import mimetypes
+import sys
+from email.message import EmailMessage
+from email.policy import SMTP
+from pathlib import Path
+
+sender, recipient, subject, body, *attachment_paths = sys.argv[1:]
+message = EmailMessage()
+message["From"] = sender
+message["To"] = recipient
+message["Subject"] = subject
+message.set_content(body)
+
+for value in attachment_paths:
+    path = Path(value)
+    content_type, _ = mimetypes.guess_type(path.name)
+    maintype, subtype = (content_type or "application/octet-stream").split("/", 1)
+    message.add_attachment(
+        path.read_bytes(),
+        maintype=maintype,
+        subtype=subtype,
+        filename=path.name,
+    )
+
+Path("/tmp/gmail-draft.eml").write_bytes(message.as_bytes(policy=SMTP))
+PY
+```
+
+Upload the RFC822 message directly to Gmail's draft media endpoint:
+
+```bash
+DRAFT_RESPONSE=$(curl -sS -X POST "https://gmail.googleapis.com/upload/gmail/v1/users/me/drafts?uploadType=media" --header "Authorization: Bearer $GMAIL_TOKEN" --header "Content-Type: message/rfc822" --data-binary @/tmp/gmail-draft.eml)
+DRAFT_ID=$(printf '%s' "$DRAFT_RESPONSE" | jq -er '.id')
+printf '%s\n' "$DRAFT_ID"
+```
+
+When working from a Zero web chat, link the new draft to the current thread and
+return the resulting URL to the user:
+
+```bash
+zero mail link "$DRAFT_ID"
 ```
 
 ### Send Draft
