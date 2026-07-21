@@ -119,6 +119,7 @@
 - [x] [Axiom](https://axiom.co/docs/restapi/introduction) - Cloud-Native Observability Platform
 - [x] [Plausible](https://plausible.io/docs) - Privacy-Friendly Web Analytics
 - [x] [Semrush](https://developer.semrush.com/api/get-started/quick-start/) - SEO, keyword, backlink, and competitive intelligence API
+- [x] [Topvisor](https://topvisor.com/api/v2/) - SEO project, keyword, rank tracking, SERP, and site audit API
 - [x] [Profound](https://docs.tryprofound.com/rest-api/introduction) - AI search visibility, citations, sentiment, fanout, and Agent Analytics API
 - [x] [Massive](https://massive.com/docs/rest/quickstart) - Market data API for stocks, options, forex, crypto, and indices
 - [x] [Datadog](https://docs.datadoghq.com/api/) - Infrastructure Monitoring & APM
