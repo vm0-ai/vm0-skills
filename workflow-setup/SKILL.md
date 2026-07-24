@@ -43,6 +43,14 @@ Default to a requirements-first conversation. Ask only for missing information
 needed for the next action, and keep questions short. Prefer one question with
 2-4 concrete choices over a generic template.
 
+For built-in templates, use a draft-first setup path. If the template already
+defines a clear job, save the reusable workflow before asking about connector
+setup or automation details. Keep it without an automation until the user
+confirms the trigger and any safety-sensitive side effects. If permission to
+send, merge, edit, spend, delete, or contact people is unclear, make the draft
+prepare or recommend the action and require approval instead of blocking draft
+creation.
+
 Good user-facing questions:
 
 - "What should this workflow do each time it runs?"
@@ -89,8 +97,11 @@ When a user says "save these steps", "create a workflow", "make a reusable SOP",
    name/description, not by ID.
 3. If creating an automation and no suitable workflow exists, offer to create
    one with Zero first, then attach the automation.
-4. Collect the minimum missing requirements in natural language.
-5. Execute the Zero CLI command(s) in the background.
+4. Collect the minimum missing requirements for the next command. A connector,
+   schedule, destination, or trigger setting is not required to save a workflow
+   draft when the reusable job is already clear.
+5. Execute the Zero CLI command(s) in the background. For a template, create and
+   verify the workflow draft before asking the next activation question.
 6. Verify with `workflow view` and/or `workflow trigger list` after create or
    update operations.
 7. Report the result in plain language, including what will happen next and any
@@ -158,9 +169,20 @@ disable the old one.
 
 ### Template Or Uploaded Workflow
 
-If the user starts from a template or uploaded file, treat the source as a draft
-for workflow instructions. Confirm the workflow name, job, and safety limits
-before creating it. Do not expose file packaging details unless import fails.
+If the user starts from a built-in template, treat the selected template as
+enough approval to save a reusable workflow draft when its job is clear. Infer
+the name and description from the template, create it without an automation,
+and verify it. Do not inspect connector authorization first.
+
+When trigger details or destinations are missing, ask one short question only
+after the draft exists. Do not add or enable an automation until the user has
+confirmed its trigger and safety-sensitive side effects. For destructive or
+external actions that are not yet confirmed, keep the draft in
+recommend/draft-only mode with an approval gate.
+
+For an uploaded file whose job is ambiguous, ask only the next question needed
+to understand the reusable workflow body. Do not expose file packaging details
+unless import fails.
 
 ## Trigger Requirement Mapping
 
