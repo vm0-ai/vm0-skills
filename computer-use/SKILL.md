@@ -1,6 +1,6 @@
 ---
 name: computer-use
-description: Operate connected desktop apps or GUI workflows through Zero Computer Use when APIs are not enough.
+description: Operate apps on the desktop host the user connected to Zero Computer Use, when APIs are not enough. Not for remote browser sessions, which are Zero Browser (`zero browser use`).
 ---
 
 # Computer Use
