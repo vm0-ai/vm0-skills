@@ -6,7 +6,7 @@ description: Apify web scraping platform. Use when user mentions "scrape website
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name APIFY_TOKEN` or `zero doctor check-connector --url https://api.apify.com/v2/acts/apify~web-scraper/runs --method POST`
+If requests fail, run `zero doctor check-connector --env-name APIFY_TOKEN` or `zero doctor check-connector --url https://api.apify.com/v2/actors/apify~web-scraper/runs --method POST`
 
 ## How to Use
 
@@ -27,7 +27,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+curl -s -X POST "https://api.apify.com/v2/actors/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
 ```
 
 **Response contains `id` (run ID) and `defaultDatasetId` for fetching results.**
@@ -49,7 +49,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+curl -s -X POST "https://api.apify.com/v2/actors/apify~web-scraper/run-sync-get-dataset-items" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
 ```
 
 ### 3. Check Run Status
@@ -78,7 +78,7 @@ Then run:
 
 ```bash
 # Step 1: Start an async run and capture the run ID
-RUN_ID=$(curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json | jq -r '.data.id')
+RUN_ID=$(curl -s -X POST "https://api.apify.com/v2/actors/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json | jq -r '.data.id')
 
 # Step 2: Check the run status
 curl -s "https://api.apify.com/v2/actor-runs/${RUN_ID}" --header "Authorization: Bearer $APIFY_TOKEN" | jq '.data.status'
@@ -112,17 +112,19 @@ Then run:
 
 ```bash
 # Step 1: Start async run and capture IDs
-RESPONSE=$(curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json)
+RESPONSE=$(curl -s -X POST "https://api.apify.com/v2/actors/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json)
 
 RUN_ID=$(echo "$RESPONSE" | jq -r '.data.id')
 DATASET_ID=$(echo "$RESPONSE" | jq -r '.data.defaultDatasetId')
 
 # Step 2: Wait for completion (poll status)
+DEADLINE=$((SECONDS + 900))
 while true; do
+  [[ "$SECONDS" -ge "$DEADLINE" ]] && echo "Actor run exceeded 15 minutes" >&2 && exit 1
   STATUS=$(curl -s "https://api.apify.com/v2/actor-runs/${RUN_ID}" --header "Authorization: Bearer $APIFY_TOKEN" | jq -r '.data.status')
   echo "Status: $STATUS"
   [[ "$STATUS" == "SUCCEEDED" ]] && break
-  [[ "$STATUS" == "FAILED" || "$STATUS" == "ABORTED" ]] && exit 1
+  [[ "$STATUS" == "FAILED" || "$STATUS" == "ABORTED" || "$STATUS" == "TIMED-OUT" ]] && exit 1
   sleep 5
 done
 
@@ -154,7 +156,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.apify.com/v2/acts/apify~google-search-scraper/run-sync-get-dataset-items?timeout=120" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+curl -s -X POST "https://api.apify.com/v2/actors/apify~google-search-scraper/run-sync-get-dataset-items?timeout=120" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
 ```
 
 #### Website Content Crawler
@@ -172,7 +174,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.apify.com/v2/acts/apify~website-content-crawler/run-sync-get-dataset-items?timeout=300" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+curl -s -X POST "https://api.apify.com/v2/actors/apify~website-content-crawler/run-sync-get-dataset-items?timeout=300" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
 ```
 
 #### Instagram Scraper
@@ -190,8 +192,59 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.apify.com/v2/acts/apify~instagram-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+curl -s -X POST "https://api.apify.com/v2/actors/apify~instagram-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
 ```
+
+#### X Tweet Scraper
+
+Use `xquik/x-tweet-scraper` for public posts, searches, timelines, threads, replies, quotes, and engagement data.
+
+Actor: https://apify.com/xquik/x-tweet-scraper
+
+Write to `/tmp/apify_request.json`:
+
+```json
+{
+  "searchTerms": ["from:apify AI", "#webscraping lang:en"],
+  "queryType": "Latest",
+  "includeSearchTerms": true,
+  "maxItems": 25
+}
+```
+
+Then run:
+
+```bash
+curl --fail --silent --show-error -X POST "https://api.apify.com/v2/actors/xquik~x-tweet-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+```
+
+`maxItems` caps the whole run, including runs with several search terms.
+
+#### X Follower Scraper
+
+Use `xquik/x-follower-scraper` for followers, following, verified followers, lists, communities, and audience overlap.
+
+Actor: https://apify.com/xquik/x-follower-scraper
+
+Write to `/tmp/apify_request.json`:
+
+```json
+{
+  "twitterHandles": ["apify"],
+  "relation": "followers",
+  "outputMode": "compact",
+  "includeTargetMetadata": true,
+  "maxItems": 25
+}
+```
+
+Then run:
+
+```bash
+curl --fail --silent --show-error -X POST "https://api.apify.com/v2/actors/xquik~x-follower-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+```
+
+Check each Actor's live Apify pricing box before starting a paid run. Diagnostic rows use `resultType: "diagnostic"` and should not be counted as scraped data.
 
 #### Amazon Product Scraper
 
@@ -207,7 +260,7 @@ Write to `/tmp/apify_request.json`:
 Then run:
 
 ```bash
-curl -s -X POST "https://api.apify.com/v2/acts/junglee~amazon-crawler/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
+curl -s -X POST "https://api.apify.com/v2/actors/junglee~amazon-crawler/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json
 ```
 
 ### 6. List Your Runs
@@ -244,7 +297,7 @@ Then run:
 
 ```bash
 # Step 1: Start an async run and capture the run ID
-RUN_ID=$(curl -s -X POST "https://api.apify.com/v2/acts/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json | jq -r '.data.id')
+RUN_ID=$(curl -s -X POST "https://api.apify.com/v2/actors/apify~web-scraper/runs" --header "Authorization: Bearer $APIFY_TOKEN" --header "Content-Type: application/json" -d @/tmp/apify_request.json | jq -r '.data.id')
 
 echo "Started run: $RUN_ID"
 
@@ -269,12 +322,15 @@ curl -s "https://api.apify.com/v2/store?limit=20&category=ECOMMERCE" --header "A
 | `apify/google-search-scraper` | Google search results |
 | `apify/instagram-scraper` | Instagram posts/profiles |
 | `junglee/amazon-crawler` | Amazon products |
-| `apify/twitter-scraper` | Twitter/X posts |
+| `xquik/x-tweet-scraper` | X/Twitter posts, searches, timelines, and engagement |
+| `xquik/x-follower-scraper` | X/Twitter followers, lists, communities, and overlap |
 | `apify/youtube-scraper` | YouTube videos |
 | `apify/linkedin-scraper` | LinkedIn profiles |
 | `lukaskrivka/google-maps` | Google Maps places |
 
 Find more at: https://apify.com/store
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
 ## Run Options
 
