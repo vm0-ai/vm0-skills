@@ -25,6 +25,13 @@ npx -p @vm0/cli zero generate -h
 
 Run `zero generate <type>` with no prompt to list available providers for that artifact type. Add `--all` when unavailable or not-yet-authorized connectors are relevant.
 
+## Built-in Generation Result Context
+
+- A successful built-in image, video, or voice generation creates a server-side file and may charge organization credits. It does not create a local file.
+- The default CLI output is a human-readable view of the generation result. Direct built-in image, video, and voice generation accepts `--json` and prints the complete result as one JSON object.
+- Shell output filtering can hide fields from either view. It does not undo the generation or its charge.
+- Running the generation command again starts a new generation and may charge credits again.
+
 ## Generation Workflow
 
 1. Identify the artifact type from the user's request.
@@ -62,7 +69,7 @@ Run `zero generate <type>` with no prompt to list available providers for that a
 6. Execute and wait for completion.
    - Run the selected `zero generate <type>` command.
    - For commands that return an Open Design resource-selection packet, follow the packet: author the artifact, verify it locally if needed, and host static outputs with `zero host`.
-   - For commands that return `/f/` file URLs, keep the URL and metadata for the user.
+   - Successful direct built-in media generation returns a persisted `/f/` file URL and metadata. The `--json` form exposes the complete result object.
    - If generation fails because of missing credits, run `zero doctor credit`.
    - If connector auth fails, run `zero doctor check-connector` using the environment name or URL from the provider guidance.
 
