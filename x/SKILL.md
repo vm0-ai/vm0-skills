@@ -1,8 +1,9 @@
 ---
 name: x
-description: X (Twitter) API for tweets and profiles. Use when user mentions "X",
-  "Twitter", "x.com", "twitter.com", shares a tweet link, "check X", or asks about
-  social media posts.
+description: X (Twitter) API for reading and publishing posts, profiles, timelines,
+  search, media, and engagement actions. Use when user mentions "X", "Twitter",
+  "x.com", "twitter.com", shares a post link, asks to check X, or asks to draft,
+  publish, delete, like, or repost social media content.
 ---
 
 ## How to Use
@@ -11,7 +12,10 @@ Use `curl` directly against `https://api.x.com`. Agent-local wrapper commands ma
 fail even when the connector boundary can inject valid X API authentication for
 direct `api.x.com` requests.
 
-All examples below are read-only. Pipe through `jq` when you need structured output.
+The connector supports both read and write operations. A direct user request such
+as "post this on X" authorizes that specific write; do not require browser access.
+If the user asks only for a draft or options, do not publish. Pipe responses through
+`jq` when you need structured output.
 
 ### 1. Get Authenticated User Profile
 
@@ -137,6 +141,93 @@ USER_ID="$(curl -sS 'https://api.x.com/2/users/by/username/elonmusk?user.fields=
 curl -sS "https://api.x.com/2/users/${USER_ID}/following?max_results=20&user.fields=id,name,username,description,public_metrics,verified"
 ```
 
+## Write Operations
+
+Only perform the specific mutation the user requested. Preserve the approved text
+and media exactly unless the user also asks for edits.
+
+### Create a Post
+
+Use `jq` to JSON-escape user-provided text safely:
+
+```bash
+POST_TEXT='Hello from the X API'
+curl -sS -X POST 'https://api.x.com/2/tweets' \
+  -H 'Content-Type: application/json' \
+  --data "$(jq -nc --arg text "$POST_TEXT" '{text: $text}')"
+```
+
+The response contains the new post ID at `.data.id`. Return a link in the form
+`https://x.com/i/status/POST_ID` after publishing.
+
+To reply or quote a post, add one of these objects to the request body:
+
+```json
+{"reply":{"in_reply_to_tweet_id":"POST_ID"}}
+{"quote_tweet_id":"POST_ID"}
+```
+
+### Upload Media and Create a Post
+
+For a one-shot image upload:
+
+```bash
+MEDIA_RESPONSE="$(curl -sS -X POST 'https://api.x.com/2/media/upload' \
+  -F 'media=@/absolute/path/image.png' \
+  -F 'media_category=tweet_image')"
+MEDIA_ID="$(printf '%s' "$MEDIA_RESPONSE" | jq -r '.data.id')"
+
+POST_TEXT='Post text'
+curl -sS -X POST 'https://api.x.com/2/tweets' \
+  -H 'Content-Type: application/json' \
+  --data "$(jq -nc --arg text "$POST_TEXT" --arg media_id "$MEDIA_ID" \
+    '{text: $text, media: {media_ids: [$media_id]}}')"
+```
+
+For video, GIF, or a large file, use the current v2 chunked upload protocol:
+
+1. `POST /2/media/upload/initialize` with JSON containing `media_type`,
+   `total_bytes`, and `media_category` such as `tweet_video`.
+2. Split the file into chunks and send each to
+   `POST /2/media/upload/{id}/append` as multipart fields `media` and
+   `segment_index`, starting at `0`.
+3. `POST /2/media/upload/{id}/finalize`.
+4. Poll `GET /2/media/upload?media_id=ID&command=STATUS`, respecting
+   `processing_info.check_after_secs`, until the state is `succeeded` or `failed`.
+5. Create the post with the returned media ID. Do not publish before processing
+   succeeds.
+
+Do not use the legacy `command=INIT`, `APPEND`, and `FINALIZE` protocol against
+the v2 endpoint.
+
+### Delete a Post
+
+```bash
+curl -sS -X DELETE 'https://api.x.com/2/tweets/POST_ID'
+```
+
+### Like or Unlike a Post
+
+```bash
+USER_ID="$(curl -sS 'https://api.x.com/2/users/me' | jq -r '.data.id')"
+curl -sS -X POST "https://api.x.com/2/users/${USER_ID}/likes" \
+  -H 'Content-Type: application/json' \
+  --data '{"tweet_id":"POST_ID"}'
+
+curl -sS -X DELETE "https://api.x.com/2/users/${USER_ID}/likes/POST_ID"
+```
+
+### Repost or Undo a Repost
+
+```bash
+USER_ID="$(curl -sS 'https://api.x.com/2/users/me' | jq -r '.data.id')"
+curl -sS -X POST "https://api.x.com/2/users/${USER_ID}/retweets" \
+  -H 'Content-Type: application/json' \
+  --data '{"tweet_id":"POST_ID"}'
+
+curl -sS -X DELETE "https://api.x.com/2/users/${USER_ID}/retweets/POST_ID"
+```
+
 ## Pagination
 
 Most list endpoints support pagination. Use `max_results` to control result count.
@@ -182,10 +273,13 @@ Use the returned `next_token` value as `pagination_token` in the next request to
 
 ## Guidelines
 
-1. **Read-only access**: This connector only grants read permissions; you cannot post, like, or retweet
-2. **Rate limits**: X API has strict rate limits; avoid rapid successive calls
-3. **Use direct curl**: Call `https://api.x.com/2/...` with `curl -sS`
-4. **Let the connector inject auth**: Do not hard-code bearer tokens in commands or docs
-5. **Fields are opt-in**: Endpoints only return minimal fields by default; specify `tweet.fields` and `user.fields` for richer data
-6. **7-day search window**: The recent search endpoint only covers the past 7 days
-7. **Pagination**: Use `max_results` and `pagination_token`
+1. **Read and write access**: The connector can publish and delete posts, upload media, and perform engagement actions in addition to reads
+2. **Explicit writes**: Only mutate X when the user requests that action; a draft request is not permission to publish
+3. **Verify mutations**: Check the API response and return the resulting post link or action result
+4. **Diagnose denials**: If a write is blocked, inspect connector permissions before claiming the connector is read-only
+5. **Rate limits**: X API has strict rate limits; avoid rapid successive calls
+6. **Use direct curl**: Call `https://api.x.com/2/...` with `curl -sS`
+7. **Let the connector inject auth**: Do not hard-code bearer tokens in commands or docs
+8. **Fields are opt-in**: Endpoints only return minimal fields by default; specify `tweet.fields` and `user.fields` for richer data
+9. **7-day search window**: The recent search endpoint only covers the past 7 days
+10. **Pagination**: Use `max_results` and `pagination_token`
