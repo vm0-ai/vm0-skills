@@ -1,26 +1,19 @@
 # vm0-skills
 
-A collection of reusable [Agent Skills](https://agentskills.io) for AI agents.
+A collection of reusable [Agent Skills](https://agentskills.io) that are
+independent of the VM0 connector catalog.
 
 Skills follow the [Agent Skills specification](https://agentskills.io/specification).
 
-## Why use this?
-
-```
-No MCPs.
-No SDKs.
-No CLI apps.
-
-Just curl.
-
-Organic skills that any AI agent can learn and use.
-```
+Skills owned by a VM0 connector live with the connector definition in
+[vm0-connectors](https://github.com/vm0-ai/vm0-connectors).
 
 ## Principles
 
-1. **Focus on SaaS API Integration**: Focus on common SaaS API use cases, providing practical integration solutions
-2. **Clean, Zero Scripts**: Keep code simple and clear, no redundant scripts, easy for AI Agents to learn and understand
-3. **Security First**: All API calls are documented in SKILL.md for easy security auditing and compliance checks
+1. **Single Ownership**: Keep connector-owned skills in `vm0-connectors` and independent skills here
+2. **Focused Instructions**: Give agents practical guidance for one well-defined capability
+3. **Self-Contained**: Keep each skill's instructions and supporting resources together
+4. **Security First**: Document commands in `SKILL.md` for security auditing and compliance checks
 
 ## Installation
 
@@ -33,8 +26,8 @@ There are multiple ways to install and use these skills:
 /plugin marketplace add vm0-ai/vm0-skills
 
 # Install specific skills
-/plugin install notion@vm0-skills
-/plugin install slack-webhook@vm0-skills
+/plugin install github-copilot@vm0-skills
+/plugin install hackernews@vm0-skills
 ```
 
 ### 2. Direct Download
@@ -44,12 +37,12 @@ There are multiple ways to install and use these skills:
 git clone https://github.com/vm0-ai/vm0-skills.git
 
 # Copy to personal skills directory
-cp -a vm0-skills/notion ~/.claude/skills/
-cp -a vm0-skills/slack-webhook ~/.claude/skills/
+cp -a vm0-skills/github-copilot ~/.claude/skills/
+cp -a vm0-skills/hackernews ~/.claude/skills/
 
 # Or copy to project directory
-cp -a vm0-skills/notion ./.claude/skills/
-cp -a vm0-skills/slack-webhook ./.claude/skills/
+cp -a vm0-skills/github-copilot ./.claude/skills/
+cp -a vm0-skills/hackernews ./.claude/skills/
 ```
 
 After installation, restart Claude Code, then ask "What skills are available?" to see installed skills.
@@ -58,11 +51,13 @@ After installation, restart Claude Code, then ask "What skills are available?" t
 
 To add a new skill or improve an existing one:
 
-1. Follow the [Agent Skills specification](https://agentskills.io/specification)
-2. Include a `SKILL.md` file with usage examples
-3. Ensure all examples are tested and working
-4. Submit a pull request
-
+1. If the skill belongs to a VM0 connector, contribute it under
+   `connectors/<connector-ref>/skill/` in
+   [vm0-connectors](https://github.com/vm0-ai/vm0-connectors).
+2. For an independent skill, follow the
+   [Agent Skills specification](https://agentskills.io/specification).
+3. Include a `SKILL.md` file with tested usage examples.
+4. Submit a pull request.
 
 ## Resources
 
