@@ -96,6 +96,7 @@
 - [x] [Perplexity AI](https://docs.perplexity.ai/) - AI Search Engine
 - [x] [GitHub Copilot](https://docs.github.com/en/rest/copilot) - AI Coding Assistant
 - [x] [Runway](https://docs.dev.runwayml.com/) - AI Video Generation
+- [x] [JoggAI](https://docs.jogg.ai/api-reference/v2/QuickStart/GettingStarted) - AI avatar and product video generation
 - [x] [MiniMax](https://platform.minimaxi.com/document) - AI Model Service
 - [x] [OpenAI](https://platform.openai.com/docs/api-reference) - GPT & Codex AI Models
 - [x] [Atlas Cloud](https://www.atlascloud.ai/docs/en/models/get-start) - Full-Modal AI Platform
