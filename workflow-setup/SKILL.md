@@ -105,7 +105,8 @@ When a user says "save these steps", "create a workflow", "make a reusable SOP",
 6. Verify with `workflow view` and/or `workflow trigger list` after create or
    update operations.
 7. Report the result in plain language, including what will happen next and any
-   safety limits. Keep technical IDs out of the normal response.
+   safety limits. After creating a new automation, proactively name the model it
+   will use. Keep technical IDs out of the normal response.
 
 Do not inspect connector authorization or request permissions as part of the
 default setup path. If the command reports connector authorization or permission
@@ -166,6 +167,14 @@ Collect:
 Check existing triggers for that workflow before creating a new one. If a similar
 automation already exists, ask whether to keep both, update the existing one, or
 disable the old one.
+
+After adding a new automation, read its thread model from the creation result.
+If the result does not include the model, inspect the created automation or its
+chat thread before responding. Proactively tell the user the friendly model name
+the automation will use; include the model ID only when the user asks for
+technical details. Automations use their chat thread's current model rather than
+storing an independent model, so phrase this as the model the automation will
+use and do not imply that the model is pinned to the automation itself.
 
 ### Template Or Uploaded Workflow
 
@@ -454,6 +463,10 @@ zero workflow trigger list <workflow-id>
 zero workflow trigger show <trigger-id>
 ```
 
+For a newly created automation, verification is incomplete until its thread
+model is known. Read it from the creation result or inspect the automation or
+chat thread before replying to the user.
+
 Keep verification output internal unless the user needs technical detail.
 
 ## Final Response Defaults
@@ -463,6 +476,7 @@ Default final response:
 - State the outcome in plain language.
 - Name the workflow and the automation behavior.
 - Mention enabled/paused status.
+- For a newly created automation, proactively state the model it will use.
 - Mention important safety behavior, such as "draft only, never sends".
 - Tell the user the natural next action, such as applying a Gmail label or using
   the webhook URL.
