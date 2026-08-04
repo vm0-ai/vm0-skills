@@ -1,6 +1,6 @@
 ---
 name: gen
-description: Use Zero generation pipelines for images, video, voice, presentations, websites, reports, and designs.
+description: Use Zero generation pipelines for images, video, talking-avatar videos, voice, presentations, websites, reports, and designs.
 ---
 
 # Gen
@@ -17,19 +17,21 @@ npx -p @vm0/cli zero generate -h
 
 - `zero generate image` - billed image file generation; supports built-in models, image editing/reference inputs, image style registry selection, and connector guidance.
 - `zero generate video` - billed video file generation; supports built-in video models, first/last frames, reference media, audio controls, and connector guidance.
+- `zero generate avatar-video` - billed JoggAI talking-avatar video generation; supports built-in public avatar and voice discovery, script or audio input, and JoggAI connector guidance.
 - `zero generate voice` - billed speech audio generation; supports built-in voices and connector guidance.
 - `zero generate presentation` - returns an Open Design resource-selection packet for an HTML presentation that the agent authors and hosts.
 - `zero generate website` - returns website authoring instructions / an Open Design packet that the agent uses to build and host a static site.
 - `zero generate report`, `docs-design`, `poster`, `dashboard-design`, `mobile-app-design` - return Open Design resource-selection packets for static HTML artifacts.
 - `zero generate text`, `code`, `document`, `audio` - list connector-backed options and print connector skill-invocation guidance; these do not have built-in vm0 pipelines unless the CLI help says otherwise.
 
-Run `zero generate <type>` with no prompt to list available providers for that artifact type. Add `--all` when unavailable or not-yet-authorized connectors are relevant.
+Run `zero generate <type>` with no generation input to list available providers for that artifact type. Add `--all` when unavailable or not-yet-authorized connectors are relevant.
 
 ## Generation Workflow
 
 1. Identify the artifact type from the user's request.
    - Use `image` for raster images, edits, references, thumbnails, icons, illustrations, and visual assets.
    - Use `video` for generated motion, animated frames, product clips, or reference-driven video.
+   - Use `avatar-video` for a talking avatar driven by a narration script or public audio URL.
    - Use `voice` for speech audio from text.
    - Use Open Design artifact commands for websites, decks, reports, posters, docs, dashboards, and mobile UI prototypes.
    - Use connector-listing commands for text, code, document, or non-speech audio generation.
@@ -56,6 +58,7 @@ Run `zero generate <type>` with no prompt to list available providers for that a
 5. Build the prompt.
    - Preserve the user's core intent, constraints, audience, brand, source materials, aspect ratio, duration, size, format, and delivery target.
    - Add operational details only when they improve generation reliability: composition, visual hierarchy, must-include/must-avoid elements, target medium, and reference handling.
+   - For avatar video, discover public avatar and voice IDs through the CLI before generation. Never invent either ID, and use exactly one of script or audio URL input.
    - For style-guided image generation, let the selected registry style drive stylistic details. Do not manually rewrite the style into the skill; pass `--style <id>`.
    - For prompt text that is long or quote-sensitive, write it to a temp file and pipe it into the command to avoid shell quoting issues.
 
@@ -96,6 +99,20 @@ List current providers:
 npx -p @vm0/cli zero generate image
 npx -p @vm0/cli zero generate video
 npx -p @vm0/cli zero generate voice
+```
+
+Discover public JoggAI avatars and voices, then generate through the built-in pipeline:
+
+```bash
+npx -p @vm0/cli zero generate avatar-video --provider built-in --list-avatars
+npx -p @vm0/cli zero generate avatar-video --provider built-in --list-voices
+npx -p @vm0/cli zero generate avatar-video --provider built-in --avatar-id "<avatar-id>" --voice-id "<voice-id>" --script "<script>"
+```
+
+Get JoggAI connector skill guidance for BYOK operations:
+
+```bash
+npx -p @vm0/cli zero generate avatar-video --provider joggai
 ```
 
 Inspect current image styles and flags:
