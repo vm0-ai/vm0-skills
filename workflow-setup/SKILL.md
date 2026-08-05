@@ -205,6 +205,7 @@ Map friendly trigger choices to CLI kinds:
 - Email label -> `gmail-label-applied`
 - GitHub label -> `github-label-applied`
 - New Google Calendar event -> `google-calendar-event-created`
+- New Google Forms response -> `google-forms-response-submitted`
 
 ### Fixed Schedule
 
@@ -332,6 +333,17 @@ zero workflow trigger add <workflow> google-calendar-event-created --calendar-id
 Current CLI behavior does not support updating this trigger kind. If the user
 wants to change the calendar, create a replacement trigger and remove/disable the
 old one only with user approval.
+
+### Google Forms Response Submitted
+
+Ask for the Google Form link using this exact wording: "Please open the form's
+edit page and copy the link from the address bar."
+
+Command shape:
+
+```bash
+zero workflow trigger add <workflow> google-forms-response-submitted --form-url "https://docs.google.com/forms/d/<form-id>/edit"
+```
 
 ## Management Flows
 
