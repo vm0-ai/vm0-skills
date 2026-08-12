@@ -39,8 +39,8 @@ ask.
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> cron --expr "0 9 * * *" -z Asia/Shanghai
-zero workflow trigger update <trigger-id> --expr "0 9 * * *" -z Asia/Shanghai
+okou workflow trigger add <workflow> cron --expr "0 9 * * *" -z Asia/Shanghai
+okou workflow trigger update <trigger-id> --expr "0 9 * * *" -z Asia/Shanghai
 ```
 
 ## One-Time Scheduled Run
@@ -53,8 +53,8 @@ such as "tomorrow", resolve it to a concrete date in the final confirmation.
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> once --at "2026-06-10T09:00" -z Asia/Shanghai
-zero workflow trigger update <trigger-id> --at "2026-06-10T09:00" -z UTC
+okou workflow trigger add <workflow> once --at "2026-06-10T09:00" -z Asia/Shanghai
+okou workflow trigger update <trigger-id> --at "2026-06-10T09:00" -z UTC
 ```
 
 ## Fixed Interval
@@ -65,8 +65,8 @@ Ask for the interval in natural language. Convert it to a CLI duration such as
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> loop --every 15m
-zero workflow trigger update <trigger-id> --every 10m
+okou workflow trigger add <workflow> loop --every 15m
+okou workflow trigger update <trigger-id> --every 10m
 ```
 
 ## Chat Run Finished
@@ -84,8 +84,8 @@ assistant text cannot match a pattern.
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> chat-run-finished --chat-thread-id <thread-id>
-zero workflow trigger add <workflow> chat-run-finished --chat-thread-id <thread-id> --run-status completed,failed --output-pattern "*deploy failed*"
+okou workflow trigger add <workflow> chat-run-finished --chat-thread-id <thread-id>
+okou workflow trigger add <workflow> chat-run-finished --chat-thread-id <thread-id> --run-status completed,failed --output-pattern "*deploy failed*"
 ```
 
 ## New Email
@@ -97,8 +97,8 @@ unless the user explicitly confirms that broad scope.
 For simple matching, use flags:
 
 ```bash
-zero workflow trigger add <workflow> gmail-new-message --from-contains "@example.com"
-zero workflow trigger add <workflow> gmail-new-message --subject-contains "invoice"
+okou workflow trigger add <workflow> gmail-new-message --from-contains "@example.com"
+okou workflow trigger add <workflow> gmail-new-message --subject-contains "invoice"
 ```
 
 For complex matching, create a temporary config file and pass `--config`. The
@@ -123,8 +123,8 @@ workflow, failing the trigger bind, then doing a label-creation retry.
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> gmail-label-applied --label "Support"
-zero workflow trigger update <trigger-id> --label "Support"
+okou workflow trigger add <workflow> gmail-label-applied --label "Support"
+okou workflow trigger update <trigger-id> --label "Support"
 ```
 
 ## Web Trigger
@@ -141,7 +141,7 @@ without exposing the secret to channels where it does not belong.
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> webhook
+okou workflow trigger add <workflow> webhook
 ```
 
 ## GitHub Label
@@ -152,8 +152,8 @@ both, and whether only the user's own label actions should count or anyone's.
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> github-label-applied --label "triage" --subject both --actor me
-zero workflow trigger update <trigger-id> --label "triage" --subject pull-requests --actor anyone
+okou workflow trigger add <workflow> github-label-applied --label "triage" --subject both --actor me
+okou workflow trigger update <trigger-id> --label "triage" --subject pull-requests --actor anyone
 ```
 
 GitHub label triggers require the GitHub App installation in the workspace. If
@@ -168,7 +168,7 @@ the user's wording clearly implies their own main calendar.
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> google-calendar-event-created --calendar-id primary
+okou workflow trigger add <workflow> google-calendar-event-created --calendar-id primary
 ```
 
 Current CLI behavior does not support updating this trigger kind. If the user
@@ -183,5 +183,5 @@ edit page and copy the link from the address bar."
 Command shape:
 
 ```bash
-zero workflow trigger add <workflow> google-forms-response-submitted --form-url "https://docs.google.com/forms/d/<form-id>/edit"
+okou workflow trigger add <workflow> google-forms-response-submitted --form-url "https://docs.google.com/forms/d/<form-id>/edit"
 ```

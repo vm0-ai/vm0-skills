@@ -1,13 +1,13 @@
 ---
 name: computer-use
-description: Operate apps on the desktop host the user connected to Zero Computer Use, when APIs are not enough. Not for remote browser sessions, which are Zero Browser (`zero browser use`).
+description: Operate apps on the desktop host the user connected to Zero Computer Use, when APIs are not enough. Not for remote browser sessions, which are Zero Browser (`okou browser use`).
 ---
 
 # Computer Use
 
 ## Overview
 
-Use `npx -p @vm0/cli zero computer-use <command>` to inspect and operate apps on the connected Zero Desktop host. Treat it as an accessibility-first GUI control surface: read the app state, act through accessibility elements, and inspect screenshots only when visual information is required or the accessibility state is insufficient.
+Use `okou computer-use <command>` to inspect and operate apps on the connected Zero Desktop host. Treat it as an accessibility-first GUI control surface: read the app state, act through accessibility elements, and inspect screenshots only when visual information is required or the accessibility state is insufficient.
 
 `--app` accepts an app bundle id only, such as `com.apple.Safari` or `com.google.Chrome`. App names like `Safari`, `Google Chrome`, `Slack`, or `WeChat` are display labels only and must not be passed to `--app`.
 
@@ -16,7 +16,7 @@ Use `npx -p @vm0/cli zero computer-use <command>` to inspect and operate apps on
 1. List apps and choose the target app's `bundleId`:
 
 ```bash
-npx -p @vm0/cli zero computer-use list-apps
+okou computer-use list-apps
 ```
 
 Use the `name` field only to identify the app for yourself, then copy the `bundleId` field. Apps listed without a `bundleId` cannot be targeted.
@@ -30,13 +30,13 @@ app_bundle_id="com.apple.Safari"
 3. If the app is not running, open it by bundle id:
 
 ```bash
-npx -p @vm0/cli zero computer-use open-app --app "$app_bundle_id" --timeout 10
+okou computer-use open-app --app "$app_bundle_id" --timeout 10
 ```
 
 4. Inspect the target app by bundle id:
 
 ```bash
-npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout 10
+okou computer-use get-app-state --app "$app_bundle_id" --timeout 10
 ```
 
 5. Read the JSON result:
@@ -49,11 +49,11 @@ npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout
 6. Act on elements first, using the same bundle id and snapshot:
 
 ```bash
-npx -p @vm0/cli zero computer-use click --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index>
-npx -p @vm0/cli zero computer-use set-value --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index> --value "text"
-npx -p @vm0/cli zero computer-use type-text --app "$app_bundle_id" --snapshot-id <snapshotId> --text "literal text"
-npx -p @vm0/cli zero computer-use press-key --app "$app_bundle_id" --snapshot-id <snapshotId> --key Command+L
-npx -p @vm0/cli zero computer-use scroll --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index> --direction down --pages 1
+okou computer-use click --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index>
+okou computer-use set-value --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index> --value "text"
+okou computer-use type-text --app "$app_bundle_id" --snapshot-id <snapshotId> --text "literal text"
+okou computer-use press-key --app "$app_bundle_id" --snapshot-id <snapshotId> --key Command+L
+okou computer-use scroll --app "$app_bundle_id" --snapshot-id <snapshotId> --element-index <index> --direction down --pages 1
 ```
 
 7. Re-read state after every meaningful UI change. Element indexes and coordinates can become stale after navigation, scrolling, or opening a new window.
@@ -79,7 +79,7 @@ To search the `list-apps` output for a likely target:
 
 ```bash
 apps_json=/tmp/computer-use-apps.json
-npx -p @vm0/cli zero computer-use list-apps > "$apps_json"
+okou computer-use list-apps > "$apps_json"
 node -e "const fs=require('fs'); const q=(process.argv[2]||'').toLowerCase(); const apps=JSON.parse(fs.readFileSync(process.argv[1],'utf8')).apps || []; for (const a of apps) { if (!q || String(a.name || '').toLowerCase().includes(q)) console.log([a.name || '', a.bundleId || 'NO_BUNDLE_ID', a.running ? 'running' : 'not running'].join('\t')); }" "$apps_json" "Slack"
 ```
 
@@ -92,7 +92,7 @@ Accessibility trees can be very large. Prefer the `appState` file returned by th
 ```bash
 app_bundle_id="com.apple.Safari"
 state_json=/tmp/computer-use-state.json
-npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout 10 > "$state_json"
+okou computer-use get-app-state --app "$app_bundle_id" --timeout 10 > "$state_json"
 app_state_path=$(node -e "const fs=require('fs'); const r=JSON.parse(fs.readFileSync(process.argv[1],'utf8')); console.log(r.appState)" "$state_json")
 rg -n "Ethan|showcase|sites\\.vm0|Send now" "$app_state_path"
 ```
@@ -101,7 +101,7 @@ If the CLI still returns inline app state instead of a path, use the transition 
 
 ```bash
 state_json=/tmp/computer-use-state.json
-npx -p @vm0/cli zero computer-use get-app-state --app "$app_bundle_id" --timeout 10 > "$state_json"
+okou computer-use get-app-state --app "$app_bundle_id" --timeout 10 > "$state_json"
 node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync(process.argv[1],'utf8')).appState; s.split('\\n').forEach((l,i)=>{ if(/Ethan|showcase|sites\\.vm0|Send now/.test(l)) console.log((i+1)+': '+l) })" "$state_json"
 ```
 

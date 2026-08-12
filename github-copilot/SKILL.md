@@ -6,7 +6,7 @@ description: GitHub Copilot API for AI coding assistance. Use when user mentions
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name GITHUB_TOKEN` or `zero doctor check-connector --url https://api.github.com/orgs/your-org/copilot/billing --method GET`
+If requests fail, run `okou doctor check-connector --env-name GITHUB_TOKEN` or `okou doctor check-connector --url https://api.github.com/orgs/your-org/copilot/billing --method GET`
 
 ## How to Use
 

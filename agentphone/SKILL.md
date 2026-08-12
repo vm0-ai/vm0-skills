@@ -7,7 +7,7 @@ docs: https://docs.agentphone.to
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name AGENTPHONE_TOKEN` or `zero doctor check-connector --url https://api.agentphone.to/v1/agents --method POST`
+If requests fail, run `okou doctor check-connector --env-name AGENTPHONE_TOKEN` or `okou doctor check-connector --url https://api.agentphone.to/v1/agents --method POST`
 
 ## How It Works
 

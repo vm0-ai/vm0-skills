@@ -1,27 +1,26 @@
 ---
 name: workflow-setup
-description: Create, edit, inspect, run, schedule, pause, or delete Zero workflows and automations.
+description: Create, edit, inspect, run, schedule, pause, or delete vm0 workflows and automations.
 ---
 
-# Zero Workflow Setup
+# Okou Workflow Setup
 
-Use this skill to help users create and manage Zero workflows and their
+Use this skill to help users create and manage vm0 workflows and their
 automations. A workflow is the reusable SOP/skill body. An automation is a
 trigger attached to a workflow. The CLI represents automations as
-`zero workflow trigger ...`; the user-facing conversation should usually call
+`okou workflow trigger ...`; the user-facing conversation should usually call
 them "automations" or "triggers" in plain language, not CLI objects.
 
 Prefer workflow triggers over legacy automations unless the user explicitly asks
 for the old automation system.
 
-Run Zero CLI commands as:
+Run Okou CLI commands as:
 
 ```bash
-npx -p @vm0/cli zero <command>
+okou <command>
 ```
 
-If `zero` is already installed in the environment, `zero <command>` is also
-fine.
+The Okou binary is provided by the current agent runtime.
 
 ## User Experience Contract
 
@@ -65,7 +64,7 @@ Avoid user-facing phrasing like:
 
 - "Give me the cron expression."
 - "Which workflow ID should I use?"
-- "Should I call `zero workflow trigger add`?"
+- "Should I call `okou workflow trigger add`?"
 - "Send me the JSON config."
 
 ## Product Model
@@ -99,11 +98,11 @@ When a user says "save these steps", "create a workflow", "make a reusable SOP",
    needed to resolve the name. If ambiguous, ask the user to choose by friendly
    name/description, not by ID.
 3. If creating an automation and no suitable workflow exists, offer to create
-   one with Zero first, then attach the automation.
+   one with Okou first, then attach the automation.
 4. Collect the minimum missing requirements for the next command. A connector,
    schedule, destination, or trigger setting is not required to save a workflow
    draft when the reusable job is already clear.
-5. Execute the Zero CLI command(s) in the background. For a template, create and
+5. Execute the Okou CLI command(s) in the background. For a template, create and
    verify the workflow draft before asking the next activation question.
 6. Verify with `workflow view` and/or `workflow trigger list` after create or
    update operations.
@@ -118,10 +117,10 @@ permission flow requested by the platform instructions.
 
 ## Creation Flows
 
-### Create Workflow With Zero
+### Create Workflow With Okou
 
 Use this when the user wants a new reusable workflow, has no suitable workflow
-for an automation, or chooses "Create with Zero".
+for an automation, or chooses "Create with Okou".
 
 Collect:
 
@@ -135,7 +134,7 @@ Collect:
 Then draft concise workflow instructions and create the workflow:
 
 ```bash
-zero workflow create <name> --agent <agent-id> --display-name "<display name>" --description "<description>" --instruction "<workflow instructions>"
+okou workflow create <name> --agent <agent-id> --display-name "<display name>" --description "<description>" --instruction "<workflow instructions>"
 ```
 
 Use `--instruction-file <path>` for longer instructions. Use `--dir <path>` only
@@ -209,11 +208,11 @@ requirements and command shapes.
 Use:
 
 ```bash
-zero workflow list
-zero workflow list --agent <agent-id>
-zero workflow view <workflow-id>
-zero workflow trigger list <workflow>
-zero workflow trigger show <trigger-id>
+okou workflow list
+okou workflow list --agent <agent-id>
+okou workflow view <workflow-id>
+okou workflow trigger list <workflow>
+okou workflow trigger show <trigger-id>
 ```
 
 Summarize in product language: what the workflow does, whether it has
@@ -226,8 +225,8 @@ When the user asks to change what the workflow does, edit the workflow
 instruction:
 
 ```bash
-zero workflow edit <workflow-id> --instruction-file ./instruction.md
-zero workflow edit <workflow-id> --display-name "<name>" --description "<text>"
+okou workflow edit <workflow-id> --instruction-file ./instruction.md
+okou workflow edit <workflow-id> --display-name "<name>" --description "<text>"
 ```
 
 Ask for confirmation before making changes that broaden side effects.
@@ -245,7 +244,7 @@ Do not imply that workflow instructions changed when only the trigger changed.
 When the user wants to test or manually run once:
 
 ```bash
-zero workflow run <workflow-id>
+okou workflow run <workflow-id>
 ```
 
 Tell the user it has started in a new thread. Include the log command only when
@@ -256,8 +255,8 @@ they ask for technical details or progress debugging.
 Use disable/enable for an automation. This preserves its settings:
 
 ```bash
-zero workflow trigger disable <trigger-id>
-zero workflow trigger enable <trigger-id>
+okou workflow trigger disable <trigger-id>
+okou workflow trigger enable <trigger-id>
 ```
 
 Ask before pausing broad or business-critical automations if the impact is not
@@ -271,13 +270,13 @@ target.
 Use trigger removal when deleting one automation:
 
 ```bash
-zero workflow trigger remove <trigger-id>
+okou workflow trigger remove <trigger-id>
 ```
 
 Use workflow deletion when deleting the workflow itself:
 
 ```bash
-zero workflow delete <workflow-id> -y
+okou workflow delete <workflow-id> -y
 ```
 
 Explain the effect in plain language: deleting an automation stops that one
@@ -289,7 +288,7 @@ triggers.
 Only copy/fork a workflow when the user asks to reuse it on another agent:
 
 ```bash
-zero workflow copy <workflow-id> --to-agent <agent-id>
+okou workflow copy <workflow-id> --to-agent <agent-id>
 ```
 
 Tell the user the workflow has been copied to the target agent.
@@ -299,7 +298,7 @@ Tell the user the workflow has been copied to the target agent.
 If the user asks for run history, first inspect the trigger details for last run
 and next run. If they need full execution logs, use the available logs/search
 tooling with a known run ID or relevant workflow context. Do not claim full
-history is available from `zero workflow trigger` if the CLI only returns summary
+history is available from `okou workflow trigger` if the CLI only returns summary
 fields.
 
 ## Safety Rules
@@ -320,14 +319,14 @@ fields.
 After creating or updating a workflow:
 
 ```bash
-zero workflow view <workflow-id>
+okou workflow view <workflow-id>
 ```
 
 After creating, updating, enabling, disabling, or removing a trigger:
 
 ```bash
-zero workflow trigger list <workflow-id>
-zero workflow trigger show <trigger-id>
+okou workflow trigger list <workflow-id>
+okou workflow trigger show <trigger-id>
 ```
 
 For a newly created automation, verification is incomplete until its thread

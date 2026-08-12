@@ -1,30 +1,30 @@
 ---
 name: gen
-description: Use Zero generation pipelines for images, video, talking-avatar videos, voice, presentations, websites, reports, and designs.
+description: Use Okou generation pipelines for images, video, talking-avatar videos, voice, presentations, websites, reports, and designs.
 ---
 
 # Gen
 
-Use this skill to generate user-facing artifacts through the Zero CLI:
+Use this skill to generate user-facing artifacts through the Okou CLI:
 
 ```bash
-npx -p @vm0/cli zero generate -h
+okou generate -h
 ```
 
-`zero generate` is the source of truth. Always inspect the current command help when exact flags, models, styles, or providers matter.
+`okou generate` is the source of truth. Always inspect the current command help when exact flags, models, styles, or providers matter.
 
 ## Core Commands
 
-- `zero generate image` - billed image file generation; supports built-in models, image editing/reference inputs, image style registry selection, and connector guidance.
-- `zero generate video` - billed video file generation; supports built-in video models, first/last frames, reference media, audio controls, and connector guidance.
-- `zero generate avatar-video` - billed JoggAI talking-avatar video generation; supports built-in public avatar and voice discovery, script or audio input, and JoggAI connector guidance.
-- `zero generate voice` - billed speech audio generation; supports built-in voices and connector guidance.
-- `zero generate presentation` - returns an Open Design resource-selection packet for an HTML presentation that the agent authors and hosts.
-- `zero generate website` - returns website authoring instructions / an Open Design packet that the agent uses to build and host a static site.
-- `zero generate report`, `docs-design`, `poster`, `dashboard-design`, `mobile-app-design` - return Open Design resource-selection packets for static HTML artifacts.
-- `zero generate text`, `code`, `document`, `audio` - list connector-backed options and print connector skill-invocation guidance; these do not have built-in vm0 pipelines unless the CLI help says otherwise.
+- `okou generate image` - billed image file generation; supports built-in models, image editing/reference inputs, image style registry selection, and connector guidance.
+- `okou generate video` - billed video file generation; supports built-in video models, first/last frames, reference media, audio controls, and connector guidance.
+- `okou generate avatar-video` - billed JoggAI talking-avatar video generation; supports built-in public avatar and voice discovery, script or audio input, and JoggAI connector guidance.
+- `okou generate voice` - billed speech audio generation; supports built-in voices and connector guidance.
+- `okou generate presentation` - returns an Open Design resource-selection packet for an HTML presentation that the agent authors and hosts.
+- `okou generate website` - returns website authoring instructions / an Open Design packet that the agent uses to build and host a static site.
+- `okou generate report`, `docs-design`, `poster`, `dashboard-design`, `mobile-app-design` - return Open Design resource-selection packets for static HTML artifacts.
+- `okou generate text`, `code`, `document`, `audio` - list connector-backed options and print connector skill-invocation guidance; these do not have built-in vm0 pipelines unless the CLI help says otherwise.
 
-Run `zero generate <type>` with no generation input to list available providers for that artifact type. Add `--all` when unavailable or not-yet-authorized connectors are relevant.
+Run `okou generate <type>` with no generation input to list available providers for that artifact type. Add `--all` when unavailable or not-yet-authorized connectors are relevant.
 
 ## Generation Workflow
 
@@ -37,12 +37,12 @@ Run `zero generate <type>` with no generation input to list available providers 
    - Use connector-listing commands for text, code, document, or non-speech audio generation.
 
 2. Discover current capability before committing.
-   - Run `zero generate <type> -h` for flags and built-in model support.
-   - Run `zero generate <type>` to see available providers.
-   - If the user asked for a connector/provider by name, run `zero generate <type> --provider <name>` to get invocation guidance, then follow that provider skill.
+   - Run `okou generate <type> -h` for flags and built-in model support.
+   - Run `okou generate <type>` to see available providers.
+   - If the user asked for a connector/provider by name, run `okou generate <type> --provider <name>` to get invocation guidance, then follow that provider skill.
 
 3. Determine whether style discovery is needed.
-   - For styled images, inspect the current style registry from `zero generate image -h`.
+   - For styled images, inspect the current style registry from `okou generate image -h`.
    - Do not hardcode style names or style descriptions in this skill. Treat the registry printed by the CLI as the live source.
    - Choose a registered style when the user's wording clearly matches a trigger, named style, or visual direction in the registry.
    - To obtain style-specific prompt guidance, run image generation with the selected `--style <id>`; the CLI returns the current resource-selection packet / metadata with the style locked in. Use that output instead of recreating the style from memory.
@@ -63,11 +63,11 @@ Run `zero generate <type>` with no generation input to list available providers 
    - For prompt text that is long or quote-sensitive, write it to a temp file and pipe it into the command to avoid shell quoting issues.
 
 6. Execute and wait for completion.
-   - Run the selected `zero generate <type>` command.
-   - For commands that return an Open Design resource-selection packet, follow the packet: author the artifact, verify it locally if needed, and host static outputs with `zero host`.
+   - Run the selected `okou generate <type>` command.
+   - For commands that return an Open Design resource-selection packet, follow the packet: author the artifact, verify it locally if needed, and host static outputs with `okou host`.
    - For commands that return `/f/` file URLs, keep the URL and metadata for the user.
-   - If generation fails because of missing credits, run `zero doctor credit`.
-   - If connector auth fails, run `zero doctor check-connector` using the environment name or URL from the provider guidance.
+   - If generation fails because of missing credits, run `okou doctor credit`.
+   - If connector auth fails, run `okou doctor check-connector` using the environment name or URL from the provider guidance.
 
 7. Deliver the result.
    - Give the user the generated URL or hosted artifact URL.
@@ -96,53 +96,53 @@ Proceed without asking when:
 List current providers:
 
 ```bash
-npx -p @vm0/cli zero generate image
-npx -p @vm0/cli zero generate video
-npx -p @vm0/cli zero generate voice
+okou generate image
+okou generate video
+okou generate voice
 ```
 
 Discover public JoggAI avatars and voices, then generate through the built-in pipeline:
 
 ```bash
-npx -p @vm0/cli zero generate avatar-video --provider built-in --list-avatars
-npx -p @vm0/cli zero generate avatar-video --provider built-in --list-voices
-npx -p @vm0/cli zero generate avatar-video --provider built-in --avatar-id "<avatar-id>" --voice-id "<voice-id>" --script "<script>"
+okou generate avatar-video --provider built-in --list-avatars
+okou generate avatar-video --provider built-in --list-voices
+okou generate avatar-video --provider built-in --avatar-id "<avatar-id>" --voice-id "<voice-id>" --script "<script>"
 ```
 
 Get JoggAI connector skill guidance for BYOK operations:
 
 ```bash
-npx -p @vm0/cli zero generate avatar-video --provider joggai
+okou generate avatar-video --provider joggai
 ```
 
 Inspect current image styles and flags:
 
 ```bash
-npx -p @vm0/cli zero generate image -h
+okou generate image -h
 ```
 
 Generate a styled image after selecting a live registry style:
 
 ```bash
-npx -p @vm0/cli zero generate image --provider built-in --style "<style-id>" --prompt "<prompt>"
+okou generate image --provider built-in --style "<style-id>" --prompt "<prompt>"
 ```
 
 Generate an unstyled/model-native image:
 
 ```bash
-npx -p @vm0/cli zero generate image --provider built-in --skip-style --prompt "<prompt>"
+okou generate image --provider built-in --skip-style --prompt "<prompt>"
 ```
 
 Use connector guidance instead of built-in generation:
 
 ```bash
-npx -p @vm0/cli zero generate video --provider "<connector-name>"
+okou generate video --provider "<connector-name>"
 ```
 
 Generate a static Open Design artifact:
 
 ```bash
-npx -p @vm0/cli zero generate website --prompt "<brief>"
+okou generate website --prompt "<brief>"
 ```
 
 Then follow the returned packet to build and host the artifact.

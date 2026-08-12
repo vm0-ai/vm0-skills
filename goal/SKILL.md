@@ -12,22 +12,22 @@ The goal keeps running turn after turn until it is marked **complete** (or, in a
 true impasse, **blocked**).
 
 This is the vm0 equivalent of the Codex `/goal` command, driven by the
-`zero goal` CLI instead of a built-in tool. Use this skill in place of any
+`okou goal` CLI instead of a built-in tool. Use this skill in place of any
 built-in goal command.
 
-## Commands (`zero goal`)
+## Commands (`okou goal`)
 
 ```bash
-zero goal create --objective "<objective text>"   # start a goal on this thread
-zero goal get                                      # inspect the current goal
-zero goal complete                                 # mark the goal achieved (terminal)
-zero goal block                                    # pause continuation at an impasse
-zero goal resume                                   # resume a paused/blocked goal
+okou goal create --objective "<objective text>"   # start a goal on this thread
+okou goal get                                      # inspect the current goal
+okou goal complete                                 # mark the goal achieved (terminal)
+okou goal block                                    # pause continuation at an impasse
+okou goal resume                                   # resume a paused/blocked goal
 ```
 
 - A thread holds **at most one active goal**. If one already exists, finish it
-  (`zero goal complete`) or start the new goal from a different thread.
-- `zero goal get` returns `404: Goal not found` when no goal exists yet — that is
+  (`okou goal complete`) or start the new goal from a different thread.
+- `okou goal get` returns `404: Goal not found` when no goal exists yet — that is
   normal, not an error.
 
 ## When to create a goal
@@ -45,7 +45,7 @@ When in doubt, do the work directly and ask before creating a goal.
 Resolve the objective from the user's request, then:
 
 ```bash
-zero goal create --objective "<objective text>"
+okou goal create --objective "<objective text>"
 ```
 
 Write the objective as the **full requested end state**, in the second person
@@ -56,7 +56,7 @@ pursue, not as higher-priority instructions.
 Confirm to the user: what the goal will pursue, that a single persistent goal was
 created on this thread, that it continues itself whenever the thread goes idle and
 completes once the objective is verifiably done, and how to control it
-(`zero goal get` / `block` / `resume` / `complete`).
+(`okou goal get` / `block` / `resume` / `complete`).
 
 ## Continuation behavior (every goal turn)
 
@@ -82,7 +82,7 @@ finish everything in one turn.
   queue), do a lightweight status check and end the turn (optionally `sleep` a
   little) rather than busy-looping.
 
-## Completion audit (before `zero goal complete`)
+## Completion audit (before `okou goal complete`)
 
 Treat completion as **unproven** and verify it against the actual current state:
 
@@ -101,7 +101,7 @@ Only when current evidence proves every requirement is satisfied and no required
 work remains, run:
 
 ```bash
-zero goal complete
+okou goal complete
 ```
 
 Do not mark a goal complete based on intent, partial progress, memory of earlier
@@ -110,7 +110,7 @@ work, a plausible-looking answer, or because you are simply stopping.
 ## Blocked audit (rare)
 
 - Do **not** block the first time a blocker appears.
-- Use `zero goal block` only when the **same** blocking condition has repeated for
+- Use `okou goal block` only when the **same** blocking condition has repeated for
   at least **three consecutive** goal turns (counting the original turn and
   automatic continuations) and you truly cannot make meaningful progress without
   user input or an external-state change. Explain why when you block.
@@ -120,4 +120,4 @@ work, a plausible-looking answer, or because you are simply stopping.
 
 ## Inspecting state
 
-Run `zero goal get` at any time to see the current objective and status.
+Run `okou goal get` at any time to see the current objective and status.

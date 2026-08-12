@@ -5,7 +5,7 @@ description: Lovart API for AI-powered design generation. Use when user mentions
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name LOVART_ACCESS_KEY` or `zero doctor check-connector --url https://lgw.lovart.ai/v1/openapi/mode/query --method POST`
+If requests fail, run `okou doctor check-connector --env-name LOVART_ACCESS_KEY` or `okou doctor check-connector --url https://lgw.lovart.ai/v1/openapi/mode/query --method POST`
 
 ## Authentication
 

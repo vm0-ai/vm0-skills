@@ -27,7 +27,7 @@ Use this skill when you need to:
 
 Connect the **Google Drive** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name GOOGLE_DRIVE_TOKEN` or `zero doctor check-connector --url https://slides.googleapis.com/v1/presentations/<presentation-id> --method GET`
+> **Troubleshooting:** If requests fail, run `okou doctor check-connector --env-name GOOGLE_DRIVE_TOKEN` or `okou doctor check-connector --url https://slides.googleapis.com/v1/presentations/<presentation-id> --method GET`
 
 The Slides API reuses `$GOOGLE_DRIVE_TOKEN`. Reading presentations is allowed by default. Creating or modifying presentations requires the `presentations.create` or `presentations.write` Google Drive connector permission.
 

@@ -5,7 +5,7 @@ description: Seedance video generation API by ByteDance. Use when user mentions 
 
 ## Troubleshooting
 
-If requests fail, run `zero doctor check-connector --env-name SEEDANCE_TOKEN` or `zero doctor check-connector --url https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks --method POST`
+If requests fail, run `okou doctor check-connector --env-name SEEDANCE_TOKEN` or `okou doctor check-connector --url https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks --method POST`
 
 ## How to Use
 

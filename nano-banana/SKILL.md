@@ -26,7 +26,7 @@ Use this skill when you need to:
 
 Connect the **Nano Banana** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors). Enabling the connector provisions `NANO_BANANA_TOKEN` — no Google Cloud account or user-supplied key is required.
 
-> **Troubleshooting:** If requests fail, run `zero doctor check-connector --env-name NANO_BANANA_TOKEN` or `zero doctor check-connector --url https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent --method POST`
+> **Troubleshooting:** If requests fail, run `okou doctor check-connector --env-name NANO_BANANA_TOKEN` or `okou doctor check-connector --url https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent --method POST`
 
 ---
 

@@ -46,7 +46,7 @@ SCENE: {CAST_DESCRIPTION} {ACTIVITY_DESCRIPTION}, in a {SETTING}. PATTERN MOTIFS
 Generation command:
 
 ```bash
-zero generate image --provider built-in --skip-style --model gpt-image-1.5 \
+okou generate image --provider built-in --skip-style --model gpt-image-1.5 \
   --size 1024x1536 --quality high --prompt "<filled template>"
 ```
 
