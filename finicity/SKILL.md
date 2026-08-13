@@ -5,7 +5,7 @@ description: Use vm0's managed banking gateway backed by Finicity to list enable
 
 ## Prerequisites
 
-1. Authenticate Okou CLI with `ZERO_TOKEN` carrying the `banking:read` capability.
+1. Authenticate Okou CLI with `OKOU_TOKEN` carrying the `banking:read` capability.
 2. The vm0 administrator must enable the relevant Finicity-backed accounts for the current agent.
 3. Finicity credentials and app tokens remain server-side; do not request them from the user.
 
