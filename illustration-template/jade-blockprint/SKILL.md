@@ -82,7 +82,7 @@ If unspecified, infer:
 - Cool / editorial / intellectual → cobalt or slate
 - Calm / botanical / refined → sage or rose
 - Moody / premium → plum
-- Signature / fresh / vm0 launch context → jade
+- Signature / fresh / launch context → jade
 
 Custom accent: honor any hex the user provides verbatim.
 

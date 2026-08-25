@@ -11,7 +11,7 @@ a fresh turn to make concrete progress toward the objective, then ends the turn.
 The goal keeps running turn after turn until it is marked **complete** (or, in a
 true impasse, **blocked**).
 
-This is the vm0 equivalent of the Codex `/goal` command, driven by the
+This is the CLI equivalent of the Codex `/goal` command, driven by the
 `okou goal` CLI instead of a built-in tool. Use this skill in place of any
 built-in goal command.
 

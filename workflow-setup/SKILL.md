@@ -1,11 +1,11 @@
 ---
 name: workflow-setup
-description: Create, edit, inspect, run, schedule, pause, or delete vm0 workflows and automations.
+description: Create, edit, inspect, run, schedule, pause, or delete workflows and automations.
 ---
 
-# Okou Workflow Setup
+# Workflow Setup
 
-Use this skill to help users create and manage vm0 workflows and their
+Use this skill to help users create and manage workflows and their
 automations. A workflow is the reusable SOP/skill body. An automation is a
 trigger attached to a workflow. The CLI represents automations as
 `okou workflow trigger ...`; the user-facing conversation should usually call

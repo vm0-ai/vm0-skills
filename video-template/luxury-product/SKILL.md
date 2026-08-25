@@ -5,7 +5,7 @@ description: A dark luxury product macro video style - premium materials in extr
 
 # Luxury Product Macro
 
-A **dark luxury product macro style**, not a watch template. Keep the user's object exactly as briefed - a watch, pen, ring, camera, fragrance cap, lighter, bottle detail, or machined component - and render it in the locked premium macro look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
+A **dark luxury product macro style**, not a watch template. Keep the user's object exactly as briefed - a watch, pen, ring, camera, fragrance cap, lighter, bottle detail, or machined component - and render it in the locked premium macro look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
 ## What this style is
 

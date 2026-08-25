@@ -5,7 +5,7 @@ description: A high-fashion editorial video style - cold desaturated grade, dram
 
 # Fashion Editorial
 
-A **high-fashion editorial style**, not a fixed model or outfit. Keep the user's subject exactly as briefed - a garment, model, accessory, beauty look, or luxury brand - and stage it in the locked editorial look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
+A **high-fashion editorial style**, not a fixed model or outfit. Keep the user's subject exactly as briefed - a garment, model, accessory, beauty look, or luxury brand - and stage it in the locked editorial look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
 ## What this style is
 

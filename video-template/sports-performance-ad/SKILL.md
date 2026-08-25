@@ -5,7 +5,7 @@ description: A sports performance advertising video style - athlete effort, gear
 
 # Sports Performance Ad
 
-A **sports performance advertising style**, not a fixed sport and not a generic motivation montage. Keep the user's athlete, action, or performance product exactly as briefed - running, boxing, cycling, lifting, climbing, team drills, shoes, gloves, a racket, or training gear - and shoot it in the locked commercial look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
+A **sports performance advertising style**, not a fixed sport and not a generic motivation montage. Keep the user's athlete, action, or performance product exactly as briefed - running, boxing, cycling, lifting, climbing, team drills, shoes, gloves, a racket, or training gear - and shoot it in the locked commercial look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
 ## What this style is
 

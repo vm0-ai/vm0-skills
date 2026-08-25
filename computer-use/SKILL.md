@@ -1,13 +1,13 @@
 ---
 name: computer-use
-description: Operate apps on the desktop host the user connected to Zero Computer Use, when APIs are not enough. Not for remote browser sessions, which are Zero Browser (`okou browser use`).
+description: Operate apps on a desktop host through Computer Use, whether surfaced as Okou Desktop or the still-supported legacy Zero Desktop, when APIs are not enough. Not for remote browser sessions (`okou browser use`), surfaced as Okou Browser or legacy Zero Browser.
 ---
 
 # Computer Use
 
 ## Overview
 
-Use `okou computer-use <command>` to inspect and operate apps on the connected Zero Desktop host. Treat it as an accessibility-first GUI control surface: read the app state, act through accessibility elements, and inspect screenshots only when visual information is required or the accessibility state is insufficient.
+Use `okou computer-use <command>` to inspect and operate apps on the connected desktop host. Current clients present this as Okou Desktop; still-supported legacy clients may call it Zero Desktop. Treat it as an accessibility-first GUI control surface: read the app state, act through accessibility elements, and inspect screenshots only when visual information is required or the accessibility state is insufficient.
 
 `--app` accepts an app bundle id only, such as `com.apple.Safari` or `com.google.Chrome`. App names like `Safari`, `Google Chrome`, `Slack`, or `WeChat` are display labels only and must not be passed to `--app`.
 

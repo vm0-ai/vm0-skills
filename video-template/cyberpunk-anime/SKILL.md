@@ -5,7 +5,7 @@ description: A 2D cyberpunk anime video style — hand-drawn cel-look characters
 
 # Cyberpunk Anime
 
-A **2D cyberpunk anime style**, not a fixed scene. Keep the user's character or subject exactly as briefed — and render it as hand-drawn anime in the neon-city look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and the look is **2D animation** (state this explicitly so the model doesn't drift to live action / 3D).
+A **2D cyberpunk anime style**, not a fixed scene. Keep the user's character or subject exactly as briefed — and render it as hand-drawn anime in the neon-city look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and the look is **2D animation** (state this explicitly so the model doesn't drift to live action / 3D).
 
 ## What this style is
 

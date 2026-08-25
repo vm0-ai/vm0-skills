@@ -1,12 +1,12 @@
 ---
 name: finicity
-description: Use vm0's managed banking gateway backed by Finicity to list enabled bank accounts, balances, and transactions. Use when the user mentions Finicity, connected bank accounts, banking balances, or bank transactions.
+description: Use the platform-managed banking gateway backed by Finicity to list enabled bank accounts, balances, and transactions. Use when the user mentions Finicity, connected bank accounts, banking balances, or bank transactions.
 ---
 
 ## Prerequisites
 
 1. Authenticate Okou CLI with `OKOU_TOKEN` carrying the `banking:read` capability.
-2. The vm0 administrator must enable the relevant Finicity-backed accounts for the current agent.
+2. A platform administrator must enable the relevant Finicity-backed accounts for the current agent.
 3. Finicity credentials and app tokens remain server-side; do not request them from the user.
 
 ## List Accounts

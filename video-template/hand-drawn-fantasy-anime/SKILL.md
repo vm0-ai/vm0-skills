@@ -5,7 +5,7 @@ description: A hand-drawn fantasy animation video style - painterly 2D backgroun
 
 # Hand Drawn Fantasy Anime
 
-A **hand-drawn fantasy animation style**, not a fixed character, studio, or franchise. Keep the user's subject exactly as briefed - a child, creature, village, forest path, airship, animal companion, or magical object - and render it in the locked painterly 2D fantasy look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
+A **hand-drawn fantasy animation style**, not a fixed character, studio, or franchise. Keep the user's subject exactly as briefed - a child, creature, village, forest path, airship, animal companion, or magical object - and render it in the locked painterly 2D fantasy look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
 ## What this style is
 

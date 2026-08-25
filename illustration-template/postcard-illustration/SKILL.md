@@ -147,7 +147,7 @@ Pass both locked reference images as style anchors (image-to-image / multi-image
 
 See the **Required model** section near the top of this file for the locked model and required generation parameters. Additional notes:
 
-- Do not request `--style` chaining with another vm0 image style — this style is self-contained and the resource is selected as the primary style.
+- Do not request `--style` chaining with another registered image style — this style is self-contained and the resource is selected as the primary style.
 - Do not silently fall back to a different image model if `gpt-image-2` is unavailable. Surface the unavailability and ask the caller before substituting — the locked look will not survive on a weaker model.
 
 ## Evaluation cues

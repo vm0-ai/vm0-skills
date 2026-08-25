@@ -5,7 +5,7 @@ description: A Japanese wabi-sabi lifestyle video style — natural imperfection
 
 # Japanese Wabi-Sabi
 
-A **wabi-sabi lifestyle style**, not a fixed scene. Keep the user's subject exactly as briefed — an object, a corner, a moment — and render it in the quiet, imperfect, softly-lit look below. The style supplies the *mood*; the user supplies the *what*. Tuned for **Seedance** (vm0's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
+A **wabi-sabi lifestyle style**, not a fixed scene. Keep the user's subject exactly as briefed — an object, a corner, a moment — and render it in the quiet, imperfect, softly-lit look below. The style supplies the *mood*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
 ## What this style is
 

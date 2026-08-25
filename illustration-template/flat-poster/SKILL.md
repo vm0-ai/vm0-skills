@@ -1,11 +1,11 @@
 ---
 name: flat-poster
-description: Vertical flat-color editorial poster style — a single saturated solid background, one centered hand-drawn vector subject in bold deep-navy outlines with a strict two-tone fill (white + a slightly darker bg-tint accent), small floating accent marks, a bold rounded sans-serif headline pinned top-left, and a small wordmark pinned bottom-right. Portrait 2:3 canvas. Trigger when the user says /flat-poster, asks for a "flat-color editorial poster", a "brand benefit card", a "marketing card in the bold outline + flat color style", or briefs with a palette + subject + headline shape.
+description: Vertical flat-color editorial poster style — a single saturated solid background, one centered hand-drawn vector subject in bold deep-navy outlines with a strict two-tone fill (white + a slightly darker bg-tint accent), small floating accent marks, a bold rounded sans-serif headline pinned top-left, and an optional user-supplied wordmark pinned bottom-right. Portrait 2:3 canvas. Trigger when the user says /flat-poster, asks for a "flat-color editorial poster", a "brand benefit card", a "marketing card in the bold outline + flat color style", or briefs with a palette + subject + headline shape.
 ---
 
 # /flat-poster — locked flat-color editorial poster style
 
-This style produces vertical brand-marketing posters in a single locked recipe: one saturated flat background, one centered hand-drawn vector subject, a bold short headline pinned to the top-left, and a small wordmark pinned to the bottom-right. The visual frame never moves — only six creative dials swap between pieces.
+This style produces vertical brand-marketing posters in a single locked recipe: one saturated flat background, one centered hand-drawn vector subject, a bold short headline pinned to the top-left, and an optional user-supplied wordmark pinned to the bottom-right. The visual frame never moves — only six creative dials swap between pieces.
 
 Think Wisevest "core benefits" card meets early-Mailchimp app illustration: confident vector linework with just enough hand-drawn imperfection to feel warm, on a flat color field that does the emotional heavy lifting.
 
@@ -16,7 +16,7 @@ The user will usually give a short brief — sometimes just a concept ("savings"
 1. **Pick a hero subject** from the brief — a single object, character, or scene element that visually carries the concept. One thing, never two.
 2. **Choose a saturated background hex** that matches the subject's mood (see palette families below).
 3. **Write or refine the headline** — 1–4 words per line, ≤ 3 lines total, deep-navy bold rounded sans-serif. Tight punchy phrasing.
-4. **Pick a wordmark** — short brand text for the bottom-right. Default `VM0` unless the user names another (keep ≤ 4 characters; longer names get garbled).
+4. **Use a wordmark only when supplied** — place the user's short brand text in the bottom-right (keep ≤ 4 characters; longer names get garbled). Omit the wordmark when the user does not provide one.
 5. **Pick accent marks** — 1–3 categories of hand-drawn dust (dashes, dots, sparkles, curly trails, rays, plus signs, etc.) that fit the subject's emotional world.
 6. **Pick a composition preset** — where the subject sits on the canvas (centered-hero by default).
 
@@ -51,9 +51,10 @@ Bias toward subjects that are concrete and iconic: things you can name in one wo
 
 ### Wordmark (bottom-right)
 
+- Optional; include only a wordmark supplied by the user
 - Same deep-navy sans-serif as the headline, **smaller**
 - Pinned to the **bottom-right corner**
-- Default text `VM0` — short, 2–4 character brand acronym
+- Keep supplied text to a short 2–4 character brand acronym
 
 ### Accent marks
 
@@ -135,7 +136,7 @@ Subject:      <one specific object/character with pose and detail>
 Composition:  <one of the six presets>
 Accents:      <1–3 accent categories>
 Headline:     <short phrase, 1–3 lines, deep-navy bold sans-serif, top-left>
-Wordmark:     <2–4 char brand, deep-navy bold sans-serif, bottom-right>
+Wordmark:     <user-supplied 2–4 char brand, deep-navy bold sans-serif, bottom-right; omit if none>
 Mood:         <one short phrase>
 ```
 
@@ -144,11 +145,11 @@ Mood:         <one short phrase>
 Models with strong typography and clean flat-vector handling (e.g. gpt-image-2) produce the most reliable output here. When briefing the model:
 
 - State **explicitly** that the canvas is portrait 2:3, with the flat color filling edge to edge.
-- State **explicitly** that the only text on the canvas is the top-left headline and the bottom-right wordmark — no captions, no body copy, no subtitle.
+- State **explicitly** that the only text on the canvas is the top-left headline plus the user-supplied bottom-right wordmark when present — no captions, no body copy, no subtitle.
 - State **explicitly** that the fill is two-tone: pure white + one darker tint of the background.
 - State **explicitly** the stroke style (deep-navy, ~7px, hand-drawn with tiny gaps).
 - Name the accent vocabulary explicitly — models otherwise default to generic stars / sparkles everywhere.
-- Keep the wordmark short (2–4 chars). Longer brand names get garbled regardless of model.
+- When a wordmark is supplied, keep it short (2–4 chars). Longer brand names get garbled regardless of model.
 
 If the model adds extra body text, regenerate or reduce the subject brief to make room.
 

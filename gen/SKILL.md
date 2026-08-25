@@ -22,7 +22,7 @@ okou generate -h
 - `okou generate presentation` - returns an Open Design resource-selection packet for an HTML presentation that the agent authors and hosts.
 - `okou generate website` - returns website authoring instructions / an Open Design packet that the agent uses to build and host a static site.
 - `okou generate report`, `docs-design`, `poster`, `dashboard-design`, `mobile-app-design` - return Open Design resource-selection packets for static HTML artifacts.
-- `okou generate text`, `code`, `document`, `audio` - list connector-backed options and print connector skill-invocation guidance; these do not have built-in vm0 pipelines unless the CLI help says otherwise.
+- `okou generate text`, `code`, `document`, `audio` - list connector-backed options and print connector skill-invocation guidance; these do not have built-in platform pipelines unless the CLI help says otherwise.
 
 Run `okou generate <type>` with no generation input to list available providers for that artifact type. Add `--all` when unavailable or not-yet-authorized connectors are relevant.
 

@@ -25,7 +25,7 @@ Use this skill when you need to:
 
 ## Prerequisites
 
-Connect the **Google Drive** connector at [app.vm0.ai/connectors](https://app.vm0.ai/connectors).
+Connect the **Google Drive** connector at [app.okou.ai/connectors](https://app.okou.ai/connectors).
 
 > **Troubleshooting:** If requests fail, run `okou doctor check-connector --env-name GOOGLE_DRIVE_TOKEN` or `okou doctor check-connector --url https://slides.googleapis.com/v1/presentations/<presentation-id> --method GET`
 
