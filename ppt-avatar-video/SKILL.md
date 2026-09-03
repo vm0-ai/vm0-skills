@@ -1,6 +1,6 @@
 ---
 name: ppt-avatar-video
-description: Convert a PPT, PPTX, or PDF directly into a narrated video by preserving each page as a static full-frame slide, with an optional transparent talking avatar. Use for fast deck-to-video requests with voice only or avatar plus voice; do not use for cinematic intros, slide redesign, or tutorial screen recordings.
+description: Convert a PPT, PPTX, or PDF directly into a narrated video by preserving each page as a static slide, with an optional transparent talking avatar in a fixed side layout or adaptive overlay. Use for fast deck-to-video requests with voice only or avatar plus voice; do not use for cinematic intros, slide redesign, or tutorial screen recordings.
 ---
 
 # PPT Narrated Video
@@ -9,7 +9,7 @@ Produce the final video quickly. This is a conversion workflow, not a motion-des
 
 ## Scope boundary
 
-- Preserve every source page as a static full-frame image in the original order.
+- Preserve every source page as a static image in the original order. Voice-only and overlay modes keep the slide full-frame; the two side-by-side modes fit it inside their fixed slide rectangle without cropping.
 - Always include the selected narration. Overlay a transparent talking avatar only when the user selected one.
 - Use hard cuts between pages by default. Add only a short dissolve when the user explicitly requests it.
 - Do not select a design preset, construct an arc, search the HyperFrames catalog, choose blueprints or rules, redesign slides, or author per-slide animation.
@@ -18,11 +18,25 @@ Produce the final video quickly. This is a conversion workflow, not a motion-des
 
 ## Preserve the requested configuration
 
-Use the supplied source, aspect ratio, and voice exactly. Treat avatar configuration as optional: never add or choose an avatar when the user supplied only a voice. When an avatar is supplied, preserve its ID, presenter anchor, and presenter scale exactly. Do not list or search avatars or voices when compatible identifiers are already supplied.
+Use the supplied source, aspect ratio, and voice exactly. Treat avatar configuration as optional: never add or choose an avatar when the user supplied only a voice. When an avatar is supplied, preserve its ID, presenter placement, and presenter scale exactly. Do not list or search avatars or voices when compatible identifiers are already supplied.
 
-For avatar mode, map 16:9 to `landscape`, 9:16 to `portrait`, and 1:1 to `square`. Transparent JoggAI output requires `--screen-style 3 --no-caption`. If placement is absent, use bottom-right. If scale is absent, use a visible presenter width of 14% of the frame. Scale refers to the non-transparent avatar bounds, not the full video canvas. Align the visible avatar's bottom edge with the frame bottom on every page.
+For avatar mode, map 16:9 to `landscape`, 9:16 to `portrait`, and 1:1 to `square`. Transparent JoggAI output requires `--screen-style 3 --no-caption`. If scale is absent, use a visible presenter width of 14% of the frame. Scale refers to the non-transparent avatar bounds, not the full video canvas.
 
 If an exact supplied avatar or voice is rejected, report that blocker. Never silently substitute another identity or voice.
+
+## Select presenter placement
+
+The product exposes exactly three placement choices. Normalize their prompt labels to these manifest values:
+
+- **`left` — presenter on the left, slide on the right.** This is fixed geometry: presenter visible left `3%`; slide left `20%`, top `11.5%`, width `77%`, height `77%`.
+- **`right` — presenter on the right, slide on the left.** This is fixed geometry: slide left `3%`, top `11.5%`, width `77%`, height `77%`; presenter visible right `3%`.
+- **`overlay` — presenter over a full-frame slide.** This is the only adaptive mode. Analyze each slide and place the presenter at the less busy bottom corner.
+
+For both fixed side modes, align the visible presenter's bottom edge with the fixed slide rectangle's bottom edge (`11.5%` above the frame bottom). Do not inspect slide whitespace, choose a corner, or move the presenter between pages in these modes.
+
+For overlay, align the visible presenter with the frame bottom. Treat the product prompt's bottom-right wording as the default and tie-break anchor, not as a reason to skip per-slide blank-space detection. If the user's own editing direction separately requires one fixed overlay corner, honor that explicit override and skip adaptive placement.
+
+When placement is genuinely absent, use `left`, matching the product default. Existing manifests without `presenter.placement` remain valid in the builder and retain their legacy full-frame overlay behavior.
 
 ## Select the media mode
 
@@ -82,7 +96,7 @@ Download the generated media and probe its exact duration. Use `assets/presenter
 
 If transcription is unavailable, distribute the measured duration in proportion to spoken word counts, then assign rounding residue to the last page. Do not use the provider's rounded duration when `ffprobe` is available.
 
-### 4. Measure alpha bounds in avatar mode only
+### 4. Measure avatar and slide geometry only when needed
 
 Skip this entire step in voice-only mode.
 
@@ -94,11 +108,23 @@ node SKILL_DIR/scripts/probe-alpha-bbox.mjs PROJECT/assets/presenter.webm
 
 Copy its `sourceWidth`, `sourceHeight`, and `bbox` values into the manifest. The composition builder uses CSS clipping and positioning so the visible cutout has the requested width and bottom alignment. Do not crop or transcode the VP9 WebM locally.
 
+For `left` and `right`, stop here: their geometry is fixed and must not run a whitespace detector.
+
+For `overlay` only, probe every slide after the presenter bbox is known:
+
+```bash
+node SKILL_DIR/scripts/probe-slide-blank-space.mjs PROJECT/assets/slides \
+  --bbox=BBOX_WIDTHxBBOX_HEIGHT \
+  --visible-width-fraction=0.14
+```
+
+The probe compares visual complexity in the two bottom candidate regions sized to the visible presenter. It chooses `bottom-left` or `bottom-right` per page and keeps the prior side when scores differ by no more than the tie threshold, avoiding needless side-to-side jitter. Copy each returned `presenterAnchor` into the matching slide entry. Do not run the probe for either fixed side mode.
+
 In avatar mode, stage only the final presenter WebM and slide images. Do not keep an uncropped duplicate or an unused still inside the cloud-render project. In voice-only mode, stage only the narration audio and slide images.
 
 ### 5. Build the static composition
 
-Create `composition-input.json` in the project using this schema:
+For a fixed-left layout, create `composition-input.json` using this schema. Use `"placement": "right"` for the mirrored fixed layout; neither mode accepts per-slide anchors.
 
 ```json
 {
@@ -119,7 +145,35 @@ Create `composition-input.json` in the project using this schema:
     "sourceHeight": 1080,
     "bbox": { "x": 618, "y": 184, "width": 596, "height": 874 },
     "visibleWidthFraction": 0.14,
-    "anchor": "bottom-right"
+    "placement": "left"
+  }
+}
+```
+
+For adaptive overlay, keep slides full-frame, set `"placement": "overlay"`, and copy the probe result into each page:
+
+```json
+{
+  "slides": [
+    {
+      "path": "assets/slides/page-001.png",
+      "duration": 4.2,
+      "presenterAnchor": "bottom-right"
+    },
+    {
+      "path": "assets/slides/page-002.png",
+      "duration": 5.1,
+      "presenterAnchor": "bottom-left"
+    }
+  ],
+  "narration": { "path": "assets/presenter.webm" },
+  "presenter": {
+    "path": "assets/presenter.webm",
+    "sourceWidth": 1920,
+    "sourceHeight": 1080,
+    "bbox": { "x": 618, "y": 184, "width": 596, "height": 874 },
+    "visibleWidthFraction": 0.14,
+    "placement": "overlay"
   }
 }
 ```
@@ -148,7 +202,7 @@ Use the project-pinned HyperFrames version rather than updating during a job. Th
 node SKILL_DIR/scripts/build-project.mjs --manifest PROJECT/composition-input.json --out PROJECT
 ```
 
-The builder creates one `data-no-timeline` root composition with static image clips and one narration audio clip. It adds one persistent transparent video clip only in avatar mode. That marker is the HyperFrames contract for an intentionally static composition; do not add a fake GSAP tween merely to make geometry change. Do not replace the composition with individually authored slide HTML files.
+The builder creates one `data-no-timeline` root composition with static image clips and one narration audio clip. It adds one persistent transparent video clip for fixed placement or an overlay that stays on one side. When adaptive overlay changes sides, it creates only the minimum consecutive presenter segments and uses `data-media-start` to keep the take synchronized. That marker is the HyperFrames contract for an intentionally static composition; do not add a fake GSAP tween merely to make geometry change. Do not replace the composition with individually authored slide HTML files.
 
 ### 6. Run one pre-render gate
 
@@ -164,7 +218,9 @@ Do not run text-layout or contrast audits against bitmap slide contents. Those p
 
 - page count and order;
 - no stretching or unintended cropping;
-- avatar mode: transparent avatar decoding, requested visible width and anchor, and captions absent;
+- avatar mode: transparent avatar decoding, requested visible width, placement geometry, and captions absent;
+- fixed `left` or `right`: one presenter segment, the 77% slide rectangle is on the configured side, and no whitespace-probe output appears in the manifest;
+- adaptive `overlay`: slides remain full-frame, every page has a valid probe-derived anchor, and media offsets remain continuous when the side changes;
 - voice-only mode: no presenter video element or avatar asset;
 - final slide timing equals the narration duration.
 

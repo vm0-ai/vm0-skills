@@ -33,6 +33,18 @@ function formatSeconds(value) {
   return Number(value.toFixed(6)).toString();
 }
 
+const PRESENTER_ANCHORS = new Set(["bottom-left", "bottom-right"]);
+const PRESENTER_PLACEMENTS = new Set(["left", "overlay", "right"]);
+
+function optionalPresenterAnchor(value, label) {
+  if (value === undefined || value === null || value === "") return null;
+  const anchor = String(value);
+  if (!PRESENTER_ANCHORS.has(anchor)) {
+    fail(`${label} must be bottom-left or bottom-right`);
+  }
+  return anchor;
+}
+
 const manifestArg = parseFlag("--manifest");
 const outArg = parseFlag("--out");
 if (!manifestArg || !outArg) {
@@ -91,15 +103,26 @@ function validateAsset(relativePath, label) {
   return relativePath.split(path.sep).join("/");
 }
 
-const slides = manifest.slides.map((slide, index) => ({
-  path: validateAsset(slide.path, `slides[${index}].path`),
-  duration: finiteNumber(slide.duration, `slides[${index}].duration`, {
+let slideCursor = 0;
+const slides = manifest.slides.map((slide, index) => {
+  const duration = finiteNumber(slide.duration, `slides[${index}].duration`, {
     min: 0.1,
     max: 3600,
-  }),
-}));
+  });
+  const result = {
+    path: validateAsset(slide.path, `slides[${index}].path`),
+    duration,
+    start: slideCursor,
+    presenterAnchor: optionalPresenterAnchor(
+      slide.presenterAnchor,
+      `slides[${index}].presenterAnchor`,
+    ),
+  };
+  slideCursor += duration;
+  return result;
+});
 
-const totalDuration = slides.reduce((sum, slide) => sum + slide.duration, 0);
+const totalDuration = slideCursor;
 
 const presenterInput = manifest.presenter;
 if (
@@ -141,23 +164,43 @@ if (presenterInput) {
     "presenter.visibleWidthFraction",
     { min: 0.01, max: 1 },
   );
-  const anchor = String(presenterInput.anchor || "bottom-right");
-  if (!new Set(["bottom-right", "bottom-left"]).has(anchor)) {
-    fail("presenter.anchor must be bottom-right or bottom-left");
+  const placement = String(presenterInput.placement || "overlay");
+  if (!PRESENTER_PLACEMENTS.has(placement)) {
+    fail("presenter.placement must be left, overlay, or right");
   }
+  if (
+    placement !== "overlay" &&
+    slides.some((slide) => slide.presenterAnchor)
+  ) {
+    fail("slides[].presenterAnchor is only valid for overlay placement");
+  }
+
+  const requestedAnchor = optionalPresenterAnchor(
+    presenterInput.anchor,
+    "presenter.anchor",
+  );
+  const anchor =
+    placement === "left"
+      ? "bottom-left"
+      : placement === "right"
+        ? "bottom-right"
+        : requestedAnchor || "bottom-right";
+  const horizontalInsetFraction = placement === "overlay" ? 0 : 0.03;
+  const bottomInsetFraction = placement === "overlay" ? 0 : 0.115;
 
   const targetVisibleWidth = width * visibleWidthFraction;
   const scale = targetVisibleWidth / bboxWidth;
   const renderedWidth = sourceWidth * scale;
   const renderedHeight = sourceHeight * scale;
-  const bottomOffset = -(sourceHeight - bboxY - bboxHeight) * scale;
-  const horizontalRule =
-    anchor === "bottom-right"
-      ? `right: ${formatSeconds(-(sourceWidth - bboxX - bboxWidth) * scale)}px;`
-      : `left: ${formatSeconds(-bboxX * scale)}px;`;
+  const bottomOffset =
+    height * bottomInsetFraction - (sourceHeight - bboxY - bboxHeight) * scale;
+  const leftOffset = width * horizontalInsetFraction - bboxX * scale;
+  const rightOffset =
+    width * horizontalInsetFraction - (sourceWidth - bboxX - bboxWidth) * scale;
 
   presenter = {
     path: presenterPath,
+    placement,
     anchor,
     visibleWidthFraction,
     targetVisibleWidth,
@@ -165,7 +208,8 @@ if (presenterInput) {
     renderedWidth,
     renderedHeight,
     bottomOffset,
-    horizontalRule,
+    leftOffset,
+    rightOffset,
     clipTop: (bboxY / sourceHeight) * 100,
     clipRight: ((sourceWidth - bboxX - bboxWidth) / sourceWidth) * 100,
     clipBottom: ((sourceHeight - bboxY - bboxHeight) / sourceHeight) * 100,
@@ -194,29 +238,70 @@ if (narrationInput) {
   fail("narration.path is required when presenter is omitted");
 }
 
-let cursor = 0;
 const slideTags = slides
   .map((slide, index) => {
-    const start = cursor;
-    cursor += slide.duration;
-    return `      <img id="slide-${String(index + 1).padStart(3, "0")}" class="clip slide" src="${escapeHtml(slide.path)}" alt="Slide ${index + 1}" data-start="${formatSeconds(start)}" data-duration="${formatSeconds(slide.duration)}" />`;
+    return `      <img id="slide-${String(index + 1).padStart(3, "0")}" class="clip slide" src="${escapeHtml(slide.path)}" alt="Slide ${index + 1}" data-start="${formatSeconds(slide.start)}" data-duration="${formatSeconds(slide.duration)}" />`;
   })
   .join("\n");
+
+const slideStyle =
+  presenter?.placement === "left"
+    ? `left: 20%; top: 11.5%; width: 77%; height: 77%;`
+    : presenter?.placement === "right"
+      ? `left: 3%; top: 11.5%; width: 77%; height: 77%;`
+      : `inset: 0; width: ${width}px; height: ${height}px;`;
+
+const presenterAnchors = presenter
+  ? slides.map((slide) => {
+      if (presenter.placement === "left") return "bottom-left";
+      if (presenter.placement === "right") return "bottom-right";
+      return slide.presenterAnchor || presenter.anchor;
+    })
+  : [];
+
+const presenterSegments = [];
+for (const [index, slide] of slides.entries()) {
+  if (!presenter) break;
+  const anchor = presenterAnchors[index];
+  const previous = presenterSegments.at(-1);
+  if (previous?.anchor === anchor) {
+    previous.duration += slide.duration;
+  } else {
+    presenterSegments.push({
+      anchor,
+      start: slide.start,
+      duration: slide.duration,
+    });
+  }
+}
 
 const presenterStyle = presenter
   ? `
       .presenter-video {
         z-index: 20;
-        ${presenter.horizontalRule}
         bottom: ${formatSeconds(presenter.bottomOffset)}px;
         width: ${formatSeconds(presenter.renderedWidth)}px;
         height: ${formatSeconds(presenter.renderedHeight)}px;
         clip-path: inset(${formatSeconds(presenter.clipTop)}% ${formatSeconds(presenter.clipRight)}% ${formatSeconds(presenter.clipBottom)}% ${formatSeconds(presenter.clipLeft)}%);
         pointer-events: none;
+      }
+      .presenter-bottom-left {
+        left: ${formatSeconds(presenter.leftOffset)}px;
+      }
+      .presenter-bottom-right {
+        right: ${formatSeconds(presenter.rightOffset)}px;
       }`
   : "";
-const presenterTag = presenter
-  ? `      <video id="presenter-video" class="clip presenter-video" src="${escapeHtml(presenter.path)}" data-start="0" data-duration="${formatSeconds(totalDuration)}" data-track-index="20" data-layout-allow-overlap data-layout-allow-overflow muted playsinline preload="auto" aria-label="Presenter"></video>\n`
+const presenterTags = presenter
+  ? `${presenterSegments
+      .map((segment, index) => {
+        const id =
+          index === 0
+            ? "presenter-video"
+            : `presenter-video-${String(index + 1).padStart(3, "0")}`;
+        return `      <video id="${id}" class="clip presenter-video presenter-${segment.anchor}" src="${escapeHtml(presenter.path)}" data-start="${formatSeconds(segment.start)}" data-duration="${formatSeconds(segment.duration)}" data-media-start="${formatSeconds(segment.start)}" data-track-index="20" data-layout-allow-overlap data-layout-allow-overflow muted playsinline preload="auto" aria-label="Presenter"></video>`;
+      })
+      .join("\n")}\n`
   : "";
 
 const html = `<!doctype html>
@@ -230,7 +315,7 @@ const html = `<!doctype html>
       html, body { margin: 0; width: ${width}px; height: ${height}px; overflow: hidden; background: ${escapeHtml(background)}; }
       #root { position: relative; width: ${width}px; height: ${height}px; overflow: hidden; isolation: isolate; background: ${escapeHtml(background)}; }
       .clip { position: absolute; }
-      .slide { inset: 0; z-index: 1; width: ${width}px; height: ${height}px; object-fit: contain; background: ${escapeHtml(background)}; }
+      .slide { z-index: 1; ${slideStyle} object-fit: contain; background: ${escapeHtml(background)}; }
 ${presenterStyle}
       .narration-audio { width: 0; height: 0; }
     </style>
@@ -238,7 +323,7 @@ ${presenterStyle}
   <body>
     <div id="root" data-composition-id="main" data-no-timeline data-start="0" data-duration="${formatSeconds(totalDuration)}" data-width="${width}" data-height="${height}">
 ${slideTags}
-${presenterTag}      <audio id="narration-audio" class="clip narration-audio" src="${escapeHtml(audioPath)}" data-start="0" data-duration="${formatSeconds(totalDuration)}" data-track-index="30" data-volume="1" preload="auto"></audio>
+${presenterTags}      <audio id="narration-audio" class="clip narration-audio" src="${escapeHtml(audioPath)}" data-start="0" data-duration="${formatSeconds(totalDuration)}" data-track-index="30" data-volume="1" preload="auto"></audio>
     </div>
   </body>
 </html>
@@ -304,7 +389,10 @@ process.stdout.write(
       narration: { path: audioPath },
       presenter: presenter
         ? {
+            placement: presenter.placement,
             anchor: presenter.anchor,
+            slideAnchors: presenterAnchors,
+            segments: presenterSegments,
             visibleWidthFraction: presenter.visibleWidthFraction,
             targetVisibleWidth: presenter.targetVisibleWidth,
             scale: presenter.scale,
