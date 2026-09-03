@@ -99,59 +99,100 @@ const slides = manifest.slides.map((slide, index) => ({
   }),
 }));
 
-const presenter = manifest.presenter;
-if (!presenter || typeof presenter !== "object") fail("presenter is required");
-
-const presenterPath = validateAsset(presenter.path, "presenter.path");
-const audioPath = validateAsset(
-  presenter.audioPath || presenter.path,
-  "presenter.audioPath",
-);
-const sourceWidth = finiteNumber(
-  presenter.sourceWidth,
-  "presenter.sourceWidth",
-  { min: 1 },
-);
-const sourceHeight = finiteNumber(
-  presenter.sourceHeight,
-  "presenter.sourceHeight",
-  { min: 1 },
-);
-const bbox = presenter.bbox || {};
-const bboxX = finiteNumber(bbox.x, "presenter.bbox.x", { min: 0 });
-const bboxY = finiteNumber(bbox.y, "presenter.bbox.y", { min: 0 });
-const bboxWidth = finiteNumber(bbox.width, "presenter.bbox.width", { min: 1 });
-const bboxHeight = finiteNumber(bbox.height, "presenter.bbox.height", {
-  min: 1,
-});
-if (bboxX + bboxWidth > sourceWidth || bboxY + bboxHeight > sourceHeight) {
-  fail("presenter.bbox exceeds the source video dimensions");
-}
-
-const visibleWidthFraction = finiteNumber(
-  presenter.visibleWidthFraction ?? 0.14,
-  "presenter.visibleWidthFraction",
-  { min: 0.01, max: 1 },
-);
-const anchor = String(presenter.anchor || "bottom-right");
-if (!new Set(["bottom-right", "bottom-left"]).has(anchor)) {
-  fail("presenter.anchor must be bottom-right or bottom-left");
-}
-
 const totalDuration = slides.reduce((sum, slide) => sum + slide.duration, 0);
-const targetVisibleWidth = width * visibleWidthFraction;
-const scale = targetVisibleWidth / bboxWidth;
-const renderedWidth = sourceWidth * scale;
-const renderedHeight = sourceHeight * scale;
-const bottomOffset = -(sourceHeight - bboxY - bboxHeight) * scale;
-const horizontalRule =
-  anchor === "bottom-right"
-    ? `right: ${formatSeconds(-(sourceWidth - bboxX - bboxWidth) * scale)}px;`
-    : `left: ${formatSeconds(-bboxX * scale)}px;`;
-const clipTop = (bboxY / sourceHeight) * 100;
-const clipRight = ((sourceWidth - bboxX - bboxWidth) / sourceWidth) * 100;
-const clipBottom = ((sourceHeight - bboxY - bboxHeight) / sourceHeight) * 100;
-const clipLeft = (bboxX / sourceWidth) * 100;
+
+const presenterInput = manifest.presenter;
+if (
+  presenterInput !== undefined &&
+  presenterInput !== null &&
+  typeof presenterInput !== "object"
+) {
+  fail("presenter must be an object when provided");
+}
+
+let presenter = null;
+if (presenterInput) {
+  const presenterPath = validateAsset(presenterInput.path, "presenter.path");
+  const sourceWidth = finiteNumber(
+    presenterInput.sourceWidth,
+    "presenter.sourceWidth",
+    { min: 1 },
+  );
+  const sourceHeight = finiteNumber(
+    presenterInput.sourceHeight,
+    "presenter.sourceHeight",
+    { min: 1 },
+  );
+  const bbox = presenterInput.bbox || {};
+  const bboxX = finiteNumber(bbox.x, "presenter.bbox.x", { min: 0 });
+  const bboxY = finiteNumber(bbox.y, "presenter.bbox.y", { min: 0 });
+  const bboxWidth = finiteNumber(bbox.width, "presenter.bbox.width", {
+    min: 1,
+  });
+  const bboxHeight = finiteNumber(bbox.height, "presenter.bbox.height", {
+    min: 1,
+  });
+  if (bboxX + bboxWidth > sourceWidth || bboxY + bboxHeight > sourceHeight) {
+    fail("presenter.bbox exceeds the source video dimensions");
+  }
+
+  const visibleWidthFraction = finiteNumber(
+    presenterInput.visibleWidthFraction ?? 0.14,
+    "presenter.visibleWidthFraction",
+    { min: 0.01, max: 1 },
+  );
+  const anchor = String(presenterInput.anchor || "bottom-right");
+  if (!new Set(["bottom-right", "bottom-left"]).has(anchor)) {
+    fail("presenter.anchor must be bottom-right or bottom-left");
+  }
+
+  const targetVisibleWidth = width * visibleWidthFraction;
+  const scale = targetVisibleWidth / bboxWidth;
+  const renderedWidth = sourceWidth * scale;
+  const renderedHeight = sourceHeight * scale;
+  const bottomOffset = -(sourceHeight - bboxY - bboxHeight) * scale;
+  const horizontalRule =
+    anchor === "bottom-right"
+      ? `right: ${formatSeconds(-(sourceWidth - bboxX - bboxWidth) * scale)}px;`
+      : `left: ${formatSeconds(-bboxX * scale)}px;`;
+
+  presenter = {
+    path: presenterPath,
+    anchor,
+    visibleWidthFraction,
+    targetVisibleWidth,
+    scale,
+    renderedWidth,
+    renderedHeight,
+    bottomOffset,
+    horizontalRule,
+    clipTop: (bboxY / sourceHeight) * 100,
+    clipRight: ((sourceWidth - bboxX - bboxWidth) / sourceWidth) * 100,
+    clipBottom: ((sourceHeight - bboxY - bboxHeight) / sourceHeight) * 100,
+    clipLeft: (bboxX / sourceWidth) * 100,
+  };
+}
+
+const narrationInput = manifest.narration;
+if (
+  narrationInput !== undefined &&
+  narrationInput !== null &&
+  typeof narrationInput !== "object"
+) {
+  fail("narration must be an object when provided");
+}
+
+let audioPath;
+if (narrationInput) {
+  audioPath = validateAsset(narrationInput.path, "narration.path");
+} else if (presenterInput) {
+  audioPath = validateAsset(
+    presenterInput.audioPath || presenterInput.path,
+    "presenter.audioPath",
+  );
+} else {
+  fail("narration.path is required when presenter is omitted");
+}
 
 let cursor = 0;
 const slideTags = slides
@@ -161,6 +202,22 @@ const slideTags = slides
     return `      <img id="slide-${String(index + 1).padStart(3, "0")}" class="clip slide" src="${escapeHtml(slide.path)}" alt="Slide ${index + 1}" data-start="${formatSeconds(start)}" data-duration="${formatSeconds(slide.duration)}" />`;
   })
   .join("\n");
+
+const presenterStyle = presenter
+  ? `
+      .presenter-video {
+        z-index: 20;
+        ${presenter.horizontalRule}
+        bottom: ${formatSeconds(presenter.bottomOffset)}px;
+        width: ${formatSeconds(presenter.renderedWidth)}px;
+        height: ${formatSeconds(presenter.renderedHeight)}px;
+        clip-path: inset(${formatSeconds(presenter.clipTop)}% ${formatSeconds(presenter.clipRight)}% ${formatSeconds(presenter.clipBottom)}% ${formatSeconds(presenter.clipLeft)}%);
+        pointer-events: none;
+      }`
+  : "";
+const presenterTag = presenter
+  ? `      <video id="presenter-video" class="clip presenter-video" src="${escapeHtml(presenter.path)}" data-start="0" data-duration="${formatSeconds(totalDuration)}" data-track-index="20" data-layout-allow-overlap data-layout-allow-overflow muted playsinline preload="auto" aria-label="Presenter"></video>\n`
+  : "";
 
 const html = `<!doctype html>
 <html lang="en">
@@ -174,23 +231,14 @@ const html = `<!doctype html>
       #root { position: relative; width: ${width}px; height: ${height}px; overflow: hidden; isolation: isolate; background: ${escapeHtml(background)}; }
       .clip { position: absolute; }
       .slide { inset: 0; z-index: 1; width: ${width}px; height: ${height}px; object-fit: contain; background: ${escapeHtml(background)}; }
-      .presenter-video {
-        z-index: 20;
-        ${horizontalRule}
-        bottom: ${formatSeconds(bottomOffset)}px;
-        width: ${formatSeconds(renderedWidth)}px;
-        height: ${formatSeconds(renderedHeight)}px;
-        clip-path: inset(${formatSeconds(clipTop)}% ${formatSeconds(clipRight)}% ${formatSeconds(clipBottom)}% ${formatSeconds(clipLeft)}%);
-        pointer-events: none;
-      }
-      .presenter-audio { width: 0; height: 0; }
+${presenterStyle}
+      .narration-audio { width: 0; height: 0; }
     </style>
   </head>
   <body>
     <div id="root" data-composition-id="main" data-no-timeline data-start="0" data-duration="${formatSeconds(totalDuration)}" data-width="${width}" data-height="${height}">
 ${slideTags}
-      <video id="presenter-video" class="clip presenter-video" src="${escapeHtml(presenterPath)}" data-start="0" data-duration="${formatSeconds(totalDuration)}" data-track-index="20" data-layout-allow-overlap data-layout-allow-overflow muted playsinline preload="auto" aria-label="Presenter"></video>
-      <audio id="presenter-audio" class="clip presenter-audio" src="${escapeHtml(audioPath)}" data-start="0" data-duration="${formatSeconds(totalDuration)}" data-track-index="30" data-volume="1" preload="auto"></audio>
+${presenterTag}      <audio id="narration-audio" class="clip narration-audio" src="${escapeHtml(audioPath)}" data-start="0" data-duration="${formatSeconds(totalDuration)}" data-track-index="30" data-volume="1" preload="auto"></audio>
     </div>
   </body>
 </html>
@@ -252,14 +300,18 @@ process.stdout.write(
       slides: slides.length,
       duration: totalDuration,
       fps,
-      presenter: {
-        anchor,
-        visibleWidthFraction,
-        targetVisibleWidth,
-        scale,
-        renderedWidth,
-        renderedHeight,
-      },
+      mode: presenter ? "avatar" : "voice-only",
+      narration: { path: audioPath },
+      presenter: presenter
+        ? {
+            anchor: presenter.anchor,
+            visibleWidthFraction: presenter.visibleWidthFraction,
+            targetVisibleWidth: presenter.targetVisibleWidth,
+            scale: presenter.scale,
+            renderedWidth: presenter.renderedWidth,
+            renderedHeight: presenter.renderedHeight,
+          }
+        : null,
     },
     null,
     2,
