@@ -15,7 +15,7 @@ Download chat attachments with `okou web download-file` after reading its help. 
 | Spreadsheet/CSV/data | Calculate and verify the needed facts first; prepare charts, a short PDF, or script. Do not send a raw spreadsheet and assume it will be read. |
 | Image | Convert unsupported images to PNG/JPEG and verify legibility. A brand mark or UI screenshot must not be hallucinated from a textual description when actual pixels are available. |
 | Audio/video/recording | Probe codec, duration, dimensions, and tracks. Transcribe when needed. Convert unsupported formats to MP4/WebM or MP3/WAV; preserve only requested segments. For original audio, verify that the selected segments have the intended track. |
-| Existing HyperFrames project | Read and validate the project, then render locally by default. Cloud rendering needs explicit connected-account authorization. Do not attach HTML or a composition ZIP to Video Agent as though it accepts an editable timeline. |
+| Existing HyperFrames project | Read and validate the project, then render locally. Do not attach HTML or a composition ZIP to Video Agent as though it accepts an editable timeline. |
 | Other or corrupt file | Try the available reader/converter. Explain the specific unreadable input; continue only if it is nonessential to a faithful result. Do not impose a new user-upload category restriction. |
 
 A screen recording is an ordinary video input. With a synchronized same-stem `.clicks.json` sidecar, use `okou video camera --help` for the existing camera plan/review flow. Never synthesize click telemetry. This does not add a new screen-recording UI entry.
@@ -34,14 +34,4 @@ A screen recording is an ordinary video input. With a synchronized same-stem `.c
 
 For more than 20 useful attachments, curate/merge derived references without discarding required facts, or choose controlled composition. Do not truncate the file list silently. For an oversized prompt, summarize references while retaining instructions; do not silently cut a required verbatim script. For long speech, split at scene or sentence boundaries, generate each necessary segment once, and keep timings aligned.
 
-For an explicitly authorized connected-account route, ordinary upload after MIME/size verification is:
-
-```bash
-curl --fail-with-body --silent --show-error \
-  https://api.heygen.com/v3/assets \
-  -H "x-api-key: $HEYGEN_TOKEN" \
-  -F "file=@PROJECT/reference.pdf" \
-  -o PROJECT/reference-upload.json
-```
-
-Read `.data.asset_id` only after a successful response. For large files follow the three-step direct-upload guide; send HeyGen credentials only to `api.heygen.com`, not to the presigned storage URL. A login page with status 200 is not a valid media file.
+The non-managed endpoint limits above explain provider boundaries; they do not authorize direct uploads or personal-account execution. In the current platform flow, prepare source visuals locally and pass narration audio through the managed presenter command, which resolves supported artifact URLs. A login page with status 200 is not a valid media file.
