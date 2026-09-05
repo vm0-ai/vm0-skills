@@ -44,3 +44,5 @@ Okou owns the scene list, prepared visuals, narration mapping, and time-based co
 9. Decode the final MP4, inspect frames and audio, compare required pages/segments and narration against the plan, and upload the verified file.
 
 The managed APIs own provider credentials, billing, and artifact persistence. Save returned results and any generation identifier before subsequent steps, wait for the existing job, and reuse completed assets after interruption. Do not retry a billed submission merely because a command or request timed out; inspect its existing generation status first.
+
+The presenter CLI already waits for the managed job. A `GENERATION_TIMEOUT` error includes its `generationId`; resume with `GET /api/built-in-generations/{generationId}` on the same API origin, authenticated with the run's `OKOU_TOKEN`, and use its completed `result`. The CLI's origin is `OKOU_API_BACKEND_URL` (add HTTPS only if no scheme is present), otherwise `https://api.okou.ai`. A queued/running response is not failure. If an interruption left no known generation ID, reconcile the existing job before resubmitting; do not invent a `--resume` CLI flag.
