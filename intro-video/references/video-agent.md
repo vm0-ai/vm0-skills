@@ -1,6 +1,6 @@
 # Video Agent: HeyGen creates the whole video
 
-Use only when the route in `SKILL.md` permits creative reinterpretation. This path requires the connected HeyGen credential. Okou prepares a factual brief and supported references; HeyGen chooses the narrative/visual execution and renders the MP4. Do not separately synthesize the same narration or render another HyperFrames copy.
+Use only when the route in `SKILL.md` permits creative reinterpretation **and the user explicitly authorized connected-account execution/billing**. This is not the default Okou-credit route; the current platform has no managed native Video Agent endpoint. Okou prepares a factual brief and supported references; HeyGen chooses the narrative/visual execution and renders the MP4. Do not separately synthesize the same narration or render another HyperFrames copy.
 
 ## Build the request
 

@@ -1,6 +1,6 @@
 # Existing templates and source-video transformations
 
-These routes apply only when the actual intent calls for them. They currently require the connected HeyGen API, not the managed Intro Video avatar/voice commands. Read the endpoint schema for the chosen operation and use JSON files for request bodies. Persist the returned job identity before polling, and never create a second job because the first one is still running.
+These routes apply only when the actual intent calls for them and the user explicitly authorizes the connected-account execution/billing path. They currently require the connected HeyGen API, not the managed Intro Video avatar/voice commands or Okou platform credits. Read the endpoint schema for the chosen operation and use JSON files for request bodies. Persist the returned job identity before polling, and never create a second job because the first one is still running.
 
 ## Studio template
 
