@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-09-06",
+  "styleId": "image-style:emboss-deboss",
+  "sourceOfInspiration": "https://x.com/AdrianPunk115/status/2095082810172473824",
+  "references": [
+    {
+      "file": "refs/ref-make-room-ivory.jpg",
+      "sha256": "4aad73885b7d24f0e9dc621a576c85e946b7a98d09dfcb026a9dddb918107901",
+      "prompt": "prompts/ref-make-room-ivory.txt",
+      "model": "gpt-image-1",
+      "provider": "fal",
+      "quality": "high",
+      "imageSize": "1024x1536",
+      "artifactId": "41fc05ff-b812-4dec-97f9-c9c8fe200139",
+      "artifactUrl": "https://a.okou.io/hp62o2npqy.png",
+      "sourceImageUrls": [],
+      "originalSha256": "b1e67d67eb456fb849bef1732ad660a3931f3d426e057c6986f103c0e955c6f6",
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+    },
+    {
+      "file": "refs/ref-slow-mornings-cobalt.jpg",
+      "sha256": "ce8d65971b4673d4f20d7e8a8d516b640f8beaf45f7e762a7630a76b7e0694d1",
+      "prompt": "prompts/ref-slow-mornings-cobalt.txt",
+      "model": "gpt-image-1",
+      "provider": "fal",
+      "quality": "high",
+      "imageSize": "1024x1536",
+      "artifactId": "a1d88cff-99cf-4bde-abcd-c5a330c47798",
+      "artifactUrl": "https://a.okou.io/r5jgjhlsge.png",
+      "sourceImageUrls": [],
+      "originalSha256": "735e1df4056ef41d9815a9b6b8e7dbc3e5b03a2330534ecce1744a85d464ba68",
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+    },
+    {
+      "file": "refs/ref-growth-sage.jpg",
+      "sha256": "9d364ee40eac260e1b1a6a4bddeb64a5181e270225384e20ae628df531ce7516",
+      "prompt": "prompts/ref-growth-sage.txt",
+      "model": "gpt-image-1",
+      "provider": "fal",
+      "quality": "high",
+      "imageSize": "1024x1536",
+      "artifactId": "e6e83406-3cf0-4419-b438-5c0ae805c262",
+      "artifactUrl": "https://a.okou.io/egc7t2fqjt.png",
+      "sourceImageUrls": [],
+      "originalSha256": "45ac8dfea12114b8cbef2b05daa2232707b9b5794609993a203cf009151f9a15",
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+    }
+  ]
+}
