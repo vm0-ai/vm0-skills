@@ -22,11 +22,11 @@ Normalize choices before selecting the route:
 - `Auto` / `Let Okou choose` delegates that decision. `No ...` forbids that element; an empty provider field does not necessarily mean none.
 - An explicit avatar look ID and voice ID are exact. The group ID groups looks; it is not a replacement avatar ID.
 - `Default` voice with an avatar means use its `defaultVoiceId`. Resolve the actual avatar first, then pass that voice ID explicitly.
-- With **no avatar**, automatic/default voice means choose an independent public HeyGen voice. It does not mean mute. `No voiceover` is the separate mute choice.
-- `No voiceover` forbids spoken narration, including retained speech in source video. Preserve music/ambient sound only if it fits the request. If an avatar is explicitly selected, a silent still is possible; do not synthesize speech just to animate it.
+- With **no avatar**, automatic/default voice means choose an independent public HeyGen voice. It does not mean mute.
+- `No voiceover` means **no added narration**, not a muted soundtrack. Keep source audio unless the user requests its removal. An explicit request for a silent/muted video means remove all audio, including source speech, music, and ambient sound. If an avatar is explicitly selected without speech, a still is possible; do not synthesize speech just to animate it.
 - `Original audio` preserves the relevant source track once. Verify that an audio track actually exists. Do not substitute TTS or add another copy. Translation or a new spoken script conflicts with an explicit original-audio requirement; resolve that conflict first.
 - The style picker offers automatic choice or a specific public **Video Agent Style**, not a separate no-style option. Use its actual preview, thumbnail, and tags as visual references for composition. A `style_id` is not a Studio `template_id` or a HyperFrames project. If the user explicitly asks in their prompt for no preset style, honor that editing direction.
-- Use 16:9 from the form unless the user's editing direction explicitly overrides it. If a requested ratio or resolution is unsupported on one route, select a route that supports it.
+- The output aspect ratio is independent of the style reference ratio. An explicit form choice of `16:9` or `9:16` is a hard output constraint; never replace it with the selected style's ratio. With `Auto`, infer the output from explicit prose, source fidelity, and the destination, and state the chosen format in the brief. If there is no format cue, use a justified format for the intended use rather than treating an absent choice as a user-selected 16:9. Clarify conflicts between two explicit choices before rendering.
 
 User editing directions override inferred defaults. When two explicit requirements conflict, explain the concrete tradeoff and ask one focused question. Do not silently replace a selected identity, relax page fidelity, or claim a guaranteed style reproduction.
 
@@ -87,6 +87,8 @@ Upload the verified final MP4 with `okou web upload-file -f FINAL.mp4`. Deliver 
 - “Summarize this PPT and DOCX in a 60-second launch video”: extract facts and build a concise composition using platform-managed HeyGen assets; this is not a page-for-page conversion.
 - “Explain all 20 PPT pages without changing them”: rasterize all pages, create mapped narration, and use controlled composition. Do not treat the PDF as a promise that Video Agent will preserve every page.
 - “Use these product clips, no avatar, choose the voice”: controlled composition with independent narration; no presenter generation.
+- “Use this landscape style for a vertical reel”: adapt its visual language into a 9:16 composition; do not letterbox a whole 16:9 render or change the output choice silently.
+- “No voiceover; keep the interview audio”: retain the source speech and add no synthetic narration. “Make it silent” instead removes every audio track.
 - “Cut this recording to 30 seconds and keep its audio”: source editing/composition; no TTS. Click-sidecar camera planning is optional only when actual synchronized telemetry is supplied.
 - “Translate this Chinese recording into English”: faithful translated narration, not a new promotional video. Use managed speech plus source composition for faceless footage; preserving the original speaker's identity or lip movements needs an unavailable managed capability and must not be promised.
 - “Use this public style and my Studio template exactly”: identify the two different resources and resolve which owns the layout before generation.

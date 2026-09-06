@@ -5,7 +5,7 @@
 Okou owns the scene list, prepared visuals, narration mapping, and time-based composition. The managed HeyGen integration generates optional speech and transparent presenter takes using Okou credits; local HyperFrames rendering finishes the composition without a personal HeyGen account. **No avatar** and **no voiceover** are implemented by omitting those layers, not by asking a generative agent to remember an exclusion.
 
 1. Prepare required source visuals and decide scene order. For page-for-page conversion, retain all pages as static bitmaps; no restyling or invented marketing arc. For recordings, keep the selected source segments and verify crop/readability. Choose custom motion only when the brief calls for it.
-2. Finalize one narration unit per scene. If the user requested silence, omit narration. If original audio was selected, extract or retain the intended track without TTS. For synthetic speech with a compatible exact voice, use the managed command:
+2. Finalize one narration unit per scene. `No voiceover` omits added narration but does not delete source audio. An explicit request for silence removes every audio track. If original audio was selected, probe that it exists and extract or retain the intended track without TTS; do not infer track presence from a filename or MIME type. For synthetic speech with a compatible exact voice, use the managed command:
 
    ```bash
    okou __intro-video-voice --voice-id VOICE_ID --text "FINAL_SCRIPT" --json
@@ -39,7 +39,7 @@ Okou owns the scene list, prepared visuals, narration mapping, and time-based co
      --workers 1 --output PROJECT/renders/final.mp4
    ```
 
-   Set the intended dimensions in the composition itself and use a matching supported resolution preset only when necessary. A local-render `--resolution` preset is not the same as the cloud API's resolution/ratio pair. Use one worker in constrained runtimes and wait for completion. Do not add a cloud render as a second copy of an already-rendered video.
+   Set the independently resolved output dimensions in the composition itself (for example 1920×1080 for 16:9 or 1080×1920 for 9:16) and use a matching supported resolution preset only when necessary. Reflow adapted graphics for the output canvas; fit fidelity-critical pages or footage without unintended cropping. A style reference's ratio is source metadata, not an output override. A local-render `--resolution` preset is not the same as the cloud API's resolution/ratio pair. Use one worker in constrained runtimes and wait for completion. Do not add a cloud render as a second copy of an already-rendered video.
 
 9. Decode the final MP4, inspect frames and audio, compare required pages/segments and narration against the plan, and upload the verified file.
 

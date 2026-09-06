@@ -10,7 +10,7 @@ Download chat attachments with `okou web download-file` after reading its help. 
 | --- | --- |
 | Prompt only | Research missing facts with `okou web-search` and read selected sources. Write a compact factual brief. Do not assume Video Agent will browse or cite evidence. |
 | PPT/PPTX used as references | Extract text and speaker notes; convert to PDF for native Video Agent attachment, or summarize into the prompt. Verify converted page count and representative pages. |
-| PPT/PDF that must retain layout | Use `okou presentation screenshot --input SOURCE --out PROJECT/assets/slides --width 1920 --height 1080 --json`; retain every required page and order. Use these bitmaps in controlled composition. |
+| PPT/PDF that must retain layout | Inspect page dimensions and `okou presentation screenshot --help`, then rasterize at a consistent size matching the source geometry. Retain every required page and order. Fit those bitmaps without stretching into the independently chosen output canvas; a portrait output does not authorize cropping slide content. |
 | DOC/DOCX/text/HTML | Extract relevant text and images; use a concise brief in the prompt or export a PDF. A DOCX, HTML project, or webpage URL is not a native Video Agent document input. |
 | Spreadsheet/CSV/data | Calculate and verify the needed facts first; prepare charts, a short PDF, or script. Do not send a raw spreadsheet and assume it will be read. |
 | Image | Convert unsupported images to PNG/JPEG and verify legibility. A brand mark or UI screenshot must not be hallucinated from a textual description when actual pixels are available. |
