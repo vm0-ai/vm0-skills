@@ -36,6 +36,40 @@ Use a small role-labeled asset set:
 
 Treat inspiration videos as analysis-only unless the user explicitly asks to use one as a motion reference. Never use a contact sheet or storyboard grid as a literal first frame.
 
+### Copy-specific motion guide
+
+Static reference videos are unsafe for this template: readable placeholders tend to leak into the result, while a guide with no words causes the model to preserve blank type blocks. When the selected video model supports reference video, first render a copy-specific guide containing the user's own seven phrases.
+
+Resolve `scripts/render_motion_guide.py` and `assets/motion-guide-base.mp4` relative to this `SKILL.md`, then run:
+
+```bash
+python3 scripts/render_motion_guide.py \
+  --output /tmp/kinetic-editorial-motion-guide.mp4 \
+  --opener "<exact opener>" \
+  --pivot "<exact identity pivot>" \
+  --claim-one "<exact claim 1>" \
+  --claim-two "<exact claim 2>" \
+  --claim-three "<exact claim 3>" \
+  --catalog "<exact catalog phrase>" \
+  --title "<exact final title>" \
+  --subtitle "<optional exact subtitle>"
+```
+
+The renderer uses Python's standard library and ffmpeg; it makes no network calls. It overlays the user's exact copy onto an original, programmatically drawn motion base containing no readable placeholders and no pixels, people, logos, products, or audio from the inspiration source.
+
+Inspect the rendered guide once for spelling, then upload it with `okou web upload-file` and pass the returned URL as the sole `motion_guide` video reference. Tell the video model to preserve the guide's copy and trajectories while replacing its generic shapes with the user's subject matter.
+
+After video generation, download the raw result and run the same command again with `--finish`, set `--base` to the raw generated video, set `--output` to the final delivery path, and repeat the same eight copy flags. The finishing pass automatically scales the typography to the generated resolution, masks the model's native text layer with restrained editorial labels, and preserves the generated audio. Deliver the finished file, not the raw model result.
+
+Reference priority is:
+
+1. exact copy already rendered into the custom guide;
+2. supplied identity assets and the user's subject, palette, and evidence content;
+3. custom-guide timing, layout density, and object trajectories;
+4. generic guide shapes, which must be replaced by the user's subject matter.
+
+If reference video is unavailable, omit the guide and follow the written grammar below. Never substitute the original inspiration video for the custom guide.
+
 ## Locked shot grammar
 
 ### Layered accumulation
@@ -107,11 +141,12 @@ Do not merely say "dynamic collage." Name the exact text, recurring anchors, pro
 ## Generation parameters
 
 - **aspectRatio:** `16:9`.
-- **duration:** `12-15s`; prefer `15s` for the seven-beat grammar.
+- **duration:** `15s` when using the copy-specific guide; `12-15s` for text-only fallback.
 - **resolution:** prefer `1080p` or higher when supported.
 - **generateAudio:** on when supported; request a brisk percussive editorial bed with paper slides, snaps, restrained scratches, and one low final accent. No voiceover by default.
+- **video input:** when supported, pass the uploaded copy-specific `motion_guide` as the sole reference video. Do not pass the original inspiration video. If a model rejects combining frame images with reference media, keep the custom guide and omit the frame images.
 - **image inputs:** role-label each URL as `anchor_lock`, `canvas_lock`, `evidence_lock`, or `final_board_lock`.
-- **negativePrompt:** `ordinary slideshow, one phrase at a time on an empty screen, full-screen erase between every phrase, generic cross-fades, permanent full-canvas tile grid, single giant object held for seconds, long empty title hold, cinematic camera move, 3D fly-through, unrelated objects, object mutation, cluttered scrapbook, pseudo-text, misspelling, stock-ad polish, watermark`.
+- **negativePrompt:** `generic guide shapes in final output, unreadable placeholder glyphs, ordinary slideshow, one phrase at a time on an empty screen, full-screen erase between every phrase, generic cross-fades, permanent full-canvas tile grid, single giant object held for seconds, long empty title hold, cinematic camera move, 3D fly-through, unrelated objects, object mutation, cluttered scrapbook, pseudo-text, misspelling, stock-ad polish, watermark`.
 
 ## Acceptance gates
 
@@ -123,6 +158,8 @@ Reject and retry when any answer is no:
 - Does the canvas stay front-facing while local modules, rather than the camera, create energy?
 - Are rule lines local and changing rather than a permanent rigid screen grid?
 - Is every approved phrase exact and cleanly readable at least once, without demanding total isolation from adjacent beats?
+- Does the output preserve the exact copy from the custom guide while replacing its generic shapes with the user's subject matter?
+- Was the deterministic `--finish` typography pass applied to the delivered file with audio preserved?
 - Is the pre-final pacing dense, with no unintended multi-second empty hold or prolonged single-object takeover?
 - Does the final board gather the recurring anchors and evidence into a legible title hierarchy for the last second?
 
