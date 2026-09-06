@@ -4,6 +4,94 @@
   "sourceOfInspiration": "https://x.com/AdrianPunk115/status/2095082810172473824",
   "references": [
     {
+      "file": "refs/ref-moon-mooring-indigo.jpg",
+      "sha256": "6c092392380cb9cd0aff2c9728cc14ec6f0542a449ce9bb8f985c826d599d852",
+      "prompt": "prompts/ref-moon-mooring-indigo.txt",
+      "promptSha256": "bb149c18403469878a4815ffe0852c65022d60b01a1af179d4c5aaa7343e3b8c",
+      "model": "gpt-image-1",
+      "provider": "fal",
+      "quality": "high",
+      "imageSize": "1024x1536",
+      "artifactId": "cd2bf7be-11bd-4f96-84b8-993bc23e7202",
+      "artifactUrl": "https://a.okou.io/3axq6rha7t.png",
+      "sourceImageUrls": [
+        "https://a.okou.io/c6w3e2hm5l.png"
+      ],
+      "sourceArtifactId": "2c5b2673-116b-4e48-8ce1-8339907a468a",
+      "inputFidelity": "high",
+      "originalSha256": "e28790abd743b037e282369c7b423cd3d9b1d78328443a29289b496e136518c3",
+      "language": "zh",
+      "visibleText": "月泊",
+      "referenceRole": "Approved relief and language-mode reference",
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+    },
+    {
+      "file": "refs/ref-beyond-ivory.jpg",
+      "sha256": "4f27f3422750891c01ba394492e59276a87a23334528c8f77635d71ae4237221",
+      "prompt": "prompts/ref-beyond-ivory.txt",
+      "promptSha256": "44b6be3fb4cd0bf01aa65877f9d08966e9cc1cb62a642ee3a16eb6e533f32e6d",
+      "model": "gpt-image-1",
+      "provider": "fal",
+      "quality": "high",
+      "imageSize": "1024x1536",
+      "artifactId": "c415828d-470e-4e55-8f06-f41481e18ea2",
+      "artifactUrl": "https://a.okou.io/w23ryhqcoz.png",
+      "sourceImageUrls": [
+        "https://a.okou.io/5f45ydjh8l.png"
+      ],
+      "sourceArtifactId": "473264bf-428f-4091-874d-fa31a6f0ecc0",
+      "inputFidelity": "low",
+      "originalSha256": "681385a1e02e89946fa4b70172801cbc88e930f81f4a93ed2a3589909d923096",
+      "language": "en",
+      "visibleText": "BEYOND",
+      "referenceRole": "Approved relief and language-mode reference",
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+    },
+    {
+      "file": "refs/ref-wind-space-blush.jpg",
+      "sha256": "10b593875c329c0f424f9d025dafa1b6476312a38ae7b33c16024b2fc4e422a2",
+      "prompt": "prompts/ref-wind-space-blush.txt",
+      "promptSha256": "c17378617f09fd6a41af98b165fe40215f96b57037ce637c42169ce63f62127a",
+      "model": "gpt-image-1",
+      "provider": "fal",
+      "quality": "high",
+      "imageSize": "1024x1536",
+      "artifactId": "06ffd8b3-da99-4321-a2ff-3de6e6d5e643",
+      "artifactUrl": "https://a.okou.io/lpyhjf4l8d.png",
+      "sourceImageUrls": [
+        "https://a.okou.io/ty7k9ny8pb.png"
+      ],
+      "sourceArtifactId": "b356af5c-bc77-44f9-ac8b-1a3300eecf40",
+      "inputFidelity": "low",
+      "originalSha256": "f6bd1f2fd774e16dce343055adae7752ff90fd44318cb4b97bebef9b62235784",
+      "language": "ja",
+      "visibleText": "風の余白",
+      "referenceRole": "Approved relief and language-mode reference",
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+    },
+    {
+      "file": "refs/ref-moon-boat-no-text.jpg",
+      "sha256": "cc7023daa8fd5567b16065278e82e7ee576be24ad3c4f8016f25f3db46abfafe",
+      "prompt": "prompts/ref-moon-boat-no-text.txt",
+      "promptSha256": "4f5fece9d9dc546374fadd3a685c61c266e643eec8b579c8a7690e8c2aa5de4a",
+      "model": "gpt-image-1",
+      "provider": "fal",
+      "quality": "high",
+      "imageSize": "1024x1536",
+      "artifactId": "78d78bf5-5a9f-4944-ae10-ee8bfc33d9ea",
+      "artifactUrl": "https://a.okou.io/edgb206pub.png",
+      "sourceImageUrls": [
+        "https://a.okou.io/c6w3e2hm5l.png"
+      ],
+      "sourceArtifactId": "2c5b2673-116b-4e48-8ce1-8339907a468a",
+      "inputFidelity": "low",
+      "originalSha256": "4fc64c48aa070cc7be7644ce381ad1b84151815c9ef6dbfade70bd98fccedc48",
+      "language": "none",
+      "visibleText": null,
+      "referenceRole": "Approved relief and language-mode reference",
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+    },
+    {
       "file": "refs/ref-make-room-ivory.jpg",
       "sha256": "4aad73885b7d24f0e9dc621a576c85e946b7a98d09dfcb026a9dddb918107901",
       "prompt": "prompts/ref-make-room-ivory.txt",
@@ -15,7 +103,9 @@
       "artifactUrl": "https://a.okou.io/hp62o2npqy.png",
       "sourceImageUrls": [],
       "originalSha256": "b1e67d67eb456fb849bef1732ad660a3931f3d426e057c6986f103c0e955c6f6",
-      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits.",
+      "referenceRole": "Earlier palette and composition reference",
+      "promptSha256": "e9f20dd7a7db455ddaa455d766345d8ce0e8c643d343bcb0e809d519182964d9"
     },
     {
       "file": "refs/ref-slow-mornings-cobalt.jpg",
@@ -29,7 +119,9 @@
       "artifactUrl": "https://a.okou.io/r5jgjhlsge.png",
       "sourceImageUrls": [],
       "originalSha256": "735e1df4056ef41d9815a9b6b8e7dbc3e5b03a2330534ecce1744a85d464ba68",
-      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits.",
+      "referenceRole": "Earlier palette and composition reference",
+      "promptSha256": "069270c1c6ec4f7952c136f60c41343dc13e56210368c121e0347dee7a2885d2"
     },
     {
       "file": "refs/ref-growth-sage.jpg",
@@ -43,7 +135,10 @@
       "artifactUrl": "https://a.okou.io/egc7t2fqjt.png",
       "sourceImageUrls": [],
       "originalSha256": "45ac8dfea12114b8cbef2b05daa2232707b9b5794609993a203cf009151f9a15",
-      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits."
+      "encoding": "Original generated PNG converted to JPEG, quality 94, 4:4:4, no crop or visual edits.",
+      "referenceRole": "Earlier palette and composition reference",
+      "promptSha256": "7ce941d1f1b0ccf755080f0cd6f89d586c69ad32a9a8afd74c1ce435538be6cd"
     }
-  ]
+  ],
+  "referencePolicy": "The four primary references were edited from our own generated posters. No images from the source post were used as generation inputs. Earlier references were generated without image inputs."
 }

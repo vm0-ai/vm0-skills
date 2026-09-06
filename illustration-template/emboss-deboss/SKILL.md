@@ -1,160 +1,198 @@
 ---
 name: emboss-deboss
-description: Minimal editorial posters and covers pressed into tactile matte paper. Shallow raised lettering and recessed graphic contours share one soft side light, fine paper fibers, restrained color, generous negative space, and one theme-driven visual metaphor. Trigger for /emboss-deboss, embossed paper posters, debossed typography, letterpress covers, or tactile print design.
+description: Compose poetic editorial posters and covers in tactile matte paper, with clearly raised lettering and forms, recessed contours, fine fibers, and intentional negative space. Supports Chinese, English, Japanese, and text-free artwork. Use for /emboss-deboss, embossed paper posters, debossed typography, letterpress covers, or paper-relief design.
 ---
 
 # Emboss & Deboss
 
-Turn a theme or a short sentence into one finished poster that looks physically
-pressed into thick, uncoated paper. Typography, a single visual metaphor, paper
-relief, and empty space form one composition. The result should feel like an
-independent magazine or an art-book cover.
+Turn a theme into a finished artwork that looks physically pressed into thick,
+uncoated paper. Typography, a visual metaphor, relief, and empty space form one
+composition. The mood is quiet and poetic; the depth is unmistakable at the size
+of the complete poster.
 
-This is a prompt-compilation resource. Return one resolved image prompt to the
-outer Okou image-generation flow. Use its provider, model, reference inputs,
-output directory, and delivery contract. Do not start a nested generator or
-change the selected model.
+This is a prompt-compilation resource. Return one resolved image prompt for the
+current image to the outer Okou generation flow. The outer flow owns generation,
+provider, model, reference inputs, size, retries, output directory, and delivery.
+Do not start a nested generator or change the selected model.
 
 ## Interpret the brief
 
-Accept a theme alone. Optional inputs are exact headline, subtitle, brand text,
-palette, aspect ratio, intended use, and a preferred relief treatment. Honor
-explicit user choices before defaults and vary only unspecified choices.
+Accept a theme alone. Optional inputs include exact text, language or no-text
+mode, palette, aspect ratio, intended use, and relief treatment. Explicit user
+choices override defaults; vary only unspecified choices.
 
-1. Identify the idea behind the theme: a relationship, movement, feeling, or
-   change. Translate it into one concrete visual metaphor.
-2. If the user supplies visible text, preserve its spelling, language, case,
-   and punctuation exactly. A line break may change; the wording may not.
-3. If only a theme is given, write a short headline in the user's language.
-   Omit optional subtitle, brand, date, edition, and footnote when not supplied.
-   Never invent business claims, logos, signatures, or an attribution on the art.
-4. Select one composition, a coherent palette, typography, and which elements
-   rise or recede. Resolve these choices before calling the image model; do not
-   hand it a menu of alternatives or ask it to randomize the whole design.
-5. Default to a portrait 2:3 poster. Square and landscape covers use the same
-   material rules with a newly composed layout, rather than cropping a portrait.
-   Map the requested ratio to a size supported by the selected model.
+- Find the relationship, movement, or feeling behind the theme and express it
+  through one concrete visual metaphor.
+- Preserve supplied visible text exactly, including language, characters, case,
+  and punctuation. Line breaks may change unless the user fixes them. Do not
+  translate supplied text without a request to do so.
+- For a theme without supplied copy, create a short headline in the requested
+  language, otherwise the user's language. A no-text request overrides this
+  headline default. Omit unsupplied subtitles, brands, dates, and footnotes.
+- Resolve the composition, palette, typography, and raised/recessed elements
+  before returning the prompt. Do not give the image model a menu of options.
+- Default to portrait 2:3. Recompose for square or landscape; do not crop a
+  portrait into another format. Use a size supported by the selected model.
 
-## Material rules
+## Paper and relief
 
-- Fill the frame with a single, flat sheet of dyed or natural uncoated paper.
-  Use a fine, irregular fiber grain. The paper remains matte, including on the
-  raised faces and inside the impressions.
-- Show the sheet front-on, with no perspective tilt, surrounding desk, frame,
-  book mockup, photographed hand, curled edge, or separate stacked layers.
-- Keep relief shallow: a fraction of the paper thickness, with compressed,
-  slightly softened fiber edges. The design is part of the sheet.
-- Use one broad soft light from the upper left unless the user specifies a
-  different direction. Keep this light consistent across every element.
-- **Emboss:** the face rises slightly above the sheet. A narrow lit edge faces
-  the light and a small external shadow falls toward the lower right.
-- **Deboss:** the contour or letter is pressed into the sheet. The recessed
-  interior carries a narrow shadow at its upper-left inner wall and a restrained
-  opposite edge highlight. Its center must sit below the surrounding surface.
-- Include both processes by default: for example, a raised headline beside a
-  recessed path, or a raised leaf above a recessed title. If the user asks for
-  only one process, use only that process.
-- At least one major element is blind pressed: its face keeps the paper's own
-  color and the relief is read through edge light and shadow. Keep another
-  readable anchor when the headline would otherwise disappear at thumbnail size.
-- Ink may color selected lettering or a small detail. Use one or two principal
-  colors; an optional tiny accent must have a compositional purpose. Dark blue,
-  green, pink, or yellow paper is as valid as ivory.
+- Use one continuous sheet of thick matte cotton or uncoated paper, seen
+  front-on. Fine, irregular fibers continue across faces, shoulders, and grooves.
+  Broad empty areas stay calm; grain must not compete with the relief edges.
+- Keep the design integral to the sheet, with low sculpted paper relief. Do not
+  make the relief so faint that it appears flat when the whole poster is visible.
+- Use one soft directional side light, upper left by default, low enough to
+  reveal height. All forms share its direction and shadow behavior.
+- **Emboss:** specify a raised matte face, a lit shoulder toward the light, a
+  shaded side wall away from it, and a short attached contact shadow on the
+  surrounding paper. Letter counters remain at the lower paper level. Color
+  contrast, an outline, or a blurred shadow alone does not establish volume.
+- **Deboss:** specify a sunken center, a shaded upper-left inner wall, and a
+  restrained opposite-edge highlight under the default light. A printed dark
+  line alone does not establish a recessed channel.
+- Include both processes by default: a raised title or main form can sit beside
+  a recessed route, water line, leaf vein, or contour. Honor requests for only
+  embossing or only debossing. Keep supporting relief quieter than the focal form.
+- Give the headline and primary solid form enough edge definition to read in
+  the complete composition. For an embossed moon or disk, describe a gently
+  convex face, continuous rounded shoulder, shaded side wall, and attached base
+  shadow. A flat colored circle or glow halo is insufficient.
+- Use blind pressing on a major element where the brief permits: its face keeps
+  the paper's color, and coherent edge lighting makes it legible. Selected ink
+  may color raised faces, but must not replace their physical relief.
+- Use one or two principal colors, with a small purposeful accent if needed.
+  Ivory, cobalt, sage, blush, charcoal, and butter yellow are valid paper colors.
 
-Avoid plastic, inflated rubber, foam, clay, chrome, metallic engraving, glossy
-bevels, deep extruded 3D letters, stone carving, laser-cut holes, floating objects,
-drop-shadow UI tiles, ornamental gradients, noisy distress, and harsh spotlights.
-Natural local shading from the paper relief is necessary.
+Avoid coarse sand or concrete grain, gritty speckles, oversharpening, plastic,
+foam, clay, stone, chrome, glossy bevels, inflated lettering, deep block extrusion,
+floating cutouts, and detached drop shadows. Exclude desks, frames, mockup books,
+curled sheets, and separate stacked layers unless the user requests a mockup.
 
-## Composition and typography
+## Poetic composition
 
-Use one main metaphor and at most two small supporting marks. Leave roughly
-40–60% of the canvas quiet. Let the title and metaphor interact through a shared
-axis, a contour, a deliberate gap, or an overlapping region with readable text.
+Build a relationship rather than a collection of decorative symbols. A small
+boat can answer a large moon across empty water; a distant sun can balance a
+recessed valley; a leaf can end a wind path. Choose the metaphor for the user's
+theme, without automatically repeating these subjects.
 
-Select a composition that fits the idea and format:
+Use one main metaphor and at most two supporting marks. Quiet space often covers
+roughly 40–60% of the canvas, adjusted for the brief. Give that space a purpose:
+distance, stillness, anticipation, or a path for the eye.
 
-| Layout | Relationship | Suitable concepts |
-| --- | --- | --- |
-| Open field | Small offset title faces a generous unoccupied area bounded by a pressed arc | Clarity, rest, space |
-| Ascending path | A single recessed route connects a lower starting point to raised type above | Learning, progress, travel |
-| Edge dialogue | A large title at one edge balances a smaller relief at the opposite edge | Contrast, confidence, focus |
-| Interwoven | A simple stem, thread, or line shares a stroke direction with the title | Craft, connection, growth |
-| Offset monument | A single large blind-pressed form sits off center with a compact text cluster | Calm, strength, remembrance |
-| Split rhythm | Two unequal text groups relate across one continuous pressed contour | Work and life, before and after |
+Select a fitting spatial relationship:
 
-Choose a refined serif, condensed sans, geometric sans, or another appropriate
-editorial typeface. Use no more than two type families. Give the headline a clear
-scale advantage; distinguish supplied supporting copy through size, weight,
-spacing, or ink contrast. Do not add text simply to fill a third hierarchy level.
+| Layout | Relationship |
+| --- | --- |
+| Open field | A compact focal group faces a generous empty area |
+| Ascending path | A recessed route connects a lower origin to a raised destination |
+| Edge dialogue | Unequal forms or text groups balance opposite edges |
+| Interwoven | Type and a stem, thread, or contour share a direction without hiding strokes |
+| Offset monument | One large off-center form balances a small secondary anchor |
+| Split rhythm | Two unequal groups relate across a continuous pressed contour |
 
-For Chinese, maintain complete, recognizable character structures and natural
-reading order. Vertical titles are allowed when they help the composition; do
-not slice a character in half. For Latin text, keep complete words and deliberate
-line breaks. Do not stretch letters arbitrarily. Keep all required text inside
-a safe margin of at least 6% of the shortest edge.
+Specify positions, relative scale, and clear gaps. Let text and image share an
+axis or contour while protecting every required glyph. Avoid accidental tangency,
+repetitive contour clutter, and placing an unrelated icon beside a headline.
+
+## Text and language modes
+
+Use no more than two type families. Choose strokes substantial enough to carry
+paper relief, while keeping counters open. Distinguish supplied supporting text
+through size, weight, spacing, or ink. Keep required text within a safe margin of
+about 6% of the shortest edge, unless a different layout is explicitly requested.
+
+- **Chinese:** preserve complete character structures and the supplied simplified
+  or traditional forms. Use natural horizontal or vertical reading order; never
+  slice, merge, or substitute characters.
+- **English:** preserve whole words, spelling, case, and deliberate line breaks.
+  Use the width of the actual phrase to balance the composition. Do not stretch
+  letters or rotate through a vertical stack merely to reuse another language's
+  layout.
+- **Japanese:** use natural wording when composing new copy and preserve supplied
+  kanji, kana, and punctuation exactly. Horizontal or vertical Mincho/Gothic type
+  can work. For vertical text, keep glyphs upright in reading order and reserve
+  room for every character. If text collides with a motif, move the motif or
+  recompose the title; do not omit a character to make it fit.
+- **No text:** explicitly require no letters, characters, numbers, logos, seals,
+  signatures, or watermarks. Rebalance the primary form, secondary anchor, and
+  empty space after removing type. In an edit, restore clean paper where the old
+  title was; check for residual strokes, ghost embossing, or replacement symbols.
+
+For requested language-varied batches, cover English, Japanese, and no-text
+versions when the requested count permits; include Chinese when requested or
+when further variety is useful. Each image has one resolved mode unless the user
+asks for bilingual text. Do not impose a language mix on a fixed-language series.
 
 ## Controlled variation
 
-Within a series, retain the paper grain, shallow relief, restrained palette,
-single light direction, and quiet editorial mood. Change at least two of the
-unconstrained axes between requested variants:
+Keep fine matte paper, coherent side lighting, readable relief, and the quiet
+editorial mood consistent. For a varied batch, change at least two unconstrained
+choices: palette, typography, composition, metaphor, or relief placement.
 
-- Paper color and ink relationship.
-- Type family and headline scale.
-- Composition and title location.
-- Theme-specific metaphor.
-- Which element is raised and which is recessed.
-
-Do not rotate through layouts mechanically when the user's theme calls for a
-particular relationship. If the user supplies a fixed brand system or asks for a
-consistent series, its fixed choices take precedence over variation.
-
-Useful palette relationships include ivory / forest ink, cobalt / warm white,
-sage / dark green, blush / burgundy, charcoal / pale gray, and butter yellow /
-ochre. These are optional starting points, not a locked list.
+Language changes may require a new layout. A no-text edition needs a complete
+visual composition of its own. Preserve any user-fixed brand system, subject,
+palette, layout, or exact wording across variants.
 
 ## Prompt shape
 
-Resolve the following into continuous, concrete prose:
+Resolve these fields into concrete prose for the current image:
 
 ```text
-Output: one finished front-on poster; requested ratio and supported size.
-Theme and intent: the user's idea, expressed through one specific metaphor.
-Visible text: an exact list of strings, or explicitly no text.
-Paper: one matte fiber sheet, its color and fine-grain character.
-Layout: precise title and metaphor positions, relative scale, and quiet space.
-Typography: selected family, line breaks, hierarchy, ink or blind treatment.
-Emboss: name the raised elements and their shallow edge behavior.
-Deboss: name the recessed elements and their inner shadow behavior.
-Lighting: one broad upper-left side light shared by all elements.
-Exclusions: extra text, mockup surroundings, glossy or deep 3D material.
+Output: one complete front-on artwork; requested ratio and supported size.
+Intent: the theme and one specific visual relationship that expresses it.
+Text mode: language and exact visible strings, or explicitly no text.
+Paper: matte sheet color, fine quiet fibers, continuous material.
+Composition: element positions, relative scale, clear gaps, purposeful empty space.
+Typography, if present: family, stroke weight, line breaks, ink or blind treatment.
+Emboss, if used: named raised faces, lit shoulders, shaded walls, attached shadows.
+Deboss, if used: named recessed centers, inner walls, and consistent edge shading.
+Lighting: one soft directional side light that reveals relief at whole-poster size.
+Exclusions: extra text, coarse grain, flat substitutes for relief, incompatible materials.
 ```
 
-Preserve the chosen physical process in the final prompt. Merely writing
-"premium embossed poster" is insufficient: specify the raised and recessed
-elements separately and tie their shadows to the same light source.
+When editing, name the accepted features to preserve and the specific defect to
+repair. Describe geometry rather than merely requesting "more 3D". Treat any
+millimeter or pixel cues in reference prompts as illustrative for those images,
+not universal physical measurements or settings to copy across resolutions.
 
-## References
+## References and revision
 
-Read [REFERENCES.md](./REFERENCES.md) for three independently generated examples.
-Inspect them as material and composition references; do not copy their wording or
-motifs into unrelated briefs. None is a required image-to-image input. The style
-works from text alone, and the user's own reference handling takes precedence.
+Read [REFERENCES.md](./REFERENCES.md) when choosing material, text-mode, or repair
+examples. Start with the approved Chinese moon, English, Japanese, and text-free
+references. Earlier references remain useful for palette exploration, but their
+subtler relief is not the target when stronger depth is requested.
+
+References are optional guidance, not required generation inputs. Keep the user's
+subject and wording independent of them. The style also works from text alone.
+
+If repeated image edits amplify grain or halos, return to the cleanest suitable
+source or recompile from the brief within the outer flow's reference policy.
+Keep the accepted composition and specify fine fibers plus explicit relief
+geometry. Do not keep increasing texture, sharpening, or contrast to simulate
+depth. Any reference-strength adjustment belongs to the selected provider's
+supported controls and must respect the user's preservation requirements.
 
 ## Verify the output
 
-Inspect the image returned by the outer generation flow:
+When the outer flow returns an image, inspect both the complete poster and close
+views of the title, focal form, and representative recessed detail:
 
-- Paper fibers are visible without looking like sand or concrete.
-- Both raised and recessed forms read correctly under one light direction,
-  unless the user explicitly selected only one process.
-- The image has one clear metaphor and intentional empty space.
-- Required text is exact, legible, and uncropped, with no invented extra copy.
-- A thumbnail still has a readable focal point; blind pressing is not invisible.
-- The composition follows the requested ratio and is a complete artwork.
+- **Relief:** raised faces, side walls, and attached shadows read at whole-poster
+  size; recessed details sit below the sheet. A title and moon both pass when
+  present. The result remains paper, with no floating or bulky extruded forms.
+- **Light and grain:** one light direction explains all edges; fine fibers are
+  visible close up without making the broad paper areas noisy.
+- **Composition:** one coherent metaphor, deliberate scale and spacing, and
+  purposeful negative space. A thumbnail retains a clear focal point.
+- **Text:** compare every character against the exact requested strings. Check
+  spelling, case, punctuation, kanji/kana, reading order, missing or repeated
+  glyphs, clipping, and extra copy. Do not rely on OCR alone.
+- **No-text mode:** inspect the former title area and the rest of the sheet for
+  lettering, symbols, signatures, or residual embossed strokes.
+- **Brief:** verify the requested ratio, text mode, palette, and fixed choices.
 
-If the process looks inverted or too deep, specify the affected edge and reduce
-its relief. If lettering is wrong, retain the exact requested wording, simplify
-the adjacent shape, and retry through the outer generation flow. Never silently
-rewrite the user's headline to hide a rendering error.
+For weak relief, correct the affected shoulder, wall, contact shadow, or inner
+edge before changing the whole composition. For wrong text, preserve the exact
+wording and simplify nearby shapes or allocate more space. Retry only within the
+outer flow's budget; if a defect remains, report it instead of silently rewriting
+the text or presenting the image as verified.
