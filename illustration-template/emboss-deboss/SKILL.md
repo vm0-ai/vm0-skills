@@ -1,6 +1,6 @@
 ---
 name: emboss-deboss
-description: Poetic editorial posters and covers in tactile matte paper, with clearly raised lettering and forms, recessed contours, fine fibers, and intentional negative space. Use for /emboss-deboss, embossed paper posters, debossed typography, letterpress covers, or paper-relief design.
+description: Poetic editorial posters and covers in sculpted matte paper, with pronounced raised lettering and forms, deeply pressed contours, fine fibers, and intentional negative space. Use for /emboss-deboss, embossed paper posters, debossed typography, letterpress covers, or paper-relief design.
 ---
 
 # /emboss-deboss — tactile paper-relief poster style
@@ -31,27 +31,36 @@ treatment to shape the design. Explicit choices override defaults.
 - One continuous sheet of thick matte cotton or uncoated paper, seen front-on.
   Fine, irregular fibers continue across faces, shoulders, and grooves.
   Broad empty areas stay calm; grain must not compete with the relief edges.
-- The design is integral to the sheet, with low sculpted paper relief that is
-  clearly visible when the complete poster is viewed.
-- One soft directional side light, upper left by default, low enough to reveal
-  height. All forms share its direction and shadow behavior.
+- The design is integral to the sheet, with pronounced sculptural relief.
+  A useful starting point is a 2–3 mm rise from dense molded cotton board:
+  distinct top faces, substantial shoulders, and visible side walls joining
+  the base sheet. Adapt the depth to the motif's scale without losing those planes.
+  Keep the rounded shoulders narrow enough to preserve broad top faces.
+- One raking side light, upper left by default, roughly 15–25 degrees above the
+  paper plane. A broad source softens shadow edges while restrained fill preserves
+  the shaded walls and base shadows. All forms share this lighting.
 - One or two principal colors, with a small purposeful accent if needed.
   Selected ink colors the raised faces without replacing their physical relief.
 
 ### Emboss and deboss
 
-- **Emboss:** a raised matte face, a lit shoulder toward the light, a shaded
-  side wall away from it, and a short attached contact shadow on the surrounding
-  paper. Letter counters remain at the lower paper level.
-- **Deboss:** a sunken center, a shaded upper-left inner wall, and a restrained
-  opposite-edge highlight under the default light. The center visibly sits
-  below the surrounding sheet.
+- **Emboss:** a raised matte face, a lit shoulder toward the light, a clearly
+  exposed strip of shaded side wall away from it, and an attached cast shadow
+  on the surrounding paper. The wall and shadow have enough width to reveal
+  height in the complete artwork. Letter counters remain at the lower paper level.
+- **Deboss:** a visibly lowered bed between two inner walls, with a shaded
+  upper-left wall and a lit opposite wall under the default light. Recessed
+  paths have a readable channel width and depth, including at their endpoints.
+  Keep the sheet inside a contour at the base level unless the entire area is recessed.
 - Include both processes by default: a raised title or main form can sit beside
   a recessed route, water line, leaf vein, or contour. Honor requests for only
-  embossing or only debossing. Supporting relief stays quieter than the focal form.
-- Give the headline and primary solid form enough edge definition to read in the
-  complete composition. An embossed moon or disk has a gently convex face,
-  continuous rounded shoulder, shaded side wall, and attached base shadow.
+  embossing or only debossing. Supporting relief occupies less visual area while
+  retaining clearly recessed geometry.
+- Give the headline and primary solid form the full face–wall–base profile
+  individually. Choose strokes wide enough to carry a readable raised top and
+  shoulder. Inked lettering has the same physical height as blind lettering.
+  An embossed moon or disk has a broad, gently convex face, a substantial rounded
+  shoulder, an exposed side wall, and an attached base shadow around its shaded arc.
 - Use blind pressing on a major element where the brief permits: its face keeps
   the paper's color, and coherent edge lighting makes it legible.
 
@@ -69,6 +78,9 @@ distance, stillness, anticipation, or a path for the eye.
 Specify positions, relative scale, and clear gaps. Let text and image share an
 axis or contour while protecting every required glyph. Keep the focal hierarchy
 clear even when the main forms use the paper's own color.
+
+Create quietness through spacing, color restraint, and few elements. Preserve
+pronounced relief in a minimal or poetic composition.
 
 ## Variable axes
 
@@ -94,14 +106,23 @@ Intent: the theme and one specific visual relationship that expresses it.
 Visible content: required motifs and exact supplied copy, if any.
 Paper: matte sheet color, fine quiet fibers, continuous material.
 Composition: element positions, relative scale, clear gaps, purposeful empty space.
-Typography, if present: family, stroke weight, line breaks, ink or blind treatment.
-Emboss, if used: named raised faces, lit shoulders, shaded walls, attached shadows.
-Deboss, if used: named recessed centers, inner walls, and consistent edge shading.
-Lighting: one soft directional side light that reveals relief at whole-poster size.
+Typography, if present: family, relief-bearing stroke weight, line breaks, ink or blind treatment.
+Emboss, if used: named raised faces, substantial shoulders, exposed walls, and attached cast shadows.
+Deboss, if used: named lowered beds, channel widths, inner walls, and consistent shading.
+Lighting: one low raking side light with restrained fill, revealing height at whole-poster size.
 Exclusions: extra text, coarse grain, flat substitutes for relief, incompatible materials.
 ```
 
 ## Worked examples
+
+### Weightless · indigo
+
+![Raised book title and disk above a deeply recessed orbit](./ref-weightless-indigo.jpg)
+
+An ivory title and isolated disk rise above the indigo board with broad top faces,
+exposed side walls, and attached shadows. A deep open orbital channel reveals its
+lower bed and inner walls. This example anchors the default relief strength:
+all three levels remain distinct in the complete cover, with generous empty space.
 
 ### Mountain valley · ivory
 
@@ -137,7 +158,9 @@ with a few recessed water lines completing the relationship.
 
 ## Anti-patterns
 
-- Flat printed lettering, a colored circle, or an outline used in place of relief.
+- Flat printed lettering, a colored circle, a hairline bevel, or a shaded outline
+  used in place of visible raised walls or a recessed channel.
+- Flat replacement text that loses the surrounding artwork's relief and lighting.
 - Coarse sand or concrete grain, gritty speckles, and oversharpened paper texture.
 - Plastic, foam, clay, stone, chrome, glossy bevels, or inflated lettering.
 - Deep block extrusion, floating cutouts, detached drop shadows, or glowing halos.
@@ -146,9 +169,10 @@ with a few recessed water lines completing the relationship.
 
 ## Output evaluation checklist
 
-- Raised faces, side walls, and attached shadows read at whole-poster size;
-  recessed details sit below the sheet. Check the title and moon individually
-  when present. All forms retain the character of sculpted paper.
+- At a normal cover-preview size, the title and primary form each show a raised
+  face, an exposed side wall, and an attached shadow. Color contrast alone does
+  not establish depth. Recessed details show a lower bed and inner walls.
+  All forms retain the character of sculpted paper.
 - One light direction explains all edges. Fine fibers are visible close up
   without making broad paper areas noisy.
 - One coherent metaphor, deliberate scale and spacing, and purposeful negative
