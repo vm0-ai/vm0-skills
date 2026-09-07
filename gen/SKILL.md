@@ -81,6 +81,8 @@ Run `okou generate <type>` with no generation input to list available providers 
 2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
 3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
 
+When using BytePlus/Seedance, choose one supported input mode: first/last frames (`--first-frame-image-url`, `--last-frame-image-url`) or reference media (`--image-url`, `--video-url`, `--audio-url`). Never combine these groups in one request. If the user's requirements need both modes, explain the tradeoff before choosing; do not silently drop supplied inputs. Correct conflicting inputs before retrying.
+
 Keep the preview message short: the images, a brief motion description, and one confirmation question.
 
 ## Asking vs. Choosing
