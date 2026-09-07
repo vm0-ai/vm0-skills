@@ -1,6 +1,6 @@
 ---
 name: gen
-description: Use Okou generation pipelines for images, video, talking-avatar videos, voice, presentations, websites, reports, and designs. Adapt video previews to the model's input capabilities and obtain user approval before generation.
+description: Use Okou generation pipelines for images, video, talking-avatar videos, voice, presentations, websites, reports, and designs.
 ---
 
 # Gen
@@ -12,8 +12,6 @@ okou generate -h
 ```
 
 `okou generate` is the source of truth. Always inspect the current command help when exact flags, models, styles, or providers matter.
-
-For new model-generated footage (`video`), follow **Video: keyframes before generation** below before any billed video submission, including template and connector routes. A request to make a video starts with a still preview by default.
 
 ## Core Commands
 
@@ -65,7 +63,7 @@ Run `okou generate <type>` with no generation input to list available providers 
    - For prompt text that is long or quote-sensitive, use a file and a safely quoted argument, or stdin when the selected prompt mode supports it.
 
 6. Execute and wait for completion.
-   - For `video`, complete the keyframe review below first. Follow provider/template instructions within that approved plan; do not submit a video job while waiting for approval.
+   - For `video`, follow **Video preview** below before submitting a video job, including template and connector routes.
    - Run the selected `okou generate <type>` command.
    - For commands that return an Open Design resource-selection packet, follow the packet: author the artifact, verify it locally if needed, and host static outputs with `okou host`.
    - For commands that return `/f/` file URLs, keep the URL and metadata for the user.
@@ -77,32 +75,17 @@ Run `okou generate <type>` with no generation input to list available providers 
    - Mention important parameters used: provider, model, selected style or raw prompt mode, size/aspect ratio, duration, voice, or site slug.
    - If the output is temporary or provider-hosted with expiration, download or host a durable copy when appropriate.
 
-## Video: keyframes before generation
+## Video preview
 
-Apply this review when producing new model-generated footage. Writing prompts, analyzing references, and editing existing footage do not require new generation jobs.
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
 
-1. **Check the selected generation mode before making images.** Read `okou generate video -h` and, where needed, the provider's current input documentation. Verify the exact provider/model version, endpoint/mode, accepted image roles and counts, compatible input combinations, and size/aspect-ratio limits. A model family name or a globally listed CLI flag does not prove support in that mode. Resolve uncertain support through documentation, not paid trial generations. Choose the smallest useful preview for the verified capability:
-
-   | Verified input capability | Preview and intended use |
-   | --- | --- |
-   | Single image / first frame | Start with one opening frame and use it as the supported image input. Describe the motion separately. |
-   | First and last frames | Start with a first frame; add an ending frame only when the ending matters. Check that subject, scene, and motion can plausibly connect within the clip duration; incompatible endpoints can force unnatural morphing. |
-   | Reference images | Use a small set for subject, product, or style consistency. Reference order is not a timeline and does not set shot order or timestamps unless the API explicitly documents those controls. |
-   | Text only | Explain before making preview images that they are a concept preview for the user and prompt development, not model inputs. Get approval for that limitation with the video plan, or agree on an image-capable alternative. Do not silently switch the chosen model or mode. |
-
-   For multiple shots, preview distinct compositions only as needed. If exact shot order requires separate generations and editing, include that clip count and cost in the plan before approval; do not turn every storyboard image into a separate billed clip automatically.
-2. **Prepare a small still preview.** Preserve the brief's subject, style, composition, aspect ratio, and required text. Generate only the frames needed for the selected approach above. Reuse suitable user-supplied or previously approved frames instead of regenerating them. Template demo images are style examples, not approval of this user's composition.
-   - Read `okou generate image -h` and use a supported image mode. Keep the default image model unless the user names another, and use an economical size/quality that makes the visual decisions clear.
-   - Tell the user that the preview generates billed images first and that video generation will wait. Do not generate videos as previews or launch video jobs in parallel with the stills.
-3. **Inspect and show the actual frames.** Check subject/brand fidelity, text, composition, and consistency between shots. Present numbered images or a contact sheet with links to the individual frames. Use user-accessible artifact URLs; upload local images before sharing. For images that will be model inputs, show the exact intended crop, including any crop needed to match the video aspect ratio.
-4. **Present the video plan with the preview.** Identify each image's role: first frame, last frame, visual reference, or concept preview only. Briefly describe the planned motion and transitions, clip count, duration per clip, aspect ratio, resolution, audio, and provider/model/mode. Show an estimated total generation cost when current pricing or a quote is available, separating preview-image cost from video cost. Otherwise state that the price is unavailable; do not invent a dollar estimate. Resolve any user-set spending cap before submitting paid jobs. Explain the relevant limit briefly: stills help align visual direction, but do not guarantee motion, transitions, temporal consistency, physics, or text stability. More frames do not necessarily improve a video, and previews do not guarantee a successful first attempt or lower total cost.
-5. **Wait for explicit approval of the shown frames and video plan.** Ask whether to generate the video using the described approach, then end the turn. For a text-only plan, do not imply the model will receive the preview images. Silence, elapsed time, choosing a style, a general video request, or asking for speed does not authorize the video submission. If changes are requested, revise only the affected frames/plan and show them again. Keep the approved frame URLs, roles, and plan in the conversation so a later turn can resume without repeating an unchanged approval. An explicit user instruction to skip preview review and proceed with paid generation for this video can override this default; do not infer that waiver from a broad delegation.
-6. **Execute the approved input strategy.** For an image-capable mode, pass the approved individual images through the verified first-frame, last-frame, or reference-image inputs (`--first-frame-image-url`, `--last-frame-image-url`, `--image-url`, or provider equivalents). Use the approved roles and supported combinations; a contact sheet is for review, not a replacement for the individual inputs. For an explicitly approved text-only plan, translate the approved visual direction into the prompt without passing unsupported image flags or claiming direct image conditioning. If the intended strategy is unsupported, explain the limitation and obtain approval for a compatible plan before submitting. Submit only the approved clip count and parameters, then wait for completion and deliver the returned artifact.
-7. **Keep further spending bounded.** Approval covers the described generation, not open-ended attempts. Do not create extra variants, paid retries, or quality rerolls without approval unless they were explicitly included in the approved attempt limit and budget. Material changes to frames, motion, model/mode, image roles, duration, resolution, or cost require renewed approval of the affected plan. If a job's status is uncertain, recover/poll the existing job instead of submitting a duplicate; retrieving an already approved job does not require another approval.
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
 
 ## Asking vs. Choosing
 
-For video, the keyframe review above takes precedence over the general proceed-without-asking guidance below.
+For video, obtain the preview confirmation above before proceeding.
 
 Ask the user before generation when:
 
@@ -160,12 +143,6 @@ Generate an unstyled/model-native image:
 
 ```bash
 okou generate image --provider built-in --raw-prompt "<prompt>"
-```
-
-For a verified first-frame-capable mode, after the user approves the preview frame and video plan:
-
-```bash
-okou generate video --provider built-in --first-frame-image-url "<approved-frame-url>" --prompt "<approved motion prompt>" --duration "<approved duration>" --aspect-ratio "<approved ratio>"
 ```
 
 Use connector guidance instead of built-in generation:
