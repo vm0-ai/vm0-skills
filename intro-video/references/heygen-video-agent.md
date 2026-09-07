@@ -14,6 +14,14 @@ Use this route for ordinary intro videos, explainers, launch clips, and summarie
 
 For a short native video, include only the purpose/topic, approximate duration, requested language and tone, narration or verified factual content, and technical corrections that change the result. Keep narration in the requested language, but write frame/background corrections, script-framing instructions, and other technical directives in English. When `avatar_id` is supplied, refer to “the selected presenter”; do not describe the avatar's appearance.
 
+When narration may be adapted, include this English directive exactly once:
+
+```text
+This script is a concept and theme to convey — not a verbatim transcript. You have full creative freedom to expand, elaborate, add examples, and fill the duration naturally. Do not pad with silence or pauses.
+```
+
+Omit this directive when the user requires verbatim narration; it conflicts with that requirement.
+
 Carry an exact public style through `style_id`. Do not duplicate it with a long style manifesto unless the user requests additional visual overrides. Avoid redundant scene constraints and decorative prose.
 
 ## Preflight the selected presenter
@@ -35,7 +43,7 @@ BACKGROUND NOTE: The selected avatar has no background or a transparent backdrop
 **Square-to-landscape Framing Note:**
 
 ```text
-FRAMING NOTE: The selected avatar image is in square orientation but this video is landscape (16:9). Frame the presenter from the chest up, centered in the landscape canvas. Use AI Image tool to generative fill to extend the scene horizontally with a complementary background environment that matches the video's tone (studio, office, or contextually appropriate setting). Do NOT add black bars or pillarboxing. The avatar should feel natural in the 16:9 frame.
+FRAMING NOTE: The selected avatar image is in square (1:1) orientation but this video is landscape (16:9). Frame the presenter from the chest up, centered in the landscape canvas. Use AI Image tool to generative fill to extend the scene horizontally with a complementary background environment that matches the video's tone (studio, office, or contextually appropriate setting). Do NOT add black bars or pillarboxing. The avatar should feel natural in the 16:9 frame.
 ```
 
 These notes guide Video Agent but do not guarantee the result. `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields; do not invent them or claim deterministic control.
