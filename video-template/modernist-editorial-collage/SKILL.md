@@ -1,6 +1,6 @@
 ---
 name: modernist-editorial-collage
-description: A fast warm-paper editorial collage where photographic cutouts, recurring evidence, oversized grotesk type, accent blocks, and local rule modules accumulate and repack through concurrent scale, crop, slide, and mask handoffs. Use for product launches, reports, collections, creative tools, or technology stories; not for generic moodboards, cinematic live action, quiet minimal films, or ordinary slideshows.
+description: Create warm-paper editorial motion collages mixing photographic product cutouts, monochrome image windows, graphic evidence, bold solid/outline sans type and changing local panels. Use for product launches, publications, collections and research stories with concurrent visual assembly.
 ---
 
 # Modernist Editorial Collage
@@ -10,6 +10,8 @@ Create a 12-15 second paper-collage motion film with this reusable visual senten
 `sparse specimen board -> opener assembles -> hero motif expands into an identity pivot -> evidence clusters accumulate around successive claims -> catalog field -> final identity board`
 
 This is a shot, layout, and transition template, not a fixed campaign. Preserve the user's subject, approved copy, assets, and palette. Lock the front-facing canvas, layered accumulation, concurrent re-layouts, typographic rhythm, and final collection board.
+
+Read [the source style analysis](references/style-analysis.md) before constructing the visual prompt. It records the actual material contrast, changing color distribution, distinct type scales and local object rotations. The seven-beat arrangement below is a production interpretation of the source, not a requirement to reuse its props or words.
 
 ## Brief contract
 
@@ -38,36 +40,36 @@ Treat inspiration videos as analysis-only unless the user explicitly asks to use
 
 ## Visual style lock
 
-The target is a contemporary art-book or independent magazine spread in motion, not a scrapbook, presentation slide, gallery of separate posters, or clean SaaS grid. Its energy comes from collision between photographic evidence, monumental typography, flat print color, and changing local structure on one tactile canvas.
+The target is a modernist publication continually reformatting on one warm-paper canvas. Photographic product cutouts, monochrome image windows, black graphic evidence, bold readable type and occasional monumental glyphs coexist. Changing local panels and concurrent movements give the spread its energy.
 
 ### Canvas and color architecture
 
 - Default to warm uncoated ivory paper with visible but restrained fiber and print grain. Let the paper remain a meaningful field rather than covering every pixel.
-- Organize color by role: a warm neutral canvas, carbon-black type and rules, one hot accent such as signal red, one earthy accent such as ochre or acid yellow, and one cool counter-accent such as mint or pale cyan. If the user supplies another palette, preserve these contrast roles and alternating rhythm instead of copying the default hues literally.
+- Organize color by role and timing: warm ivory and carbon black establish the canvas; gold/ochre products supply a sustained warm mass; red fields intensify the middle; smaller cool mint/green, gray and red objects form a later collection row. Translate these roles into the user's palette. Give accents unequal areas and different entry times instead of filling every frame with every color.
 - Use accent rectangles, circles, and strips as structural crops, masks, windows, or moving counterweights. Never use them as automatic backing plates behind text.
 
 ### Evidence material
 
-- Mix materially different evidence on purpose: clean full-color product or object cutouts, monochrome portrait or documentary crops, black circular or waveform graphics, books or cards, diagrams, and small index marks. A film does not need every category, but it should combine photographic evidence with graphic information rather than repeat one hero object in every slot.
-- Unify the inventory through crisp cut edges, shallow contact shadows, occasional photostat halftone, and consistent paper treatment. Keep the cutouts tactile and mostly front-facing; avoid glossy floating 3D renders.
+- Mix materially different evidence on purpose: full-color product cutouts, monochrome portrait/documentary windows, dark data or waveform panels, repeated angular diagram marks, and small index details. Choose categories that support the user's topic; records, books and particular devices are optional source props.
+- Preserve photographic highlights, object perspective and surface differences. Glossy black vinyl, metallic products and shaded object edges coexist with monochrome photographs and flat graphics in the source. Unify them through crisp clipping, shallow compositing and the paper substrate; do not flatten every asset into a matte illustration or place all objects in a deep 3D scene.
 - Establish two to four memorable anchors, then reuse the same recognizable instances as the board grows. Later density should come from accumulated evidence and changed scale, not unrelated new props.
 
 ### Layout and scale
 
 - Compose asymmetrically with large areas of paper interrupted by dense local clusters. Alternate a sparse field with a compressed evidence zone; do not center every hero or distribute modules evenly.
 - Create aggressive scale collisions: a giant cropped word or letter may span most of the frame while a row of tiny evidence cards, index marks, or rule lines crosses it. Use off-edge crops on photographs and type so the frame feels extracted from a larger editorial system.
-- Rule lines and module borders are thin, local, and temporary. They may divide one quadrant or align a row, but a permanent equal-cell grid makes the result look like a dashboard.
+- Let unequal local panels form, split and disappear, then reorganize into rows. Many divisions come from adjacent image or color edges; do not draw a border around every object. Any rule lines remain subordinate to those changing regions.
 - Let objects occlude letters and let letters pass behind photographs, while preserving one clean readable state for each approved phrase. Layering should feel deliberate, never like a pile of stickers.
 
 ### Typography and print finish
 
-- Use one heavy grotesk or condensed sans family at extreme scale, paired with a restrained neutral face for any approved microtype. Favor uppercase, tight leading, and strong horizontal baselines.
+- Distinguish three scales: large readable horizontal claims in a normal-width bold grotesk; occasional enormous cropped glyphs behind those claims during a transition; and small supporting labels. Favor capitals and steady baselines. A brief giant-glyph passage does not mean every headline should fill the frame vertically or use an extra-condensed font.
 - Use solid black, outline, and occasional single-accent type states. A phrase may change from outline to solid or become a crop mask, but it may not sit on a caption bar, rounded label, translucent panel, shadow plate, or highlight strip.
-- Keep paper fibers, ink grain, halftone, and slight edge roughness subtle enough that typography and object silhouettes remain crisp. Avoid distressed grunge overlays, torn-notebook clichés, tape on every object, or nostalgic scrapbook decoration.
+- Keep paper speckles, ink grain and edge roughness restrained so type, clipped photographs and object silhouettes remain crisp. Halftone is an optional adaptation, not a required source treatment. Avoid distressed grunge, torn-notebook clichés and tape on every object.
 
 ### Motion character
 
-Movement should resemble a designer rapidly reformatting one live magazine spread: rigid quarter-turns, sharp crop-window changes, precise slides, short scale overshoots, and foreground pieces acting as wipes while neighboring modules move at the same time. Avoid liquid morphing, smooth cinematic zooms, generic cross-fades, or one centered object changing at a time.
+Movement should resemble a designer rapidly reformatting one live magazine spread: a circular object rotates/scales across other layers, products tilt or turn on their own axes, image windows recrop, staggered duplicates align into a row, and type changes between outline and solid. Use a dominant movement with smaller neighboring changes in dense passages. Photographic windows may contain local motion. The master canvas stays front-facing while objects retain their own perspective and highlights.
 
 ### Keyframe-first approval gate
 
@@ -124,7 +126,7 @@ If reference video is unavailable, omit the guide and follow the written grammar
 
 ### Layered accumulation
 
-- Establish two to four recurring anchors during the opening. Keep at least two recognizable throughout the film, even when cropped, scaled, recolored, or briefly occluded.
+- Establish two to four recurring anchors during the opening. Reuse recognizable instances across later beats even when temporarily cropped, scaled, recolored or occluded; a temporary transition carrier may leave after doing its job.
 - Add one coherent evidence cluster at a time. The opening does not need to reveal the entire inventory.
 - Reuse prior anchors and evidence in later layouts; do not reset to an empty canvas between phrases.
 - Let several layers coexist. The film should become richer and denser before resolving into the final board.
@@ -132,7 +134,7 @@ If reference video is unavailable, omit the guide and follow the written grammar
 
 ### Concurrent re-layout
 
-Each transition has one dominant carrier and two or more coordinated secondary actions:
+In dense re-layouts, pair one dominant carrier with coordinated secondary actions. Examples include:
 
 - a circle rolls or scales while neighboring modules split and type changes state;
 - a card or package rotates while a photograph crops in and a row aligns;
@@ -154,7 +156,7 @@ The carrier does not need to cover the whole frame. Preserve visual continuity t
 | 8.7-10.8s | Catalog field or editorial noun holds briefly while portraits, products, charts, or cards continue to settle. |
 | 10.8-15.0s | Recurring anchors and evidence gather into the final identity board; title and optional subtitle resolve, with the last second calm and legible. |
 
-Scale proportionally for 12 seconds. Keep all seven functions even if two adjacent beats share one continuing object. Before the final second, no layout may remain materially unchanged for more than about 1.2 seconds.
+Scale proportionally for 12 seconds. In this production recipe, keep all seven functions even if two adjacent beats share one continuing object. Major reorganizations alternate with readable holds and smaller settling motions; avoid freezing the whole board early. The source's approximate timing is documented separately in the style analysis.
 
 ## Typography, canvas, and motion
 
@@ -162,8 +164,8 @@ Scale proportionally for 12 seconds. Keep all seven functions even if two adjace
 - A departing and arriving phrase may overlap for 0.2-0.4 seconds during a deliberate mask or outline-to-solid handoff. Do not require full-screen erasure between phrases.
 - Give every approved phrase a clean readable state. Transitional overlap must not create pseudo-words or imply an unintended combined claim.
 - Keep the camera fixed and front-facing. Motion happens inside the canvas through crop, scale, rotation, slide, mask, and local parallax; no dolly, orbit, handheld drift, or perspective scene change.
-- Use crisp snaps, brisk ease-outs, rigid quarter-turns or half-turns, short overshoots, and slight tactile jitter. Avoid one long smooth zoom dominating the film.
-- Use warm tactile paper, photographed or illustrated cutouts, rough-but-controlled edges, shallow contact shadows, and occasional grain.
+- Use brisk slides, short overshoots, crop changes, spins and local object turns. Choose timing from the intended re-layout; fixed quarter-turn angles or stop-motion jitter are not style requirements.
+- Preserve warm tactile paper, photographic cutouts with their own highlights, monochrome windows, flat graphic evidence and shallow overlap. Small illustrated marks can support this mixture.
 - Rule lines and module borders are local compositional devices that may appear, split, and disappear. Do not impose a permanent full-screen tile grid on every beat.
 - Keep the collage asymmetrical but balanced. Allow strategic occlusion and cropped type while preserving one clearly readable state for each phrase.
 
@@ -177,10 +179,10 @@ Include:
 
 - **Subject:** exact opener, pivot phrase, claims, final title and subtitle; recurring anchors; progressive evidence clusters.
 - **Scene:** one persistent canvas, palette, local grid language, type hierarchy, and the density arc from sparse to collected.
-- **Motion:** the seven-beat timeline; one dominant carrier plus at least two secondary actions for every re-layout; exact readable windows for copy.
-- **Camera:** locked front-facing master canvas with no perspective changes.
-- **Light:** flat soft illumination, shallow cutout shadows, restrained highlights, consistent across all beats.
-- **Style:** contemporary art-book collage on warm uncoated paper, mixing crisp photographic evidence, photostat texture, carbon-black local rules, structural red/ochre/cool accent blocks, extreme-scale grotesk typography, deliberate occlusion, and a fast reformatting rhythm. Translate the user's brand into these material and contrast roles rather than defaulting to a scrapbook or dashboard.
+- **Motion:** the seven-beat arrangement; dominant carriers and concurrent neighboring actions in dense re-layouts; readable windows for copy and progressive settling at the end.
+- **Camera:** locked front-facing master canvas; allow local product turns and perspective within photographic windows without moving the master view.
+- **Light:** a flat paper field with shallow compositing; retain each photographic object's characteristic highlights and shading.
+- **Style:** warm uncoated-paper editorial collage mixing full-color product cutouts, monochrome photographic windows, black graphic evidence, unequal local panels, normal-width bold sans claims with outline/solid handoffs, occasional giant background glyphs, and gold/red/cool color roles introduced over time. Preserve photographic material contrast and concurrent reformatting.
 
 End the prompt with:
 
@@ -196,7 +198,7 @@ Do not merely say "dynamic collage." Name the exact text, recurring anchors, pro
 - **generateAudio:** on when supported; request a brisk percussive editorial bed with paper slides, snaps, restrained scratches, and one low final accent. No voiceover by default.
 - **video input:** only after keyframe approval, pass the uploaded copy-specific `motion_guide` as the motion reference. Do not pass the original inspiration video.
 - **image inputs:** role-label approved keyframes as `beat_01` through `beat_07`; also label any separate user assets as `anchor_lock`, `canvas_lock`, `evidence_lock`, or `final_board_lock`. When a model cannot combine the approved frame inputs with reference video, do not silently discard the keyframes; ask whether frame fidelity or motion fidelity takes priority, or select a supported mode that preserves both.
-- **negativePrompt:** `generic moodboard, nostalgic scrapbook, sticker pile, torn-notebook collage, clean SaaS dashboard, equal card grid, glossy floating 3D renders, generic guide shapes in final output, rectangular banner behind text, subtitle bar, label strip, highlight block, separate text background panel, unreadable placeholder glyphs, ordinary slideshow, one phrase at a time on an empty screen, full-screen erase between every phrase, generic cross-fades, permanent full-canvas tile grid, single giant object held for seconds, long empty title hold, cinematic camera move, 3D fly-through, unrelated objects, object mutation, pseudo-text, misspelling, stock-ad polish, watermark`.
+- **negativePrompt:** `generic moodboard, nostalgic scrapbook, sticker pile, torn-notebook collage, equal card dashboard, border around every object, uniformly matte illustrated assets, deep glossy 3D scene, all headlines stretched to full height, every accent color filling every frame, generic guide shapes in final output, rectangular banner behind text, subtitle bar, separate text background panel, placeholder glyphs, ordinary slideshow, one phrase on an empty screen, full-screen erase between phrases, generic cross-fades, prolonged single-object takeover, early frozen end card, cinematic camera move, 3D fly-through, unrelated objects, object mutation, pseudo-text, misspelling, watermark`.
 
 ## Acceptance gates
 
@@ -205,11 +207,12 @@ Reject and retry when any answer is no:
 - Were all seven keyframes reviewed at full resolution and explicitly approved before any video generation call?
 - Is typography integrated directly into the canvas or a real subject object, with no artificial banner, subtitle bar, label strip, highlight block, or background panel?
 - Are there seven distinct layout functions, including the identity pivot and catalog field?
-- Do at least two recognizable anchors persist while evidence accumulates progressively?
-- Does every transition combine one dominant carrier with at least two coordinated secondary actions?
+- Do recognizable anchors recur across the evolving layouts while new evidence joins them?
+- Do dense transitions combine a dominant carrier with coordinated neighboring changes?
 - Does the canvas stay front-facing while local modules, rather than the camera, create energy?
 - Are rule lines local and changing rather than a permanent rigid screen grid?
-- Does the film retain the warm-paper editorial collision of photographic evidence, structural accent color, extreme-scale type, and deliberate occlusion instead of becoming a scrapbook or dashboard?
+- Does the film retain photographic highlights and monochrome/graphic contrast on paper, with distinct claim/glyph/label scales and changing local panels?
+- Are accents distributed by role and time, with a clear base palette rather than equally saturated panels throughout?
 - Is every approved phrase exact and cleanly readable at least once, without demanding total isolation from adjacent beats?
 - Does the output preserve the exact copy from the custom guide while replacing its generic shapes with the user's subject matter?
 - Is the pre-final pacing dense, with no unintended multi-second empty hold or prolonged single-object takeover?
@@ -223,7 +226,7 @@ Reject and retry when any answer is no:
 
 ## Inspiration provenance
 
-The motion and style grammar were reverse-engineered from the public reference supplied by the user: `https://x.com/haoailab/status/2095223988201120039/video/1`. The reference establishes a warm-paper modernist editorial surface, photographic evidence mixed with books, devices, portraits and waveform-like graphics, a black/red/ochre/mint contrast system, giant grotesk type, layered accumulation, concurrent local re-layouts, and a final identity board. Preserve those visual relationships, not the literal palette or subject matter. Do not reuse its brand, claims, people, products, or footage unless the user explicitly requests that specific reproduction.
+The [public reference](https://x.com/haoailab/status/2095223988201120039/video/1) supplies the observed visual evidence. The [style analysis](references/style-analysis.md) records its material diversity, color progression, typography hierarchy, concurrent motion and approximate timing separately from the seven-beat production guide. Replace source brands, claims, people and products with the user's evidence; transfer their compositional and material roles.
 
 ## Reference output
 
@@ -231,4 +234,4 @@ The motion and style grammar were reverse-engineered from the public reference s
 | --- | --- |
 | Picker thumbnail | `https://static.vm0.io/vm0/artifact-templates/video/40667930-5be5-4894-a592-0d052ae35996/thumbnail-kinetic-editorial-collage.jpg` |
 | Preview video | `https://static.vm0.io/vm0/artifact-templates/video/40667930-5be5-4894-a592-0d052ae35996/preview-kinetic-editorial-collage.mp4` |
-| Canonical | fixed paper canvas · layered accumulation · seven functional beats · concurrent local re-layouts · final identity board |
+| Canonical | warm paper · photographic/graphic material contrast · solid/outline sans hierarchy · changing local panels · concurrent assembly · collected end board |

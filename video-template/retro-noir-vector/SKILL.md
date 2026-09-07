@@ -1,26 +1,26 @@
 ---
 name: retro-noir-vector
-description: A retro graphic-noir 2D flat-vector title film of locked poster tableaux connected by geometry-aware dissolves while one recurring silhouette travels in one screen direction. Use for fashion, music, festivals, culture, destinations, illustrated narratives, or atmospheric brand films; not for soft storybook craft, photoreal action coverage, or free-camera 3D journeys.
+description: Create retro graphic-noir films with flat printed color planes, small expressive silhouettes, monumental type and architecture, long shadows, scale contrasts and connected cross-dissolves. Use for cultural titles, music, fashion and illustrated narratives.
 ---
 
 # Retro Noir Vector
 
 Create a 15-22 second graphic film with one reusable visual sentence:
 
-`title tableau -> recurring subject enters -> flat worlds dissolve around one continuous trajectory -> monumental passage -> closing motif echoes the opening`
+`graphic title/tableau -> silhouette action -> connected dissolving posters -> monumental scale change -> an earlier motif returns as the closing emblem`
 
-This is a **shot and transition template**, not a fixed retro look. Preserve the user's subject, title, palette, and setting. Lock the poster composition, one-direction travel, and geometry-aware dissolve grammar.
+Preserve the user's subject, title, palette and setting while carrying over the source's printed vector surface, silhouette drama, poster compositions and connected dissolves. Read [the source style analysis](references/style-analysis.md) before constructing the visual prompt; it documents multiple movement axes, scale changes and actual typography in the reference.
 
 ## Brief contract
 
 Require or infer:
 
 - exact title and optional closing line;
-- one recurring moving subject with a clear silhouette;
-- one fixed screen direction;
+- a recurring subject or small cast with clear, distinguishable silhouettes;
+- coherent local paths and a planned visual handoff when an axis or viewpoint changes;
 - six to ten flat tableau locations;
 - a limited palette and two or three recurring geometric motifs;
-- one opening-to-closing visual echo.
+- an earlier motif that can return as a closing image.
 
 Prefer paper airplane, ribbon, bird, bicycle, umbrella, ball, vehicle, or another silhouette that survives overlap. Identity-heavy people require a separate character lock.
 
@@ -41,59 +41,61 @@ The target is a retro film-noir graphic rendered as hard-edged 2D flat-vector mo
 
 ### Vector surface and palette
 
-- Build the image from opaque flat-vector color planes with razor-clear silhouette edges. A restrained screenprint grain, slight tonal mottling, or near-imperceptible registration offset may soften large areas, but the dominant read stays clean and graphic rather than handmade or distressed.
-- Use four to six colors with clear jobs: one near-black structural dark, one warm paper light, one hot accent, and one to three muted supporting colors. Large areas should remain flat and decisive. No rainbow palette, airbrushed gradient, bloom, neon rim light, or glossy 3D material.
+- Build the image from opaque flat-vector color planes with clear silhouette edges and fine, visibly mottled print grain inside the fills. Preserve the flat shape construction; avoid thick paper layers, beveled edges or distressed craft textures.
+- Use a restricted subset of a shared palette in each tableau. Cream, black and navy supply light/dark structure; crimson, burnt orange and mustard give hot accents; dusty pink, slate and muted blue/cyan support scene changes. Translate these roles into the user's palette. Avoid airbrushed gradients, bloom, neon rim light or glossy 3D material.
 - Let the palette change by recombining the same color roles across tableaux rather than introducing a new color system in every scene.
-- Reserve any soft or photographic texture for at most one climactic close-up motif. Its contrast with the otherwise flat vector world should feel intentional, not like mixed rendering styles.
+- Keep close-ups in the same graphic medium. The reference's final eye is flat colored geometry with fine grain, so a photographic insert is not a style requirement.
 
 ### Silhouette and geometry
 
 - Reduce subjects and environments to flat-vector silhouettes, sharp wedges, broad rectangles, circles, stripes, and one-point corridors. Preserve only the few internal details needed to identify the recurring subject.
-- Use long, clean shadows at a consistent diagonal. A shadow stays attached to its subject or is omitted; it may not read as a ghost copy.
+- Use long, clean solid shadows that follow the local scene's diagonal geometry. Keep shadows attached and legible; their direction can change when the scene's lighting/composition changes.
 - Give each tableau one dominant geometric proposition, such as a vertical stripe rhythm, an oblique bridge, a circular portal, monumental slabs, or receding frames. Compose with aggressive crops and asymmetrical negative space rather than centering every subject.
-- Create apparent depth only through scale, overlap, flat parallax, and one-point geometry. The frame remains a compressed theatrical stage, even in a corridor or street scene.
+- Contrast small figures with enormous letters, face fragments and architecture. Create apparent depth through scale, overlap, flat parallax and one-point geometry. Preserve a compressed theatrical stage while allowing scene-to-scene changes of scale and viewpoint.
 
 ### Typography
 
-- Use monumental display capitals with architectural weight. Most copy should be a heavy condensed or wide sans; one outlined serif glyph is allowed when its bowl, counter, stem, or diagonal physically becomes a door, shaft, rail, tower, shadow, or transition mask. Rotated vertical title fragments and aggressive edge crops are welcome when the approved title still receives one clean read.
+- Separate two roles: heavy cropped sans capitals create title rhythm, while a large filled high-contrast serif glyph can become architecture through its stem, counter and shadow. The source's cream D is solid, not outlined. Use an approved initial or symbol for the architectural role; rotated title fragments and edge crops are welcome when the approved title still receives a clean read.
 - Keep title typography on the same flat plane as the poster. Do not place it in a banner, box, subtitle strip, floating label, or translucent panel.
 - Restrict readable copy to the approved title and closing line. Decorative pseudo-writing and incidental signage break the print-poster language.
 
 ### Mood and motion texture
 
-Favor graphic tension, deliberate stillness inside each tableau, and decisive lateral movement through the dissolves. The result may be playful, cultural, romantic, or mysterious, but it should retain bold silhouette drama and editorial restraint. Avoid cute layered-paper dioramas, watercolor softness, comic-book speed lines, glitch, particles, or cinematic lens effects.
+Favor graphic tension, held poster compositions, measured figure movement and deliberate changes of scale. Lateral travel can alternate with a vertical climb, descent or leap when the composition makes the change clear. The result may be playful, cultural, romantic or mysterious while retaining silhouette drama and editorial restraint. Avoid cute layered-paper dioramas, watercolor softness, comic-book speed lines, glitch and cinematic lens effects.
 
-## Locked shot grammar
+## Reusable motion grammar
 
 ### Tableau construction
 
 - Lock every shot like a theatrical stage or printed poster.
 - Use large flat planes, hard silhouettes, deliberate crops, long geometric shadows, and one dominant spatial idea per tableau.
 - Valid spatial ideas include stripes, corridor, stairs, repeating storefronts, circular sun, bridge, monumental letters, or stacked slabs.
-- Keep subject scale, baseline, silhouette, and screen direction plausible through every dissolve.
-- Allow local lateral action only; no dolly, orbit, handheld drift, or cinematic fly-through.
+- Preserve subject identity and a readable local trajectory through each passage. Introduce an axis, scale or viewpoint change with a clear shape or composition handoff; one direction for the entire film is optional.
+- Keep the master view substantially locked within each tableau. Local lateral or vertical action, environmental scrolling and drawn perspective are allowed; avoid free-camera cinematic fly-throughs.
 
 ### Geometry-aware dissolve
 
-Every handoff must align at least two of these:
+Choose a clear connection for each handoff; aligning more than one property can strengthen it:
 
 - subject position and velocity;
 - one dominant diagonal, vertical edge, circle, or vanishing point;
 - one large color block in the same screen region;
 - a shadow or trail that becomes architecture in the next scene.
 
-Begin the next tableau's geometry before the previous one disappears. The subject continues through the overlap without freezing, reversing, duplicating, or teleporting. A plain opacity fade between unrelated images fails the template.
+Begin the next tableau's geometry before the previous one disappears. Visible double exposure is part of the cross-dissolve language; maintain a clear action or motif through that overlap and resolve to a clean new tableau. Avoid persistent accidental clones or unrelated fades. A planned change of cast, axis or viewpoint is allowed when the visual connection remains readable.
 
-### Timeline
+### Example 22-second arrangement
+
+This is a reusable production arrangement. The source's observed timing is recorded separately in the style analysis.
 
 | Time | Required beat |
 | --- | --- |
-| 0.0-2.0s | Exact title tableau establishes palette, crops, motifs, and travel direction. |
-| 2.0-5.0s | Subject enters; first aligned dissolve teaches continuous travel. |
-| 5.0-9.0s | Two wide poster worlds change environment while preserving stride or flight. |
+| 0.0-2.0s | Exact title tableau establishes palette, crops and silhouette/motif vocabulary. |
+| 2.0-5.0s | Figure action and the first connected dissolve establish the motion language. |
+| 5.0-9.0s | A detail or wide tableau changes scale; a repeated environment carries a coherent local path. |
 | 9.0-13.0s | Scale escalation: giant glyph, circle, or shadow becomes monumental architecture. |
 | 13.0-18.5s | Perspective corridor or street tableau increases depth without moving the camera. |
-| 18.5-22.0s | Opening motif returns at a new scale; exact closing line or title holds. |
+| 18.5-22.0s | An earlier motif returns at a new scale; include the exact closing line or title when requested. |
 
 For a 15-second output, keep the same six functions and compress intermediate holds. Do not remove the monumental passage or closing echo.
 
@@ -101,9 +103,9 @@ For a 15-second output, keep the same six functions and compress intermediate ho
 
 - Limit text to the exact title and optional closing line.
 - Letters may become flat architecture only when their original geometry remains legible.
-- Alternate wide tableaux with at most one extreme detail and one perspective corridor.
-- Increase or vary scale without losing the subject trajectory.
-- Never create decorative pseudo-writing, unrelated signage, or a second copy of the subject during overlap.
+- Contrast wide tableaux, extreme details and drawn-perspective passages when they serve the brief; there is no source-derived one-close-up limit.
+- Vary scale while carrying a recognizable silhouette, shape or color relationship through the handoff.
+- Avoid decorative pseudo-writing and unintended persistent clones. A specified cast or brief cross-dissolve superimposition is distinct from an accidental duplicate.
 
 ## Prompt construction
 
@@ -113,12 +115,12 @@ Write one cohesive prompt in this exact order:
 
 Include:
 
-- **Subject:** exact title, recurring subject, fixed travel direction, closing line.
-- **Scene:** ordered flat tableaux, limited palette, recurring motifs, opening and closing echo.
-- **Motion:** continuous trajectory and the two-property spatial alignment for every dissolve.
-- **Camera:** one locked orthographic poster view per tableau; no free-camera language.
+- **Subject:** exact title, recurring subject or small cast, local paths and optional closing line.
+- **Scene:** ordered flat tableaux, limited palette, recurring motifs and an earlier-to-closing visual echo.
+- **Motion:** local actions, scale changes and the shape/color/trajectory connection carrying each visible dissolve.
+- **Camera:** locked poster compositions, with scene-to-scene viewpoint changes and drawn one-point perspective when useful.
 - **Light:** graphic flat light and long directional shadows consistent with the palette.
-- **Style:** retro film-noir 2D flat-vector motion graphic with near-black structural silhouettes, crimson or another hot accent, cream light, muted supporting colors, angular planes, long diagonal shadows, monumental rotated or cropped display type, and locked theatrical depth. Use only a trace of print texture; do not turn it into soft paper craft or cinematic realism.
+- **Style:** retro graphic-noir motion design with cream/navy/black value structure, restrained hot and muted accents, fine print grain inside flat fills, small silhouettes against monumental geometry, cropped heavy sans titles, occasional filled serif architecture and long solid shadows. Keep the same 2D medium in both wide shots and extreme details.
 
 End the prompt with:
 
@@ -133,19 +135,19 @@ Do not merely say “smooth transitions.” State which subject path, edge, circ
 - **resolution:** prefer `1080p` or higher when supported.
 - **generateAudio:** on when supported; request restrained rhythmic texture and soft transition swells, no voiceover by default.
 - **image inputs:** role-label each URL as `style_subject_lock`, `opening_lock`, `tableau_lock_N`, or `closing_lock`.
-- **negativePrompt:** `soft pastel storybook, cute paper diorama, watercolor wash, glossy 3D render, photoreal cinema, gradients, bloom, lens flare, hard-cut montage, unrelated opacity fades, duplicated subject, detached shadow, ghost subject, reversed direction, teleporting, camera dolly, orbit, handheld drift, busy signage, text box, subtitle strip, pseudo-text, watermark`.
+- **negativePrompt:** `soft pastel storybook, thick paper diorama, watercolor wash, glossy 3D render, photoreal close-up, gradients, bloom, lens flare, unrelated fades, persistent accidental subject clones, detached shadow, unexplained teleporting, camera fly-through, orbit, handheld drift, busy signage, text box, subtitle strip, pseudo-text, watermark`.
 
 ## Acceptance gates
 
 Reject and retry when any answer is no:
 
 - Is every shot readable as a strong flat poster composition?
-- Does one recognizable subject travel in one direction throughout?
-- Does each dissolve align at least two spatial properties?
-- Is there no generic fade, teleport, duplicate subject, or free-camera move?
+- Do recurring silhouettes or motifs connect the tableaux, with readable local motion and deliberate axis changes?
+- Does each dissolve have an identifiable shape, color, placement or trajectory connection?
+- Do brief overlaps resolve cleanly without persistent clones, unexplained teleporting or a free-camera move?
 - Does scale vary or escalate without losing the visual thread?
-- Does the final motif visibly echo the opening?
-- Is the exact title clean at the opening and closing?
+- Does the final motif visibly echo an earlier image?
+- Is approved title/closing copy clean wherever the brief requires it?
 - Do hard flat-vector planes, limited colors, long shadows, monumental type, and locked theatrical composition survive every tableau?
 - Does the result avoid soft craft-paper, photoreal, and free-camera aesthetics?
 
@@ -157,7 +159,7 @@ Reject and retry when any answer is no:
 
 ## Inspiration provenance
 
-The style and dissolve grammar were reverse-engineered from the [public reference](https://x.com/GeekCatX/status/2092675263054450807) and its [disclosed prompt](https://x.com/GeekCatX/status/2092675517749358878). Its source surface combines retro graphic-noir 2D vectors, crimson/navy/cream/black and muted supporting planes, giant rotated type, angular backdrops, long diagonal shadows, and monumental flat architecture. Preserve that graphic tension and geometric continuity; do not reuse its cats, noir characters, weapons, vending machines, title fragments, eye motif, exact palette sequence, scene order, or footage.
+The [public reference](https://x.com/GeekCatX/status/2092675263054450807) supplies visual evidence; its [disclosed prompt](https://x.com/GeekCatX/status/2092675517749358878) supplies secondary intent. The [style analysis](references/style-analysis.md) distinguishes actual cross-dissolves, multiple paths, filled serif type and flat close-ups from optional production recipes. Replace source characters, props, words and scene order with the user's content while preserving those visual relationships.
 
 ## Reference output
 
@@ -165,4 +167,4 @@ The style and dissolve grammar were reverse-engineered from the [public referenc
 | --- | --- |
 | Picker thumbnail | `https://static.vm0.io/vm0/artifact-templates/video/8684bf6d-daf4-45c4-a287-163d48724867/thumbnail-poster-tableau-dissolve.jpg` |
 | Preview video | `https://static.vm0.io/vm0/artifact-templates/video/8684bf6d-daf4-45c4-a287-163d48724867/preview-poster-tableau-dissolve.mp4` |
-| Canonical | locked flat tableaux · one subject and direction · spatially aligned dissolves · scale escalation · closing visual echo |
+| Canonical | flat printed tableaux · small silhouettes and monumental geometry · connected dissolves · scale contrasts · returning visual motif |
