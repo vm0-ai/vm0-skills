@@ -7,6 +7,16 @@ description: A minimalist tech/product reveal video style — a single product f
 
 A premium **product-reveal style**, not a fixed product. Keep the user's product exactly as briefed — a phone, a watch, a bottle, a gadget — and present it in the locked studio look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and framing/negatives are expressed the way Seedance follows most reliably.
 
+## Keyframe review before video generation
+
+Before any billed video submission through the CLI or a provider API:
+
+1. Generate a small set of still keyframes in the user's chosen subject and this style. Start with one opening frame for a single shot; add only distinct shots or essential end states. Reuse suitable supplied/approved images. Read `okou generate image -h` for supported prompt modes, keep the default image model unless the user names another, and use economical preview settings. Tell the user that images are billed and video generation will wait. The reference-output images below illustrate style; they do not approve a different subject or this video's composition.
+2. Inspect and share the actual frames using user-accessible URLs (upload local images). Show the exact crop intended for the video. Number multiple frames; a contact sheet may accompany individual links. Include planned motion, clip count, duration per clip, aspect ratio, resolution, audio, provider/model, and a current cost estimate when available; distinguish image and video costs, never invent prices, and resolve any user-set spending cap. Explain briefly that stills preview appearance while generated motion/timing may vary.
+3. Ask the user to approve these frames and this video plan, then end the turn. Do not start video jobs in the background or in parallel while waiting. A general video request, template choice, speed request, or silence is not approval. Reuse explicit approval already given for an unchanged plan; only an explicit instruction to skip preview review and proceed with paid generation for this video overrides the default. Revise affected frames/plan and seek approval again when changes are requested.
+4. After approval, use the approved individual images as supported first-frame, last-frame, or reference-image inputs. Read `okou generate video -h` or the provider's current input contract; never pass a contact sheet or silently drop image conditioning. If unsupported, get approval for a compatible plan before generating. Keep the approved URLs and plan in the conversation and submit only the approved clips and parameters.
+5. Approval covers the described attempts, not unlimited spending. Obtain fresh approval for material frame/plan/cost changes and for extra variants or paid retries outside the approved attempt limit and budget. Recover or poll an existing job when its status is uncertain instead of submitting a duplicate.
+
 ## What this style is
 
 **The essence:** make a single object feel **precious and inevitable** — isolate it in clean empty space and let pristine light do all the talking. The goal is **focus and reverence for the object**, nothing else in the frame to distract.
@@ -45,7 +55,7 @@ Adapt the product, its material highlights, and the exact move to what's briefed
 - **negativePrompt**: `cluttered background, lifestyle context, warm color, colored light, hard glare, handheld shake, fast cuts, busy scene, low resolution, distorted product`.
 - **generateAudio**: usually **off** for a clean product cut (add music/VO in edit); leave on only for a subtle ambient hum.
 - **seed**: mild lever for text-to-video; use it to re-roll the *same* prompt. The real consistency tool is `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one studio still of the product (see *Reference still*) and pass it as the first frame for image-to-video.
+- **firstFrameImageUrl**: use the user-approved opening keyframe from the review above. Preserve the planned motion around that visual anchor.
 
 ## How to apply
 
@@ -68,4 +78,4 @@ Same locked studio look; the product changes.
 | Reference still — perfume (Seedream, seed 50) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/6a2bf374-0049-4ade-80f9-bbd419787825/image-6a2bf374.png` |
 | Canonical | single product · white seamless void · clean shadow + reflection · cool neutral · slow push-in · 16:9 |
 
-> The reference still holds the studio look on a different product (perfume vs. phone) — the style is product-invariant. Pass it as `firstFrameImageUrl` to lock the look for image-to-video.
+> The reference still holds the studio look on a different product (perfume vs. phone) — the style is product-invariant. Use a user-approved frame of the brief's subject as the video input.

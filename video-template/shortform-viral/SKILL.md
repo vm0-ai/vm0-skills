@@ -7,6 +7,16 @@ description: A short-form viral video style — vertical 9:16, fast hook, authen
 
 A **social short-form style**, not a fixed scene. Keep the user's subject exactly as briefed — a product, a moment, people, a place — and shoot it like a creator's phone clip below. The style supplies the *energy*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
+## Keyframe review before video generation
+
+Before any billed video submission through the CLI or a provider API:
+
+1. Generate a small set of still keyframes in the user's chosen subject and this style. Start with one opening frame for a single shot; add only distinct shots or essential end states. Reuse suitable supplied/approved images. Read `okou generate image -h` for supported prompt modes, keep the default image model unless the user names another, and use economical preview settings. Tell the user that images are billed and video generation will wait. The reference-output images below illustrate style; they do not approve a different subject or this video's composition.
+2. Inspect and share the actual frames using user-accessible URLs (upload local images). Show the exact crop intended for the video. Number multiple frames; a contact sheet may accompany individual links. Include planned motion, clip count, duration per clip, aspect ratio, resolution, audio, provider/model, and a current cost estimate when available; distinguish image and video costs, never invent prices, and resolve any user-set spending cap. Explain briefly that stills preview appearance while generated motion/timing may vary.
+3. Ask the user to approve these frames and this video plan, then end the turn. Do not start video jobs in the background or in parallel while waiting. A general video request, template choice, speed request, or silence is not approval. Reuse explicit approval already given for an unchanged plan; only an explicit instruction to skip preview review and proceed with paid generation for this video overrides the default. Revise affected frames/plan and seek approval again when changes are requested.
+4. After approval, use the approved individual images as supported first-frame, last-frame, or reference-image inputs. Read `okou generate video -h` or the provider's current input contract; never pass a contact sheet or silently drop image conditioning. If unsupported, get approval for a compatible plan before generating. Keep the approved URLs and plan in the conversation and submit only the approved clips and parameters.
+5. Approval covers the described attempts, not unlimited spending. Obtain fresh approval for material frame/plan/cost changes and for extra variants or paid retries outside the approved attempt limit and budget. Recover or poll an existing job when its status is uncertain instead of submitting a duplicate.
+
 ## What this style is
 
 **The essence:** feel like a real person filmed it on their phone and it blew up — **authentic, immediate, high-energy**. The goal is **relatable spontaneity and a fast hook**, not polish. It should look unproduced on purpose.
@@ -45,7 +55,7 @@ Adapt the action and setting to the subject. Put aspect ratio, negatives, and se
 - **negativePrompt**: `formal studio look, tripod locked frame, cinematic letterbox, slow pacing, heavy color grade, staged, stiff, low resolution`.
 - **generateAudio**: **on** — casual ambient/energy helps the authentic feel (swap for trending audio in edit).
 - **seed**: mild lever for text-to-video. For look consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl**: optional here — handheld energy matters more than a locked first frame; use a still anchor only if you need a specific opening look.
+- **firstFrameImageUrl**: use the user-approved opening keyframe from the review above. Preserve the planned motion around that visual anchor.
 
 ## How to apply
 

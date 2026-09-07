@@ -7,6 +7,16 @@ description: A sensory culinary-documentary video style — macro food texture, 
 
 A **sensory food-documentary style**, not a fixed dish. Keep the user's food or craft exactly as briefed — sashimi, coffee, bread, a cocktail — and shoot it in the intimate macro look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
+## Keyframe review before video generation
+
+Before any billed video submission through the CLI or a provider API:
+
+1. Generate a small set of still keyframes in the user's chosen subject and this style. Start with one opening frame for a single shot; add only distinct shots or essential end states. Reuse suitable supplied/approved images. Read `okou generate image -h` for supported prompt modes, keep the default image model unless the user names another, and use economical preview settings. Tell the user that images are billed and video generation will wait. The reference-output images below illustrate style; they do not approve a different subject or this video's composition.
+2. Inspect and share the actual frames using user-accessible URLs (upload local images). Show the exact crop intended for the video. Number multiple frames; a contact sheet may accompany individual links. Include planned motion, clip count, duration per clip, aspect ratio, resolution, audio, provider/model, and a current cost estimate when available; distinguish image and video costs, never invent prices, and resolve any user-set spending cap. Explain briefly that stills preview appearance while generated motion/timing may vary.
+3. Ask the user to approve these frames and this video plan, then end the turn. Do not start video jobs in the background or in parallel while waiting. A general video request, template choice, speed request, or silence is not approval. Reuse explicit approval already given for an unchanged plan; only an explicit instruction to skip preview review and proceed with paid generation for this video overrides the default. Revise affected frames/plan and seek approval again when changes are requested.
+4. After approval, use the approved individual images as supported first-frame, last-frame, or reference-image inputs. Read `okou generate video -h` or the provider's current input contract; never pass a contact sheet or silently drop image conditioning. If unsupported, get approval for a compatible plan before generating. Keep the approved URLs and plan in the conversation and submit only the approved clips and parameters.
+5. Approval covers the described attempts, not unlimited spending. Obtain fresh approval for material frame/plan/cost changes and for extra variants or paid retries outside the approved attempt limit and budget. Recover or poll an existing job when its status is uncertain instead of submitting a duplicate.
+
 ## What this style is
 
 **The essence:** make food feel **irresistible and crafted by human hands** — get close enough to read every texture, catch the steam, and feel the care. The goal is **appetite and craft reverence**, an intimate sensory moment.
@@ -45,7 +55,7 @@ Adapt the dish, the craft action, and the texture to the brief. Put aspect ratio
 - **negativePrompt**: `cold lighting, clinical look, fast cuts, wide industrial kitchen, flat desaturated color, plastic food, low resolution`.
 - **generateAudio**: **on** — sizzle / pour / ambient kitchen sound strengthens the sensory feel.
 - **seed**: mild lever for text-to-video; for look consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one macro still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the user-approved opening keyframe from the review above. Preserve the planned motion around that visual anchor.
 
 ## How to apply
 
@@ -68,4 +78,4 @@ Same warm macro look; the food changes.
 | Reference still — latte pour (Seedream, seed 52) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/71642cf3-f879-4684-a6a1-afeb52fb723a/image-71642cf3.png` |
 | Canonical | macro texture · rising steam · warm backlight · artisan hands · shallow focus · slow pace |
 
-> The reference still holds the warm macro look on a different subject (coffee vs. sashimi) — the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the warm macro look on a different subject (coffee vs. sashimi) — the style is subject-invariant. Use a user-approved frame of the brief's subject as the video input.

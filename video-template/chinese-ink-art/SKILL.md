@@ -7,6 +7,16 @@ description: A Chinese ink-wash (shuimo) video style — monochrome ink gradient
 
 A **Chinese ink-wash (shuimo) style**, not a fixed scene. Keep the user's subject exactly as briefed — a mountain, a crane, a figure, an object — and render it as flowing ink on paper in the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
+## Keyframe review before video generation
+
+Before any billed video submission through the CLI or a provider API:
+
+1. Generate a small set of still keyframes in the user's chosen subject and this style. Start with one opening frame for a single shot; add only distinct shots or essential end states. Reuse suitable supplied/approved images. Read `okou generate image -h` for supported prompt modes, keep the default image model unless the user names another, and use economical preview settings. Tell the user that images are billed and video generation will wait. The reference-output images below illustrate style; they do not approve a different subject or this video's composition.
+2. Inspect and share the actual frames using user-accessible URLs (upload local images). Show the exact crop intended for the video. Number multiple frames; a contact sheet may accompany individual links. Include planned motion, clip count, duration per clip, aspect ratio, resolution, audio, provider/model, and a current cost estimate when available; distinguish image and video costs, never invent prices, and resolve any user-set spending cap. Explain briefly that stills preview appearance while generated motion/timing may vary.
+3. Ask the user to approve these frames and this video plan, then end the turn. Do not start video jobs in the background or in parallel while waiting. A general video request, template choice, speed request, or silence is not approval. Reuse explicit approval already given for an unchanged plan; only an explicit instruction to skip preview review and proceed with paid generation for this video overrides the default. Revise affected frames/plan and seek approval again when changes are requested.
+4. After approval, use the approved individual images as supported first-frame, last-frame, or reference-image inputs. Read `okou generate video -h` or the provider's current input contract; never pass a contact sheet or silently drop image conditioning. If unsupported, get approval for a compatible plan before generating. Keep the approved URLs and plan in the conversation and submit only the approved clips and parameters.
+5. Approval covers the described attempts, not unlimited spending. Obtain fresh approval for material frame/plan/cost changes and for extra variants or paid retries outside the approved attempt limit and budget. Recover or poll an existing job when its status is uncertain instead of submitting a duplicate.
+
 ## What this style is
 
 **The essence:** **stillness and emptiness as beauty** — a few confident ink strokes floating in vast white space, evoking a classical Chinese poem. The goal is **calm, breath, and negative space**: what's left unpainted matters as much as the ink.
@@ -45,7 +55,7 @@ Adapt the subject and what little surrounds it; keep the emptiness. Put aspect r
 - **negativePrompt**: `color photography, photorealistic, Western oil painting, saturated colors, cluttered composition, harsh lighting, 3D render, low resolution`.
 - **generateAudio**: optional — soft guqin / water ambience suits it; often added in edit.
 - **seed**: mild lever for text-to-video; for look consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one ink-wash still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the user-approved opening keyframe from the review above. Preserve the planned motion around that visual anchor.
 
 ## How to apply
 
@@ -68,4 +78,4 @@ Same ink-wash look; the subject changes.
 | Reference still — ink crane (Seedream, seed 54) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/a8c55beb-59ac-4362-8abc-83a669d88ebb/image-a8c55beb.png` |
 | Canonical | monochrome ink · vast white space · brushstroke · mist · one tiny red accent · slow drift |
 
-> The reference still holds the ink-wash look on a different subject (crane vs. mountains/boat) — the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the ink-wash look on a different subject (crane vs. mountains/boat) — the style is subject-invariant. Use a user-approved frame of the brief's subject as the video input.

@@ -7,6 +7,16 @@ description: A sports performance advertising video style - athlete effort, gear
 
 A **sports performance advertising style**, not a fixed sport and not a generic motivation montage. Keep the user's athlete, action, or performance product exactly as briefed - running, boxing, cycling, lifting, climbing, team drills, shoes, gloves, a racket, or training gear - and shoot it in the locked commercial look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
+## Keyframe review before video generation
+
+Before any billed video submission through the CLI or a provider API:
+
+1. Generate a small set of still keyframes in the user's chosen subject and this style. Start with one opening frame for a single shot; add only distinct shots or essential end states. Reuse suitable supplied/approved images. Read `okou generate image -h` for supported prompt modes, keep the default image model unless the user names another, and use economical preview settings. Tell the user that images are billed and video generation will wait. The reference-output images below illustrate style; they do not approve a different subject or this video's composition.
+2. Inspect and share the actual frames using user-accessible URLs (upload local images). Show the exact crop intended for the video. Number multiple frames; a contact sheet may accompany individual links. Include planned motion, clip count, duration per clip, aspect ratio, resolution, audio, provider/model, and a current cost estimate when available; distinguish image and video costs, never invent prices, and resolve any user-set spending cap. Explain briefly that stills preview appearance while generated motion/timing may vary.
+3. Ask the user to approve these frames and this video plan, then end the turn. Do not start video jobs in the background or in parallel while waiting. A general video request, template choice, speed request, or silence is not approval. Reuse explicit approval already given for an unchanged plan; only an explicit instruction to skip preview review and proceed with paid generation for this video overrides the default. Revise affected frames/plan and seek approval again when changes are requested.
+4. After approval, use the approved individual images as supported first-frame, last-frame, or reference-image inputs. Read `okou generate video -h` or the provider's current input contract; never pass a contact sheet or silently drop image conditioning. If unsupported, get approval for a compatible plan before generating. Keep the approved URLs and plan in the conversation and submit only the approved clips and parameters.
+5. Approval covers the described attempts, not unlimited spending. Obtain fresh approval for material frame/plan/cost changes and for extra variants or paid retries outside the approved attempt limit and budget. Recover or poll an existing job when its status is uncertain instead of submitting a duplicate.
+
 ## What this style is
 
 **The essence:** make performance feel **physical, precise, and commercially aspirational** - the body under pressure, gear in motion, sweat catching light, every frame selling speed, strength, or endurance. The goal is **performance credibility and premium sports-ad intensity**, not generic inspirational sentiment.
@@ -46,7 +56,7 @@ Adapt the sport, body detail, product detail, and action beats to the brief. Put
 - **negativePrompt**: `calm atmosphere, static camera, soft lighting, wellness mood, casual creator footage, bright cheerful lifestyle, slow meditative pacing, clean studio product look, generic motivational poster, low resolution, distorted limbs`.
 - **generateAudio**: **on** if supported - breath, foot strikes, glove impact, rope slap, or gym ambience strengthens the ad feel.
 - **seed**: mild lever for text-to-video; use `firstFrameImageUrl` for look consistency.
-- **firstFrameImageUrl** (strongest stability lever): generate one high-intensity still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the user-approved opening keyframe from the review above. Preserve the planned motion around that visual anchor.
 
 ## How to apply
 
@@ -69,4 +79,4 @@ Same sports-ad register; the sport changes.
 | Reference still - boxer hand wraps (Seedream, seed 62) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/be3365b8-9cdc-48b0-ab60-009b14218d3a/image-be3365b8.png` |
 | Canonical | sports-ad close-up, athlete effort, gear/product detail, motion blur, Dutch/low angle, high-contrast rim light |
 
-> The reference still holds the sports performance ad look on a different sport (boxing vs. running) - the style is sport-invariant and product-aware. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the sports performance ad look on a different sport (boxing vs. running) - the style is sport-invariant and product-aware. Use a user-approved frame of the brief's subject as the video input.

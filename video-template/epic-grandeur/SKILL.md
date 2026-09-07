@@ -7,6 +7,16 @@ description: A large-format epic cinematic video style — wide-to-extreme-wide 
 
 A trailer-grade, large-format cinematic **style**, not a fixed scene. Keep the user's subject exactly as briefed — a city, a product, a person, a landscape — and render it through the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and framing/scale/negatives are expressed the way Seedance follows most reliably.
 
+## Keyframe review before video generation
+
+Before any billed video submission through the CLI or a provider API:
+
+1. Generate a small set of still keyframes in the user's chosen subject and this style. Start with one opening frame for a single shot; add only distinct shots or essential end states. Reuse suitable supplied/approved images. Read `okou generate image -h` for supported prompt modes, keep the default image model unless the user names another, and use economical preview settings. Tell the user that images are billed and video generation will wait. The reference-output images below illustrate style; they do not approve a different subject or this video's composition.
+2. Inspect and share the actual frames using user-accessible URLs (upload local images). Show the exact crop intended for the video. Number multiple frames; a contact sheet may accompany individual links. Include planned motion, clip count, duration per clip, aspect ratio, resolution, audio, provider/model, and a current cost estimate when available; distinguish image and video costs, never invent prices, and resolve any user-set spending cap. Explain briefly that stills preview appearance while generated motion/timing may vary.
+3. Ask the user to approve these frames and this video plan, then end the turn. Do not start video jobs in the background or in parallel while waiting. A general video request, template choice, speed request, or silence is not approval. Reuse explicit approval already given for an unchanged plan; only an explicit instruction to skip preview review and proceed with paid generation for this video overrides the default. Revise affected frames/plan and seek approval again when changes are requested.
+4. After approval, use the approved individual images as supported first-frame, last-frame, or reference-image inputs. Read `okou generate video -h` or the provider's current input contract; never pass a contact sheet or silently drop image conditioning. If unsupported, get approval for a compatible plan before generating. Keep the approved URLs and plan in the conversation and submit only the approved clips and parameters.
+5. Approval covers the described attempts, not unlimited spending. Obtain fresh approval for material frame/plan/cost changes and for extra variants or paid retries outside the approved attempt limit and budget. Recover or poll an existing job when its status is uncertain instead of submitting a duplicate.
+
 ## What this style is
 
 **The essence:** a style whose whole job is to make the subject feel **monumental** — to overwhelm the viewer with scale and reverent awe, like the opening shot of a nature documentary or a prestige-film trailer. The goal is **awe**, not beauty, tension, or nostalgia; every choice below is a means to that end.
@@ -54,7 +64,7 @@ Set these through the model's own parameters (not in the prompt text):
 - **negativePrompt**: `close-up, indoor scene, handheld shake, fast cuts, flat or desaturated grade, cold color, neon, low resolution, distorted subject`.
 - **generateAudio**: Seedance generates ambient sound, not spoken narration. Leave **on** for atmospheric wind / room tone; turn it **off** if you'll add your own voiceover or music in edit.
 - **seed**: some run-to-run determinism, but for text-to-video it's a **mild** lever — it does not carry the look across different subjects. Use it to re-roll variations of the *same* prompt, not as the main consistency tool (that's `firstFrameImageUrl`).
-- **firstFrameImageUrl** (strongest stability lever): generate one still in this look (see *Reference stills* — these were made with Seedream at a fixed seed) and pass it as the first frame for image-to-video. This anchors the style far harder than text alone.
+- **firstFrameImageUrl**: use the user-approved opening keyframe from the review above. Preserve the planned motion around that visual anchor.
 
 ## How to apply
 
@@ -82,4 +92,4 @@ Same locked look every time; the subject — and the wording around it — adapt
 | Reference still — coastal city (Seedream, seed 43) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/307a3304-d1a0-41bd-a704-b144790510b2/image-307a3304.png` |
 | Canonical | wide vista · subject small-to-medium, never close-up · sunrise + flare · warm saturated · one slow aerial/crane move · 21:9 |
 
-> The two reference stills show the look holding across different **grand-exterior** subjects (a climber vs. a city). Non-exterior subjects (a product on white, an indoor scene, an abstract graphic) fall outside this style and need restaging — or a different style. Either still can be passed as `firstFrameImageUrl` to lock the look for image-to-video.
+> The two reference stills show the look holding across different **grand-exterior** subjects (a climber vs. a city). Non-exterior subjects (a product on white, an indoor scene, an abstract graphic) fall outside this style and need restaging — or a different style. Use a user-approved frame of the brief's subject as the video input.

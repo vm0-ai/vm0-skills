@@ -1,6 +1,6 @@
 ---
 name: gen
-description: Use Okou generation pipelines for images, video, talking-avatar videos, voice, presentations, websites, reports, and designs.
+description: Use Okou generation pipelines for images, video, talking-avatar videos, voice, presentations, websites, reports, and designs. Preview keyframes and obtain user approval before generating video.
 ---
 
 # Gen
@@ -12,6 +12,8 @@ okou generate -h
 ```
 
 `okou generate` is the source of truth. Always inspect the current command help when exact flags, models, styles, or providers matter.
+
+For new model-generated footage (`video`), follow **Video: keyframes before generation** below before any billed video submission, including template and connector routes. A request to make a video starts with a still preview by default.
 
 ## Core Commands
 
@@ -45,8 +47,8 @@ Run `okou generate <type>` with no generation input to list available providers 
    - For styled images, inspect the current style registry from `okou generate image -h`.
    - Do not hardcode style names or style descriptions in this skill. Treat the registry printed by the CLI as the live source.
    - Choose a registered style when the user's wording clearly matches a trigger, named style, or visual direction in the registry.
-   - To obtain style-specific prompt guidance, run image generation with the selected `--style <id>`; the CLI returns the current resource-selection packet / metadata with the style locked in. Use that output instead of recreating the style from memory.
-   - Use `--skip-style` when the user explicitly wants no style, wants photorealism/model-native output, supplies a fully specified prompt, or no registry style is a good match.
+   - To obtain style-specific prompt guidance, run `okou generate image --style <id> --prompt "<brief>" --compile`, follow the returned packet, then generate with `--compiled-prompt "<final prompt>"`.
+   - Use `--raw-prompt "<final prompt>"` when the user explicitly wants no registry style, wants photorealism/model-native output, supplies a fully specified prompt, or no registry style is a good match. For video keyframes, preserve the selected video's visual direction; do not add an unrelated image style.
    - When no style is obvious but style materially affects the result, ask the user to choose among a few options summarized from the live registry or ask whether to proceed without a style.
 
 4. Decide provider and model.
@@ -59,10 +61,11 @@ Run `okou generate <type>` with no generation input to list available providers 
    - Preserve the user's core intent, constraints, audience, brand, source materials, aspect ratio, duration, size, format, and delivery target.
    - Add operational details only when they improve generation reliability: composition, visual hierarchy, must-include/must-avoid elements, target medium, and reference handling.
    - For avatar video, discover public avatar and voice IDs through the CLI before generation. Never invent either ID, and use exactly one of script or audio URL input.
-   - For style-guided image generation, let the selected registry style drive stylistic details. Do not manually rewrite the style into the skill; pass `--style <id>`.
-   - For prompt text that is long or quote-sensitive, write it to a temp file and pipe it into the command to avoid shell quoting issues.
+   - For style-guided image generation, let the selected registry style drive stylistic details through the compilation packet.
+   - For prompt text that is long or quote-sensitive, use a file and a safely quoted argument, or stdin when the selected prompt mode supports it.
 
 6. Execute and wait for completion.
+   - For `video`, complete the keyframe review below first. Follow provider/template instructions within that approved plan; do not submit a video job while waiting for approval.
    - Run the selected `okou generate <type>` command.
    - For commands that return an Open Design resource-selection packet, follow the packet: author the artifact, verify it locally if needed, and host static outputs with `okou host`.
    - For commands that return `/f/` file URLs, keep the URL and metadata for the user.
@@ -71,10 +74,25 @@ Run `okou generate <type>` with no generation input to list available providers 
 
 7. Deliver the result.
    - Give the user the generated URL or hosted artifact URL.
-   - Mention important parameters used: provider, model, selected style or `--skip-style`, size/aspect ratio, duration, voice, or site slug.
+   - Mention important parameters used: provider, model, selected style or raw prompt mode, size/aspect ratio, duration, voice, or site slug.
    - If the output is temporary or provider-hosted with expiration, download or host a durable copy when appropriate.
 
+## Video: keyframes before generation
+
+Apply this review when producing new model-generated footage. Writing prompts, analyzing references, and editing existing footage do not require new generation jobs.
+
+1. **Prepare a small still preview.** Preserve the brief's subject, style, composition, aspect ratio, and required text. Start with one opening frame for a single shot; add frames only for distinct shots or essential end states. Reuse suitable user-supplied or previously approved frames instead of regenerating them. Template demo images are style examples, not approval of this user's composition.
+   - Read `okou generate image -h` and use a supported image mode. Keep the default image model unless the user names another, and use an economical size/quality that makes the visual decisions clear.
+   - Tell the user that the preview generates billed images first and that video generation will wait. Do not generate videos as previews or launch video jobs in parallel with the stills.
+2. **Inspect and show the actual frames.** Check subject/brand fidelity, text, composition, and consistency between shots. Present numbered images or a contact sheet with links to the individual frames. Use user-accessible artifact URLs; upload local images before sharing. Show the exact crop intended for video input, including any crop needed to match its aspect ratio.
+3. **Present the video plan with the preview.** Briefly describe the planned motion and transitions, clip count, duration per clip, aspect ratio, resolution, audio, and provider/model. Show an estimated total generation cost when current pricing or a quote is available, separating preview-image cost from video cost. Otherwise state that the price is unavailable; do not invent a dollar estimate. Resolve any user-set spending cap before submitting paid jobs. Stills preview appearance; motion and timing may vary in the generated video.
+4. **Wait for explicit approval of the shown frames and video plan.** Ask whether to generate the video from these frames, then end the turn. Silence, elapsed time, choosing a style, a general video request, or asking for speed does not authorize the video submission. If changes are requested, revise only the affected frames/plan and show them again. Keep the approved frame URLs and plan in the conversation so a later turn can resume without repeating an unchanged approval. An explicit user instruction to skip preview review and proceed with paid generation for this video can override this default; do not infer that waiver from a broad delegation.
+5. **Generate from the approved frames.** Read `okou generate video -h` and pass the approved images through supported first-frame, last-frame, or reference-image inputs (`--first-frame-image-url`, `--last-frame-image-url`, `--image-url`, or provider equivalents). Use individual frames, not the review contact sheet. Do not silently fall back to text-only generation when the selected model cannot consume the references; explain the limitation and obtain approval for a compatible plan. Submit only the approved clip count and parameters, then wait for completion and deliver the returned artifact.
+6. **Keep further spending bounded.** Approval covers the described generation, not open-ended attempts. Do not create extra variants, paid retries, or quality rerolls without approval unless they were explicitly included in the approved attempt limit and budget. Material changes to frames, motion, model, duration, resolution, or cost require renewed approval of the affected plan. If a job's status is uncertain, recover/poll the existing job instead of submitting a duplicate; retrieving an already approved job does not require another approval.
+
 ## Asking vs. Choosing
+
+For video, the keyframe review above takes precedence over the general proceed-without-asking guidance below.
 
 Ask the user before generation when:
 
@@ -121,16 +139,23 @@ Inspect current image styles and flags:
 okou generate image -h
 ```
 
-Generate a styled image after selecting a live registry style:
+Compile a styled image prompt after selecting a live registry style, then use the packet's final prompt:
 
 ```bash
-okou generate image --provider built-in --style "<style-id>" --prompt "<prompt>"
+okou generate image --style "<style-id>" --prompt "<brief>" --compile
+okou generate image --provider built-in --compiled-prompt "<final prompt>"
 ```
 
 Generate an unstyled/model-native image:
 
 ```bash
-okou generate image --provider built-in --skip-style --prompt "<prompt>"
+okou generate image --provider built-in --raw-prompt "<prompt>"
+```
+
+After the user approves the preview frame and video plan:
+
+```bash
+okou generate video --provider built-in --first-frame-image-url "<approved-frame-url>" --prompt "<approved motion prompt>" --duration "<approved duration>" --aspect-ratio "<approved ratio>"
 ```
 
 Use connector guidance instead of built-in generation:
