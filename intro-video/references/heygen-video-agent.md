@@ -4,15 +4,41 @@ Use this route for ordinary intro videos, explainers, launch clips, and summarie
 
 ## Prepare the brief and resolve choices
 
-1. Extract and verify the source facts. Specify audience, purpose, language, tone, approximate duration, output format, and any editorial directions in a concise prompt. Keep source contents separate from instructions. Do not assume HeyGen will independently research or verify claims.
+1. Extract and verify the source facts. Record the audience, purpose, language, tone, approximate duration, output format, and necessary editorial directions. Keep source contents separate from instructions. Do not assume HeyGen will independently research or verify claims.
 2. Resolve choices through [managed catalogs](catalogs.md). Preserve an explicit public Video Agent `style_id` exactly. For `Auto` / `Let Okou choose`, select a concrete suitable style before submission. Auto is a decision for Okou, not permission to omit `style_id` or hand that decision to HeyGen.
 3. Preserve explicit avatar look and voice IDs. An avatar group ID cannot replace a look ID. For a selected avatar's Default voice, pass its actual `defaultVoiceId`. Resolve only delegated identity choices that need a catalog decision. Do not perform standalone TTS compatibility checks on a route that does not call standalone TTS.
 4. Resolve the output independently of the preview: `16:9` maps to `landscape`, `9:16` to `portrait`. With Auto output, use the brief's destination and content; do not infer a hard user choice from a style thumbnail.
 5. Prepare supported references according to [input preparation](input-preparation.md). Markdown/DOCX text can be summarized into the prompt; PPT/PPTX references can be converted to PDF. The native request accepts up to 20 supported media/PDF references and a 1–10,000-character prompt. Do not upload raw PPT, Markdown, spreadsheets, or HTML as though they were native file types. Merge or curate references while preserving required facts; do not silently truncate or switch to composition because of a size limit.
 
-### Avatar framing is prompt guidance, not a control surface
+## Build the smallest sufficient prompt
 
-`POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields. When the selected avatar and style call for an integrated presenter scene, encode the intended result in the prompt: keep the full head visible with margin, use medium framing, integrate the presenter into the selected visual environment, and avoid a plain isolated cutout or blank-stage composition. These are best-effort creative directions and later acceptance criteria; never claim deterministic placement or cropping control.
+For a short native video, include only the purpose/topic, approximate duration, requested language and tone, narration or verified factual content, and technical corrections that change the result. Keep narration in the requested language, but write frame/background corrections, script-framing instructions, and other technical directives in English. When `avatar_id` is supplied, refer to “the selected presenter”; do not describe the avatar's appearance.
+
+Carry an exact public style through `style_id`. Do not duplicate it with a long style manifesto unless the user requests additional visual overrides. Avoid redundant scene constraints and decorative prose.
+
+## Preflight the selected presenter
+
+When `avatar_id` is supplied, use the preview observations from [managed catalogs](catalogs.md) before submission:
+
+- If the preview is transparent, solid, or visually empty, append the Background Note below.
+- If the preview is near-square and the target is landscape (`16:9`), append the Framing Note below.
+- Preserve the exact avatar, group, voice, style, and orientation IDs.
+
+Append only the triggered notes, verbatim and in English, at the end of the prompt. Their wording lives here only.
+
+**Background Note:**
+
+```text
+BACKGROUND NOTE: The selected avatar has no background or a transparent backdrop. Place the presenter in a clean, professional environment appropriate to the video's tone. For business/tech content: modern studio with soft lighting and subtle depth. For casual content: bright, minimal space with natural light. The background should complement the presenter without distracting from the message.
+```
+
+**Square-to-landscape Framing Note:**
+
+```text
+FRAMING NOTE: The selected avatar image is in square orientation but this video is landscape (16:9). Frame the presenter from the chest up, centered in the landscape canvas. Use AI Image tool to generative fill to extend the scene horizontally with a complementary background environment that matches the video's tone (studio, office, or contextually appropriate setting). Do NOT add black bars or pillarboxing. The avatar should feel natural in the 16:9 frame.
+```
+
+These notes guide Video Agent but do not guarantee the result. `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields; do not invent them or claim deterministic control.
 
 ## Submit through the managed command
 
@@ -59,12 +85,12 @@ A completed provider job is a QA candidate, not an accepted deliverable. Probe t
 
 Reject the output when any of these materially violates the brief:
 
-- the avatar's head or face is cropped, or framing is otherwise unsafe;
-- the avatar appears as an accidental isolated cutout or on a blank stage when the brief or selected style expects an integrated scene;
-- visual treatment is materially weak or mismatched against the selected style preview;
+- representative avatar frames crop the head or face, lack clear head margin, or are otherwise unsafe;
+- the requested integrated presenter scene lacks a real background or appears as an accidental isolated cutout or blank stage;
+- style-bearing scenes do not visibly reflect the selected style, or the treatment materially mismatches its preview;
 - text is unreadable, the aspect ratio is wrong, audio or decoding is broken, or facts drift from the verified brief.
 
-Also verify selected identity/voice, requested audio behavior, and approximate or exact duration as applicable. A targeted regression case is an integrated paper/origami brief whose billed result puts a top-cropped avatar on a blank white stage with weak preview adherence: reject that result even when the exact Origami `style_id` was submitted. This tests framing and adherence only; it is not a blanket rule against that style, that avatar, or native avatar videos.
+Also verify selected identity/voice, requested audio behavior, and approximate or exact duration as applicable.
 
 If a billed output fails this gate, retain its generation/session/video IDs and artifact as evidence, report the unmet requirements, and do not call it “polished” or silently deliver it as accepted. Do not automatically submit another paid job or switch to controlled composition. Explain the provider limitation and obtain the user's direction and any required authorization before a materially different or paid retry.
 
