@@ -1,9 +1,9 @@
 ---
-name: cursor-led-variant-world
+name: y2k-product-playground
 description: A playful 3D e-commerce and Y2K editorial catalog where a visible graphic cursor selects variants and each selection re-themes the dominant product hero, oversized rounded title, color field, and funky motif world. Use for product families, collections, plans, destinations, menus, or template galleries; not for software tutorials, SaaS dashboards, or automatic carousels.
 ---
 
-# Cursor-Led Variant World
+# Y2K Product Playground
 
 Create a 12-15 second interaction film with one reusable visual sentence:
 

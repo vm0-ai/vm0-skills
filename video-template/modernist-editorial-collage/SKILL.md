@@ -1,9 +1,9 @@
 ---
-name: kinetic-editorial-collage
+name: modernist-editorial-collage
 description: A fast warm-paper editorial collage where photographic cutouts, recurring evidence, oversized grotesk type, accent blocks, and local rule modules accumulate and repack through concurrent scale, crop, slide, and mask handoffs. Use for product launches, reports, collections, creative tools, or technology stories; not for generic moodboards, cinematic live action, quiet minimal films, or ordinary slideshows.
 ---
 
-# Kinetic Editorial Collage
+# Modernist Editorial Collage
 
 Create a 12-15 second paper-collage motion film with this reusable visual sentence:
 

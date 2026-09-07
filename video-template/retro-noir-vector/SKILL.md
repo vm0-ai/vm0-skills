@@ -1,9 +1,9 @@
 ---
-name: poster-tableau-dissolve
+name: retro-noir-vector
 description: A retro graphic-noir 2D flat-vector title film of locked poster tableaux connected by geometry-aware dissolves while one recurring silhouette travels in one screen direction. Use for fashion, music, festivals, culture, destinations, illustrated narratives, or atmospheric brand films; not for soft storybook craft, photoreal action coverage, or free-camera 3D journeys.
 ---
 
-# Poster-Tableau Dissolve
+# Retro Noir Vector
 
 Create a 15-22 second graphic film with one reusable visual sentence:
 
