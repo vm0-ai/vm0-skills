@@ -5,7 +5,7 @@ description: A fixed front-facing catalog film where a visible cursor selects va
 
 # Cursor-Led Variant World
 
-Create a 12-15 second interaction film with one reusable visual sentence:
+Create a 5-15 second interaction film with one reusable visual sentence:
 
 `stable catalog shell -> cursor arrives -> target reacts -> matching hero expands -> visual world re-themes -> next target -> final selection holds`
 
@@ -22,17 +22,37 @@ Require or infer:
 - selector order and final selected state;
 - optional final CTA of one to three words.
 
-Prefer four variants for a 15-second film. Shorten the list before making names unreadable.
+Match the variant count to the requested duration: use two variants for 5-7 seconds, three for 8-11 seconds, and preferably four for 12-15 seconds. Shorten the list or lengthen the film before making names unreadable or removing the cursor-cause beat.
 
 ## Reference contract
 
-Use purpose-built still images only:
+Use purpose-built still images:
 
 1. `shell_lock`: a clean front-facing landing-page state with exact brand title, selector order, hero footprint, and typography hierarchy.
 2. `variant_source`: all variants isolated at consistent scale, angle, lighting, and construction.
 3. Optional `variant_lock_01...06`: one identity still per variant when a combined source cannot preserve them.
 
-Do not use a multi-panel storyboard as a literal frame. Treat inspiration videos as analysis-only evidence and never pass them to video generation.
+Do not use a multi-panel storyboard as a literal frame. Treat inspiration videos as analysis-only evidence unless the user explicitly requests a one-off motion-reference reproduction. A reusable template run must use only the user's assets and purpose-built locks, never the inspiration video.
+
+### Keyframe-first approval gate
+
+Before any video-generation call, create three 16:9 mother keyframes:
+
+1. `initial_shell`: the unambiguous starting selection, complete shell, exact title and visible cursor entry.
+2. `causal_peak`: the cursor tip visibly contacting the next target while the outgoing state masks away and the matching incoming hero expands. Preserve one clean copy of each approved name; do not morph letters through pseudo-text.
+3. `final_selection`: the chosen final world, exact name and optional CTA in the unchanged shell.
+
+Generate `initial_shell` first, then use it as the shell-and-object reference for the other two while allowing the local hero, palette, motifs and active state to change. The navigation, selector order, margins, title zone, CTA position and cursor rendering must remain identical.
+
+For an 8-15 second film with more than two variants, add one clean state lock per intermediate variant only after the mother trio is coherent. Crop every frame to the active 16:9 canvas, inspect the full-resolution images, assemble an ordered contact sheet and show both to the user. Stop before video generation until the user explicitly approves the keyframes.
+
+Render text directly in the interface or on a real subject object. Reject rectangular banners, subtitle bars, label strips, highlight blocks or separate background panels added only to make text readable.
+
+### Reference input routing
+
+Inspect `okou generate video -h` immediately before generation and honor the selected model's current media constraints. Do not pass `--model` unless the user named one.
+
+MiniMax H3 treats first/last-frame inputs and ordinary image/video references as mutually exclusive. For a short run whose three approved frames all matter, pass the ordered frames as image references without first/last-frame flags. Use first/last-frame mode only when no midpoint lock is required. If a motion guide is necessary, build it only from approved user or generated assets and pass it as the sole video reference; never silently drop an approved middle state or substitute the inspiration video.
 
 ## Locked shot grammar
 
@@ -64,6 +84,17 @@ Never change the hero or world before the cursor reaches the target. Never hide 
 
 ### Timeline
 
+For a 5-second film, use exactly two variants:
+
+| Time | Required beat |
+| --- | --- |
+| 0.0-0.7s | Complete shell and starting world; cursor enters from a crop edge. |
+| 0.7-2.4s | Cursor contact teaches the full causal chain and resolves variant two. |
+| 2.4-4.2s | One final cursor-caused re-selection or return to the chosen final world. |
+| 4.2-5.0s | Exact final name and state hold without camera drift. |
+
+For 8-11 seconds, use three variants and preserve 0.8-1.2 seconds for the final hold. For 12-15 seconds, use:
+
 | Time | Required beat |
 | --- | --- |
 | 0.0-1.2s | Stable shell assembles; cursor enters from a crop edge. |
@@ -72,7 +103,7 @@ Never change the hero or world before the cursor reaches the target. Never hide 
 | 11.8-13.5s | Brief selector recap or return to the chosen final state. |
 | 13.5-15.0s | Optional CTA responds; final selected state holds for at least one second. |
 
-Scale proportionally for a 12-second output. Do not remove the opening teaching beat or final hold.
+Do not squeeze additional variants into the short tiers. Never remove the opening teaching beat, visible cursor cause or final hold.
 
 ## Motion, type, and camera
 
@@ -106,23 +137,25 @@ Do not merely say “cursor animation.” Name the cursor path, target reaction,
 ## Generation parameters
 
 - **aspectRatio:** `16:9`.
-- **duration:** `12-15s`; prefer `15s` for four or more variants.
+- **duration:** `5-15s`; match the variant count and timeline tier above.
 - **resolution:** prefer `1080p` or higher when supported; use `720p` only when the selected tier requires it.
 - **generateAudio:** on when the model supports it; request restrained UI clicks, soft whooshes, and one tonal accent per state. No voiceover by default.
-- **image inputs:** role-label every URL in the prompt as `shell_lock`, `variant_source`, or `variant_lock_N`.
-- **negativePrompt:** `camera cuts, dolly, orbit, automatic carousel, invisible cursor jump, interface layout drift, mismatched hero and selector, blended products, duplicate cursor, illegible text, pseudo-letters, excessive particles, watermark`.
+- **image inputs:** role-label every URL as `initial_shell`, `causal_peak`, `final_selection`, `shell_lock`, `variant_source`, or `variant_lock_N`.
+- **negativePrompt:** `camera cuts, dolly, orbit, automatic carousel, invisible cursor jump, interface layout drift, mismatched hero and selector, blended products, duplicate cursor, illegible text, pseudo-letters, rectangular banner behind text, subtitle bar, label strip, separate text background panel, excessive particles, watermark`.
 
 ## Acceptance gates
 
 Reject and retry when any answer is no:
 
 - Does every state change have a visible cursor cause?
+- Were the mother keyframes shown at full resolution and explicitly approved before video generation?
 - Does the same shell survive without layout or camera drift?
 - Does each selector activate the matching hero and exact name?
-- Are at least three worlds distinct while belonging to one family?
+- Are all requested worlds distinct while belonging to one family, with at least two worlds in a 5-7 second film?
 - Are outgoing and incoming objects separated rather than blended?
 - Are all approved names readable with no transitional pseudo-letters?
-- Does the final state hold for at least one second?
+- Is every text treatment integrated without an artificial banner, subtitle bar or backing panel?
+- Does the final state hold for at least 0.8 seconds in a 5-second film and at least one second in longer films?
 
 ## Worked examples
 
