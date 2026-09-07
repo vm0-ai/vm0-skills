@@ -30,11 +30,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--catalog", required=True)
     parser.add_argument("--title", required=True)
     parser.add_argument("--subtitle", default="")
-    parser.add_argument(
-        "--finish",
-        action="store_true",
-        help="Composite final exact typography over a generated video and mask its native text layer.",
-    )
     return parser.parse_args()
 
 
@@ -135,9 +130,7 @@ def drawtext_filter(
     *,
     color: str = BLACK,
     outline: bool = False,
-    max_width: int | None = None,
     scale: float = 1.0,
-    boxed: bool = False,
 ) -> str:
     size = max(1, round(size * scale))
     y = round(y * scale)
@@ -145,10 +138,6 @@ def drawtext_filter(
     border = f":borderw={border_width}:bordercolor=0x{BLACK}" if outline else ""
     shadow_offset = max(1, round(2 * scale))
     shadow = "" if outline else f":shadowcolor=black@0.16:shadowx={shadow_offset}:shadowy={shadow_offset}"
-    box = ""
-    if boxed:
-        box_color = "black@0.70" if color in {WHITE, "ffffff"} else f"0x{IVORY}@0.92"
-        box = f":box=1:boxcolor={box_color}:boxborderw={max(4, round(7 * scale))}"
     fill = IVORY if outline else color
     alpha = fade_expression(start, end)
     return (
@@ -156,29 +145,7 @@ def drawtext_filter(
         f"fontfile='{fontfile}':textfile='{textfile.as_posix()}':reload=0:"
         f"fontsize={size}:fontcolor=0x{fill}:x=(w-text_w)/2:y={y}:"
         f"alpha='{alpha}':enable='between(t,{start:.3f},{end:.3f})'"
-        f"{border}{shadow}{box}"
-    )
-
-
-def drawbox_filter(
-    y: int,
-    height: int,
-    start: float,
-    end: float,
-    *,
-    width: int = 1180,
-    color: str = IVORY,
-    opacity: float = 1.0,
-    scale: float = 1.0,
-) -> str:
-    scaled_width = round(width * scale)
-    scaled_height = round(height * scale)
-    scaled_y = round(y * scale)
-    return (
-        "drawbox="
-        f"x=(w-{scaled_width})/2:y={scaled_y}:w={scaled_width}:h={scaled_height}:"
-        f"color=0x{color}@{opacity:.2f}:t=fill:"
-        f"enable='between(t,{start:.3f},{end:.3f})'"
+        f"{border}{shadow}"
     )
 
 
@@ -217,49 +184,27 @@ def main() -> None:
             path.write_text(value, encoding="utf-8")
             files[label] = path
 
-        if args.finish:
-            filters = [
-                drawbox_filter(294, 116, 0.20, 1.58, scale=render_scale),
-                drawtext_filter(files["opener"], fontfile, fitted_size(args.opener, 720, 90), 312, 0.20, 1.58, scale=render_scale),
-                drawbox_filter(320, 122, 1.62, 2.98, width=780, color=BLACK, scale=render_scale),
-                drawtext_filter(files["pivot"], fontfile, fitted_size(args.pivot, 430, 96), 338, 1.62, 2.98, color=WHITE, scale=render_scale),
-                drawbox_filter(324, 112, 3.02, 5.38, scale=render_scale),
-                drawtext_filter(files["claim_one"], fontfile, fitted_size(args.claim_one, 760, 80), 342, 3.02, 5.38, scale=render_scale),
-                drawbox_filter(330, 116, 5.42, 6.78, scale=render_scale),
-                drawtext_filter(files["claim_two"], fontfile, fitted_size(args.claim_two, 640, 82), 350, 5.42, 6.78, scale=render_scale),
-                drawbox_filter(350, 112, 6.82, 8.68, scale=render_scale),
-                drawtext_filter(files["claim_three"], fontfile, fitted_size(args.claim_three, 650, 78), 370, 6.82, 8.68, scale=render_scale),
-                drawbox_filter(338, 126, 8.72, 10.76, scale=render_scale),
-                drawtext_filter(files["catalog"], fontfile, fitted_size(args.catalog, 690, 92), 358, 8.72, 10.76, scale=render_scale),
-                drawbox_filter(326, 180 if args.subtitle else 134, 10.80, 15.0, scale=render_scale),
-                drawtext_filter(files["title"], fontfile, fitted_size(args.title, 760, 104), 354, 10.80, 15.0, scale=render_scale),
-            ]
-            if args.subtitle:
-                filters.append(
-                    drawtext_filter(files["subtitle"], fontfile, fitted_size(args.subtitle, 620, 34, 20), 466, 10.80, 15.0, scale=render_scale)
-                )
-        else:
-            filters = [
-                drawtext_filter(files["opener"], fontfile, fitted_size(args.opener, 720, 90), 312, 0.25, 0.98, outline=True, scale=render_scale),
-                drawtext_filter(files["opener"], fontfile, fitted_size(args.opener, 720, 90), 312, 0.80, 2.08, scale=render_scale),
-                drawtext_filter(files["pivot"], fontfile, fitted_size(args.pivot, 430, 96), 338, 1.70, 3.28, color=WHITE, scale=render_scale),
-                drawtext_filter(files["claim_one"], fontfile, fitted_size(args.claim_one, 760, 80), 342, 2.95, 4.02, outline=True, scale=render_scale),
-                drawtext_filter(files["claim_one"], fontfile, fitted_size(args.claim_one, 760, 80), 342, 3.68, 5.82, scale=render_scale),
-                drawtext_filter(files["claim_two"], fontfile, fitted_size(args.claim_two, 640, 82), 350, 5.28, 6.18, outline=True, scale=render_scale),
-                drawtext_filter(files["claim_two"], fontfile, fitted_size(args.claim_two, 640, 82), 350, 5.88, 7.02, scale=render_scale),
-                drawtext_filter(files["claim_three"], fontfile, fitted_size(args.claim_three, 650, 78), 370, 6.52, 7.78, outline=True, scale=render_scale),
-                drawtext_filter(files["claim_three"], fontfile, fitted_size(args.claim_three, 650, 78), 370, 7.42, 9.02, scale=render_scale),
-                drawtext_filter(files["catalog"], fontfile, fitted_size(args.catalog, 690, 92), 358, 8.42, 9.72, outline=True, scale=render_scale),
-                drawtext_filter(files["catalog"], fontfile, fitted_size(args.catalog, 690, 92), 358, 9.38, 11.14, scale=render_scale),
-                drawtext_filter(files["title"], fontfile, fitted_size(args.title, 760, 104), 354, 10.42, 15.0, scale=render_scale),
-            ]
-            if args.subtitle:
-                filters.append(
-                    drawtext_filter(files["subtitle"], fontfile, fitted_size(args.subtitle, 620, 34, 20), 466, 10.52, 15.0, scale=render_scale)
-                )
+        filters = [
+            drawtext_filter(files["opener"], fontfile, fitted_size(args.opener, 720, 90), 312, 0.25, 0.98, outline=True, scale=render_scale),
+            drawtext_filter(files["opener"], fontfile, fitted_size(args.opener, 720, 90), 312, 0.80, 2.08, scale=render_scale),
+            drawtext_filter(files["pivot"], fontfile, fitted_size(args.pivot, 430, 96), 338, 1.70, 3.28, color=WHITE, scale=render_scale),
+            drawtext_filter(files["claim_one"], fontfile, fitted_size(args.claim_one, 760, 80), 342, 2.95, 4.02, outline=True, scale=render_scale),
+            drawtext_filter(files["claim_one"], fontfile, fitted_size(args.claim_one, 760, 80), 342, 3.68, 5.82, scale=render_scale),
+            drawtext_filter(files["claim_two"], fontfile, fitted_size(args.claim_two, 640, 82), 350, 5.28, 6.18, outline=True, scale=render_scale),
+            drawtext_filter(files["claim_two"], fontfile, fitted_size(args.claim_two, 640, 82), 350, 5.88, 7.02, scale=render_scale),
+            drawtext_filter(files["claim_three"], fontfile, fitted_size(args.claim_three, 650, 78), 370, 6.52, 7.78, outline=True, scale=render_scale),
+            drawtext_filter(files["claim_three"], fontfile, fitted_size(args.claim_three, 650, 78), 370, 7.42, 9.02, scale=render_scale),
+            drawtext_filter(files["catalog"], fontfile, fitted_size(args.catalog, 690, 92), 358, 8.42, 9.72, outline=True, scale=render_scale),
+            drawtext_filter(files["catalog"], fontfile, fitted_size(args.catalog, 690, 92), 358, 9.38, 11.14, scale=render_scale),
+            drawtext_filter(files["title"], fontfile, fitted_size(args.title, 760, 104), 354, 10.42, 15.0, scale=render_scale),
+        ]
+        if args.subtitle:
             filters.append(
-                drawtext_filter(files["catalog"], fontfile, fitted_size(args.catalog, 660, 118), 600, 10.62, 15.0, color="2b2a27", scale=render_scale)
+                drawtext_filter(files["subtitle"], fontfile, fitted_size(args.subtitle, 620, 34, 20), 466, 10.52, 15.0, scale=render_scale)
             )
+        filters.append(
+            drawtext_filter(files["catalog"], fontfile, fitted_size(args.catalog, 660, 118), 600, 10.62, 15.0, color="2b2a27", scale=render_scale)
+        )
 
         command = [
             "ffmpeg",

@@ -36,9 +36,27 @@ Use a small role-labeled asset set:
 
 Treat inspiration videos as analysis-only unless the user explicitly asks to use one as a motion reference. Never use a contact sheet or storyboard grid as a literal first frame.
 
-### Copy-specific motion guide
+### Keyframe-first approval gate
 
-Static reference videos are unsafe for this template: readable placeholders tend to leak into the result, while a guide with no words causes the model to preserve blank type blocks. When the selected video model supports reference video, first render a copy-specific guide containing the user's own seven phrases.
+Never generate the video on the same uninterrupted pass that establishes a new visual direction. First create seven 16:9 keyframes matching the seven-beat timeline below:
+
+1. sparse opener;
+2. identity pivot;
+3. first evidence field;
+4. typographic gate;
+5. comparison or collection row;
+6. catalog field;
+7. final identity board.
+
+Generate beat 1 first. After it is clean, use it only as a style-and-recurring-object reference for beats 2-7 while explicitly allowing each composition to change. Keep the same canvas material, palette, object rendering, typography family, and recurring anchors across all seven frames.
+
+Every approved phrase must be exact and rendered directly on the canvas or on a real subject object. Do not place a rectangular banner, subtitle bar, label strip, highlight block, or separate background panel behind text merely to improve legibility. Reject extra words, pseudo-text, logos, and watermarks.
+
+Crop all candidates to the intended 16:9 active canvas, assemble an ordered contact sheet, inspect each full-resolution frame, and show the set to the user. Stop before video generation. Video generation requires explicit approval of the keyframes; if the user requests changes, revise only the rejected frames and repeat this gate.
+
+### Approved motion guide
+
+Static reference videos are unsafe for this template: readable placeholders tend to leak into the result, while a guide with no words causes the model to preserve blank type blocks. Only after the keyframes are approved, render a copy-specific motion guide containing the user's own seven phrases.
 
 Resolve `scripts/render_motion_guide.py` and `assets/motion-guide-base.mp4` relative to this `SKILL.md`, then run:
 
@@ -57,16 +75,15 @@ python3 scripts/render_motion_guide.py \
 
 The renderer uses Python's standard library and ffmpeg; it makes no network calls. It overlays the user's exact copy onto an original, programmatically drawn motion base containing no readable placeholders and no pixels, people, logos, products, or audio from the inspiration source.
 
-Inspect the rendered guide once for spelling, then upload it with `okou web upload-file` and pass the returned URL as the sole `motion_guide` video reference. Tell the video model to preserve the guide's copy and trajectories while replacing its generic shapes with the user's subject matter.
-
-After video generation, download the raw result and run the same command again with `--finish`, set `--base` to the raw generated video, set `--output` to the final delivery path, and repeat the same eight copy flags. The finishing pass automatically scales the typography to the generated resolution, masks the model's native text layer with restrained editorial labels, and preserves the generated audio. Deliver the finished file, not the raw model result.
+Inspect the rendered guide once for spelling, then upload it with `okou web upload-file`. Tell the video model to preserve the approved keyframes, guide timing, exact copy, and trajectories while replacing the guide's generic shapes with the approved subject matter. Never repair model text by adding a solid background strip in post-production; retry the affected beat or use a typography treatment already approved in its keyframe.
 
 Reference priority is:
 
-1. exact copy already rendered into the custom guide;
-2. supplied identity assets and the user's subject, palette, and evidence content;
-3. custom-guide timing, layout density, and object trajectories;
-4. generic guide shapes, which must be replaced by the user's subject matter.
+1. approved keyframe composition, direct typography, and recurring-object identity;
+2. exact copy already rendered into the custom guide;
+3. supplied identity assets and the user's subject, palette, and evidence content;
+4. custom-guide timing, layout density, and object trajectories;
+5. generic guide shapes, which must be replaced by the user's subject matter.
 
 If reference video is unavailable, omit the guide and follow the written grammar below. Never substitute the original inspiration video for the custom guide.
 
@@ -144,14 +161,16 @@ Do not merely say "dynamic collage." Name the exact text, recurring anchors, pro
 - **duration:** `15s` when using the copy-specific guide; `12-15s` for text-only fallback.
 - **resolution:** prefer `1080p` or higher when supported.
 - **generateAudio:** on when supported; request a brisk percussive editorial bed with paper slides, snaps, restrained scratches, and one low final accent. No voiceover by default.
-- **video input:** when supported, pass the uploaded copy-specific `motion_guide` as the sole reference video. Do not pass the original inspiration video. If a model rejects combining frame images with reference media, keep the custom guide and omit the frame images.
-- **image inputs:** role-label each URL as `anchor_lock`, `canvas_lock`, `evidence_lock`, or `final_board_lock`.
-- **negativePrompt:** `generic guide shapes in final output, unreadable placeholder glyphs, ordinary slideshow, one phrase at a time on an empty screen, full-screen erase between every phrase, generic cross-fades, permanent full-canvas tile grid, single giant object held for seconds, long empty title hold, cinematic camera move, 3D fly-through, unrelated objects, object mutation, cluttered scrapbook, pseudo-text, misspelling, stock-ad polish, watermark`.
+- **video input:** only after keyframe approval, pass the uploaded copy-specific `motion_guide` as the motion reference. Do not pass the original inspiration video.
+- **image inputs:** role-label approved keyframes as `beat_01` through `beat_07`; also label any separate user assets as `anchor_lock`, `canvas_lock`, `evidence_lock`, or `final_board_lock`. When a model cannot combine the approved frame inputs with reference video, do not silently discard the keyframes; ask whether frame fidelity or motion fidelity takes priority, or select a supported mode that preserves both.
+- **negativePrompt:** `generic guide shapes in final output, rectangular banner behind text, subtitle bar, label strip, highlight block, separate text background panel, unreadable placeholder glyphs, ordinary slideshow, one phrase at a time on an empty screen, full-screen erase between every phrase, generic cross-fades, permanent full-canvas tile grid, single giant object held for seconds, long empty title hold, cinematic camera move, 3D fly-through, unrelated objects, object mutation, cluttered scrapbook, pseudo-text, misspelling, stock-ad polish, watermark`.
 
 ## Acceptance gates
 
 Reject and retry when any answer is no:
 
+- Were all seven keyframes reviewed at full resolution and explicitly approved before any video generation call?
+- Is typography integrated directly into the canvas or a real subject object, with no artificial banner, subtitle bar, label strip, highlight block, or background panel?
 - Are there seven distinct layout functions, including the identity pivot and catalog field?
 - Do at least two recognizable anchors persist while evidence accumulates progressively?
 - Does every transition combine one dominant carrier with at least two coordinated secondary actions?
@@ -159,7 +178,6 @@ Reject and retry when any answer is no:
 - Are rule lines local and changing rather than a permanent rigid screen grid?
 - Is every approved phrase exact and cleanly readable at least once, without demanding total isolation from adjacent beats?
 - Does the output preserve the exact copy from the custom guide while replacing its generic shapes with the user's subject matter?
-- Was the deterministic `--finish` typography pass applied to the delivered file with audio preserved?
 - Is the pre-final pacing dense, with no unintended multi-second empty hold or prolonged single-object takeover?
 - Does the final board gather the recurring anchors and evidence into a legible title hierarchy for the last second?
 
