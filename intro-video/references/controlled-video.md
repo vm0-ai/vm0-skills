@@ -10,44 +10,59 @@ Resolve Auto style from the [managed catalog](catalogs.md) only when the brief c
 
 Style selection does not authorize extra decorative layers. If the user permits no visual additions, record the selected style and explain that the original visuals determine the appearance; do not add graphics just to demonstrate the choice.
 
-1. Prepare required source visuals and decide scene order. For page-for-page conversion, retain all pages as static bitmaps; no restyling or invented marketing arc. For recordings, keep the selected source segments and verify crop/readability. Choose custom motion only when the brief calls for it.
-2. Finalize one narration unit per scene. `No voiceover` omits added narration but does not delete source audio. An explicit request for silence removes every audio track. If original audio was selected, probe that it exists and extract or retain the intended track without TTS; do not infer track presence from a filename or MIME type. For synthetic speech with a compatible exact voice, use the managed command:
+## Lock the plan
+
+Before asset generation, lock the required pages or footage, scene order, preservation geometry, source-audio policy, narration units, presenter overlay, output ratio, and fixed timing requirements. For page-for-page work, retain every page as a static bitmap with no restyling or invented marketing arc. For recordings, retain the selected segments and verify crop/readability. Choose custom motion only when requested.
+
+For static deck conversion, the mounted `ppt-avatar-video` skill's **composition builder** and geometry probes are reusable, but its JoggAI generation instructions do not accept the selected HeyGen IDs. Reuse only the builder after reading its manifest schema. Keep source pages static. For a non-speaking avatar, use an available still; if a transparent still is unavailable, resolve the presentation choice instead of manufacturing an unrelated person.
+
+## Prepare independent lanes
+
+After the plan is locked, run these lanes concurrently and cache every probe, conversion, catalog result, and generated asset:
+
+1. **Visuals:** prepare only the required page bitmaps, footage segments, and permitted added graphics.
+2. **Narration/audio:** finalize one narration unit per scene. `No voiceover` omits added narration but does not delete source audio; `silent` removes every audio track. For original audio, probe that the intended track exists and extract or retain it without TTS. For synthetic speech with a compatible exact voice, use the managed command:
 
    ```bash
    okou __intro-video-voice --voice-id VOICE_ID --text "FINAL_SCRIPT" --json
    ```
 
-   Keep long or quote-sensitive scripts in a file and pass their contents as one safely quoted argument; the current command does not accept stdin. Split only to respect its 5,000-character limit. Retain every returned permanent audio URL and download needed assets into the composition project.
-3. Generate a speaking presenter only if requested. Reuse that same audio:
+   Keep long or quote-sensitive scripts in a file and pass their contents as one safely quoted argument; the command does not accept stdin. Split only for its 5,000-character limit. Retain each permanent audio URL and download needed assets into the project.
+3. **HyperFrames project:** initialize the project from the locked plan without waiting for visuals or narration. Inspect `npx hyperframes@VERSION skills --help`; if the entrypoint is missing, inspect `skills update --help`, install the needed `hyperframes` skill, then read and follow it. Use the project's pinned version; for a new project, use verified version `0.8.26`. Keep it fixed. If installation fails, report the dependency instead of inventing CLI flags or HTML attributes.
 
-   ```bash
-   okou __intro-video-presenter --avatar-id LOOK_ID --avatar-group-id GROUP_ID \
-     --audio-url NARRATION_URL --json
-   ```
+Generate a speaking presenter only if requested. Its sole preparation dependency is the finalized narration audio; start it as soon as that audio is available while other lanes continue, and reuse that same audio:
 
-   The managed renderer currently produces a landscape transparent WebM. Verify alpha, duration, and framing. It is a composition layer, not the final MP4. For other ratios, fit the cutout without cropping essential content. Do not invent an `--aspect-ratio` flag or use a personal account as a fallback.
-4. Check real speech duration with `ffprobe`; use transcription/timestamps to map scene cuts. A presenter take uses at most 600 seconds of audio. Longer narratives need separate bounded takes aligned to their narration segments, not a rejected overlong job. Mix narration once; mute the duplicate audio of any separately composited presenter.
-5. Build the composition using the installed official HyperFrames workflow. Inspect `npx hyperframes@VERSION skills --help`; if the entrypoint is missing, inspect `skills update --help` and install the needed `hyperframes` skill, then read it and follow its selected authoring route. Use the project's pinned version; for a new project, `0.8.26` is the version whose commands were verified for this skill. Keep the version fixed throughout the job. If the workflow cannot be installed, report the missing dependency rather than inventing unsupported CLI flags or HTML attributes.
-6. For static deck conversion, the mounted `ppt-avatar-video` skill's **composition builder** and geometry probes are reusable, but its JoggAI generation instructions do not accept the selected HeyGen IDs. Reuse only the builder after reading its manifest schema. Keep the source pages static. For a non-speaking avatar, use an actual available still; if a transparent still is unavailable, resolve the presentation choice instead of manufacturing an unrelated person.
-7. Validate the composition before rendering:
+```bash
+okou __intro-video-presenter --avatar-id LOOK_ID --avatar-group-id GROUP_ID \
+  --audio-url NARRATION_URL --json
+```
 
-   ```bash
-   npx hyperframes@VERSION lint PROJECT --json
-   npx hyperframes@VERSION check PROJECT --strict --samples 5 --json
-   npx hyperframes@VERSION snapshot PROJECT --at FIRST,MIDDLE,LAST --no-end --describe false
-   ```
+The managed renderer produces a landscape transparent WebM. Verify alpha, duration, and framing. It is a composition layer, not the final MP4. For other ratios, fit it without cropping essential content. Do not invent an `--aspect-ratio` flag or use a personal account.
 
-   Use actual numeric snapshot times, check all source pages/segments required by the brief, and confirm no stretching, covered text, accidental audio duplication, or missing assets. A public Video Agent style ID is not a local-render option: any similar-looking custom composition is an adaptation and must have been described as such.
-8. Render locally by default; this does not require a HeyGen API credential:
+Check real speech duration with `ffprobe`; use transcription/timestamps only as needed to map scene cuts. A presenter take uses at most 600 seconds of audio. Split longer narratives into bounded takes aligned to narration segments. Mix narration once and mute duplicate presenter audio. Do not repeat preparation or generate speculative alternate-route assets.
 
-   ```bash
-   npx hyperframes@VERSION render PROJECT --fps 30 --quality high --format mp4 \
-     --workers 1 --output PROJECT/renders/final.mp4
-   ```
+## Assemble, validate, and render once
 
-   Set the independently resolved output dimensions in the composition itself (for example 1920×1080 for 16:9 or 1080×1920 for 9:16) and use a matching supported resolution preset only when necessary. Reflow adapted graphics for the output canvas; fit fidelity-critical pages or footage without unintended cropping. A style reference's ratio is source metadata, not an output override. A local-render `--resolution` preset is not the same as the cloud API's resolution/ratio pair. Use one worker in constrained runtimes and wait for completion. Do not add a cloud render as a second copy of an already-rendered video.
+When the lanes finish, assemble the cached assets and final timings once. Validate before the final render:
 
-9. Decode the final MP4, inspect frames and audio, compare required pages/segments and narration against the plan, and upload the verified file.
+```bash
+npx hyperframes@VERSION lint PROJECT --json
+npx hyperframes@VERSION check PROJECT --strict --samples 5 --json
+npx hyperframes@VERSION snapshot PROJECT --at FIRST,MIDDLE,LAST --no-end --describe false
+```
+
+Use numeric snapshot times, check every required page/segment, and confirm no stretching, covered text, duplicate audio, or missing assets. A public Video Agent style ID is not a local-render option; any similar custom treatment is an adaptation and must have been described as such.
+
+Render locally once after validation; this does not require a HeyGen API credential:
+
+```bash
+npx hyperframes@VERSION render PROJECT --fps 30 --quality high --format mp4 \
+  --workers 1 --output PROJECT/renders/final.mp4
+```
+
+Set the independently resolved dimensions in the composition (for example 1920×1080 for 16:9 or 1080×1920 for 9:16). Reflow adapted graphics; fit fidelity-critical pages or footage without cropping. A style reference's ratio is source metadata, not an output override. A local `--resolution` preset is not the cloud API's resolution/ratio pair. Use one worker in constrained runtimes and wait for completion. Do not add a cloud render.
+
+Decode the final MP4, inspect frames and audio, compare required pages/segments and narration against the plan, and upload the verified file.
 
 The managed APIs own provider credentials, billing, and artifact persistence. Save returned results and any generation identifier before subsequent steps, wait for the existing job, and reuse completed assets after interruption. Do not retry a billed submission merely because a command or request timed out; inspect its existing generation status first.
 
