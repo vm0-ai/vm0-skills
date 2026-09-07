@@ -1,11 +1,11 @@
 ---
 name: poster-tableau-dissolve
-description: A flat editorial title film of locked poster tableaux connected by geometry-aware dissolves while one recurring subject travels in one screen direction. Use for fashion, music, festivals, culture, destinations, illustrated narratives, or atmospheric brand films; not for photoreal action coverage or free-camera 3D journeys.
+description: A retro graphic-noir 2D flat-vector title film of locked poster tableaux connected by geometry-aware dissolves while one recurring silhouette travels in one screen direction. Use for fashion, music, festivals, culture, destinations, illustrated narratives, or atmospheric brand films; not for soft storybook craft, photoreal action coverage, or free-camera 3D journeys.
 ---
 
 # Poster-Tableau Dissolve
 
-Create a 5-22 second graphic film with one reusable visual sentence:
+Create a 15-22 second graphic film with one reusable visual sentence:
 
 `title tableau -> recurring subject enters -> flat worlds dissolve around one continuous trajectory -> monumental passage -> closing motif echoes the opening`
 
@@ -18,7 +18,7 @@ Require or infer:
 - exact title and optional closing line;
 - one recurring moving subject with a clear silhouette;
 - one fixed screen direction;
-- a duration-appropriate set of flat tableau locations: three functional states for 5-7 seconds, four or five for 8-14 seconds, or six to ten for 15-22 seconds;
+- six to ten flat tableau locations;
 - a limited palette and two or three recurring geometric motifs;
 - one opening-to-closing visual echo.
 
@@ -33,27 +33,35 @@ Use purpose-built full-screen stills only:
 3. Two or three `tableau_lock_N`: representative environments with compatible subject scale and direction.
 4. Optional `closing_lock`: final motif and title relationship.
 
-Do not feed a multi-panel storyboard as one frame. Treat inspiration videos as analysis-only evidence unless the user explicitly requests a one-off motion-reference reproduction. A reusable template run must use only the user's assets and purpose-built locks, never the inspiration video.
+Do not feed a multi-panel storyboard as one frame. Treat inspiration videos as analysis-only evidence and never pass them to video generation.
 
-### Keyframe-first approval gate
+## Visual style lock
 
-Before any video-generation call, create three 16:9 mother keyframes:
+The target is a retro film-noir graphic rendered as hard-edged 2D flat-vector motion design, not soft craft paper, a pastel storybook, or a photoreal cinematic sequence. Every frame should be strong enough to work as a standalone suspense poster while still belonging to one continuous world.
 
-1. `opening_title`: the exact title, recurring subject, palette, first motif and fixed travel direction.
-2. `dissolve_peak`: the most demanding geometry-aware overlap. Show the subject exactly once while outgoing and incoming worlds coexist, with at least two aligned properties and the monumental scale passage already evident.
-3. `closing_echo`: the final tableau where the opening motif returns at a new scale and the exact title or closing line resolves.
+### Vector surface and palette
 
-Generate `opening_title` first, then use it as the subject, palette, material and typography reference for the other two while allowing the tableau geometry to change. Keep the subject silhouette, baseline and travel direction stable.
+- Build the image from opaque flat-vector color planes with razor-clear silhouette edges. A restrained screenprint grain, slight tonal mottling, or near-imperceptible registration offset may soften large areas, but the dominant read stays clean and graphic rather than handmade or distressed.
+- Use four to six colors with clear jobs: one near-black structural dark, one warm paper light, one hot accent, and one to three muted supporting colors. Large areas should remain flat and decisive. No rainbow palette, airbrushed gradient, bloom, neon rim light, or glossy 3D material.
+- Let the palette change by recombining the same color roles across tableaux rather than introducing a new color system in every scene.
+- Reserve any soft or photographic texture for at most one climactic close-up motif. Its contrast with the otherwise flat vector world should feel intentional, not like mixed rendering styles.
 
-For an 8-22 second film, add representative intermediate tableau locks only after the mother trio is coherent. Crop every frame to the active 16:9 canvas, inspect the full-resolution images, assemble an ordered contact sheet and show both to the user. Stop before video generation until the user explicitly approves the keyframes.
+### Silhouette and geometry
 
-Render the title and closing line directly in the tableau or as legible architecture. Reject rectangular banners, subtitle bars, label strips, highlight blocks or separate background panels added only to make text readable.
+- Reduce subjects and environments to flat-vector silhouettes, sharp wedges, broad rectangles, circles, stripes, and one-point corridors. Preserve only the few internal details needed to identify the recurring subject.
+- Use long, clean shadows at a consistent diagonal. A shadow stays attached to its subject or is omitted; it may not read as a ghost copy.
+- Give each tableau one dominant geometric proposition, such as a vertical stripe rhythm, an oblique bridge, a circular portal, monumental slabs, or receding frames. Compose with aggressive crops and asymmetrical negative space rather than centering every subject.
+- Create apparent depth only through scale, overlap, flat parallax, and one-point geometry. The frame remains a compressed theatrical stage, even in a corridor or street scene.
 
-### Reference input routing
+### Typography
 
-Inspect `okou generate video -h` immediately before generation and honor the selected model's current media constraints. Do not pass `--model` unless the user named one.
+- Use monumental display capitals with architectural weight. Most copy should be a heavy condensed or wide sans; one outlined serif glyph is allowed when its bowl, counter, stem, or diagonal physically becomes a door, shaft, rail, tower, shadow, or transition mask. Rotated vertical title fragments and aggressive edge crops are welcome when the approved title still receives one clean read.
+- Keep title typography on the same flat plane as the poster. Do not place it in a banner, box, subtitle strip, floating label, or translucent panel.
+- Restrict readable copy to the approved title and closing line. Decorative pseudo-writing and incidental signage break the print-poster language.
 
-MiniMax H3 treats first/last-frame inputs and ordinary image/video references as mutually exclusive. For a short run whose three approved frames all matter, pass the ordered frames as image references without first/last-frame flags. Use first/last-frame mode only when no midpoint lock is required. If a motion guide is necessary, build it only from approved user or generated assets and pass it as the sole video reference; never silently drop the dissolve-peak lock or substitute the inspiration video.
+### Mood and motion texture
+
+Favor graphic tension, deliberate stillness inside each tableau, and decisive lateral movement through the dissolves. The result may be playful, cultural, romantic, or mysterious, but it should retain bold silhouette drama and editorial restraint. Avoid cute layered-paper dioramas, watercolor softness, comic-book speed lines, glitch, particles, or cinematic lens effects.
 
 ## Locked shot grammar
 
@@ -78,16 +86,6 @@ Begin the next tableau's geometry before the previous one disappears. The subjec
 
 ### Timeline
 
-For a 5-second film, keep three functional states:
-
-| Time | Required beat |
-| --- | --- |
-| 0.0-1.0s | Exact opening title establishes subject, palette, motif and travel direction. |
-| 1.0-3.5s | Subject continues through one extended geometry-aware dissolve; a giant glyph, circle or shadow supplies the monumental passage while two or more spatial properties align. |
-| 3.5-5.0s | The closing tableau resolves the opening motif at a new scale; the final 0.6-0.8 seconds stay calm and legible. |
-
-For 8-14 seconds, preserve the same opening, continuous subject, monumental passage and closing echo across four or five tableaux. For 15-22 seconds, use:
-
 | Time | Required beat |
 | --- | --- |
 | 0.0-2.0s | Exact title tableau establishes palette, crops, motifs, and travel direction. |
@@ -97,7 +95,7 @@ For 8-14 seconds, preserve the same opening, continuous subject, monumental pass
 | 13.0-18.5s | Perspective corridor or street tableau increases depth without moving the camera. |
 | 18.5-22.0s | Opening motif returns at a new scale; exact closing line or title holds. |
 
-Do not add tableaux faster than the subject path and aligned dissolve remain readable. Never remove the monumental passage or closing echo.
+For a 15-second output, keep the same six functions and compress intermediate holds. Do not remove the monumental passage or closing echo.
 
 ## Typography and continuity
 
@@ -120,7 +118,7 @@ Include:
 - **Motion:** continuous trajectory and the two-property spatial alignment for every dissolve.
 - **Camera:** one locked orthographic poster view per tableau; no free-camera language.
 - **Light:** graphic flat light and long directional shadows consistent with the palette.
-- **Style:** premium editorial title design, screenprint or cut-paper depth, bold crops, crisp silhouettes, geometry-led transitions.
+- **Style:** retro film-noir 2D flat-vector motion graphic with near-black structural silhouettes, crimson or another hot accent, cream light, muted supporting colors, angular planes, long diagonal shadows, monumental rotated or cropped display type, and locked theatrical depth. Use only a trace of print texture; do not turn it into soft paper craft or cinematic realism.
 
 End the prompt with:
 
@@ -131,31 +129,35 @@ Do not merely say “smooth transitions.” State which subject path, edge, circ
 ## Generation parameters
 
 - **aspectRatio:** `16:9`.
-- **duration:** `5-22s`; choose a model tier that supports the requested length and use the matching timeline tier.
+- **duration:** `15-22s`; choose a model tier that supports the requested length.
 - **resolution:** prefer `1080p` or higher when supported.
 - **generateAudio:** on when supported; request restrained rhythmic texture and soft transition swells, no voiceover by default.
-- **image inputs:** role-label each URL as `opening_title`, `dissolve_peak`, `closing_echo`, `style_subject_lock`, `opening_lock`, `tableau_lock_N`, or `closing_lock`.
-- **negativePrompt:** `hard-cut montage, unrelated opacity fades, duplicated subject, ghost subject, reversed direction, teleporting, camera dolly, orbit, handheld drift, photoreal 3D fly-through, busy signage, pseudo-text, rectangular banner behind text, subtitle bar, label strip, separate text background panel, watermark`.
+- **image inputs:** role-label each URL as `style_subject_lock`, `opening_lock`, `tableau_lock_N`, or `closing_lock`.
+- **negativePrompt:** `soft pastel storybook, cute paper diorama, watercolor wash, glossy 3D render, photoreal cinema, gradients, bloom, lens flare, hard-cut montage, unrelated opacity fades, duplicated subject, detached shadow, ghost subject, reversed direction, teleporting, camera dolly, orbit, handheld drift, busy signage, text box, subtitle strip, pseudo-text, watermark`.
 
 ## Acceptance gates
 
 Reject and retry when any answer is no:
 
 - Is every shot readable as a strong flat poster composition?
-- Were the mother keyframes shown at full resolution and explicitly approved before video generation?
 - Does one recognizable subject travel in one direction throughout?
 - Does each dissolve align at least two spatial properties?
 - Is there no generic fade, teleport, duplicate subject, or free-camera move?
 - Does scale vary or escalate without losing the visual thread?
 - Does the final motif visibly echo the opening?
 - Is the exact title clean at the opening and closing?
-- Is every text treatment integrated without an artificial banner, subtitle bar or backing panel?
+- Do hard flat-vector planes, limited colors, long shadows, monumental type, and locked theatrical composition survive every tableau?
+- Does the result avoid soft craft-paper, photoreal, and free-camera aesthetics?
 
 ## Worked examples
 
 1. `PASSAGE`: a paper airplane travels left-to-right through sun, striped city, stairs, corridor, and giant circular portal tableaux.
 2. `AFTER DARK`: a red bicycle crosses nightlife posters, repeating windows, a diagonal bridge, and a moon that becomes the closing record label.
 3. `TIDELINE`: a ribbon-like fish moves right-to-left through wave bands, beach umbrellas, breakwater slabs, and a sun that returns as an eye-like closing motif.
+
+## Inspiration provenance
+
+The style and dissolve grammar were reverse-engineered from the [public reference](https://x.com/GeekCatX/status/2092675263054450807) and its [disclosed prompt](https://x.com/GeekCatX/status/2092675517749358878). Its source surface combines retro graphic-noir 2D vectors, crimson/navy/cream/black and muted supporting planes, giant rotated type, angular backdrops, long diagonal shadows, and monumental flat architecture. Preserve that graphic tension and geometric continuity; do not reuse its cats, noir characters, weapons, vending machines, title fragments, eye motif, exact palette sequence, scene order, or footage.
 
 ## Reference output
 

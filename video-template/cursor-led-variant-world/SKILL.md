@@ -1,11 +1,11 @@
 ---
 name: cursor-led-variant-world
-description: A fixed front-facing catalog film where a visible cursor selects variants and each selection re-themes the hero, exact title, palette, and motif world. Use for product families, collections, plans, destinations, menus, or template galleries; not for software tutorials or automatic carousels.
+description: A playful 3D e-commerce and Y2K editorial catalog where a visible graphic cursor selects variants and each selection re-themes the dominant product hero, oversized rounded title, color field, and funky motif world. Use for product families, collections, plans, destinations, menus, or template galleries; not for software tutorials, SaaS dashboards, or automatic carousels.
 ---
 
 # Cursor-Led Variant World
 
-Create a 5-15 second interaction film with one reusable visual sentence:
+Create a 12-15 second interaction film with one reusable visual sentence:
 
 `stable catalog shell -> cursor arrives -> target reacts -> matching hero expands -> visual world re-themes -> next target -> final selection holds`
 
@@ -22,37 +22,45 @@ Require or infer:
 - selector order and final selected state;
 - optional final CTA of one to three words.
 
-Match the variant count to the requested duration: use two variants for 5-7 seconds, three for 8-11 seconds, and preferably four for 12-15 seconds. Shorten the list or lengthen the film before making names unreadable or removing the cursor-cause beat.
+Prefer four variants for a 15-second film. Shorten the list before making names unreadable.
 
 ## Reference contract
 
-Use purpose-built still images:
+Use purpose-built still images only:
 
 1. `shell_lock`: a clean front-facing landing-page state with exact brand title, selector order, hero footprint, and typography hierarchy.
 2. `variant_source`: all variants isolated at consistent scale, angle, lighting, and construction.
 3. Optional `variant_lock_01...06`: one identity still per variant when a combined source cannot preserve them.
 
-Do not use a multi-panel storyboard as a literal frame. Treat inspiration videos as analysis-only evidence unless the user explicitly requests a one-off motion-reference reproduction. A reusable template run must use only the user's assets and purpose-built locks, never the inspiration video.
+Do not use a multi-panel storyboard as a literal frame. Treat inspiration videos as analysis-only evidence and never pass them to video generation.
 
-### Keyframe-first approval gate
+## Visual style lock
 
-Before any video-generation call, create three 16:9 mother keyframes:
+The target is a playful 3D e-commerce landing page crossed with Y2K graphics, contemporary editorial design, and premium product branding. It is an art-directed product lookbook disguised as a responsive page, not a literal website, SaaS dashboard, or software demo.
 
-1. `initial_shell`: the unambiguous starting selection, complete shell, exact title and visible cursor entry.
-2. `causal_peak`: the cursor tip visibly contacting the next target while the outgoing state masks away and the matching incoming hero expands. Preserve one clean copy of each approved name; do not morph letters through pseudo-text.
-3. `final_selection`: the chosen final world, exact name and optional CTA in the unchanged shell.
+### Canvas and hierarchy
 
-Generate `initial_shell` first, then use it as the shell-and-object reference for the other two while allowing the local hero, palette, motifs and active state to change. The navigation, selector order, margins, title zone, CTA position and cursor rendering must remain identical.
+- Use one full-frame color field with three shallow depth planes: fixed interface type and selectors, the physical hero object, and a sparse motif layer that may pass in front of or behind the hero.
+- Keep the shell almost poster-like: one oversized variant name, one dominant hero footprint, one low selector rail, and generous open color. Do not subdivide the frame into cards, windows, panels, or a conventional navigation-heavy layout.
+- Let the selected hero dominate at roughly 55-70% of the frame height, usually slightly right of center, at a consistent three-quarter studio angle. The enormous name sits behind and beside it and may accept deliberate occlusion, but it must reach one readable state.
+- Use a visible, graphic cursor with enough visual mass to read as a character. Avoid a tiny default operating-system arrow.
 
-For an 8-15 second film with more than two variants, add one clean state lock per intermediate variant only after the mother trio is coherent. Crop every frame to the active 16:9 canvas, inspect the full-resolution images, assemble an ordered contact sheet and show both to the user. Stop before video generation until the user explicitly approves the keyframes.
+### Product, type, and material
 
-Render text directly in the interface or on a real subject object. Reject rectangular banners, subtitle bars, label strips, highlight blocks or separate background panels added only to make text readable.
+- Give every variant a materially convincing hero: lacquered resin, frosted glass, brushed metal, folded paper, ceramic, fabric, food, or another theme-appropriate surface. Preserve shared camera angle and lighting while changing silhouette and material cues; a hue-only swap fails.
+- Light the hero like a premium studio object with one broad soft key, a controlled rim, and a compact contact shadow. Keep depth shallow and graphic rather than placing the product in a photoreal room.
+- Use one bold, chunky, rounded display face for the oversized names: soft 1970s curves, inflated bubble weight, slightly irregular widths, and enough mass to squash, stretch, or wobble once before resolving. Pair it with a clean geometric sans for navigation, selectors, and short labels. Avoid thin neo-grotesk headlines or corporate UI typography.
+- Render names directly in the color field. Do not add a pill, card, ribbon, subtitle bar, glow plate, or translucent backing behind text.
 
-### Reference input routing
+### Palette behavior
 
-Inspect `okou generate video -h` immediately before generation and honor the selected model's current media constraints. Do not pass `--model` unless the user named one.
+- Build each variant as a coordinated color world: one dominant field, one high-energy accent, one dark or light neutral, and at most one supporting tint. Change those roles together instead of scattering a rainbow across every state.
+- Keep saturation confident and clean, with hard graphic shapes and at most a restrained soft gradient caused by light. Avoid neon HUD color, glassmorphism, or generic blue-purple SaaS gradients.
+- Draw from a funky Y2K motion-graphic vocabulary: organic blobs, checkerboards, wavy lines, spirals, squiggles, dots, chunky stars, warped grids, floating spheres, rings, and hand-drawn shapes. Select a small theme-specific subset for each state and derive it from the hero's silhouette, material, or ingredients. Motifs should frame the product, not become unrelated decoration.
 
-MiniMax H3 treats first/last-frame inputs and ordinary image/video references as mutually exclusive. For a short run whose three approved frames all matter, pass the ordered frames as image references without first/last-frame flags. Use first/last-frame mode only when no midpoint lock is required. If a motion guide is necessary, build it only from approved user or generated assets and pass it as the sole video reference; never silently drop an approved middle state or substitute the inspiration video.
+### Motion character
+
+Use precise toy-like physicality: magnetic hover, firm squash-and-stretch, elastic rise, one controlled overshoot, cursor-responsive 3D tilt, rubbery type, and delayed motif parallax. Background blobs, ribbons, and wipes may morph or flow, but an established hero must remain a solid identifiable object and never melt into the next product. Avoid floaty ambient drift, frantic confetti, or a product swap that leaves the surrounding world unchanged.
 
 ## Locked shot grammar
 
@@ -84,17 +92,6 @@ Never change the hero or world before the cursor reaches the target. Never hide 
 
 ### Timeline
 
-For a 5-second film, use exactly two variants:
-
-| Time | Required beat |
-| --- | --- |
-| 0.0-0.7s | Complete shell and starting world; cursor enters from a crop edge. |
-| 0.7-2.4s | Cursor contact teaches the full causal chain and resolves variant two. |
-| 2.4-4.2s | One final cursor-caused re-selection or return to the chosen final world. |
-| 4.2-5.0s | Exact final name and state hold without camera drift. |
-
-For 8-11 seconds, use three variants and preserve 0.8-1.2 seconds for the final hold. For 12-15 seconds, use:
-
 | Time | Required beat |
 | --- | --- |
 | 0.0-1.2s | Stable shell assembles; cursor enters from a crop edge. |
@@ -103,7 +100,7 @@ For 8-11 seconds, use three variants and preserve 0.8-1.2 seconds for the final 
 | 11.8-13.5s | Brief selector recap or return to the chosen final state. |
 | 13.5-15.0s | Optional CTA responds; final selected state holds for at least one second. |
 
-Do not squeeze additional variants into the short tiers. Never remove the opening teaching beat, visible cursor cause or final hold.
+Scale proportionally for a 12-second output. Do not remove the opening teaching beat or final hold.
 
 ## Motion, type, and camera
 
@@ -126,7 +123,7 @@ Include:
 - **Motion:** the full causal transition chain and proportional timeline.
 - **Camera:** locked orthographic page view with only local layered parallax.
 - **Light:** coherent studio or illustrated lighting across variants; palette changes must not change object identity.
-- **Style:** polished interactive product-motion design, crisp masks, tactile springs, clean readable typography, user-specified art direction.
+- **Style:** playful premium 3D e-commerce crossed with Y2K graphics and contemporary editorial design: a full-frame color field, a 55-70% materially lit hero, enormous rounded bubble display type, funky organic and checkerboard motifs, crisp masks, and WebGL-like spring physics. Translate the user's palette and subject into this hierarchy rather than defaulting to generic web UI.
 
 End the prompt with:
 
@@ -137,31 +134,35 @@ Do not merely say “cursor animation.” Name the cursor path, target reaction,
 ## Generation parameters
 
 - **aspectRatio:** `16:9`.
-- **duration:** `5-15s`; match the variant count and timeline tier above.
+- **duration:** `12-15s`; prefer `15s` for four or more variants.
 - **resolution:** prefer `1080p` or higher when supported; use `720p` only when the selected tier requires it.
 - **generateAudio:** on when the model supports it; request restrained UI clicks, soft whooshes, and one tonal accent per state. No voiceover by default.
-- **image inputs:** role-label every URL as `initial_shell`, `causal_peak`, `final_selection`, `shell_lock`, `variant_source`, or `variant_lock_N`.
-- **negativePrompt:** `camera cuts, dolly, orbit, automatic carousel, invisible cursor jump, interface layout drift, mismatched hero and selector, blended products, duplicate cursor, illegible text, pseudo-letters, rectangular banner behind text, subtitle bar, label strip, separate text background panel, excessive particles, watermark`.
+- **image inputs:** role-label every URL in the prompt as `shell_lock`, `variant_source`, or `variant_lock_N`.
+- **negativePrompt:** `literal SaaS dashboard, browser chrome, card grid, glassmorphism, generic blue-purple gradient, tiny OS cursor, camera cuts, dolly, orbit, automatic carousel, invisible cursor jump, interface layout drift, mismatched hero and selector, hue-only product swap, blended products, duplicate cursor, text backing plate, illegible text, pseudo-letters, excessive particles, watermark`.
 
 ## Acceptance gates
 
 Reject and retry when any answer is no:
 
 - Does every state change have a visible cursor cause?
-- Were the mother keyframes shown at full resolution and explicitly approved before video generation?
 - Does the same shell survive without layout or camera drift?
 - Does each selector activate the matching hero and exact name?
-- Are all requested worlds distinct while belonging to one family, with at least two worlds in a 5-7 second film?
+- Are at least three worlds distinct while belonging to one family?
 - Are outgoing and incoming objects separated rather than blended?
 - Are all approved names readable with no transitional pseudo-letters?
-- Is every text treatment integrated without an artificial banner, subtitle bar or backing panel?
-- Does the final state hold for at least 0.8 seconds in a 5-second film and at least one second in longer films?
+- Does the result read as a bold product lookbook rather than ordinary website UI?
+- Does each state change the hero material or silhouette, palette bundle, type behavior, and derived motifs as one visual world?
+- Does the final state hold for at least one second?
 
 ## Worked examples
 
 1. A lighting collection: `DUSK`, `HALO`, `EMBER`, `MOSS`; the cursor changes fixture form, room tint, and geometric light motifs inside one showroom shell.
 2. A travel collection: `OSLO`, `KYOTO`, `MEXICO CITY`, `MARRAKECH`; one ticket-card family changes city image, route color, and local motif system.
 3. A pricing family: `START`, `GROW`, `SCALE`, `ENTERPRISE`; one plan shell changes module density, accent color, and capability icon world.
+
+## Inspiration provenance
+
+The style and interaction grammar were reverse-engineered from the [public reference](https://x.com/ShamsAmin56/status/2092188350476337613) and its [disclosed prompt](https://x.com/ShamsAmin56/status/2092188357053071786). Its source surface is playful 3D e-commerce crossed with Y2K graphics, contemporary editorial design, and premium confectionery branding. Preserve the art-directed catalog hierarchy, dominant materially rendered hero, coordinated palette worlds, rounded kinetic type, funky motif vocabulary, and cursor-led physical response; do not reuse its brand, ice creams, copy, exact palette sequence, motif combinations, layout measurements, or footage.
 
 ## Reference output
 

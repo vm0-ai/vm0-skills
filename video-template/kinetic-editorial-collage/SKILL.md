@@ -1,11 +1,11 @@
 ---
 name: kinetic-editorial-collage
-description: A fast front-facing editorial collage where recurring anchors, new evidence clusters, oversized type, and local grid modules accumulate and repack through concurrent scale, crop, slide, and mask handoffs. Use for product launches, reports, collections, creative tools, or technology stories; not for cinematic live action, quiet minimal films, or ordinary slideshows.
+description: A fast warm-paper editorial collage where photographic cutouts, recurring evidence, oversized grotesk type, accent blocks, and local rule modules accumulate and repack through concurrent scale, crop, slide, and mask handoffs. Use for product launches, reports, collections, creative tools, or technology stories; not for generic moodboards, cinematic live action, quiet minimal films, or ordinary slideshows.
 ---
 
 # Kinetic Editorial Collage
 
-Create a 5-15 second paper-collage motion film with this reusable visual sentence:
+Create a 12-15 second paper-collage motion film with this reusable visual sentence:
 
 `sparse specimen board -> opener assembles -> hero motif expands into an identity pivot -> evidence clusters accumulate around successive claims -> catalog field -> final identity board`
 
@@ -16,14 +16,14 @@ This is a shot, layout, and transition template, not a fixed campaign. Preserve 
 Require or infer:
 
 - one exact final title of one to three words;
-- duration-appropriate exact copy: an opener, one dense middle phrase and a final title for 5-7 seconds; five functional phrases for 8-11 seconds; or the full opener, pivot, three claims, catalog phrase and final title for 12-15 seconds;
+- one short opener and three to five exact claim or chapter phrases;
 - two to four recurring anchor objects that appear early and survive across the film;
-- two to five evidence clusters that may enter progressively, such as products, portraits, charts, photographs, diagrams, cards, or collection rows;
+- three to five evidence clusters that may enter progressively, such as products, portraits, charts, photographs, diagrams, cards, or collection rows;
 - one hero transition motif with a simple silhouette, such as a circle, book, card, dial, screen, or package;
 - a paper, screen, or branded canvas material;
 - one neutral, one dark, and two or three accent colors.
 
-Prefer short phrases. Convert paragraphs into visual evidence rather than tiny text. The opener, claims, and final title may differ; do not force one title to replace every phrase or compress seven text beats into a five-second film.
+Prefer short phrases. Convert paragraphs into visual evidence rather than tiny text. The opener, claims, and final title may differ; do not force one title to replace every phrase.
 
 ## Reference contract
 
@@ -34,27 +34,62 @@ Use a small role-labeled asset set:
 3. Optional `evidence_lock`: a clean sheet containing the charts, photos, portraits, product variants, or collection items allowed to enter progressively.
 4. Optional `final_board_lock`: the intended final hierarchy when title or product identity must be exact.
 
-Treat inspiration videos as analysis-only unless the user explicitly asks for a one-off motion-reference reproduction. When the user explicitly approves still-frame composition reference, source screenshots may guide the mother-keyframe geometry once, but replace every source brand, person, product, word and recognizable image. Never pass the inspiration video into a reusable template run. Never use a contact sheet or storyboard grid as a literal first frame.
+Treat inspiration videos as analysis-only unless the user explicitly asks to use one as a motion reference. Never use a contact sheet or storyboard grid as a literal first frame.
+
+## Visual style lock
+
+The target is a contemporary art-book or independent magazine spread in motion, not a scrapbook, presentation slide, gallery of separate posters, or clean SaaS grid. Its energy comes from collision between photographic evidence, monumental typography, flat print color, and changing local structure on one tactile canvas.
+
+### Canvas and color architecture
+
+- Default to warm uncoated ivory paper with visible but restrained fiber and print grain. Let the paper remain a meaningful field rather than covering every pixel.
+- Organize color by role: a warm neutral canvas, carbon-black type and rules, one hot accent such as signal red, one earthy accent such as ochre or acid yellow, and one cool counter-accent such as mint or pale cyan. If the user supplies another palette, preserve these contrast roles and alternating rhythm instead of copying the default hues literally.
+- Use accent rectangles, circles, and strips as structural crops, masks, windows, or moving counterweights. Never use them as automatic backing plates behind text.
+
+### Evidence material
+
+- Mix materially different evidence on purpose: clean full-color product or object cutouts, monochrome portrait or documentary crops, black circular or waveform graphics, books or cards, diagrams, and small index marks. A film does not need every category, but it should combine photographic evidence with graphic information rather than repeat one hero object in every slot.
+- Unify the inventory through crisp cut edges, shallow contact shadows, occasional photostat halftone, and consistent paper treatment. Keep the cutouts tactile and mostly front-facing; avoid glossy floating 3D renders.
+- Establish two to four memorable anchors, then reuse the same recognizable instances as the board grows. Later density should come from accumulated evidence and changed scale, not unrelated new props.
+
+### Layout and scale
+
+- Compose asymmetrically with large areas of paper interrupted by dense local clusters. Alternate a sparse field with a compressed evidence zone; do not center every hero or distribute modules evenly.
+- Create aggressive scale collisions: a giant cropped word or letter may span most of the frame while a row of tiny evidence cards, index marks, or rule lines crosses it. Use off-edge crops on photographs and type so the frame feels extracted from a larger editorial system.
+- Rule lines and module borders are thin, local, and temporary. They may divide one quadrant or align a row, but a permanent equal-cell grid makes the result look like a dashboard.
+- Let objects occlude letters and let letters pass behind photographs, while preserving one clean readable state for each approved phrase. Layering should feel deliberate, never like a pile of stickers.
+
+### Typography and print finish
+
+- Use one heavy grotesk or condensed sans family at extreme scale, paired with a restrained neutral face for any approved microtype. Favor uppercase, tight leading, and strong horizontal baselines.
+- Use solid black, outline, and occasional single-accent type states. A phrase may change from outline to solid or become a crop mask, but it may not sit on a caption bar, rounded label, translucent panel, shadow plate, or highlight strip.
+- Keep paper fibers, ink grain, halftone, and slight edge roughness subtle enough that typography and object silhouettes remain crisp. Avoid distressed grunge overlays, torn-notebook clichés, tape on every object, or nostalgic scrapbook decoration.
+
+### Motion character
+
+Movement should resemble a designer rapidly reformatting one live magazine spread: rigid quarter-turns, sharp crop-window changes, precise slides, short scale overshoots, and foreground pieces acting as wipes while neighboring modules move at the same time. Avoid liquid morphing, smooth cinematic zooms, generic cross-fades, or one centered object changing at a time.
 
 ### Keyframe-first approval gate
 
-Never generate the video on the same uninterrupted pass that establishes a new visual direction. Start with three 16:9 mother keyframes:
+Never generate the video on the same uninterrupted pass that establishes a new visual direction. First create seven 16:9 keyframes matching the seven-beat timeline below:
 
-1. `sparse_opener`: a few recurring anchors and the exact opener on a largely open canvas;
-2. `dense_transition`: the hardest mid-film re-layout at peak overlap, with inherited anchors, accumulated evidence, oversized cropped type, one dominant carrier and at least two coordinated secondary actions;
-3. `final_board`: the complete recurring inventory repacked around the exact final title.
+1. sparse opener;
+2. identity pivot;
+3. first evidence field;
+4. typographic gate;
+5. comparison or collection row;
+6. catalog field;
+7. final identity board.
 
-Generate `sparse_opener` first. After it is clean, use it as the canvas, palette, typography, object-rendering and recurring-anchor reference for the other two while explicitly allowing their compositions to change. Later frames must visibly reuse the established objects; three unrelated posters fail even when their colors match.
+Generate beat 1 first. After it is clean, use it only as a style-and-recurring-object reference for beats 2-7 while explicitly allowing each composition to change. Keep the same canvas material, palette, object rendering, typography family, and recurring anchors across all seven frames.
 
-Use the approved mother trio directly for 5-7 seconds. For 8-11 seconds, expand to five keyframes by adding an identity pivot and a comparison or catalog state. For 12-15 seconds, expand to the full seven functions: sparse opener, identity pivot, first evidence field, typographic gate, comparison or collection row, catalog field and final identity board. Add frames only after the mother trio is coherent.
+Every approved phrase must be exact and rendered directly on the canvas or on a real subject object. Do not place a rectangular banner, subtitle bar, label strip, highlight block, or separate background panel behind text merely to improve legibility. Reject extra words, pseudo-text, logos, and watermarks.
 
-Every approved phrase must be exact and rendered directly on the canvas or on a real subject object. Do not place a rectangular banner, subtitle bar, label strip, highlight block or separate background panel behind text merely to improve legibility. Reject extra words, pseudo-text, logos and watermarks.
+Crop all candidates to the intended 16:9 active canvas, assemble an ordered contact sheet, inspect each full-resolution frame, and show the set to the user. Stop before video generation. Video generation requires explicit approval of the keyframes; if the user requests changes, revise only the rejected frames and repeat this gate.
 
-Crop all candidates to the intended 16:9 active canvas, assemble an ordered contact sheet, inspect each full-resolution frame and show the set to the user. Stop before video generation. Video generation requires explicit approval of the duration-appropriate keyframes; if the user requests changes, revise only the rejected frames and repeat this gate.
+### Approved motion guide
 
-### Long-form copy-specific motion guide
-
-For the full 12-15 second, seven-phrase form, static reference videos are unsafe: readable placeholders tend to leak into the result, while a guide with no words causes the model to preserve blank type blocks. Only after all seven keyframes are approved, render a copy-specific motion guide containing the user's own seven phrases.
+Static reference videos are unsafe for this template: readable placeholders tend to leak into the result, while a guide with no words causes the model to preserve blank type blocks. Only after the keyframes are approved, render a copy-specific motion guide containing the user's own seven phrases.
 
 Resolve `scripts/render_motion_guide.py` and `assets/motion-guide-base.mp4` relative to this `SKILL.md`, then run:
 
@@ -73,9 +108,7 @@ python3 scripts/render_motion_guide.py \
 
 The renderer uses Python's standard library and ffmpeg; it makes no network calls. It overlays the user's exact copy onto an original, programmatically drawn motion base containing no readable placeholders and no pixels, people, logos, products, or audio from the inspiration source.
 
-Inspect the rendered guide once for spelling, then upload it with `okou web upload-file`. Tell the video model to preserve the approved keyframes, guide timing, exact copy and trajectories while replacing the guide's generic shapes with the approved subject matter. Never repair model text by adding a solid background strip in post-production; retry the affected beat or use a typography treatment already approved in its keyframe.
-
-Do not use the seven-phrase guide for a 5-11 second film. Drive those tiers with the ordered approved keyframes and the written duration grammar below so the short film does not become unreadable.
+Inspect the rendered guide once for spelling, then upload it with `okou web upload-file`. Tell the video model to preserve the approved keyframes, guide timing, exact copy, and trajectories while replacing the guide's generic shapes with the approved subject matter. Never repair model text by adding a solid background strip in post-production; retry the affected beat or use a typography treatment already approved in its keyframe.
 
 Reference priority is:
 
@@ -85,13 +118,7 @@ Reference priority is:
 4. custom-guide timing, layout density, and object trajectories;
 5. generic guide shapes, which must be replaced by the user's subject matter.
 
-### Reference input routing
-
-Inspect `okou generate video -h` immediately before generation and honor the selected model's current media constraints. Do not pass `--model` unless the user named one.
-
-MiniMax H3 treats first/last-frame inputs and ordinary image/video references as mutually exclusive. For a short run whose three approved mother frames all matter, pass the ordered frames as image references without first/last-frame flags. Use first/last-frame mode only when no midpoint lock is required. For the long form, if the selected model cannot combine the approved keyframes with the copy-specific motion guide, ask whether frame fidelity or motion fidelity takes priority; never silently discard keyframes or substitute the inspiration video.
-
-For the long form, if reference video is unavailable, omit the guide and follow the written grammar below. Never substitute the original inspiration video for the custom guide.
+If reference video is unavailable, omit the guide and follow the written grammar below. Never substitute the original inspiration video for the custom guide.
 
 ## Locked shot grammar
 
@@ -115,19 +142,7 @@ Each transition has one dominant carrier and two or more coordinated secondary a
 
 The carrier does not need to cover the whole frame. Preserve visual continuity through matching position, edge, scale, silhouette, or direction. Avoid ordinary cuts, generic cross-fades, and one-object-at-a-time slideshow motion.
 
-### Duration grammar
-
-For a 5-second film, keep three functions:
-
-| Time | Required beat |
-| --- | --- |
-| 0.0-1.2s | Begin from the approved sparse opener; anchors enter from crop edges while the exact opener resolves. |
-| 1.2-3.4s | One dominant anchor carries a concurrent multi-layer re-layout into the approved dense transition; inherited evidence stays visible while new evidence enters. |
-| 3.4-5.0s | A local shape or letter wipe repacks every recurring anchor into the approved final board; keep the final 0.6-0.8 seconds calm and legible. |
-
-For 8-11 seconds, use five functions: sparse opener, identity pivot, dense evidence field, comparison or catalog state, and final identity board. Keep at least 0.8 seconds for the final board and give every transition one dominant carrier plus two coordinated secondary actions.
-
-For 12-15 seconds, use the full seven-beat timeline:
+### Seven-beat timeline
 
 | Time | Required beat |
 | --- | --- |
@@ -139,7 +154,7 @@ For 12-15 seconds, use the full seven-beat timeline:
 | 8.7-10.8s | Catalog field or editorial noun holds briefly while portraits, products, charts, or cards continue to settle. |
 | 10.8-15.0s | Recurring anchors and evidence gather into the final identity board; title and optional subtitle resolve, with the last second calm and legible. |
 
-Scale the table proportionally for 12 seconds. Keep all seven functions even if two adjacent beats share one continuing object. Before the final second, no layout may remain materially unchanged for more than about 1.2 seconds.
+Scale proportionally for 12 seconds. Keep all seven functions even if two adjacent beats share one continuing object. Before the final second, no layout may remain materially unchanged for more than about 1.2 seconds.
 
 ## Typography, canvas, and motion
 
@@ -160,44 +175,45 @@ Write one cohesive prompt in this exact order:
 
 Include:
 
-- **Subject:** every exact phrase required by the selected duration tier; recurring anchors; progressive evidence clusters; final title and optional subtitle.
+- **Subject:** exact opener, pivot phrase, claims, final title and subtitle; recurring anchors; progressive evidence clusters.
 - **Scene:** one persistent canvas, palette, local grid language, type hierarchy, and the density arc from sparse to collected.
-- **Motion:** the duration-selected layout functions; one dominant carrier plus at least two secondary actions for every re-layout; exact readable windows for copy.
+- **Motion:** the seven-beat timeline; one dominant carrier plus at least two secondary actions for every re-layout; exact readable windows for copy.
 - **Camera:** locked front-facing master canvas with no perspective changes.
 - **Light:** flat soft illumination, shallow cutout shadows, restrained highlights, consistent across all beats.
-- **Style:** premium modernist editorial collage, tactile analog surface, oversized typography, fast layered rhythm, and the user's specified brand direction.
+- **Style:** contemporary art-book collage on warm uncoated paper, mixing crisp photographic evidence, photostat texture, carbon-black local rules, structural red/ochre/cool accent blocks, extreme-scale grotesk typography, deliberate occlusion, and a fast reformatting rhythm. Translate the user's brand into these material and contrast roles rather than defaulting to a scrapbook or dashboard.
 
 End the prompt with:
 
 `safe for all audiences, nonviolent, no explicit content`
 
-Do not merely say "dynamic collage." Name the exact text, recurring anchors, progressive evidence, duration-selected layout functions, and the carrier plus secondary actions for each transition.
+Do not merely say "dynamic collage." Name the exact text, recurring anchors, progressive evidence, seven layout functions, and the carrier plus secondary actions for each transition.
 
 ## Generation parameters
 
 - **aspectRatio:** `16:9`.
-- **duration:** `5-15s`; use the three-, five- or seven-function tier above. Use `15s` when using the copy-specific seven-phrase guide.
+- **duration:** `15s` when using the copy-specific guide; `12-15s` for text-only fallback.
 - **resolution:** prefer `1080p` or higher when supported.
 - **generateAudio:** on when supported; request a brisk percussive editorial bed with paper slides, snaps, restrained scratches, and one low final accent. No voiceover by default.
-- **video input:** for the long form only and after keyframe approval, pass the uploaded copy-specific `motion_guide` as the motion reference. Do not pass the original inspiration video.
-- **image inputs:** role-label the three, five or seven approved keyframes in time order; also label separate user assets as `anchor_lock`, `canvas_lock`, `evidence_lock`, or `final_board_lock`. Follow the reference input routing above.
-- **negativePrompt:** `generic guide shapes in final output, rectangular banner behind text, subtitle bar, label strip, highlight block, separate text background panel, unreadable placeholder glyphs, ordinary slideshow, one phrase at a time on an empty screen, full-screen erase between every phrase, generic cross-fades, permanent full-canvas tile grid, single giant object held for seconds, long empty title hold, cinematic camera move, 3D fly-through, unrelated objects, object mutation, cluttered scrapbook, pseudo-text, misspelling, stock-ad polish, watermark`.
+- **video input:** only after keyframe approval, pass the uploaded copy-specific `motion_guide` as the motion reference. Do not pass the original inspiration video.
+- **image inputs:** role-label approved keyframes as `beat_01` through `beat_07`; also label any separate user assets as `anchor_lock`, `canvas_lock`, `evidence_lock`, or `final_board_lock`. When a model cannot combine the approved frame inputs with reference video, do not silently discard the keyframes; ask whether frame fidelity or motion fidelity takes priority, or select a supported mode that preserves both.
+- **negativePrompt:** `generic moodboard, nostalgic scrapbook, sticker pile, torn-notebook collage, clean SaaS dashboard, equal card grid, glossy floating 3D renders, generic guide shapes in final output, rectangular banner behind text, subtitle bar, label strip, highlight block, separate text background panel, unreadable placeholder glyphs, ordinary slideshow, one phrase at a time on an empty screen, full-screen erase between every phrase, generic cross-fades, permanent full-canvas tile grid, single giant object held for seconds, long empty title hold, cinematic camera move, 3D fly-through, unrelated objects, object mutation, pseudo-text, misspelling, stock-ad polish, watermark`.
 
 ## Acceptance gates
 
 Reject and retry when any answer is no:
 
-- Were all duration-appropriate keyframes reviewed at full resolution and explicitly approved before any video generation call?
+- Were all seven keyframes reviewed at full resolution and explicitly approved before any video generation call?
 - Is typography integrated directly into the canvas or a real subject object, with no artificial banner, subtitle bar, label strip, highlight block, or background panel?
-- Are there three, five or seven distinct layout functions matching the selected duration tier?
+- Are there seven distinct layout functions, including the identity pivot and catalog field?
 - Do at least two recognizable anchors persist while evidence accumulates progressively?
 - Does every transition combine one dominant carrier with at least two coordinated secondary actions?
 - Does the canvas stay front-facing while local modules, rather than the camera, create energy?
 - Are rule lines local and changing rather than a permanent rigid screen grid?
+- Does the film retain the warm-paper editorial collision of photographic evidence, structural accent color, extreme-scale type, and deliberate occlusion instead of becoming a scrapbook or dashboard?
 - Is every approved phrase exact and cleanly readable at least once, without demanding total isolation from adjacent beats?
-- When the long-form custom guide is used, does the output preserve its exact copy while replacing generic shapes with the user's subject matter?
+- Does the output preserve the exact copy from the custom guide while replacing its generic shapes with the user's subject matter?
 - Is the pre-final pacing dense, with no unintended multi-second empty hold or prolonged single-object takeover?
-- Does the final board gather the recurring anchors and evidence into a legible title hierarchy for the selected final hold: 0.6-0.8 seconds at 5 seconds, or at least one second in longer films?
+- Does the final board gather the recurring anchors and evidence into a legible title hierarchy for the last second?
 
 ## Worked examples
 
@@ -207,7 +223,7 @@ Reject and retry when any answer is no:
 
 ## Inspiration provenance
 
-The motion grammar was reverse-engineered from the public reference supplied by the user: `https://x.com/haoailab/status/2095223988201120039/video/1`. The reference establishes layered accumulation, seven functional beats, concurrent local re-layouts, progressive evidence, and a final identity board. Do not reuse its brand, claims, people, or footage unless the user explicitly requests that specific reproduction.
+The motion and style grammar were reverse-engineered from the public reference supplied by the user: `https://x.com/haoailab/status/2095223988201120039/video/1`. The reference establishes a warm-paper modernist editorial surface, photographic evidence mixed with books, devices, portraits and waveform-like graphics, a black/red/ochre/mint contrast system, giant grotesk type, layered accumulation, concurrent local re-layouts, and a final identity board. Preserve those visual relationships, not the literal palette or subject matter. Do not reuse its brand, claims, people, products, or footage unless the user explicitly requests that specific reproduction.
 
 ## Reference output
 
