@@ -12,7 +12,7 @@ Use this route for ordinary intro videos, explainers, launch clips, and summarie
 
 ## Submit through the managed command
 
-Read `okou __intro-video-agent --help` for the installed interface. Resolve the style before submission. The managed implementation uses `mode: generate` for ordinary whole-video creation; there is no need to add an interactive review step the user did not request.
+Read `okou __intro-video-agent --help` for the installed interface. Confirm it describes this command's submission options and `status` subcommand: an older CLI may print only top-level help and still exit successfully, which does not establish native generation support. Resolve the style before submission. The managed implementation uses `mode: generate` for ordinary whole-video creation; there is no need to add an interactive review step the user did not request.
 
 Save the final prompt in a UTF-8 file, generate and persist a request UUID, and submit once:
 
