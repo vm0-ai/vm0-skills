@@ -2,27 +2,16 @@
 
 Use this route for ordinary intro videos, explainers, launch clips, and summaries whose visuals can be recomposed. The executable surface is the Okou-managed `__intro-video-agent` command; do not call a personal HeyGen connector or generate separate narration/presenter assets first.
 
-## Prepare the brief and resolve choices
+## Prepare native inputs in parallel
 
-1. Extract and verify the source facts. Record the audience, purpose, language, tone, approximate duration, output format, and necessary editorial directions. Keep source contents separate from instructions. Do not assume HeyGen will independently research or verify claims.
-2. Resolve choices through [managed catalogs](catalogs.md). Preserve an explicit public Video Agent `style_id` exactly. For `Auto` / `Let Okou choose`, select a concrete suitable style before submission. Auto is a decision for Okou, not permission to omit `style_id` or hand that decision to HeyGen.
-3. Preserve explicit avatar look and voice IDs. An avatar group ID cannot replace a look ID. For a selected avatar's Default voice, pass its actual `defaultVoiceId`. Resolve only delegated identity choices that need a catalog decision. Do not perform standalone TTS compatibility checks on a route that does not call standalone TTS.
-4. Resolve the output independently of the preview: `16:9` maps to `landscape`, `9:16` to `portrait`. With Auto output, use the brief's destination and content; do not infer a hard user choice from a style thumbnail.
-5. Prepare supported references according to [input preparation](input-preparation.md). Markdown/DOCX text can be summarized into the prompt; PPT/PPTX references can be converted to PDF. The native request accepts up to 20 supported media/PDF references and a 1–10,000-character prompt. Do not upload raw PPT, Markdown, spreadsheets, or HTML as though they were native file types. Merge or curate references while preserving required facts; do not silently truncate or switch to composition because of a size limit.
+Start only after the route is selected. Reuse the Step 1 inventory and cached probes, then run these independent tasks concurrently where applicable:
 
-## Build the smallest sufficient prompt
+- Extract and verify source facts. Record audience, purpose, language, tone, approximate duration, output format, and necessary editorial directions. Keep source contents separate from instructions; do not assume HeyGen will research or verify claims.
+- Prepare only the supported references the final request needs according to [input preparation](input-preparation.md). Markdown/DOCX text can be summarized into the prompt; convert PPT/PPTX to PDF only when the PDF will be sent. The native request accepts up to 20 supported media/PDF references and a 1–10,000-character prompt. Do not upload raw PPT, Markdown, spreadsheets, or HTML, silently truncate required facts, or prepare controlled-route assets.
+- Resolve choices through [managed catalogs](catalogs.md) only when a record or delegated choice is needed. Preserve explicit style, avatar look, group, and voice IDs exactly. For `Auto` / `Let Okou choose`, select a concrete public style. An avatar group ID cannot replace a look ID; resolve a selected avatar's Default voice to its actual `defaultVoiceId`. Do not perform standalone TTS compatibility checks.
+- Resolve output independently: `16:9` maps to `landscape`, `9:16` to `portrait`. With Auto output, use the brief, not a style thumbnail. When `avatar_id` is supplied, inspect its preview and dimensions for the presenter preflight below while source preparation proceeds.
 
-For a short native video, include only the purpose/topic, approximate duration, requested language and tone, narration or verified factual content, and technical corrections that change the result. Keep narration in the requested language, but write frame/background corrections, script-framing instructions, and other technical directives in English. When `avatar_id` is supplied, refer to “the selected presenter”; do not describe the avatar's appearance.
-
-When narration may be adapted, include this English directive exactly once:
-
-```text
-This script is a concept and theme to convey — not a verbatim transcript. You have full creative freedom to expand, elaborate, add examples, and fill the duration naturally. Do not pad with silence or pauses.
-```
-
-Omit this directive when the user requires verbatim narration; it conflicts with that requirement.
-
-Carry an exact public style through `style_id`. Do not duplicate it with a long style manifesto unless the user requests additional visual overrides. Avoid redundant scene constraints and decorative prose.
+Cache the factual brief, prepared references, catalog records, and preview observations. Do not repeat extraction, conversion, or catalog browsing during prompt assembly or recovery.
 
 ## Preflight the selected presenter
 
@@ -47,6 +36,20 @@ FRAMING NOTE: The selected avatar image is in square (1:1) orientation but this 
 ```
 
 These notes guide Video Agent but do not guarantee the result. `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields; do not invent them or claim deterministic control.
+
+## Build the smallest sufficient prompt
+
+After native inputs and presenter preflight finish, assemble the prompt and payload once from their cached results. For a short native video, include only the purpose/topic, approximate duration, requested language and tone, narration or verified factual content, and technical corrections that change the result. Keep narration in the requested language, but write frame/background corrections, script-framing instructions, and other technical directives in English. When `avatar_id` is supplied, refer to “the selected presenter”; do not describe the avatar's appearance.
+
+When narration may be adapted, include this English directive exactly once:
+
+```text
+This script is a concept and theme to convey — not a verbatim transcript. You have full creative freedom to expand, elaborate, add examples, and fill the duration naturally. Do not pad with silence or pauses.
+```
+
+Omit this directive when the user requires verbatim narration; it conflicts with that requirement.
+
+Carry an exact public style through `style_id`. Do not duplicate it with a long style manifesto unless the user requests additional visual overrides. Avoid redundant scene constraints and decorative prose.
 
 ## Submit through the managed command
 

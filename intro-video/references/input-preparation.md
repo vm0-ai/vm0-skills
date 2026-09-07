@@ -2,15 +2,19 @@
 
 Verified against the [Video Agent guide](https://developers.heygen.com/docs/video-agent), [uploads](https://developers.heygen.com/docs/upload-assets), [usage limits](https://developers.heygen.com/docs/usage-limits), and [official OpenAPI](https://developers.heygen.com/openapi/external-api.json) on 2026-09-05. Check the endpoint's current schema if a requested option is absent here; general limits pages can be less specific than the endpoint schema.
 
-## Convert based on the intended use
+## Inspect once before routing
 
-Download chat attachments with `okou web download-file` after reading its help. Inspect real content, not only suffixes. Keep an input inventory recording source name, role, extracted facts, prepared path, MIME type, bytes, and any duration/page count needed for the chosen route.
+Prompt-only is a fast path: build the brief directly and skip attachment inspection and preparation. Otherwise read `okou web download-file --help` once, then download each attachment once with bounded parallelism. Cache each stable local file and cheap probe result. Inspect real content and intended role, not only suffixes, and keep a lightweight inventory of source name, role, cached path, MIME type, bytes, and only the page, track, dimension, or duration metadata needed to choose the route.
 
-Preparation does not select the route. File extensions, MIME types, and source metadata determine how to read or convert material; only an explicit preservation or editing-control requirement selects controlled composition. When the user wants facts or assets for a newly authored video, extract or convert what is useful and continue to native Video Agent.
+Start with metadata and targeted text/media inspection. Do not render pages, transcode media, fully transcribe audio, or exhaustively extract assets before routing unless that minimum work is required to identify the content, role, or a real preservation conflict.
+
+## Prepare only the selected route
+
+Preparation does not select the route. File extensions, MIME types, and source metadata determine how to read or convert material; only an explicit preservation or editing-control requirement selects controlled composition. After route selection, derive only artifacts consumed by that route and run independent preparation with bounded parallelism.
 
 | Input role | Preparation |
 | --- | --- |
-| Prompt only | Research missing facts with `okou web-search` and read selected sources. Write a compact factual brief. Do not assume Video Agent will browse or cite evidence. |
+| Prompt only | Write a compact factual brief directly. Research only facts the requested result needs but the prompt does not supply; do not assume Video Agent will browse or cite evidence. |
 | PPT/PPTX used as references | Extract text and speaker notes; convert to PDF for native Video Agent attachment, or summarize into the prompt. Verify converted page count and representative pages. |
 | PPT/PDF that must retain layout | Inspect page dimensions and `okou presentation screenshot --help`, then rasterize at a consistent size matching the source geometry. Retain every required page and order. Fit those bitmaps without stretching into the independently chosen output canvas; a portrait output does not authorize cropping slide content. |
 | DOC/DOCX/Markdown/text/HTML | Extract relevant text and images; use a concise brief in the prompt or export a PDF. These source formats are not native Video Agent document inputs, but that does not make them controlled-composition inputs. |
@@ -36,4 +40,6 @@ A screen recording is an ordinary video input. With a synchronized same-stem `.c
 
 For more than 20 useful attachments, curate/merge derived references without discarding required facts. Do not truncate the file list silently or change routes solely because of an input limit. If preparation cannot fit the required material faithfully, explain the actual limit and resolve the source scope. For an oversized prompt, summarize references while retaining instructions; do not silently cut a required verbatim script. On the controlled route, split long speech at scene or sentence boundaries, generate each necessary segment once, and keep timings aligned.
 
-Prepare only what the selected route needs. For native generation, pass supported references through the managed Video Agent interface so the platform can resolve artifact URLs for HeyGen; local paths and authenticated HTML pages are not provider file inputs. For controlled composition, prepare source visuals locally and pass narration audio through the managed presenter command, which resolves supported artifact URLs. Provider documentation for Studio, direct uploads, and HyperFrames Cloud does not authorize an unimplemented managed command or a personal-account fallback. A login page with status 200 is not a valid media file.
+Record extracted facts and derived artifacts in the inventory with their source and preparation parameters. Reuse cached probes, extraction, and conversions after interruption or retry; do not repeat them or prepare artifacts for the unselected route.
+
+For native generation, pass supported references through the managed Video Agent interface so the platform can resolve artifact URLs for HeyGen; local paths and authenticated HTML pages are not provider file inputs. For controlled composition, prepare source visuals locally and pass narration audio through the managed presenter command, which resolves supported artifact URLs. Provider documentation for Studio, direct uploads, and HyperFrames Cloud does not authorize an unimplemented managed command or a personal-account fallback. A login page with status 200 is not a valid media file.
