@@ -6,7 +6,7 @@ Read this only after the main skill selects controlled composition for an explic
 
 Okou owns the scene list, prepared visuals, narration mapping, and time-based composition. The managed HeyGen integration generates optional speech and transparent presenter takes using Okou credits; local HyperFrames rendering finishes the composition without a personal HeyGen account. **No avatar** and **no voiceover** are implemented by omitting those layers, not by asking a generative agent to remember an exclusion.
 
-Resolve Auto style from the managed HeyGen catalog using the material and audience, as described in the main skill. Use the selected style only for permitted added graphics and treatments. Preserve original page/footage pixels and geometry where required; explain that the resulting treatment is a controlled adaptation, not native preset execution. Resolve a conflict only when the user explicitly requires both native preset execution and incompatible preservation controls.
+Resolve Auto style from the [managed catalog](catalogs.md) only when the brief calls for a style treatment. Use the selected style only for permitted added graphics and treatments. Preserve original page/footage pixels and geometry where required; explain that the resulting treatment is a controlled adaptation, not native preset execution. Resolve a conflict only when the user explicitly requires both native preset execution and incompatible preservation controls.
 
 Style selection does not authorize extra decorative layers. If the user permits no visual additions, record the selected style and explain that the original visuals determine the appearance; do not add graphics just to demonstrate the choice.
 

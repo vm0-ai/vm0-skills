@@ -6,16 +6,18 @@ Verified against the [Video Agent guide](https://developers.heygen.com/docs/vide
 
 Download chat attachments with `okou web download-file` after reading its help. Inspect real content, not only suffixes. Keep an input inventory recording source name, role, extracted facts, prepared path, MIME type, bytes, and any duration/page count needed for the chosen route.
 
+Preparation does not select the route. File extensions, MIME types, and source metadata determine how to read or convert material; only an explicit preservation or editing-control requirement selects controlled composition. When the user wants facts or assets for a newly authored video, extract or convert what is useful and continue to native Video Agent.
+
 | Input role | Preparation |
 | --- | --- |
 | Prompt only | Research missing facts with `okou web-search` and read selected sources. Write a compact factual brief. Do not assume Video Agent will browse or cite evidence. |
 | PPT/PPTX used as references | Extract text and speaker notes; convert to PDF for native Video Agent attachment, or summarize into the prompt. Verify converted page count and representative pages. |
 | PPT/PDF that must retain layout | Inspect page dimensions and `okou presentation screenshot --help`, then rasterize at a consistent size matching the source geometry. Retain every required page and order. Fit those bitmaps without stretching into the independently chosen output canvas; a portrait output does not authorize cropping slide content. |
-| DOC/DOCX/text/HTML | Extract relevant text and images; use a concise brief in the prompt or export a PDF. A DOCX, HTML project, or webpage URL is not a native Video Agent document input. |
+| DOC/DOCX/Markdown/text/HTML | Extract relevant text and images; use a concise brief in the prompt or export a PDF. These source formats are not native Video Agent document inputs, but that does not make them controlled-composition inputs. |
 | Spreadsheet/CSV/data | Calculate and verify the needed facts first; prepare charts, a short PDF, or script. Do not send a raw spreadsheet and assume it will be read. |
 | Image | Convert unsupported images to PNG/JPEG and verify legibility. A brand mark or UI screenshot must not be hallucinated from a textual description when actual pixels are available. |
-| Audio/video/recording | Probe codec, duration, dimensions, and tracks. Transcribe when needed. Convert unsupported formats to MP4/WebM or MP3/WAV; preserve only requested segments. For original audio, verify that the selected segments have the intended track. |
-| Existing HyperFrames project | Read and validate the project, then render locally. Do not attach HTML or a composition ZIP to Video Agent as though it accepts an editable timeline. |
+| Audio/video/recording | Probe codec, duration, dimensions, and tracks. Transcribe when the content supplies facts; convert unsupported formats to MP4/WebM or MP3/WAV for native references. Retain selected frames or original audio only when the user explicitly requires them, and verify the intended track. |
+| Existing HyperFrames project | If the user explicitly asks to preserve, edit, or render the project, read and validate it for controlled composition. Otherwise extract useful facts/assets for native generation. Do not attach HTML or a composition ZIP to Video Agent as though it accepts an editable timeline. |
 | Other or corrupt file | Try the available reader/converter. Explain the specific unreadable input; continue only if it is nonessential to a faithful result. Do not impose a new user-upload category restriction. |
 
 A screen recording is an ordinary video input. With a synchronized same-stem `.clicks.json` sidecar, use `okou video camera --help` for the existing camera plan/review flow. Never synthesize click telemetry. This does not add a new screen-recording UI entry.

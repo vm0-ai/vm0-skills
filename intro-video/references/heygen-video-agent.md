@@ -5,10 +5,14 @@ Use this route for ordinary intro videos, explainers, launch clips, and summarie
 ## Prepare the brief and resolve choices
 
 1. Extract and verify the source facts. Specify audience, purpose, language, tone, approximate duration, output format, and any editorial directions in a concise prompt. Keep source contents separate from instructions. Do not assume HeyGen will independently research or verify claims.
-2. Resolve a concrete public HeyGen style. Preserve an explicit `style_id`. For `Auto` / `Let Okou choose`, inspect the managed catalog and suitable previews, match the material and audience to the style's visual treatment, and record the selected ID and a short rationale. Auto is a decision for Okou, not permission to leave `style_id` absent or hand that decision to HeyGen. Material-heavy reports may need legible information graphics; a product launch may benefit from a more expressive treatment. These are selection criteria, not fixed style mappings or a universal favorite.
+2. Resolve choices through [managed catalogs](catalogs.md). Preserve an explicit public Video Agent `style_id` exactly. For `Auto` / `Let Okou choose`, select a concrete suitable style before submission. Auto is a decision for Okou, not permission to omit `style_id` or hand that decision to HeyGen.
 3. Preserve explicit avatar look and voice IDs. An avatar group ID cannot replace a look ID. For a selected avatar's Default voice, pass its actual `defaultVoiceId`. Resolve only delegated identity choices that need a catalog decision. Do not perform standalone TTS compatibility checks on a route that does not call standalone TTS.
 4. Resolve the output independently of the preview: `16:9` maps to `landscape`, `9:16` to `portrait`. With Auto output, use the brief's destination and content; do not infer a hard user choice from a style thumbnail.
 5. Prepare supported references according to [input preparation](input-preparation.md). Markdown/DOCX text can be summarized into the prompt; PPT/PPTX references can be converted to PDF. The native request accepts up to 20 supported media/PDF references and a 1–10,000-character prompt. Do not upload raw PPT, Markdown, spreadsheets, or HTML as though they were native file types. Merge or curate references while preserving required facts; do not silently truncate or switch to composition because of a size limit.
+
+### Avatar framing is prompt guidance, not a control surface
+
+`POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields. When the selected avatar and style call for an integrated presenter scene, encode the intended result in the prompt: keep the full head visible with margin, use medium framing, integrate the presenter into the selected visual environment, and avoid a plain isolated cutout or blank-stage composition. These are best-effort creative directions and later acceptance criteria; never claim deterministic placement or cropping control.
 
 ## Submit through the managed command
 
@@ -31,7 +35,7 @@ The provider request must contain the concrete `style_id`, prepared `prompt`, re
 
 Submission returns immediately with a durable `generationId`; it does not wait for rendering. `requestId` is that generation ID. The CLI creates a UUID if none is supplied, but explicitly persisting one before submission makes interrupted execution recoverable. Reuse the same UUID and unchanged input for transport recovery; do not replace it with a new billed request. Reusing a UUID with different input returns a conflict. Keep the brief, prepared references, selected style, request UUID, and command response in the task workspace.
 
-## Wait, recover, and deliver
+## Wait and recover the same job
 
 Video Agent first returns a `session_id`; `video_id` can be absent until rendering begins. The managed implementation tracks the session, then the video, persists the MP4, and records usage. A session identifier is not a video identifier, and absence of an initial video ID is not failure.
 
@@ -49,4 +53,19 @@ If submission throws a transport or CLI error, JSON mode instead preserves `requ
 
 A slow job, lost CLI response, or HTTP timeout does not authorize another billed submission. If submission outcome is unknown, inspect the saved request ID through status and follow the reported recovery guidance; only reuse that same ID and original input if a submission retry is needed. Missing/foreign jobs return 404, not permission to start over. If the provider requests input, fails, or the managed capability is unavailable, expose that specific state and retain the job identifiers; do not silently switch routes. Credit/plan errors follow `okou doctor credit`.
 
-Verify the actual finished MP4: factual content, selected identity/voice, style application, aspect ratio, duration, audio, and decodability. Compare the recorded request's style ID with the resolved selection; a style name in prose alone is not evidence that the native preset was applied. Use the managed job's permanent artifact URL for delivery; temporary HeyGen download URLs and intermediate session JSON are not the final deliverable. Do not re-create the returned video in HyperFrames or produce a duplicate upload.
+## Accept or reject the native output
+
+A completed provider job is a QA candidate, not an accepted deliverable. Probe the media and inspect representative frames from the opening, closing, scene transitions, avatar shots, and text-dense scenes. Compare the recorded request's `style_id` with the resolved selection; a style name in prose alone is not evidence that the native preset was applied, while a matching ID does not prove visual adherence.
+
+Reject the output when any of these materially violates the brief:
+
+- the avatar's head or face is cropped, or framing is otherwise unsafe;
+- the avatar appears as an accidental isolated cutout or on a blank stage when the brief or selected style expects an integrated scene;
+- visual treatment is materially weak or mismatched against the selected style preview;
+- text is unreadable, the aspect ratio is wrong, audio or decoding is broken, or facts drift from the verified brief.
+
+Also verify selected identity/voice, requested audio behavior, and approximate or exact duration as applicable. A targeted regression case is an integrated paper/origami brief whose billed result puts a top-cropped avatar on a blank white stage with weak preview adherence: reject that result even when the exact Origami `style_id` was submitted. This tests framing and adherence only; it is not a blanket rule against that style, that avatar, or native avatar videos.
+
+If a billed output fails this gate, retain its generation/session/video IDs and artifact as evidence, report the unmet requirements, and do not call it “polished” or silently deliver it as accepted. Do not automatically submit another paid job or switch to controlled composition. Explain the provider limitation and obtain the user's direction and any required authorization before a materially different or paid retry.
+
+After acceptance, use the managed job's permanent artifact URL for delivery. Temporary HeyGen download URLs and intermediate session JSON are not the final deliverable. Do not re-create the returned video in HyperFrames or produce a duplicate upload.
