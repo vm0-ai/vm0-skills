@@ -1,8 +1,14 @@
 # Controlled video: Okou supplies the content and timeline
 
+Read this only after the main skill selects controlled composition for an explicit source-preservation or editing constraint. A source attachment, Auto style, missing native access, or a failed native job is not a trigger for this route.
+
 ## Exact pages, footage, audio, or layout
 
 Okou owns the scene list, prepared visuals, narration mapping, and time-based composition. The managed HeyGen integration generates optional speech and transparent presenter takes using Okou credits; local HyperFrames rendering finishes the composition without a personal HeyGen account. **No avatar** and **no voiceover** are implemented by omitting those layers, not by asking a generative agent to remember an exclusion.
+
+Resolve Auto style from the managed HeyGen catalog using the material and audience, as described in the main skill. Use the selected style only for permitted added graphics and treatments. Preserve original page/footage pixels and geometry where required; explain that the resulting treatment is a controlled adaptation, not native preset execution. Resolve a conflict only when the user explicitly requires both native preset execution and incompatible preservation controls.
+
+Style selection does not authorize extra decorative layers. If the user permits no visual additions, record the selected style and explain that the original visuals determine the appearance; do not add graphics just to demonstrate the choice.
 
 1. Prepare required source visuals and decide scene order. For page-for-page conversion, retain all pages as static bitmaps; no restyling or invented marketing arc. For recordings, keep the selected source segments and verify crop/readability. Choose custom motion only when the brief calls for it.
 2. Finalize one narration unit per scene. `No voiceover` omits added narration but does not delete source audio. An explicit request for silence removes every audio track. If original audio was selected, probe that it exists and extract or retain the intended track without TTS; do not infer track presence from a filename or MIME type. For synthetic speech with a compatible exact voice, use the managed command:

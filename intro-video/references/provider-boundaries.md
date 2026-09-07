@@ -1,6 +1,6 @@
 # Provider capability is not platform capability
 
-Research reference, not executable instructions. Checked against the [official HeyGen OpenAPI](https://developers.heygen.com/openapi/external-api.json) on 2026-09-05 and vm0 main at `a400ced08a`. The current platform integration (#31648, #31658, #31668, and the public catalogs in #31830) manages speech and transparent avatar takes, not every HeyGen product. Personal accounts and connector flows are outside this Intro Video skill.
+Capability reference; execute through the managed commands documented by this skill. The [official HeyGen OpenAPI](https://developers.heygen.com/openapi/external-api.json) and [Video Agent guide](https://developers.heygen.com/docs/video-agent) were checked on 2026-09-07. The default route requires the Okou release containing the managed Video Agent command; the controlled route uses managed speech and transparent-avatar takes. Personal accounts and connector flows remain outside this Intro Video skill.
 
 ## Video Agent and public styles
 
@@ -8,7 +8,9 @@ Research reference, not executable instructions. Checked against the [official H
 
 Duration, language, narrative, captions, and exclusions are prompt directions, not explicit guaranteed render controls. There is no general no-avatar/no-voice switch; omitted/null IDs mean automatic selection. Exact scripts, original pages/frames/audio, and overlay geometry are not guaranteed. `mode: chat` is not a reliable user-review barrier because the agent may proceed to generation.
 
-A public style ID is native only on this endpoint. In the current managed composition flow, its preview is a visual reference, not a promise of native preset application. State the adaptation; resolve a hard native-render requirement before generating paid assets. Do not relabel the style as a Studio template or invent a managed Video Agent command.
+A public style ID is applied natively on this endpoint. The default route passes the exact selected ID, including a concrete catalog ID chosen by Okou when style selection is delegated. The provider permits omission, but omission does not satisfy the product's Auto-style behavior. In controlled composition, previews can inform permitted added layers; state that adaptation and resolve an explicit native-render requirement if it conflicts with preservation constraints. Do not relabel a style as a Studio template.
+
+Creation returns a session ID and an optional video ID. Track the session until a video is assigned, then retrieve its result. Handle waiting/input, failure, and interruption without duplicate creation. Native session lifecycle and whole-video pricing are distinct from the transparent presenter path. Use the managed artifact result rather than a temporary provider URL.
 
 ## Avatar and Studio video
 
