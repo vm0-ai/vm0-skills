@@ -7,6 +7,14 @@ description: A large-format epic cinematic video style — wide-to-extreme-wide 
 
 A trailer-grade, large-format cinematic **style**, not a fixed scene. Keep the user's subject exactly as briefed — a city, a product, a person, a landscape — and render it through the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and framing/scale/negatives are expressed the way Seedance follows most reliably.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** a style whose whole job is to make the subject feel **monumental** — to overwhelm the viewer with scale and reverent awe, like the opening shot of a nature documentary or a prestige-film trailer. The goal is **awe**, not beauty, tension, or nostalgia; every choice below is a means to that end.
@@ -54,7 +62,7 @@ Set these through the model's own parameters (not in the prompt text):
 - **negativePrompt**: `close-up, indoor scene, handheld shake, fast cuts, flat or desaturated grade, cold color, neon, low resolution, distorted subject`.
 - **generateAudio**: Seedance generates ambient sound, not spoken narration. Leave **on** for atmospheric wind / room tone; turn it **off** if you'll add your own voiceover or music in edit.
 - **seed**: some run-to-run determinism, but for text-to-video it's a **mild** lever — it does not carry the look across different subjects. Use it to re-roll variations of the *same* prompt, not as the main consistency tool (that's `firstFrameImageUrl`).
-- **firstFrameImageUrl** (strongest stability lever): generate one still in this look (see *Reference stills* — these were made with Seedream at a fixed seed) and pass it as the first frame for image-to-video. This anchors the style far harder than text alone.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -82,4 +90,4 @@ Same locked look every time; the subject — and the wording around it — adapt
 | Reference still — coastal city (Seedream, seed 43) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/307a3304-d1a0-41bd-a704-b144790510b2/image-307a3304.png` |
 | Canonical | wide vista · subject small-to-medium, never close-up · sunrise + flare · warm saturated · one slow aerial/crane move · 21:9 |
 
-> The two reference stills show the look holding across different **grand-exterior** subjects (a climber vs. a city). Non-exterior subjects (a product on white, an indoor scene, an abstract graphic) fall outside this style and need restaging — or a different style. Either still can be passed as `firstFrameImageUrl` to lock the look for image-to-video.
+> The two reference stills show the look holding across different **grand-exterior** subjects (a climber vs. a city). Non-exterior subjects (a product on white, an indoor scene, an abstract graphic) fall outside this style and need restaging — or a different style. Use an approved frame of the user's subject when supported.

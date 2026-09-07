@@ -7,6 +7,14 @@ description: A minimalist tech/product reveal video style — a single product f
 
 A premium **product-reveal style**, not a fixed product. Keep the user's product exactly as briefed — a phone, a watch, a bottle, a gadget — and present it in the locked studio look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and framing/negatives are expressed the way Seedance follows most reliably.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** make a single object feel **precious and inevitable** — isolate it in clean empty space and let pristine light do all the talking. The goal is **focus and reverence for the object**, nothing else in the frame to distract.
@@ -45,7 +53,7 @@ Adapt the product, its material highlights, and the exact move to what's briefed
 - **negativePrompt**: `cluttered background, lifestyle context, warm color, colored light, hard glare, handheld shake, fast cuts, busy scene, low resolution, distorted product`.
 - **generateAudio**: usually **off** for a clean product cut (add music/VO in edit); leave on only for a subtle ambient hum.
 - **seed**: mild lever for text-to-video; use it to re-roll the *same* prompt. The real consistency tool is `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one studio still of the product (see *Reference still*) and pass it as the first frame for image-to-video.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -68,4 +76,4 @@ Same locked studio look; the product changes.
 | Reference still — perfume (Seedream, seed 50) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/6a2bf374-0049-4ade-80f9-bbd419787825/image-6a2bf374.png` |
 | Canonical | single product · white seamless void · clean shadow + reflection · cool neutral · slow push-in · 16:9 |
 
-> The reference still holds the studio look on a different product (perfume vs. phone) — the style is product-invariant. Pass it as `firstFrameImageUrl` to lock the look for image-to-video.
+> The reference still holds the studio look on a different product (perfume vs. phone) — the style is product-invariant. Use an approved frame of the user's subject when supported.

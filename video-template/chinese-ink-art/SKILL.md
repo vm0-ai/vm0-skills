@@ -7,6 +7,14 @@ description: A Chinese ink-wash (shuimo) video style — monochrome ink gradient
 
 A **Chinese ink-wash (shuimo) style**, not a fixed scene. Keep the user's subject exactly as briefed — a mountain, a crane, a figure, an object — and render it as flowing ink on paper in the look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** **stillness and emptiness as beauty** — a few confident ink strokes floating in vast white space, evoking a classical Chinese poem. The goal is **calm, breath, and negative space**: what's left unpainted matters as much as the ink.
@@ -45,7 +53,7 @@ Adapt the subject and what little surrounds it; keep the emptiness. Put aspect r
 - **negativePrompt**: `color photography, photorealistic, Western oil painting, saturated colors, cluttered composition, harsh lighting, 3D render, low resolution`.
 - **generateAudio**: optional — soft guqin / water ambience suits it; often added in edit.
 - **seed**: mild lever for text-to-video; for look consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one ink-wash still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -68,4 +76,4 @@ Same ink-wash look; the subject changes.
 | Reference still — ink crane (Seedream, seed 54) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/a8c55beb-59ac-4362-8abc-83a669d88ebb/image-a8c55beb.png` |
 | Canonical | monochrome ink · vast white space · brushstroke · mist · one tiny red accent · slow drift |
 
-> The reference still holds the ink-wash look on a different subject (crane vs. mountains/boat) — the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the ink-wash look on a different subject (crane vs. mountains/boat) — the style is subject-invariant. Use an approved frame of the user's subject when supported.

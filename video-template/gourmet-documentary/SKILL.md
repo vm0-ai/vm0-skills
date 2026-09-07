@@ -7,6 +7,14 @@ description: A sensory culinary-documentary video style — macro food texture, 
 
 A **sensory food-documentary style**, not a fixed dish. Keep the user's food or craft exactly as briefed — sashimi, coffee, bread, a cocktail — and shoot it in the intimate macro look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** make food feel **irresistible and crafted by human hands** — get close enough to read every texture, catch the steam, and feel the care. The goal is **appetite and craft reverence**, an intimate sensory moment.
@@ -45,7 +53,7 @@ Adapt the dish, the craft action, and the texture to the brief. Put aspect ratio
 - **negativePrompt**: `cold lighting, clinical look, fast cuts, wide industrial kitchen, flat desaturated color, plastic food, low resolution`.
 - **generateAudio**: **on** — sizzle / pour / ambient kitchen sound strengthens the sensory feel.
 - **seed**: mild lever for text-to-video; for look consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one macro still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -68,4 +76,4 @@ Same warm macro look; the food changes.
 | Reference still — latte pour (Seedream, seed 52) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/71642cf3-f879-4684-a6a1-afeb52fb723a/image-71642cf3.png` |
 | Canonical | macro texture · rising steam · warm backlight · artisan hands · shallow focus · slow pace |
 
-> The reference still holds the warm macro look on a different subject (coffee vs. sashimi) — the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the warm macro look on a different subject (coffee vs. sashimi) — the style is subject-invariant. Use an approved frame of the user's subject when supported.

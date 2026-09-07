@@ -7,6 +7,14 @@ description: A short-form viral video style — vertical 9:16, fast hook, authen
 
 A **social short-form style**, not a fixed scene. Keep the user's subject exactly as briefed — a product, a moment, people, a place — and shoot it like a creator's phone clip below. The style supplies the *energy*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** feel like a real person filmed it on their phone and it blew up — **authentic, immediate, high-energy**. The goal is **relatable spontaneity and a fast hook**, not polish. It should look unproduced on purpose.
@@ -45,7 +53,7 @@ Adapt the action and setting to the subject. Put aspect ratio, negatives, and se
 - **negativePrompt**: `formal studio look, tripod locked frame, cinematic letterbox, slow pacing, heavy color grade, staged, stiff, low resolution`.
 - **generateAudio**: **on** — casual ambient/energy helps the authentic feel (swap for trending audio in edit).
 - **seed**: mild lever for text-to-video. For look consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl**: optional here — handheld energy matters more than a locked first frame; use a still anchor only if you need a specific opening look.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 

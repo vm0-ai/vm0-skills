@@ -7,6 +7,14 @@ description: A 2D cyberpunk anime video style — hand-drawn cel-look characters
 
 A **2D cyberpunk anime style**, not a fixed scene. Keep the user's character or subject exactly as briefed — and render it as hand-drawn anime in the neon-city look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering, and the look is **2D animation** (state this explicitly so the model doesn't drift to live action / 3D).
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** a lonely, beautiful **neon-noir mood in hand-drawn anime** — a small human moment dwarfed by a glowing, rain-soaked megacity. The goal is **atmosphere and melancholy**, the quiet feeling of a city at night, not action spectacle.
@@ -45,7 +53,7 @@ Adapt the character and city details to the brief. Put aspect ratio, negatives, 
 - **negativePrompt**: `live action, photorealistic, 3D CGI render, warm daylight, bright cheerful tone, natural landscape, low resolution, extra fingers`.
 - **generateAudio**: **on** for rain/city ambience (pairs well with lo-fi music in edit).
 - **seed**: mild lever for text-to-video; for look/character consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one anime still (see *Reference still*) and pass it as the first frame — especially useful to lock a character design.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -68,4 +76,4 @@ Same neon-anime look; the subject changes.
 | Reference still — ramen stall (Seedream, seed 53) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/4084db29-b61f-4491-b90d-54a48220601c/image-4084db29.png` |
 | Canonical | 2D cel anime · neon megacity · rain-slicked reflections · teal+magenta · melancholic · drifting frame |
 
-> The reference still holds the neon-anime look on a different subject (ramen stall vs. hooded figure) — the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock a character or scene for image-to-video.
+> The reference still holds the neon-anime look on a different subject (ramen stall vs. hooded figure) — the style is subject-invariant. Use an approved frame of the user's subject when supported.

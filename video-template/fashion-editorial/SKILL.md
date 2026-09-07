@@ -7,6 +7,14 @@ description: A high-fashion editorial video style - cold desaturated grade, dram
 
 A **high-fashion editorial style**, not a fixed model or outfit. Keep the user's subject exactly as briefed - a garment, model, accessory, beauty look, or luxury brand - and stage it in the locked editorial look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** make fashion feel **untouchable and monumental** - a body, garment, or luxury object held in architectural space with deliberate restraint. The goal is **status, silhouette, and material presence**, not warmth or lifestyle realism.
@@ -46,7 +54,7 @@ Adapt the subject, garment, pose, and backdrop to the brief. Put aspect ratio, n
 - **negativePrompt**: `casual clothes, influencer styling, warm color tones, natural lifestyle lighting, cluttered background, soft flat lighting, cheerful commercial look, fast cuts, low resolution, distorted anatomy`.
 - **generateAudio**: usually **off**; add music or sound design in edit.
 - **seed**: mild lever for text-to-video; use `firstFrameImageUrl` for look consistency.
-- **firstFrameImageUrl** (strongest stability lever): generate one editorial still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -69,4 +77,4 @@ Same editorial register; the subject changes.
 | Reference still - crimson couture coat (Seedream, seed 60) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/7e4b718c-b98e-4210-98d1-7bb781dd344e/image-7e4b718c.png` |
 | Canonical | cold editorial grade, monumental clean space, hard shadows, deliberate pose, strong silhouette, luxury material |
 
-> The reference still holds the editorial look on a different fashion subject (crimson coat vs. pale skirt look) - the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the editorial look on a different fashion subject (crimson coat vs. pale skirt look) - the style is subject-invariant. Use an approved frame of the user's subject when supported.

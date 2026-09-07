@@ -7,6 +7,14 @@ description: A dark luxury product macro video style - premium materials in extr
 
 A **dark luxury product macro style**, not a watch template. Keep the user's object exactly as briefed - a watch, pen, ring, camera, fragrance cap, lighter, bottle detail, or machined component - and render it in the locked premium macro look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** make a small object feel **rare, engineered, and expensive** by treating its surface as a landscape. The viewer should read metal grain, engraving, bevels, indices, screws, or mechanism detail before they read the whole object.
@@ -46,7 +54,7 @@ Adapt the material, detail, and reveal move to the product. Put aspect ratio, ne
 - **negativePrompt**: `lifestyle context, hands, natural environment, white seamless background, flat lighting, wide full product shot, plastic material, cluttered tabletop, low resolution, distorted product geometry`.
 - **generateAudio**: optional - subtle mechanical ticks or refined ambient design can help; often added in edit.
 - **seed**: mild lever for text-to-video; use `firstFrameImageUrl` for look consistency.
-- **firstFrameImageUrl** (strongest stability lever): generate one dark macro still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -69,4 +77,4 @@ Same dark macro look; the object changes.
 | Reference still - fountain pen nib (Seedream, seed 61) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/f2f41ff1-d6c8-4ace-9a3e-2a3511f2e425/image-f2f41ff1.png` |
 | Canonical | black studio, extreme material macro, metal speculars, engraved detail, ultra-shallow focus, refined reveal |
 
-> The reference still holds the dark luxury macro look on a different object (fountain pen vs. the watch-dial thumbnail example) - the style is product-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the dark luxury macro look on a different object (fountain pen vs. the watch-dial thumbnail example) - the style is product-invariant. Use an approved frame of the user's subject when supported.

@@ -7,6 +7,14 @@ description: A hand-drawn fantasy animation video style - painterly 2D backgroun
 
 A **hand-drawn fantasy animation style**, not a fixed character, studio, or franchise. Keep the user's subject exactly as briefed - a child, creature, village, forest path, airship, animal companion, or magical object - and render it in the locked painterly 2D fantasy look below. The style supplies the *look*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject -> scene -> motion -> camera -> light -> style` ordering.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** make the world feel **handmade, alive, and gently enchanted** - simple expressive characters moving through lush painted nature, with soft light and small magical details. The goal is **wonder, warmth, and emotional innocence**, not spectacle or combat.
@@ -47,7 +55,7 @@ Adapt the creature, character, environment, and small motion to the brief. Put a
 - **negativePrompt**: `3D CGI, photorealistic, live action, hard digital render, plastic texture, harsh neon, flat vector art, dark gritty combat, copied franchise character, named protected studio style, low resolution`.
 - **generateAudio**: optional - soft forest ambience, tiny chimes, wind, or gentle creature sounds can help.
 - **seed**: mild lever for text-to-video; use `firstFrameImageUrl` for look consistency.
-- **firstFrameImageUrl** (strongest stability lever): generate one painterly 2D still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -70,4 +78,4 @@ Same hand-drawn fantasy register; the subject changes.
 | Reference still - apprentice and moss creature (Seedream, seed 63) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/d892e1cb-a7af-465c-89a0-79b1380011ac/image-d892e1cb.png` |
 | Canonical | hand-drawn 2D, painterly forest, expressive simple character, soft diffused light, warm storybook palette, gentle wonder |
 
-> The reference still holds the hand-drawn fantasy animation look on a different subject (apprentice and moss creature vs. child in glowing forest) - the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the hand-drawn fantasy animation look on a different subject (apprentice and moss creature vs. child in glowing forest) - the style is subject-invariant. Use an approved frame of the user's subject when supported.

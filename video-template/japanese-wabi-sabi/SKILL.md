@@ -7,6 +7,14 @@ description: A Japanese wabi-sabi lifestyle video style — natural imperfection
 
 A **wabi-sabi lifestyle style**, not a fixed scene. Keep the user's subject exactly as briefed — an object, a corner, a moment — and render it in the quiet, imperfect, softly-lit look below. The style supplies the *mood*; the user supplies the *what*. Tuned for **Seedance** (the platform's default video model): the prompt follows Seedance's `subject → scene → motion → camera → light → style` ordering.
 
+## Video preview
+
+1. Before generating a video, prepare a few keyframes matching the user's subject, style, and aspect ratio. Reuse suitable supplied or already approved images.
+2. Show the actual images through accessible links, briefly describe the intended motion, and ask the user to confirm. End the turn and wait; do not start a video job before confirmation. Revise the preview if requested.
+3. After confirmation, generate the video. Use the approved images as first/last frames or references when supported by the selected model; otherwise follow the approved visual direction in the prompt. Reuse existing confirmation for an unchanged preview.
+
+Keep the preview message short: the images, a brief motion description, and one confirmation question.
+
 ## What this style is
 
 **The essence:** find beauty in **imperfection, age, and quiet** — a small, humble subject held in soft light and empty space, unhurried. The goal is **calm and intimacy** (the beauty of the incomplete and impermanent), not spectacle or polish.
@@ -45,7 +53,7 @@ Adapt the humble subject and its textures to the brief. Put aspect ratio, negati
 - **negativePrompt**: `urban clutter, artificial light, hard light, saturated colors, fast pacing, glossy perfection, busy composition, low resolution`.
 - **generateAudio**: optional — soft ambient (birdsong, water, breeze) suits the calm.
 - **seed**: mild lever for text-to-video; for look consistency use `firstFrameImageUrl`.
-- **firstFrameImageUrl** (strongest stability lever): generate one soft-light still (see *Reference still*) and pass it as the first frame.
+- **firstFrameImageUrl**: use the approved opening frame when the selected model supports this input.
 
 ## How to apply
 
@@ -68,4 +76,4 @@ Same quiet wabi-sabi look; the subject changes.
 | Reference still — teacup (Seedream, seed 55) | `https://cdn.vm0.io/artifacts/user_3EWY21Oe3f15kfs3yYmbGgDb3NV/418fc568-a83d-483f-b344-a494b962c0dd/image-418fc568.png` |
 | Canonical | aged organic textures · soft warm light · negative space · shallow focus · slow gentle pace · muted color |
 
-> The reference still holds the wabi-sabi look on a different subject (teacup vs. alley) — the style is subject-invariant. Pass it as `firstFrameImageUrl` to lock the look.
+> The reference still holds the wabi-sabi look on a different subject (teacup vs. alley) — the style is subject-invariant. Use an approved frame of the user's subject when supported.
