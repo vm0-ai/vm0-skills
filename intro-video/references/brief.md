@@ -17,13 +17,22 @@ frame:                          # narrative frame; fill or waive each with a rea
   proof: ""                     # the verifiable evidence (numbers, names, sources)
   ask: ""                       # the one action the viewer takes
 key_messages: []                # verified facts only, each traceable to the request or a source
-on_screen_text: []              # strings that must appear literally (numbers, quotes, URLs, CTA)
+on_screen_text: []              # strings that must appear literally; each at most 6 words or one figure plus a label
 script:
   mode: adapt                   # adapt | verbatim
   text: ""                      # user-supplied script when present
-presenter: { avatar_id: "", group_id: "", preview: { width: 0, height: 0, background: real } }   # or none
+presenter:                      # or none
+  avatar_id: ""
+  group_id: ""
+  avatar_type: studio_avatar    # studio_avatar | photo_avatar | digital_twin, from the form or the catalog
+  preview: { width: 0, height: 0, environment: real }   # environment: real | transparent | solid | empty
+  scene: any                    # any | integrated (a real environment behind the presenter is a hard requirement)
+  framing: any                  # any | safe (complete head with margin is a hard requirement)
+facts: open                     # open | source-only (only facts from the request and sources may appear)
 voice: default                  # default | { voice_id } | auto | original | none
 orientation: landscape          # landscape | portrait
+output:
+  min_resolution: 720p          # 720p (native baseline) | 1080p (hard; selects the controlled route)
 style: { style_id: "", aspect_ratio: "" }   # always concrete on the native route
 brand: { colors: [], fonts: [], logo_file: null }
 attachments:
@@ -43,6 +52,10 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 | orientation | explicit `16:9` / `9:16` | destination named in the request (Reels, TikTok, Shorts → portrait; YouTube, web, LinkedIn, sales, internal → landscape) | landscape |
 | tone | user wording | recipe default | "confident and conversational" |
 | audience | user wording | inferred from material | the recipe's audience |
+| presenter.scene | "必须有背景", "真实环境", "不要抠像", "in an office/studio" → integrated | | any |
+| presenter.framing | "头部完整", "不要裁", "safe margins" → safe | | any |
+| facts | "只用给定事实", "不要补充", "source only", attached report as the sole source → source-only | | open |
+| output.min_resolution | "1080p", "full HD", broadcast use → 1080p | | 720p |
 
 Duration is written into the prompt as an approximate target. In verbatim mode the duration follows the script: estimate it from the script length with the calibration values below, record the estimate, and do not state a different target.
 
@@ -61,7 +74,7 @@ The form's configuration block maps one-to-one onto the brief:
 | --- | --- |
 | `HeyGen style: <name> (<id>)` | `style.style_id` exact; `style.aspect_ratio` from the metadata line |
 | `HeyGen style: Let Okou choose` | resolve a concrete public style through catalogs.md; record the reason |
-| `Avatar: <name> (<look id>)` plus group / default voice lines | `presenter.avatar_id`, `presenter.group_id`; preview dimensions and background from the catalog preflight |
+| `Avatar: <name> (<look id>)` plus group / default voice lines | `presenter.avatar_id`, `presenter.group_id`; `avatar_type`, preview size, and preferred orientation from the form's `HeyGen avatar type` / `preview size` / `preferred orientation` lines when present, otherwise from the catalog preflight |
 | `Avatar: No avatar` | `presenter: none`; native prompt carries the voice-over-only line |
 | `Avatar: Auto` (older form revision) | resolve to one concrete public look; never submit without `avatar_id` |
 | `Voice: Default — follow <avatar> (<voice id>)` | `voice: default` → that look's actual default voice ID |
@@ -75,6 +88,8 @@ The form's configuration block maps one-to-one onto the brief:
 | `User request:` | intent, audience, language, duration, tone, key messages, on-screen text, script, preservation, brand |
 
 `silent` anywhere in the request means no audio track at all and also selects the controlled route.
+
+A hard `scene: integrated`, `framing: safe`, or `min_resolution: 1080p` is resolved before any paid submission by the presenter capability check in SKILL.md; it never becomes a post-render surprise.
 
 ## Script mode cues
 

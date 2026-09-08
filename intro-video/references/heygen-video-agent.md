@@ -15,13 +15,13 @@ Cache the brief, prepared references, catalog records, and preview observations.
 
 ## Preflight the selected presenter
 
-With `avatar_id` resolved, use the preview observations from [managed catalogs](catalogs.md) before compiling:
+With `avatar_id` resolved, use the look classification from [managed catalogs](catalogs.md) and the presenter capability check in SKILL.md before compiling:
 
-- preview transparent, solid, or visually empty → append the BACKGROUND NOTE;
-- near-square or portrait look with landscape output, or near-square or landscape look with portrait output → append the matching FRAMING NOTE;
-- preserve the exact avatar, group, voice, style, and orientation IDs.
+- `photo_avatar` with a real environment → no BACKGROUND NOTE; FRAMING NOTE only when the look's orientation does not match the output;
+- `studio_avatar`, `digital_twin`, or any transparent, solid, or visually empty preview → BACKGROUND NOTE, plus the matching FRAMING NOTE when `cropRisk` is high;
+- preserve the exact avatar, group, voice, style, and orientation IDs; if the managed API rejects the look's default voice, substitute a public voice in the narration language and record it.
 
-The note texts live only in the [prompt compiler](prompt-compiler.md); append only the triggered notes, verbatim, at the very end of the prompt. They guide Video Agent but do not guarantee the result: `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields, so do not invent them or claim deterministic control.
+The note texts live only in the [prompt compiler](prompt-compiler.md); append only the triggered notes, verbatim, at the very end of the prompt. They guide Video Agent but do not guarantee the result: `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields, and real runs on 2026-09-08 showed studio cutouts on a white stage and cropped near-square heads despite the notes. That is why hard scene, framing, and 1080p requirements are resolved before submission and why QA files these outcomes as provider-control gaps.
 
 ## Compile the prompt once
 
@@ -61,6 +61,8 @@ okou __intro-video-agent status '<generation-id>' --json
 Each status command performs one reconciliation request and never submits a video. Repeat only while the job remains in progress, using the provider's recommended 10–30-second interval and keeping the user informed during long waits; whole videos commonly take many minutes. Stop on a terminal status or a concrete state that needs attention; do not loop indefinitely through an input request or failure.
 
 Successful submission/status API responses use a flat job object: `generationId`, `status` (`queued`, `running`, `completed`, or `failed`), nullable `sessionId`/`videoId`, and optional `providerStatus`, `notice`, or `error`. A completed response includes the persisted `url` and media/usage fields such as `filename`, `contentType`, `durationSeconds`, and `creditsCharged`, with the resolved style/identity/output fields when available. Inspect notices and errors as well as the top-level status.
+
+A session that ends `failed` upstream is reported by the managed status as `HEYGEN_GENERATION_FAILED` without the provider's message; keep the generation, session, and video IDs in the report and do not guess the cause or resubmit.
 
 If submission throws a transport or CLI error, JSON mode instead preserves `requestId`, `generationId`, `error`, `resumeCommand`, and `notice` without claiming a known job status. The CLI also prints the recovery UUID and status command to stderr before submission; stdout remains one JSON object. Check the command's exit status and error/notice fields, retain the saved UUID, and follow the recovery guidance. Missing job-state fields in this error object do not establish that generation failed or that another submission is safe.
 
