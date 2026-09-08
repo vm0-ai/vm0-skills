@@ -22,7 +22,7 @@ For a native presenter, classify the selected look before anything is paid for:
 
 Preference order when Okou chooses the look, and the replacement suggested when the user's explicit look fails a hard requirement: `photo_avatar` with a real environment and matching orientation; then any look with a real environment; then a `studio_avatar` with `cropRisk: low`. Pass the classification to the presenter capability check and the native preflight; the correction text lives only in the prompt compiler.
 
-Dated facts (2026-09-08): the managed catalog returned only `studio_avatar` looks and all 50 previews were transparent cutouts; three native runs on three styles placed them on a plain white stage; the two near-square looks were cropped in landscape output while the wide Iker_public_1 (1324×1080) was framed correctly.
+Dated facts (2026-09-08): the managed catalog returned only `studio_avatar` looks and all 50 previews were transparent cutouts. With prompts that carried both notes but not the compiler's presenter sentences or the script-freedom directive, seven runs placed the cutout on a white stage and cropped the near-square heads. With the complete compiled prompt, the same near-square Bryce_public_4 rendered a full head with headroom inside a generated environment on 2026-09-07 and again on 2026-09-08. The wide Iker_public_1 (1324×1080) framed correctly either way.
 
 For delegated style, compare relevant tags and actual previews against the material, audience, purpose, tone, and output. Record the selected style ID and a short reason once a justified match is available. Native Video Agent receives that concrete `style_id`; controlled composition may use the preview only as an explicitly described visual adaptation.
 

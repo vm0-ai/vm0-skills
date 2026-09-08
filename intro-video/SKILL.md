@@ -31,7 +31,7 @@ Only the user's explicit requirements select the route. Filename, MIME type, met
 
 | Mode | When | Native handling |
 | --- | --- | --- |
-| `adapt` (default) | The user gave a topic, key points, or a draft without demanding exact wording | Include the script-freedom directive from the [prompt compiler](references/prompt-compiler.md) and a target duration; HeyGen may rephrase and expand to fill the length naturally |
+| `adapt` (default) | The user gave a topic, key points, or a draft without demanding exact wording | Always include the script-freedom directive from the [prompt compiler](references/prompt-compiler.md) and a target duration; HeyGen may rephrase and expand to fill the length naturally. Never drop the directive to shorten the prompt |
 | `verbatim` | The user asks for exact wording (逐字 / 照读 / word for word / approved copy) | Omit the freedom directive, add the verbatim directive, and let the length follow the script. Estimate the resulting duration before submission, tell the user HeyGen may still make small wording changes, and verify the transcript afterwards |
 | `verbatim` + exact timing | Both exact wording and exact length or timeline | Controlled route |
 
@@ -42,7 +42,7 @@ Without the freedom directive, HeyGen pads a short script with silence to reach 
 HeyGen composes presenters differently by look type, and the prompt notes only guide the result. Classify the resolved look with [catalogs](references/catalogs.md): `avatar_type`, whether its preview has a real environment, and its crop risk for the output orientation. Then:
 
 - `photo_avatar` with an environment: no BACKGROUND NOTE; add a FRAMING NOTE only when the look's orientation does not match the output.
-- `studio_avatar` or any transparent, solid, or empty preview: the presenter will most likely render as a cutout on the style's plain stage, and a near-square look in landscape output has cropped the head in real runs. Say so in the pre-generation sentence. If the brief marks `scene: integrated` or `framing: safe`, first try to resolve a look that satisfies it (an environment look with matching orientation); if none exists, the requirement selects the controlled route unless the user explicitly accepts the native risk.
+- `studio_avatar` or any transparent, solid, or empty preview: the prompt must carry the compiler's brief paragraph (presenter sentences including `Keep the entire head and hair visible in every presenter shot.`), the script-freedom directive in adapt mode, and both notes. Built that way, a near-square transparent look rendered a full head inside a generated environment in two real runs; prompts that dropped the presenter sentences or the directive rendered a cutout on a white stage with a cropped head in seven runs. Say in the pre-generation sentence that the environment and framing are prompt-guided. If the brief marks `scene: integrated` or `framing: safe`, prefer a look with a real environment when one is available; otherwise run native with the full prompt, and only a failed full-prompt attempt or an explicit user choice moves the requirement to the controlled route.
 - Record the classification and the decision with the brief; QA reads it to tell a brief violation from a provider-control gap.
 
 ## Step 4 — Prepare only the selected route, then execute once

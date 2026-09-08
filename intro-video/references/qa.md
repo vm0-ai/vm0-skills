@@ -29,8 +29,8 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Duration, approximate | 0.8× to 1.4× the target passes; 1.4× to 1.75× is B with the billing impact stated; above 1.75× or below 0.8× is A | A or B as stated |
 | Duration, verbatim | within about 20% of the pre-submission estimate | A |
 | Resolution | at least 1280×720 landscape or 720×1280 portrait; record the actual value. 1080p is a gate only on the controlled route or when the provider exposes a resolution field | B when below the baseline |
-| Presenter scene | a real integrated background when the brief or style expects one | B for transparent, solid, or empty looks (`scene: any`); A for a `photo_avatar` with an environment or when the notes were missing from the prompt |
-| Presenter framing | complete head with clear margin in every representative frame | B for `cropRisk: high` looks (`framing: any`); A when the FRAMING NOTE was missing from the prompt |
+| Presenter scene | a real integrated background when the brief or style expects one | A when the prompt lacked the presenter sentences, the script-freedom directive, or the BACKGROUND NOTE; B when the full prompt was present and the look is transparent, solid, or empty (`scene: any`); A for a `photo_avatar` with an environment |
+| Presenter framing | complete head with clear margin in every representative frame | A when the prompt lacked the head sentence, the directive, or the FRAMING NOTE; B when the full prompt was present and `cropRisk` was high (`framing: any`) |
 | Style | style-bearing scenes visibly reflect the selected style; the recorded `style_id` matches the selection (a matching ID alone does not prove adherence) | A |
 
 ## Controlled gate
