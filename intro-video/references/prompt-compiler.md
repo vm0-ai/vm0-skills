@@ -1,6 +1,6 @@
 # Prompt compiler: from brief to one native prompt
 
-The prompt is HeyGen Video Agent's whole content interface. `style_id`, `avatar_id`, `voice_id`, and `orientation` travel as parameters; everything below is prompt text. Assemble it once from the cached brief, in this order, and keep it short: a presenter video stays under about 1,700 characters, any prompt under 10,000. This file is the only home of the fixed English literals.
+The prompt is HeyGen Video Agent's whole content interface. `style_id`, `avatar_id`, `voice_id`, and `orientation` travel as parameters; everything below is prompt text. Assemble it once from the cached brief, in this order, and keep it short: a presenter video stays under about 3,000 characters (about 2,000 of them are the fixed literals below), any prompt under 10,000. This file is the only home of the fixed English literals.
 
 ## Skeleton
 
@@ -121,7 +121,7 @@ The notes guide the agent; `POST /v3/video-agents` has no background, crop, scal
 ## Rules
 
 - Build the whole skeleton. Dropping the presenter sentences or the script-mode directive to shorten a prompt produces a cutout on a plain stage with a cropped head; the notes alone do not prevent it.
-- Keep it short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto. A presenter prompt stays under about 1,700 characters.
+- Keep it short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto. A presenter prompt stays under about 3,000 characters; the fixed literals take about 2,000, so trim the narration or the on-screen list, never the literals.
 - One approximate length only. Caps such as `no longer than 30 seconds` are ignored; for a hard ceiling set the target well below it (about 18 seconds for a 30-second ceiling) or use verbatim mode.
 - Positive framing: describe what to show, not what to avoid. Restrictive lists make the agent play safe.
 - No per-scene timestamps and no layout coordinates. Describe motion with verbs (counts up, slides in, draws itself) only when a description is needed at all.

@@ -47,7 +47,7 @@ A controlled ablation on HeyGen's direct video endpoint (same audio, same output
 4. **Put the narration in one quoted `Narration:` paragraph.** Do not split it into scenes or add `Media:` directions; scene-by-scene prompts push the agent into template assembly, which is where the cutout and the cropped head come back.
 5. **Keep the script-mode directive** (freedom, source-only, or verbatim). Removing it to shorten the prompt reverts to the cutout.
 6. **End with the FRAMING NOTE, then the BACKGROUND NOTE**, both verbatim, using the square wording for any look under 1.20; the notes work only together with the sentences and the directive.
-7. **Stay under about 1,700 characters and state one approximate length.** Length caps are ignored; for a hard ceiling set the target well below it.
+7. **Stay under about 3,000 characters (the fixed literals take about 2,000) and state one approximate length.** Length caps are ignored; for a hard ceiling set the target well below it.
 
 Record the look classification (`avatar_type`, environment, crop risk) with the brief and mention that environment and framing are prompt-guided. `scene: integrated` or `framing: safe` in the brief means: pick a look with a real environment when one is available; otherwise run the complete prompt once, and move to the controlled route only after a complete-prompt attempt fails or the user asks for it.
 
