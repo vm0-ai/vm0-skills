@@ -120,7 +120,7 @@ The notes guide the agent; `POST /v3/video-agents` has no background, crop, scal
 
 ## Rules
 
-- Build the whole skeleton. Dropping the presenter sentences or the script-mode directive to shorten a prompt produces a cutout on a plain stage with a cropped head; the notes alone do not prevent it.
+- Build the whole skeleton. Never drop the presenter sentences or the script-mode directive to shorten a prompt, and never rely on the notes alone.
 - Keep it short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto. A presenter prompt stays under about 3,000 characters; the fixed literals take about 2,000, so trim the narration or the on-screen list, never the literals.
 - One approximate length only. Caps such as `no longer than 30 seconds` are ignored; for a hard ceiling set the target well below it (about 18 seconds for a 30-second ceiling) or use verbatim mode.
 - Positive framing: describe what to show, not what to avoid. Restrictive lists make the agent play safe.
