@@ -37,21 +37,24 @@ Only the user's explicit requirements select the route. Filename, MIME type, met
 
 Without the freedom directive, HeyGen pads a short script with silence to reach a stated target; never state a conflicting target duration in verbatim mode.
 
-## Presenter capability check (native route, before any paid submission)
+## Compose the presenter prompt so the head stays in frame
 
-A cropped head is never deliverable. Classify the resolved look with [catalogs](references/catalogs.md): `avatar_type`, whether the preview has a real environment, and its crop risk for the output orientation. Record the classification with the brief.
+HeyGen scales a presenter cutout to fill the frame width and anchors it low, so a near-square look loses the top of its head unless the prompt tells the agent, in the right places, what the presenter scene must look like. Do this for every native submission with a presenter:
 
-1. **Choose the look to avoid cropping.** When Okou chooses, take a `photo_avatar` with a real environment and matching orientation, else a look with `cropRisk: low`. When the user chose a `cropRisk: high` look, say so in the pre-generation sentence, name one low-risk alternative from the same catalog, and keep the user's look unless they switch.
-2. **Compile the complete presenter prompt** from the [prompt compiler](references/prompt-compiler.md): the three presenter sentences, the script-mode directive, the FRAMING NOTE whenever `cropRisk` is high, and the BACKGROUND NOTE for any transparent, solid, or empty preview. A `photo_avatar` with a real environment gets neither note unless its orientation mismatches the output. This complete short prompt is the only configuration that has rendered a full head for a near-square transparent look; never trim it.
-3. **Check the head in every representative frame** at QA. A cropped head or missing headroom rejects the output on both routes. The next attempt changes the look (low-risk or photo avatar) or moves to the controlled route; it never repeats the same prompt and never runs without the user's go-ahead.
+1. **Prefer a look that needs no rescue.** When Okou chooses the look, take one whose preview is at least 1.20 times wider than tall for landscape output (taller than wide for portrait), or a `photo_avatar` with a real environment. Keep an explicitly chosen look, and say in the pre-generation sentence when it is near-square or transparent.
+2. **Open with the brief paragraph and its three presenter sentences**, verbatim from the [prompt compiler](references/prompt-compiler.md): `The selected presenter delivers the narration in a <tone> tone. Use the selected <style name> style. Keep the entire head and hair visible in every presenter shot.` These sentences make the agent plan a presenter scene with an environment instead of pasting the cutout onto the style's stage.
+3. **Put the narration in one quoted `Narration:` paragraph.** Do not split it into scenes or add `Media:` directions; scene-by-scene prompts push the agent into template assembly, which is where the cutout and the cropped head come back.
+4. **Keep the script-mode directive** (freedom, source-only, or verbatim). Removing it to shorten the prompt reverts to the cutout.
+5. **End with the FRAMING NOTE, then the BACKGROUND NOTE**, both verbatim, using the square wording for any look under 1.20; the notes work only together with the sentences and the directive.
+6. **Stay under about 1,500 characters and state one approximate length.** Length caps are ignored; for a hard ceiling set the target well below it.
 
-`scene: integrated` follows the same order: prefer a look with a real environment, otherwise run the complete prompt once, and move to the controlled route only after a failed complete-prompt attempt or on the user's explicit choice.
+Record the look classification (`avatar_type`, environment, crop risk) with the brief and mention that environment and framing are prompt-guided. `scene: integrated` or `framing: safe` in the brief means: pick a look with a real environment when one is available; otherwise run the complete prompt once, and move to the controlled route only after a complete-prompt attempt fails or the user asks for it.
 
 ## Step 4 — Prepare only the selected route, then execute once
 
 Never prepare both routes speculatively. Cache downloads, probes, extractions, conversions, catalog records, and generated assets; do not repeat them during prompt assembly or recovery.
 
-- **Native:** choose the [recipe](references/recipes.md) for the inferred intent, extract and verify facts, prepare only the references the request needs, resolve exact IDs through [catalogs](references/catalogs.md), run the presenter preflight, then compile the prompt once with the [prompt compiler](references/prompt-compiler.md). Submit once, poll the same durable job, and apply the native gate in [QA](references/qa.md).
+- **Native:** choose the [recipe](references/recipes.md) for the inferred intent, extract and verify facts, prepare only the references the request needs, resolve exact IDs through [catalogs](references/catalogs.md), compose the presenter prompt as described above with the [prompt compiler](references/prompt-compiler.md), and submit once. Poll the same durable job, then verify with [QA](references/qa.md).
 - **Controlled:** lock the timeline and preservation plan, then prepare visuals, narration audio, and the HyperFrames project concurrently. A speaking presenter waits only for finalized narration audio. Assemble, validate, render once, then apply the controlled gate.
 
 ## Preserve the user's choices
@@ -66,6 +69,6 @@ Tell the user the route, its consequence, the inferred duration and language, an
 
 ## Accept or reject
 
-A completed provider job is a QA candidate, not a deliverable. Apply [QA](references/qa.md): probe the media, inspect representative frames, transcribe when the brief fixes wording, language, or brand names, and compare against the brief. The gate has two tiers: brief violations are rejected; provider-control gaps are delivered with an explicit warning and evidence, never as polished. In both cases do not automatically submit another paid job, do not repeat the identical prompt, and do not switch routes without the user's direction.
+A completed provider job is a QA candidate, not a deliverable. The prompt is the control and QA is the verification: probe the media, inspect representative frames, transcribe when the brief fixes wording, language, or brand names, and compare against the brief per [QA](references/qa.md). A defect the prompt could have prevented is a prompt error to fix before any retry; a defect that survived a complete prompt is a provider gap to disclose. In both cases do not automatically submit another paid job, do not repeat the identical prompt, and do not switch routes without the user's direction.
 
 Read only the execution reference for the selected route. Consult [provider boundaries](references/provider-boundaries.md) only for a requested capability the selected route does not cover.

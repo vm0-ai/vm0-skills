@@ -24,6 +24,13 @@ CRITICAL ON-SCREEN TEXT (display literally):
 <BACKGROUND NOTE, only when triggered>
 ```
 
+## Why the skeleton looks like this
+
+- The agent renders a transparent look by scaling the cutout to fill the frame width and anchoring it low. A near-square look therefore loses the top of its head unless the prompt makes the agent plan a presenter scene: the three presenter sentences do that, and the agent's own plan then starts with generating a background for the presenter.
+- The script-mode directive keeps the agent composing instead of assembling; prompts without it, and long scene-by-scene prompts with `Media:` blocks, revert to the cutout, the cropped head, and invented on-screen details.
+- The FRAMING NOTE and BACKGROUND NOTE describe the correction the agent should make; on their own they are ignored, together with the sentences and the directive they are followed.
+- One narration paragraph, one length, one topic: every extra structure is a chance for the agent to fall back to templates.
+
 ## Slots
 
 1. **Brief paragraph** (English). One format sentence: kind of video, one approximate length, orientation, narration language, audience; in verbatim mode say `The narration length follows the script below.` instead of a length. Then, for a presenter run, the three presenter sentences below in that order; for `presenter: none`, the voice-over-only line. Optionally one placement sentence (`The selected presenter opens and closes on camera.`). Never describe the presenter's appearance.
