@@ -39,11 +39,11 @@ Without the freedom directive, HeyGen pads a short script with silence to reach 
 
 ## Presenter capability check (native route, before any paid submission)
 
-HeyGen composes presenters differently by look type, and the prompt notes only guide the result. Classify the resolved look with [catalogs](references/catalogs.md): `avatar_type`, whether its preview has a real environment, and its crop risk for the output orientation. Then:
+Classify the resolved look with [catalogs](references/catalogs.md): `avatar_type`, whether the preview has a real environment, and its crop risk for the output orientation. Record the classification with the brief; QA uses it to tell a prompt defect from a provider gap.
 
-- `photo_avatar` with an environment: no BACKGROUND NOTE; add a FRAMING NOTE only when the look's orientation does not match the output.
-- `studio_avatar` or any transparent, solid, or empty preview: the prompt must carry the compiler's brief paragraph (presenter sentences including `Keep the entire head and hair visible in every presenter shot.`), the script-freedom directive in adapt mode, and both notes. Built that way, a near-square transparent look rendered a full head inside a generated environment in two real runs; prompts that dropped the presenter sentences or the directive rendered a cutout on a white stage with a cropped head in seven runs. Say in the pre-generation sentence that the environment and framing are prompt-guided. If the brief marks `scene: integrated` or `framing: safe`, prefer a look with a real environment when one is available; otherwise run native with the full prompt, and only a failed full-prompt attempt or an explicit user choice moves the requirement to the controlled route.
-- Record the classification and the decision with the brief; QA reads it to tell a brief violation from a provider-control gap.
+- `photo_avatar` with a real environment: no BACKGROUND NOTE; a FRAMING NOTE only when the look's orientation does not match the output.
+- `studio_avatar`, `digital_twin`, or any transparent, solid, or empty preview: compile the complete presenter prompt from the [prompt compiler](references/prompt-compiler.md), including the three presenter sentences, the script-mode directive, the FRAMING NOTE when crop risk is high, and the BACKGROUND NOTE. Say in the pre-generation sentence that the environment and framing are prompt-guided.
+- `scene: integrated` or `framing: safe`: prefer a look with a real environment and matching orientation when one is available; otherwise run the native route once with the complete prompt. Only a failed complete-prompt attempt or the user's explicit choice moves the requirement to the controlled route.
 
 ## Step 4 — Prepare only the selected route, then execute once
 

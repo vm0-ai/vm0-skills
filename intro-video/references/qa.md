@@ -20,7 +20,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Check | Pass condition | Tier on failure |
 | --- | --- | --- |
 | Narration language | in the brief's language | A |
-| Facts | numbers, names, labels, headings, counts, and interface details match the verified brief; nothing invented (a `4 Steps` card or made-up ad-set names are failures even when the narration is right) | A |
+| Facts | numbers, names, labels, headings, counts, and interface details match the verified brief; an invented statistic or label is a failure even when the narration is right | A |
 | On-screen text | every `on_screen_text` string appears literally; readable at delivery size on a contrasting panel | A |
 | Brand names | the transcript spells brand terms correctly or the mispronunciation is recorded in the report | A when a hint was omitted, B when the hint was present |
 | Presenter presence | matches the brief: on camera where the recipe says, or absent for `presenter: none` | A |

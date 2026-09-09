@@ -21,11 +21,11 @@ With `avatar_id` resolved, use the look classification from [managed catalogs](c
 - `studio_avatar`, `digital_twin`, or any transparent, solid, or visually empty preview → BACKGROUND NOTE, plus the matching FRAMING NOTE when `cropRisk` is high;
 - preserve the exact avatar, group, voice, style, and orientation IDs; if the managed API rejects the look's default voice, substitute a public voice in the narration language and record it.
 
-The note texts live only in the [prompt compiler](prompt-compiler.md); append only the triggered notes, verbatim, at the very end of the prompt. They guide Video Agent but do not guarantee the result: `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields, and real runs on 2026-09-08 showed studio cutouts on a white stage and cropped near-square heads despite the notes. That is why hard scene, framing, and 1080p requirements are resolved before submission and why QA files these outcomes as provider-control gaps.
+The note texts live only in the [prompt compiler](prompt-compiler.md); append only the triggered notes, verbatim, at the very end of the prompt, FRAMING before BACKGROUND. They guide Video Agent but do not guarantee the result: `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields. Hard scene, framing, and 1080p requirements are therefore settled before submission, and QA files a failure of a complete prompt as a provider-control gap.
 
 ## Compile the prompt once
 
-Assemble the prompt from the cached brief in the compiler's fixed order: format line, content in the narration language, tone, presenter line, attachment anchoring, literal on-screen text, production guidance, the script-mode directive, and finally the presenter notes. Carry the public style through `style_id` only; do not duplicate it with prose unless the user requested a visual override. Save the final prompt in a UTF-8 file and keep it with the brief as evidence.
+Assemble the prompt from the cached brief with the compiler's skeleton: brief paragraph with the presenter sentences, quoted narration, literal on-screen text, attachment sentences, production lines, the script-mode directive, then the presenter notes. Keep a presenter prompt under about 1,500 characters. Carry the public style through `style_id` and name it once in the brief paragraph. Save the final prompt in a UTF-8 file and keep it with the brief as evidence.
 
 ## Submit through the managed command
 
