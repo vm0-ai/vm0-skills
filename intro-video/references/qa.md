@@ -30,7 +30,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Duration, verbatim | within about 20% of the pre-submission estimate | A |
 | Resolution | at least 1280×720 landscape or 720×1280 portrait; record the actual value. 1080p is a gate only on the controlled route or when the provider exposes a resolution field | B when below the baseline |
 | Presenter scene | a real integrated background when the brief or style expects one | A when the prompt lacked the presenter sentences, the script-freedom directive, or the BACKGROUND NOTE; B when the full prompt was present and the look is transparent, solid, or empty (`scene: any`); A for a `photo_avatar` with an environment |
-| Presenter framing | complete head with clear margin in every representative frame | A when the prompt lacked the head sentence, the directive, or the FRAMING NOTE; B when the full prompt was present and `cropRisk` was high (`framing: any`) |
+| Presenter framing | complete head with clear headroom in every representative frame | A always: a cropped head is never delivered. Report whether the prompt was complete; the fix is a low-risk look, a photo avatar, or the controlled route, never the same prompt again |
 | Style | style-bearing scenes visibly reflect the selected style; the recorded `style_id` matches the selection (a matching ID alone does not prove adherence) | A |
 
 ## Controlled gate
