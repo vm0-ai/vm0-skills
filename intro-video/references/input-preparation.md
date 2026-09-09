@@ -1,6 +1,6 @@
 # Input preparation and limits
 
-Verified against the [Video Agent guide](https://developers.heygen.com/docs/video-agent), [uploads](https://developers.heygen.com/docs/upload-assets), [usage limits](https://developers.heygen.com/docs/usage-limits), and [official OpenAPI](https://developers.heygen.com/openapi/external-api.json) on 2026-09-05. Check the endpoint's current schema if a requested option is absent here; general limits pages can be less specific than the endpoint schema.
+Sources: the [Video Agent guide](https://developers.heygen.com/docs/video-agent), [uploads](https://developers.heygen.com/docs/upload-assets), [usage limits](https://developers.heygen.com/docs/usage-limits), and the [official OpenAPI](https://developers.heygen.com/openapi/external-api.json). Check the endpoint's current schema if a requested option is absent here; general limits pages can be less specific than the endpoint schema.
 
 ## Inspect once before routing
 

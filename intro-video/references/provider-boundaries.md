@@ -1,6 +1,6 @@
 # Provider capability is not platform capability
 
-Capability reference; execute through the managed commands documented by this skill. The [official HeyGen OpenAPI](https://developers.heygen.com/openapi/external-api.json) and [Video Agent guide](https://developers.heygen.com/docs/video-agent) were checked on 2026-09-07. The default route requires the Okou release containing the managed Video Agent command; the controlled route uses managed speech and transparent-avatar takes. Personal accounts and connector flows remain outside this Intro Video skill.
+Capability reference; execute through the managed commands documented by this skill. Sources: the [official HeyGen OpenAPI](https://developers.heygen.com/openapi/external-api.json) and the [Video Agent guide](https://developers.heygen.com/docs/video-agent). The default route requires the Okou release containing the managed Video Agent command; the controlled route uses managed speech and transparent-avatar takes. Personal accounts and connector flows remain outside this Intro Video skill.
 
 ## Video Agent and public styles
 
