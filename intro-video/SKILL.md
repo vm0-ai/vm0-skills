@@ -72,4 +72,6 @@ Tell the user the route, its consequence, the inferred duration and language, an
 
 A completed provider job is a QA candidate, not a deliverable. The prompt is the control and QA is the verification: probe the media, inspect representative frames, transcribe when the brief fixes wording, language, or brand names, and compare against the brief per [QA](references/qa.md). A defect the prompt could have prevented is a prompt error to fix before any retry; a defect that survived a complete prompt is a provider gap to disclose. In both cases do not automatically submit another paid job, do not repeat the identical prompt, and do not switch routes without the user's direction.
 
+QA is internal. The final message delivers the accepted video with its permanent URL and one line on the route, duration, and language; it never includes QA results: no check list, pass/fail table, tier labels, frame lists, transcripts, or evidence links. Keep the evidence in the workspace. Mention a defect only when it changes what the user receives: a provider gap in one plain sentence with the alternative, a rejected output in one sentence with what you propose.
+
 Read only the execution reference for the selected route. Consult [provider boundaries](references/provider-boundaries.md) only for a requested capability the selected route does not cover.
