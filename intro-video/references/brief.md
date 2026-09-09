@@ -77,7 +77,7 @@ The form's configuration block maps one-to-one onto the brief:
 | `Avatar: <name> (<look id>)` plus group / default voice lines | `presenter.avatar_id`, `presenter.group_id`; `avatar_type`, preview size, and preferred orientation from the form's `HeyGen avatar type` / `preview size` / `preferred orientation` lines when present, otherwise from the catalog preflight |
 | `Avatar: No avatar` | `presenter: none`; native prompt carries the voice-over-only line |
 | `Avatar: Auto` (older form revision) | resolve to one concrete public look; never submit without `avatar_id` |
-| `Voice: Default — follow <avatar> (<voice id>)` | `voice: default` → that look's actual default voice ID |
+| `Voice: Default`, including a preferred avatar voice ID | Keep `voice: default`; prefer the look's actual default voice and follow [voice resolution](catalogs.md#resolve-the-voice) if unavailable. Record the resolved ID separately so it is not mistaken for an explicitly selected voice. |
 | `Voice: <name> (<id>)` | exact `voice_id` |
 | `Voice: Let Okou choose` | a public voice filtered by `language` |
 | `Voice: Original audio` | `voice: original`, `preservation: audio` → controlled route |
