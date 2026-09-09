@@ -27,7 +27,7 @@ presenter:                      # or none
   avatar_type: studio_avatar    # studio_avatar | photo_avatar | digital_twin, from the form or the catalog
   preview: { width: 0, height: 0, environment: real }   # environment: real | transparent | solid | empty
   scene: any                    # any | integrated (a real environment behind the presenter is a hard requirement)
-  framing: any                  # any | safe (complete head with margin is a hard requirement)
+  framing: safe                 # safe (default: the complete head with margin is always required) | any (only when the user explicitly accepts cropping)
 facts: open                     # open | source-only (only facts from the request and sources may appear)
 voice: default                  # default | { voice_id } | auto | original | none
 orientation: landscape          # landscape | portrait
@@ -53,7 +53,7 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 | tone | user wording | recipe default | "confident and conversational" |
 | audience | user wording | inferred from material | the recipe's audience |
 | presenter.scene | "必须有背景", "真实环境", "不要抠像", "in an office/studio" → integrated | | any |
-| presenter.framing | "头部完整", "不要裁", "safe margins" → safe | | any |
+| presenter.framing | always safe unless the user explicitly accepts cropping ("裁一点没关系", "crop is fine") → any | | safe |
 | facts | "只用给定事实", "不要补充", "source only", attached report as the sole source → source-only | | open |
 | output.min_resolution | "1080p", "full HD", broadcast use → 1080p | | 720p |
 
