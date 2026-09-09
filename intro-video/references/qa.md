@@ -1,6 +1,6 @@
 # QA: accept or reject against the brief
 
-A provider `completed` status, a rendered file, or a passing lint is a candidate, not acceptance. Compare the output with the brief, keep the evidence, and never repeat a billed job automatically.
+A provider `completed` status, a rendered file, or a passing lint is a candidate, not acceptance. Compare the output with the brief, keep the evidence in the workspace, and never repeat a billed job automatically. QA results stay in the workspace; the final message to the user never lists them.
 
 ## Inspect
 
@@ -8,13 +8,13 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 - Extract frames from the opening, the closing, each scene transition, every presenter shot, and every text-dense scene. Use `okou video frames --at ...` on the managed artifact URL or a local decode.
 - Transcribe when wording, language, silence, or brand names matter: `okou video transcribe` gives timestamped segments. Verbatim mode, non-default languages, and briefs with brand terms always transcribe.
 - Read the recorded request: `style_id`, `avatar_id`, `voice_id`, `orientation`, script mode, the look classification from the capability check, and the prompt actually submitted.
-- When a presenter scene looks wrong and a read-only HeyGen credential is available, `GET /v3/videos/{video_id}/scenes` shows whether the presenter scenes used a derived landscape look with a baked-in environment or the raw studio look on a color background; record which one, with the look dimensions, in the report. The payload omits `engine` for accepted Avatar III requests, so do not read anything into a missing engine, and do not attribute the framing to the engine. A session lookup can return not found while the video and scenes endpoints work, so verify by video ID.
+- When a presenter scene looks wrong and a read-only HeyGen credential is available, `GET /v3/videos/{video_id}/scenes` shows whether the presenter scenes used a derived landscape look with a baked-in environment or the raw studio look on a color background; record which one, with the look dimensions, in the workspace. The payload omits `engine` for accepted Avatar III requests, so do not read anything into a missing engine, and do not attribute the framing to the engine. A session lookup can return not found while the video and scenes endpoints work, so verify by video ID.
 
 ## Two tiers
 
-**Tier A, brief violations.** Something the prompt or route controls went wrong. Reject the output and report what a corrected prompt or route would change.
+**Tier A, brief violations.** Something the prompt or route controls went wrong. Reject the output, record what a corrected prompt or route would change, and tell the user in one sentence what is wrong and what you propose.
 
-**Tier B, provider-control gaps.** The requirement was met as far as the prompt can carry it, and HeyGen's API has no field to enforce it. Deliver the file with an explicit warning, the frames as evidence, and the sentence "a retry with the same prompt will not change this"; offer the concrete alternatives (another look, the controlled route, or acceptance). Never call it polished. If the brief had marked the property as a hard requirement, the capability check should have routed away before payment; report it as an accepted risk that materialized, not as a skill defect.
+**Tier B, provider-control gaps.** The requirement was met as far as the prompt can carry it, and HeyGen's API has no field to enforce it. Deliver the file with one plain sentence that names the gap, says a retry with the same prompt will not change it, and offers the concrete alternatives (another look, the controlled route, or acceptance); keep the frames in the workspace as evidence. Never call it polished. If the brief had marked the property as a hard requirement, the capability check should have routed away before payment; record it as an accepted risk that materialized, not as a skill defect.
 
 ## Native gate
 
@@ -23,7 +23,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Narration language | in the brief's language | A |
 | Facts | numbers, names, labels, headings, counts, and interface details match the verified brief; an invented statistic or label is a failure even when the narration is right | A |
 | On-screen text | every `on_screen_text` string appears literally; readable at delivery size on a contrasting panel | A |
-| Brand names | the transcript spells brand terms correctly or the mispronunciation is recorded in the report | A when a hint was omitted, B when the hint was present |
+| Brand names | the transcript spells brand terms correctly or the mispronunciation is recorded in the workspace | A when a hint was omitted, B when the hint was present |
 | Presenter presence | matches the brief: on camera where the recipe says, or absent for `presenter: none` | A |
 | Orientation | requested landscape or portrait | A |
 | Decode | audio and video decode cleanly; no long silences (transcript gaps over a few seconds) | A |
@@ -31,7 +31,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Duration, verbatim | within about 20% of the pre-submission estimate | A |
 | Resolution | at least 1280×720 landscape or 720×1280 portrait; record the actual value. 1080p is a gate only on the controlled route or when the provider exposes a resolution field | B when below the baseline |
 | Presenter scene | a real integrated background when the brief or style expects one | A when the prompt lacked the presenter sentences, the script-freedom directive, or the BACKGROUND NOTE; B when the full prompt was present and the look is transparent, solid, or empty (`scene: any`); A for a `photo_avatar` with an environment |
-| Presenter framing | complete head with clear headroom in every representative frame | A always: a cropped head is never delivered. Report whether the prompt was complete and which look the scenes used; a crop means a non-landscape look was fitted to the width, so the fix is a landscape look with a real environment, the adaptation directive if it was missing, or the controlled route, never the same prompt or a different engine |
+| Presenter framing | complete head with clear headroom in every representative frame | A always: a cropped head is never delivered. Record whether the prompt was complete and which look the scenes used; a crop means a non-landscape look was fitted to the width, so the fix is a landscape look with a real environment, the adaptation directive if it was missing, or the controlled route, never the same prompt or a different engine |
 | Style | style-bearing scenes visibly reflect the selected style; the recorded `style_id` matches the selection (a matching ID alone does not prove adherence) | A |
 
 ## Controlled gate
@@ -40,4 +40,4 @@ Everything above that applies, plus: every required page or segment present, in 
 
 ## When it fails
 
-Retain the generation, session, and video IDs and the artifact as evidence. Report each failed check with its tier and what would change on a retry. Do not deliver a Tier A failure as polished, do not submit another paid job, and do not switch routes; obtain the user's direction and, for a materially different or paid retry, their authorization. A retry never reuses the identical prompt.
+Retain the generation, session, and video IDs and the artifact as evidence in the workspace, and record each failed check there with what would change on a retry. Tell the user in one or two plain sentences what is wrong and what you propose, without the check list or tier labels. Do not deliver a Tier A failure as polished, do not submit another paid job, and do not switch routes; obtain the user's direction and, for a materially different or paid retry, their authorization. A retry never reuses the identical prompt.
