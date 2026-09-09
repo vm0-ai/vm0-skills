@@ -1,11 +1,12 @@
 # Prompt compiler: from brief to one native prompt
 
-The prompt is HeyGen Video Agent's whole content interface. `style_id`, `avatar_id`, `voice_id`, and `orientation` travel as parameters; everything below is prompt text. Assemble it once from the cached brief, in this order, and keep it short: a presenter video stays under about 1,500 characters, any prompt under 10,000. This file is the only home of the fixed English literals.
+The prompt is HeyGen Video Agent's whole content interface. `style_id`, `avatar_id`, `voice_id`, and `orientation` travel as parameters; everything below is prompt text. Assemble it once from the cached brief, in this order, and keep it short: a presenter video stays under about 1,700 characters, any prompt under 10,000. This file is the only home of the fixed English literals.
 
 ## Skeleton
 
 ```text
 <brief paragraph>
+<presenter adaptation directive, for any look without a baked-in environment>
 
 Narration:
 “<script, or one narration paragraph written from the key messages, in the narration language>”
@@ -26,14 +27,14 @@ CRITICAL ON-SCREEN TEXT (display literally):
 
 ## Why the skeleton looks like this
 
-- The agent renders a transparent look by scaling the cutout to fill the frame width and anchoring it low. A near-square look therefore loses the top of its head unless the prompt makes the agent plan a presenter scene: the three presenter sentences do that, and the agent's own plan then starts with generating a background for the presenter.
+- HeyGen's scene composition (`GET /v3/videos/{id}/scenes`) shows what separates a good presenter scene from a bad one. A good one carries an avatar element that is a look the agent derived during planning: a 16:9 photo avatar of the selected presenter, environment baked into the image, rendered with `avatar_iv`. A bad one carries the raw studio look with no engine on a plain color background, scaled to the frame width, so a near-square look loses the top of its head. The presenter sentences make the agent plan that derivation; the presenter adaptation directive asks for it by name and tells the agent to use the derived presenter in every presenter scene.
 - The script-mode directive keeps the agent composing instead of assembling; prompts without it, and long scene-by-scene prompts with `Media:` blocks, revert to the cutout, the cropped head, and invented on-screen details.
 - The FRAMING NOTE and BACKGROUND NOTE describe the correction the agent should make; on their own they are ignored, together with the sentences and the directive they are followed.
 - One narration paragraph, one length, one topic: every extra structure is a chance for the agent to fall back to templates.
 
 ## Slots
 
-1. **Brief paragraph** (English). One format sentence: kind of video, one approximate length, orientation, narration language, audience; in verbatim mode say `The narration length follows the script below.` instead of a length. Then, for a presenter run, the three presenter sentences below in that order; for `presenter: none`, the voice-over-only line. Optionally one placement sentence (`The selected presenter opens and closes on camera.`). Never describe the presenter's appearance.
+1. **Brief paragraph** (English). One format sentence: kind of video, one approximate length, orientation, narration language, audience; in verbatim mode say `The narration length follows the script below.` instead of a length. Then, for a presenter run, the three presenter sentences below in that order; for `presenter: none`, the voice-over-only line. Optionally one placement sentence (`The selected presenter opens and closes on camera.`). Never describe the presenter's appearance. For any look without a baked-in environment (`studio_avatar`, `digital_twin`, or a transparent, solid, or empty preview) add the presenter adaptation directive as its own paragraph right after the brief paragraph, with the output orientation filled in.
 2. **Narration** (narration language). Adapt mode: `Narration:` followed by the script or one flowing paragraph composed from the key messages in arc order, in quotation marks; no scene labels or timestamps below 60 seconds, one short line per scene above 60 seconds. Verbatim mode: `Script (narrate exactly as written):` followed by the script unchanged.
 3. **CRITICAL ON-SCREEN TEXT** block: one quoted string per line from `on_screen_text`. Without it the agent rephrases numbers and quotes; long strings get split across cards.
 4. **Attachment sentences** (English), one per `show` attachment: `Use the attached <what> as B-roll when <topic>.` `Display the attached logo in the intro and the end card.` An attached file without a usage sentence is ignored.
@@ -47,6 +48,12 @@ CRITICAL ON-SCREEN TEXT (display literally):
 
 ```text
 The selected presenter delivers the narration in a <tone> tone. Use the selected <style name> style. Keep the entire head and hair visible in every presenter shot.
+```
+
+**Presenter adaptation directive** (own paragraph after the brief paragraph; every look without a baked-in environment; fill in `16:9 landscape` or `9:16 portrait`):
+
+```text
+Before building any scene, adapt the selected presenter into a natural <16:9 landscape> studio framing: create an AI-extended <16:9> version of the selected presenter with the entire head, hair, and shoulders inside the frame and a complementary professional environment behind them, wait until that extended presenter is ready, and use it (Avatar IV) in every presenter scene. Do not place the original presenter cutout on a plain background.
 ```
 
 **Voice-over-only line** (`presenter: none`):
@@ -114,7 +121,7 @@ The notes guide the agent; `POST /v3/video-agents` has no background, crop, scal
 ## Rules
 
 - Build the whole skeleton. Dropping the presenter sentences or the script-mode directive to shorten a prompt produces a cutout on a plain stage with a cropped head; the notes alone do not prevent it.
-- Keep it short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto. A presenter prompt stays under about 1,500 characters.
+- Keep it short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto. A presenter prompt stays under about 1,700 characters.
 - One approximate length only. Caps such as `no longer than 30 seconds` are ignored; for a hard ceiling set the target well below it (about 18 seconds for a 30-second ceiling) or use verbatim mode.
 - Positive framing: describe what to show, not what to avoid. Restrictive lists make the agent play safe.
 - No per-scene timestamps and no layout coordinates. Describe motion with verbs (counts up, slides in, draws itself) only when a description is needed at all.
@@ -135,6 +142,8 @@ Brief: `product-launch`, about 25 seconds, landscape, zh-CN narration, adapt mod
 
 ```text
 Create one polished 25-second landscape (16:9) product launch video in Simplified Chinese for operations managers at small and mid-sized companies. The selected presenter delivers the narration in a confident, conversational tone. Use the selected Minimalism style. Keep the entire head and hair visible in every presenter shot.
+
+Before building any scene, adapt the selected presenter into a natural 16:9 landscape studio framing: create an AI-extended 16:9 version of the selected presenter with the entire head, hair, and shoulders inside the frame and a complementary professional environment behind them, wait until that extended presenter is ready, and use it (Avatar IV) in every presenter scene. Do not place the original presenter cutout on a plain background.
 
 Narration:
 “每周一早上，运营负责人要花两小时从五个系统里拼一份周报。Okou 智能周报把这两小时变成两分钟：连上你的表格和看板，自动生成可直接发送的周报。上线首月，试用团队平均每周省下 1.8 小时。现在可以免费试用 14 天。”

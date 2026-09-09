@@ -8,6 +8,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 - Extract frames from the opening, the closing, each scene transition, every presenter shot, and every text-dense scene. Use `okou video frames --at ...` on the managed artifact URL or a local decode.
 - Transcribe when wording, language, silence, or brand names matter: `okou video transcribe` gives timestamped segments. Verbatim mode, non-default languages, and briefs with brand terms always transcribe.
 - Read the recorded request: `style_id`, `avatar_id`, `voice_id`, `orientation`, script mode, the look classification from the capability check, and the prompt actually submitted.
+- When a presenter scene looks wrong and a read-only HeyGen credential is available, `GET /v3/videos/{video_id}/scenes` shows whether the presenter scenes used a derived photo-avatar look with `engine: avatar_iv` or the raw studio look on a color background; record which one in the report. A session lookup can return not found while the video and scenes endpoints work, so verify by video ID.
 
 ## Two tiers
 

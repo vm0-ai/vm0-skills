@@ -39,14 +39,15 @@ Without the freedom directive, HeyGen pads a short script with silence to reach 
 
 ## Compose the presenter prompt so the head stays in frame
 
-HeyGen scales a presenter cutout to fill the frame width and anchors it low, so a near-square look loses the top of its head unless the prompt tells the agent, in the right places, what the presenter scene must look like. Do this for every native submission with a presenter:
+A presenter scene comes out right only when the agent first derives a 16:9 (or 9:16) photo-avatar version of the selected look, with the environment baked into that image, and renders it with Avatar IV; when it skips that step it drops the raw studio cutout onto a plain color background, scaled to the frame width, and the top of the head is lost. The prompt must ask for that step by name. Do this for every native submission with a presenter:
 
 1. **Prefer a look that needs no rescue.** When Okou chooses the look, take one whose preview is at least 1.20 times wider than tall for landscape output (taller than wide for portrait), or a `photo_avatar` with a real environment. Keep an explicitly chosen look, and say in the pre-generation sentence when it is near-square or transparent.
-2. **Open with the brief paragraph and its three presenter sentences**, verbatim from the [prompt compiler](references/prompt-compiler.md): `The selected presenter delivers the narration in a <tone> tone. Use the selected <style name> style. Keep the entire head and hair visible in every presenter shot.` These sentences make the agent plan a presenter scene with an environment instead of pasting the cutout onto the style's stage.
-3. **Put the narration in one quoted `Narration:` paragraph.** Do not split it into scenes or add `Media:` directions; scene-by-scene prompts push the agent into template assembly, which is where the cutout and the cropped head come back.
-4. **Keep the script-mode directive** (freedom, source-only, or verbatim). Removing it to shorten the prompt reverts to the cutout.
-5. **End with the FRAMING NOTE, then the BACKGROUND NOTE**, both verbatim, using the square wording for any look under 1.20; the notes work only together with the sentences and the directive.
-6. **Stay under about 1,500 characters and state one approximate length.** Length caps are ignored; for a hard ceiling set the target well below it.
+2. **Open with the brief paragraph and its three presenter sentences**, verbatim from the [prompt compiler](references/prompt-compiler.md): `The selected presenter delivers the narration in a <tone> tone. Use the selected <style name> style. Keep the entire head and hair visible in every presenter shot.`
+3. **Follow it with the presenter adaptation directive**, verbatim from the compiler, for every `studio_avatar`, `digital_twin`, or transparent look: it tells the agent to create an AI-extended 16:9 (or 9:16) version of the selected presenter with the full head and a complementary environment, wait for it, and use that extended presenter in every presenter scene instead of the original cutout. Omit it only for a `photo_avatar` that already has a real environment in the output orientation.
+4. **Put the narration in one quoted `Narration:` paragraph.** Do not split it into scenes or add `Media:` directions; scene-by-scene prompts push the agent into template assembly, which is where the cutout and the cropped head come back.
+5. **Keep the script-mode directive** (freedom, source-only, or verbatim). Removing it to shorten the prompt reverts to the cutout.
+6. **End with the FRAMING NOTE, then the BACKGROUND NOTE**, both verbatim, using the square wording for any look under 1.20; the notes work only together with the sentences and the directive.
+7. **Stay under about 1,700 characters and state one approximate length.** Length caps are ignored; for a hard ceiling set the target well below it.
 
 Record the look classification (`avatar_type`, environment, crop risk) with the brief and mention that environment and framing are prompt-guided. `scene: integrated` or `framing: safe` in the brief means: pick a look with a real environment when one is available; otherwise run the complete prompt once, and move to the controlled route only after a complete-prompt attempt fails or the user asks for it.
 
