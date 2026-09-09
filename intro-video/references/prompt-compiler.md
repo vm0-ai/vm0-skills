@@ -27,7 +27,7 @@ CRITICAL ON-SCREEN TEXT (display literally):
 
 ## Why the skeleton looks like this
 
-- HeyGen's scene composition (`GET /v3/videos/{id}/scenes`) shows what separates a good presenter scene from a bad one. A good one carries an avatar element that is a look the agent derived during planning: a 16:9 photo avatar of the selected presenter, environment baked into the image, rendered with `avatar_iv`. A bad one carries the raw studio look with no engine on a plain color background, scaled to the frame width, so a near-square look loses the top of its head. The presenter sentences make the agent plan that derivation; the presenter adaptation directive asks for it by name and tells the agent to use the derived presenter in every presenter scene.
+- A controlled ablation on the direct video endpoint isolated the mechanism behind a cropped head: a raw near-square studio look fitted to the frame width (`cover`) loses the top of the head, the same look fitted inside the frame (`contain`) keeps it, a landscape look with a baked-in environment keeps it under either fit, the environment always comes from the look image, and switching the engine between Avatar III and Avatar IV changes nothing. Video Agent exposes no fit field. Its scene composition (`GET /v3/videos/{id}/scenes`) shows that good presenter scenes used a landscape look the agent derived during planning, and bad ones used the raw studio look on a plain color background filled to the width. The presenter sentences make the agent plan that derivation; the adaptation directive asks for it by name and tells the agent to keep the presenter inside the frame.
 - The script-mode directive keeps the agent composing instead of assembling; prompts without it, and long scene-by-scene prompts with `Media:` blocks, revert to the cutout, the cropped head, and invented on-screen details.
 - The FRAMING NOTE and BACKGROUND NOTE describe the correction the agent should make; on their own they are ignored, together with the sentences and the directive they are followed.
 - One narration paragraph, one length, one topic: every extra structure is a chance for the agent to fall back to templates.
@@ -50,10 +50,10 @@ CRITICAL ON-SCREEN TEXT (display literally):
 The selected presenter delivers the narration in a <tone> tone. Use the selected <style name> style. Keep the entire head and hair visible in every presenter shot.
 ```
 
-**Presenter adaptation directive** (own paragraph after the brief paragraph; every look without a baked-in environment; fill in `16:9 landscape` or `9:16 portrait`):
+**Presenter adaptation directive** (own paragraph after the brief paragraph; every look that is not already a landscape or portrait image with a real environment; fill in `16:9 landscape` or `9:16 portrait`; never name an engine):
 
 ```text
-Before building any scene, adapt the selected presenter into a natural <16:9 landscape> studio framing: create an AI-extended <16:9> version of the selected presenter with the entire head, hair, and shoulders inside the frame and a complementary professional environment behind them, wait until that extended presenter is ready, and use it (Avatar IV) in every presenter scene. Do not place the original presenter cutout on a plain background.
+Before building any scene, adapt the selected presenter into a natural <16:9 landscape> studio framing: create an AI-extended <16:9> version of the selected presenter with the entire head, hair, and shoulders inside the image and a complementary professional environment behind them, wait until that extended presenter is ready, and use it in every presenter scene. Fit the presenter entirely inside the frame; never fill the frame width with the original cutout or place it on a plain background.
 ```
 
 **Voice-over-only line** (`presenter: none`):
@@ -143,7 +143,7 @@ Brief: `product-launch`, about 25 seconds, landscape, zh-CN narration, adapt mod
 ```text
 Create one polished 25-second landscape (16:9) product launch video in Simplified Chinese for operations managers at small and mid-sized companies. The selected presenter delivers the narration in a confident, conversational tone. Use the selected Minimalism style. Keep the entire head and hair visible in every presenter shot.
 
-Before building any scene, adapt the selected presenter into a natural 16:9 landscape studio framing: create an AI-extended 16:9 version of the selected presenter with the entire head, hair, and shoulders inside the frame and a complementary professional environment behind them, wait until that extended presenter is ready, and use it (Avatar IV) in every presenter scene. Do not place the original presenter cutout on a plain background.
+Before building any scene, adapt the selected presenter into a natural 16:9 landscape studio framing: create an AI-extended 16:9 version of the selected presenter with the entire head, hair, and shoulders inside the image and a complementary professional environment behind them, wait until that extended presenter is ready, and use it in every presenter scene. Fit the presenter entirely inside the frame; never fill the frame width with the original cutout or place it on a plain background.
 
 Narration:
 “每周一早上，运营负责人要花两小时从五个系统里拼一份周报。Okou 智能周报把这两小时变成两分钟：连上你的表格和看板，自动生成可直接发送的周报。上线首月，试用团队平均每周省下 1.8 小时。现在可以免费试用 14 天。”
