@@ -37,7 +37,7 @@ okou __intro-video-presenter --avatar-id LOOK_ID --avatar-group-id GROUP_ID \
   --audio-url NARRATION_URL --json
 ```
 
-The managed renderer produces a landscape transparent WebM. Verify alpha, duration, and framing. It is a composition layer, not the final MP4. For other ratios, fit it without cropping essential content. Do not invent an `--aspect-ratio` flag or use a personal account.
+The managed renderer produces a landscape transparent WebM. Verify alpha, duration, and framing: on the direct video endpoint a near-square look fitted to the frame width (`cover`) loses the top of its head, while `contain` keeps it, and the managed command exposes no fit control. If a take arrives cropped, report it as a platform fit defect with the look dimensions instead of retrying the same take. It is a composition layer, not the final MP4. For other ratios, fit it without cropping essential content. Do not invent an `--aspect-ratio` flag or use a personal account.
 
 Check real speech duration with `ffprobe`; use transcription/timestamps only as needed to map scene cuts. A presenter take uses at most 600 seconds of audio. Split longer narratives into bounded takes aligned to narration segments. Mix narration once and mute duplicate presenter audio. Do not repeat preparation or generate speculative alternate-route assets.
 
