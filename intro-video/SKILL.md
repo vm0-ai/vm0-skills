@@ -37,7 +37,7 @@ Only the user's explicit requirements select the route. Filename, MIME type, met
 
 Without the freedom directive, HeyGen pads a short script with silence to reach a stated target; never state a conflicting target duration in verbatim mode.
 
-In adapt mode the stated target is a real constraint in the other direction too: HeyGen honours the length and compresses or cuts a narration that does not fit it, and what it cuts is the ending. So the narration and the target are one decision, made before submission — measure the drafted narration against the budget in [brief](references/brief.md) and change one of the two until they agree.
+In adapt mode the stated target is a real constraint in the other direction too: HeyGen honours the length and compresses or cuts a narration that does not fit it, and what it cuts is the ending. So the narration and the target are one decision, made before submission — convert the drafted narration at the pace in [brief](references/brief.md) and change one of the two until they agree.
 
 ## Compose the presenter prompt so the head stays in frame
 

@@ -8,7 +8,7 @@ audience: ""                    # who watches, in the user's words
 language: zh-CN                 # narration and on-screen text
 duration:
   narration_seconds: 47         # the drafted narration measured at the calibrated pace
-  target_seconds: 50            # derived from narration_seconds, rounded, inside the recipe band
+  target_seconds: 50            # narration_seconds rounded up, inside the recipe band
   tolerance: approximate        # approximate | exact (exact selects the controlled route)
 tone: ""                        # two to four plain adjectives or a comparison ("like a founder demoing to a peer")
 frame:                          # narrative frame; fill or waive each with a reason
@@ -61,16 +61,14 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 
 Duration and narration are decided together, in both modes: draft the narration first, measure it with the calibration below, record the result as `narration_seconds`, and derive `target_seconds` from it. A recipe's duration entry is the band the finished video should land in, not a menu to pick from; never fix the target at a band's low end and then write more narration than that target holds. A number the user actually asked for is the one exception, and then the narration is cut to fit it.
 
-| Narration language | Initial pace for estimates | Narration budget per 60 seconds of target |
-| --- | --- | --- |
-| English | about 150 words per minute | about 120–130 words |
-| Chinese | about 220 characters per minute | about 175–190 characters |
+| Narration language | Initial pace for estimates |
+| --- | --- |
+| English | about 150 words per minute |
+| Chinese | about 220 characters per minute |
 
-The budget is below the raw pace on purpose: the opening, the scene changes, the pauses, and the end card consume roughly a fifth of the timeline, and narration written to the raw pace has nowhere to land.
+In adapt mode, count the drafted narration, convert it at that pace, and round the target **up** to the nearest five seconds. Up, because the opening, the transitions and the end card occupy timeline the narration does not, so a target at or below the spoken length leaves the agent no room: it compresses, and what it drops is the last sentence — the ask or the recap. A narration longer than the target it ships with is never submitted; cut key messages until it fits, or raise the target if the recipe band allows.
 
-In adapt mode the drafted narration must fit within the budget for `target_seconds`. When it does not, cut key messages until it does, or raise the target if the recipe band allows; a brief whose narration exceeds its target is never submitted. HeyGen resolves that conflict itself by compressing and cutting, and the sentence it drops is the last one — the ask or the recap.
-
-The budget is a band, not a ceiling, so a narration well short of it is also a mismatch. With a target you derived, lower it to the narration. With a duration the user fixed, the material has to cover it: `facts: open` lets the agent expand to fill the length, but under `facts: source-only` it may only restate the source, so a thin source cannot reach a long target. Say that before submitting — the material supports about this many seconds, so either shorten the duration or allow facts beyond the source — and let the user choose. Do not pad, invent facts, or submit a narration you already know is short: it renders under the QA duration floor with the ending intact but the video hollow.
+A narration well short of the target is a mismatch too. With a target you derived, lower it to the narration. With a duration the user fixed, size the narration just under that number and let the material cover it: `facts: open` lets the agent expand to fill the length, but under `facts: source-only` it may only restate the source, so a thin source cannot reach a long target. Say that before submitting — the material supports about this many seconds, so either shorten the duration or allow facts beyond the source — and let the user choose. Do not pad, invent facts, or submit a narration you already know is short: it renders under the QA duration floor with the ending intact but the video hollow.
 
 In verbatim mode the duration follows the script: estimate it from the script length at the pace above, record the estimate as both `narration_seconds` and the expected length, and do not state a different target.
 

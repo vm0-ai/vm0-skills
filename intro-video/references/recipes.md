@@ -44,7 +44,7 @@ Use these roles to structure the script. They are writing tools, not prompt labe
 
 Style tags are preferences for `Let Okou choose`; an explicit style always wins.
 
-A duration band is where a finished video of this kind should land, not a target to pick from — least of all its low end. The number written into the brief comes from the narration actually drafted, measured against the budget in [brief](brief.md); the band only bounds it. A band never reaches the user as a requirement: when no duration was requested, say the inferred length is your inference.
+A duration band is where a finished video of this kind should land, not a target to pick from — least of all its low end. The number written into the brief comes from the narration actually drafted, converted at the pace in [brief](brief.md); the band only bounds it. A band never reaches the user as a requirement: when no duration was requested, say the inferred length is your inference.
 
 ## The narrative frame comes first
 
@@ -55,7 +55,7 @@ Before compiling any prompt, fill the brief's five answers: claim, conflict, tur
 These come from HeyGen's own prompting experiments and from the arcs above. They apply to both routes.
 
 - The script is the biggest quality lever. Write for the ear: short sentences, active voice, contractions, one idea per video.
-- Write to the narration budget for the target, not to the material. Material always outruns the budget; drop the weakest key messages here, deliberately, instead of letting the agent drop the closing sentence at render time.
+- Write the narration to the target, not to the material. Material always outruns the time available; drop the weakest key messages here, deliberately, instead of letting the agent drop the closing sentence at render time.
 - Stories beat lists. First person and a concrete case ("we lost the evening enquiries") beat neutral summaries.
 - Front-load the hook. The first sentence carries the claim or the conflict.
 - Use the arc as an order, and never as timestamps. Per-scene timestamps make the delivery robotic; that is the one point HeyGen's prompting guide and its own effectiveness research agree on, so they are banned at every length on both routes.

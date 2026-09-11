@@ -27,7 +27,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Presenter presence | matches the brief: on camera where the recipe says, or absent for `presenter: none` | A |
 | Orientation | requested landscape or portrait | A |
 | Decode | audio and video decode cleanly; no long silences (transcript gaps over a few seconds) | A |
-| Narration completeness | the transcript's last sentence is grammatically complete and carries the brief's ask or recap. Duration alone never settles this, so transcribe before judging, and always when the video came in under about 0.9× the target: a short video usually means the agent compressed an over-budget narration and dropped its ending, which a retry with the same narration repeats | A |
+| Narration completeness | the transcript's last sentence is grammatically complete and carries the brief's ask or recap. Duration alone never settles this, so transcribe before judging, and always when the video came in under about 0.9× the target: a short video usually means the agent compressed a narration longer than its target and dropped the ending, which a retry with the same narration repeats | A |
 | Duration, approximate | 0.8× to 1.4× the target passes; 1.4× to 1.75× is B with the billing impact stated; above 1.75× or below 0.8× is A | A or B as stated |
 | Duration, verbatim | within about 20% of the pre-submission estimate | A |
 | Resolution | at least 1280×720 landscape or 720×1280 portrait; record the actual value. 1080p is a gate only on the controlled route or when the provider exposes a resolution field | B when below the baseline |
