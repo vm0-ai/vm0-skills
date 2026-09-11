@@ -28,7 +28,7 @@ Use these roles to structure the script. They are writing tools, not prompt labe
 
 ## Recipe table
 
-| id | Use when | Spine (arc) | Duration default | Orientation | Presenter | Media | On-screen text | Style tags |
+| id | Use when | Spine (arc) | Duration band | Orientation | Presenter | Media | On-screen text | Style tags |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `product-launch` | new product, feature, release | hook → conflict → turn → concept → breakdown → evidence → proof → recap → cta (`lau_keynote`) | 45–60 s | landscape | opens and closes on camera | product screenshots as B-roll; motion graphics for numbers | product name, headline number, CTA | retro-tech, print, cinematic |
 | `company-intro` | who we are, brand story, about us | hook → example → conflict → turn → proof → evidence → breakdown → recap → cta (`mkt_story`) | 60–90 s | landscape | on camera for claim and ask | stock for real environments; logo in intro and end card | company name, tagline, URL | print, cinematic, handmade |
@@ -44,6 +44,8 @@ Use these roles to structure the script. They are writing tools, not prompt labe
 
 Style tags are preferences for `Let Okou choose`; an explicit style always wins.
 
+A duration band is where a finished video of this kind should land, not a target to pick from — least of all its low end. The number written into the brief comes from the narration actually drafted, measured against the budget in [brief](brief.md); the band only bounds it. A band never reaches the user as a requirement: when no duration was requested, say the inferred length is your inference.
+
 ## The narrative frame comes first
 
 Before compiling any prompt, fill the brief's five answers: claim, conflict, turn, proof, ask. Proof must be a checkable fact from the request or a source (a number, a named customer, a file). Waive an answer only with a written reason ("no ask: internal announcement"). A video with an empty frame is a list, and lists produce forgettable output.
@@ -53,6 +55,7 @@ Before compiling any prompt, fill the brief's five answers: claim, conflict, tur
 These come from HeyGen's own prompting experiments and from the arcs above. They apply to both routes.
 
 - The script is the biggest quality lever. Write for the ear: short sentences, active voice, contractions, one idea per video.
+- Write to the narration budget for the target, not to the material. A deck with twelve points and a 60-second target loses eight of them here, deliberately, rather than losing the closing sentence at render time.
 - Stories beat lists. First person and a concrete case ("we lost the evening enquiries") beat neutral summaries.
 - Front-load the hook. The first sentence carries the claim or the conflict.
 - Use the arc as an order, not as labels. Up to about 60 seconds, write one flowing script with a tone line; do not split it into scenes. Above 60 seconds or for data-heavy content, group the script into scene blocks in arc order, each with a media note, and never with timestamps.

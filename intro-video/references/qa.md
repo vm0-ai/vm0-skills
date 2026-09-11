@@ -6,7 +6,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 
 - Probe the file: container, duration, dimensions, frame rate, audio tracks, decodability.
 - Extract frames from the opening, the closing, each scene transition, every presenter shot, and every text-dense scene. Use `okou video frames --at ...` on the managed artifact URL or a local decode.
-- Transcribe when wording, language, silence, or brand names matter: `okou video transcribe` gives timestamped segments. Verbatim mode, non-default languages, and briefs with brand terms always transcribe.
+- Transcribe when wording, language, silence, or brand names matter: `okou video transcribe` gives timestamped segments. Verbatim mode, non-default languages, and briefs with brand terms always transcribe. Every narrated output transcribes at least its closing segment, because narration completeness cannot be judged from the duration or the frames.
 - Read the recorded request: `style_id`, `avatar_id`, `voice_id`, `orientation`, script mode, the look classification from the capability check, and the prompt actually submitted.
 - When a presenter scene looks wrong and a read-only HeyGen credential is available, `GET /v3/videos/{video_id}/scenes` shows whether the presenter scenes used a derived landscape look with a baked-in environment or the raw studio look on a color background; record which one, with the look dimensions, in the workspace. The payload omits `engine` for accepted Avatar III requests, so do not read anything into a missing engine, and do not attribute the framing to the engine. A session lookup can return not found while the video and scenes endpoints work, so verify by video ID.
 
@@ -27,7 +27,9 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Presenter presence | matches the brief: on camera where the recipe says, or absent for `presenter: none` | A |
 | Orientation | requested landscape or portrait | A |
 | Decode | audio and video decode cleanly; no long silences (transcript gaps over a few seconds) | A |
+| Narration completeness | the transcript's last sentence is grammatically complete and carries the brief's ask or recap; a narration that stops mid-clause or ends before the closing beat is a failure even when the file decodes and the duration passes | A |
 | Duration, approximate | 0.8× to 1.4× the target passes; 1.4× to 1.75× is B with the billing impact stated; above 1.75× or below 0.8× is A | A or B as stated |
+| Duration, short of target | below about 0.9× the target, transcribe before anything else: a short video usually means the agent compressed an over-budget narration and dropped its ending, and the fix is a shorter narration, not a retry | A when the narration is incomplete |
 | Duration, verbatim | within about 20% of the pre-submission estimate | A |
 | Resolution | at least 1280×720 landscape or 720×1280 portrait; record the actual value. 1080p is a gate only on the controlled route or when the provider exposes a resolution field | B when below the baseline |
 | Presenter scene | a real integrated background when the brief or style expects one | A when the prompt lacked the presenter sentences, the script-freedom directive, or the BACKGROUND NOTE; B when the full prompt was present and the look is transparent, solid, or empty (`scene: any`); A for a `photo_avatar` with an environment |

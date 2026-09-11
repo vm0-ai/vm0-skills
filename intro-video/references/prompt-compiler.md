@@ -123,6 +123,8 @@ The notes guide the agent; `POST /v3/video-agents` has no background, crop, scal
 - Build the whole skeleton. Never drop the presenter sentences or the script-mode directive to shorten a prompt, and never rely on the notes alone.
 - Keep it short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto. A presenter prompt stays under about 3,000 characters; the fixed literals take about 2,000, so trim the narration or the on-screen list, never the literals.
 - One approximate length only. Caps such as `no longer than 30 seconds` are ignored; for a hard ceiling set the target well below it (about 18 seconds for a 30-second ceiling) or use verbatim mode.
+- Measure the narration against the stated length before submitting: count the characters or words in the `Narration:` block and check it against the budget in [brief](brief.md) (about 175–190 Chinese characters or 120–130 English words per 60 seconds). Over budget, trim the narration or restate the length — never submit a prompt that asks for more words than its own length holds, because HeyGen honours the length and cuts the closing sentence.
+- End the narration on the ask or recap as a complete sentence, and never let an end card, CTA line, or on-screen string carry a thought the narration was supposed to finish.
 - Positive framing: describe what to show, not what to avoid. Restrictive lists make the agent play safe.
 - No per-scene timestamps and no layout coordinates. Describe motion with verbs (counts up, slides in, draws itself) only when a description is needed at all.
 - With `avatar_id`, say "the selected presenter"; never describe hair, clothing, gender, or age.

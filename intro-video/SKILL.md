@@ -37,6 +37,8 @@ Only the user's explicit requirements select the route. Filename, MIME type, met
 
 Without the freedom directive, HeyGen pads a short script with silence to reach a stated target; never state a conflicting target duration in verbatim mode.
 
+In adapt mode the stated target is a real constraint in the other direction too: HeyGen honours the length and compresses or cuts a narration that does not fit it, and what it cuts is the ending. So the narration and the target are one decision, made before submission — measure the drafted narration against the budget in [brief](references/brief.md) and change one of the two until they agree.
+
 ## Compose the presenter prompt so the head stays in frame
 
 A look narrower than the output loses the top of its head when it is fitted to the frame width, and keeps it when it is fitted inside the frame or is already a landscape image with a real environment. The environment comes from the look image; the engine (Avatar III or Avatar IV) changes nothing. Video Agent has no fit control and, left alone, fills the width with the raw studio cutout on a plain background. So the lever on the native route is the look: a landscape look with a real environment is safe by itself; any other look must be adapted into one before the scenes are built, and the prompt must ask for that by name. Do this for every native submission with a presenter:
@@ -55,7 +57,7 @@ Record the look classification (`avatar_type`, environment, crop risk) with the 
 
 Never prepare both routes speculatively. Cache downloads, probes, extractions, conversions, catalog records, and generated assets; do not repeat them during prompt assembly or recovery.
 
-- **Native:** choose the [recipe](references/recipes.md) for the inferred intent, extract and verify facts, prepare only the references the request needs, resolve exact IDs through [catalogs](references/catalogs.md), compose the presenter prompt as described above with the [prompt compiler](references/prompt-compiler.md), and submit once. Poll the same durable job, then verify with [QA](references/qa.md).
+- **Native:** choose the [recipe](references/recipes.md) for the inferred intent, extract and verify facts, prepare only the references the request needs, resolve exact IDs through [catalogs](references/catalogs.md), compose the presenter prompt as described above with the [prompt compiler](references/prompt-compiler.md), check the assembled narration against the stated length one last time, and submit once. Poll the same durable job, then verify with [QA](references/qa.md).
 - **Controlled:** lock the timeline and preservation plan, then prepare visuals, narration audio, and the HyperFrames project concurrently. A speaking presenter waits only for finalized narration audio. Assemble, validate, render once, then apply the controlled gate.
 
 ## Preserve the user's choices
@@ -64,7 +66,7 @@ Never prepare both routes speculatively. Cache downloads, probes, extractions, c
 - **Presenter:** an explicit look ID is exact; a group ID is not a look ID. If the brief still delegates the presenter choice, resolve it to one concrete public look before submission; do not submit without `avatar_id` unless the brief says no presenter. `No avatar` on the native route is a prompt directive plus a QA check, not an API switch.
 - **Voice:** an exact voice ID is exact. `Default` with a presenter resolves that look's actual default voice. A delegated voice means a public voice matching the narration language. `No voiceover` and `Original audio` are controlled-route requirements, never a muted native job.
 - **Output:** preserve an explicit `16:9` (landscape) or `9:16` (portrait). Output ratio is independent of a style preview's ratio.
-- **Duration and language:** inferred, recorded in the brief, and stated in the prompt. A round number is approximate unless the user asks for exact timing.
+- **Duration and language:** inferred, recorded in the brief, and stated in the prompt. A round number is approximate unless the user asks for exact timing. An inferred duration is derived from the narration you drafted, never pinned to a recipe band's endpoint; when the user named no duration, say the length is your inference so they can correct it.
 
 Tell the user the route, its consequence, the inferred duration and language, and any presenter or resolution capability gap in one sentence before generation. Do not add a review gate they did not request. Do not silently switch routes, identities, or fidelity levels after a failure.
 

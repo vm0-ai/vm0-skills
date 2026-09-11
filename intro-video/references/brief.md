@@ -8,6 +8,7 @@ audience: ""                    # who watches, in the user's words
 language: zh-CN                 # narration and on-screen text
 duration:
   target_seconds: 60
+  narration_seconds: 0          # the drafted narration at the calibrated pace; must fit target_seconds
   tolerance: approximate        # approximate | exact (exact selects the controlled route)
 tone: ""                        # two to four plain adjectives or a comparison ("like a founder demoing to a peer")
 frame:                          # narrative frame; fill or waive each with a reason
@@ -47,7 +48,7 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 | Field | 1st | 2nd | 3rd |
 | --- | --- | --- | --- |
 | intent | explicit words in the request ("launch video", "介绍公司", "onboarding") | dominant attachment (deck of a product → launch; syllabus → course) | `explainer` |
-| duration | a number in the request | the recipe default | the volume of verified material, capped by the recipe range |
+| duration | a number in the request | the drafted narration measured at the calibrated pace, rounded to the nearest 5 seconds and kept inside the recipe range | the recipe default |
 | language | language of the request text | language of the source material | account locale |
 | orientation | explicit `16:9` / `9:16` | destination named in the request (Reels, TikTok, Shorts → portrait; YouTube, web, LinkedIn, sales, internal → landscape) | landscape |
 | tone | user wording | recipe default | "confident and conversational" |
@@ -57,12 +58,18 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 | facts | "只用给定事实", "不要补充", "source only", attached report as the sole source → source-only | | open |
 | output.min_resolution | "1080p", "full HD", broadcast use → 1080p | | 720p |
 
-Duration is written into the prompt as an approximate target. In verbatim mode the duration follows the script: estimate it from the script length with the calibration values below, record the estimate, and do not state a different target.
+Duration and narration are decided together, in both modes: draft the narration first, measure it with the calibration below, record the result as `narration_seconds`, and derive `target_seconds` from it. A recipe's duration entry is the band the finished video should land in, not a menu to pick from; never fix the target at a band's low end and then write more narration than that target holds. A number the user actually asked for is the one exception, and then the narration is cut to fit it.
 
-| Narration language | Initial pace for estimates |
-| --- | --- |
-| English | about 150 words per minute |
-| Chinese | about 220 characters per minute |
+| Narration language | Initial pace for estimates | Narration budget per 60 seconds of target |
+| --- | --- | --- |
+| English | about 150 words per minute | about 120–130 words |
+| Chinese | about 220 characters per minute | about 175–190 characters |
+
+The budget is below the raw pace on purpose: the opening, the scene changes, the pauses, and the end card consume roughly a fifth of the timeline, and narration written to the raw pace has nowhere to land.
+
+In adapt mode the drafted narration must fit within the budget for `target_seconds`. When it does not, cut key messages until it does, or raise the target if the recipe band allows; a brief whose narration exceeds its target is never submitted. HeyGen resolves that conflict itself by compressing and cutting, and the sentence it drops is the last one — the ask or the recap.
+
+In verbatim mode the duration follows the script: estimate it from the script length at the pace above, record the estimate as both `narration_seconds` and the expected length, and do not state a different target.
 
 These are starting values. Re-calibrate from real transcripts of accepted outputs rather than tuning the prompt.
 
