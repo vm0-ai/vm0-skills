@@ -28,7 +28,7 @@ After the plan is locked, run these lanes concurrently and cache every probe, co
    ```
 
    Keep long or quote-sensitive scripts in a file and pass their contents as one safely quoted argument; the command does not accept stdin. Split only for its 5,000-character limit. Retain each permanent audio URL and download needed assets into the project.
-3. **HyperFrames project:** initialize the project from the locked plan without waiting for visuals or narration. Inspect `npx hyperframes@VERSION skills --help`; if the entrypoint is missing, inspect `skills update --help`, install the needed `hyperframes` skill, then read and follow it. Use the project's pinned version; for a new project, use verified version `0.8.26`. Keep it fixed. If installation fails, report the dependency instead of inventing CLI flags or HTML attributes.
+3. **HyperFrames project:** initialize the project from the locked plan without waiting for visuals or narration. Inspect `npx hyperframes@VERSION skills --help`; if the entrypoint is missing, inspect `skills update --help`, install the needed `hyperframes` skill, then read and follow it. Use the version the project already pins, and never change it mid-project. For a new project, resolve the current version once (`npm view hyperframes version`), pin it in the project, and record it with the plan; `0.8.26` was the version verified when this reference was written, so treat it as the floor rather than the value to copy. If installation fails, report the dependency instead of inventing CLI flags or HTML attributes.
 
 Generate a speaking presenter only if requested. Its sole preparation dependency is the finalized narration audio; start it as soon as that audio is available while other lanes continue, and reuse that same audio:
 

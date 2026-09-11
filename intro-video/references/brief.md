@@ -70,6 +70,8 @@ The budget is below the raw pace on purpose: the opening, the scene changes, the
 
 In adapt mode the drafted narration must fit within the budget for `target_seconds`. When it does not, cut key messages until it does, or raise the target if the recipe band allows; a brief whose narration exceeds its target is never submitted. HeyGen resolves that conflict itself by compressing and cutting, and the sentence it drops is the last one — the ask or the recap.
 
+The budget is a band, not a ceiling, so a narration well short of it is also a mismatch. With a target you derived, lower it to the narration. With a duration the user fixed, the material has to cover it: `facts: open` lets the agent expand to fill the length, but under `facts: source-only` it may only restate the source, so a thin source cannot reach a long target. Say that before submitting — the material supports about this many seconds, so either shorten the duration or allow facts beyond the source — and let the user choose. Do not pad, invent facts, or submit a narration you already know is short: it renders under the QA duration floor with the ending intact but the video hollow.
+
 In verbatim mode the duration follows the script: estimate it from the script length at the pace above, record the estimate as both `narration_seconds` and the expected length, and do not state a different target.
 
 These are starting values. Re-calibrate from real transcripts of accepted outputs rather than tuning the prompt.
