@@ -28,7 +28,7 @@ presenter:                      # or none
   avatar_type: studio_avatar    # studio_avatar | photo_avatar | digital_twin, from the form or the catalog
   preview: { width: 1080, height: 1080, environment: transparent }   # decoded from the preview; environment: real | transparent | solid | empty
   scene: any                    # any | integrated (a real environment behind the presenter is a hard requirement)
-  framing: safe                 # safe (default: the complete head with margin is always required) | any (only when the user explicitly accepts cropping)
+  framing: safe                 # always safe: the complete head with margin is required in every frame, and no user instruction relaxes it
 facts: open                     # open | source-only (only facts from the request and sources may appear)
 voice: default                  # default | { voice_id } | auto | original | none
 orientation: landscape          # landscape | portrait
@@ -55,7 +55,7 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 | tone | user wording | recipe default | "confident and conversational" |
 | audience | user wording | inferred from material | the recipe's audience |
 | presenter.scene | the user requires a real setting behind the presenter, or rejects a cut-out on a plain background ("in an office/studio", "must have a background", "no green-screen cut-out") → integrated | | any |
-| presenter.framing | always safe unless the user explicitly accepts cropping ("crop is fine", "a little cropping is OK") → any | | safe |
+| presenter.framing | not inferred: always `safe`. A cropped head is never delivered, so "crop is fine" changes nothing about what ships — treat it as permission to pick a different look, not to crop | | safe |
 | facts | the user forbids anything beyond the supplied material ("source only", "use only the given facts", "do not add anything"), or an attached report is the sole source → source-only | | open |
 | output.min_resolution | "1080p", "full HD", broadcast use → 1080p | | 720p |
 
@@ -97,7 +97,7 @@ The form's configuration block maps one-to-one onto the brief:
 
 `silent` anywhere in the request means no audio track at all and also selects the controlled route.
 
-A hard `scene: integrated`, `framing: safe`, or `min_resolution: 1080p` is settled before any paid submission by the presenter capability check in SKILL.md, so it never becomes a post-render surprise. Settled does not always mean routed away: a hard 1080p goes to controlled composition, while a real environment and safe framing are what the complete native prompt is for, and the user is told before generation that both are prompt-guided.
+A hard `scene: integrated`, the standing `framing: safe`, or `min_resolution: 1080p` is settled before any paid submission by the presenter capability check in SKILL.md, so it never becomes a post-render surprise. Settled does not always mean routed away: a hard 1080p goes to controlled composition, while a real environment and safe framing are what the complete native prompt is for, and the user is told before generation that both are prompt-guided.
 
 ## Script mode cues
 
