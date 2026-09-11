@@ -37,7 +37,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 
 ## Controlled gate
 
-Everything above that applies, plus: every required page or segment present, in order, unstretched and uncropped; no covered text; no duplicate audio from a presenter take; original audio retained when required; the transparent presenter take has real alpha and fits without cropping essential content; the composition renders at the resolved 1920×1080 or 1080×1920. On this route presenter scene, framing, and resolution are Tier A because Okou controls them.
+Everything above that applies, plus: no presenter in any frame when the brief says `presenter: none` — the reason that requirement routes here, so it is checked on the frames rather than assumed from the composition; every required page or segment present, in order, unstretched and uncropped; no covered text; no duplicate audio from a presenter take; original audio retained when required; the transparent presenter take has real alpha and fits without cropping essential content; the composition renders at the resolved 1920×1080 or 1080×1920. On this route presenter scene, framing, and resolution are Tier A because Okou controls them.
 
 ## When it fails
 
