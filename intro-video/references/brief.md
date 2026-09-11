@@ -26,7 +26,7 @@ presenter:                      # or none
   avatar_id: ""
   group_id: ""
   avatar_type: studio_avatar    # studio_avatar | photo_avatar | digital_twin, from the form or the catalog
-  preview: { width: 0, height: 0, environment: real }   # environment: real | transparent | solid | empty
+  preview: { width: 1080, height: 1080, environment: transparent }   # decoded from the preview; environment: real | transparent | solid | empty
   scene: any                    # any | integrated (a real environment behind the presenter is a hard requirement)
   framing: safe                 # safe (default: the complete head with margin is always required) | any (only when the user explicitly accepts cropping)
 facts: open                     # open | source-only (only facts from the request and sources may appear)
@@ -48,7 +48,7 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 | Field | 1st | 2nd | 3rd |
 | --- | --- | --- | --- |
 | intent | explicit words in the request ("launch video", "介绍公司", "onboarding") | dominant attachment (deck of a product → launch; syllabus → course) | `explainer` |
-| duration | a number in the request | the drafted narration measured at the calibrated pace, rounded to the nearest 5 seconds and kept inside the recipe range | the recipe default |
+| duration | a number in the request | the drafted narration converted at the calibrated pace, rounded up to the nearest 5 seconds and kept inside the recipe band | the recipe default |
 | duration.tolerance | "正好", "恰好", "精确", "exactly", "must be", or a length tied to a slot, platform cap, or contract → exact, which selects the controlled route | | approximate; a round number the user named is still approximate |
 | language | language of the request text | language of the source material | account locale |
 | orientation | explicit `16:9` / `9:16` | destination named in the request (Reels, TikTok, Shorts → portrait; YouTube, web, LinkedIn, sales, internal → landscape) | landscape |

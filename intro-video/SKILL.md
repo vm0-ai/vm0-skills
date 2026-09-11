@@ -31,11 +31,11 @@ Only the user's explicit requirements select the route. Filename, MIME type, met
 
 | Mode | When | Native handling |
 | --- | --- | --- |
-| `adapt` (default) | The user gave a topic, key points, or a draft without demanding exact wording | Always include the script-freedom directive from the [prompt compiler](references/prompt-compiler.md) and a target duration; HeyGen may rephrase and expand to fill the length naturally. Never drop the directive to shorten the prompt |
-| `verbatim` | The user asks for exact wording (逐字 / 照读 / word for word / approved copy) | Omit the freedom directive, add the verbatim directive, and let the length follow the script. Estimate the resulting duration before submission, tell the user HeyGen may still make small wording changes, and verify the transcript afterwards |
+| `adapt` (default) | The user gave a topic, key points, or a draft without demanding exact wording | Always include an expansion directive from the [prompt compiler](references/prompt-compiler.md) — the script-freedom one with `facts: open`, the source-only one with `facts: source-only` — plus a target duration; HeyGen may rephrase and expand to fill the length naturally. Never drop the directive to shorten the prompt |
+| `verbatim` | The user asks for exact wording (逐字 / 照读 / word for word / approved copy) | Omit the expansion directive, add the verbatim directive, and let the length follow the script. Estimate the resulting duration before submission, tell the user HeyGen may still make small wording changes, and verify the transcript afterwards |
 | `verbatim` + exact timing | Both exact wording and exact length or timeline | Controlled route |
 
-Without the freedom directive, HeyGen pads a short script with silence to reach a stated target; never state a conflicting target duration in verbatim mode.
+Without an expansion directive, HeyGen pads a short script with silence to reach a stated target; never state a conflicting target duration in verbatim mode.
 
 In adapt mode the stated target is a real constraint in the other direction too: HeyGen honours the length and compresses or cuts a narration that does not fit it, and what it cuts is the ending. So the narration and the target are one decision, made before submission — convert the drafted narration at the pace in [brief](references/brief.md) and change one of the two until they agree.
 
