@@ -55,7 +55,7 @@ Before compiling any prompt, fill the brief's five answers: claim, conflict, tur
 These come from HeyGen's own prompting experiments and from the arcs above. They apply to both routes.
 
 - The script is the biggest quality lever. Write for the ear: short sentences, active voice, contractions, one idea per video.
-- Write to the narration budget for the target, not to the material. A deck with twelve points and a 60-second target loses eight of them here, deliberately, rather than losing the closing sentence at render time.
+- Write to the narration budget for the target, not to the material. Material always outruns the budget; drop the weakest key messages here, deliberately, instead of letting the agent drop the closing sentence at render time.
 - Stories beat lists. First person and a concrete case ("we lost the evening enquiries") beat neutral summaries.
 - Front-load the hook. The first sentence carries the claim or the conflict.
 - Use the arc as an order, not as labels. Up to about 60 seconds, write one flowing script with a tone line; do not split it into scenes. Above 60 seconds or for data-heavy content, group the script into scene blocks in arc order, each with a media note, and never with timestamps.

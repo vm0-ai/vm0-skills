@@ -7,8 +7,8 @@ intent: product-launch          # one recipe id from recipes.md
 audience: ""                    # who watches, in the user's words
 language: zh-CN                 # narration and on-screen text
 duration:
-  target_seconds: 60
-  narration_seconds: 0          # the drafted narration at the calibrated pace; must fit target_seconds
+  narration_seconds: 47         # the drafted narration measured at the calibrated pace
+  target_seconds: 50            # derived from narration_seconds, rounded, inside the recipe band
   tolerance: approximate        # approximate | exact (exact selects the controlled route)
 tone: ""                        # two to four plain adjectives or a comparison ("like a founder demoing to a peer")
 frame:                          # narrative frame; fill or waive each with a reason
