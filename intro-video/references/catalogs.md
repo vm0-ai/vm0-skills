@@ -12,7 +12,7 @@ okou __intro-video-catalog voices --page-size 100 --json
 
 Follow `nextToken` with `--token` when more candidates are needed, and stop if a cursor repeats. A failed request is not an empty catalog and does not authorize an invented or omitted ID.
 
-Preserve exact public IDs. An avatar group ID groups looks and cannot replace the selected look's `avatar_id`. With a selected avatar and `Default` voice, resolve its `defaultVoiceId` and pass that actual voice ID when required. With no avatar, a delegated voice means choose an independent public voice matching the brief's language; it does not mean mute. A delegated presenter (an older form's `Auto`) is resolved to one concrete public look by the preference order below; record the reason. Never submit a native job without `avatar_id` unless the brief says no presenter.
+Preserve exact public IDs. A look is one appearance of an avatar — one outfit, one preview image, its own `avatar_id` and its own default voice; a group ID names the person and groups that person's looks, so it can never replace the selected look's `avatar_id`. Looks in one group differ in preview dimensions, so crop risk is a property of the look, not of the person. With a selected avatar and `Default` voice, resolve its `defaultVoiceId` and pass that actual voice ID when required. With no avatar, a delegated voice means choose an independent public voice matching the brief's language; it does not mean mute. A delegated presenter (an older form's `Auto`) is resolved to one concrete public look by the preference order below; record the reason. Never submit a native job without `avatar_id` unless the brief says no presenter.
 
 For a native presenter, classify the selected look before anything is paid for:
 
