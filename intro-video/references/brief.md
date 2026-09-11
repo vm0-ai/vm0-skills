@@ -83,7 +83,7 @@ The form's configuration block maps one-to-one onto the brief:
 | `HeyGen style: <name> (<id>)` | `style.style_id` exact; `style.aspect_ratio` from the metadata line |
 | `HeyGen style: Let Okou choose` | resolve a concrete public style through catalogs.md; record the reason |
 | `Avatar: <name> (<look id>)` plus group / default voice lines | `presenter.avatar_id`, `presenter.group_id`; `avatar_type`, preview size, and preferred orientation from the form's `HeyGen avatar type` / `preview size` / `preferred orientation` lines when present, otherwise from the catalog preflight |
-| `Avatar: No avatar` | `presenter: none`; native prompt carries the voice-over-only line |
+| `Avatar: No avatar` | `presenter: none` → controlled route (the presenter layer is left out of the composition; Video Agent cannot be told to omit one) |
 | `Avatar: Auto` (older form revision) | resolve to one concrete public look; never submit without `avatar_id` |
 | `Voice: Default — follow <avatar> (<voice id>)` | `voice: default` → that look's actual default voice ID |
 | `Voice: <name> (<id>)` | exact `voice_id` |

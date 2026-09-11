@@ -40,7 +40,7 @@ okou __intro-video-agent --prompt-file ./prompt.txt \
   --request-id '<request-uuid>' --json
 ```
 
-Replace placeholders with resolved values and use `portrait` for 9:16. Use exactly one of `--prompt` or `--prompt-file`. Style ID and orientation are required. Omit the avatar flags only for `presenter: none`; the group ID is a catalog lookup hint. With an explicit avatar and no voice override, the managed API resolves the avatar's actual default voice. When the brief already contains an exact voice ID, pass it explicitly.
+Replace placeholders with resolved values and use `portrait` for 9:16. Use exactly one of `--prompt` or `--prompt-file`. Style ID and orientation are required. Always pass a resolved `--avatar-id`; an omitted one means the agent picks a look, and `presenter: none` is a controlled-route requirement that never reaches this command. The group ID is a catalog lookup hint. With an explicit avatar and no voice override, the managed API resolves the avatar's actual default voice. When the brief already contains an exact voice ID, pass it explicitly.
 
 Add `--file-url <managed-https-reference>` for each prepared reference, up to 20. Use URLs accepted by the managed file resolver; the command does not accept arbitrary local paths or raw document types. It has no no-avatar/no-voice switches; those requirements belong to the controlled route.
 

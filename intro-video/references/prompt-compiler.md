@@ -34,7 +34,7 @@ CRITICAL ON-SCREEN TEXT (display literally):
 
 ## Slots
 
-1. **Brief paragraph** (English). One format sentence: kind of video, one approximate length, orientation, narration language, audience; in verbatim mode say `The narration length follows the script below.` instead of a length. Then, for a presenter run, the three presenter sentences below in that order; for `presenter: none`, the voice-over-only line. Optionally one placement sentence (`The selected presenter opens and closes on camera.`). Never describe the presenter's appearance. For any look without a baked-in environment (`studio_avatar`, `digital_twin`, or a transparent, solid, or empty preview) add the presenter adaptation directive as its own paragraph right after the brief paragraph, with the output orientation filled in.
+1. **Brief paragraph** (English). One format sentence: kind of video, one approximate length, orientation, narration language, audience; in verbatim mode say `The narration length follows the script below.` instead of a length. Then the three presenter sentences below, in that order — every native prompt is a presenter run, because `presenter: none` routes to controlled composition. Optionally one placement sentence (`The selected presenter opens and closes on camera.`). Never describe the presenter's appearance. For any look without a baked-in environment (`studio_avatar`, `digital_twin`, or a transparent, solid, or empty preview) add the presenter adaptation directive as its own paragraph right after the brief paragraph, with the output orientation filled in.
 2. **Narration** (narration language). Adapt mode: `Narration:` followed by the script or one flowing paragraph composed from the key messages in arc order, in quotation marks, with no scene labels and no timestamps at any length. The skeleton is the default form; HeyGen's scene-by-scene level is a deliberate departure from it, with the cost recorded in [recipes](recipes.md). Verbatim mode: `Script (narrate exactly as written):` followed by the script unchanged.
 3. **CRITICAL ON-SCREEN TEXT** block: one quoted string per line from `on_screen_text`. Without it the agent rephrases numbers and quotes; long strings get split across cards.
 4. **Attachment sentences** (English), one per `show` attachment: `Use the attached <what> as B-roll when <topic>.` `Display the attached logo in the intro and the end card.` An attached file without a usage sentence is ignored.
@@ -54,12 +54,6 @@ The selected presenter delivers the narration in a <tone> tone. Use the selected
 
 ```text
 Before building any scene, adapt the selected presenter into a natural <16:9 landscape> studio framing: create an AI-extended <16:9> version of the selected presenter with the entire head, hair, and shoulders inside the image and a complementary professional environment behind them, wait until that extended presenter is ready, and use it in every presenter scene. Fit the presenter entirely inside the frame; never fill the frame width with the original cutout or place it on a plain background.
-```
-
-**Voice-over-only line** (`presenter: none`):
-
-```text
-Voice-over narration only, with no on-screen presenter. Carry the story with motion graphics, the attached material, and footage.
 ```
 
 **Text legibility line** (last production line, every prompt with on-screen text):

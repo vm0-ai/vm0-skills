@@ -24,7 +24,7 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Facts | numbers, names, labels, headings, counts, and interface details match the verified brief; an invented statistic or label is a failure even when the narration is right | A |
 | On-screen text | every `on_screen_text` string appears literally; readable at delivery size on a contrasting panel | A |
 | Brand names | the transcript spells brand terms correctly or the mispronunciation is recorded in the workspace | A when a hint was omitted, B when the hint was present |
-| Presenter presence | matches the brief: on camera where the recipe says, or absent for `presenter: none` | A |
+| Presenter presence | on camera where the recipe says; a native job always has a presenter, since `presenter: none` routes to controlled composition and its absence is checked by the controlled gate | A |
 | Orientation | requested landscape or portrait | A |
 | Decode | audio and video decode cleanly; no long silences (transcript gaps over a few seconds) | A |
 | Narration completeness | the transcript's last sentence is grammatically complete and carries the brief's ask or recap. Duration alone never settles this, so transcribe before judging, and always when the video came in under about 0.9× the target: a short video usually means the agent compressed a narration longer than its target and dropped the ending, which a retry with the same narration repeats | A |

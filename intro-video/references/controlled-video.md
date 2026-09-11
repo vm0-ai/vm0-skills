@@ -1,6 +1,6 @@
 # Controlled video: Okou orchestrates the content, audio, and timeline
 
-Read this only after the main skill selects controlled composition. It is the route for requirements HeyGen Video Agent cannot honor: no added narration (`No voiceover`), no audio at all (`silent`), a retained source track (`Original audio`), exact pages, frames, footage, timing, layout, or geometry, and a verbatim script that must also hit an exact duration. Video Agent always writes and voices narration and treats attached audio as reference material, so these outcomes exist only because Okou composes the video itself. A source attachment, Auto style, missing native access, or a failed native job is not a trigger for this route.
+Read this only after the main skill selects controlled composition. It is the route for requirements HeyGen Video Agent cannot honor: no digital human on screen (`No avatar`), no added narration (`No voiceover`), no audio at all (`silent`), a retained source track (`Original audio`), exact pages, frames, footage, timing, layout, or geometry, and a verbatim script that must also hit an exact duration. Video Agent always writes and voices narration and treats attached audio as reference material, so these outcomes exist only because Okou composes the video itself. A source attachment, Auto style, missing native access, or a failed native job is not a trigger for this route.
 
 ## Exact pages, footage, audio, or layout
 
