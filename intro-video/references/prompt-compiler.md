@@ -1,6 +1,6 @@
 # Prompt compiler: from brief to one native prompt
 
-The prompt is HeyGen Video Agent's whole content interface. `style_id`, `avatar_id`, `voice_id`, and `orientation` travel as parameters; everything below is prompt text. Assemble it once from the cached brief, in this order, and keep it short: a presenter video stays under about 3,000 characters (about 2,000 of them are the fixed literals below), any prompt under 10,000. This file is the only home of the fixed English literals.
+The prompt is HeyGen Video Agent's whole content interface. `style_id`, `avatar_id`, `voice_id`, and `orientation` travel as parameters; everything below is prompt text. Assemble it once from the cached brief, in this order. There is no house length limit: the prompt runs as long as the narration, the on-screen list, and the fixed literals require, and the only ceiling is the provider's 10,000 characters. What degrades the result is structure, not size — see below. This file is the only home of the fixed English literals.
 
 ## Skeleton
 
@@ -121,8 +121,8 @@ The notes guide the agent; `POST /v3/video-agents` has no background, crop, scal
 ## Rules
 
 - Build the whole skeleton. Never drop the presenter sentences or the script-mode directive to shorten a prompt, and never rely on the notes alone.
-- Keep it short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto. A presenter prompt stays under about 3,000 characters; the fixed literals take about 2,000, so trim the narration or the on-screen list, never the literals.
-- One approximate length only. Caps such as `no longer than 30 seconds` are ignored; for a hard ceiling set the target well below it (about 18 seconds for a 30-second ceiling) or use verbatim mode.
+- Keep it plain, not short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto — those are what send the agent back to templates. Length itself is not the defect: a 60-second English narration needs about 700 characters and a 120-second one about 1,400, and the prompt simply gets that much longer. Never trim the narration to hit a character count; the narration is sized by the target duration.
+- One approximate length only. Caps written into the prompt, such as `no longer than 30 seconds`, are ignored. For a soft preference set the target below the ceiling (about 18 seconds for a 30-second one) and size the narration to that target; a ceiling the deliverable genuinely must not exceed is a controlled-route requirement, not a wording problem.
 - Measure the narration against the stated length before submitting: count the characters or words in the `Narration:` block and check it against the budget in [brief](brief.md) (about 175–190 Chinese characters or 120–130 English words per 60 seconds). Over budget, trim the narration or restate the length — never submit a prompt that asks for more words than its own length holds, because HeyGen honours the length and cuts the closing sentence.
 - End the narration on the ask or recap as a complete sentence, and never let an end card, CTA line, or on-screen string carry a thought the narration was supposed to finish.
 - Positive framing: describe what to show, not what to avoid. Restrictive lists make the agent play safe.

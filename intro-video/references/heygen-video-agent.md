@@ -25,7 +25,7 @@ The note texts live only in the [prompt compiler](prompt-compiler.md); append on
 
 ## Compile the prompt once
 
-Assemble the prompt from the cached brief with the compiler's skeleton: brief paragraph with the presenter sentences, quoted narration, literal on-screen text, attachment sentences, production lines, the script-mode directive, then the presenter notes. Keep a presenter prompt under about 3,000 characters; the fixed literals take about 2,000 of them, so trim the narration or the on-screen list, never the literals. Carry the public style through `style_id` and name it once in the brief paragraph. Save the final prompt in a UTF-8 file and keep it with the brief as evidence.
+Assemble the prompt from the cached brief with the compiler's skeleton: brief paragraph with the presenter sentences, quoted narration, literal on-screen text, attachment sentences, production lines, the script-mode directive, then the presenter notes. The prompt is as long as its narration and on-screen list require, with the provider's 10,000 characters as the only ceiling; never trim the narration to hit a character count. Carry the public style through `style_id` and name it once in the brief paragraph. Save the final prompt in a UTF-8 file and keep it with the brief as evidence.
 
 ## Submit through the managed command
 

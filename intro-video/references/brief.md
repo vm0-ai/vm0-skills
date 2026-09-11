@@ -49,6 +49,7 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 | --- | --- | --- | --- |
 | intent | explicit words in the request ("launch video", "介绍公司", "onboarding") | dominant attachment (deck of a product → launch; syllabus → course) | `explainer` |
 | duration | a number in the request | the drafted narration measured at the calibrated pace, rounded to the nearest 5 seconds and kept inside the recipe range | the recipe default |
+| duration.tolerance | "正好", "恰好", "精确", "exactly", "must be", or a length tied to a slot, platform cap, or contract → exact, which selects the controlled route | | approximate; a round number the user named is still approximate |
 | language | language of the request text | language of the source material | account locale |
 | orientation | explicit `16:9` / `9:16` | destination named in the request (Reels, TikTok, Shorts → portrait; YouTube, web, LinkedIn, sales, internal → landscape) | landscape |
 | tone | user wording | recipe default | "confident and conversational" |

@@ -27,9 +27,8 @@ A provider `completed` status, a rendered file, or a passing lint is a candidate
 | Presenter presence | matches the brief: on camera where the recipe says, or absent for `presenter: none` | A |
 | Orientation | requested landscape or portrait | A |
 | Decode | audio and video decode cleanly; no long silences (transcript gaps over a few seconds) | A |
-| Narration completeness | the transcript's last sentence is grammatically complete and carries the brief's ask or recap; a narration that stops mid-clause or ends before the closing beat is a failure even when the file decodes and the duration passes | A |
+| Narration completeness | the transcript's last sentence is grammatically complete and carries the brief's ask or recap. Duration alone never settles this, so transcribe before judging, and always when the video came in under about 0.9× the target: a short video usually means the agent compressed an over-budget narration and dropped its ending, which a retry with the same narration repeats | A |
 | Duration, approximate | 0.8× to 1.4× the target passes; 1.4× to 1.75× is B with the billing impact stated; above 1.75× or below 0.8× is A | A or B as stated |
-| Duration, short of target | below about 0.9× the target, transcribe before anything else: a short video usually means the agent compressed an over-budget narration and dropped its ending, and the fix is a shorter narration, not a retry | A when the narration is incomplete |
 | Duration, verbatim | within about 20% of the pre-submission estimate | A |
 | Resolution | at least 1280×720 landscape or 720×1280 portrait; record the actual value. 1080p is a gate only on the controlled route or when the provider exposes a resolution field | B when below the baseline |
 | Presenter scene | a real integrated background when the brief or style expects one | A when the prompt lacked the presenter sentences, the script-freedom directive, or the BACKGROUND NOTE; B when the full prompt was present and the look is transparent, solid, or empty (`scene: any`); A for a `photo_avatar` with an environment |
