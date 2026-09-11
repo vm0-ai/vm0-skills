@@ -134,20 +134,20 @@ When the user asks for a look beyond the selected style, add one paragraph after
 
 ## Worked example
 
-Brief: `product-launch`, about 25 seconds, landscape, zh-CN narration, adapt mode with `facts: source-only`, selected Minimalism style, a `studio_avatar` look with a square transparent preview, one dashboard screenshot and one logo attached.
+Brief: `product-launch`, about 25 seconds, landscape, en-US narration, adapt mode with `facts: source-only`, selected Minimalism style, a `studio_avatar` look with a square transparent preview, one dashboard screenshot and one logo attached.
 
 ```text
-Create one polished 25-second landscape (16:9) product launch video in Simplified Chinese for operations managers at small and mid-sized companies. The selected presenter delivers the narration in a confident, conversational tone. Use the selected Minimalism style. Keep the entire head and hair visible in every presenter shot.
+Create one polished 25-second landscape (16:9) product launch video in English for operations managers at small and mid-sized companies. The selected presenter delivers the narration in a confident, conversational tone. Use the selected Minimalism style. Keep the entire head and hair visible in every presenter shot.
 
 Before building any scene, adapt the selected presenter into a natural 16:9 landscape studio framing: create an AI-extended 16:9 version of the selected presenter with the entire head, hair, and shoulders inside the image and a complementary professional environment behind them, wait until that extended presenter is ready, and use it in every presenter scene. Fit the presenter entirely inside the frame; never fill the frame width with the original cutout or place it on a plain background.
 
 Narration:
-“每周一早上，运营负责人要花两小时从五个系统里拼一份周报。Okou 智能周报把这两小时变成两分钟：连上你的表格和看板，自动生成可直接发送的周报。上线首月，试用团队平均每周省下 1.8 小时。现在可以免费试用 14 天。”
+"Every Monday morning, an operations lead spends two hours stitching a weekly report out of five systems. Okou Smart Reports turns those two hours into two minutes: connect your sheets and boards, and a send-ready report writes itself. In the first month, pilot teams saved an average of 1.8 hours a week. A 14-day free trial is open now."
 
 CRITICAL ON-SCREEN TEXT (display literally):
-- "两小时变两分钟"
-- "每周省下 1.8 小时"
-- "免费试用 14 天"
+- "Two hours to two minutes"
+- "1.8 hours saved weekly"
+- "14-day free trial"
 - "okou.ai"
 
 Use the attached dashboard screenshot as B-roll when describing the automatic report. Display the attached logo in the intro and the end card.

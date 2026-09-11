@@ -47,16 +47,16 @@ The entry form never asks for intent, duration, language, tone, or CTA. Infer ea
 
 | Field | 1st | 2nd | 3rd |
 | --- | --- | --- | --- |
-| intent | explicit words in the request ("launch video", "介绍公司", "onboarding") | dominant attachment (deck of a product → launch; syllabus → course) | `explainer` |
+| intent | explicit words in the request ("launch video", "about us", "onboarding", or the same in the request's own language) | dominant attachment (deck of a product → launch; syllabus → course) | `explainer` |
 | duration | a number in the request | the drafted narration converted at the calibrated pace, rounded up to the nearest 5 seconds and kept inside the recipe band | the recipe default |
 | duration.tolerance | the user marks the number as binding — "exactly", "precisely", "must be", or the equivalent in the request's own language — or the length is tied to a slot, platform cap, or contract → exact, which selects the controlled route | | approximate; a round number the user named is still approximate |
 | language | language of the request text | language of the source material | account locale |
 | orientation | explicit `16:9` / `9:16` | destination named in the request (Reels, TikTok, Shorts → portrait; YouTube, web, LinkedIn, sales, internal → landscape) | landscape |
 | tone | user wording | recipe default | "confident and conversational" |
 | audience | user wording | inferred from material | the recipe's audience |
-| presenter.scene | "必须有背景", "真实环境", "不要抠像", "in an office/studio" → integrated | | any |
-| presenter.framing | always safe unless the user explicitly accepts cropping ("裁一点没关系", "crop is fine") → any | | safe |
-| facts | "只用给定事实", "不要补充", "source only", attached report as the sole source → source-only | | open |
+| presenter.scene | the user requires a real setting behind the presenter, or rejects a cut-out on a plain background ("in an office/studio", "must have a background", "no green-screen cut-out") → integrated | | any |
+| presenter.framing | always safe unless the user explicitly accepts cropping ("crop is fine", "a little cropping is OK") → any | | safe |
+| facts | the user forbids anything beyond the supplied material ("source only", "use only the given facts", "do not add anything"), or an attached report is the sole source → source-only | | open |
 | output.min_resolution | "1080p", "full HD", broadcast use → 1080p | | 720p |
 
 Duration and narration are decided together, in both modes: draft the narration first, measure it with the calibration below, record the result as `narration_seconds`, and derive `target_seconds` from it. A recipe's duration entry is the band the finished video should land in, not a menu to pick from; never fix the target at a band's low end and then write more narration than that target holds. A number the user actually asked for is the one exception, and then the narration is cut to fit it.
@@ -101,7 +101,7 @@ A hard `scene: integrated`, `framing: safe`, or `min_resolution: 1080p` is settl
 
 ## Script mode cues
 
-Set `script.mode: verbatim` only when the user says the wording must not change: 逐字, 照读, 一字不改, "word for word", "exactly as written", "approved copy", "legal text", or pastes a script and asks to "use this script" without inviting edits. A pasted draft with "something like", "based on", "polish", or 参考 stays `adapt`.
+Set `script.mode: verbatim` only when the user says the wording must not change: "word for word", "exactly as written", "read it as-is", "not one character changed", "approved copy", "legal text", or a pasted script offered with "use this script" and no invitation to edit. A pasted draft offered as a reference, or with "something like", "based on", or "polish", stays `adapt`. Recognise the same demands in whatever language the request is written in; these are the meanings to match, not literal strings.
 
 ## Attachment roles
 
