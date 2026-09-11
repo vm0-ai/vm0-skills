@@ -97,7 +97,7 @@ The form's configuration block maps one-to-one onto the brief:
 
 `silent` anywhere in the request means no audio track at all and also selects the controlled route.
 
-A hard `scene: integrated`, `framing: safe`, or `min_resolution: 1080p` is resolved before any paid submission by the presenter capability check in SKILL.md; it never becomes a post-render surprise.
+A hard `scene: integrated`, `framing: safe`, or `min_resolution: 1080p` is settled before any paid submission by the presenter capability check in SKILL.md, so it never becomes a post-render surprise. Settled does not always mean routed away: a hard 1080p goes to controlled composition, while a real environment and safe framing are what the complete native prompt is for, and the user is told before generation that both are prompt-guided.
 
 ## Script mode cues
 
