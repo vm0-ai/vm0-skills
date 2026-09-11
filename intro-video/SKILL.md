@@ -35,7 +35,7 @@ Only the user's explicit requirements select the route. Filename, MIME type, met
 | Mode | When | Native handling |
 | --- | --- | --- |
 | `adapt` (default) | The user gave a topic, key points, or a draft without demanding exact wording | Always include an expansion directive from the [prompt compiler](references/prompt-compiler.md) — the script-freedom one with `facts: open`, the source-only one with `facts: source-only` — plus a target duration; HeyGen may rephrase and expand to fill the length naturally. Never drop the directive to shorten the prompt |
-| `verbatim` | The user asks for exact wording (逐字 / 照读 / word for word / approved copy) | Omit the expansion directive, add the verbatim directive, and let the length follow the script. Estimate the resulting duration before submission, tell the user HeyGen may still make small wording changes, and verify the transcript afterwards |
+| `verbatim` | The user asks for exact wording — word for word, as written, approved copy, or the same demand in the request's own language; see the script-mode cues in [brief](references/brief.md) | Omit the expansion directive, add the verbatim directive, and let the length follow the script. Estimate the resulting duration before submission, tell the user HeyGen may still make small wording changes, and verify the transcript afterwards |
 | `verbatim` + exact timing | Both exact wording and exact length or timeline | Controlled route |
 
 Without an expansion directive, HeyGen pads a short script with silence to reach a stated target; never state a conflicting target duration in verbatim mode.
