@@ -1,0 +1,9 @@
+{
+  "duration": 6,
+  "assertions": [
+    { "kind": "appearsBy", "selector": ".authority-content-line", "bySec": 0.7 },
+    { "kind": "staysInFrame", "selector": ".authority-content-stage" },
+    { "kind": "staysInFrame", "selector": ".scene-copy" },
+    { "kind": "staysInFrame", "selector": ".authority-display" }
+  ]
+}
