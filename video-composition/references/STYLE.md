@@ -163,13 +163,13 @@ The presenter wrapper is not automatically visible. Integrated and territory tre
 
 ~~~html
 <div class="presenter-slot presenter-integrated presenter-crop-full" data-presenter-treatment="integrated" data-presenter-crop="full" data-face-safe="true">
-  <img class="presenter-media" src="presenter.png" alt="">
+  <div class="presenter-media" data-presenter-media="pending"></div>
 </div>
 ~~~
 
 ~~~html
 <div class="presenter-slot presenter-integrated presenter-crop-head-shoulders" data-presenter-treatment="integrated" data-presenter-crop="head-shoulders" data-face-safe="true">
-  <img class="presenter-media" src="presenter.png" alt="">
+  <div class="presenter-media" data-presenter-media="pending"></div>
 </div>
 ~~~
 

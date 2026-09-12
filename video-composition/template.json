@@ -89,10 +89,7 @@
       "assets/fonts/condensed.woff2",
       "assets/fonts/mono.woff2"
     ],
-    "presenterReferences": [
-      "assets/presenters/p1.png",
-      "assets/presenters/p2.png"
-    ],
+    "presenterReferences": [],
     "styleMasters": [
       "assets/style-master-a.png",
       "assets/style-master-b.png"
@@ -144,10 +141,7 @@
       "SOURCES.md-when-factual-research-requires-it"
     ],
     "inlineStarterSceneLimit": 12,
-    "defaultPresenterMedia": [
-      "assets/presenters/p1.png",
-      "assets/presenters/p2.png"
-    ],
+    "defaultPresenterMedia": [],
     "imageGeneration": "only-when-user-explicitly-requests-a-new-identity-or-custom-image"
   },
   "contentFitPolicy": {

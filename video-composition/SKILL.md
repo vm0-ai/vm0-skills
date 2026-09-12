@@ -15,7 +15,7 @@ This owns the workflow after HyperFrames. Work from the brief and sources alone,
 
 Record one semantic or narration beat per scene:
 
-`scene-id | Router layout id | presenter: off|static|talking-avatar | viewer outcome`
+`scene-id | Router layout id | presenter: off|talking-avatar | viewer outcome`
 
 Fix silent/static scene timing now. For voice or a talking avatar, open [VOICE-AVATAR.md](references/VOICE-AVATAR.md) and generate media alongside draft assembly: authoring runs on provisional windows while media generates, then both join on measured seconds. Real media duration wins. Dispatch media first; that ordering is the saving.
 
@@ -30,8 +30,7 @@ Read only [ROUTER.md](references/ROUTER.md) with this file; it maps all 40 layou
 ### 3. Resolve presenter, palette, and language once
 
 - Presenter `off`: no presenter DOM or reserved bay.
-- Presenter `static`: use bundled `p1.png` or `p2.png` under bootstrap `--presenter on`.
-- Presenter `talking-avatar`: generated video, never a static PNG; follow the fast path.
+- Presenter `talking-avatar`: a generated video, staged with bootstrap `--presenter on`; follow the fast path.
 - For `zh`, `ja`, or `ko`, pass one licensed local `--content-font`.
 - Choose one palette: `navy-cobalt`, `monumental-minimal`, `black-gold`, `obsidian-champagne`, `petrol-brass`, `parchment-oxblood`, `porcelain-carbon`, `custom`. Geometry is identical across them, so this is tone: a light field for dense figures, a dark one for a single claim, `custom` for brand colours. Name the choice before generating; define custom palettes through [STYLE.md](references/STYLE.md).
 

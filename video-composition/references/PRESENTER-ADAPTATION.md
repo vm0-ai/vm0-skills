@@ -56,7 +56,7 @@ Presenter scene:
 >
   <section class="vc-content-stage">...</section>
   <div class="presenter-slot" data-presenter-crop="full" data-face-safe="true">
-    <img class="presenter-media" src="presenter.png" alt="">
+    <div class="presenter-media" data-presenter-media="pending"></div>
   </div>
 </main>
 ```
@@ -80,7 +80,7 @@ Compact head-and-shoulders scene:
 <main class="vc-frame" data-presenter="on" data-presenter-layout="corner-right" data-title-chrome="off">
   <section class="vc-content-stage">...</section>
   <div class="presenter-slot" data-presenter-crop="head-shoulders" data-face-safe="true">
-    <img class="presenter-media" src="presenter.png" alt="">
+    <div class="presenter-media" data-presenter-media="pending"></div>
   </div>
 </main>
 ```

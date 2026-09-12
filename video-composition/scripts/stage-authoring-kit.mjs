@@ -297,8 +297,6 @@ function cleanManagedReferences(referenceRoot) {
   if (args.presenterMode === "off") {
     removeManaged(`${referenceRoot}/PRESENTER-ADAPTATION.md`);
     for (const relative of [
-      "assets/video-composition/presenters/p1.png",
-      "assets/video-composition/presenters/p2.png",
       "compositions/vc-presenter-scene.html",
       "compositions/vc-presenter-scene.motion.json",
     ]) removeManaged(relative);
@@ -519,8 +517,6 @@ copy("scripts/set-color-system.mjs", "scripts/set-color-system.mjs");
 copy("assets/starter/compositions/vc-scene.html", "compositions/vc-scene.html");
 copy("assets/starter/compositions/vc-scene.motion.json", "compositions/vc-scene.motion.json");
 if (args.presenterMode === "on") {
-  copy("assets/presenters/p1.png", "assets/video-composition/presenters/p1.png");
-  copy("assets/presenters/p2.png", "assets/video-composition/presenters/p2.png");
   copy("assets/starter/compositions/vc-presenter-scene.html", "compositions/vc-presenter-scene.html");
   copy("assets/starter/compositions/vc-presenter-scene.motion.json", "compositions/vc-presenter-scene.motion.json");
 }
@@ -554,7 +550,6 @@ if (adapterLayouts.length) {
 if (adapterLayouts.some(id => id.startsWith("media/"))) {
   copy("assets/style-master-a.png", "assets/video-composition/media/style-master-a.png");
   copy("assets/style-master-b.png", "assets/video-composition/media/style-master-b.png");
-  copy("assets/presenters/p1.png", "assets/video-composition/media/presenter.png");
 }
 
 if (args.layoutIds.some(id => routerBinding(id).routerCode === "M")) {

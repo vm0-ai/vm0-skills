@@ -41,7 +41,7 @@ test("presenter off stages selected references without presenter files", () => {
   assert.equal(colors.scope, "project");
   assert.ok(fs.existsSync(path.join(project, ".style-reference/video-composition/layouts/source/data--single-stat.html")));
   assert.ok(fs.existsSync(path.join(project, ".style-reference/video-composition/layouts/source/data--single-stat.motion.json")));
-  assert.ok(!fs.existsSync(path.join(project, "assets/video-composition/presenters/p1.png")));
+  assert.ok(!fs.existsSync(path.join(project, "assets/video-composition/presenters")));
   assert.ok(!fs.existsSync(path.join(project, "compositions/vc-presenter-scene.html")));
   const selection = fs.readFileSync(path.join(project, ".style-reference/video-composition/SELECTION.md"), "utf8");
   assert.match(selection, /data\/single-stat/);
@@ -50,11 +50,11 @@ test("presenter off stages selected references without presenter files", () => {
   assert.equal(fs.readFileSync(path.join(project, "index.html"), "utf8"), hostBefore);
 });
 
-test("presenter on stages reusable presenter media and starter", () => {
+test("presenter on stages the presenter starter without bundled stills", () => {
   const project = projectFixture();
   const run = stage(project, "--presenter", "on");
   assert.equal(run.status, 0, run.stderr);
-  assert.ok(fs.existsSync(path.join(project, "assets/video-composition/presenters/p1.png")));
+  assert.ok(!fs.existsSync(path.join(project, "assets/video-composition/presenters")));
   assert.ok(fs.existsSync(path.join(project, "compositions/vc-presenter-scene.html")));
   assert.ok(fs.existsSync(path.join(project, ".style-reference/video-composition/PRESENTER-ADAPTATION.md")));
 });
@@ -150,12 +150,12 @@ test("controlled cleanup removes only known managed files", () => {
   fs.writeFileSync(path.join(reference, "layouts/preview/text--claim-support.png"), "old\n");
   fs.writeFileSync(path.join(reference, "notes.md"), "keep\n");
   fs.mkdirSync(path.join(project, "assets/video-composition/presenters"), { recursive: true });
-  fs.writeFileSync(path.join(project, "assets/video-composition/presenters/p1.png"), "old\n");
+  fs.writeFileSync(path.join(project, "assets/video-composition/presenters/unmanaged.png"), "keep\n");
 
   const run = stage(project, "--presenter", "off", "--clean-managed");
   assert.equal(run.status, 0, run.stderr);
   assert.ok(!fs.existsSync(path.join(reference, "LAYOUT-CATALOG.md")));
   assert.ok(!fs.existsSync(path.join(reference, "layouts/preview/text--claim-support.png")));
-  assert.ok(!fs.existsSync(path.join(project, "assets/video-composition/presenters/p1.png")));
+  assert.equal(fs.readFileSync(path.join(project, "assets/video-composition/presenters/unmanaged.png"), "utf8"), "keep\n");
   assert.equal(fs.readFileSync(path.join(reference, "notes.md"), "utf8"), "keep\n");
 });

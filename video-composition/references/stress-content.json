@@ -16,10 +16,7 @@
       "NATIONAL"
     ],
     "disclosure": "Illustrative content for layout, capacity, and replacement testing; not a factual claim.",
-    "presenter_assets": [
-      "assets/presenters/p1.png",
-      "assets/presenters/p2.png"
-    ]
+    "presenter_assets": []
   },
   "quality_target": {
     "canvas": "1920x1080",

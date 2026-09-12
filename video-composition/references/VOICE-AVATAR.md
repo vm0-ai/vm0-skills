@@ -60,7 +60,7 @@ Then replace the marked content slots and attach media:
 
 - Scene-keyed voice files: use one uniquely identified `<audio>` per returned line, grouped as `voiceover` when there are several clips.
 - One continuous voice file: mount it once across the host timeline. Scene starts come from its transcript or word timings; do not split or duplicate it.
-- Talking avatar: replace the scene's static `<img class="presenter-media">` with a timed `<video class="presenter-media clip" muted playsinline>`, and add a separate uniquely identified `<audio>` using the same source. HyperFrames owns both; never call `play()`, `pause()`, or seek in script.
+- Talking avatar: replace the scene's empty `<div class="presenter-media" data-presenter-media="pending">` with a timed `<video class="presenter-media clip" muted playsinline>`, and add a separate uniquely identified `<audio>` using the same source. HyperFrames owns both; never call `play()`, `pause()`, or seek in script.
 - Reused long avatar source: set `data-media-start` to that scene's measured source offset and `data-duration` to the scene range. Multiple scene mounts may point at the same source file.
 - Never play the avatar video's embedded audio and a duplicate narration track together. The video stays muted; the separate audio element carries sound.
 - Put `data-start` on the media or its plain wrapper, not both. Keep the avatar and its audio on the same scene-local window.
