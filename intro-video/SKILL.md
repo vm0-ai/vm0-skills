@@ -5,7 +5,7 @@ description: Turn a prompt or mixed source files into one verified intro-video M
 
 # Intro Video
 
-Deliver one playable, verified MP4 that communicates the user's idea. The Okou-managed HeyGen Video Agent renders the whole video by default; Okou's job is to turn diverse inputs into one reliable prompt plus a few exact parameters. Use only Okou-managed commands and credits. Never request a personal HeyGen account or connector.
+Deliver one playable, verified MP4 that communicates the user's idea. The Okou-managed HeyGen Video Agent renders the whole video by default; Okou's job is to turn diverse inputs into one reliable prompt plus a few exact parameters. Use only Okou-managed commands and credits; the platform holds the provider credentials.
 
 ## Step 1 — Normalize the request into a brief
 
@@ -34,11 +34,11 @@ Only the user's explicit requirements select the route. Filename, MIME type, met
 
 | Mode | When | Native handling |
 | --- | --- | --- |
-| `adapt` (default) | The user gave a topic, key points, or a draft without demanding exact wording | Always include an expansion directive from the [prompt compiler](references/prompt-compiler.md) — the script-freedom one with `facts: open`, the source-only one with `facts: source-only` — plus a target duration; HeyGen may rephrase and expand to fill the length naturally. Never drop the directive to shorten the prompt |
+| `adapt` (default) | The user gave a topic, key points, or a draft without demanding exact wording | Always include an expansion directive from the [prompt compiler](references/prompt-compiler.md) — the script-freedom one with `facts: open`, the source-only one with `facts: source-only` — plus a target duration; HeyGen may rephrase and expand to fill the length naturally. The directive ships with every adapt-mode prompt |
 | `verbatim` | The user asks for exact wording — word for word, as written, approved copy, or the same demand in the request's own language; see the script-mode cues in [brief](references/brief.md) | Omit the expansion directive, add the verbatim directive, and let the length follow the script. Estimate the resulting duration before submission, tell the user HeyGen may still make small wording changes, and verify the transcript afterwards |
 | `verbatim` + exact timing | Both exact wording and exact length or timeline | Controlled route |
 
-Without an expansion directive, HeyGen pads a short script with silence to reach a stated target; never state a conflicting target duration in verbatim mode.
+Without an expansion directive, HeyGen pads a short script with silence to reach a stated target, so in verbatim mode the only length that appears is the script's own estimate.
 
 In adapt mode the stated target is a real constraint in the other direction too: HeyGen honours the length and compresses or cuts a narration that does not fit it, and what it cuts is the ending. So the narration and the target are one decision, made before submission — convert the drafted narration at the pace in [brief](references/brief.md) and change one of the two until they agree.
 
@@ -50,12 +50,12 @@ A look is one appearance of an avatar — one outfit, one preview image, its own
 - **Add the FRAMING NOTE only when the look is also narrow**: for landscape output a decoded preview under 1.20 times wider than tall; the mirror rule for portrait. A wide look needs no FRAMING NOTE and still needs the directive above. The two properties are independent, and `avatar_type`, `preferredOrientation`, and width never establish an environment — decode the preview.
 - **Choose a wider look only when the choice is yours.** With a delegated presenter, take the widest low-crop look available. An explicitly chosen look is never swapped, not even for another look of the same person: looks in one group differ in shape, so name that alternative in the pre-generation sentence and let the user decide.
 
-The engine (Avatar III or Avatar IV) changes neither framing nor background, so never trade a look choice for an engine request. Do this for every native submission with a presenter:
+The engine (Avatar III or Avatar IV) changes neither framing nor background, so the look and the prompt are the whole lever. Do this for every native submission with a presenter:
 
 1. **Classify the selected look before writing anything**, from its decoded preview: environment, then crop risk for the output. Keep an explicitly chosen look even when it is near-square, and say so in the pre-generation sentence — a near-square transparent look is the one the agent fits to the width when nothing tells it otherwise.
 2. **Open with the brief paragraph and its three presenter sentences**, verbatim from the [prompt compiler](references/prompt-compiler.md): `The selected presenter delivers the narration in a <tone> tone. Use the selected <style name> style. Keep the entire head and hair visible in every presenter shot.`
-3. **Follow it with the presenter adaptation directive**, verbatim from the compiler, for every `studio_avatar`, `digital_twin`, or transparent look: it tells the agent to create an AI-extended 16:9 (or 9:16) version of the selected presenter with the full head, hair, and shoulders inside the image and a complementary environment, wait for it, use that extended presenter in every presenter scene, and fit the presenter inside the frame instead of filling the width with the cutout. Omit it only for a look that already is a landscape (or portrait) image with a real environment. Do not ask for a particular engine; it does not change the framing.
-4. **Put the narration in one quoted `Narration:` paragraph.** Do not split it into scenes or add `Media:` directions.
+3. **Follow it with the presenter adaptation directive**, verbatim from the compiler, for every `studio_avatar`, `digital_twin`, or transparent look: it tells the agent to create an AI-extended 16:9 (or 9:16) version of the selected presenter with the full head, hair, and shoulders inside the image and a complementary environment, wait for it, use that extended presenter in every presenter scene, and fit the presenter inside the frame instead of filling the width with the cutout. Omit it only for a look that already is a landscape (or portrait) image with a real environment. The engine is the provider's choice; it changes neither framing nor background.
+4. **Put the narration in one quoted `Narration:` paragraph**, at any length, with the visuals carried by the production lines.
 5. **Keep the script-mode directive** (freedom, source-only, or verbatim), even when shortening the prompt.
 6. **End with the triggered notes**, verbatim, FRAMING before BACKGROUND, using the square wording for any look under 1.20. Append only the notes the classification triggers; a low-crop look gets no FRAMING NOTE. The notes work only together with the sentences and the directive.
 7. **State one approximate length.** The prompt is as long as the narration and the on-screen list need, bounded only by the provider's 10,000 characters. Length caps inside the prompt are ignored; for a hard ceiling the route, not the wording, is the answer.
@@ -64,24 +64,24 @@ Record the look classification (`avatar_type`, environment, crop risk) with the 
 
 ## Step 4 — Prepare only the selected route, then execute once
 
-Never prepare both routes speculatively. Cache downloads, probes, extractions, conversions, catalog records, and generated assets; do not repeat them during prompt assembly or recovery.
+Prepare the selected route only. Cache downloads, probes, extractions, conversions, catalog records, and generated assets, and read them back during prompt assembly and recovery.
 
 - **Native:** choose the [recipe](references/recipes.md) for the inferred intent, extract and verify facts, prepare only the references the request needs, resolve exact IDs through [catalogs](references/catalogs.md), compose the presenter prompt as described above with the [prompt compiler](references/prompt-compiler.md), check the assembled narration against the stated length one last time, and submit once. Poll the same durable job, then verify with [QA](references/qa.md).
 - **Controlled:** lock the timeline and preservation plan, then prepare visuals, narration audio, and the HyperFrames project concurrently. A speaking presenter waits only for finalized narration audio. Assemble, validate, render once, then apply the controlled gate.
 
 ## Preserve the user's choices
 
-- **Style:** an explicitly selected public style is passed as that exact `style_id`. For `Let Okou choose`, select a concrete public style from the live catalog by intent, audience, tone, and output orientation, and pass its ID. Never substitute a Studio template, omit the ID, or turn a native style into a local visual reference. On the controlled route a style preview may only guide permitted added treatment, described as an adaptation.
+- **Style:** an explicitly selected public style is passed as that exact `style_id`. For `Let Okou choose`, select a concrete public style from the live catalog by intent, audience, tone, and output orientation, and pass its ID. The style travels as that exact ID on the native route; on the controlled route its preview guides permitted added treatment, described as an adaptation.
 - **Presenter:** an explicit look ID is exact; a group ID is not a look ID. If the brief still delegates the presenter choice, resolve it to one concrete public look before submission; a native job always carries an `avatar_id`. `No avatar` is a controlled-route requirement, never a native prompt sentence. A recipe's optional presenter means a voice-over treatment is acceptable for that intent, not that a native job may go without a look.
 - **Voice:** an exact voice ID is exact. `Default` with a presenter resolves that look's actual default voice. A delegated voice means a public voice matching the narration language. `No voiceover` and `Original audio` are controlled-route requirements, never a muted native job.
 - **Output:** preserve an explicit `16:9` (landscape) or `9:16` (portrait). Output ratio is independent of a style preview's ratio.
 - **Duration and language:** inferred, recorded in the brief, and stated in the prompt. A round number is approximate unless the user asks for exact timing. An inferred duration is derived from the narration you drafted, never pinned to a recipe band's endpoint; when the user named no duration, say the length is your inference so they can correct it.
 
-Tell the user the route, its consequence, the inferred duration and language, and any presenter or resolution capability gap in one sentence before generation. Do not add a review gate they did not request. Do not silently switch routes, identities, or fidelity levels after a failure.
+Tell the user the route, its consequence, the inferred duration and language, and any presenter or resolution capability gap in one sentence before generation. Add a review gate only when they ask for one. After a failure, bring the route, identity, or fidelity question back to the user before changing any of them.
 
 ## Accept or reject
 
-A completed provider job is a QA candidate, not a deliverable. The prompt is the control and QA is the verification: probe the media, inspect representative frames, transcribe when the brief fixes wording, language, or brand names, and compare against the brief per [QA](references/qa.md). A defect the prompt could have prevented is a prompt error to fix before any retry; a defect that survived a complete prompt is a provider gap to disclose. In both cases do not automatically submit another paid job, do not repeat the identical prompt, and do not switch routes without the user's direction.
+A completed provider job is a QA candidate, not a deliverable. The prompt is the control and QA is the verification: probe the media, inspect representative frames, transcribe when the brief fixes wording, language, or brand names, and compare against the brief per [QA](references/qa.md). A defect the prompt could have prevented is a prompt error to fix before any retry; a defect that survived a complete prompt is a provider gap to disclose. In both cases the next paid job waits for the user's direction, and any retry carries a changed prompt.
 
 QA is internal. The final message delivers the accepted video with its permanent URL and one line on the route, duration, and language; it never includes QA results: no check list, pass/fail table, tier labels, frame lists, transcripts, or evidence links. Keep the evidence in the workspace. Mention a defect only when it changes what the user receives: a provider gap in one plain sentence with the alternative, a rejected output in one sentence with what you propose.
 

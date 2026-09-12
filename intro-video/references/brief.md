@@ -108,7 +108,7 @@ Set `script.mode: verbatim` only when the user says the wording must not change:
 Decide each file's role from its content and the request, then prepare it per [input preparation](input-preparation.md):
 
 - `show`: the viewer must see it (screenshots, logo, product photos, charts, chosen slides). Prepare a supported reference and write its usage into the brief (`usage: "B-roll when describing the dashboard"`).
-- `context`: the information matters, not the pixels (documents, transcripts, web pages, spreadsheets). Extract verified facts into `key_messages`; do not attach.
+- `context`: the information matters, not the pixels (documents, transcripts, web pages, spreadsheets). Extract verified facts into `key_messages`; the file itself stays out of the request.
 - `both`: long visual documents; attach the PDF and extract the key points.
 
 A request to keep pages, frames, footage, audio, or timing exactly sets `preservation` and therefore the controlled route. Never fabricate content for an inaccessible source; name the gap instead.

@@ -34,7 +34,7 @@ CRITICAL ON-SCREEN TEXT (display literally):
 
 ## Slots
 
-1. **Brief paragraph** (English). One format sentence: kind of video, one approximate length, orientation, narration language, audience; in verbatim mode say `The narration length follows the script below.` instead of a length. Then the three presenter sentences below, in that order — every native prompt is a presenter run, because `presenter: none` routes to controlled composition. Optionally one placement sentence (`The selected presenter opens and closes on camera.`). Never describe the presenter's appearance. For any look without a baked-in environment (`studio_avatar`, `digital_twin`, or a transparent, solid, or empty preview) add the presenter adaptation directive as its own paragraph right after the brief paragraph, with the output orientation filled in.
+1. **Brief paragraph** (English). One format sentence: kind of video, one approximate length, orientation, narration language, audience; in verbatim mode say `The narration length follows the script below.` instead of a length. Then the three presenter sentences below, in that order — every native prompt is a presenter run, because `presenter: none` routes to controlled composition. Optionally one placement sentence (`The selected presenter opens and closes on camera.`). Refer to the presenter only as "the selected presenter". For any look without a baked-in environment (`studio_avatar`, `digital_twin`, or a transparent, solid, or empty preview) add the presenter adaptation directive as its own paragraph right after the brief paragraph, with the output orientation filled in.
 2. **Narration** (narration language). Adapt mode: `Narration:` followed by the script or one flowing paragraph composed from the key messages in arc order, in quotation marks, with no scene labels and no timestamps at any length. The skeleton is the default form; HeyGen's scene-by-scene level is a deliberate departure from it, with the cost recorded in [recipes](recipes.md). Verbatim mode: `Script (narrate exactly as written):` followed by the script unchanged.
 3. **CRITICAL ON-SCREEN TEXT** block: one quoted string per line from `on_screen_text`. Without it the agent rephrases numbers and quotes; long strings get split across cards.
 4. **Attachment sentences** (English), one per `show` attachment: `Use the attached <what> as B-roll when <topic>.` `Display the attached logo in the intro and the end card.` An attached file without a usage sentence is ignored.
@@ -110,23 +110,23 @@ FRAMING NOTE: The selected avatar image is in square (1:1) orientation but this 
 BACKGROUND NOTE: The selected avatar has no background or a transparent backdrop. Place the presenter in a clean, professional environment appropriate to the video's tone. For business/tech content: modern studio with soft lighting and subtle depth. For casual content: bright, minimal space with natural light. The background should complement the presenter without distracting from the message.
 ```
 
-The notes guide the agent; `POST /v3/video-agents` has no background, crop, scale, position, or safe-area field, so never claim deterministic control. Never write a note whose source and target orientation are the same.
+The notes guide the agent; `POST /v3/video-agents` has no background, crop, scale, position, or safe-area field, so report these notes as guidance when you describe what was controlled. A note is written only when the look's orientation and the output's differ.
 
 ## Rules
 
-- Build the whole skeleton. Never drop the presenter sentences or the script-mode directive to shorten a prompt, and never rely on the notes alone.
+- Build the whole skeleton. The presenter sentences, the script-mode directive and the notes work as one set, and the notes alone are ignored.
 - Keep it plain, not short. No per-scene `Media:` blocks, no production paragraphs, no style manifesto — those are what send the agent back to templates. Length itself is not the defect: a 60-second English narration needs about 700 characters and a 120-second one about 1,400, and the prompt simply gets that much longer. Never trim the narration to hit a character count; the narration is sized by the target duration.
 - One approximate length only. Caps written into the prompt, such as `no longer than 30 seconds`, are ignored. For a soft preference set the target below the ceiling (about 18 seconds for a 30-second one) and size the narration to that target; a ceiling the deliverable genuinely must not exceed is a controlled-route requirement, not a wording problem.
 - Measure the narration against the stated length before submitting: count the characters or words in the `Narration:` block and convert them at the pace in [brief](brief.md). If they exceed the stated length, trim the narration or restate the length — never submit a prompt that asks for more words than its own length holds, because HeyGen honours the length and cuts the closing sentence.
-- End the narration on the ask or recap as a complete sentence, and never let an end card, CTA line, or on-screen string carry a thought the narration was supposed to finish.
+- End the narration on the ask or recap as a complete sentence. An end card or CTA line repeats that thought on screen; the narration is what completes it.
 - Positive framing: describe what to show, not what to avoid. Restrictive lists make the agent play safe.
 - No per-scene timestamps and no layout coordinates. Describe motion with verbs (counts up, slides in, draws itself) only when a description is needed at all.
-- With `avatar_id`, say "the selected presenter"; never describe hair, clothing, gender, or age.
+- With `avatar_id`, say "the selected presenter"; the look supplies hair, clothing, and everything else about the person.
 - One topic per video; split multi-topic requests.
 - Narration and on-screen strings in the brief's language; every directive, note, and production line in English.
-- Name the selected style once, in the brief paragraph; never repeat it as prose.
+- Name the selected style once, in the brief paragraph.
 - Each CRITICAL string at most 6 words or one figure plus a label; source citations and full sentences belong to the narration.
-- Over 10,000 characters: compress the narration and attachment sentences first; never drop directives, on-screen text, or a verbatim script. A verbatim script that alone exceeds the limit is a controlled-route job.
+- Over 10,000 characters: compress the narration and attachment sentences, keeping the directives, the on-screen list, and any verbatim script whole. A verbatim script that alone exceeds the limit is a controlled-route job.
 
 ## Style paragraph (user-requested override only)
 

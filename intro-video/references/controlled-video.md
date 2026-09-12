@@ -8,7 +8,7 @@ Okou owns the scene list, prepared visuals, narration mapping, and time-based co
 
 Resolve Auto style from the [managed catalog](catalogs.md) only when the brief calls for a style treatment. Use the selected style only for permitted added graphics and treatments. Preserve original page/footage pixels and geometry where required; explain that the resulting treatment is a controlled adaptation, not native preset execution. Resolve a conflict only when the user explicitly requires both native preset execution and incompatible preservation controls.
 
-Style selection does not authorize extra decorative layers. If the user permits no visual additions, record the selected style and explain that the original visuals determine the appearance; do not add graphics just to demonstrate the choice.
+A style selection buys a treatment, not extra decorative layers. Where the user permits no visual additions, record the selected style and explain that the original visuals determine the appearance.
 
 ## Lock the plan
 
@@ -37,9 +37,9 @@ okou __intro-video-presenter --avatar-id LOOK_ID --avatar-group-id GROUP_ID \
   --audio-url NARRATION_URL --json
 ```
 
-The managed renderer produces a landscape transparent WebM. Verify alpha, duration, and framing: on the direct video endpoint a near-square look fitted to the frame width (`cover`) loses the top of its head, while `contain` keeps it, and the managed command exposes no fit control. If a take arrives cropped, report it as a platform fit defect with the look dimensions instead of retrying the same take. It is a composition layer, not the final MP4. For other ratios, fit it without cropping essential content. Do not invent an `--aspect-ratio` flag or use a personal account.
+The managed renderer produces a landscape transparent WebM. Verify alpha, duration, and framing: on the direct video endpoint a near-square look fitted to the frame width (`cover`) loses the top of its head, while `contain` keeps it, and the managed command exposes no fit control. If a take arrives cropped, report it as a platform fit defect with the look dimensions instead of retrying the same take. It is a composition layer, not the final MP4. For other ratios, fit it without cropping essential content. The flags this command accepts are the ones `--help` lists, and it runs on the platform's credentials.
 
-Check real speech duration with `ffprobe`; use transcription/timestamps only as needed to map scene cuts. A presenter take uses at most 600 seconds of audio. Split longer narratives into bounded takes aligned to narration segments. Mix narration once and mute duplicate presenter audio. Do not repeat preparation or generate speculative alternate-route assets.
+Check real speech duration with `ffprobe`; use transcription/timestamps only as needed to map scene cuts. A presenter take uses at most 600 seconds of audio. Split longer narratives into bounded takes aligned to narration segments. Mix narration once and mute duplicate presenter audio. Reuse the prepared assets, and keep preparation to the selected route.
 
 ## Assemble, validate, and render once
 
@@ -60,10 +60,10 @@ npx hyperframes@VERSION render PROJECT --fps 30 --quality high --format mp4 \
   --workers 1 --output PROJECT/renders/final.mp4
 ```
 
-Set the independently resolved dimensions in the composition (for example 1920×1080 for 16:9 or 1080×1920 for 9:16). Reflow adapted graphics; fit fidelity-critical pages or footage without cropping. A style reference's ratio is source metadata, not an output override. A local `--resolution` preset is not the cloud API's resolution/ratio pair. Use one worker in constrained runtimes and wait for completion. Do not add a cloud render.
+Set the independently resolved dimensions in the composition (for example 1920×1080 for 16:9 or 1080×1920 for 9:16). Reflow adapted graphics; fit fidelity-critical pages or footage without cropping. A style reference's ratio is source metadata, not an output override. A local `--resolution` preset is not the cloud API's resolution/ratio pair. Use one worker in constrained runtimes and wait for completion; the render finishes locally.
 
 Decode the final MP4, inspect frames and audio, compare required pages/segments and narration against the plan, and upload the verified file.
 
-The managed APIs own provider credentials, billing, and artifact persistence. Save returned results and any generation identifier before subsequent steps, wait for the existing job, and reuse completed assets after interruption. Do not retry a billed submission merely because a command or request timed out; inspect its existing generation status first.
+The managed APIs own provider credentials, billing, and artifact persistence. Save returned results and any generation identifier before subsequent steps, wait for the existing job, and reuse completed assets after interruption. A command or request that timed out is reconciled by inspecting its existing generation status, which is what a billed retry would otherwise duplicate.
 
-The presenter CLI already waits for the managed job. A `GENERATION_TIMEOUT` error includes its `generationId`; resume with `GET /api/built-in-generations/{generationId}` on the same API origin, authenticated with the run's `OKOU_TOKEN`, and use its completed `result`. The CLI's origin is `OKOU_API_BACKEND_URL` (add HTTPS only if no scheme is present), otherwise `https://api.okou.ai`. A queued/running response is not failure. If an interruption left no known generation ID, reconcile the existing job before resubmitting; do not invent a `--resume` CLI flag.
+The presenter CLI already waits for the managed job. A `GENERATION_TIMEOUT` error includes its `generationId`; resume with `GET /api/built-in-generations/{generationId}` on the same API origin, authenticated with the run's `OKOU_TOKEN`, and use its completed `result`. The CLI's origin is `OKOU_API_BACKEND_URL` (add HTTPS only if no scheme is present), otherwise `https://api.okou.ai`. A queued/running response is not failure. If an interruption left no known generation ID, reconcile the existing job before resubmitting, using the resume guidance above rather than a CLI flag.
