@@ -83,15 +83,6 @@
     "executableLayoutStarters": "assets/layouts/source",
     "layoutPreviews": "assets/layouts/preview",
     "layoutContactSheet": "assets/layouts/contact-sheet.jpg",
-    "layoutPalettePreviews": {
-      "navy-cobalt": "assets/layouts/preview/navy-cobalt",
-      "monumental-minimal": "assets/layouts/preview/monumental-minimal",
-      "black-gold": "assets/layouts/preview/black-gold",
-      "obsidian-champagne": "assets/layouts/preview/obsidian-champagne",
-      "petrol-brass": "assets/layouts/preview/petrol-brass",
-      "parchment-oxblood": "assets/layouts/preview/parchment-oxblood",
-      "porcelain-carbon": "assets/layouts/preview/porcelain-carbon"
-    },
     "layoutContactSheets": {
       "navy-cobalt": "assets/layouts/contact-sheet-navy-cobalt.jpg",
       "monumental-minimal": "assets/layouts/contact-sheet-monumental-minimal.jpg",

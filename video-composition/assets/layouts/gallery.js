@@ -96,7 +96,7 @@ for (const [groupName, items] of groups) {
     const stem = id.replace("/", "--");
     const article = document.createElement("article");
     article.className = "card";
-    article.innerHTML = `<a class="preview" data-preview-stem="${stem}" href="preview/navy-cobalt/${stem}.png"><img src="preview/navy-cobalt/${stem}.png" alt="${label} official HyperFrames render proof"></a><div class="copy"><h2>${label}</h2><p>${id}</p><span>HyperFrames · ${registryItem}</span><a href="source/${stem}.html">Open executable starter</a></div>`;
+    article.innerHTML = `<a class="preview" data-preview-stem="${stem}" href="preview/${stem}.png"><img src="preview/${stem}.png" alt="${label} official HyperFrames render proof"></a><div class="copy"><h2>${label}</h2><p>${id}</p><span>HyperFrames · ${registryItem}</span><a href="source/${stem}.html">Open executable starter</a></div>`;
     grid.append(article);
   }
   gallery.append(section);
@@ -112,11 +112,8 @@ function applyPalette(name, updateUrl = true) {
   document.querySelector("#contact-sheet").src = sheet;
   document.querySelector("#contact-sheet").alt = `${palette.label} contact sheet of forty official HyperFrames layout proofs`;
   document.querySelector("#contact-sheet-link").href = sheet;
-  for (const link of document.querySelectorAll("[data-preview-stem]")) {
-    const image = `preview/${selected}/${link.dataset.previewStem}.png`;
-    link.href = image;
-    link.querySelector("img").src = image;
-  }
+  // Layout geometry is identical across palettes, so one proof set serves them all.
+  // The palette switch re-themes the page itself and swaps the contact sheet.
   for (const button of document.querySelectorAll("[data-palette]")) {
     button.setAttribute("aria-pressed", String(button.dataset.palette === selected));
   }

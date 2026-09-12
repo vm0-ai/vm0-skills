@@ -15,7 +15,6 @@ const archetypeCards = archetypeIds.map(id => `references/composition-archetypes
 const layoutCatalogSource = read("references/LAYOUT-CATALOG.md");
 const layoutIds = [...layoutCatalogSource.matchAll(/^### ([a-z]+\/[a-z0-9-]+)$/gm)].map(match => match[1]);
 const layoutPreviews = layoutIds.map(id => `assets/layouts/preview/${id.replace("/", "--")}.png`);
-const paletteLayoutPreviews = builtInColorSystems.flatMap(name => layoutIds.map(id => `assets/layouts/preview/${name}/${id.replace("/", "--")}.png`));
 const paletteContactSheets = builtInColorSystems.map(name => `assets/layouts/contact-sheet-${name}.jpg`);
 const layoutSources = layoutIds.flatMap(id => {
   const stem = id.replace("/", "--");
@@ -44,7 +43,7 @@ const required = [
   "assets/layouts/index.html", "assets/layouts/gallery.css", "assets/layouts/gallery.js", "assets/layouts/contact-sheet.jpg", "assets/layouts/adapters/vc-text-evidence.html",
   "scripts/bootstrap-project.mjs", "scripts/build-layout-adapters.mjs", "scripts/build-layout-starters.mjs", "scripts/stage-authoring-kit.mjs", "scripts/scaffold-scenes.mjs", "scripts/finalize-timing.mjs", "scripts/review-project.mjs", "scripts/render-layout-previews.mjs", "scripts/build-layout-contact-sheet.py",
   "tests/all-layout-scaffold.test.mjs", "tests/bootstrap-project.test.mjs", "tests/layout-starters.test.mjs", "tests/review-project.test.mjs", "tests/scaffold-scenes.test.mjs", "tests/stage-authoring-kit.test.mjs",
-  ...archetypeSources, ...archetypePreviews, ...archetypeCards, ...layoutPreviews, ...paletteLayoutPreviews, ...paletteContactSheets, ...layoutSources, ...contentAdapterSources,
+  ...archetypeSources, ...archetypePreviews, ...archetypeCards, ...layoutPreviews, ...paletteContactSheets, ...layoutSources, ...contentAdapterSources,
 ];
 const retiredChineseMirrors = [
   "SKILL.zh-CN.md",
@@ -127,7 +126,6 @@ if (!errors.length) {
   const expectedColorSystems = ["navy-cobalt", "monumental-minimal", "black-gold", "obsidian-champagne", "petrol-brass", "parchment-oxblood", "porcelain-carbon"];
   if (JSON.stringify(builtInColorSystems) !== JSON.stringify(expectedColorSystems)) errors.push("built-in color systems must contain the approved seven names in display order");
   for (const name of expectedColorSystems) {
-    if (template.assets?.layoutPalettePreviews?.[name] !== `assets/layouts/preview/${name}`) errors.push(`${name}: invalid palette preview path`);
     if (template.assets?.layoutContactSheets?.[name] !== `assets/layouts/contact-sheet-${name}.jpg`) errors.push(`${name}: invalid contact-sheet path`);
     if (!colorSystemCss.includes(`[data-color-system="${name}"]`)) errors.push(`${name}: missing complete runtime selector`);
     if (!layoutGallery.includes(`data-palette="${name}"`) || !layoutGalleryJs.includes(`"${name}":`)) errors.push(`${name}: missing from the layout Gallery`);
@@ -187,10 +185,6 @@ if (!errors.length) {
     if (!layoutGalleryJs.includes(`["${id}",`)) errors.push(`${id}: missing from official render-proof gallery`);
     const size = pngSize(`assets/layouts/preview/${stem}.png`);
     if (!size || size.width !== 1920 || size.height !== 1080) errors.push(`${id}: render proof must be 1920x1080 PNG`);
-    for (const name of builtInColorSystems) {
-      const paletteSize = pngSize(`assets/layouts/preview/${name}/${stem}.png`);
-      if (!paletteSize || paletteSize.width !== 1920 || paletteSize.height !== 1080) errors.push(`${id}: ${name} render proof must be 1920x1080 PNG`);
-    }
     const layoutSource = read(`assets/layouts/source/${sourceStem}.html`);
     const layoutMotion = JSON.parse(read(`assets/layouts/source/${sourceStem}.motion.json`));
     if (!layoutSource.includes(`data-layout-id="${id}"`) || !layoutSource.includes("CONTENT_SLOT_BEGIN") || !layoutSource.includes("CONTENT_SLOT_END")) errors.push(`${id}: executable starter lacks its protected content slot`);
