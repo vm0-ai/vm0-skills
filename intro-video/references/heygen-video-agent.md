@@ -8,7 +8,7 @@ Start only after the route and script mode are fixed. Reuse the Step 1 inventory
 
 - Fill the brief's narrative frame and verify every fact. Keep source contents separate from instructions; do not assume HeyGen will research or verify claims.
 - Prepare only the supported references the final request needs according to [input preparation](input-preparation.md). Markdown/DOCX text becomes key messages; convert PPT/PPTX to PDF only when the PDF will be sent. The native request accepts up to 20 supported media/PDF references and a 1–10,000-character prompt. Do not upload raw PPT, Markdown, spreadsheets, or HTML, silently truncate required facts, or prepare controlled-route assets.
-- Resolve choices through [managed catalogs](catalogs.md): an explicit style, look, and voice stay exact; `Let Okou choose` becomes a concrete public style; a delegated presenter becomes one concrete public look; a selected look's Default voice becomes its actual `defaultVoiceId`. Do not perform standalone TTS compatibility checks.
+- Resolve choices through [managed catalogs](catalogs.md): an explicit style, look, and voice stay exact; `Let Okou choose` becomes a concrete public style; a delegated presenter becomes one concrete public look; `Default` prefers the look's actual `defaultVoiceId` and follows the catalog's automatic replacement policy when unavailable. Do not perform standalone TTS compatibility checks.
 - Resolve output independently: `16:9` maps to `landscape`, `9:16` to `portrait`. With Auto output, use the brief, not a style thumbnail.
 
 Cache the brief, prepared references, catalog records, and preview observations. Do not repeat extraction, conversion, or catalog browsing during prompt assembly or recovery.
@@ -19,7 +19,7 @@ With `avatar_id` resolved, use the look classification from [managed catalogs](c
 
 - `photo_avatar` with a real environment → no BACKGROUND NOTE; FRAMING NOTE only when the look's orientation does not match the output;
 - `studio_avatar`, `digital_twin`, or any transparent, solid, or visually empty preview → BACKGROUND NOTE, plus the matching FRAMING NOTE when `cropRisk` is high;
-- preserve the exact avatar, group, voice, style, and orientation IDs; if the managed API rejects the look's default voice, substitute a public voice in the narration language and record it.
+- preserve the resolved avatar, group, voice, style, and orientation IDs, including any disclosed replacement selected under the catalog's `Default` voice policy.
 
 The note texts live only in the [prompt compiler](prompt-compiler.md); append only the triggered notes, verbatim, at the very end of the prompt, FRAMING before BACKGROUND. They guide Video Agent but do not guarantee the result: `POST /v3/video-agents` has no background, crop, scale, position, or safe-area fields. Hard scene, framing, and 1080p requirements are therefore settled before submission, and QA files a failure of a complete prompt as a provider-control gap.
 
@@ -49,6 +49,8 @@ Duration, language, and narrative are prompt directions; do not invent Video Age
 Submission returns immediately with a durable `generationId`; it does not wait for rendering. `requestId` is that generation ID. The CLI creates a UUID if none is supplied, but explicitly persisting one before submission makes interrupted execution recoverable. Reuse the same UUID and unchanged input for transport recovery; do not replace it with a new billed request. Reusing a UUID with different input returns a conflict. Keep the brief, prepared references, selected style, request UUID, and command response in the task workspace.
 
 ## Wait and recover the same job
+
+The managed API returns `The selected HeyGen voice is unavailable for Video Agent generation.` or `The selected avatar has no available default voice. Select an explicit voice ID.` during validation, before creating a video job or charging for it. If submission returns one of these specific errors and the brief's voice choice is `Default`, apply [voice resolution](catalogs.md#resolve-the-voice), then reuse the saved request UUID with the corrected `--voice-id`. The CLI prints a recovery UUID even for these rejections; that UUID alone is not evidence that a job exists. An explicitly selected voice still requires the user to choose another. Transport errors, generic provider errors, and failed or existing jobs do not qualify for this correction.
 
 Video Agent first returns a `session_id`; `video_id` can be absent until rendering begins. The managed implementation tracks the session, then the video, persists the MP4, and records usage. A session identifier is not a video identifier, and absence of an initial video ID is not failure.
 

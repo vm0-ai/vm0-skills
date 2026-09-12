@@ -12,7 +12,7 @@ okou __intro-video-catalog voices --page-size 100 --json
 
 Follow `nextToken` with `--token` when more candidates are needed, and stop if a cursor repeats. A failed request is not an empty catalog and does not authorize an invented or omitted ID.
 
-Preserve exact public IDs. An avatar group ID groups looks and cannot replace the selected look's `avatar_id`. With a selected avatar and `Default` voice, resolve its `defaultVoiceId` and pass that actual voice ID when required. With no avatar, a delegated voice means choose an independent public voice matching the brief's language; it does not mean mute. A delegated presenter (an older form's `Auto`) is resolved to one concrete public look by the preference order below; record the reason. Never submit a native job without `avatar_id` unless the brief says no presenter.
+Preserve explicitly selected public IDs. An avatar group ID groups looks and cannot replace the selected look's `avatar_id`. Resolve the voice using the policy below, keeping the user's `Default` choice distinct from an explicitly selected voice even after resolving an ID. A delegated presenter (an older form's `Auto`) is resolved to one concrete public look by the preference order below; record the reason. Never submit a native job without `avatar_id` unless the brief says no presenter.
 
 For a native presenter, classify the selected look before anything is paid for:
 
@@ -26,4 +26,12 @@ The managed catalog currently returns only `studio_avatar` looks with transparen
 
 For delegated style, compare relevant tags and actual previews against the material, audience, purpose, tone, and output. Record the selected style ID and a short reason once a justified match is available. Native Video Agent receives that concrete `style_id`; controlled composition may use the preview only as an explicitly described visual adaptation.
 
-Apply compatibility checks only to the chosen route. Standalone managed TTS uses a Starfish-compatible voice, while Video Agent has different restrictions. An avatar's default voice may therefore work natively while being unavailable to standalone TTS. The managed API can also reject a look's default voice as unavailable for Video Agent; when that happens, select a public voice in the narration language, record the substitution, and continue instead of failing the request.
+## Resolve the voice
+
+Apply compatibility checks only to the chosen route. Standalone managed TTS uses a Starfish-compatible voice, while Video Agent has different restrictions. An avatar's default voice may work natively while being unavailable to standalone TTS; absence from the standalone voice catalog alone does not justify replacing it for Video Agent.
+
+- **Explicit voice:** preserve the exact ID, even when it happens to equal the look's default voice. If unavailable, ask the user to choose another voice.
+- **Default with an avatar:** resolve the look's actual `defaultVoiceId` first. If it is missing or confirmed unavailable for the selected route, automatically select a compatible public voice in the narration language, matching any stated voice preferences and the brief's tone. Keep the selected avatar, style, and output. Record the original default ID (or its absence), replacement ID, and reason in the brief. Tell the user which voice replaced it before generation and mention the replacement with the delivered video; do not add a confirmation step.
+- **Delegated voice with no avatar:** choose an independent public voice matching the narration language; it does not mean mute.
+
+If no compatible public voice is available, explain the limitation and ask for another voice choice. Catalog or transport failures do not establish voice unavailability. For a default voice rejected during native submission, follow the [confirmed pre-job validation case](heygen-video-agent.md#wait-and-recover-the-same-job); this policy does not authorize replacing a voice or starting another paid job after a generation failure or an uncertain submission.
