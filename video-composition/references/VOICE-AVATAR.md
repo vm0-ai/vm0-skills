@@ -1,6 +1,6 @@
 # Voice and Talking-Avatar Fast Path
 
-Open this guide only when the video uses generated voiceover or a real talking digital human. A talking avatar is generated video with a performed voice and an intrinsic duration; it is not the bundled static presenter PNG.
+Open this guide only when the video uses generated voiceover or a talking digital human. A talking avatar is generated video with a performed voice and an intrinsic duration, and here it is always a **transparent take**: the composition supplies the background, so an avatar with a baked-in scene cannot be mounted.
 
 ## Lock the shared contract first
 
@@ -8,20 +8,49 @@ Before starting external generation, lock one narration beat per scene:
 
 `scene-id | narration text | Router layout id | media: voice|talking-avatar|silent | presenter position | viewer outcome`
 
-The narration text, scene IDs, selected layouts, language, one HeyGen `voice_id`, and talking-avatar scenes are shared prerequisites. Resolve the voice once and reuse it across voice-only and talking-avatar scenes. Do not guess final seconds. Do not change the script after dispatch unless the media job is intentionally restarted.
+The narration text, scene IDs, selected layouts, language, one voice ID, and the set of talking-avatar scenes are shared prerequisites. Resolve the voice once and reuse it across voice-only and talking-avatar scenes. Do not guess final seconds. Do not change the script after dispatch unless the media job is intentionally restarted.
 
 ## Run two lanes concurrently
 
 ### Media lane
 
-- Voice-only from script: synthesize all scene-keyed narration with HeyGen voice/TTS in one batch when supported. The returned files are already scene segments; keep their ID-keyed durations and word timings.
-- Existing long voice track: keep one source file. Derive scene boundaries from transcript or word timings and mount ranges from that source; do not export duplicate audio clips.
-- Talking avatar generated directly from script: dispatch the selected avatar scenes with the same HeyGen `voice_id`. The returned video and its audio are one media result; do not also synthesize duplicate TTS for that scene.
-- Talking avatar driven by a separate voice file: TTS must finish before that scene's avatar job can start. This dependency is serial inside the media lane; the visual lane still runs concurrently.
-- Existing long talking-avatar video: keep one source file and reuse it across scene mounts with measured source offsets. Do not re-encode one file per scene.
-- Generate independent avatar scenes concurrently when the provider supports it. Do not submit duplicate jobs merely to poll faster.
+**A talking avatar, from the script.** One managed command produces the take and its narration together, so no separate speech job is needed and nothing waits:
 
-Use direct HeyGen voice and avatar generation for these media assets, not a complete Video Agent project per scene. Parallel submission changes wall time, not the intended generated seconds. Cost still rises when content is regenerated, overlapping handles or pauses are duplicated, or a more expensive avatar engine is selected.
+```bash
+okou generate avatar-video --provider built-in \
+  --avatar-id AVATAR_ID \
+  --voice-id VOICE_ID \
+  --aspect-ratio landscape \
+  --screen-style 3 \
+  --no-caption \
+  --video-name SCENE_ID \
+  --json < narration/SCENE_ID.txt
+```
+
+`--screen-style 3` is the transparent WebM with alpha, and it is the only style this route can mount: style `1` bakes a scene behind the person and style `2` returns a green screen that still needs keying. `--no-caption` keeps the provider from burning subtitles over a layout that already carries its own on-screen text. Pipe long or quote-sensitive narration through stdin. Discover identities with `--list-avatars` and `--list-voices`, which take `--avatar-style`, `--avatar-gender`, `--voice-language` and similar filters.
+
+The returned video and its audio are one media result; that scene needs no separate speech synthesis.
+
+**A talking avatar, from an audio file you already have.** Pass it instead of a script — `--audio-url URL` on the same command. The HeyGen presenter renderer is the other route to a transparent take and accepts audio only:
+
+```bash
+okou __intro-video-presenter --avatar-id LOOK_ID --avatar-group-id GROUP_ID \
+  --audio-url NARRATION_URL --json
+```
+
+It returns a landscape transparent WebM and accepts at most 600 seconds of audio per take; split longer narratives at narration boundaries. Because it has no script input, speech must finish before the take can start: that dependency is serial inside the media lane, and it is the reason the script-driven command above is the default. The visual lane runs concurrently either way.
+
+**Voice only, no person on screen.** Synthesize the scene-keyed narration:
+
+```bash
+okou __intro-video-voice --voice-id VOICE_ID --text "FINAL_SCRIPT" --json
+```
+
+The returned files are already scene segments; keep their ID-keyed durations and word timings. Split only for the command's 5,000-character limit.
+
+**An existing long track.** Keep one source file, voice or avatar, and derive scene boundaries from its transcript or word timings, mounting ranges out of that single source rather than re-encoding a file per scene.
+
+Independent avatar scenes generate concurrently. Parallel submission changes wall time, not the seconds generated; cost rises when content is regenerated or handles and pauses are duplicated.
 
 Physical cutting is a fallback, not the default workflow. Use FFmpeg only when a provider cannot return scene-keyed media, HyperFrames cannot consume the source as a time range, or the requested deliverable explicitly requires standalone segment files.
 
@@ -46,7 +75,7 @@ node <SKILL_DIR>/scripts/bootstrap-project.mjs \
 
 ## Join once, from real media timing
 
-Measure each returned media file with `ffprobe`; prefer HeyGen's returned word timings when available. The actual voice or talking-avatar duration wins. Silent scenes retain their planned duration. Add only an intentional bounded pause, never a speculative percentage buffer.
+Measure each returned media file with `ffprobe`; prefer the provider's returned word timings when available. The actual voice or talking-avatar duration wins. Silent scenes retain their planned duration. Add only an intentional bounded pause, never a speculative percentage buffer.
 
 Finalize the existing host and frames with exact seconds; this updates cumulative starts, full-window clip durations, and motion sidecars without rebuilding or overwriting authored scene content:
 
@@ -64,6 +93,6 @@ Then replace the marked content slots and attach media:
 - Reused long avatar source: set `data-media-start` to that scene's measured source offset and `data-duration` to the scene range. Multiple scene mounts may point at the same source file.
 - Never play the avatar video's embedded audio and a duplicate narration track together. The video stays muted; the separate audio element carries sound.
 - Put `data-start` on the media or its plain wrapper, not both. Keep the avatar and its audio on the same scene-local window.
-- Side and corner presenter layouts require a transparent/background-removed presenter asset. A generated clip with a baked background belongs in a presenter-led full-media divider unless background removal was explicitly requested.
+- Verify the take before mounting it: it must carry real alpha, not a matte painted onto opaque pixels. A clip that arrives with a baked background was generated at the wrong screen style and is regenerated, not keyed by hand.
 
 Motion is fitted inside the real speech window. The presenter container remains still; the generated performance supplies human movement. Run Preflight only after media is mounted, then continue the normal Static and Preview review.

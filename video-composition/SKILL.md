@@ -30,7 +30,7 @@ Read only [ROUTER.md](references/ROUTER.md) with this file; it maps all 40 layou
 ### 3. Resolve presenter, palette, and language once
 
 - Presenter `off`: no presenter DOM or reserved bay.
-- Presenter `talking-avatar`: a generated video, staged with bootstrap `--presenter on`; follow the fast path.
+- Presenter `talking-avatar`: a generated transparent take, staged with bootstrap `--presenter on`; the composition supplies the background, so follow the fast path rather than any avatar output with a scene behind it.
 - For `zh`, `ja`, or `ko`, pass one licensed local `--content-font`.
 - Choose one palette: `navy-cobalt`, `monumental-minimal`, `black-gold`, `obsidian-champagne`, `petrol-brass`, `parchment-oxblood`, `porcelain-carbon`, `custom`. Geometry is identical across them, so this is tone: a light field for dense figures, a dark one for a single claim, `custom` for brand colours. Name the choice before generating; define custom palettes through [STYLE.md](references/STYLE.md).
 
