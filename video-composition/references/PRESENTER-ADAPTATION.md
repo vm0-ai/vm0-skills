@@ -1,6 +1,6 @@
 # Adaptive Presenter Planning
 
-Use this guide after this system is selected and before scene geometry is authored. It governs whether a presenter exists, how the person returns, and how content fits around the standard-size full or grounded head-and-shoulders treatment. A presenter may be a static transparent image or a real talking-avatar video; do not confuse the bundled PNG with a generated digital human. It does not create a scene schema or a layout renderer.
+Use this guide after this system is selected and before scene geometry is authored. It governs whether a presenter exists, how the person returns, and how content fits around the standard-size full or grounded head-and-shoulders treatment. A presenter here is always a generated talking-avatar video with a transparent background; the composition supplies everything behind the person. It does not create a scene schema or a layout renderer.
 
 ## Resolve one video-level choice
 
@@ -14,7 +14,7 @@ Set the top-level composition to exactly one of these values:
 - `off`: presenter DOM is structurally absent from every scene. Do not mount a hidden `.presenter-slot`, reserve an empty person bay, or stage a presenter-only scene. Every content scene uses the full safe frame and centers its complete required-content box.
 - `on`: the sequence includes a deliberate presenter recurrence plan, while individual scenes may still use `data-presenter="off"`. The presenter is not required to coexist with every chart, text system, map, or media block.
 
-For `on`, also record each presenter scene as `static` or `talking-avatar`. A talking avatar is generated video with an intrinsic voice and duration. Follow [VOICE-AVATAR.md](VOICE-AVATAR.md); its measured media duration determines the scene.
+A talking avatar carries its own voice and duration, so follow [VOICE-AVATAR.md](VOICE-AVATAR.md): its measured media duration determines the scene.
 
 Use the user's explicit choice. If no choice is present, ask one short question before scene planning. Do not silently convert `on` to an effectively presenter-free video, and do not silently add a presenter to `off`.
 
