@@ -108,10 +108,8 @@ function applyPalette(name, updateUrl = true) {
   document.documentElement.dataset.colorSystem = selected;
   document.querySelector("#palette-eyebrow").textContent = `${palette.label} · OFFICIAL HYPERFRAMES PROOFS`;
   document.querySelector("#palette-description").textContent = palette.description;
-  const sheet = `contact-sheet-${selected}.jpg`;
-  document.querySelector("#contact-sheet").src = sheet;
-  document.querySelector("#contact-sheet").alt = `${palette.label} contact sheet of forty official HyperFrames layout proofs`;
-  document.querySelector("#contact-sheet-link").href = sheet;
+  // One sheet serves every palette: the forty layouts are identical apart from colour,
+  // and the page itself recolours live from color-system.css.
   // Layout geometry is identical across palettes, so one proof set serves them all.
   // The palette switch re-themes the page itself and swaps the contact sheet.
   for (const button of document.querySelectorAll("[data-palette]")) {
