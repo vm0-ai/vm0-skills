@@ -5,9 +5,9 @@ description: "Compose a video locally with HyperFrames from an executable layout
 
 # Video Composition
 
-## Workflow ownership and context budget
+## Workflow ownership
 
-This owns the workflow after HyperFrames. Do not route through `general-video`. Work from the brief and sources alone: no `DESIGN.md`, `frame.md`, storyboard, or animation map. Edit up to twelve starter-based scenes inline.
+This owns the workflow after HyperFrames. Work from the brief and sources alone, and edit the starter-based scenes inline.
 
 ## Fast production workflow
 

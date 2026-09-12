@@ -81,8 +81,6 @@ Each phase writes `report.json` and `summary.md`. Run a manual `--scenes id,id` 
 
 ## Boundaries
 
-- No generic `general-video` planning pass after this Skill is explicitly selected.
-- No manually authored storyboard, frame packets, or animation map for an ordinary starter-based build.
 - No content JSON, coordinate mapper, or content-to-layout renderer.
 - No title chrome or decorative rail without source-required meaning.
 - No presenter-free comparison composition for a presenter scene.
