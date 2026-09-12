@@ -1,7 +1,0 @@
-interface:
-  display_name: "Video Composition"
-  short_description: "Compose a video locally with HyperFrames: executable layouts, generated voice or talking avatar, deterministic review"
-  brand_color: "#2F5BD0"
-  default_prompt: "Use $video-composition to choose executable Router starters, bootstrap once, replace only marked content slots, and run the deterministic review flow."
-policy:
-  allow_implicit_invocation: true

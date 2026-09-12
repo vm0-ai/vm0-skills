@@ -5,8 +5,6 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const skillRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const template = JSON.parse(fs.readFileSync(path.join(skillRoot, "template.json"), "utf8"));
-const archetypes = new Map(template.archetypes.map(item => [item.id, item]));
 const layoutCatalog = fs.readFileSync(path.join(skillRoot, "references/LAYOUT-CATALOG.md"), "utf8");
 const layouts = new Set([...layoutCatalog.matchAll(/^### ([a-z]+\/[a-z0-9-]+)$/gm)].map(match => match[1]));
 const router = fs.readFileSync(path.join(skillRoot, "references/ROUTER.md"), "utf8");
@@ -17,9 +15,9 @@ function usage(exitCode = 0) {
   const out = exitCode ? console.error : console.log;
   out([
     "Usage:",
-    "  node scripts/stage-authoring-kit.mjs --project <dir> --presenter <off|on> [--media-mode none|voice|talking-avatar] [--language tag] [--color-system <built-in-name|custom>] [--color-tokens file] [--layouts family/id,family/id] [--archetypes id,id] [--content-font file] [--install] [--clean-managed] [--force]",
+    "  node scripts/stage-authoring-kit.mjs --project <dir> --presenter <off|on> [--media-mode none|voice|talking-avatar] [--language tag] [--color-system <built-in-name|custom>] [--color-tokens file] [--layouts family/id,family/id] [--content-font file] [--install] [--clean-managed] [--force]",
     "",
-    "Copies the this visual system integration kit and selected executable official-component starters into an existing HyperFrames project.",
+    "Copies the Video Composition integration kit and selected executable official-component starters into an existing HyperFrames project.",
     "It does not modify index.html, invent layouts, write content, or render video.",
     "",
     "Options:",
@@ -28,7 +26,6 @@ function usage(exitCode = 0) {
     "  --media-mode <mode>    none, generated voiceover, or real talking-avatar video",
     "  --language <tag>      Visible-language tag; zh/ja/ko require --content-font on first staging",
     "  --layouts <ids>       Comma-separated layout ids whose executable starters and PNG proofs should be copied",
-    "  --archetypes <ids>    Comma-separated archetype ids to copy as editable evidence",
     "  --content-font <file>  Optional licensed WOFF2, WOFF, TTF, OTF, or TTC font for non-Latin content",
     "  --color-system <name>  One project-wide named collection; legacy blue-white/white-blue aliases are accepted",
     "  --color-tokens <file>  Optional CSS collection defining semantic palette tokens for data-color-system=custom",
@@ -41,7 +38,7 @@ function usage(exitCode = 0) {
 }
 
 function parseArgs(argv) {
-  const args = { layoutIds: [], archetypeIds: [], install: false, cleanManaged: false, force: false, language: "en", mediaMode: "none", colorSystem: "navy-cobalt" };
+  const args = { layoutIds: [], install: false, cleanManaged: false, force: false, language: "en", mediaMode: "none", colorSystem: "navy-cobalt" };
   for (let index = 0; index < argv.length; index += 1) {
     const token = argv[index];
     if (token === "--help" || token === "-h") usage(0);
@@ -69,11 +66,6 @@ function parseArgs(argv) {
     }
     if (token === "--presenter") {
       args.presenterMode = argv[index + 1];
-      index += 1;
-      continue;
-    }
-    if (token === "--archetypes") {
-      args.archetypeIds = (argv[index + 1] || "").split(",").map(value => value.trim()).filter(Boolean);
       index += 1;
       continue;
     }
@@ -166,12 +158,6 @@ if (/^(?:zh|ja|ko)(?:-|$)/i.test(args.language) && !args.contentFont && !fs.exis
   process.exit(1);
 }
 
-const invalid = args.archetypeIds.filter(id => !archetypes.has(id));
-if (invalid.length) {
-  console.error(`Unknown archetype id(s): ${invalid.join(", ")}`);
-  console.error(`Available: ${Array.from(archetypes.keys()).join(", ")}`);
-  process.exit(1);
-}
 const invalidLayouts = args.layoutIds.filter(id => !layouts.has(id));
 if (invalidLayouts.length) {
   console.error(`Unknown layout id(s): ${invalidLayouts.join(", ")}`);
@@ -289,7 +275,6 @@ function cleanManagedReferences(referenceRoot) {
     "STYLE.md", "stress-content.json", "layouts/contact-sheet.jpg",
     "VOICE-AVATAR.md",
     "REGISTRY-INSTALLS.json",
-    "archetypes/INDEX.md",
   ];
   for (const relative of retired) removeManaged(`${referenceRoot}/${relative}`);
 
@@ -308,11 +293,6 @@ function cleanManagedReferences(referenceRoot) {
     removeManaged(`${referenceRoot}/layouts/preview/${filename}.png`);
     removeManaged(`${referenceRoot}/layouts/source/${filename}.html`);
     removeManaged(`${referenceRoot}/layouts/source/${filename}.motion.json`);
-  }
-  for (const id of archetypes.keys()) {
-    if (args.archetypeIds.includes(id)) continue;
-    for (const name of ["source.html", "preview.png", "card.md"]) removeManaged(`${referenceRoot}/archetypes/${id}/${name}`);
-    removeEmptyParents(`${referenceRoot}/archetypes/${id}`, referenceRoot);
   }
 }
 
@@ -455,7 +435,7 @@ function writeContentFont() {
 
 function buildSelectionReference() {
   const lines = [
-    "# this visual system Selected Reference",
+    "# this system Selected Reference",
     "",
     "This lean authoring reference is generated by the staging script. It is not a content manifest, runtime input, layout compiler, or renderer.",
     "",
@@ -485,16 +465,6 @@ function buildSelectionReference() {
     lines.push("No layouts were selected at staging time. Use the compact `ROUTER.md` copied beside this file, then restage with the chosen IDs if proof images are useful.");
   }
 
-  lines.push("", "## Selected archetypes", "");
-  if (args.archetypeIds.length) {
-    for (const id of args.archetypeIds) {
-      const item = archetypes.get(id);
-      lines.push(`- \`${id}\` — ${item.name}; density \`${item.density}\`; presenter \`${item.presenter}\`. See \`archetypes/${id}/\`.`);
-    }
-  } else {
-    lines.push("No archetype was selected. Compose from the Router row and Style Master pair without scanning the full gallery.");
-  }
-  lines.push("");
   return lines.join("\n");
 }
 
@@ -556,25 +526,18 @@ if (args.layoutIds.some(id => routerBinding(id).routerCode === "M")) {
   copy("assets/layouts/adapters/vc-text-evidence.html", "compositions/vc-text-evidence.html");
 }
 
-for (const id of args.archetypeIds) {
-  const item = archetypes.get(id);
-  copy(item.source, `${referenceRoot}/archetypes/${id}/source.html`);
-  copy(item.preview, `${referenceRoot}/archetypes/${id}/preview.png`);
-  copy(item.card, `${referenceRoot}/archetypes/${id}/card.md`);
-}
 
 if (args.install) {
   installMappedRegistryItems();
   writeInstallReceipt(referenceRoot);
 }
 
-console.log(`this visual system kit staged in ${projectRoot}`);
+console.log(`this system kit staged in ${projectRoot}`);
 console.log(`Copied ${copied.length} file(s); skipped ${skipped.length} existing file(s).`);
 if (args.cleanManaged) console.log(`Removed ${removed.length} obsolete or unselected managed file(s); unknown files were preserved.`);
 console.log(`Video presenter mode: ${args.presenterMode}`);
 console.log(`Long media mode: ${args.mediaMode}`);
 console.log(`Color system: ${args.colorSystem}`);
-if (args.archetypeIds.length) console.log(`Reference archetypes: ${args.archetypeIds.join(", ")}`);
 if (args.layoutIds.length) console.log(`Content-form layouts: ${args.layoutIds.join(", ")}`);
 if (args.install) console.log(`Registry items ready: ${installed.join(", ")}`);
 if (reusedInstalls.length) console.log(`Registry installs reused without network work: ${reusedInstalls.join(", ")}`);

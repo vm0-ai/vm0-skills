@@ -25,7 +25,7 @@ Read only [ROUTER.md](references/ROUTER.md) with this file; it maps all 40 layou
 
 - Choose the smallest sufficient row.
 - If names are insufficient, inspect the [gallery](assets/layouts/index.html) or [contact sheet](assets/layouts/contact-sheet.jpg); every proof links to its executable HTML starter.
-- Do not preload `template.json`, catalogs, media generation, or generic video Skills.
+- Keep the context to this file and ROUTER.md; catalogs, media generation and generic video Skills stay closed.
 
 ### 3. Resolve presenter, palette, and language once
 

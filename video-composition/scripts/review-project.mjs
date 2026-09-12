@@ -446,7 +446,7 @@ function parseArgs(argv) {
 
 function buildSummary(report) {
   const lines = [
-    `# this visual system ${report.phase} review`,
+    `# this system ${report.phase} review`,
     "",
     `- Status: **${report.dryRun ? "DRY RUN" : report.ok ? "PASS" : "FAIL"}**`,
     `- Project: \`${report.project}\``,
