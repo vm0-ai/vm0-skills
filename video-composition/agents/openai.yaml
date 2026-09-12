@@ -1,0 +1,7 @@
+interface:
+  display_name: "Presenter - this visual system"
+  short_description: "News & Public Affairs presenter direction in this visual system"
+  brand_color: "#2F5BD0"
+  default_prompt: "Use $presenter-navy-cobalt to choose executable Router starters, bootstrap once, replace only marked content slots, and run the deterministic review flow."
+policy:
+  allow_implicit_invocation: true
