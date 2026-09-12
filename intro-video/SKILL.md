@@ -67,7 +67,7 @@ Record the look classification (`avatar_type`, environment, crop risk) with the 
 Prepare the selected route only. Cache downloads, probes, extractions, conversions, catalog records, and generated assets, and read them back during prompt assembly and recovery.
 
 - **Native:** choose the [recipe](references/recipes.md) for the inferred intent, extract and verify facts, prepare only the references the request needs, resolve exact IDs through [catalogs](references/catalogs.md), compose the presenter prompt as described above with the [prompt compiler](references/prompt-compiler.md), check the assembled narration against the stated length one last time, and submit once. Poll the same durable job, then verify with [QA](references/qa.md).
-- **Controlled:** lock the timeline and preservation plan, then prepare visuals, narration audio, and the HyperFrames project concurrently. A speaking presenter waits only for finalized narration audio. Assemble, validate, render once, then apply the controlled gate.
+- **Controlled:** lock the timeline and preservation plan. With nothing to preserve, hand that plan to the `video-composition` skill, which owns the layout library and the media orchestration. Otherwise prepare visuals, narration audio, and the HyperFrames project concurrently. A speaking presenter waits only for finalized narration audio. Assemble, validate, render once, then apply the controlled gate.
 
 ## Preserve the user's choices
 
