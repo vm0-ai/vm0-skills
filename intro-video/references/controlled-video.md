@@ -6,7 +6,7 @@ The lanes, validation and render steps below are the preservation path. A build 
 
 ## Exact pages, footage, audio, or layout
 
-Okou owns the scene list, prepared visuals, narration mapping, and time-based composition. The managed HeyGen integration generates optional speech and transparent presenter takes using Okou credits; local HyperFrames rendering finishes the composition without a personal HeyGen account. **No avatar**, **no voiceover**, **silent**, and **original audio** are implemented by including or omitting audio and presenter layers in the composition, not by asking a generative agent to remember an exclusion. Okou owns the audio decision on this route.
+Okou owns the scene list, prepared visuals, narration mapping, and time-based composition. The managed HeyGen integration generates optional speech and transparent presenter takes using Okou credits; Okou’s managed cloud-render command finishes the composition using the platform HeyGen account. **No avatar**, **no voiceover**, **silent**, and **original audio** are implemented by including or omitting audio and presenter layers in the composition, not by asking a generative agent to remember an exclusion. Okou owns the audio decision on this route.
 
 Resolve Auto style from the [managed catalog](catalogs.md) only when the brief calls for a style treatment. Use the selected style only for permitted added graphics and treatments. Preserve original page/footage pixels and geometry where required; explain that the resulting treatment is a controlled adaptation, not native preset execution. Resolve a conflict only when the user explicitly requires both native preset execution and incompatible preservation controls.
 
@@ -55,16 +55,29 @@ npx hyperframes@VERSION snapshot PROJECT --at FIRST,MIDDLE,LAST --no-end --descr
 
 Use numeric snapshot times, check every required page/segment, and confirm no stretching, covered text, duplicate audio, or missing assets. A public Video Agent style ID is not a local-render option; any similar custom treatment is an adaptation and must have been described as such.
 
-Render locally once after validation; this does not require a HeyGen API credential:
+The preservation path requires the Okou API and CLI release containing `okou video render`, under the existing Intro Video switch. Check `okou video render --help` once. If the command or platform access is unavailable, report the missing release/access; do not invoke the personal HeyGen connector or silently switch export routes.
+
+Set the independently resolved dimensions in the composition: 1920×1080 for 16:9 or 1080×1920 for 9:16. Reflow permitted added graphics; fit fidelity-critical pages or footage without cropping. The first managed release accepts 1080p, 30 fps, standard-quality MP4 in those two ratios. Output dimensions must match the composition’s `data-width` and `data-height`.
+
+Inspect the exact packaged inputs, then submit once:
 
 ```bash
-npx hyperframes@VERSION render PROJECT --fps 30 --quality high --format mp4 \
-  --workers 1 --output PROJECT/renders/final.mp4
+okou video render PROJECT --dry-run --json
+okou video render PROJECT --json
 ```
 
-Set the independently resolved dimensions in the composition (for example 1920×1080 for 16:9 or 1080×1920 for 9:16). Reflow adapted graphics; fit fidelity-critical pages or footage without cropping. A style reference's ratio is source metadata, not an output override. A local `--resolution` preset is not the cloud API's resolution/ratio pair. Use one worker in constrained runtimes and wait for completion; the render finishes locally.
+The command honors `.hyperframesignore`, excludes generated renders, snapshots and development files, and rejects ZIPs over 200 MiB. Inspect the largest included files before submission. Exclude only verified unused intermediates; keep original page bitmaps, transparent presenter WebM, narration, fonts, scripts and all referenced assets. Never extract every presenter frame merely to upload a cloud project. The managed renderer receives authored HTML and assets, not a Video Agent prompt that could redesign the source.
 
-Decode the final MP4, inspect frames and audio, compare required pages/segments and narration against the plan, and upload the verified file.
+The CLI uploads the ZIP through Okou, retains a durable request ID and returns the job. Save the returned generation ID and continuation command. The backend keeps the provider key, freezes the project input, submits to HeyGen, persists the finished MP4, and settles cloud-render credits separately from the existing voice/presenter assets.
+
+```bash
+okou video render status GENERATION_ID --json
+okou video render resume GENERATION_ID --json
+```
+
+Use `status` to check the existing task; follow its retry interval instead of polling rapidly. After interruption, use `resume` with that same ID. It replays a submission only when the server explicitly permits it, with the original request and idempotency key. The provider retains idempotency records for 24 hours; Okou leaves a safety margin. If the server returns `manual_check`, retain the ID and report the unresolved submission rather than allocating a replacement. Closing a CLI process does not cancel a cloud render.
+
+A completed job returns the permanent Okou artifact and actual `creditsCharged`; pending billing is not zero-cost rendering. Download the returned MP4 for one final verification pass: decode it, probe actual dimensions/frame rate/duration, inspect frames and audio, and compare required pages/segments and narration with the plan. Use that same accepted artifact URL for delivery; a second upload of identical output is unnecessary. Record local pack/upload time separately from cloud status intervals, and label polling-derived timings as estimates.
 
 The managed APIs own provider credentials, billing, and artifact persistence. Save returned results and any generation identifier before subsequent steps, wait for the existing job, and reuse completed assets after interruption. A command or request that timed out is reconciled by inspecting its existing generation status, which is what a billed retry would otherwise duplicate.
 
