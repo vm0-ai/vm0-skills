@@ -21,6 +21,8 @@ ffmpeg -i recording.mp4 -vf "fps=30,select='eq(n\,150)+eq(n\,420)'" -vsync 0 fra
 
 The sidecar carries two different geometries and only one of them is pixel-accurate. `clicks[].frame` is the click position the renderer consumes. `clicks[].element.frame` is accessibility geometry and has been observed tens of pixels off the rendered pixels on a macOS capture, so do not compose against it.
 
+A capture usually also carries the recording tool's own control bar: a contiguous dark band a few tens of pixels tall, present in every frame, belonging to no part of the product. It is not `content` padding and the sidecar does not describe it, so nothing warns you about it — and because the renderer shows the full source frame before the first key, an unguarded plan opens and closes on it. Measure its extent before planning and keep every `rect` clear of it. Identify it by the **longest unbroken run** of dark pixels in a row, not by how many dark pixels the row holds: a bar narrower than a third of the frame is a small fraction of any row, so a percentage threshold reads it as ordinary UI.
+
 ## Step 2 — Render the automatic first cut
 
 ```bash
@@ -29,7 +31,7 @@ okou video camera --file recording.mp4 --events recording.clicks.json --output b
 
 It writes the MP4, an editable `*.camera-plan.json`, a `*.camera-review.json` manifest, and a directory of paired source/output checkpoint JPEGs, then prints their paths with `durationMs`, `cameraShots`, `cameraMoves`, `clicksOutsideFrame`, and `renderMs`. Exactly one of `--events` or `--plan` is accepted. Expect roughly a minute of local render per 20–30 seconds of 1080p-class footage; budget for two or three passes rather than one perfect plan.
 
-Keep this cut. It is the algorithm's own answer, it costs nothing to deliver alongside the refined one, and the comparison is what shows the refinement was worth making.
+Keep this cut. It is the algorithm's own answer, it costs nothing to deliver alongside the refined one, and the comparison is what shows the refinement was worth making. It is also the only render that emits click-moment checkpoint frames: a plan render places checkpoints on move boundaries alone, so this is the only click-level acceptance evidence the renderer produces.
 
 ## Step 3 — Review the first cut on frames, not on counts
 
@@ -45,7 +47,7 @@ ffmpeg -i cp-005-output.jpg -i cp-013-output.jpg -i cp-018-output.jpg \
 [6:v][7:v][8:v]hstack=3[c];[a][b][c]vstack=3,scale=2560:-2" -frames:v 1 tile.jpg
 ```
 
-Read the manifest's `clicks[].inFrame` against the Step 1 floor: matching `droppedOutOfFrameClicks` is a pass, anything above it is a framing to fix. A click can be flagged while plainly visible — the check wants margin, not mere containment, measured in output pixels, so a click near the top of the frame needs a tighter shot to clear it.
+Read the manifest's `clicks[].inFrame` against the Step 1 floor: matching `droppedOutOfFrameClicks` is a pass, anything above it is a framing to fix. A click can be flagged while plainly visible — the check wants margin, not mere containment, measured in output pixels, so a click near the top of the frame needs a tighter shot to clear it. The threshold is undocumented and sits near 125 output pixels: aim for about 155, and treat anything under 130 as a framing to fix.
 
 What an automatic plan typically gets wrong: one move per click regardless of how close the clicks are, so the camera never rests; a uniform zoom that crops a dialog or a chip at the exact moment it matters; and a final framing chosen for the last click rather than for the result the viewer should read.
 
@@ -62,17 +64,33 @@ Each `shots[].keys[]` entry is one move: it starts at `startMs`, runs for `durat
 - `rect` is `{x, y, width}` in the source video's pixel space; height follows the source aspect ratio. Zoom is `source.width / rect.width`, so a 1920-wide source framed at `width: 960` is a 2× push.
 - `content` can be narrower than the video — a capture may carry padding at one edge. Keep every `rect` inside `content` or the shot shows the padding.
 - a move must **land before** its `clickMs`, not on it. A key whose motion is still running when the click fires shows the click mid-pan and reports it out of frame.
-- `baseZoom` is where the camera sits before the first key and after a pull-back.
+- `baseZoom` does **not** do what its name promises: it is inert. The renderer shows the full source frame before the first key whatever it is set to. Give every plan an explicit opening key, or the video opens on the raw capture, recording control bar and all.
 
-Edit for rest, not for coverage: group clicks that share a region under one framing, hold it while the interface responds, and spend the moves on the beats that carry meaning — the choice being made, the state that changed, the final screen. Align each shot's edges to the thing being shown (a dialog's own border, the full chip, the button and its label) so nothing important is half-cut. Re-render, then re-read the same checkpoint frames; a plan that no longer flags a click can still have introduced a worse composition.
+`--events` and `--plan` are mutually exclusive, and that has one consequence worth stating plainly: **a plan render carries no click timeline at all.** Its review manifest reports `clicks: []` and `clicksOutsideFrame: 0` — zero out of zero, not zero out of twelve. The field looks exactly like the Step 3 check passing, and it is not a check. Accept a refined plan against computed margins and against output frames sampled at each `clickMs`; never against that number.
 
-Measure those edges; do not estimate them by eye. One row of greyscale pixels names every card gap, dialog border and padding edge to the pixel, and a column does the same for top and bottom:
+Edit for rest, not for coverage: group clicks that share a region under one framing, hold it while the interface responds, and spend the moves on the beats that carry meaning — the choice being made, the state that changed, the final screen. Align each shot's edges to the thing being shown (a dialog's own border, the full chip, the button and its label) so nothing important is half-cut. Re-render, then verify on frames sampled at each `clickMs` rather than on the plan render's own checkpoints, which land on move boundaries and can miss every moment that matters. Tile them and read the tile once. A plan that no longer flags a click can still have introduced a worse composition.
+
+### Solve the plan; do not hand-search it
+
+Every constraint on a framing is stated above and every one of them is computable: inside `content`, clear of the capture overlay, landing before its `clickMs`, and far enough from each edge in output pixels. Search that space with code rather than by reasoning. Each candidate rectangle has to be checked against all four constraints for every click in the beat, and against the pixel columns its edges would fall on; that is arithmetic over thousands of candidates, and doing it a few at a time in prose is both slow and unreliable.
+
+```bash
+python3 <SKILL_DIR>/scripts/autoplan.py recording.mp4 recording.clicks.json build/refined.plan.json
+```
+
+It detects the capture overlay; groups clicks into beats by time, by screen change and by whether one framing can hold them at all; anchors each beat on the UI block its clicks belong to; picks the framing that clears the margin gate on every click while putting the side edges in empty space; schedules each move to land about 260 ms before its click; and emits explicit opening and closing keys. It prints a per-click margin table, which is the acceptance check the renderer will not give you for a plan render.
+
+Anchor a beat on the **UI block containing its clicks**, found by expanding outward from the click until a band of empty space is crossed. Two anchors look reasonable and are not: the bare click point, which centres the shot on a coordinate and slices whatever sits beside it, and the densest region of the frame, which pulls the shot towards whatever carries the most ink — usually a list or a sidebar rather than the control being clicked. A small control such as a send button forms a block of its own and must be grown into its container first, or the shot anchors on the button and crops the content the click was about.
+
+When a framing reads badly, change a constant (`MARGIN_OUT_PX`, `MAX_ZOOM`, `BEAT_GAP_MS`, `SCENE_DELTA`) and run it again. Tune by constant rather than by editing rectangles: an edited rectangle fixes one shot and carries nothing to the next recording. Several beats pinned at exactly `MARGIN_OUT_PX` mean the margin is the binding constraint rather than the rectangles, and a click pinned against a frame edge caps the margin it can ever reach — those beats fall back to `MARGIN_RELAXED`, still clear of the threshold.
+
+To check an edge the solver chose, or to measure something it does not model, measure; do not estimate by eye. One row of greyscale pixels names every card gap, dialog border and padding edge to the pixel, and a column does the same for top and bottom:
 
 ```bash
 ffmpeg -ss <t> -i recording.mp4 -frames:v 1 -vf "crop=<width>:1:0:<y>,format=gray" -f rawvideo -
 ```
 
-Runs of bright values are the gaps between cards and the dialog's own background; runs of dark values are thumbnails and text rows; the first long run of pure black at the right names `content`'s edge and cross-checks the sidecar. Eyes are for judging whether a composition reads, not for reading coordinates off a frame.
+Runs of bright values are the gaps between cards and the dialog's own background; runs of dark values are thumbnails and text rows; the first long run of pure black at the right names `content`'s edge and cross-checks the sidecar. Sweep a range of rows rather than probing one, counting non-background pixels per row: the text bands, image bands and the gaps between them fall out of the profile without having to guess which row to read first. Eyes are for judging whether a composition reads, not for reading coordinates off a frame.
 
 ## Step 5 — Add audio only if the brief asks for it
 
